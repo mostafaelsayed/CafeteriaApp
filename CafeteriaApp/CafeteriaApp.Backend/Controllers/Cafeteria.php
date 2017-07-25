@@ -20,8 +20,12 @@ function getCafeterias() {
 function addCafeteria($n) {
   $connection = new Connection();
   $conn = $connection->check_connection();
-  $sql = "insert into cafeteria (Name) values ('$n')"; // string should be quoted like that (single quotes)
-  if ($conn->query($sql)===TRUE) {
+  $sql = "insert into cafeteria (Name) values (?)";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("s",$name);
+  $name = $n;
+  //$conn->query($sql);
+  if ($stmt->execute()===TRUE) {
     echo "Cafeteria Added successfully";
   }
   else {
