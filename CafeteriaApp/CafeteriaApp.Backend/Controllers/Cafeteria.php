@@ -30,6 +30,23 @@ function addCafeteria($n) {
   }
 }
 
+function editCafeteria($n,$Id) {
+  $connection = new Connection();
+  $conn = $connection->check_connection();
+  $sql = "update cafeteria set Name = (?) where Id = (?)";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("si",$name,$id);
+  $name = $n;
+  $id = $Id;
+  //$conn->query($sql);
+  if ($stmt->execute()===TRUE) {
+    echo "Cafeteria updated successfully";
+  }
+  else {
+    echo "Error: ".$conn->error;
+  }
+}
+
 if ($_SERVER['REQUEST_METHOD']=="GET") {
   if (isset($_GET["action"]) && $_GET["action"]=="getCafeterias"){
     getCafeterias();
@@ -50,6 +67,20 @@ if ($_SERVER['REQUEST_METHOD']=="POST"){
         echo "name is required";
       }
   }
+}
+
+if ($_SERVER['REQUEST_METHOD']=="PUT"){
+    //decode the json data
+    $data = json_decode(file_get_contents("php://input"));
+    //echo $data;
+      if ($data->Name != null && $data->Id != null) {
+        //if ($data->action == "addcafeteria"){
+        editCafeteria($data->Name,$data->Id);
+      }
+      else{
+        echo "name is required";
+      }
+  //}
 }
 
  ?>

@@ -8,22 +8,43 @@ var app = angular.module('myapp', []);
 // controller for getting categories from database
 app.controller('getByCafeteriaId', function ($scope,$http,$location) {
    $scope.cafeteriaid = $location.search().id;
-   $scope.gotocreatepage = function(){
+   //console.log($scope.cafeteriaid);
+   $scope.gotocreatepage = function() {
      window.location.href = "/CafeteriaApp.Frontend/Areas/Admin/Category/Views/create.php?id="+$scope.cafeteriaid;
    }
    //$scope.createurl = "/CafeteriaApp.Frontend/Areas/Admin/Category/Views/create.php?id="+$scope.cafeteriaid;
-   console.log($scope.cafeteriaid);
+   //console.log($scope.cafeteriaid);
     $http.get('/CafeteriaApp.Backend/Controllers/Category.php?Id='+$scope.cafeteriaid)
     .then(function (response) {
         $scope.categories = response.data;
         console.log(response);
     });
 });
+
+app.controller('editcafeteria',function($scope,$http,$location){
+  $scope.Name = "";
+  $scope.cafeteriaid = $location.search().id;
+
+
+  $scope.editCafeteria = function() {
+    var data = {
+      Name: $scope.Name,
+      Id: $scope.cafeteriaid
+    };
+    if ($scope.Name != "") {
+  $http.put('/CafeteriaApp.Backend/Controllers/Cafeteria.php',data)
+  .then(function(response){
+    console.log(response);
+    document.location = "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/index.php";
+   });
+ };
+  };
+ });
 // controller for adding category in the database
 app.controller('addCategory',function($scope,$http,$location){
   $scope.Name = "";
   $scope.cafeteriaid = $location.search().id;
-  console.log($scope.cafeteriaid);
+  //console.log($scope.cafeteriaid);
   $scope.addCategory = function () {
     var data = {
       Name: $scope.Name,
@@ -34,7 +55,7 @@ app.controller('addCategory',function($scope,$http,$location){
     $http.post('/CafeteriaApp.Backend/Controllers/Category.php',data)
     .then(function(response){
       //First function handles success
-      document.location =  "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show.php?id="+$scope.cafeteriaid;
+      document.location =  "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/edit.php?id="+$scope.cafeteriaid;
       console.log(response);
       //document.location="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show.php";
     }, function(response) {

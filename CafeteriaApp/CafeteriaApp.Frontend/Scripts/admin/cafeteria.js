@@ -63,10 +63,12 @@ app.controller('getcafeterias', function ($scope,$http,$location) {
     $scope.editCafeteria = function(cafeteriaid){
       //$location.path('/show.php/'+cafeteriaid)
 
-      window.location.href = "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show.php?id="+cafeteriaid;
+      window.location.href = "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/edit.php?id="+cafeteriaid;
       //document.loction = "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show.php/"+cafeteriaid;
     };
 });
+
+
 // controller for adding cafeteria in the database
 app.controller('addcafeteria',function($scope,$http,$location){
   $scope.Name = "";

@@ -5,6 +5,7 @@
 include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
  ?>
  <script src="/CafeteriaApp.Frontend/Scripts/admin/category.js"></script>
+ <!-- <script src="/CafeteriaApp.Frontend/Scripts/admin/cafeteria.js"></script> -->
  <div id="page-wrapper" style="margin-top:-600px">
 <div class="row">
     <div class="col-lg-12">
@@ -12,8 +13,8 @@ include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
     </div>
     <!-- /.col-lg-12 -->
 </div>
-
-<!-- <div ng-app="myapp" ng-controller="addCategory" class="row">
+<div ng-app="myapp">
+<div ng-controller="editcafeteria" class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -29,7 +30,7 @@ include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
                             </div>
 
                             <div class="form-group" style="float: right">
-                                <button ng-click="addCategory()" class="btn btn-primary">Save</button>
+                                <button ng-click="editCafeteria()" class="btn btn-primary">Save</button>
 
                             </div>
                         </form>
@@ -39,7 +40,7 @@ include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
             </div>
         </div>
     </div>
-</div> -->
+</div>
 
 
 <div class="row">
@@ -50,7 +51,7 @@ include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
     <!-- /.col-lg-12 -->
 </div>
 
-<div class="row" ng-app="myapp" ng-controller="getByCafeteriaId">
+<div class="row" ng-controller="getByCafeteriaId">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -94,6 +95,7 @@ include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
         <!-- /.panel -->
     </div>
     <!-- /.col-lg-12 -->
+</div>
 </div>
 </div>
 <!-- /.row -->
