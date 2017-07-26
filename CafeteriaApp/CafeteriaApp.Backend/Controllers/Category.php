@@ -15,10 +15,22 @@ function getByCafeteriaId($id) {
   }
 }
 
+<<<<<<< HEAD
 
 function addCategory($name,$CafetriaId) {
   $sql = "insert into category (Name,CafeteriaId) values ('$name',$CafetriaId)"; // string should be quoted like that (single quotes)
   if ($conn->query($sql)===TRUE) {
+=======
+function addCategory($n,$Id) {
+  $connection = new Connection();
+  $conn = $connection->check_connection();
+  $sql = "insert into category (Name,CafeteriaId) values (?,?)"; // string should be quoted like that (single quotes)
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("si",$name,$id);
+  $name = $n;
+  $id = $Id;
+  if ($stmt->execute()===TRUE) {
+>>>>>>> origin/master
     echo "Category Added successfully";
   }
   else {
@@ -41,11 +53,11 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
 if ($_SERVER['REQUEST_METHOD']=="POST"){
     //decode the json data
     $data = json_decode(file_get_contents("php://input"));
-    if (isset($data->action) && $data->action == "addCategory" && $data->Id != null && $data->Name != null){
-        addCategory($data->Name,$data->Id);
+    if (isset($data->action) && $data->action == "addCategory" && $data->CafeteriaId != null && $data->Name != null){
+        addCategory($data->Name,$data->CafeteriaId);
       }
       else{
-        echo "name is required";
+        echo "error occured while creating category";
       }
 }
 ?>
