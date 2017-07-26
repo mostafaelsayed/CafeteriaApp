@@ -2,8 +2,7 @@
 include 'CafeteriaApp.Backend\connection.php';
 
 function getCafeterias() {
-  $connection = new Connection();
-  $conn = $connection->check_connection();
+  
   $sql = "select * from cafeteria";
   if ($conn->query($sql)) {
       $result = $conn->query($sql);
@@ -18,8 +17,6 @@ function getCafeterias() {
 }
 
 function addCafeteria($n) {
-  $connection = new Connection();
-  $conn = $connection->check_connection();
   $sql = "insert into cafeteria (Name) values (?)";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("s",$name);

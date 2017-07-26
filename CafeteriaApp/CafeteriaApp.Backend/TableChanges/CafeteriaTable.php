@@ -4,8 +4,6 @@ include 'CafeteriaApp.Backend\connection.php';
 include 'CafeteriaApp.Backend\Models\Cafeteria.php';
 
 $cafeteria = new Cafeteria();
-$connection = new Connection();
-$conn = $connection->check_connection();
 
 function create_cafeteria_table($con,$sql)
 {
@@ -31,6 +29,10 @@ function alter_cafeteria_table($con,$sql) {
       echo "Error updating table: " . $con->error;
   }
 }
+
+
+
+
 
 if (property_exists('Cafeteria','createTable')) {
   // sql to create table

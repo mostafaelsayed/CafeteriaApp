@@ -3,8 +3,6 @@ include 'CafeteriaApp.Backend\connection.php';
 include 'CafeteriaApp.Backend\Models\Category.php';
 
 $category = new Category();
-$connection = new Connection();
-$conn = $connection->check_connection();
 
 function create_category_table($conn,$sql)
 {
