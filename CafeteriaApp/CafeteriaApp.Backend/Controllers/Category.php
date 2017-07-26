@@ -17,20 +17,15 @@ function getByCafeteriaId($conn,$id) {
 
 
 
-function addCategory($conn,$name,$CafetriaId) {
-  $sql = "insert into category (Name,CafeteriaId) values ('$name',$CafetriaId)"; // string should be quoted like that (single quotes)
-  if ($conn->query($sql)===TRUE) {
-=======
-function addCategory($n,$Id) {
-  $connection = new Connection();
-  $conn = $connection->check_connection();
+function addCategory($conn,$name,$CafeteriaId) {
+  //$sql = "insert into category (Name,CafeteriaId) values ('$name',$CafetriaId)"; // string should be quoted like that (
   $sql = "insert into category (Name,CafeteriaId) values (?,?)"; // string should be quoted like that (single quotes)
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("si",$name,$id);
-  $name = $n;
-  $id = $Id;
-  if ($stmt->execute()===TRUE) {
->>>>>>> origin/master
+  $stmt->bind_param("si",$n,$id);
+  $n = $name;
+  $id = $CafeteriaId;
+  //echo $stmt->execute();
+  if ($stmt->execute()===TRUE){
     echo "Category Added successfully";
   }
   else {
