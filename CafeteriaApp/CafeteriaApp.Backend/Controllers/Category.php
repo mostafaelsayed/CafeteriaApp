@@ -1,7 +1,7 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
 
-function getByCafeteriaId($id) {
+function getByCafeteriaId($conn,$id) {
   
   $sql = "select * from category where CafeteriaId = $id";
   if ($conn->query($sql)) {
@@ -15,9 +15,9 @@ function getByCafeteriaId($id) {
   }
 }
 
-<<<<<<< HEAD
 
-function addCategory($name,$CafetriaId) {
+
+function addCategory($conn,$name,$CafetriaId) {
   $sql = "insert into category (Name,CafeteriaId) values ('$name',$CafetriaId)"; // string should be quoted like that (single quotes)
   if ($conn->query($sql)===TRUE) {
 =======
@@ -43,7 +43,7 @@ function addCategory($n,$Id) {
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
   if ($_GET["Id"] != null) {
-    getByCafeteriaId($_GET["Id"]);
+    getByCafeteriaId($conn,$_GET["Id"]);
   }
   else {
     echo "Error occured while returning cafeterias";
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST"){
     //decode the json data
     $data = json_decode(file_get_contents("php://input"));
     if (isset($data->action) && $data->action == "addCategory" && $data->CafeteriaId != null && $data->Name != null){
-        addCategory($data->Name,$data->CafeteriaId);
+        addCategory($conn,$data->Name,$data->CafeteriaId);
       }
       else{
         echo "error occured while creating category";

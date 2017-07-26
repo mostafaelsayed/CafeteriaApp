@@ -1,7 +1,7 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
 
-function getCafeterias() {
+function getCafeterias($conn) {
   
   $sql = "select * from cafeteria";
   if ($conn->query($sql)) {
@@ -16,7 +16,7 @@ function getCafeterias() {
 
 }
 
-function addCafeteria($n) {
+function addCafeteria($conn,$n) {
   $sql = "insert into cafeteria (Name) values (?)";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("s",$name);
@@ -30,9 +30,7 @@ function addCafeteria($n) {
   }
 }
 
-function editCafeteria($n,$Id) {
-  $connection = new Connection();
-  $conn = $connection->check_connection();
+function editCafeteria($conn,$n,$Id) {
   $sql = "update cafeteria set Name = (?) where Id = (?)";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("si",$name,$id);
@@ -49,7 +47,7 @@ function editCafeteria($n,$Id) {
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
   if (isset($_GET["action"]) && $_GET["action"]=="getCafeterias"){
-    getCafeterias();
+    getCafeterias($conn);
   }
   else {
     echo "Error occured while returning cafeterias";
@@ -61,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST"){
     $data = json_decode(file_get_contents("php://input"));
     if (isset($data->action) && $data->action == "addcafeteria"){
       if ($data->Name != null){
-        addCafeteria($data->Name);
+        addCafeteria($conn,$data->Name);
       }
       else{
         echo "name is required";
@@ -75,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD']=="PUT"){
     //echo $data;
       if ($data->Name != null && $data->Id != null) {
         //if ($data->action == "addcafeteria"){
-        editCafeteria($data->Name,$data->Id);
+        editCafeteria($conn,$data->Name,$data->Id);
       }
       else{
         echo "name is required";

@@ -36,11 +36,11 @@ function alter_cafeteria_table($con,$sql) {
 
 if (property_exists('Cafeteria','createTable')) {
   // sql to create table
-  create_cafeteria_table($conn,$cafeteria->createTable);
+  create_cafeteria_table($conn,$cafeteria->$sql1);
 }
 else if (property_exists('Cafeteria','deleteTable')){
 $conn->query("set foreign_key_checks=0");
-delete_cafeteria_table($conn,$cafeteria->deleteTable);
+delete_cafeteria_table($conn,$cafeteria->$sql2);
 }
 else if (property_exists('Cafeteria','alterCafeteriaTable')) {
   $conn->query("set foreign_key_checks=0");
