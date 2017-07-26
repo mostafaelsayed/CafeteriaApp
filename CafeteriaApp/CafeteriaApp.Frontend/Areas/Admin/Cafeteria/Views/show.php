@@ -56,7 +56,7 @@ include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
             <div class="panel-heading">
                 Manage Your categories
                 <div>
-                    <a  style="float: right;margin-top: -23px;" title="Add Category" id="creatNewCategory" ng-href='/CafeteriaApp.Frontend/Areas/Admin/Category/Views/create.php'
+                    <a  style="float: right;margin-top: -23px;" title="Add Category" id="creatNewCategory" ng-click="gotocreatepage()"
                        class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a>
                 </div>
             </div>
