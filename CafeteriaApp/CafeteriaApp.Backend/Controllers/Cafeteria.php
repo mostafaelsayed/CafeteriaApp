@@ -91,9 +91,6 @@ if ($_SERVER['REQUEST_METHOD']=="PUT"){
 
 if ($_SERVER['REQUEST_METHOD']=="DELETE") {
   $cafeteriaIdToDelete = $_GET["cafeteriaid"];
-  //$cafeteriaToDelete = json_decode(file_get_contents("php://input"),true);
-    //$cafeteriaIdToDelete = $cafeteriaToDelete['id'];
-    //echo $cafeteriaIdToDelete;
       if ($cafeteriaIdToDelete != null) {
         deleteCafeteria($conn,$cafeteriaIdToDelete);
       }

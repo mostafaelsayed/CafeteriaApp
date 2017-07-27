@@ -66,8 +66,8 @@ $("#mymodal").click(function(event){
                               <a id="myButton" ng-click="goToEditCafeteriaPage(c.Id)" class="btn btn-success">Edit</a>
 
                                 <button href ng-click="deleteCafeteria(c.Id)" class="btn btn-danger">Delete</button>
-                                <p>{{message}}</p>
-                            </td>
+<!--                                 <p>{{message}}</p>
+ -->                            </td>
                         </tr>
 
                     </tbody>

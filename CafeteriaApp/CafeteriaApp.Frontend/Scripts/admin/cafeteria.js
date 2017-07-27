@@ -100,9 +100,9 @@ app.controller('getcafeterias', function ($scope,$http,$location,ModalService) {
       
     $scope.show();
      $scope.delete = function(){ 
-      var cafeteria = {
-        id: cafeteriaid
-      };
+      // var cafeteria = {
+      //   id: cafeteriaid
+      // };
      $http.delete('/CafeteriaApp.Backend/Controllers/Cafeteria.php?cafeteriaid='+cafeteriaid)
      .then(function(response){
       console.log(response);
