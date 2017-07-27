@@ -34,19 +34,16 @@ function alter_cafeteria_table($con,$sql) {
 
 
 
-if (property_exists('Cafeteria','createTable')) {
+$r = $conn->query("SHOW TABLES LIKE 'Cafeteria'");
+if ($r && $r->num_rows != 0) {
+  // sql to drop table
+  //$conn->query("set foreign_key_checks=0");
+  delete_cafeteria_table($conn,$cafeteria->drop);
+}
+else {
   // sql to create table
-  create_cafeteria_table($conn,$cafeteria->$sql1);
+  create_cafeteria_table($conn,$cafeteria->create);
 }
-else if (property_exists('Cafeteria','deleteTable')){
-$conn->query("set foreign_key_checks=0");
-delete_cafeteria_table($conn,$cafeteria->$sql2);
-}
-else if (property_exists('Cafeteria','alterCafeteriaTable')) {
-  $conn->query("set foreign_key_checks=0");
-  alter_cafeteria_table($conn,$cafeteria->alterCafeteriaTable);
-  alter_cafeteria_table($conn,$cafeteria->alterCategoryTable);
 
-}
 $conn->close();
 ?>

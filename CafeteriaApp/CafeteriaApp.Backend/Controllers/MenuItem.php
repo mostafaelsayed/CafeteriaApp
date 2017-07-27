@@ -1,7 +1,7 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
 
-function getByMenuItemId($conn , $id) {
+function getMenuItemByCategoryId($conn , $id) {
   
   $sql = "select * from MenuItem where CategoryId = $id";
   if ($conn->query($sql)) {
@@ -31,10 +31,10 @@ function addMenuItem($conn,$name,$Image,$Price,$Description,$CategoryId) {
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
   if ($_GET["Id"] != null) {
-    getByMenuItemId($conn,$_GET["Id"]);
+    getMenuItemByCategoryId($conn,$_GET["Id"]);
   }
   else {
-    echo "Error occured while returning cafeterias";
+    echo "Error occured while returning MenuItems";
   }
 }
 

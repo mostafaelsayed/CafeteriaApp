@@ -60,6 +60,7 @@ app.controller('getcafeterias', function ($scope,$http,$location) {
         $scope.cafeterias = response.data;
         console.log(response);
     });
+    
     $scope.editCafeteria = function(cafeteriaid){
       //$location.path('/show.php/'+cafeteriaid)
 

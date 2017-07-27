@@ -2,7 +2,7 @@
 include 'CafeteriaApp.Backend\connection.php';
 include 'CafeteriaApp.Backend\Models\MenuItem.php';
 
-$menuItem = new menuItem();
+$menuItem = new MenuItem();
 
 function create_menuItem_table($conn,$sql)
 {
@@ -28,11 +28,11 @@ $r = $conn->query("SHOW TABLES LIKE 'MenuItem'");
 if ($r && $r->num_rows != 0) {
   // sql to drop table
   //$conn->query("set foreign_key_checks=0");
-  delete_menuItem_table($conn,$menuItem->sql2);
+  delete_menuItem_table($conn,$menuItem->drop);
 }
 else {
   // sql to create table
-  create_menuItem_table($conn,$menuItem->sql1);
+  create_menuItem_table($conn,$menuItem->create);
 }
 
 

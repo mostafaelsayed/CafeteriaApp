@@ -1,7 +1,7 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
 
-function getByCafeteriaId($conn,$id) {
+function getCategoryByCafeteriaId($conn,$id) {
   
   $sql = "select * from category where CafeteriaId = $id";
   if ($conn->query($sql)) {
@@ -17,10 +17,6 @@ function getByCafeteriaId($conn,$id) {
 
 
 
-function addCategory($conn,$name,$CafetriaId) {
-  $sql = "insert into category (Name,CafeteriaId) values ('$name',$CafetriaId)"; // string should be quoted like that (single quotes)
-  if ($conn->query($sql)===TRUE) {
-=======
 function addCategory($n,$Id) {
   $connection = new Connection();
   $conn = $connection->check_connection();
@@ -30,7 +26,6 @@ function addCategory($n,$Id) {
   $name = $n;
   $id = $Id;
   if ($stmt->execute()===TRUE) {
->>>>>>> origin/master
     echo "Category Added successfully";
   }
   else {

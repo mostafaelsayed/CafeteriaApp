@@ -1,21 +1,21 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
-include 'CafeteriaApp.Backend\Models\Category.php';
+include 'CafeteriaApp.Backend\Models\Dates.php';
 
-$category = new Category();
+$date = new Dates();
 
-function create_category_table($conn,$sql)
+function create_date_table($conn,$sql)
 {
   if ($conn->query($sql) === TRUE) {
-      echo "Table Category created successfully";
+      echo "Table Dates created successfully";
   } else {
       echo "Error creating table: " . $conn->error;
   }
 }
 
-function delete_category_table($conn,$sql) {
+function delete_date_table($conn,$sql) {
   if ($conn->query($sql) === TRUE) {
-      echo "Table Category deleted successfully";
+      echo "Table Dates deleted successfully";
   } else {
       echo "Error deleting table: " . $conn->error;
   }
@@ -24,15 +24,15 @@ function delete_category_table($conn,$sql) {
 // sql to create table
 // sql to drop table
 // delete_category_table($conn,$category->sql2);
-$r = $conn->query("SHOW TABLES LIKE 'Category'");
+$r = $conn->query("SHOW TABLES LIKE 'Dates'");
 if ($r && $r->num_rows != 0) {
   // sql to drop table
   //$conn->query("set foreign_key_checks=0");
-  delete_category_table($conn,$category->drop);
+  delete_date_table($conn,$date->drop);
 }
 else {
   // sql to create table
-  create_category_table($conn,$category->create);
+  create_date_table($conn,$date->create);
 }
 
 
