@@ -7,7 +7,7 @@ include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
  <!-- <div id="page-wrapper" style="margin-top:0px"> -->
 <div>
     <div>
-        <h1 class="page-header" style="text-align:center;background-color:#8A2BE2;margin-top:50px">Cafeterias</h1>
+        <h1 class="page-header" style="text-align:center;margin-top:70px">Our Cafeterias</h1>
     </div>
 </div>
 
@@ -15,5 +15,10 @@ include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
 
 <div ng-controller="getcafeterias">
 
+<div ng-repeat="c in cafeterias" class="container">
+  <div class="jumbotron">
+  <a ng-href="/CafeteriaApp.Frontend/Areas/Customer/Cafeteria/Views/show.php?id={{c.Id}}"><img ng-src="/CafeteriaApp.Frontend/Scripts/CustomerTheme/images/bbig1.jpg" width="500" height="400" /></a>
+</div>
+</div>
 </div>
 </div>

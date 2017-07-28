@@ -1,50 +1,9 @@
-﻿//function UserViewModel() {
-//    var self = this;
-//    self.users = ko.observableArray();
-
-
-//    self.showError = function (jqXHR) {
-
-//        self.result(jqXHR.status + ': ' + jqXHR.statusText);
-
-//        var response = jqXHR.responseJSON;
-//        if (response) {
-//            if (response.Message) self.errors.push(response.Message);
-//            if (response.ModelState) {
-//                var modelState = response.ModelState;
-//                for (var prop in modelState) {
-//                    if (modelState.hasOwnProperty(prop)) {
-//                        var msgArr = modelState[prop]; // expect array here
-//                        if (msgArr.length) {
-//                            for (var i = 0; i < msgArr.length; ++i) self.errors.push(msgArr[i]);
-//                        }
-//                    }
-//                }
-//            }
-//            if (response.error) self.errors.push(response.error);
-//            if (response.error_description) self.errors.push(response.error_description);
-//        }
-//    }
-
-
-//    self.getAllUsers = function () {
-//        $.ajax({
-//            type: 'Get',
-//            url: '/api/user/Get',
-//            contentType: 'application/json; charset=utf-8'
-//        }).done(function (result) {
-//            self.users(result.users);
-//            console.log(self.users());
-//        }).fail(function () { self.showError() });
-//    }
-//    self.getAllUsers();
-//}
-var app = angular.module('myapp', ['angularModalService','ui.bootstrap']);
+﻿var app = angular.module('myapp', ['angularModalService','ui.bootstrap']);
 
 app.controller('ModalController', function($scope, close) {
 
  $scope.close = function(result) {
-  close(result); // close, but give 500ms for bootstrap to animate
+  close(result);
  };
 
 });
@@ -58,12 +17,10 @@ app.controller('getcafeterias', function ($scope,$http,$location,ModalService) {
         }).then(function(modal) {
             modal.element.modal();
             modal.close.then(function(result)
-
              {
               if (result == "Yes"){
               $scope.delete();
             }
-                //$scope.message = "You said " + result;
             });
         });
     };
@@ -74,7 +31,7 @@ app.controller('getcafeterias', function ($scope,$http,$location,ModalService) {
         console.log(response);
     });
 }
-    
+
     $scope.editCafeteria = function(){
       $scope.cafeteriaid = $location.search().id;
       var data = {
@@ -86,23 +43,16 @@ app.controller('getcafeterias', function ($scope,$http,$location,ModalService) {
   .then(function(response){
     console.log(response);
     window.history.back();
-    //document.location = "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/index.php";
    });
  };
   };
   $scope.getcafeterias();
     $scope.goToEditCafeteriaPage = function(cafeteriaid){
-
-      //$location.path('/show.php/'+cafeteriaid)
-
       window.location.href = "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/edit.php?id="+cafeteriaid;
-      //document.loction = "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show.php/"+cafeteriaid;
     };
     $scope.deleteCafeteria = function(cafeteriaid) {
-
     $scope.show();
-
-     $scope.delete = function(){
+     $scope.delete = function() {
      $http.delete('/CafeteriaApp.Backend/Controllers/Cafeteria.php?cafeteriaid='+cafeteriaid)
      .then(function(response){
       console.log(response);
@@ -112,11 +62,9 @@ app.controller('getcafeterias', function ($scope,$http,$location,ModalService) {
   }
 });
 
-
 // controller for adding cafeteria in the database
 app.controller('addcafeteria',function($scope,$http,$location){
   $scope.Name = "";
-
   $scope.addCafeteria = function () {
     var data = {
       Name: $scope.Name,
@@ -127,11 +75,9 @@ app.controller('addcafeteria',function($scope,$http,$location){
     .then(function(response){
       //First function handles success
       console.log(response);
-      document.location =  "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/index.php";
-      //$location.path("/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/index.php");
+      window.history.back();
     }, function(response) {
         //Second function handles error
-        //console.log(response);
     });
   }
   };

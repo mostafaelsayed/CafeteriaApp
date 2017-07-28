@@ -2,7 +2,7 @@
 include 'CafeteriaApp.Backend\connection.php';
 
 function getCafeterias($conn) {
-  
+
   $sql = "select * from Cafeteria";
   if ($conn->query($sql)) {
       $result = $conn->query($sql);
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
 if ($_SERVER['REQUEST_METHOD']=="POST"){
     //decode the json data
     $data = json_decode(file_get_contents("php://input"));
-    if (isset($data->action) && $data->action == "addCafeteria"){
+    if (isset($data->action) && $data->action == "addcafeteria"){
       if ($data->Name != null){
         addCafeteria($conn,$data->Name);
       }
