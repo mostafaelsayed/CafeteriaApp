@@ -82,7 +82,7 @@ $("#mymodal").click(function(event){
             <div class="panel-heading">
                 Manage Your categories
                 <div>
-                    <a  style="float: right;margin-top: -23px;" title="Add Category" id="creatNewCategory" ng-click="gotocreatepage()"
+                    <a  style="float: right;margin-top: -23px;" title="Add Category" id="creatNewCategory" ng-href="/CafeteriaApp.Frontend/Areas/Admin/Category/Views/create.php?id={{cafeteriaid}}"
                        class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a>
                 </div>
             </div>
@@ -101,8 +101,8 @@ $("#mymodal").click(function(event){
 
                             <td class="center">
                                 <!-- <button type="button" id="myButton" data-bind="attr:{categoryid:Id,  name:Name}" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button> -->
-                                <a id="myButton" ng-click="goToEditCategoryPage(c.Id)" class="btn btn-success">Edit</a>
-                                <button href ng-click="deleteCategory(c.Id)" class="btn btn-danger">Delete</button>
+                                <a id="myButton" ng-href="/CafeteriaApp.Frontend/Areas/Admin/Category/Views/edit.php?id={{c.Id}}" target="_self" class="btn btn-success">Edit</a>
+                                <button ng-click="deleteCategory(c.Id)" class="btn btn-danger">Delete</button>
                              </td>
                         </tr>
 

@@ -7,9 +7,9 @@ var app = angular.module('myapp', ['angularModalService','ui.bootstrap']);
     }]);
 
     app.controller('ModalController', function($scope, close) {
-  
+
  $scope.close = function(result) {
-  close(result); // close, but give 500ms for bootstrap to animate
+  close(result);
  };
 
 });
@@ -29,17 +29,11 @@ app.controller('getByCafeteriaId', function ($scope,$http,$location,ModalService
               if (result == "Yes"){
               $scope.delete();
             }
-                //$scope.message = "You said " + result;
             });
         });
     };
    $scope.cafeteriaid = $location.search().id;
-   //console.log($scope.cafeteriaid);
-   $scope.gotocreatepage = function() {
-     window.location.href = "/CafeteriaApp.Frontend/Areas/Admin/Category/Views/create.php?id="+$scope.cafeteriaid;
-   }
-   //$scope.createurl = "/CafeteriaApp.Frontend/Areas/Admin/Category/Views/create.php?id="+$scope.cafeteriaid;
-   //console.log($scope.cafeteriaid);
+
    $scope.getcategories = function(){
     $http.get('/CafeteriaApp.Backend/Controllers/Category.php?Id='+$scope.cafeteriaid)
     .then(function (response) {
@@ -48,18 +42,11 @@ app.controller('getByCafeteriaId', function ($scope,$http,$location,ModalService
     });
    }
     $scope.getcategories();
-    $scope.goToEditCategoryPage = function(categoryid) {
-      $scope.categoryid = $location.search().id;
-      window.location.href = "/CafeteriaApp.Frontend/Areas/Admin/Category/Views/edit.php?id="+$scope.categoryid;
-    }
 
      $scope.deleteCategory = function(categoryid){
-      
+
     $scope.show();
-     $scope.delete = function(){ 
-      // var category = {
-      //   id: categoryid
-      // };
+     $scope.delete = function(){
      $http.delete('/CafeteriaApp.Backend/Controllers/Category.php?categoryid='+categoryid)
      .then(function(response){
       console.log(response);
@@ -105,10 +92,8 @@ app.controller('addCategory',function($scope,$http,$location){
       //First function handles success
       document.location =  "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/edit.php?id="+$scope.cafeteriaid;
       console.log(response);
-      //document.location="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show.php";
     }, function(response) {
         //Second function handles error
-        //console.log(response);
     });
   }
   };
@@ -129,9 +114,7 @@ app.controller('addCategory',function($scope,$http,$location){
   .then(function(response){
     console.log(response);
     window.history.back();
-    //document.location = "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/index.php";
    });
  };
   }
   });
-

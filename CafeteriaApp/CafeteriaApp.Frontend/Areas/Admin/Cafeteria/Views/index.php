@@ -63,9 +63,9 @@ $("#mymodal").click(function(event){
                             <td ng-bind="c.Name"></td>
 
                             <td class="center">
-                              <a id="myButton" ng-click="goToEditCafeteriaPage(c.Id)" class="btn btn-success">Edit</a>
+                              <a id="myButton" ng-href="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/edit.php?id={{c.Id}}" class="btn btn-success">Edit</a>
 
-                                <button href ng-click="deleteCafeteria(c.Id)" class="btn btn-danger">Delete</button>
+                                <button ng-click="deleteCafeteria(c.Id)" class="btn btn-danger">Delete</button>
 <!--                                 <p>{{message}}</p>
  -->                            </td>
                         </tr>
@@ -88,7 +88,7 @@ $("#mymodal").click(function(event){
 <!-- <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
-       
+
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>

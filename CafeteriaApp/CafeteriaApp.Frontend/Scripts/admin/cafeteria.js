@@ -47,9 +47,7 @@ app.controller('getcafeterias', function ($scope,$http,$location,ModalService) {
  };
   };
   $scope.getcafeterias();
-    $scope.goToEditCafeteriaPage = function(cafeteriaid){
-      window.location.href = "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/edit.php?id="+cafeteriaid;
-    };
+  
     $scope.deleteCafeteria = function(cafeteriaid) {
     $scope.show();
      $scope.delete = function() {
