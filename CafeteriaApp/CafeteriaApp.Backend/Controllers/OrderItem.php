@@ -1,29 +1,29 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
 
-function getUsers($conn) {
+function getOrderItems($conn) {
   
-  $sql = "select * from User";
+  $sql = "select * from OrderItem";
   if ($conn->query($sql)) {
       $result = $conn->query($sql);
-      $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
-      $users = json_encode($users);
+      $orderItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $orderItems = json_encode($orderItems);
       $conn->close();
-      echo $users;
+      echo $orderItems;
   } else {
-      echo "Error retrieving Users: " . $conn->error;
+      echo "Error retrieving OrderItems : " . $conn->error;
   }
 }
 
 
-function addUser($conn,$n) {
-  $sql = "insert into User (Name) values (?)";
+function addOrderItem($conn,$n) {
+  $sql = "insert into OrderItem (Name) values (?)";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("s",$name);
   $name = $n;
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
-    echo "User Added successfully";
+    echo "OrderItem Added successfully";
   }
   else {
     echo "Error: ".$conn->error;
@@ -31,15 +31,15 @@ function addUser($conn,$n) {
 }
 
 
-function editUser($conn,$n,$Id) {
-  $sql = "update User set Name = (?) where Id = (?)";
+function editOrderItem($conn,$n,$Id) {
+  $sql = "update OrderItem set Name = (?) where Id = (?)";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("si",$name,$id);
   $name = $n;
   $id = $Id;
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
-    echo "User updated successfully";
+    echo "OrderItem updated successfully";
   }
   else {
     echo "Error: ".$conn->error;
@@ -47,20 +47,20 @@ function editUser($conn,$n,$Id) {
 }
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
-  if (isset($_GET["action"]) && $_GET["action"]=="getUsers"){
-    getUsers($conn);
+  if (isset($_GET["action"]) && $_GET["action"]=="getOrderItems"){
+    getOrderItems($conn);
   }
   else {
-    echo "Error occured while returning Users";
+    echo "Error occured while returning OrderItems";
   }
 }
 
 if ($_SERVER['REQUEST_METHOD']=="POST"){
     //decode the json data
     $data = json_decode(file_get_contents("php://input"));
-    if (isset($data->action) && $data->action == "addUser"){
+    if (isset($data->action) && $data->action == "addOrderItem"){
       if ($data->Name != null){
-        addUser($conn,$data->Name);
+        addOrderItem($conn,$data->Name);
       }
       else{
         echo "name is required";
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD']=="PUT"){
     //echo $data;
       if ($data->Name != null && $data->Id != null) {
         //if ($data->action == "addcafeteria"){
-        editUser($conn,$data->Name,$data->Id);
+        editOrderItem($conn,$data->Name,$data->Id);
       }
       else{
         echo "name is required";

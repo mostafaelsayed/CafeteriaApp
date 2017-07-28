@@ -1,7 +1,7 @@
 <?php
 class Cafeteria {
 public $create = "create table `mydb`.`Cafeteria` (
-Id int(6) unsigned auto_increment primary key,
+Id int auto_increment primary key,
 Name varchar(430) not null,
 Image varchar(50)
 )";
