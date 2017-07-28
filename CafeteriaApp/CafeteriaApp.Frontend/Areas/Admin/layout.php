@@ -7,10 +7,10 @@
      <script src="/CafeteriaApp.Frontend/Scripts/libs/angular.min.js"></script>
     <script src="/CafeteriaApp.Frontend/Scripts/libs/bootstrap.min.js"></script>
     <script src="/CafeteriaApp.Frontend/Scripts/libs/bootstrap-gh-pages/ui-bootstrap-2.5.0.js"></script>
-   
+
 <script src="/CafeteriaApp.Frontend/Scripts/libs/bootstrap-gh-pages/ui-bootstrap-tpls-2.5.0.js"></script>
     <!-- <script src="/CafeteriaApp.Frontend/Scripts/libs/angular-route.js"></script> -->
-    
+
     <script src="/CafeteriaApp.Frontend/Scripts/libs/angular-modal-service.js"></script>
     <!-- <script src="/CafeteriaApp.Frontend/Scripts/libs/knockout-3.4.2.js"></script> -->
 <!-- <script src="/CafeteriaApp.Frontend/Scripts/alertify/alertify.min.js"></script> -->

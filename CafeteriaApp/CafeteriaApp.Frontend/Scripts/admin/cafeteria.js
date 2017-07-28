@@ -41,23 +41,8 @@
 //}
 var app = angular.module('myapp', ['angularModalService','ui.bootstrap']);
 
-
-
-// app.config(function ($routeProvider) {
-//             $routeProvider.when('/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show.php/:id', {
-//                 //templateUrl: '/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show.php',
-//                 //controller: 'loginController'
-//             //}).when('/student/:username', {
-//               //  templateUrl: '/student.html',
-//                 //controller: 'studentController'
-//             }).otherwise({
-//                 //redirectTo: "/"
-//             });
-//           });
-
-
 app.controller('ModalController', function($scope, close) {
-  
+
  $scope.close = function(result) {
   close(result); // close, but give 500ms for bootstrap to animate
  };
@@ -101,13 +86,11 @@ app.controller('getcafeterias', function ($scope,$http,$location,ModalService) {
       window.location.href = "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/edit.php?id="+cafeteriaid;
       //document.loction = "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show.php/"+cafeteriaid;
     };
-    $scope.deleteCafeteria = function(cafeteriaid){
-      
+    $scope.deleteCafeteria = function(cafeteriaid) {
+
     $scope.show();
-     $scope.delete = function(){ 
-      // var cafeteria = {
-      //   id: cafeteriaid
-      // };
+
+     $scope.delete = function(){
      $http.delete('/CafeteriaApp.Backend/Controllers/Cafeteria.php?cafeteriaid='+cafeteriaid)
      .then(function(response){
       console.log(response);
