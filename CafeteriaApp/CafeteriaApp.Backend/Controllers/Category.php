@@ -1,7 +1,7 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
 
-function getCategoryByCafeteriaId($conn,$id) {
+function getByCafeteriaId($conn,$id) {
   
   $sql = "select * from category where CafeteriaId = $id";
   if ($conn->query($sql)) {
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
     getByCafeteriaId($conn,$_GET["Id"]);
   }
   else {
-    echo "Error occured while returning cafeterias";
+    echo "Error occured while returning categories";
   }
 }
 

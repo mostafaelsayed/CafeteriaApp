@@ -73,14 +73,26 @@ app.controller('getcafeterias', function ($scope,$http,$location,ModalService) {
         $scope.cafeterias = response.data;
         console.log(response);
     });
-<<<<<<< HEAD
+}
     
-    $scope.editCafeteria = function(cafeteriaid){
-=======
+    $scope.editCafeteria = function(){
+      $scope.cafeteriaid = $location.search().id;
+      var data = {
+      Name: $scope.Name,
+      Id: $scope.cafeteriaid
+    };
+    if ($scope.Name != "") {
+  $http.put('/CafeteriaApp.Backend/Controllers/Cafeteria.php',data)
+  .then(function(response){
+    console.log(response);
+    window.history.back();
+    //document.location = "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/index.php";
+   });
+ };
   };
   $scope.getcafeterias();
     $scope.goToEditCafeteriaPage = function(cafeteriaid){
->>>>>>> origin/master
+
       //$location.path('/show.php/'+cafeteriaid)
 
       window.location.href = "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/edit.php?id="+cafeteriaid;
