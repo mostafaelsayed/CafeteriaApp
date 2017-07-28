@@ -39,7 +39,9 @@
 //    }
 //    self.getAllUsers();
 //}
-var app = angular.module('myapp', []);
+var app = angular.module('myapp', ['angularModalService','ui.bootstrap']);
+
+
 
 // app.config(function ($routeProvider) {
 //             $routeProvider.when('/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show.php/:id', {
@@ -53,20 +55,66 @@ var app = angular.module('myapp', []);
 //             });
 //           });
 
+
+app.controller('ModalController', function($scope, close) {
+  
+ $scope.close = function(result) {
+  close(result); // close, but give 500ms for bootstrap to animate
+ };
+
+});
+
 // controller for getting cafeterias from database
-app.controller('getcafeterias', function ($scope,$http,$location) {
-    $http.get('/CafeteriaApp.Backend/Controllers/Cafeteria.php?action=getCafeterias')
+app.controller('getcafeterias', function ($scope,$http,$location,ModalService) {
+   $scope.show = function() {
+        ModalService.showModal({
+            templateUrl: 'modal.html',
+            controller: "ModalController"
+        }).then(function(modal) {
+            modal.element.modal();
+            modal.close.then(function(result)
+
+             {
+              if (result == "Yes"){
+              $scope.delete();
+            }
+                //$scope.message = "You said " + result;
+            });
+        });
+    };
+    $scope.getcafeterias = function() {
+      $http.get('/CafeteriaApp.Backend/Controllers/Cafeteria.php?action=getCafeterias')
     .then(function (response) {
         $scope.cafeterias = response.data;
         console.log(response);
     });
+<<<<<<< HEAD
     
     $scope.editCafeteria = function(cafeteriaid){
+=======
+  };
+  $scope.getcafeterias();
+    $scope.goToEditCafeteriaPage = function(cafeteriaid){
+>>>>>>> origin/master
       //$location.path('/show.php/'+cafeteriaid)
 
       window.location.href = "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/edit.php?id="+cafeteriaid;
       //document.loction = "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show.php/"+cafeteriaid;
     };
+    $scope.deleteCafeteria = function(cafeteriaid){
+      
+    $scope.show();
+     $scope.delete = function(){ 
+      // var cafeteria = {
+      //   id: cafeteriaid
+      // };
+     $http.delete('/CafeteriaApp.Backend/Controllers/Cafeteria.php?cafeteriaid='+cafeteriaid)
+     .then(function(response){
+      console.log(response);
+      $scope.getcafeterias();
+     });
+    };
+  }
 });
 
 

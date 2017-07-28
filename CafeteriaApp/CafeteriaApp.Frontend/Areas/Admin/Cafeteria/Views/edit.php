@@ -32,6 +32,7 @@ include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
                             <div class="form-group" style="float: right">
                                 <button ng-click="editCafeteria()" class="btn btn-primary">Save</button>
 
+
                             </div>
                         </form>
                     </div>
@@ -52,6 +53,30 @@ include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
 </div>
 
 <div class="row" ng-controller="getByCafeteriaId">
+<!-- <script>
+$("#mymodal").click(function(event){
+    $(event.target).modal("hide");
+});
+</script> -->
+ <script type="text/ng-template" id="modal.html">
+         <div class="modal fade" id="mymodal" data-backdrop="false" style="background: rgba(0, 0, 0, 0.5)">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Are You Sure You Want To Delete This Cafeteria?</h4>
+              </div>
+              <div class="modal-body">
+                <p>It's your call...</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" ng-click="close('No')" class="btn btn-default" data-dismiss="modal">No</button>
+                <button type="button" ng-click="close('Yes')" class="btn btn-primary" data-dismiss="modal">Yes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+     </script>
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -76,7 +101,8 @@ include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
 
                             <td class="center">
                                 <!-- <button type="button" id="myButton" data-bind="attr:{categoryid:Id,  name:Name}" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button> -->
-                                <!-- <a id="myButton" data-bind="attr:{href:'/admin/category/edit/'+Id}" class="btn btn-success">Edit</a> -->
+                                <a id="myButton" ng-click="goToEditCategoryPage(c.Id)" class="btn btn-success">Edit</a>
+                                <button href ng-click="deleteCategory(c.Id)" class="btn btn-danger">Delete</button>
                              </td>
                         </tr>
 
