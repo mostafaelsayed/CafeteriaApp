@@ -17,15 +17,21 @@ function getCategoryByCafeteriaId($conn,$id) {
 
 
 
+<<<<<<< HEAD
 function addCategory($n,$Id) {
   $connection = new Connection();
   $conn = $connection->check_connection();
+=======
+function addCategory($conn,$name,$CafeteriaId) {
+  //$sql = "insert into category (Name,CafeteriaId) values ('$name',$CafetriaId)"; // string should be quoted like that (
+>>>>>>> origin/master
   $sql = "insert into category (Name,CafeteriaId) values (?,?)"; // string should be quoted like that (single quotes)
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("si",$name,$id);
-  $name = $n;
-  $id = $Id;
-  if ($stmt->execute()===TRUE) {
+  $stmt->bind_param("si",$n,$id);
+  $n = $name;
+  $id = $CafeteriaId;
+  //echo $stmt->execute();
+  if ($stmt->execute()===TRUE){
     echo "Category Added successfully";
   }
   else {
@@ -34,6 +40,35 @@ function addCategory($n,$Id) {
   $conn->close();
 }
 
+function editCategory($conn,$n,$Id) {
+  $sql = "update category set Name = (?) where Id = (?)";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("si",$name,$id);
+  $name = $n;
+  $id = $Id;
+  //$conn->query($sql);
+  if ($stmt->execute()===TRUE) {
+<<<<<<< HEAD
+    echo "Category Added successfully";
+=======
+    echo "Category updated successfully";
+>>>>>>> origin/master
+  }
+  else {
+    echo "Error: ".$conn->error;
+  }
+}
+
+function deleteCategory($conn,$Id) {
+  $conn->query("set foreign_key_checks=0");
+  $sql = "delete from category where Id = ".$Id;
+  if ($conn->query($sql)===TRUE) {
+    echo "Category deleted successfully";
+  }
+  else {
+    echo "Error: ".$conn->error;
+  }
+}
 
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
@@ -55,4 +90,26 @@ if ($_SERVER['REQUEST_METHOD']=="POST"){
         echo "error occured while creating category";
       }
 }
+
+if ($_SERVER['REQUEST_METHOD']=="PUT"){
+    //decode the json data
+    $data = json_decode(file_get_contents("php://input"));
+      if ($data->Name != null && $data->Id != null) {
+        editCategory($conn,$data->Name,$data->Id);
+      }
+      else{
+        echo "name is required";
+      }
+}
+
+if ($_SERVER['REQUEST_METHOD']=="DELETE") {
+  $categoryIdToDelete = $_GET["categoryid"];
+      if ($categoryIdToDelete != null) {
+        deleteCategory($conn,$categoryIdToDelete);
+      }
+      else{
+        //echo "No Id is provided";
+      }
+}
+
 ?>
