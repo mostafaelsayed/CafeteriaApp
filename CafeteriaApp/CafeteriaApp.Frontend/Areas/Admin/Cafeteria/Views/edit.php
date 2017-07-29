@@ -82,7 +82,7 @@ $("#mymodal").click(function(event){
             <div class="panel-heading">
                 Manage Your categories
                 <div>
-                    <a  style="float: right;margin-top: -23px;" title="Add Category" id="creatNewCategory" ng-href="/CafeteriaApp.Frontend/Areas/Admin/Category/Views/create.php?id={{cafeteriaid}}"
+                    <a  style="float: right;margin-top: -23px;" title="Add Category" id="creatNewCategory" target="_self" ng-href="/CafeteriaApp.Frontend/Areas/Admin/Category/Views/create.php?id={{cafeteriaid}}"
                        class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a>
                 </div>
             </div>

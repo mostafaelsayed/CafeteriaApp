@@ -10,8 +10,7 @@ include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
         <h1 class="page-header">Cafeterias</h1>
     </div>
 </div>
- <!--  -->
-
+ 
 <div class="row" ng-app="myapp">
 
 <div ng-controller="getcafeterias">

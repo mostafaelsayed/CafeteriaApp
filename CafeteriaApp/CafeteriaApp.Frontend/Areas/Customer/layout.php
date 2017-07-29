@@ -3,6 +3,13 @@
 <head>
 <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/CafeteriaApp.Frontend/fonts/glyphicons-halflings-regular.eot" rel="font-woff">
+    <link href="/CafeteriaApp.Frontend/fonts/glyphicons-halflings-regular.svg" rel="font-woff">
+    <link href="/CafeteriaApp.Frontend/fonts/glyphicons-halflings-regular.ttf" rel="x-font-ttf">
+    <link href="/CafeteriaApp.Frontend/fonts/glyphicons-halflings-regular.woff" rel="font-woff">
+    <link href="/CafeteriaApp.Frontend/fonts/glyphicons-halflings-regular.woff2" rel="font-woff">
+    <link href="/CafeteriaApp.Frontend/Content/font face.css" rel="stylesheet">
+
     <script src="/CafeteriaApp.Frontend/Scripts/libs/jquery-3.2.1.js"></script>
      <script src="/CafeteriaApp.Frontend/Scripts/libs/angular.min.js"></script>
     <script src="/CafeteriaApp.Frontend/Scripts/libs/bootstrap.min.js"></script>
@@ -16,6 +23,9 @@
 <!-- <script src="/CafeteriaApp.Frontend/Scripts/alertify/alertify.min.js"></script> -->
 <!-- Bootstrap Core CSS -->
  <link href="/CafeteriaApp.Frontend/Content/bootstrap.min.css" rel="stylesheet">
+
+
+
  <!-- MetisMenu CSS -->
  <link href="/CafeteriaApp.Frontend/Scripts/adminTheme/metisMenu/metisMenu.min.css" rel="stylesheet">
  <!-- DataTables CSS -->
