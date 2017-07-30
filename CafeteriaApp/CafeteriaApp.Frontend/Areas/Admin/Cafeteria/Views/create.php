@@ -7,7 +7,7 @@ include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Create Cafeteria</title>
+    <title>Adding Cafeteria</title>
 
     <script src="/CafeteriaApp.Frontend/Scripts/admin/cafeteria.js"></script>
 </head>

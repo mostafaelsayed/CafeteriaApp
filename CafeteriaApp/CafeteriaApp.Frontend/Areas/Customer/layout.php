@@ -55,7 +55,7 @@
  <body>
 <div id="wrapper">
         <!-- Navigation -->
-      <nav class="navbar navbar-default navbar-fixed-top"  style="background-color:#8A2BE2">
+      <nav class="navbar navbar-default navbar-fixed-top"  style="background-color:#8B0000">
         <div class="container-fluid">
           <div class="navbar-header">
             <a style="color:black" class="navbar-brand" href="/CafeteriaApp.Frontend/Areas/Customer/Cafeteria/Views/index.php">Cafeterias Page</a>

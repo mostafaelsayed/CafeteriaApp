@@ -1,4 +1,4 @@
-<title>Categories</title>
+<title>Adding Category</title>
 <?php
 include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
  ?>

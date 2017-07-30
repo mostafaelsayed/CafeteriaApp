@@ -1,4 +1,4 @@
-<title>Categories</title>
+<title>Managing Category</title>
 <?php
 include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
  ?>
@@ -103,7 +103,7 @@ $("#mymodal").click(function(event){
                             <td class="center">
                                 <!-- <button type="button" id="myButton" data-bind="attr:{categoryid:Id,  name:Name}" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button> -->
                                 <a id="myButton" ng-href="/CafeteriaApp.Frontend/Areas/Admin/MenuItem/Views/edit.php?id={{m.Id}}" target="_self" class="btn btn-success">Edit</a>
-                                <button ng-click="deleteMenuItem(c.Id)" class="btn btn-danger">Delete</button>
+                                <button ng-click="deleteMenuItem(m.Id)" class="btn btn-danger">Delete</button>
                              </td>
                         </tr>
 

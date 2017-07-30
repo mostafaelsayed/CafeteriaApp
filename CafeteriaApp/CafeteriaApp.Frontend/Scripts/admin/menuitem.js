@@ -58,7 +58,7 @@ app.controller('getByCategoryId', function ($scope,$http,$location,ModalService)
 
 app.controller('editMenuItem',function($scope,$http,$location){
   $scope.Name = "";
-  $scope.categoryid = $location.search().id;
+  $scope.menuItemId = $location.search().id;
 
 
   $scope.editMenuItem = function() {
@@ -66,7 +66,7 @@ app.controller('editMenuItem',function($scope,$http,$location){
       Name: $scope.Name,
       Price: $scope.Price,
       Description: $scope.Description,
-      Id: $scope.categoryid
+      Id: $scope.menuItemId
     };
     if ($scope.Name != "") {
   $http.put('/CafeteriaApp.Backend/Controllers/MenuItem.php',data)

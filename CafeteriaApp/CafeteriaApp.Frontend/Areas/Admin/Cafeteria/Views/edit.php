@@ -1,6 +1,6 @@
 
 <!-- <ng-view></ng-view> -->
-<title>Categories</title>
+<title>Managing Cafeteria</title>
 <?php
 include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
  ?>
