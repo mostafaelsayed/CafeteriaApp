@@ -1,6 +1,6 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
-require_once( 'CafeteriaApp.Backend\Customer.php');
+require_once( 'CafeteriaApp.Backend/Customer.php');
 
 function getUsers($conn) {
   
@@ -175,7 +175,7 @@ if(  $result[0] > 0 )
 }
 
   
-// need to know if he's entering the same email or not as the condition will differ , validation , times , login ,logout
+// need to know if he's entering the same email or not as the condition will differ
 
 
 function checkExistingEmail($conn,$email,$register_edit) // problem if he wants to edit his info cause' of his email
