@@ -16,6 +16,27 @@ function getCustomers($conn) {
   }
 }
 
+function getCustomerById($conn ,$id) {
+   if( !isset($id)) 
+ {
+ echo "Error: Customer Id is not set";
+  return;
+  }
+  else
+  {
+  $sql = "select * from Customer where Id =".$id;
+  if ($conn->query($sql)) {
+      $result = $conn->query($sql);
+      $customers = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $customers = json_encode($customers);
+      $conn->close();
+      return $customers;
+  } else {
+      echo "Error retrieving customers: " . $conn->error;
+  }
+}
+}
+
 function getCustomerByUserId($conn,$userId) {
   if( !isset($userId)) 
  {
@@ -91,40 +112,6 @@ elseif (!isset($userId)) {
 
 // deleting a customer is on cascading
 
-if ($_SERVER['REQUEST_METHOD']=="GET") {
-  if (isset($_GET["action"]) && $_GET["action"]=="getCustomers"){
-    getCustomer($conn);
-  }
-  else {
-    echo "Error occured while returning Customer";
-  }
-}
 
-if ($_SERVER['REQUEST_METHOD']=="POST"){
-    //decode the json data
-    $data = json_decode(file_get_contents("php://input"));
-    if (isset($data->action) && $data->action == "addCustomer"){
-      if ($data->Name != null){
-        addCustomer($conn,$data->Name);
-      }
-      else{
-        echo "name is required";
-      }
-  }
-}
-
-if ($_SERVER['REQUEST_METHOD']=="PUT"){
-    //decode the json data
-    $data = json_decode(file_get_contents("php://input"));
-    //echo $data;
-      if ($data->Name != null && $data->Id != null) {
-        //if ($data->action == "addcafeteria"){
-        editCustomer($conn,$data->Name,$data->Id);
-      }
-      else{
-        echo "name is required";
-      }
-  //}
-}
 
  ?>

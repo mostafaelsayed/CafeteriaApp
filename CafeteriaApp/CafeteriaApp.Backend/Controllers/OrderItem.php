@@ -1,5 +1,8 @@
 <?php
+require_once('CafeteriaApp.Backend/session.php');
 include 'CafeteriaApp.Backend\connection.php';
+require_once('CafeteriaApp.Backend/Controllers/Order.php');
+
 
 function getOrderItemsByOrderId($conn,$id) {
     if( !isset($id)) 
@@ -21,16 +24,60 @@ function getOrderItemsByOrderId($conn,$id) {
   }
 }}
 
+function getOrderItemById($conn,$id) {
+    if( !isset($id)) 
+ {
+ echo "Error: OrderItem Id is not set";
+  return;
+  }
+  else
+  {
+  $sql = "select * from OrderItem where Id=".$id;
+  if ($conn->query($sql)) {
+      $result = $conn->query($sql);
+      $orderItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $orderItems = json_encode($orderItems);
+      $conn->close();
+      return $orderItems;
+  } else {
+      echo "Error retrieving OrderItem : " . $conn->error;
+  }
+}}
+
+
+ function editOrderItemQuantity($conn,$quantity,$id) {
+  if( !isset($quantity)) 
+ {
+ echo "Error: OrderItem quantity is not set";
+  return;
+  }
+  elseif(!isset($id))
+  {
+    echo "Error: OrderItem id is not set";
+  return;
+  }
+  else{
+  $sql = "update OrderItem set Quantity = (?) where Id = (?)";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("ii",$Quantity,$Id);
+  $Quantity = $quantity;
+  $Id = $id;
+  //$conn->query($sql);
+  if ($stmt->execute()===TRUE) {
+    echo "OrderItem updated successfully";
+  }
+  else {
+    echo "Error: ".$conn->error;
+  }
+}}
+
+
+
 
 
 function addOrderItem($conn,$orderId,$menuItemId,$quantity,$totalPrice) {
 
-   if( !isset($orderId)) 
- {
- echo "Error: OrderItem orderId is not set";
-  return;
-  }
-elseif (!isset($menuItemId)) {
+  if (!isset($menuItemId)) {
  echo "Error: OrderItem menuItemId is not set";
   return;
   }
@@ -38,9 +85,22 @@ elseif (!isset($menuItemId)) {
  echo "Error: OrderItem quantity is not set";
   return;
   }
-  elseif (!isset($totalPrice)) {
- echo "Error: OrderItem totalPrice is not set";
+  elseif (!isset($totalPrice)) { // **********************************************************
+   echo "Error: OrderItem totalPrice is not set";
   return;
+}
+
+elseif (!isset($orderId)) { // **********************************************************
+
+  $order = json_decode( getOpenOrderByCustomerId( $conn, $_SESSION["CustomerId"]), true );
+  
+  if(isset($order)){
+  $orderId = $order["Id"];}
+  else{
+
+    return false; // **********************************************************
+ }
+
   }
   else {
   $sql = "insert into OrderItem (OrderId,MenuItemId,Quantity,TotalPrice) values (?,?,?)";
@@ -79,40 +139,6 @@ function deleteOrderItem($conn,$id) {
 }
 
 
-if ($_SERVER['REQUEST_METHOD']=="GET") {
-  if (isset($_GET["action"]) && $_GET["action"]=="getOrderItems"){
-    getOrderItems($conn);
-  }
-  else {
-    echo "Error occured while returning OrderItems";
-  }
-}
 
-if ($_SERVER['REQUEST_METHOD']=="POST"){
-    //decode the json data
-    $data = json_decode(file_get_contents("php://input"));
-    if (isset($data->action) && $data->action == "addOrderItem"){
-      if ($data->Name != null){
-        addOrderItem($conn,$data->Name);
-      }
-      else{
-        echo "name is required";
-      }
-  }
-}
-
-if ($_SERVER['REQUEST_METHOD']=="PUT"){
-    //decode the json data
-    $data = json_decode(file_get_contents("php://input"));
-    //echo $data;
-      if ($data->Name != null && $data->Id != null) {
-        //if ($data->action == "addcafeteria"){
-        editOrderItem($conn,$data->Name,$data->Id);
-      }
-      else{
-        echo "name is required";
-      }
-  //}
-}
 
  ?>

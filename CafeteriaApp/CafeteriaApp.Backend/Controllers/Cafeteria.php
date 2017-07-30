@@ -16,6 +16,23 @@ function getCafeterias($conn) {
 
 }
 
+
+function getCafeteriaById($conn ,$id) {
+
+  $sql = "select * from Cafeteria where Id =".$id;
+  if ($conn->query($sql)) {
+      $result = $conn->query($sql);
+      $cafeterias = mysqli_fetch_all($result, MYSQLI_ASSOC); // ??
+      $cafeterias = json_encode($cafeterias); // ??
+      $conn->close();
+      return $cafeterias;
+  } else {
+      echo "Error retrieving Cafeterias : " . $conn->error;
+  }
+
+}
+
+
 function addCafeteria($conn,$name,$image) {
 
 if( !isset($name)) 
@@ -102,48 +119,5 @@ function deleteCafeteria($conn,$id) {
 }
 
 
-
-if ($_SERVER['REQUEST_METHOD']=="GET") {
-  if (isset($_GET["action"]) && $_GET["action"]=="getCafeterias"){
-    getCafeterias($conn);
-  }
-  else {
-    echo "Error occured while returning cafeterias";
-  }
-}
-
-if ($_SERVER['REQUEST_METHOD']=="POST"){
-    //decode the json data
-    $data = json_decode(file_get_contents("php://input"));
-    if (isset($data->action) && $data->action == "addCafeteria"){ // chnage cafetria to uppercase first letter
-      if ($data->Name != null){
-        addCafeteria($conn,$data->Name);
-      }
-      else{
-        echo "name is required";
-      }
-  }
-}
-
-if ($_SERVER['REQUEST_METHOD']=="PUT"){
-    //decode the json data
-    $data = json_decode(file_get_contents("php://input"));
-      if ($data->Name != null && $data->Id != null) {
-        editCafeteria($conn,$data->Name,$data->Id);
-      }
-      else{
-        echo "name is required";
-      }
-}
-
-if ($_SERVER['REQUEST_METHOD']=="DELETE") {
-  $cafeteriaIdToDelete = $_GET["cafeteriaid"];
-      if ($cafeteriaIdToDelete != null) {
-        deleteCafeteria($conn,$cafeteriaIdToDelete);
-      }
-      else{
-        //echo "No Id is provided";
-      }
-}
 
  ?>

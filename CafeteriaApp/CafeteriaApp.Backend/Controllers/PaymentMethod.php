@@ -16,6 +16,25 @@ function getPaymentMethods($conn) {
 
 }
 
+function getPaymentMethodById($conn,$id) {
+    if( !isset($id)) 
+ {
+ echo "Error: PaymentMethod Id is not set";
+  return;
+  }
+  else{
+  $sql = "select * from PaymentMethod where Id=".$id;
+  if ($conn->query($sql)) {
+      $result = $conn->query($sql);
+      $paymentMethods = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $paymentMethods = json_encode($paymentMethods);
+      $conn->close();
+      return $paymentMethods;
+  } else {
+      echo "Error retrieving PaymentMethods : " . $conn->error;
+  }
+}
+}
 
 function addPaymentMethod($conn,$name) {
  if( !isset($name)) 
@@ -82,40 +101,5 @@ function deletePaymentMethod($conn,$id) {
 }
 
 
-if ($_SERVER['REQUEST_METHOD']=="GET") {
-  if (isset($_GET["action"]) && $_GET["action"]=="getPaymentMethods"){
-    getPaymentMethods($conn);
-  }
-  else {
-    echo "Error occured while returning PaymentMethods";
-  }
-}
-
-if ($_SERVER['REQUEST_METHOD']=="POST"){
-    //decode the json data
-    $data = json_decode(file_get_contents("php://input"));
-    if (isset($data->action) && $data->action == "addPaymentMethod"){
-      if ($data->Name != null){
-        addPaymentMethod($conn,$data->Name);
-      }
-      else{
-        echo "name is required";
-      }
-  }
-}
-
-if ($_SERVER['REQUEST_METHOD']=="PUT"){
-    //decode the json data
-    $data = json_decode(file_get_contents("php://input"));
-    //echo $data;
-      if ($data->Name != null && $data->Id != null) {
-        //if ($data->action == "addcafeteria"){
-        editPaymentMethod($conn,$data->Name,$data->Id);
-      }
-      else{
-        echo "name is required";
-      }
-  //}
-}
 
  ?>

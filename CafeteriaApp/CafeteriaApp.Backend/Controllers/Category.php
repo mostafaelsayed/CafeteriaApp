@@ -22,6 +22,27 @@ function getCategoryByCafeteriaId($conn,$id) {
 }
 }
 
+function getCategoryById($conn,$id) {
+  if( !isset($id)) 
+ {
+ echo "Error: Id is not set";
+  return;
+  }
+  else
+  {
+  $sql = "select * from category where Id = ".$id; 
+  if ($conn->query($sql)) {
+      $result = $conn->query($sql);
+      $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $categories = json_encode($categories);
+      $conn->close();
+      return $categories;
+  } else {
+      echo "Error Retrieving Categories: " . $conn->error;
+  }
+}
+}
+
 function addCategory($conn,$name,$image,$CafeteriaId) {
   if( !isset($name)) 
  {

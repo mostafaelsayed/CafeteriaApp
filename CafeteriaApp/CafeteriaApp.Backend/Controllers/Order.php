@@ -2,14 +2,14 @@
 include 'CafeteriaApp.Backend\connection.php';
 
 
-function getOrdersByCustomerId($conn,$id) {
+function getClosedOrdersByCustomerId($conn,$id) {
   if( !isset($id)) 
  {
  echo "Error: Customer Id is not set";
   return;
   }
   else{
-  $sql = "select * from orders where CustomerId = ".$id;
+  $sql = "select * from order where CustomerId = ".$id;
   if ($conn->query($sql)) {
       $result = $conn->query($sql);
       $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -21,6 +21,50 @@ function getOrdersByCustomerId($conn,$id) {
   }
 }}
 
+function getOrderById($conn,$id) {
+  if( !isset($id)) 
+ {
+ echo "Error: Order Id is not set";
+  return;
+  }
+  else{
+  $sql = "select * from order where Id = ".$id;
+  if ($conn->query($sql)) {
+      $result = $conn->query($sql);
+      $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $orders = json_encode($orders);
+      $conn->close();
+      return $orders;
+  } else {
+      echo "Error retrieving order: " . $conn->error;
+  }
+}}
+
+
+
+function getOpenOrderIdByCustomerId($conn,$id) {
+   $openStatusId=1;
+
+    if( !isset($id)) 
+ {
+ echo "Error: Customer Id is not set";
+  return;
+  }
+  else
+  {
+  $sql = "select Id from Order where CustomerId =".$id ."and OrderStatusId = ".$openStatusId ;
+  if ($conn->query($sql)) {
+      $result = $conn->query($sql);
+      $order = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $order = json_encode($order);
+      $conn->close();
+      return $order;
+  } else {
+      echo "Error retrieving Open Order : " . $conn->error;
+  }
+}}
+
+
 
 function getOrdersByDeliveryDateId($conn,$id) {
     if( !isset($id)) 
@@ -29,7 +73,7 @@ function getOrdersByDeliveryDateId($conn,$id) {
   return;
   }
   else{
-  $sql = "select * from orders where DeliveryDateId = ".$id;
+  $sql = "select * from order where DeliveryDateId = ".$id;
   if ($conn->query($sql)) {
       $result = $conn->query($sql);
       $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -49,7 +93,7 @@ function getOrdersByDeliveryTimeId($conn,$id) {
   return;
   }
   else{
-  $sql = "select * from orders where DeliveryTimeId = ".$id;
+  $sql = "select * from order where DeliveryTimeId = ".$id;
   if ($conn->query($sql)) {
       $result = $conn->query($sql);
       $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -69,7 +113,7 @@ function getOrdersByOrderStatusId($conn,$id) {
   return;
   }
   else{
-  $sql = "select * from orders where OrderStatusId = ".$id;
+  $sql = "select * from order where OrderStatusId = ".$id;
   if ($conn->query($sql)) {
       $result = $conn->query($sql);
       $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -89,7 +133,7 @@ function getOrdersByPaymentMethodId($conn,$id) {
   return;
   }
   else{
-  $sql = "select * from orders where PaymentMethodId = ".$id;
+  $sql = "select * from order where PaymentMethodId = ".$id;
   if ($conn->query($sql)) {
       $result = $conn->query($sql);
       $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -145,17 +189,19 @@ elseif (!isset($deliveryTimeId)) {
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("iisffiii",$DeliveryDateId, $DeliveryTimeId,  $DeliveryPlace, $Paid, $Total, $PaymentMethodId,$OrderStatusId, 
     $CustomerId );
-$DeliveryDateId=$deliveryDateId;
-$DeliveryTimeId=$deliveryTimeId;
-$DeliveryPlace=$deliveryPlace;
-$Paid=$paid;
-$Total=$total;
-$PaymentMethodId=$paymentMethodId;
-$OrderStatusId=$orderStatusId;
-$CustomerId=$customerId;
+  $DeliveryDateId=$deliveryDateId;
+  $DeliveryTimeId=$deliveryTimeId;
+  $DeliveryPlace=$deliveryPlace;
+  $Paid=$paid;
+  $Total=$total;
+  $PaymentMethodId=$paymentMethodId;
+  $OrderStatusId=$orderStatusId;
+  $CustomerId=$customerId;
 
   if ($stmt->execute()===TRUE) {
     echo "Order Added successfully";
+
+    return mysqli_insert_id($conn);
   }
   else {
     echo "Error: ".$conn->error;
@@ -185,24 +231,4 @@ function deleteOrder($conn,$id) {
 }
 
 
-
-if ($_SERVER['REQUEST_METHOD']=="GET") {
-  if ($_GET["Id"] != null) {
-    getOrdersByCustomerId($conn,$_GET["Id"]);
-  }
-  else {
-    echo "Error occured while returning Orders";
-  }
-}
-
-if ($_SERVER['REQUEST_METHOD']=="POST"){
-    //decode the json data
-    $data = json_decode(file_get_contents("php://input"));
-    if (isset($data->action) && $data->action == "addOrder" && $data->CustomerId != null && $data->Name != null){
-        addOrder($conn,$data->Name,$data->CustomerId);
-      }
-      else{
-        echo "error occured while creating Order";
-      }
-}
 ?>

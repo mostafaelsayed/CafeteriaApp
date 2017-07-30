@@ -22,6 +22,27 @@ function getFavoriteItemsByCustomerId($conn,$Cid) {
 }}
 
 
+function getFavoriteItemById($conn,$id) {
+  if( !isset($id)) 
+ {
+ echo "Error: FavoriteItem Id is not set";
+  return;
+  }
+  else
+  {
+  $sql = "select * from FavoriteItem where CustomerId =".$id;
+  if ($conn->query($sql)) {
+      $result = $conn->query($sql);
+      $favoriteItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $favoriteItems = json_encode($favoriteItems);
+      $conn->close();
+      return $favoriteItems;
+  } else {
+      echo "Error retrieving FavoriteItems: " . $conn->error;
+  }
+}}
+
+
 function addFavoriteItem($conn,$Cid,$Mid) {
    if (!isset($Cid)) {
  echo "Error: Customer Id is not set";
@@ -81,41 +102,5 @@ if (!isset($id)) {
 // }
 
 
-
-if ($_SERVER['REQUEST_METHOD']=="GET") {
-  if (isset($_GET["action"]) && $_GET["action"]=="getFavoriteItems"){
-    getFavoriteItems($conn);
-  }
-  else {
-    echo "Error occured while returning FavoriteItems";
-  }
-}
-
-if ($_SERVER['REQUEST_METHOD']=="POST"){
-    //decode the json data
-    $data = json_decode(file_get_contents("php://input"));
-    if (isset($data->action) && $data->action == "addFavoriteItem"){
-      if ($data->Name != null){
-        addFavoriteItem($conn,$data->Name);
-      }
-      else{
-        echo "name is required";
-      }
-  }
-}
-
-if ($_SERVER['REQUEST_METHOD']=="PUT"){
-    //decode the json data
-    $data = json_decode(file_get_contents("php://input"));
-    //echo $data;
-      if ($data->Name != null && $data->Id != null) {
-        //if ($data->action == "addcafeteria"){
-        editFavoriteItem($conn,$data->Name,$data->Id);
-      }
-      else{
-        echo "name is required";
-      }
-  //}
-}
 
  ?>

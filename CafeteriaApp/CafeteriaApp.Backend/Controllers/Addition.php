@@ -15,6 +15,20 @@ function getAdditionsByCategoryId($conn,$id) {
   }
 }
 
+function getAdditionsById($conn,$id) {
+  
+  $sql = "select * from Addition where Id=".$id;
+  if ($conn->query($sql)) {
+      $result = $conn->query($sql);
+      $additions = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $additions = json_encode($additions);
+      $conn->close();
+      echo $additions;
+  } else {
+      echo "Error retrieving Additions: " . $conn->error;
+  }
+}
+
 
 function addAddition($conn,$name,$price,$categoryId) {
   $sql = "insert into Addition (Name,Price,CategoryId) values (?,?,?)";
@@ -69,43 +83,5 @@ function deleteAddition($conn,$id) {
 }
 }
 
-
-
-
-if ($_SERVER['REQUEST_METHOD']=="GET") {
-  if (isset($_GET["action"]) && $_GET["action"]=="getAdditions"){
-    getAdditions($conn);
-  }
-  else {
-    echo "Error occured while returning Additions";
-  }
-}
-
-if ($_SERVER['REQUEST_METHOD']=="POST"){
-    //decode the json data
-    $data = json_decode(file_get_contents("php://input"));
-    if (isset($data->action) && $data->action == "addAddition"){
-      if ($data->Name != null){
-        addAddition($conn,$data->Name);
-      }
-      else{
-        echo "name is required";
-      }
-  }
-}
-
-if ($_SERVER['REQUEST_METHOD']=="PUT"){
-    //decode the json data
-    $data = json_decode(file_get_contents("php://input"));
-    //echo $data;
-      if ($data->Name != null && $data->Id != null) {
-        //if ($data->action == "addcafeteria"){
-        editAddition($conn,$data->Name,$data->Id);
-      }
-      else{
-        echo "name is required";
-      }
-  //}
-}
 
  ?>

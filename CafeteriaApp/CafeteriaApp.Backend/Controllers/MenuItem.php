@@ -21,6 +21,26 @@ function getMenuItemByCategoryId($conn , $id) {
   }
 }}
 
+function getMenuItemById($conn , $id) {
+   if( !isset($id)) 
+ {
+ echo "Error:MenuItem Id is not set";
+  return;
+  }
+  else
+  {
+  $sql = "select * from MenuItem where Id = $id";
+  if ($conn->query($sql)) {
+      $result = $conn->query($sql);
+      $MenuItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $MenuItems = json_encode($MenuItems);
+      $conn->close();
+      echo $MenuItems;
+  } else {
+      echo "Error retrieving MenuItems: " . $conn->error;
+  }
+}}
+
 
 
 function addMenuItem($conn,$name,$image,$price,$description,$categoryId) {
@@ -132,25 +152,4 @@ function deleteMenuItem($conn,$id) {
 }
 
 
-
-if ($_SERVER['REQUEST_METHOD']=="GET") {
-  if ($_GET["Id"] != null) {
-    getMenuItemByCategoryId($conn,$_GET["Id"]);
-  }
-  else {
-    echo "Error occured while returning MenuItems";
-  }
-}
-
-// i don't know how to handle
-if ($_SERVER['REQUEST_METHOD']=="POST"){
-    //decode the json data
-    $data = json_decode(file_get_contents("php://input"));// ????????????
-    if (isset($data->action) && $data->action == "addMenuItem" && $data->Id != null && $data->Name != null){
-        addMenuItem($conn,$data->Name,$data->Image ,$data->Price ,$data->Description , $data->Id);
-      }
-      else{
-        echo "name is required";
-      }
-}
 ?>

@@ -1,6 +1,6 @@
 <?php
-include 'CafeteriaApp.Backend\connection.php';
-require_once( 'CafeteriaApp.Backend/Customer.php');
+//include 'CafeteriaApp.Backend\connection.php';
+require_once( 'CafeteriaApp.Backend/Controllers/Customer.php');
 
 function getUsers($conn) {
   
@@ -15,6 +15,25 @@ function getUsers($conn) {
       echo "Error retrieving Users: " . $conn->error;
   }
 }
+
+function getUserById($conn,$id) {
+    if( !isset($id)) 
+ {
+ echo "Error: User Id is not set";
+  return;
+  }
+  else{
+  $sql = "select * from User where Id=".$id;
+  if ($conn->query($sql)) {
+      $result = $conn->query($sql);
+      $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $users = json_encode($users);
+      $conn->close();
+      return $users;
+  } else {
+      echo "Error retrieving User: " . $conn->error;
+  }
+}}
 
 
 function attemptLogin($email, $password) {
@@ -75,9 +94,7 @@ function confirmQuery($result_set) {
   }
 
 
-
-
-function registerCustomerUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password, ) {
+function registerAdminUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password ) {
    if(checkExistingEmail($conn ,$email ,true)) 
  { echo "User Email already exists !";
   }
@@ -96,18 +113,87 @@ else
   $Email = $email;
   $PhoneNumber = $phoneNumber;
   $Password = $password;
-  $RoleId = ;    // customer role
+  $RoleId =1 ;    // customer role
+  //$conn->query($sql);
+  if ($stmt->execute()===TRUE) {
+    
+    $user_id =  mysqli_insert_id($conn);
+    echo "Admin User Added successfully !";
+
+  }
+  else {
+    echo "Error: ".$conn->error;
+  }
+}
+}
+
+
+function registerCashierUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password ) {
+   if(checkExistingEmail($conn ,$email ,true)) 
+ { echo "User Email already exists !";
+  }
+elseif(  checkExistingUserName($conn ,$userName,true))
+   { echo "User Name already exists !";
+  }
+else
+{
+  $sql = "insert into User (UserName , FirstName , LastName , Image , Email , PhoneNumber , Password, RoleId) values (?,?,?,?,?,?,?,?)";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("sssssssi",$UserName,$FirstName,$LastName,$Image,$Email,$PhoneNumber,$Password,$RoleId);
+  $UserName = $userName;
+  $FirstName = $firstName;
+  $LastName = $lastName;
+  $Image = $image;
+  $Email = $email;
+  $PhoneNumber = $phoneNumber;
+  $Password = $password;
+  $RoleId =2 ;    // customer role
+  //$conn->query($sql);
+  if ($stmt->execute()===TRUE) {
+    
+    $user_id =  mysqli_insert_id($conn);
+    echo "Cashier User Added successfully !";
+
+  }
+  else {
+    echo "Error: ".$conn->error;
+  }
+}
+}
+
+
+
+function registerCustomerUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password ) {
+   if(checkExistingEmail($conn ,$email ,true)) 
+ { echo "User Email already exists !";
+  }
+elseif(  checkExistingUserName($conn ,$userName,true))
+   { echo "User Name already exists !";
+  }
+else
+{
+  $sql = "insert into User (UserName , FirstName , LastName , Image , Email , PhoneNumber , Password, RoleId) values (?,?,?,?,?,?,?,?)";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("sssssssi",$UserName,$FirstName,$LastName,$Image,$Email,$PhoneNumber,$Password,$RoleId);
+  $UserName = $userName;
+  $FirstName = $firstName;
+  $LastName = $lastName;
+  $Image = $image;
+  $Email = $email;
+  $PhoneNumber = $phoneNumber;
+  $Password = $password;
+  $RoleId =3 ;    // customer role
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
     
     $user_id =  mysqli_insert_id($conn);
     if(addCustomer($conn,0.0,$user_id))
     {
-     echo "User Added successfully !";
+     echo "Customer User Added successfully !";
     }
     else
     {
-      echo "Error: failed to create a customer for the user !";
+      echo "Error: failed to create a Customer user !";
     }
   }
   else {
@@ -223,7 +309,6 @@ function deleteUser($conn,$id) { // cascaded delete ??
   }
 }
 }
-
 
 
 

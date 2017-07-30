@@ -4,12 +4,32 @@ include 'CafeteriaApp.Backend\connection.php';
 function getCommentsByMenuItemId($conn,$id) {
   if( !isset($id)) 
  {
- echo "Error: Id is not set";
+ echo "Error: MenuItem Id is not set";
   return;
   }
   else
   {
   $sql = "select * from Comment where MenuItemId =".$id;
+  if ($conn->query($sql)) {
+      $result = $conn->query($sql);
+      $comments = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $comments = json_encode($comments);
+      $conn->close();
+      return $comments;
+  } else {
+      echo "Error retrieving Comments: " . $conn->error;
+  }
+}}
+
+function getCommentById($conn,$id) {
+  if( !isset($id)) 
+ {
+ echo "Error: Comment Id is not set";
+  return;
+  }
+  else
+  {
+  $sql = "select * from Comment where Id =".$id;
   if ($conn->query($sql)) {
       $result = $conn->query($sql);
       $comments = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -117,41 +137,5 @@ if (!isset($id)) {
   }
 }}
 
-
-if ($_SERVER['REQUEST_METHOD']=="GET") {
-  if (isset($_GET["action"]) && $_GET["action"]=="getComments"){
-    getComments($conn);
-  }
-  else {
-    echo "Error occured while returning Details";
-  }
-}
-
-if ($_SERVER['REQUEST_METHOD']=="POST"){
-    //decode the json data
-    $data = json_decode(file_get_contents("php://input"));
-    if (isset($data->action) && $data->action == "addComment"){
-      if ($data->Details != null){
-        addComment($conn,$data->Details);
-      }
-      else{
-        echo "Details is required";
-      }
-  }
-}
-
-if ($_SERVER['REQUEST_METHOD']=="PUT"){
-    //decode the json data
-    $data = json_decode(file_get_contents("php://input"));
-    //echo $data;
-      if ($data->Details != null && $data->Id != null) {
-        //if ($data->action == "addcafeteria"){
-        editComment($conn,$data->Details,$data->Id);
-      }
-      else{
-        echo "Details is required";
-      }
-  //}
-}
 
  ?>
