@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD']=="PUT"){
 }
 
 if ($_SERVER['REQUEST_METHOD']=="DELETE") {
-  $cafeteriaIdToDelete = $_GET["cafeteriaid"];
+  $cafeteriaIdToDelete = $_GET["cafeteriaId"];
       if ($cafeteriaIdToDelete != null) {
         deleteCafeteria($conn,$cafeteriaIdToDelete);
       }

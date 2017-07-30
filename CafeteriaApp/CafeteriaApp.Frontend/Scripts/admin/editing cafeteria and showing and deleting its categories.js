@@ -1,4 +1,5 @@
 var app = angular.module('myapp', ['angularModalService','ui.bootstrap']);
+
 app.config(['$locationProvider', function($locationProvider) {
   $locationProvider.html5Mode({
     enabled: true,
@@ -12,7 +13,7 @@ app.controller('ModalController', function($scope, close) {
   };
 });
 
-app.controller('editcafeteria',function($scope,$http,$location){
+app.controller('editCafeteria',function($scope,$http,$location){
   $scope.name = "";
   $scope.cafeteriaId = $location.search().id;
 
@@ -22,7 +23,7 @@ app.controller('editcafeteria',function($scope,$http,$location){
       Id: $scope.cafeteriaId
     };
     if ($scope.name != "") {
-      $http.put('/CafeteriaApp.Backend/Controllers/Cafeteria.php',data)
+      $http.put('/CafeteriaApp.Backend/Requests/Cafeteria.php',data)
       .then(function(response){
         console.log(response);
         window.history.back();
@@ -34,10 +35,10 @@ app.controller('editcafeteria',function($scope,$http,$location){
 
 // controller for showing and deleting categories
 
-app.controller('showingAndDeletingCategories',function($scope,$http,$location) {
+app.controller('showingAndDeletingCategories',function($scope,$http,$location,ModalService) {
   $scope.cafeteriaId = $location.search().id;
   $scope.getCategories = function(){
-    $http.get('/CafeteriaApp.Backend/Controllers/Category.php?Id='+$scope.cafeteriaId)
+    $http.get('/CafeteriaApp.Backend/Requests/Category.php?Id='+$scope.cafeteriaId)
       .then(function (response) {
         $scope.categories = response.data;
         console.log(response);
@@ -49,7 +50,7 @@ app.controller('showingAndDeletingCategories',function($scope,$http,$location) {
   $scope.deleteCategory = function(categoryId){
     $scope.show();
     $scope.delete = function(){
-      $http.delete('/CafeteriaApp.Backend/Controllers/Category.php?categoryId='+categoryId)
+      $http.delete('/CafeteriaApp.Backend/Requests/Category.php?categoryId='+categoryId)
       .then(function(response){
         console.log(response);
         $scope.getCategories();

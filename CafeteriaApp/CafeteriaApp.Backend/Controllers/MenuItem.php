@@ -2,7 +2,7 @@
 include 'CafeteriaApp.Backend\connection.php';
 
 function getMenuItemByCategoryId($conn , $id) {
-   if( !isset($id)) 
+   if( !isset($id))
  {
  echo "Error:Category Id is not set";
   return;
@@ -22,7 +22,7 @@ function getMenuItemByCategoryId($conn , $id) {
 }}
 
 function getMenuItemById($conn , $id) {
-   if( !isset($id)) 
+   if( !isset($id))
  {
  echo "Error:MenuItem Id is not set";
   return;
@@ -43,16 +43,16 @@ function getMenuItemById($conn , $id) {
 
 
 
-function addMenuItem($conn,$name,$image,$price,$description,$categoryId) {
-   if( !isset($name)) 
+function addMenuItem($conn,$name,$price,$description,$categoryId) {
+   if( !isset($name))
  {
  echo "Error: MenuItem name is not set";
   return;
   }
-elseif (!isset($image)) {
- echo "Error: MenuItem image Id is not set";
-  return;
-  }
+// elseif (!isset($image)) {
+//  echo "Error: MenuItem image Id is not set";
+//   return;
+//   }
   elseif (!isset($price)) {
  echo "Error: MenuItem price is not set";
   return;
@@ -66,11 +66,11 @@ elseif (!isset($categoryId)) {
   return;
 }
   else {
-  $sql = "insert into MenuItem (Name,Image,Price,Description,CategoryId) values ('','',,'',)"; // string should be quoted like that (single quotes)
+  $sql = "insert into MenuItem (Name,Price,Description,CategoryId) values (?,?,?,?)"; // string should be quoted like that (single quotes)
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("ssfsi",$Name,$Image,$Price,$Description,$CategoryId); // not sure if float takes 'f'
+  $stmt->bind_param("sdsi",$Name,$Price,$Description,$CategoryId); // not sure if float takes 'f'
   $Name=$name;
-  $Image=$image;
+  //$Image=$image;
   $Price=$price;
   $Description=$description;
   $CategoryId=$categoryId;
@@ -89,15 +89,15 @@ elseif (!isset($categoryId)) {
 
 
 function editMenuItem($conn,$name,$image,$price,$description,$id) {
-  if( !isset($name)) 
+  if( !isset($name))
  {
  echo "Error: MenuItem name is not set";
  return;
   }
-elseif (!isset($image)) {
- echo "Error: MenuItem image is not set";
-  return;
-  }
+// elseif (!isset($image)) {
+//  echo "Error: MenuItem image is not set";
+//   return;
+//   }
   elseif (!isset($price)) {
  echo "Error: MenuItem price is not set";
   return;
@@ -112,11 +112,11 @@ elseif (!isset($image)) {
   }
   else
   {
-  $sql = "update MenuItem set Name = (?), Image=(?), Price=(?) ,Description =(?) where Id = (?)";
+  $sql = "update MenuItem set Name = (?), Price=(?) ,Description =(?) where Id = (?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("ssfsi",$Name,$Image,$Price,$Description,$Id);
+  $stmt->bind_param("sfsi",$Name,$Price,$Description,$Id);
   $Name = $name;
-  $Image = $image;
+  //$Image = $image;
   $Price = $price;
   $Description = $description;
   $Id = $id;
@@ -126,7 +126,7 @@ elseif (!isset($image)) {
   }
   else {
     echo "Error: ".$conn->error;
-  
+
   }
 }
 }

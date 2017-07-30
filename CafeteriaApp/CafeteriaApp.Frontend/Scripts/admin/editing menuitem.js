@@ -14,7 +14,7 @@ app.controller('editMenuItem',function($scope,$http,$location){
       Id: $scope.menuItemId
     };
     if ($scope.name != "") {
-      $http.put('/CafeteriaApp.Backend/Controllers/MenuItem.php',data)
+      $http.put('/CafeteriaApp.Backend/Requests/MenuItem.php',data)
       .then(function(response){
         console.log(response);
         window.history.back();

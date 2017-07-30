@@ -7,7 +7,7 @@
 <script src="/CafeteriaApp.Frontend/Scripts/admin/showing and deleting cafeterias.js"></script>
 
 <div id="page-wrapper" style="margin-top:-600px">
-  
+
   <div class="row">
     <div class="col-lg-12">
       <h1 class="page-header">Cafeterias</h1>
@@ -54,7 +54,7 @@
                 <tr class="odd gradeX">
                   <td ng-bind="c.Name"></td>
                   <td class="center">
-                    <a id="myButton" ng-href="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/editing cafeteria and showing and deleting its categories.php?id={{c.Id}}" class="btn btn-success">Edit</a>
+                    <a id="myButton" ng-href="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/editing cafeteria and showing and deleting its categories.php?id={{c.Id}}" target="_self" class="btn btn-success">Edit</a>
                     <button ng-click="deleteCafeteria(c.Id)" class="btn btn-danger">Delete</button>
                   </td>
                 </tr>

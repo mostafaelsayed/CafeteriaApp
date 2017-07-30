@@ -1,5 +1,12 @@
 var app = angular.module('myapp', []);
 
+app.config(['$locationProvider', function($locationProvider) {
+  $locationProvider.html5Mode({
+    enabled: true,
+    requireBase: false
+  });
+}]);
+
 app.controller('addMenuItem',function($scope,$http,$location){
   $scope.name = "";
   $scope.price = "";
@@ -10,11 +17,11 @@ app.controller('addMenuItem',function($scope,$http,$location){
       Name: $scope.name,
       Price: $scope.price,
       Description: $scope.description,
-      CafeteriaId: $scope.categoryId,
+      CategoryId: $scope.categoryId,
       action: "addMenuItem"
     };
     if ($scope.name != "" && $scope.categoryId != "") {
-      $http.post('/CafeteriaApp.Backend/Controllers/MenuItem.php',data)
+      $http.post('/CafeteriaApp.Backend/Requests/MenuItem.php',data)
       .then(function(response){
         //First function handles success
         window.history.back();

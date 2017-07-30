@@ -16,8 +16,8 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
 if ($_SERVER['REQUEST_METHOD']=="POST"){
     //decode the json data
     $data = json_decode(file_get_contents("php://input"));// ????????????
-    if (isset($data->action) && $data->action == "addMenuItem" && $data->Id != null && $data->Name != null){
-        addMenuItem($conn,$data->Name,$data->Image ,$data->Price ,$data->Description , $data->Id);
+    if (isset($data->action) && $data->action == "addMenuItem" && $data->CategoryId != null && $data->Name != null){
+        addMenuItem($conn,$data->Name ,$data->Price ,$data->Description , $data->CategoryId);
       }
       else{
         echo "name is required";

@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD']=="PUT"){
 }
 
 if ($_SERVER['REQUEST_METHOD']=="DELETE") {
-  $categoryIdToDelete = $_GET["categoryid"];
+  $categoryIdToDelete = $_GET["categoryId"];
       if ($categoryIdToDelete != null) {
         deleteCategory($conn,$categoryIdToDelete);
       }

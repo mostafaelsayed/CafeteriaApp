@@ -22,7 +22,7 @@ app.controller('editCategory',function($scope,$http,$location){
       Id: $scope.categoryId
     };
     if ($scope.name != "") {
-      $http.put('/CafeteriaApp.Backend/Controllers/Category.php',data)
+      $http.put('/CafeteriaApp.Backend/Requests/Category.php',data)
       .then(function(response){
         console.log(response);
         window.history.back();
@@ -38,7 +38,7 @@ app.controller('editCategory',function($scope,$http,$location){
 app.controller('showingAndDeletingMenuItems',function($scope,$http,$location) {
   $scope.categoryId = $location.search().id;
   $scope.getMenuItems = function(){
-    $http.get('/CafeteriaApp.Backend/Controllers/MenuItem.php?Id='+$scope.categoryId)
+    $http.get('/CafeteriaApp.Backend/Requests/MenuItem.php?Id='+$scope.categoryId)
     .then(function (response) {
       $scope.menuItems = response.data;
       console.log(response);
@@ -50,7 +50,7 @@ app.controller('showingAndDeletingMenuItems',function($scope,$http,$location) {
   $scope.deleteMenuItem = function(menuItemId){
     $scope.show();
     $scope.delete = function(){
-      $http.delete('/CafeteriaApp.Backend/Controllers/MenuItem.php?menuItemId='+menuItemId)
+      $http.delete('/CafeteriaApp.Backend/Requests/MenuItem.php?menuItemId='+menuItemId)
       .then(function(response){
         console.log(response);
         $scope.getMenuItems();
