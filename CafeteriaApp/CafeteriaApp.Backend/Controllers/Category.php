@@ -1,28 +1,49 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
 
-function getByCafeteriaId($conn,$id) {
-  
-  $sql = "select * from category where CafeteriaId = $id";
+function getCategoryByCafeteriaId($conn,$id) {
+  if( !isset($id)) 
+ {
+ echo "Error: Id is not set";
+  return;
+  }
+  else
+  {
+  $sql = "select * from category where CafeteriaId = ".$id; 
   if ($conn->query($sql)) {
       $result = $conn->query($sql);
       $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $categories = json_encode($categories);
       $conn->close();
-      echo $categories;
+      return $categories;
   } else {
-      echo "Error retrieving categories: " . $conn->error;
+      echo "Error Retrieving Categories: " . $conn->error;
   }
 }
+}
 
-
-
-function addCategory($conn,$name,$CafeteriaId) {
-  $sql = "insert into category (Name,CafeteriaId) values (?,?)"; // string should be quoted like that (single quotes)
+function addCategory($conn,$name,$image,$CafeteriaId) {
+  if( !isset($name)) 
+ {
+ echo "Error: Name is not set";
+  return;
+  }
+elseif (!isset($image)) {
+ echo "Error: Image is not set";
+  return;
+  }
+  elseif (!isset($CafeteriaId)) {
+ echo "Error: Cafeteria Id is not set";
+  return;
+  }
+  else
+  {
+  $sql = "insert into category (Name,Image,CafeteriaId) values (?,?,?)"; // string should be quoted like that (single quotes)
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("si",$n,$id);
-  $n = $name;
-  $id = $CafeteriaId;
+  $stmt->bind_param("ssi",$Name,$Image,$Id);
+  $Name = $name;
+  $Image=$image;
+  $Id = $CafeteriaId;
   //echo $stmt->execute();
   if ($stmt->execute()===TRUE){
     echo "Category Added successfully";
@@ -32,25 +53,53 @@ function addCategory($conn,$name,$CafeteriaId) {
   }
   $conn->close();
 }
+}
 
-function editCategory($conn,$n,$Id) {
+
+
+function editCategory($conn,$name,$image,$id) {
+if( !isset($name)) 
+ {
+ echo "Error: Name is not set";
+  return;
+  }
+  elseif( !isset($image)) 
+ {
+ echo "Error: Image is not set";
+  return;
+  }
+elseif (!isset($id)) {
+ echo "Error: Id is not set";
+  return;
+  }
+  else {
   $sql = "update category set Name = (?) where Id = (?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("si",$name,$id);
-  $name = $n;
-  $id = $Id;
+  $stmt->bind_param("si",$Name,$Image,$Id);
+  $Name = $name;
+  $Image=$image;
+  $Id = $id;
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
-    echo "Category updated successfully";
+    echo "Category Name updated successfully";
   }
   else {
     echo "Error: ".$conn->error;
   }
 }
+}
 
-function deleteCategory($conn,$Id) {
+
+
+function deleteCategory($conn,$id) {
+if (!isset($id)) {
+ echo "Error: Id is not set";
+  return;
+  }
+  else {
+
   $conn->query("set foreign_key_checks=0");
-  $sql = "delete from category where Id = ".$Id;
+  $sql = "delete from category where Id = ".$id. "LIMIT 1";
   if ($conn->query($sql)===TRUE) {
     echo "Category deleted successfully";
   }
@@ -58,6 +107,8 @@ function deleteCategory($conn,$Id) {
     echo "Error: ".$conn->error;
   }
 }
+}
+
 
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {

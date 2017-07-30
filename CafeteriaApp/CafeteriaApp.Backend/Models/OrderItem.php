@@ -8,6 +8,7 @@ class OrderItem
 	 `Quantity` INT UNSIGNED NOT NULL ,
 	 `OrderId` INT NOT NULL ,
 	 `MenuItemId` INT NOT NULL ,
+	 `TotalPrice` DECIMAL NOT NULL ,
 	 PRIMARY KEY (`Id`) ,
 	 foreign key (OrderId) references `Order`(Id) , 
 	 foreign key (MenuItemId) references `MenuItem`(Id)

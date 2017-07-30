@@ -1,26 +1,55 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
 
-function getOrderItems($conn) {
-  
-  $sql = "select * from OrderItem";
+function getOrderItemsByOrderId($conn,$id) {
+    if( !isset($id)) 
+ {
+ echo "Error: Order Id is not set";
+  return;
+  }
+  else
+  {
+  $sql = "select * from OrderItem where OrderId=".$id;
   if ($conn->query($sql)) {
       $result = $conn->query($sql);
       $orderItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $orderItems = json_encode($orderItems);
       $conn->close();
-      echo $orderItems;
+      return $orderItems;
   } else {
       echo "Error retrieving OrderItems : " . $conn->error;
   }
-}
+}}
 
 
-function addOrderItem($conn,$n) {
-  $sql = "insert into OrderItem (Name) values (?)";
+
+function addOrderItem($conn,$orderId,$menuItemId,$quantity,$totalPrice) {
+
+   if( !isset($orderId)) 
+ {
+ echo "Error: OrderItem orderId is not set";
+  return;
+  }
+elseif (!isset($menuItemId)) {
+ echo "Error: OrderItem menuItemId is not set";
+  return;
+  }
+  elseif (!isset($quantity)) {
+ echo "Error: OrderItem quantity is not set";
+  return;
+  }
+  elseif (!isset($totalPrice)) {
+ echo "Error: OrderItem totalPrice is not set";
+  return;
+  }
+  else {
+  $sql = "insert into OrderItem (OrderId,MenuItemId,Quantity,TotalPrice) values (?,?,?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("s",$name);
-  $name = $n;
+  $stmt->bind_param("iiif",$OrderId,$MenuItemId,$Quantity,$TotalPrice);
+  $OrderId = $orderId;
+  $MenuItemId = $menuItemId;
+  $Quantity = $quantity;
+  $TotalPrice = $totalPrice;
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
     echo "OrderItem Added successfully";
@@ -28,23 +57,27 @@ function addOrderItem($conn,$n) {
   else {
     echo "Error: ".$conn->error;
   }
-}
+}}
 
 
-function editOrderItem($conn,$n,$Id) {
-  $sql = "update OrderItem set Name = (?) where Id = (?)";
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param("si",$name,$id);
-  $name = $n;
-  $id = $Id;
-  //$conn->query($sql);
-  if ($stmt->execute()===TRUE) {
-    echo "OrderItem updated successfully";
+function deleteOrderItem($conn,$id) {
+ if (!isset($id))
+  {
+     echo "Error: Id is not set";
+  return;
+  }
+  else{
+  //$conn->query("set foreign_key_checks = 0"); // ????????/
+  $sql = "delete from OrderItem where Id = ".$id . "LIMIT 1";
+  if ($conn->query($sql)===TRUE) {
+    echo "OrderItem deleted successfully";
   }
   else {
     echo "Error: ".$conn->error;
   }
 }
+}
+
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
   if (isset($_GET["action"]) && $_GET["action"]=="getOrderItems"){

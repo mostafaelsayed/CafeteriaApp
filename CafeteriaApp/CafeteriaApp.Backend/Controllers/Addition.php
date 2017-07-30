@@ -1,9 +1,9 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
 
-function getAdditions($conn) {
+function getAdditionsByCategoryId($conn,$id) {
   
-  $sql = "select * from Addition";
+  $sql = "select * from Addition where CategoryId=".$id;
   if ($conn->query($sql)) {
       $result = $conn->query($sql);
       $additions = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -16,11 +16,13 @@ function getAdditions($conn) {
 }
 
 
-function addAddition($conn,$n) {
-  $sql = "insert into Addition (Name) values (?)";
+function addAddition($conn,$name,$price,$categoryId) {
+  $sql = "insert into Addition (Name,Price,CategoryId) values (?,?,?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("s",$name);
-  $name = $n;
+  $stmt->bind_param("sfi",$Name,$Price ,$CategoryId);
+  $Name = $name;
+  $Price=$price;
+  $CategoryId=$categoryId;
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
     echo "Addition Added successfully";
@@ -31,12 +33,14 @@ function addAddition($conn,$n) {
 }
 
 
-function editAddition($conn,$n,$Id) {
-  $sql = "update Addition set Name = (?) where Id = (?)";
+
+function editAddition($conn,$name,$price,$id) {
+  $sql = "update Addition set Name = (?) , Price=(?) where Id = (?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("si",$name,$id);
-  $name = $n;
-  $id = $Id;
+  $stmt->bind_param("ssi",$Name,$Price,$Id);
+  $Name = $name;
+  $Price=$price;
+  $Id = $id;
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
     echo "Addition updated successfully";
@@ -45,6 +49,28 @@ function editAddition($conn,$n,$Id) {
     echo "Error: ".$conn->error;
   }
 }
+
+
+function deleteAddition($conn,$id) {
+ if (!isset($id))
+  {
+     echo "Error: Id is not set";
+  return;
+  }
+  else{
+  //$conn->query("set foreign_key_checks = 0"); // ????????/
+  $sql = "delete from Addition where Id = ".$id . "LIMIT 1";
+  if ($conn->query($sql)===TRUE) {
+    echo "Addition deleted successfully";
+  }
+  else {
+    echo "Error: ".$conn->error;
+  }
+}
+}
+
+
+
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
   if (isset($_GET["action"]) && $_GET["action"]=="getAdditions"){

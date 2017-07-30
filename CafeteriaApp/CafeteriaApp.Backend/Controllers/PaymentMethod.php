@@ -9,18 +9,25 @@ function getPaymentMethods($conn) {
       $paymentMethods = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $paymentMethods = json_encode($paymentMethods);
       $conn->close();
-      echo $paymentMethods;
+      return $paymentMethods;
   } else {
       echo "Error retrieving PaymentMethods : " . $conn->error;
   }
 
 }
 
-function addPaymentMethod($conn,$n) {
+
+function addPaymentMethod($conn,$name) {
+ if( !isset($name)) 
+ {
+ echo "Error: PaymentMethod name is not set";
+  return;
+  }
+  else{
   $sql = "insert into PaymentMethod (Name) values (?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("s",$name);
-  $name = $n;
+  $stmt->bind_param("s",$Name);
+  $Name = $name;
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
     echo "PaymentMethod Added successfully";
@@ -28,14 +35,25 @@ function addPaymentMethod($conn,$n) {
   else {
     echo "Error: ".$conn->error;
   }
-}
+}}
 
-function editPaymentMethod($conn,$n,$Id) {
+function editPaymentMethod($conn,$name,$id) {
+if( !isset($name)) 
+ {
+ echo "Error: PaymentMethod name is not set";
+  return;
+  }
+  elseif(!isset($id))
+  {
+    echo "Error: PaymentMethod id is not set";
+  return;
+  }
+  else{
   $sql = "update PaymentMethod set Name = (?) where Id = (?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("si",$name,$id);
-  $name = $n;
-  $id = $Id;
+  $stmt->bind_param("si",$Name,$Id);
+  $Name = $name;
+  $Id = $id;
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
     echo "PaymentMethod updated successfully";
@@ -43,7 +61,26 @@ function editPaymentMethod($conn,$n,$Id) {
   else {
     echo "Error: ".$conn->error;
   }
+}}
+
+function deletePaymentMethod($conn,$id) {
+ if (!isset($id))
+  {
+     echo "Error: Id is not set";
+  return;
+  }
+  else{
+  //$conn->query("set foreign_key_checks = 0"); // ????????/
+  $sql = "delete from PaymentMethod where Id = ".$id . "LIMIT 1";
+  if ($conn->query($sql)===TRUE) {
+    echo "PaymentMethod deleted successfully";
+  }
+  else {
+    echo "Error: ".$conn->error;
+  }
 }
+}
+
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
   if (isset($_GET["action"]) && $_GET["action"]=="getPaymentMethods"){

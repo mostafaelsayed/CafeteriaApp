@@ -16,35 +16,21 @@ function getTimes($conn) {
 }
 
 
-function addTime($conn,$n) {
-  $sql = "insert into Times (Time) values (?)";
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param("s",$name);
-  $name = $n;
-  //$conn->query($sql);
-  if ($stmt->execute()===TRUE) {
-    echo "Time Added successfully";
-  }
-  else {
-    echo "Error: ".$conn->error;
-  }
-}
+// function addTimes($conn,$n) {
+//   $sql = "insert into Times (Time) values (?)";
+//   $stmt = $conn->prepare($sql);
+//   $stmt->bind_param("s",$name);
+//   $name = $n;
+//   //$conn->query($sql);
+//   if ($stmt->execute()===TRUE) {
+//     echo "Time Added successfully";
+//   }
+//   else {
+//     echo "Error: ".$conn->error;
+//   }
+// }
 
 
-function editTime($conn,$n,$Id) {
-  $sql = "update Times set Time = (?) where Id = (?)";
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param("si",$name,$id);
-  $name = $n;
-  $id = $Id;
-  //$conn->query($sql);
-  if ($stmt->execute()===TRUE) {
-    echo "Time updated successfully";
-  }
-  else {
-    echo "Error: ".$conn->error;
-  }
-}
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
   if (isset($_GET["action"]) && $_GET["action"]=="getTimes"){

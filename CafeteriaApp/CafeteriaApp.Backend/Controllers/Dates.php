@@ -9,45 +9,78 @@ function getDates($conn) {
       $dates = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $dates = json_encode($dates);
       $conn->close();
-      echo $dates;
+      return $dates;
   } else {
       echo "Error retrieving Dates: " . $conn->error;
   }
-
 }
 
-function addDate($conn,$n) {
+
+function addDate($conn,$date) { // check format of the input
+ if (!isset($date)) {
+ echo "Error: Date is not set";
+  return;
+  }
+  else {
   $sql = "insert into Dates (Date) values (?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("s",$name);
-  $name = $n;
+  $stmt->bind_param("s",$Date);
+  $Date = $date;
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
-    echo "Role Added successfully";
+    echo "Date Added successfully";
   }
   else {
     echo "Error: ".$conn->error;
   }
-}
+}}
 
-function editDate($conn,$n,$Id) {
+
+function editDate($conn,$date,$id) {
+  if (!isset($id)) {
+ echo "Error: Id is not set";
+  return;
+  }
+  elseif (!isset($date)) {
+ echo "Error: Date is not set";
+  return;
+  }
+  else {
   $sql = "update Dates set Date = (?) where Id = (?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("si",$name,$id);
-  $name = $n;
-  $id = $Id;
+  $stmt->bind_param("si",$Date,$Id);
+  $Date = $date;
+  $Id = $id;
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
-    echo "Dates updated successfully";
+    echo "Date updated successfully";
   }
   else {
     echo "Error: ".$conn->error;
   }
-}
+}}
+
+
+function deleteDate($conn,$id) {
+if (!isset($id)) {
+ echo "Error: Id is not set";
+  return;
+  }
+  else {
+  //$conn->query("set foreign_key_checks=0");
+  $sql = "delete from Dates where Id = ".$id. "LIMIT 1";
+  if ($conn->query($sql)===TRUE) {
+    echo "Date deleted successfully";
+  }
+  else {
+    echo "Error: ".$conn->error;
+  }
+}}
+
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
-  if (isset($_GET["action"]) && $_GET["action"]=="getRoles"){
-    getRoles($conn);
+  if (isset($_GET["action"]) && $_GET["action"]=="getDates"){
+    getDates($conn);
   }
   else {
     echo "Error occured while returning Dates";

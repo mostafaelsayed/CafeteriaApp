@@ -9,18 +9,32 @@ function getCafeterias($conn) {
       $cafeterias = mysqli_fetch_all($result, MYSQLI_ASSOC); // ??
       $cafeterias = json_encode($cafeterias); // ??
       $conn->close();
-      echo $cafeterias;
+      return $cafeterias;
   } else {
       echo "Error retrieving Cafeterias : " . $conn->error;
   }
 
 }
 
-function addCafeteria($conn,$n) {
-  $sql = "insert into cafeteria (Name) values (?)";
+function addCafeteria($conn,$name,$image) {
+
+if( !isset($name)) 
+ {
+ echo "Error: Name is not set";
+  return;
+  }
+elseif (!isset($image)) {
+ echo "Error: Image is not set";
+  return;
+  }
+  else
+  {
+
+  $sql = "insert into cafeteria (Name,Image) values (?,?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("s",$name);
-  $name = $n;
+  $stmt->bind_param("ss",$name,$Image);
+  $name = $name;
+  $Image= $image;
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
     echo "Cafeteria Added successfully";
@@ -29,25 +43,55 @@ function addCafeteria($conn,$n) {
     echo "Error: ".$conn->error;
   }
 }
+}
 
-function editCafeteria($conn,$n,$Id) {
-  $sql = "update cafeteria set Name = (?) where Id = (?)";
+
+function editCafeteria($conn,$name,$image,$id) {
+  if( !isset($name)) 
+ {
+ echo "Error: Name is not set";
+ return;
+  }
+   elseif( !isset($image)) 
+  {
+ echo "Error: Image is not set";
+ return;
+  }
+elseif (!isset($id)) {
+ echo "Error: Id is not set";
+  return;
+  }
+  else
+  {
+  $sql = "update cafeteria set Name = (?),Image = (?) where Id = (?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("si",$name,$id);
-  $name = $n;
-  $id = $Id;
+  $stmt->bind_param("ssi",$Name,$Image,$Id);
+  $Name = $name;
+  $Image = $image;
+  $Id = $id;
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
     echo "Cafeteria updated successfully";
   }
   else {
     echo "Error: ".$conn->error;
+  
   }
 }
+}
 
-function deleteCafeteria($conn,$Id) {
-  $conn->query("set foreign_key_checks=0");
-  $sql = "delete from cafeteria where Id = ".$Id;
+
+
+
+function deleteCafeteria($conn,$id) {
+ if (!isset($id))
+  {
+     echo "Error: Id is not set";
+  return;
+  }
+  else{
+  $conn->query("set foreign_key_checks = 0"); // ????????/
+  $sql = "delete from cafeteria where Id = ".$id. "LIMIT 1";
   if ($conn->query($sql)===TRUE) {
     echo "Cafeteria deleted successfully";
   }
@@ -55,6 +99,9 @@ function deleteCafeteria($conn,$Id) {
     echo "Error: ".$conn->error;
   }
 }
+}
+
+
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
   if (isset($_GET["action"]) && $_GET["action"]=="getCafeterias"){
@@ -68,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
 if ($_SERVER['REQUEST_METHOD']=="POST"){
     //decode the json data
     $data = json_decode(file_get_contents("php://input"));
-    if (isset($data->action) && $data->action == "addcafeteria"){
+    if (isset($data->action) && $data->action == "addCafeteria"){ // chnage cafetria to uppercase first letter
       if ($data->Name != null){
         addCafeteria($conn,$data->Name);
       }
