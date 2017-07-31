@@ -93,7 +93,7 @@ function deleteRole($conn,$id) { // cascaded delete ??
   }
   else{
   //$conn->query("set foreign_key_checks = 0"); // ????????/
-  $sql = "delete from Role where Id = ".$id . "LIMIT 1";
+  $sql = "delete from Role where Id = ".$id . " LIMIT 1";
   if ($conn->query($sql)===TRUE) {
     echo "Role deleted successfully";
   }

@@ -107,7 +107,7 @@ function deleteCafeteria($conn,$id) {
   }
   else{
   $conn->query("set foreign_key_checks = 0"); // ????????/
-  $sql = "delete from cafeteria where Id = ".$id;
+  $sql = "delete from cafeteria where Id = ".$id." LIMIT 1";
   if ($conn->query($sql)===TRUE) {
     echo "Cafeteria deleted successfully";
   }

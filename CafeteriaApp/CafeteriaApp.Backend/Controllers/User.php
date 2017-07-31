@@ -256,7 +256,7 @@ function deleteUser($conn,$id) { // cascaded delete ??
   }
   else{
   //$conn->query("set foreign_key_checks = 0"); // ????????/
-  $sql = "delete from User where Id = ".$id . "LIMIT 1";
+  $sql = "delete from User where Id = ".$id . " LIMIT 1";
   if ($conn->query($sql)===TRUE) {
     echo "User deleted successfully";
   }

@@ -220,7 +220,7 @@ function deleteOrder($conn,$id) {
   }
   else{
   //$conn->query("set foreign_key_checks = 0"); // ????????/
-  $sql = "delete from Order where Id = ".$id . "LIMIT 1";
+  $sql = "delete from Order where Id = ".$id . " LIMIT 1";
   if ($conn->query($sql)===TRUE) {
     echo "Order deleted successfully";
   }

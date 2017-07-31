@@ -46,7 +46,7 @@ function getCustomerByUserId($conn,$userId) {
   }
   else
   {
-  $sql = "select * from Customer where UserId =".$userId;
+  $sql = "select Id from Customer where UserId =".$userId." LIMIT 1";
   $result = $conn->query($sql);
   if ($result) {
       $customer = mysqli_fetch_all($result, MYSQLI_ASSOC);

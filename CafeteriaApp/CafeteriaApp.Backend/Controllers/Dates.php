@@ -139,7 +139,7 @@ if (!isset($id)) {
   }
   else {
   //$conn->query("set foreign_key_checks=0");
-  $sql = "delete from Dates where Id = ".$id. "LIMIT 1";
+  $sql = "delete from Dates where Id = ".$id. " LIMIT 1";
   if ($conn->query($sql)===TRUE) {
     echo "Date deleted successfully";
   }

@@ -74,7 +74,7 @@ function deleteAddition($conn,$id) {
   }
   else{
   //$conn->query("set foreign_key_checks = 0"); // ????????/
-  $sql = "delete from Addition where Id = ".$id . "LIMIT 1";
+  $sql = "delete from Addition where Id = ".$id . " LIMIT 1";
   if ($conn->query($sql)===TRUE) {
     echo "Addition deleted successfully";
   }
