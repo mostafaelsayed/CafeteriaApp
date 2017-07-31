@@ -4,8 +4,9 @@ include 'CafeteriaApp.Backend\connection.php';
 function getAdditionsByCategoryId($conn,$id) {
   
   $sql = "select * from Addition where CategoryId=".$id;
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+
+  if ($result) {
       $additions = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $additions = json_encode($additions);
       $conn->close();
@@ -18,8 +19,8 @@ function getAdditionsByCategoryId($conn,$id) {
 function getAdditionsById($conn,$id) {
   
   $sql = "select * from Addition where Id=".$id;
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $additions = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $additions = json_encode($additions);
       $conn->close();

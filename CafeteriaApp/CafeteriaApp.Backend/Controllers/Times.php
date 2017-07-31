@@ -4,8 +4,8 @@ include 'CafeteriaApp.Backend\connection.php';
 function getTimes($conn) {
   
   $sql = "select * from Times";
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $times = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $times = json_encode($times);
       $conn->close();
@@ -23,8 +23,8 @@ function getTimeById($conn,$id) {
   }
   else{
   $sql = "select * from Times where Id=".$id;
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $times = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $times = json_encode($times);
       $conn->close();

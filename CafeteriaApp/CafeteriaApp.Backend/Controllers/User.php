@@ -5,8 +5,8 @@ require_once( 'CafeteriaApp.Backend/Controllers/Customer.php');
 function getUsers($conn) {
   
   $sql = "select * from User";
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $users = json_encode($users);
       $conn->close();
@@ -24,8 +24,8 @@ function getUserById($conn,$id) {
   }
   else{
   $sql = "select * from User where Id=".$id;
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $users = json_encode($users);
       $conn->close();

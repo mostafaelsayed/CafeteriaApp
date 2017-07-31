@@ -10,8 +10,8 @@ function getFavoriteItemsByCustomerId($conn,$Cid) {
   else
   {
   $sql = "select * from FavoriteItem where CustomerId =".$Cid;
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $favoriteItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $favoriteItems = json_encode($favoriteItems);
       $conn->close();
@@ -31,8 +31,8 @@ function getFavoriteItemById($conn,$id) {
   else
   {
   $sql = "select * from FavoriteItem where CustomerId =".$id;
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $favoriteItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $favoriteItems = json_encode($favoriteItems);
       $conn->close();

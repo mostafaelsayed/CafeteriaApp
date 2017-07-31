@@ -4,8 +4,8 @@ include 'CafeteriaApp.Backend\connection.php';
 function getRoles($conn) {
   
   $sql = "select * from Role";
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $roles = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $roles = json_encode($roles);
       $conn->close();
@@ -24,8 +24,8 @@ function getRoleById($conn,$id) {
   }
   else{
   $sql = "select * from Role where Id=".$id;
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $roles = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $roles = json_encode($roles);
       $conn->close();

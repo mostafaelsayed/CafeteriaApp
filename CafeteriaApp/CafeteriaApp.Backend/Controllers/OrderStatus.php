@@ -4,8 +4,8 @@ include 'CafeteriaApp.Backend\connection.php';
 function getOrderStatus($conn) {
   
   $sql = "select * from OrderStatus";
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $OrderStatus = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $OrderStatus = json_encode($OrderStatus);
       $conn->close();
@@ -15,6 +15,7 @@ function getOrderStatus($conn) {
   }
 }
 
+
 function getOrderStatusById($conn ,$id) {
     if( !isset($id)) 
  {
@@ -23,8 +24,8 @@ function getOrderStatusById($conn ,$id) {
   }
   else{
   $sql = "select * from OrderStatus  where Id=".$id;
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $OrderStatus = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $OrderStatus = json_encode($OrderStatus);
       $conn->close();

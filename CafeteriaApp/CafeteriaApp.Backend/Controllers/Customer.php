@@ -5,7 +5,8 @@ include 'CafeteriaApp.Backend\connection.php';
 function getCustomers($conn) {
   
   $sql = "select * from Customer";
-  if ($conn->query($sql)) {
+  $result = $conn->query($sql);
+  if ($result) {
       $result = $conn->query($sql);
       $customers = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $customers = json_encode($customers);
@@ -25,8 +26,8 @@ function getCustomerById($conn ,$id) {
   else
   {
   $sql = "select * from Customer where Id =".$id;
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $customers = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $customers = json_encode($customers);
       $conn->close();
@@ -46,8 +47,8 @@ function getCustomerByUserId($conn,$userId) {
   else
   {
   $sql = "select * from Customer where UserId =".$userId;
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $customer = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $customer = json_encode($customer);
       $conn->close();

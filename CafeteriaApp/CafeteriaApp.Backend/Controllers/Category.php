@@ -10,8 +10,8 @@ function getByCafeteriaId($conn,$id) {
   else
   {
   $sql = "select * from category where CafeteriaId = ".$id;
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $categories = json_encode($categories);
       $conn->close();
@@ -31,8 +31,8 @@ function getCategoryById($conn,$id) {
   else
   {
   $sql = "select * from category where Id = ".$id;
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $category = mysqli_fetch_object($result);
       $category = json_encode($category);
       $conn->close();

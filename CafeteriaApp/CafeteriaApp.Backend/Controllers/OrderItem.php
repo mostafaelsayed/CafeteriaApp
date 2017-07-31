@@ -13,8 +13,8 @@ function getOrderItemsByOrderId($conn,$id) {
   else
   {
   $sql = "select * from OrderItem where OrderId=".$id;
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $orderItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $orderItems = json_encode($orderItems);
       $conn->close();
@@ -33,8 +33,8 @@ function getOrderItemById($conn,$id) {
   else
   {
   $sql = "select * from OrderItem where Id=".$id;
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $orderItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $orderItems = json_encode($orderItems);
       $conn->close();

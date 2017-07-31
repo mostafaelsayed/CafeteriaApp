@@ -4,8 +4,8 @@ include 'CafeteriaApp.Backend\connection.php';
 function getCafeterias($conn) {
 
   $sql = "select * from Cafeteria";
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $cafeterias = mysqli_fetch_all($result, MYSQLI_ASSOC); // ??
       $cafeterias = json_encode($cafeterias); // ??
       $conn->close();
@@ -20,8 +20,9 @@ function getCafeterias($conn) {
 function getCafeteriaById($conn ,$id) {
 
   $sql = "select * from Cafeteria where Id =".$id;
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+
+  if ($result->query($sql)) {
       $cafeteria = mysqli_fetch_object($result); // fetch only the first row of the result
       $cafeteria = json_encode($cafeteria); // ??
       $conn->close();
@@ -96,8 +97,6 @@ elseif (!isset($id)) {
   }
 }
 }
-
-
 
 
 function deleteCafeteria($conn,$id) {

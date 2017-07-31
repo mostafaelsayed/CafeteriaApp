@@ -10,8 +10,8 @@ function getMenuItemByCategoryId($conn , $id) {
   else
   {
   $sql = "select * from MenuItem where CategoryId = ".$id;
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $MenuItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $MenuItems = json_encode($MenuItems);
       $conn->close();
@@ -30,8 +30,8 @@ function getMenuItemById($conn , $id) {
   else
   {
   $sql = "select * from MenuItem where Id = ".$id;
-  if ($result=$conn->query($sql)) {
-      //$result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $MenuItem = mysqli_fetch_object($result);
       $MenuItem = json_encode($MenuItem);
       $conn->close();

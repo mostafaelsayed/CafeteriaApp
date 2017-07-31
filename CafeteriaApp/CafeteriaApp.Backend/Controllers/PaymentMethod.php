@@ -4,8 +4,8 @@ include 'CafeteriaApp.Backend\connection.php';
 function getPaymentMethods($conn) {
   
   $sql = "select * from PaymentMethod";
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $paymentMethods = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $paymentMethods = json_encode($paymentMethods);
       $conn->close();
@@ -24,8 +24,8 @@ function getPaymentMethodById($conn,$id) {
   }
   else{
   $sql = "select * from PaymentMethod where Id=".$id;
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
+  $result = $conn->query($sql);
+  if ($result) {
       $paymentMethods = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $paymentMethods = json_encode($paymentMethods);
       $conn->close();
