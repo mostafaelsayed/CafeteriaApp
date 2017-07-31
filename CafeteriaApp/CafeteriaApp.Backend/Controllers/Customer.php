@@ -8,7 +8,7 @@ function getCustomers($conn) {
   $result = $conn->query($sql);
   if ($result) {
       $result = $conn->query($sql);
-      $customers = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $customers = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $customers = json_encode($customers);
       $conn->close();
       return $customers;
@@ -28,7 +28,7 @@ function getCustomerById($conn ,$id) {
   $sql = "select * from Customer where Id =".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $customers = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $customers = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $customers = json_encode($customers);
       $conn->close();
       return $customers;
@@ -37,6 +37,7 @@ function getCustomerById($conn ,$id) {
   }
 }
 }
+
 
 function getCustomerByUserId($conn,$userId) {
   if( !isset($userId)) 
@@ -49,12 +50,12 @@ function getCustomerByUserId($conn,$userId) {
   $sql = "select Id from Customer where UserId =".$userId." LIMIT 1";
   $result = $conn->query($sql);
   if ($result) {
-      $customer = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $customer = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $customer = json_encode($customer);
       $conn->close();
       return $customer;
   } else {
-      echo "Error retrieving customers: " . $conn->error;
+      echo "Error retrieving customer: " . $conn->error;
   }
 }}
 

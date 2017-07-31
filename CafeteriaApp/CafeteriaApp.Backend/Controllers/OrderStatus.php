@@ -6,7 +6,7 @@ function getOrderStatus($conn) {
   $sql = "select * from OrderStatus";
   $result = $conn->query($sql);
   if ($result) {
-      $OrderStatus = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $OrderStatus = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $OrderStatus = json_encode($OrderStatus);
       $conn->close();
       return $OrderStatus;
@@ -26,7 +26,7 @@ function getOrderStatusById($conn ,$id) {
   $sql = "select * from OrderStatus  where Id=".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $OrderStatus = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $OrderStatus = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $OrderStatus = json_encode($OrderStatus);
       $conn->close();
       return $OrderStatus;

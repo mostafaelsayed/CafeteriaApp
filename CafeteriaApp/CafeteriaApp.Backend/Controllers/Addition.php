@@ -7,7 +7,7 @@ function getAdditionsByCategoryId($conn,$id) {
   $result = $conn->query($sql);
 
   if ($result) {
-      $additions = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $additions = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $additions = json_encode($additions);
       $conn->close();
       echo $additions;
@@ -21,7 +21,7 @@ function getAdditionsById($conn,$id) {
   $sql = "select * from Addition where Id=".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $additions = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $additions = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $additions = json_encode($additions);
       $conn->close();
       echo $additions;

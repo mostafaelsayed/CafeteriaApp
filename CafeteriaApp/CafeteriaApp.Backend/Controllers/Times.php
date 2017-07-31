@@ -6,7 +6,7 @@ function getTimes($conn) {
   $sql = "select * from Times";
   $result = $conn->query($sql);
   if ($result) {
-      $times = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $times = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $times = json_encode($times);
       $conn->close();
       echo $times;
@@ -25,7 +25,7 @@ function getTimeById($conn,$id) {
   $sql = "select * from Times where Id=".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $times = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $times = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $times = json_encode($times);
       $conn->close();
       echo $times;

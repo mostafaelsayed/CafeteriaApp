@@ -12,7 +12,7 @@ function getFavoriteItemsByCustomerId($conn,$Cid) {
   $sql = "select * from FavoriteItem where CustomerId =".$Cid;
   $result = $conn->query($sql);
   if ($result) {
-      $favoriteItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $favoriteItems = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $favoriteItems = json_encode($favoriteItems);
       $conn->close();
       return $favoriteItems;
@@ -33,7 +33,7 @@ function getFavoriteItemById($conn,$id) {
   $sql = "select * from FavoriteItem where CustomerId =".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $favoriteItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $favoriteItems = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $favoriteItems = json_encode($favoriteItems);
       $conn->close();
       return $favoriteItems;

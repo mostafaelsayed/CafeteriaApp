@@ -12,7 +12,7 @@ function getMenuItemByCategoryId($conn , $id) {
   $sql = "select * from MenuItem where CategoryId = ".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $MenuItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $MenuItems = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $MenuItems = json_encode($MenuItems);
       $conn->close();
       echo $MenuItems;

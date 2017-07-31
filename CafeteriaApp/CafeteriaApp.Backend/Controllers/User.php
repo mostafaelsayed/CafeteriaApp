@@ -7,7 +7,7 @@ function getUsers($conn) {
   $sql = "select * from User";
   $result = $conn->query($sql);
   if ($result) {
-      $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $users = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $users = json_encode($users);
       $conn->close();
       return $users;
@@ -28,7 +28,7 @@ function getUserById($conn,$id) {
   $sql = "select * from User where Id=".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $users = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $users = json_encode($users);
       $conn->close();
       return $users;

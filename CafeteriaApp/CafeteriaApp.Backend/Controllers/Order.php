@@ -12,7 +12,7 @@ function getClosedOrdersByCustomerId($conn,$id) {
   $sql = "select * from order where CustomerId = ".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $orders = json_encode($orders);
       $conn->close();
       return $orders;
@@ -31,7 +31,7 @@ function getOrderById($conn,$id) {
   $sql = "select * from order where Id = ".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $orders = json_encode($orders);
       $conn->close();
       return $orders;
@@ -55,7 +55,7 @@ function getOpenOrderIdByCustomerId($conn,$id) {
   $sql = "select Id from Order where CustomerId =".$id ."and OrderStatusId = ".$openStatusId ;
   $result = $conn->query($sql);
   if ($result) {
-      $order = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $order = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $order = json_encode($order);
       $conn->close();
       return $order;
@@ -76,7 +76,7 @@ function getOrdersByDeliveryDateId($conn,$id) {
   $sql = "select * from order where DeliveryDateId = ".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $orders = json_encode($orders);
       $conn->close();
       return $orders;
@@ -96,7 +96,7 @@ function getOrdersByDeliveryTimeId($conn,$id) {
   $sql = "select * from order where DeliveryTimeId = ".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $orders = json_encode($orders);
       $conn->close();
       return $orders;
@@ -116,7 +116,7 @@ function getOrdersByOrderStatusId($conn,$id) {
   $sql = "select * from order where OrderStatusId = ".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $orders = json_encode($orders);
       $conn->close();
       return $orders;
@@ -136,7 +136,7 @@ function getOrdersByPaymentMethodId($conn,$id) {
   $sql = "select * from order where PaymentMethodId = ".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $orders = json_encode($orders);
       $conn->close();
       return $orders;

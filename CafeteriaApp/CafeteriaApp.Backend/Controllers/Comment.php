@@ -12,7 +12,7 @@ function getCommentsByMenuItemId($conn,$id) {
   $sql = "select * from Comment where MenuItemId =".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $comments = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $comments = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $comments = json_encode($comments);
       $conn->close();
       return $comments;
@@ -32,7 +32,7 @@ function getCommentById($conn,$id) {
   $sql = "select * from Comment where Id =".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $comments = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $comments = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $comments = json_encode($comments);
       $conn->close();
       return $comments;
@@ -52,7 +52,7 @@ function getCommentsByCustomerId($conn,$id) {  // check in future if it's redund
   $sql = "select * from Comment where CustomerId =".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $comments = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $comments = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $comments = json_encode($comments);
       $conn->close();
       return $comments;

@@ -12,7 +12,7 @@ function getByCafeteriaId($conn,$id) {
   $sql = "select * from category where CafeteriaId = ".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $categories = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $categories = json_encode($categories);
       $conn->close();
       echo $categories;

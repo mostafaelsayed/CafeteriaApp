@@ -6,7 +6,7 @@ function getRoles($conn) {
   $sql = "select * from Role";
   $result = $conn->query($sql);
   if ($result) {
-      $roles = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $roles = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $roles = json_encode($roles);
       $conn->close();
       return $roles;
@@ -26,7 +26,7 @@ function getRoleById($conn,$id) {
   $sql = "select * from Role where Id=".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $roles = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $roles = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $roles = json_encode($roles);
       $conn->close();
       return $roles;

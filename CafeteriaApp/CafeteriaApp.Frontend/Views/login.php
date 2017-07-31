@@ -28,8 +28,8 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
 
       //get customer id by user id from db 
      $customer_id_json = getCustomerByUserId($conn ,$_SESSION["user_id"] );
-
-      $_SESSION["customer_id"] = json_decode($customer_id_json, true)["CustomerId"];
+      $_SESSION["customer_id"] = json_decode($customer_id_json, true)["Id"];
+     
 
       redirect_to("index.php"); //                              3ala 7asab 
     } else {

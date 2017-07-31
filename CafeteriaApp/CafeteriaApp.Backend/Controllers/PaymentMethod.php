@@ -6,7 +6,7 @@ function getPaymentMethods($conn) {
   $sql = "select * from PaymentMethod";
   $result = $conn->query($sql);
   if ($result) {
-      $paymentMethods = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $paymentMethods = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $paymentMethods = json_encode($paymentMethods);
       $conn->close();
       return $paymentMethods;
@@ -26,7 +26,7 @@ function getPaymentMethodById($conn,$id) {
   $sql = "select * from PaymentMethod where Id=".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $paymentMethods = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $paymentMethods = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $paymentMethods = json_encode($paymentMethods);
       $conn->close();
       return $paymentMethods;

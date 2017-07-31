@@ -6,7 +6,7 @@ function getCafeterias($conn) {
   $sql = "select * from Cafeteria";
   $result = $conn->query($sql);
   if ($result) {
-      $cafeterias = mysqli_fetch_all($result, MYSQLI_ASSOC); // ??
+      $cafeterias = mysqli_fetch_array($result, MYSQLI_ASSOC); // ??
       $cafeterias = json_encode($cafeterias); // ??
       $conn->close();
       echo $cafeterias;

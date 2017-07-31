@@ -7,7 +7,7 @@ function getDates($conn) {
   $result = $conn->query($sql);
   if ($result)
    {    
-      $dates = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $dates = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $dates = json_encode($dates);
       $conn->close();
       return $dates;
@@ -25,7 +25,7 @@ function getDateById($conn ,$id) {
   $sql = "select Date from Dates where Id=".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $Id = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $Id = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $Id= json_encode($Id);
       $conn->close();
       return $Id;
@@ -44,7 +44,7 @@ function getIdByDate($conn ,$value) {
   $sql = "select Id from Dates where Date=".$value;
    $result = $conn->query($sql);
   if ($result) {
-      $date = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $date = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $date= json_encode($date);
       $conn->close();
       return $date;
@@ -59,7 +59,7 @@ function getIdByTodayDate($conn) { //CURDATE() mysql
   $sql = "select Id from Dates where Date = STR_TO_DATE('{$today}', '%Y-%m-%d')";
   $result = $conn->query($sql);
   if ($result) {
-      $date = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $date = mysqli_fetch_array($result, MYSQLI_ASSOC);
       //echo $date[0]["Id"] ;
       $date= json_encode($date);
       $conn->close();
