@@ -92,7 +92,7 @@ function addOrderItem($conn,$orderId,$menuItemId,$quantity,$totalPrice) {
 
 elseif (!isset($orderId)) { // **********************************************************
 
-  $order = json_decode( getOpenOrderByCustomerId( $conn, $_SESSION["CustomerId"]), true );
+  $order = json_decode( getOpenOrderByCustomerId( $conn, $_SESSION["customer_id"]), true );
   
   if(isset($order)){
   $orderId = $order["Id"];}
