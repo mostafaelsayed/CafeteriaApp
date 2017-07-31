@@ -1,15 +1,23 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
 
-function getCafeterias($conn) {
+function getCafeterias($conn,$backend=false) {
 
   $sql = "select * from Cafeteria";
   $result = $conn->query($sql);
   if ($result) {
-      $cafeterias = mysqli_fetch_array($result, MYSQLI_ASSOC); // ??
+      $cafeterias = mysqli_fetch_all($result, MYSQLI_ASSOC); // ??
       $cafeterias = json_encode($cafeterias); // ??
       $conn->close();
-      echo $cafeterias;
+       if($backend)
+      { 
+        return $cafeterias;   
+      }
+      else
+      {
+       echo $cafeterias;
+      }
+   
   } else {
       echo "Error retrieving Cafeterias : " . $conn->error;
   }
@@ -17,16 +25,24 @@ function getCafeterias($conn) {
 }
 
 
-function getCafeteriaById($conn ,$id) {
+function getCafeteriaById($conn ,$id,$backend=false) {
 
-  $sql = "select * from Cafeteria where Id =".$id;
+  $sql = "select * from Cafeteria where Id =".$id." LIMIT 1";
   $result = $conn->query($sql);
 
   if ($result->query($sql)) {
-      $cafeteria = mysqli_fetch_object($result); // fetch only the first row of the result
+      $cafeteria = mysqli_fetch_assoc($result); // fetch only the first row of the result
       $cafeteria = json_encode($cafeteria); // ??
       $conn->close();
-      echo $cafeteria;
+       if($backend)
+      { 
+        return $cafeteria;   
+      }
+      else
+      {
+       echo $cafeteria;
+      }
+   
   } else {
       echo "Error retrieving Cafeteria : " . $conn->error;
   }

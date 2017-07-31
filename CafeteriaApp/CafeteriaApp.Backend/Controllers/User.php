@@ -2,36 +2,52 @@
 //include 'CafeteriaApp.Backend\connection.php';
 require_once( 'CafeteriaApp.Backend/Controllers/Customer.php');
 
-function getUsers($conn) {
+function getUsers($conn,$backend=false) {
   
   $sql = "select * from User";
   $result = $conn->query($sql);
   if ($result) {
-      $users = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $users = json_encode($users);
       $conn->close();
-      return $users;
+      if($backend)
+      { 
+        return $users;   
+      }
+      else
+      {
+       echo $users;
+      }
+     
   } else {
       echo "Error retrieving Users: " . $conn->error;
   }
 }
+ //print_r(json_decode(getUsers($conn), true)) ;
 
-//getUsers($conn);
 
-function getUserById($conn,$id) {
+function getUserById($conn,$id,$backend=false) {
     if( !isset($id)) 
  {
  echo "Error: User Id is not set";
   return;
   }
   else{
-  $sql = "select * from User where Id=".$id;
+  $sql = "select * from User where Id=".$id." LIMIT 1";
   $result = $conn->query($sql);
   if ($result) {
-      $users = mysqli_fetch_array($result, MYSQLI_ASSOC);
-      $users = json_encode($users);
+      $user = mysqli_fetch_assoc($result);
+      $user = json_encode($user);
       $conn->close();
-      return $users;
+      if($backend)
+      { 
+        return $user;   
+      }
+      else
+      {
+       echo $user;
+      }
+      
   } else {
       echo "Error retrieving User: " . $conn->error;
   }

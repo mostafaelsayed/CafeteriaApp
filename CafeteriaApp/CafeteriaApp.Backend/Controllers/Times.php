@@ -1,36 +1,52 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
 
-function getTimes($conn) {
+function getTimes($conn,$backend=false) {
   
   $sql = "select * from Times";
   $result = $conn->query($sql);
   if ($result) {
-      $times = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $times = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $times = json_encode($times);
       $conn->close();
-      echo $times;
+      if($backend)
+      { 
+        return $times;   
+      }
+      else
+      {
+       echo $times;
+      }
+      
   } else {
       echo "Error retrieving Times: " . $conn->error;
   }
 }
 
-function getTimeById($conn,$id) {
+function getTimeById($conn,$id,$backend=false) {
     if( !isset($id)) 
  {
  echo "Error: Time Id is not set";
   return;
   }
   else{
-  $sql = "select * from Times where Id=".$id;
+  $sql = "select * from Times where Id=".$id." LIMIT 1";
   $result = $conn->query($sql);
   if ($result) {
-      $times = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $times = mysqli_fetch_assoc($result);
       $times = json_encode($times);
       $conn->close();
-      echo $times;
+      if($backend)
+      { 
+        return $times;   
+      }
+      else
+      {
+       echo $times;
+      }
+    
   } else {
-      echo "Error retrieving Times: " . $conn->error;
+      echo "Error retrieving Time: " . $conn->error;
   }
 }
 }

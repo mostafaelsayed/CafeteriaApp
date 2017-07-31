@@ -2,22 +2,31 @@
 include 'CafeteriaApp.Backend\connection.php';
 
 
-function getCustomers($conn) {
+function getCustomers($conn,$backend=false){
   
   $sql = "select * from Customer";
   $result = $conn->query($sql);
   if ($result) {
       $result = $conn->query($sql);
-      $customers = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $customers = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $customers = json_encode($customers);
       $conn->close();
-      return $customers;
+      if($backend)
+      { 
+        return $customers;   
+      }
+      else
+      {
+       echo $customers;
+      }
+    
   } else {
       echo "Error retrieving customers: " . $conn->error;
   }
 }
 
-function getCustomerById($conn ,$id) {
+
+function getCustomerById($conn ,$id,$backend=false) {
    if( !isset($id)) 
  {
  echo "Error: Customer Id is not set";
@@ -25,21 +34,28 @@ function getCustomerById($conn ,$id) {
   }
   else
   {
-  $sql = "select * from Customer where Id =".$id;
+  $sql = "select * from Customer where Id =".$id." LIMIT 1";
   $result = $conn->query($sql);
   if ($result) {
-      $customers = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $customers = mysqli_fetch_assoc($result);
       $customers = json_encode($customers);
       $conn->close();
-      return $customers;
+      if($backend)
+      { 
+        return $customers;   
+      }
+      else
+      {
+       echo $customers;
+      }
   } else {
-      echo "Error retrieving customers: " . $conn->error;
+      echo "Error retrieving Customer: " . $conn->error;
   }
 }
 }
 
 
-function getCustomerByUserId($conn,$userId) {
+function getCustomerByUserId($conn,$userId,$backend=false) {
   if( !isset($userId)) 
  {
  echo "Error: User Id is not set";
@@ -50,10 +66,18 @@ function getCustomerByUserId($conn,$userId) {
   $sql = "select Id from Customer where UserId =".$userId." LIMIT 1";
   $result = $conn->query($sql);
   if ($result) {
-      $customer = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $customer = mysqli_fetch_assoc($result);
       $customer = json_encode($customer);
       $conn->close();
-      return $customer;
+      if($backend)
+      { 
+        return $customer;   
+      }
+      else
+      {
+       echo $customer;
+      }
+     
   } else {
       echo "Error retrieving customer: " . $conn->error;
   }

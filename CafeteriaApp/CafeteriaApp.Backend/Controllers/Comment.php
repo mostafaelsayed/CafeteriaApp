@@ -1,7 +1,7 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
 
-function getCommentsByMenuItemId($conn,$id) {
+function getCommentsByMenuItemId($conn,$id,$backend=false) {
   if( !isset($id)) 
  {
  echo "Error: MenuItem Id is not set";
@@ -12,16 +12,23 @@ function getCommentsByMenuItemId($conn,$id) {
   $sql = "select * from Comment where MenuItemId =".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $comments = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $comments = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $comments = json_encode($comments);
       $conn->close();
-      return $comments;
+      if($backend)
+      { 
+        return $comments;   
+      }
+      else
+      {
+       echo $comments;
+      }
   } else {
       echo "Error retrieving Comments: " . $conn->error;
   }
 }}
 
-function getCommentById($conn,$id) {
+function getCommentById($conn,$id,$backend=false) {
   if( !isset($id)) 
  {
  echo "Error: Comment Id is not set";
@@ -29,19 +36,27 @@ function getCommentById($conn,$id) {
   }
   else
   {
-  $sql = "select * from Comment where Id =".$id;
+  $sql = "select * from Comment where Id =".$id." LIMIT 1";
   $result = $conn->query($sql);
   if ($result) {
-      $comments = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $comments = mysqli_fetch_assoc($result);
       $comments = json_encode($comments);
       $conn->close();
-      return $comments;
+      if($backend)
+      { 
+        return $comments;   
+      }
+      else
+      {
+       echo $comments;
+      }
+    
   } else {
-      echo "Error retrieving Comments: " . $conn->error;
+      echo "Error retrieving Comment: " . $conn->error;
   }
 }}
 
-function getCommentsByCustomerId($conn,$id) {  // check in future if it's redundunt
+function getCommentsByCustomerId($conn,$id,$backend=false) {  // check in future if it's redundunt
   if( !isset($id)) 
  {
  echo "Error: Id is not set";
@@ -52,10 +67,18 @@ function getCommentsByCustomerId($conn,$id) {  // check in future if it's redund
   $sql = "select * from Comment where CustomerId =".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $comments = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $comments = mysqli_fetch_assoc($result);
       $comments = json_encode($comments);
       $conn->close();
-      return $comments;
+      if($backend)
+      { 
+        return $comments;   
+      }
+      else
+      {
+       echo $comments;
+      }
+    
   } else {
       echo "Error retrieving Comments: " . $conn->error;
   }

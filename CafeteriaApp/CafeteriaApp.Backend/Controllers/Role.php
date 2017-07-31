@@ -1,37 +1,53 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
 
-function getRoles($conn) {
+function getRoles($conn,$backend=false) {
   
   $sql = "select * from Role";
   $result = $conn->query($sql);
   if ($result) {
-      $roles = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $roles = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $roles = json_encode($roles);
       $conn->close();
-      return $roles;
+      if($backend)
+      { 
+        return $roles;   
+      }
+      else
+      {
+       echo $roles;
+      }
+     
   } else {
       echo "Error retrieving Roles: " . $conn->error;
   }
-
 }
 
-function getRoleById($conn,$id) {
+
+function getRoleById($conn,$id,$backend=false) {
     if( !isset($id)) 
  {
  echo "Error: Role Id is not set";
   return;
   }
   else{
-  $sql = "select * from Role where Id=".$id;
+  $sql = "select * from Role where Id=".$id." LIMIT 1";
   $result = $conn->query($sql);
   if ($result) {
-      $roles = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $roles = mysqli_fetch_assoc($result);
       $roles = json_encode($roles);
       $conn->close();
-      return $roles;
+      if($backend)
+      { 
+        return $roles;   
+      }
+      else
+      {
+       echo $roles;
+      }
+      
   } else {
-      echo "Error retrieving Roles: " . $conn->error;
+      echo "Error retrieving Role: " . $conn->error;
   }
 
 }}

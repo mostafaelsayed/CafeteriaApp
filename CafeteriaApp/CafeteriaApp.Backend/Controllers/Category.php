@@ -1,7 +1,7 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
 
-function getByCafeteriaId($conn,$id) {
+function getByCafeteriaId($conn,$id,$backend=false) {
   if( !isset($id))
  {
  echo "Error: Id is not set";
@@ -12,17 +12,25 @@ function getByCafeteriaId($conn,$id) {
   $sql = "select * from category where CafeteriaId = ".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $categories = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $categories = json_encode($categories);
       $conn->close();
-      echo $categories;
+      if($backend)
+      { 
+        return $categories;   
+      }
+      else
+      {
+       echo $categories;
+      }
+     
   } else {
       echo "Error Retrieving Categories: " . $conn->error;
   }
 }
 }
 
-function getCategoryById($conn,$id) {
+function getCategoryById($conn,$id,$backend=false) {
   if( !isset($id))
  {
  echo "Error: Id is not set";
@@ -30,13 +38,21 @@ function getCategoryById($conn,$id) {
   }
   else
   {
-  $sql = "select * from category where Id = ".$id;
+  $sql = "select * from category where Id = ".$id." LIMIT 1";
   $result = $conn->query($sql);
   if ($result) {
-      $category = mysqli_fetch_object($result);
+      $category = mysqli_fetch_assoc($result);
       $category = json_encode($category);
       $conn->close();
-      echo $category;
+      if($backend)
+      { 
+        return $category;   
+      }
+      else
+      {
+       echo $category;
+      }
+     
   } else {
       echo "Error Retrieving Category: " . $conn->error;
   }

@@ -1,32 +1,47 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
 
-function getAdditionsByCategoryId($conn,$id) {
+function getAdditionsByCategoryId($conn,$id,$backend=false) {
   
   $sql = "select * from Addition where CategoryId=".$id;
   $result = $conn->query($sql);
 
   if ($result) {
-      $additions = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $additions = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $additions = json_encode($additions);
       $conn->close();
-      echo $additions;
+      if($backend)
+      { 
+        return $additions;   
+      }
+      else
+      {
+       echo $additions;
+      }
+     
   } else {
       echo "Error retrieving Additions: " . $conn->error;
   }
 }
 
-function getAdditionsById($conn,$id) {
+function getAdditionById($conn,$id,$backend=false) {
   
-  $sql = "select * from Addition where Id=".$id;
+  $sql = "select * from Addition where Id=".$id." LIMIT 1";
   $result = $conn->query($sql);
   if ($result) {
-      $additions = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $additions = mysqli_fetch_assoc($result);
       $additions = json_encode($additions);
       $conn->close();
-      echo $additions;
+       if($backend)
+      { 
+        return $additions;   
+      }
+      else
+      {
+       echo $additions;
+      }
   } else {
-      echo "Error retrieving Additions: " . $conn->error;
+      echo "Error retrieving Addition: " . $conn->error;
   }
 }
 

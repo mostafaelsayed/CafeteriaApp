@@ -1,7 +1,7 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
 
-function getMenuItemByCategoryId($conn , $id) {
+function getMenuItemByCategoryId($conn , $id,$backend=false) {
    if( !isset($id))
  {
  echo "Error:Category Id is not set";
@@ -12,16 +12,24 @@ function getMenuItemByCategoryId($conn , $id) {
   $sql = "select * from MenuItem where CategoryId = ".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $MenuItems = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $MenuItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $MenuItems = json_encode($MenuItems);
       $conn->close();
-      echo $MenuItems;
+      if($backend)
+      { 
+        return $MenuItems;   
+      }
+      else
+      {
+       echo $MenuItems;
+      }
+      
   } else {
       echo "Error retrieving MenuItems: " . $conn->error;
   }
 }}
 
-function getMenuItemById($conn , $id) {
+function getMenuItemById($conn , $id,$backend=false) {
    if( !isset($id))
  {
  echo "Error:MenuItem Id is not set";
@@ -29,13 +37,21 @@ function getMenuItemById($conn , $id) {
   }
   else
   {
-  $sql = "select * from MenuItem where Id = ".$id;
+  $sql = "select * from MenuItem where Id = ".$id." LIMIT 1";
   $result = $conn->query($sql);
   if ($result) {
-      $MenuItem = mysqli_fetch_object($result);
+      $MenuItem = mysqli_fetch_assoc($result);
       $MenuItem = json_encode($MenuItem);
       $conn->close();
-      echo $MenuItem;
+       if($backend)
+      { 
+        return $MenuItem;   
+      }
+      else
+      {
+       echo $MenuItem;
+      }
+      
   } else {
       echo "Error retrieving MenuItem: " . $conn->error;
   }

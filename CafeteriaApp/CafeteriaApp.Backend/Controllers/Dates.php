@@ -1,41 +1,57 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
 
-function getDates($conn) {
+function getDates($conn,$backend=false) {
   
   $sql = "select * from Dates";
   $result = $conn->query($sql);
   if ($result)
    {    
-      $dates = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $dates = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $dates = json_encode($dates);
       $conn->close();
-      return $dates;
+       if($backend)
+      { 
+        return $dates;   
+      }
+      else
+      {
+       echo $dates;
+      }
+      
   } else {
       echo "Error retrieving Dates: " . $conn->error;
   }
 }
 
-function getDateById($conn ,$id) {
+function getDateById($conn ,$id,$backend=false) {
   if (!isset($id)) {
  echo "Error: Date id is not set";
   return;
   }
   else {
-  $sql = "select Date from Dates where Id=".$id;
+  $sql = "select Date from Dates where Id=".$id." LIMIT 1";
   $result = $conn->query($sql);
   if ($result) {
-      $Id = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $Id = mysqli_fetch_assoc($result);
       $Id= json_encode($Id);
       $conn->close();
-      return $Id;
+      if($backend)
+      { 
+        return $Id;   
+      }
+      else
+      {
+       echo $Id;
+      }
+      
   } else {
-      echo "Error retrieving Dates: " . $conn->error;
+      echo "Error retrieving Date: " . $conn->error;
   }
 }}
 
 
-function getIdByDate($conn ,$value) {
+function getIdByDate($conn ,$value,$backend=false) {
   if (!isset($value)) {
  echo "Error: Date value  is not set";
   return;
@@ -44,26 +60,43 @@ function getIdByDate($conn ,$value) {
   $sql = "select Id from Dates where Date=".$value;
    $result = $conn->query($sql);
   if ($result) {
-      $date = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $date = mysqli_fetch_assoc($result);
       $date= json_encode($date);
       $conn->close();
-      return $date;
+      if($backend)
+      { 
+        return $date;   
+      }
+      else
+      {
+       echo $date;
+      }
+      
   } else {
       echo "Error retrieving Dates: " . $conn->error;
   }
 }}
 
 
-function getIdByTodayDate($conn) { //CURDATE() mysql
+
+function getIdByTodayDate($conn,$backend=false) { //CURDATE() mysql
   $today = date("Y-m-d");
   $sql = "select Id from Dates where Date = STR_TO_DATE('{$today}', '%Y-%m-%d')";
   $result = $conn->query($sql);
   if ($result) {
-      $date = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $date = mysqli_fetch_assoc($result);
       //echo $date[0]["Id"] ;
       $date= json_encode($date);
       $conn->close();
-      return $date;
+      if($backend)
+      { 
+        return $date;   
+      }
+      else
+      {
+       echo $date;
+      }
+
   } else {
       echo "Error retrieving Dates: " . $conn->error;
   

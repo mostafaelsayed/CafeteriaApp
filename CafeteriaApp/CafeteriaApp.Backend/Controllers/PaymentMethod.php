@@ -1,37 +1,53 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
 
-function getPaymentMethods($conn) {
+function getPaymentMethods($conn,$backend=false) {
   
   $sql = "select * from PaymentMethod";
   $result = $conn->query($sql);
   if ($result) {
-      $paymentMethods = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $paymentMethods = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $paymentMethods = json_encode($paymentMethods);
       $conn->close();
-      return $paymentMethods;
+      if($backend)
+      { 
+        return $paymentMethods;   
+      }
+      else
+      {
+       echo $paymentMethods;
+      }
+     
   } else {
       echo "Error retrieving PaymentMethods : " . $conn->error;
   }
 
 }
 
-function getPaymentMethodById($conn,$id) {
+function getPaymentMethodById($conn,$id,$backend=false) {
     if( !isset($id)) 
  {
  echo "Error: PaymentMethod Id is not set";
   return;
   }
   else{
-  $sql = "select * from PaymentMethod where Id=".$id;
+  $sql = "select * from PaymentMethod where Id=".$id." LIMIT 1";
   $result = $conn->query($sql);
   if ($result) {
-      $paymentMethods = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $paymentMethods = mysqli_fetch_assoc($result);
       $paymentMethods = json_encode($paymentMethods);
       $conn->close();
-      return $paymentMethods;
+      if($backend)
+      { 
+        return $paymentMethods;   
+      }
+      else
+      {
+       echo $paymentMethods;
+      }
+     
   } else {
-      echo "Error retrieving PaymentMethods : " . $conn->error;
+      echo "Error retrieving PaymentMethod : " . $conn->error;
   }
 }
 }

@@ -1,35 +1,51 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
 
-function getOrderStatus($conn) {
+function getOrderStatus($conn,$backend=false) {
   
   $sql = "select * from OrderStatus";
   $result = $conn->query($sql);
   if ($result) {
-      $OrderStatus = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $OrderStatus = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $OrderStatus = json_encode($OrderStatus);
       $conn->close();
-      return $OrderStatus;
+       if($backend)
+      { 
+        return $OrderStatus;   
+      }
+      else
+      {
+       echo $OrderStatus;
+      }
+    
   } else {
       echo "Error retrieving OrderStatus: " . $conn->error;
   }
 }
 
 
-function getOrderStatusById($conn ,$id) {
+function getOrderStatusById($conn ,$id,$backend=false) {
     if( !isset($id)) 
  {
  echo "Error: OrderStatus Id is not set";
   return;
   }
   else{
-  $sql = "select * from OrderStatus  where Id=".$id;
+  $sql = "select * from OrderStatus  where Id=".$id." LIMIT 1";
   $result = $conn->query($sql);
   if ($result) {
-      $OrderStatus = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $OrderStatus = mysqli_fetch_assoc($result);
       $OrderStatus = json_encode($OrderStatus);
       $conn->close();
-      return $OrderStatus;
+      if($backend)
+      { 
+        return $OrderStatus;   
+      }
+      else
+      {
+       echo $OrderStatus;
+      }
+    
   } else {
       echo "Error retrieving OrderStatus: " . $conn->error;
   }

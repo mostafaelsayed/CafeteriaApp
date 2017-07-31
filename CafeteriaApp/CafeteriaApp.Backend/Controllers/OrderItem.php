@@ -4,7 +4,7 @@ include 'CafeteriaApp.Backend\connection.php';
 require_once('CafeteriaApp.Backend/Controllers/Order.php');
 
 
-function getOrderItemsByOrderId($conn,$id) {
+function getOrderItemsByOrderId($conn,$id,$backend=false) {
     if( !isset($id)) 
  {
  echo "Error: Order Id is not set";
@@ -15,16 +15,24 @@ function getOrderItemsByOrderId($conn,$id) {
   $sql = "select * from OrderItem where OrderId=".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $orderItems = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $orderItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $orderItems = json_encode($orderItems);
       $conn->close();
-      return $orderItems;
+      if($backend)
+      { 
+        return $orderItems;   
+      }
+      else
+      {
+       echo $orderItems;
+      }
+      
   } else {
       echo "Error retrieving OrderItems : " . $conn->error;
   }
 }}
 
-function getOrderItemById($conn,$id) {
+function getOrderItemById($conn,$id,$backend=false) {
     if( !isset($id)) 
  {
  echo "Error: OrderItem Id is not set";
@@ -32,13 +40,21 @@ function getOrderItemById($conn,$id) {
   }
   else
   {
-  $sql = "select * from OrderItem where Id=".$id;
+  $sql = "select * from OrderItem where Id=".$id." LIMIT 1";
   $result = $conn->query($sql);
   if ($result) {
-      $orderItems = mysqli_fetch_array($result, MYSQLI_ASSOC);
-      $orderItems = json_encode($orderItems);
+      $orderItem = mysqli_fetch_assoc($result);
+      $orderItem = json_encode($orderItem);
       $conn->close();
-      return $orderItems;
+       if($backend)
+      { 
+        return $orderItem;   
+      }
+      else
+      {
+       echo $orderItem;
+      }
+      
   } else {
       echo "Error retrieving OrderItem : " . $conn->error;
   }
@@ -85,21 +101,21 @@ function addOrderItem($conn,$orderId,$menuItemId,$quantity,$totalPrice) {
  echo "Error: OrderItem quantity is not set";
   return;
   }
-  elseif (!isset($totalPrice)) { // **********************************************************
+  elseif (!isset($totalPrice)) { 
    echo "Error: OrderItem totalPrice is not set";
   return;
 }
 
-elseif (!isset($orderId)) { // **********************************************************
+elseif (!isset($orderId)) { 
 
   $order = json_decode( getOpenOrderByCustomerId( $conn, $_SESSION["customer_id"]), true );
   
   if(isset($order)){
-  $orderId = $order["Id"];}
+  $orderId = $order["Id"];
+    }
   else{
-
-    return false; // **********************************************************
- }
+    return false; // untill we can handle delivery_place and payment_method
+  }
 
   }
   else {

@@ -2,7 +2,7 @@
 include 'CafeteriaApp.Backend\connection.php';
 
 
-function getClosedOrdersByCustomerId($conn,$id) {
+function getClosedOrdersByCustomerId($conn,$id,$backend=false) {
   if( !isset($id)) 
  {
  echo "Error: Customer Id is not set";
@@ -12,29 +12,45 @@ function getClosedOrdersByCustomerId($conn,$id) {
   $sql = "select * from order where CustomerId = ".$id;
   $result = $conn->query($sql);
   if ($result) {
-      $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $orders = json_encode($orders);
       $conn->close();
-      return $orders;
+       if($backend)
+      { 
+        return $orders;   
+      }
+      else
+      {
+       echo $orders;
+      }
+      
   } else {
       echo "Error retrieving orders: " . $conn->error;
   }
 }}
 
-function getOrderById($conn,$id) {
+function getOrderById($conn,$id,$backend=false) {
   if( !isset($id)) 
  {
  echo "Error: Order Id is not set";
   return;
   }
   else{
-  $sql = "select * from order where Id = ".$id;
+  $sql = "select * from order where Id = ".$id." LIMIT 1";
   $result = $conn->query($sql);
   if ($result) {
-      $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $orders = mysqli_fetch_assoc($result);
       $orders = json_encode($orders);
       $conn->close();
-      return $orders;
+      if($backend)
+      { 
+        return $orders;   
+      }
+      else
+      {
+       echo $orders;
+      }
+    
   } else {
       echo "Error retrieving order: " . $conn->error;
   }
@@ -42,7 +58,7 @@ function getOrderById($conn,$id) {
 
 
 
-function getOpenOrderIdByCustomerId($conn,$id) {
+function getOpenOrderIdByCustomerId($conn,$id,$backend=false) {
    $openStatusId=1;
 
     if( !isset($id)) 
@@ -58,7 +74,15 @@ function getOpenOrderIdByCustomerId($conn,$id) {
       $order = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $order = json_encode($order);
       $conn->close();
-      return $order;
+      if($backend)
+      { 
+        return $order;   
+      }
+      else
+      {
+       echo $order;
+      }
+     
   } else {
       echo "Error retrieving Open Order : " . $conn->error;
   }
@@ -66,7 +90,7 @@ function getOpenOrderIdByCustomerId($conn,$id) {
 
 
 
-function getOrdersByDeliveryDateId($conn,$id) {
+function getOrdersByDeliveryDateId($conn,$id,$backend=false) {
     if( !isset($id)) 
  {
  echo "Error: DeliveryDate Id is not set";
@@ -79,14 +103,21 @@ function getOrdersByDeliveryDateId($conn,$id) {
       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $orders = json_encode($orders);
       $conn->close();
-      return $orders;
+      if($backend)
+      { 
+        return $orders;   
+      }
+      else
+      {
+       echo $orders;
+      }
   } else {
       echo "Error retrieving orders: " . $conn->error;
   }
 }}
 
 
-function getOrdersByDeliveryTimeId($conn,$id) {
+function getOrdersByDeliveryTimeId($conn,$id,$backend=false) {
   if( !isset($id)) 
  {
  echo "Error: DeliveryTime Id is not set";
@@ -99,14 +130,21 @@ function getOrdersByDeliveryTimeId($conn,$id) {
       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $orders = json_encode($orders);
       $conn->close();
-      return $orders;
+      if($backend)
+      { 
+        return $orders;   
+      }
+      else
+      {
+       echo $orders;
+      }
   } else {
       echo "Error retrieving orders: " . $conn->error;
   }
 }}
 
 
-function getOrdersByOrderStatusId($conn,$id) {
+function getOrdersByOrderStatusId($conn,$id,$backend=false) {
   if( !isset($id)) 
  {
  echo "Error: OrderStatus Id is not set";
@@ -119,14 +157,21 @@ function getOrdersByOrderStatusId($conn,$id) {
       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $orders = json_encode($orders);
       $conn->close();
-      return $orders;
+      if($backend)
+      { 
+        return $orders;   
+      }
+      else
+      {
+       echo $orders;
+      }
   } else {
       echo "Error retrieving orders: " . $conn->error;
   }
 }}
 
 
-function getOrdersByPaymentMethodId($conn,$id) {
+function getOrdersByPaymentMethodId($conn,$id,$backend=false) {
   if( !isset($id)) 
  {
  echo "Error: PaymentMethod Id is not set";
@@ -139,7 +184,14 @@ function getOrdersByPaymentMethodId($conn,$id) {
       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $orders = json_encode($orders);
       $conn->close();
-      return $orders;
+      if($backend)
+      { 
+        return $orders;   
+      }
+      else
+      {
+       echo $orders;
+      }
   } else {
       echo "Error retrieving orders: " . $conn->error;
   }

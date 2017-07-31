@@ -1,7 +1,7 @@
 <?php
 include 'CafeteriaApp.Backend\connection.php';
 
-function getFavoriteItemsByCustomerId($conn,$Cid) {
+function getFavoriteItemsByCustomerId($conn,$Cid,$backend=false) {
   if( !isset($Cid)) 
  {
  echo "Error: Customer Id is not set";
@@ -12,17 +12,25 @@ function getFavoriteItemsByCustomerId($conn,$Cid) {
   $sql = "select * from FavoriteItem where CustomerId =".$Cid;
   $result = $conn->query($sql);
   if ($result) {
-      $favoriteItems = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $favoriteItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $favoriteItems = json_encode($favoriteItems);
       $conn->close();
-      return $favoriteItems;
+       if($backend)
+      { 
+        return $favoriteItems;   
+      }
+      else
+      {
+       echo $favoriteItems;
+      }
+     
   } else {
       echo "Error retrieving FavoriteItems: " . $conn->error;
   }
 }}
 
 
-function getFavoriteItemById($conn,$id) {
+function getFavoriteItemById($conn,$id,$backend=false) {
   if( !isset($id)) 
  {
  echo "Error: FavoriteItem Id is not set";
@@ -30,15 +38,23 @@ function getFavoriteItemById($conn,$id) {
   }
   else
   {
-  $sql = "select * from FavoriteItem where CustomerId =".$id;
+  $sql = "select * from FavoriteItem where Id =".$id." LIMIT 1";
   $result = $conn->query($sql);
   if ($result) {
-      $favoriteItems = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $favoriteItems = mysqli_fetch_assoc($result);
       $favoriteItems = json_encode($favoriteItems);
       $conn->close();
-      return $favoriteItems;
+       if($backend)
+      { 
+        return $favoriteItems;   
+      }
+      else
+      {
+       echo $favoriteItems;
+      }
+      
   } else {
-      echo "Error retrieving FavoriteItems: " . $conn->error;
+      echo "Error retrieving FavoriteItem: " . $conn->error;
   }
 }}
 
