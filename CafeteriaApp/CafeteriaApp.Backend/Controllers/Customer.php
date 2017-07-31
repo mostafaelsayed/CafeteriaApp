@@ -72,7 +72,7 @@ elseif (!isset($userId)) {
   else {
   $sql = "insert into Customer (Credit,UserId) values (?,?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("fi",$Credit,$UserId);
+  $stmt->bind_param("di",$Credit,$UserId);
   $Credit = $cred;
   $UserId=$userId;
   //$conn->query($sql);

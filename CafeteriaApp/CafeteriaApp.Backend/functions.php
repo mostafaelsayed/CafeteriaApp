@@ -1,4 +1,7 @@
-<?php
+<?php 	
+require_once("CafeteriaApp.Backend/Controllers/User.php"); 
+ 
+
 
 	function redirect_to($new_location) {
 	  header("Location: " . $new_location);
@@ -71,10 +74,69 @@
 	}
 	
 	function confirm_logged_in() {
-		if (!logged_in()) {
+		if (!islogged_in()) {
 			redirect_to("login.php");
 		}
 	}
+
+
+
+function attempt_login($conn,$email, $password) {
+    $user = getUserByEmail($conn , $email);
+    if ($user) {
+      // found user, now check password
+      if (passwordCheck($password, $user["PasswordHash"])) {
+        // password matches
+        return $user;
+      } else {
+        // password does not match
+        return false;
+      }
+    } else {
+      // user not found
+      return false;
+    }
+  }
+
+
+function getUserByEmail($conn,$email) {    
+   if (!isset($email))
+  {
+     echo "Error: User Email is not set";
+  return;
+  }
+  else{
+    $safe_email = mysqli_real_escape_string($conn, $email);
+    
+    $query  = "SELECT * ";
+    $query .= "FROM User ";
+    $query .= "WHERE Email = '{$safe_email}' ";
+    $query .= "LIMIT 1";
+    $user_set = mysqli_query($conn, $query);
+    confirmQuery($user_set);
+    if($user = mysqli_fetch_assoc($user_set)) {
+      return $user;
+    } else {
+      return null;
+    }
+  }}
+  
+
+function confirmQuery($result_set) {
+    if (!$result_set) {
+      die("Database query failed."); //  not give the user who wants to login any info
+    }
+  }
+
+  function passwordCheck($password, $existing_hash) {
+    // existing hash contains format and salt at start
+    $hash = crypt($password, $existing_hash);
+    if ($hash === $existing_hash) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
 ?>
 
