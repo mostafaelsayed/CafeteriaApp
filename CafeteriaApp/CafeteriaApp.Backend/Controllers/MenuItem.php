@@ -10,20 +10,20 @@ function getMenuItemByCategoryId($conn , $id,$backend=false) {
   else
   {
   $sql = "select * from MenuItem where CategoryId = ".$id;
-  $result = $conn->query($sql);
-  if ($result) {
+  //$result = $conn->query($sql);
+  if ($result = $conn->query($sql)) {
       $MenuItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $MenuItems = json_encode($MenuItems);
       $conn->close();
       if($backend)
-      { 
-        return $MenuItems;   
+      {
+        return $MenuItems;
       }
       else
       {
        echo $MenuItems;
       }
-      
+
   } else {
       echo "Error retrieving MenuItems: " . $conn->error;
   }
@@ -38,20 +38,20 @@ function getMenuItemById($conn , $id,$backend=false) {
   else
   {
   $sql = "select * from MenuItem where Id = ".$id." LIMIT 1";
-  $result = $conn->query($sql);
-  if ($result) {
+  //$result = $conn->query($sql);
+  if ($result = $conn->query($sql)) {
       $MenuItem = mysqli_fetch_assoc($result);
       $MenuItem = json_encode($MenuItem);
       $conn->close();
        if($backend)
-      { 
-        return $MenuItem;   
+      {
+        return $MenuItem;
       }
       else
       {
        echo $MenuItem;
       }
-      
+
   } else {
       echo "Error retrieving MenuItem: " . $conn->error;
   }

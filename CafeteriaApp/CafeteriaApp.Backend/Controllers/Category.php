@@ -10,20 +10,20 @@ function getByCafeteriaId($conn,$id,$backend=false) {
   else
   {
   $sql = "select * from category where CafeteriaId = ".$id;
-  $result = $conn->query($sql);
-  if ($result) {
+  //$result = $conn->query($sql);
+  if ($result = $conn->query($sql)) {
       $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $categories = json_encode($categories);
       $conn->close();
       if($backend)
-      { 
-        return $categories;   
+      {
+        return $categories;
       }
       else
       {
        echo $categories;
       }
-     
+
   } else {
       echo "Error Retrieving Categories: " . $conn->error;
   }
@@ -39,20 +39,20 @@ function getCategoryById($conn,$id,$backend=false) {
   else
   {
   $sql = "select * from category where Id = ".$id." LIMIT 1";
-  $result = $conn->query($sql);
-  if ($result) {
+  //$result = $conn->query($sql);
+  if ($result = $conn->query($sql)) {
       $category = mysqli_fetch_assoc($result);
       $category = json_encode($category);
       $conn->close();
       if($backend)
-      { 
-        return $category;   
+      {
+        return $category;
       }
       else
       {
        echo $category;
       }
-     
+
   } else {
       echo "Error Retrieving Category: " . $conn->error;
   }

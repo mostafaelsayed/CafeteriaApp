@@ -3,14 +3,11 @@ require_once( 'CafeteriaApp.Backend/Controllers/Cafeteria.php');
 
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
-  if (isset($_GET["action"]) && $_GET["action"]=="getCafeterias"){
-    getCafeterias($conn);
-  }
-  elseif (isset($_GET["id"])) {
+  if (isset($_GET["id"])) {
     getCafeteriaById($conn,$_GET["id"]);
   }
   else {
-    echo "Error occured while returning cafeterias";
+    getCafeterias($conn);
   }
 }
 
@@ -44,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD']=="DELETE") {
         deleteCafeteria($conn,$cafeteriaIdToDelete);
       }
       else{
-        //echo "No Id is provided";
+        echo "No Id is provided";
       }
 }
 

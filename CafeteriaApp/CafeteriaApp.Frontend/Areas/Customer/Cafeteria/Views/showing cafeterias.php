@@ -1,10 +1,11 @@
 <title>Cafeterias</title>
-<?php
-include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
- ?>
- <script src="/CafeteriaApp.Frontend/Scripts/customer/cafeteria.js"></script>
 
- <!-- <div id="page-wrapper" style="margin-top:0px"> -->
+<?php
+  include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
+?>
+
+<script src="/CafeteriaApp.Frontend/Scripts/customer/showing cafeterias.js"></script>
+
 <div>
     <div>
         <h1 class="page-header" style="text-align:center;margin-top:70px">Our Cafeterias</h1>
@@ -12,7 +13,7 @@ include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
 </div>
 
 <div ng-app="myapp">
-  <div ng-controller="getcafeterias">
+  <div ng-controller="getCafeterias">
     <div  id="myCarousel" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
           <li data-target="#myCarousel" data-slide-to=0 class="active"></li>
@@ -20,7 +21,7 @@ include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
       </ol>
       <div class="carousel-inner">
         <div class="item active">
-          <a ng-href="/CafeteriaApp.Frontend/Areas/Customer/Cafeteria/Views/show.php?id={{cafeterias[0].Id}}">
+          <a ng-href="/CafeteriaApp.Frontend/Areas/Customer/Cafeteria/Views/showing categories of a cafeteria.php?id={{cafeterias[0].Id}}">
             <img style="display:block;margin:auto" ng-src={{cafeterias[0].Image}} width="500" height="400" />
           </a>
           <div class="carousel-caption">
@@ -28,7 +29,7 @@ include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
           </div>
         </div>
         <div ng-repeat="c in cafeterias.slice(1,cafeterias.length)" class="item">
-            <a ng-href="/CafeteriaApp.Frontend/Areas/Customer/Cafeteria/Views/show.php?id={{c.Id}}">
+            <a ng-href="/CafeteriaApp.Frontend/Areas/Customer/Cafeteria/Views/showing categories of a cafeteria.php?id={{c.Id}}">
               <img style="display:block;margin:auto" ng-src={{c.Image}} width="500" height="400" />
             </a>
             <div class="carousel-caption">

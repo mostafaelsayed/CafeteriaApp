@@ -1,15 +1,17 @@
 <title>MenuItems</title>
-<?php
-include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
- ?>
- <script src="/CafeteriaApp.Frontend/Scripts/customer/menuitem.js"></script>
 
- <!-- <div id="page-wrapper" style="margin-top:0px"> -->
+<?php
+  include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
+?>
+
+<script src="/CafeteriaApp.Frontend/Scripts/customer/showing menuitems of a category.js"></script>
+
 <div>
     <div>
         <h1 class="page-header" style="text-align:center;margin-top:70px">MenuItems</h1>
     </div>
 </div>
+
 <div class="container-fluid">
   <div class="row">
     <div ng-app="myapp" class="col-lg-8">
