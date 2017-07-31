@@ -1,10 +1,25 @@
 var app = angular.module('myapp', []);
 
+app.config(['$locationProvider', function($locationProvider) {
+  $locationProvider.html5Mode({
+    enabled: true,
+    requireBase: false
+  });
+}]);
+
 app.controller('editMenuItem',function($scope,$http,$location){
-  $scope.name = "";
-  $scope.price = "";
-  $scope.description
   $scope.menuItemId = $location.search().id;
+  $scope.getMenuItem = function(){
+    $http.get('/CafeteriaApp.Backend/Requests/MenuItem.php?id='+$scope.menuItemId)
+    .then(function(response){
+      console.log(response);
+      $scope.name = response.data.Name;
+      $scope.price = response.data.Price;
+      $scope.description = response.data.Description;
+    })
+  }
+
+  $scope.getMenuItem();
 
   $scope.editMenuItem = function() {
     var data = {

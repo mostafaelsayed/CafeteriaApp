@@ -22,12 +22,12 @@ function getCafeteriaById($conn ,$id) {
   $sql = "select * from Cafeteria where Id =".$id;
   if ($conn->query($sql)) {
       $result = $conn->query($sql);
-      $cafeterias = mysqli_fetch_all($result, MYSQLI_ASSOC); // ??
-      $cafeterias = json_encode($cafeterias); // ??
+      $cafeteria = mysqli_fetch_object($result); // fetch only the first row of the result
+      $cafeteria = json_encode($cafeteria); // ??
       $conn->close();
-      return $cafeterias;
+      echo $cafeteria;
   } else {
-      echo "Error retrieving Cafeterias : " . $conn->error;
+      echo "Error retrieving Cafeteria : " . $conn->error;
   }
 
 }

@@ -3,8 +3,11 @@ require_once( 'CafeteriaApp.Backend/Controllers/Category.php');
 
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
-  if ($_GET["Id"] != null) {
-    getByCafeteriaId($conn,$_GET["Id"]);
+  if (isset($_GET["cafeteriaId"])) {
+    getByCafeteriaId($conn,$_GET["cafeteriaId"]);
+  }
+  elseif ($_GET["id"] != null) {
+    getCategoryById($conn,$_GET["id"]);
   }
   else {
     echo "Error occured while returning categories";
@@ -14,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
 if ($_SERVER['REQUEST_METHOD']=="POST"){
     //decode the json data
     $data = json_decode(file_get_contents("php://input"));
-    if (isset($data->action) && $data->action == "addCategory" && $data->CafeteriaId != null && $data->Name != null){
+    if (isset($data->CafeteriaId) && isset($data->Name) && $data->CafeteriaId != null && $data->Name != null){
         addCategory($conn,$data->Name,$data->CafeteriaId);
       }
       else{

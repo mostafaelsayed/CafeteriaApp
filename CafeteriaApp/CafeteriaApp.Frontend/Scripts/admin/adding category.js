@@ -14,7 +14,7 @@ app.controller('addCategory',function($scope,$http,$location){
     var data = {
       Name: $scope.name,
       CafeteriaId: $scope.cafeteriaId,
-      action: "addCategory"
+      //action: "addCategory"
     };
     if ($scope.name != "" && $scope.cafeteriaId != "") {
       $http.post('/CafeteriaApp.Backend/Requests/Category.php',data)

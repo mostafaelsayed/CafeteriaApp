@@ -33,12 +33,12 @@ function getCategoryById($conn,$id) {
   $sql = "select * from category where Id = ".$id;
   if ($conn->query($sql)) {
       $result = $conn->query($sql);
-      $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
-      $categories = json_encode($categories);
+      $category = mysqli_fetch_object($result);
+      $category = json_encode($category);
       $conn->close();
-      return $categories;
+      echo $category;
   } else {
-      echo "Error Retrieving Categories: " . $conn->error;
+      echo "Error Retrieving Category: " . $conn->error;
   }
 }
 }

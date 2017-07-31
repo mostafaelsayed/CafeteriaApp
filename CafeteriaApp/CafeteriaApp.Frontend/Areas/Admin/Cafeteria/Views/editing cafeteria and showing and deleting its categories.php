@@ -1,4 +1,5 @@
 <title>Managing Cafeteria</title>
+
 <?php
   include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
 ?>
@@ -47,8 +48,8 @@
       <script type="text/ng-template" id="modal.html">
         <div class="modal fade" id="mymodal" data-backdrop="false" style="background: rgba(0, 0, 0, 0.5)">
           <div class="modal-dialog">
-            <div class="modal-header">
-              <div class="modal-content">
+            <div class="modal-content">
+              <div class="modal-header">
                 <button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Are You Sure You Want To Delete This Category?</h4>
               </div>

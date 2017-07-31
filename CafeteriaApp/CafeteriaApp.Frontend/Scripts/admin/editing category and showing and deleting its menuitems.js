@@ -13,8 +13,18 @@ app.controller('ModalController', function($scope, close) {
 });
 
 app.controller('editCategory',function($scope,$http,$location){
-  $scope.name = "";
   $scope.categoryId = $location.search().id;
+
+  $scope.getCategory = function(){
+    $http.get('/CafeteriaApp.Backend/Requests/Category.php?id='+$scope.categoryId)
+    .then(function(response){
+      $scope.name = response.data.Name;
+      console.log(response);
+      $scope.image = response.data.Image;
+    })
+  }
+
+  $scope.getCategory();
 
   $scope.editCategory = function() {
     var data = {
@@ -35,10 +45,10 @@ app.controller('editCategory',function($scope,$http,$location){
 
 // controller for showing and deleting menuitems
 
-app.controller('showingAndDeletingMenuItems',function($scope,$http,$location) {
+app.controller('showingAndDeletingMenuItems',function($scope,$http,$location,ModalService) {
   $scope.categoryId = $location.search().id;
   $scope.getMenuItems = function(){
-    $http.get('/CafeteriaApp.Backend/Requests/MenuItem.php?Id='+$scope.categoryId)
+    $http.get('/CafeteriaApp.Backend/Requests/MenuItem.php?categoryId='+$scope.categoryId)
     .then(function (response) {
       $scope.menuItems = response.data;
       console.log(response);

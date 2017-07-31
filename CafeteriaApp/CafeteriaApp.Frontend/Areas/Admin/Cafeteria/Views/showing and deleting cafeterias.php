@@ -39,7 +39,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">Manage Your Cafeterias
             <div>
-              <a style="float: right;margin-top: -23px;" title="Add Cafeteria" id="creatNewCafeteria" ng-href="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/adding cafeteria.php"class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a>
+              <a style="float: right;margin-top: -23px;" title="Add Cafeteria" id="creatNewCafeteria" ng-href="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/adding cafeteria.php" target="_self" class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a>
             </div>
           </div>
           <div class="panel-body">

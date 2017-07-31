@@ -18,7 +18,7 @@ app.controller('addMenuItem',function($scope,$http,$location){
       Price: $scope.price,
       Description: $scope.description,
       CategoryId: $scope.categoryId,
-      action: "addMenuItem"
+      //action: "addMenuItem"
     };
     if ($scope.name != "" && $scope.categoryId != "") {
       $http.post('/CafeteriaApp.Backend/Requests/MenuItem.php',data)

@@ -6,6 +6,9 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
   if (isset($_GET["action"]) && $_GET["action"]=="getCafeterias"){
     getCafeterias($conn);
   }
+  elseif (isset($_GET["id"])) {
+    getCafeteriaById($conn,$_GET["id"]);
+  }
   else {
     echo "Error occured while returning cafeterias";
   }
@@ -14,14 +17,14 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
 if ($_SERVER['REQUEST_METHOD']=="POST"){
     //decode the json data
     $data = json_decode(file_get_contents("php://input"));
-    if (isset($data->action) && $data->action == "addCafeteria"){ // chnage cafetria to uppercase first letter
+    //if (isset($d $data->action == "addCafeteria"){ // chnage cafetria to uppercase first letter
       if ($data->Name != null){
         addCafeteria($conn,$data->Name);
       }
       else{
         echo "name is required";
       }
-  }
+  //}
 }
 
 if ($_SERVER['REQUEST_METHOD']=="PUT"){

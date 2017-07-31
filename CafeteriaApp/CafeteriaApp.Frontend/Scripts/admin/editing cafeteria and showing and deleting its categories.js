@@ -14,8 +14,17 @@ app.controller('ModalController', function($scope, close) {
 });
 
 app.controller('editCafeteria',function($scope,$http,$location){
-  $scope.name = "";
   $scope.cafeteriaId = $location.search().id;
+
+  $scope.getCafeteria = function(){
+    $http.get('/CafeteriaApp.Backend/Requests/Cafeteria.php?id='+$scope.cafeteriaId)
+    .then(function(response){
+      $scope.name = response.data.Name;
+      $scope.image = response.data.Image;
+    });
+  }
+
+  $scope.getCafeteria();
 
   $scope.editCafeteria = function() {
     var data = {
@@ -37,8 +46,9 @@ app.controller('editCafeteria',function($scope,$http,$location){
 
 app.controller('showingAndDeletingCategories',function($scope,$http,$location,ModalService) {
   $scope.cafeteriaId = $location.search().id;
+  
   $scope.getCategories = function(){
-    $http.get('/CafeteriaApp.Backend/Requests/Category.php?Id='+$scope.cafeteriaId)
+    $http.get('/CafeteriaApp.Backend/Requests/Category.php?cafeteriaId='+$scope.cafeteriaId)
       .then(function (response) {
         $scope.categories = response.data;
         console.log(response);

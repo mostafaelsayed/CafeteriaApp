@@ -9,7 +9,7 @@ function getMenuItemByCategoryId($conn , $id) {
   }
   else
   {
-  $sql = "select * from MenuItem where CategoryId = $id";
+  $sql = "select * from MenuItem where CategoryId = ".$id;
   if ($conn->query($sql)) {
       $result = $conn->query($sql);
       $MenuItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -29,15 +29,15 @@ function getMenuItemById($conn , $id) {
   }
   else
   {
-  $sql = "select * from MenuItem where Id = $id";
-  if ($conn->query($sql)) {
-      $result = $conn->query($sql);
-      $MenuItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
-      $MenuItems = json_encode($MenuItems);
+  $sql = "select * from MenuItem where Id = ".$id;
+  if ($result=$conn->query($sql)) {
+      //$result = $conn->query($sql);
+      $MenuItem = mysqli_fetch_object($result);
+      $MenuItem = json_encode($MenuItem);
       $conn->close();
-      echo $MenuItems;
+      echo $MenuItem;
   } else {
-      echo "Error retrieving MenuItems: " . $conn->error;
+      echo "Error retrieving MenuItem: " . $conn->error;
   }
 }}
 
@@ -66,7 +66,7 @@ elseif (!isset($categoryId)) {
   return;
 }
   else {
-  $sql = "insert into MenuItem (Name,Price,Description,CategoryId) values (?,?,?,?)"; // string should be quoted like that (single quotes)
+  $sql = "insert into menuitem (Name,Price,Description,CategoryId) values (?,?,?,?)"; // string should be quoted like that (single quotes)
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("sdsi",$Name,$Price,$Description,$CategoryId); // not sure if float takes 'f'
   $Name=$name;
@@ -74,7 +74,7 @@ elseif (!isset($categoryId)) {
   $Price=$price;
   $Description=$description;
   $CategoryId=$categoryId;
-  if ($conn->query($sql)===TRUE) {
+  if ($stmt->execute()===TRUE) {
     echo "MenuItem Added successfully";
   }
   else {
@@ -86,9 +86,7 @@ elseif (!isset($categoryId)) {
 
 
 
-
-
-function editMenuItem($conn,$name,$image,$price,$description,$id) {
+function editMenuItem($conn,$name,$price,$description,$id) {
   if( !isset($name))
  {
  echo "Error: MenuItem name is not set";
@@ -114,7 +112,7 @@ function editMenuItem($conn,$name,$image,$price,$description,$id) {
   {
   $sql = "update MenuItem set Name = (?), Price=(?) ,Description =(?) where Id = (?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("sfsi",$Name,$Price,$Description,$Id);
+  $stmt->bind_param("sdsi",$Name,$Price,$Description,$Id);
   $Name = $name;
   //$Image = $image;
   $Price = $price;
@@ -141,7 +139,7 @@ function deleteMenuItem($conn,$id) {
   }
   else{
   //$conn->query("set foreign_key_checks = 0"); // ????????/
-  $sql = "delete from MenuItem where Id = ".$id . "LIMIT 1";
+  $sql = "delete from MenuItem where Id = ".$id;
   if ($conn->query($sql)===TRUE) {
     echo "MenuItem deleted successfully";
   }
