@@ -15,7 +15,7 @@ function getDates($conn) {
   }
 }
 
-function getDates($conn ,$id) {
+function getDateById($conn ,$id) {
   if (!isset($id)) {
  echo "Error: Date id is not set";
   return;
@@ -52,6 +52,7 @@ function addDate($conn,$date) { // check format of the input
     echo "Error: ".$conn->error;
   }
 }}
+
 
 
 function editDate($conn,$date,$id) {
