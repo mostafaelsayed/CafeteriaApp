@@ -23,11 +23,11 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
     if ($found_user) {
       // Success
 			// Mark user as logged in
-			$_SESSION["user_id"] = $found_user["Id"];
-			$_SESSION["user_name"] = $found_user["UserName"];
+			$_SESSION["UserId"] = $found_user["Id"];
+			$_SESSION["userName"] = $found_user["UserName"];
 
       //get customer id by user id from db 
-     $customer_id_json = getCustomerByUserId($conn ,$_SESSION["user_id"] );
+     $customer_id_json = getCustomerIdByUserId($conn ,$_SESSION["user_id"] ,true);
       $_SESSION["customer_id"] = json_decode($customer_id_json, true)["Id"];
      
 

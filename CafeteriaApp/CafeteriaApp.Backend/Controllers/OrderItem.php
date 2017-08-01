@@ -12,7 +12,7 @@ function getOrderItemsByOrderId($conn,$id,$backend=false) {
   }
   else
   {
-  $sql = "select * from OrderItem where OrderId=".$id;
+  $sql = "select MenuItem.Name , OrderItem.Quantity , OrderItem.TotalPrice  from OrderItem INNER JOIN MenuItem ON  OrderItem.MenuItemId = MenuItem.Id where OrderItem.OrderId=".$id ;
   $result = $conn->query($sql);
   if ($result) {
       $orderItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -31,6 +31,7 @@ function getOrderItemsByOrderId($conn,$id,$backend=false) {
       echo "Error retrieving OrderItems : " . $conn->error;
   }
 }}
+
 
 function getOrderItemById($conn,$id,$backend=false) {
     if( !isset($id)) 

@@ -1,5 +1,6 @@
+<?php require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies ?> 
 <?php
-include 'CafeteriaApp.Backend\connection.php';
+require_once ("CafeteriaApp.Backend/connection.php");
 
 
 function getCustomers($conn,$backend=false){
@@ -24,6 +25,7 @@ function getCustomers($conn,$backend=false){
       echo "Error retrieving customers: " . $conn->error;
   }
 }
+
 
 
 function getCustomerById($conn ,$id,$backend=false) {
@@ -55,7 +57,75 @@ function getCustomerById($conn ,$id,$backend=false) {
 }
 
 
+
+function getCurrentCustomerByUserId($conn,$backend=false) {
+ 
+ if(isset($_SESSION["UserId"])) 
+  {
+  $userId=$_SESSION["UserId"];
+  } 
+
+  if( !isset($userId)) 
+ {
+ echo "Error: User Id is not set";
+  return;
+  }
+  else
+  {
+  $sql = "select * from Customer where UserId =".$userId." LIMIT 1";
+  $result = $conn->query($sql);
+  if ($result) {
+      $customer = mysqli_fetch_assoc($result);
+      $customer = json_encode($customer);
+      $conn->close();
+      if($backend)
+      { 
+        return $customer;   
+      }
+      else
+      {
+       echo $customer;
+      }
+     
+  } else {
+      echo "Error retrieving customer: " . $conn->error;
+  }
+}}
+
+
 function getCustomerByUserId($conn,$userId,$backend=false) {
+ 
+
+  if( !isset($userId)) 
+ {
+ echo "Error: User Id is not set";
+  return;
+  }
+  else
+  {
+  $sql = "select * from Customer where UserId =".$userId." LIMIT 1";
+  $result = $conn->query($sql);
+  if ($result) {
+      $customer = mysqli_fetch_assoc($result);
+      $customer = json_encode($customer);
+      $conn->close();
+      if($backend)
+      { 
+        return $customer;   
+      }
+      else
+      {
+       echo $customer;
+      }
+     
+  } else {
+      echo "Error retrieving customer: " . $conn->error;
+  }
+}}
+
+
+
+function getCustomerIdByUserId($conn,$userId,$backend=false) {
   if( !isset($userId)) 
  {
  echo "Error: User Id is not set";
@@ -83,6 +153,8 @@ function getCustomerByUserId($conn,$userId,$backend=false) {
   }
 }}
 
+
+//getCustomerByUserId($conn);
 
 function addCustomer($conn,$cred,$userId) {
    if( !isset($cred)) 
