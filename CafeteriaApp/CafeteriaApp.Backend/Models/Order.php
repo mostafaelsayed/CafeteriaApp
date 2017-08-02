@@ -7,7 +7,7 @@ class Order
 	public $create= "CREATE TABLE `mydb`.`Order` (
 	`Id` INT NOT NULL AUTO_INCREMENT ,
 	 `CustomerId` INT NOT NULL ,
-	 `DeliveryPlace` INT NOT NULL ,
+	 `DeliveryPlace` VARCHAR(200) NOT NULL ,
 	  `DeliveryDateId` INT NOT NULL ,
 	  `DeliveryTimeId` INT NOT NULL ,
 	  `Paid` DECIMAL NOT NULL ,
