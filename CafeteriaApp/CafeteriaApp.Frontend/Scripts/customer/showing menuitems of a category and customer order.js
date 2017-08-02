@@ -49,6 +49,7 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
   $scope.getOrderItems = function() {
     $http.get('/CafeteriaApp.Backend/Requests/OrderItem.php?orderId='+$scope.orderId)
     .then(function(response) {
+      console.log(response);
       $scope.orderItems = response.data;
       console.log(response.data);
       //$scope.TotalPrice = $scope.getTotalPrice();
@@ -59,6 +60,7 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
     //console.log($scope.customerId);
     $http.get('/CafeteriaApp.Backend/Requests/Order.php')
     .then(function(response) {
+      console.log(response);
       $scope.currentOrder = response.data;
       $scope.orderId = $scope.currentOrder.Id;
       //console.log($scope.orderId);
