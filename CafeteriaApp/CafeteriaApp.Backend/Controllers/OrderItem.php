@@ -150,7 +150,7 @@ elseif ($orderId == null) // create order by default values
     $Price =$quantity * $price ; //$price;//*********************************get price from db.menuItems
     //$conn->query($sql);
     if ($stmt->execute()===TRUE) {
-      echo "OrderItem Added successfully";
+      //echo "OrderItem Added successfully";
       return $orderId;
     }
     else {
@@ -175,10 +175,12 @@ elseif ($orderId == null) // create order by default values
   $OrderId = $orderId;
   $MenuItemId = $menuItemId;
   $Quantity = $quantity;
-  $Price = $price;
+  $price =5 ;
+  $Price =$quantity * $price ; //$price;//*********************************get price from db.menuItems
+  //$Price = $price;
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
-    echo "OrderItem Added successfully";
+    //echo "OrderItem Added successfully";
     return $orderId;
   }
   else {
