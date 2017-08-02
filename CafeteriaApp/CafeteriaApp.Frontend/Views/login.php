@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
       }
       
 
-      redirect_to(rawurldecode("CafeteriaApp.Frontend/Areas/Customer/Cafeteria/Views/showing cafeterias.php")); //                              3ala 7asab 
+      redirect_to(rawurldecode("/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php")); //                              3ala 7asab 
     }
 
      else {
