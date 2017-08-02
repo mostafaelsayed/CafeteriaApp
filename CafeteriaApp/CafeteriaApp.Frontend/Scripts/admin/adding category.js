@@ -7,6 +7,8 @@ app.config(['$locationProvider', function($locationProvider) {
   });
 }]);
 
+// controller for adding category to the database
+
 app.controller('addCategory',function($scope,$http,$location){
   $scope.name = "";
   $scope.cafeteriaId = $location.search().id;

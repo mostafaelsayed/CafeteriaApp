@@ -1,10 +1,4 @@
 ﻿var app = angular.module('myapp', ['angularModalService','ui.bootstrap']);
-app.config(['$locationProvider', function($locationProvider) {
-  $locationProvider.html5Mode({
-    enabled: true,
-    requireBase: false
-  });
-}]);
 
 app.controller('ModalController', function($scope, close) {
   $scope.close = function(result) {
@@ -13,7 +7,8 @@ app.controller('ModalController', function($scope, close) {
 });
 
 // controller for getting and deleting cafeterias
-app.controller('showingAndDeletingCafeterias', function ($scope,$http,$location,ModalService) {
+
+app.controller('showingAndDeletingCafeterias', function ($scope,$http,ModalService) {
   $scope.show = function() {
     ModalService.showModal({
       templateUrl: 'modal.html',
@@ -43,7 +38,6 @@ app.controller('showingAndDeletingCafeterias', function ($scope,$http,$location,
     $scope.delete = function() {
      $http.delete('/CafeteriaApp.Backend/Requests/Cafeteria.php?cafeteriaId='+cafeteriaId)
      .then(function(response){
-       console.log(response);
        $scope.getCafeterias();
      });
     };

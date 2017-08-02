@@ -7,19 +7,19 @@ app.config(['$locationProvider', function($locationProvider) {
   });
 }]);
 
-// controller for getting categories from database
+// controller for getting categories of a cafeteria from database
 
-app.controller('getByCafeteriaId', function ($scope,$http,$location) {
-  $scope.cafeteriaid = $location.search().id;
+app.controller('getCategories', function ($scope,$http,$location) {
+  $scope.cafeteriaId = $location.search().id;
 
-  $scope.getcategories = function(){
-   $http.get('/CafeteriaApp.Backend/Requests/Category.php?cafeteriaId='+$scope.cafeteriaid)
+  $scope.getCategories = function(){
+   $http.get('/CafeteriaApp.Backend/Requests/Category.php?cafeteriaId='+$scope.cafeteriaId)
    .then(function (response) {
        $scope.categories = response.data;
        console.log(response);
    });
   }
 
-  $scope.getcategories();
+  $scope.getCategories();
 
 });

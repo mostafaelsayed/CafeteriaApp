@@ -13,6 +13,8 @@ app.controller('ModalController', function($scope, close) {
   };
 });
 
+// controller for editing a cafeteria
+
 app.controller('editCafeteria',function($scope,$http,$location){
   $scope.cafeteriaId = $location.search().id;
 
@@ -36,7 +38,6 @@ app.controller('editCafeteria',function($scope,$http,$location){
       .then(function(response){
         console.log(response);
         window.history.back();
-    // document.location = "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/index.php";
       });
     };
   };
@@ -46,7 +47,7 @@ app.controller('editCafeteria',function($scope,$http,$location){
 
 app.controller('showingAndDeletingCategories',function($scope,$http,$location,ModalService) {
   $scope.cafeteriaId = $location.search().id;
-  
+
   $scope.getCategories = function(){
     $http.get('/CafeteriaApp.Backend/Requests/Category.php?cafeteriaId='+$scope.cafeteriaId)
       .then(function (response) {

@@ -12,6 +12,8 @@ app.controller('ModalController', function($scope, close) {
   };
 });
 
+// controller for editing a category
+
 app.controller('editCategory',function($scope,$http,$location){
   $scope.categoryId = $location.search().id;
 

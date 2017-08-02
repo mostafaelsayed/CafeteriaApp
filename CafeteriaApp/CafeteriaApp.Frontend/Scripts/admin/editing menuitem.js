@@ -7,6 +7,8 @@ app.config(['$locationProvider', function($locationProvider) {
   });
 }]);
 
+// controller for editing a menuitem
+
 app.controller('editMenuItem',function($scope,$http,$location){
   $scope.menuItemId = $location.search().id;
   $scope.getMenuItem = function(){

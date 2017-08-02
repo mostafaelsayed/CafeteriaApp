@@ -7,6 +7,8 @@ app.config(['$locationProvider', function($locationProvider) {
   });
 }]);
 
+// controller for adding menuitem to the database
+
 app.controller('addMenuItem',function($scope,$http,$location){
   $scope.name = "";
   $scope.price = "";

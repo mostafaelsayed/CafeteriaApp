@@ -52,18 +52,18 @@
  <!-- Custom Theme JavaScript -->
  <script src="/CafeteriaApp.Frontend/Scripts/adminTheme/sb-admin-2.js"></script>
  </head>
- <body>
+ <body style="background-image:	url('/CafeteriaApp.Frontend/Scripts/CustomerTheme/images/background image1.jpg')">
 <div id="wrapper">
         <!-- Navigation -->
-      <nav class="navbar navbar-default navbar-fixed-top"  style="background-color:#8B0000">
+      <nav class="navbar navbar-default navbar-fixed-top" style="background-image:	url('/CafeteriaApp.Frontend/Scripts/CustomerTheme/images/background image1.jpg')">
         <div class="container-fluid">
           <div class="navbar-header">
-            <a style="color:black" class="navbar-brand" href="/CafeteriaApp.Frontend/Areas/Customer/Cafeteria/Views/index.php">Cafeterias Page</a>
+            <a style="color:white" class="navbar-brand" href="/CafeteriaApp.Frontend/Areas/Customer/Cafeteria/Views/showing cafeterias.php">Cafeterias Page</a>
           </div>
           <ul class="nav navbar-nav">
-            <li><a class="navbar-brand" style="color:black" href="#">Home</a></li>
-            <li><a class="navbar-brand" style="color:black" href="#">Contact</a></li>
-            <li><a class="navbar-brand" style="color:black" href="#">Help</a></li>
+            <li><a class="navbar-brand" style="color:white" href="#">Home</a></li>
+            <li><a class="navbar-brand" style="color:white" href="#">Contact</a></li>
+            <li><a class="navbar-brand" style="color:white" href="#">Help</a></li>
           </ul>
           </div>
 
