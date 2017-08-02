@@ -59,16 +59,19 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
       $scope.orderId = $scope.currentOrder.Id;
       if ($scope.orderId == undefined) {
         $scope.orderId = null;
-      }
-      //console.log($scope.orderId);
-      if($scope.orderId != undefined) {
-        $scope.getOrderItems();
-      }
-      else if ($scope.orderId == undefined) {
         $scope.orderItems = [];
         //console.log($scope.orderItems);
         $scope.TotalPrice = 0;
       }
+      //console.log($scope.orderId);
+      else if($scope.orderId != undefined) {
+        $scope.getOrderItems();
+      }
+      // else if ($scope.orderId == undefined) {
+      //   $scope.orderItems = [];
+      //   //console.log($scope.orderItems);
+      //   $scope.TotalPrice = 0;
+      // }
     });
   }
 
