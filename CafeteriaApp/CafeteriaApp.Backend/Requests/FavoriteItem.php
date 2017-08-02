@@ -1,5 +1,6 @@
 <?php
 require_once( 'CafeteriaApp.Backend/Controllers/FavoriteItem.php');
+require_once("CafeteriaApp.Backend/connection.php");
 
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {

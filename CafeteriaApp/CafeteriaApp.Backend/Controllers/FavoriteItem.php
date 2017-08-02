@@ -1,5 +1,5 @@
 <?php
-include 'CafeteriaApp.Backend\connection.php';
+
 
 function getFavoriteItemsByCustomerId($conn,$Cid,$backend=false) {
   if( !isset($Cid)) 

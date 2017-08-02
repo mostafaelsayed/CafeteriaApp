@@ -1,11 +1,12 @@
 <?php
 require_once( 'CafeteriaApp.Backend/Controllers/MenuItem.php');
+require_once("CafeteriaApp.Backend/connection.php");
 
 
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
   if (isset($_GET["categoryId"])) {
-    getMenuItemByCategoryId($conn,$_GET["categoryId"]);
+    getMenuItemByCategoryId($conn,1);
   }
   elseif (isset($_GET["id"])) {
     getMenuItemById($conn,$_GET["id"]);

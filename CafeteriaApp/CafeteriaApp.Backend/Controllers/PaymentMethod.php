@@ -1,5 +1,4 @@
 <?php
-include 'CafeteriaApp.Backend\connection.php';
 
 function getPaymentMethods($conn,$backend=false) {
   

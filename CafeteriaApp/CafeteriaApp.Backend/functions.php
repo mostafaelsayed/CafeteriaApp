@@ -1,5 +1,5 @@
 <?php 	
-require_once("CafeteriaApp.Backend/Controllers/User.php"); 
+//require_once("CafeteriaApp.Backend/Controllers/User.php"); 
  
 
 
@@ -138,6 +138,10 @@ function confirmQuery($result_set) {
     }
   }
 
+
+
+
+//***************************			to be continued			 ********************************************
 function validatePageAccessWithRoleId($pageName  /*, $existing_hash*/) {
     // existing hash contains format and salt at start
     //$hash = crypt($pageName, $existing_hash);
@@ -148,11 +152,13 @@ function validatePageAccessWithRoleId($pageName  /*, $existing_hash*/) {
 
     $result_set = mysqli_query($conn, $query);
     confirmQuery($result_set);
-    if($result_set) {
-    $result_no = mysqli_num_rows($result_set)
 
-    if ($result_no > 0 )
+    if($result_set) {
+    $result_no = mysqli_num_rows($result_set);
+
+    if ( $result_no > 0 ){
       return;
+    }
     }
     else
     {

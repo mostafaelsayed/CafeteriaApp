@@ -1,7 +1,4 @@
-<?php require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies ?> 
-<?php
-require_once ("CafeteriaApp.Backend/connection.php");
-
+<?php require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies 
 
 function getCustomers($conn,$backend=false){
   
@@ -138,7 +135,7 @@ function getCustomerIdByUserId($conn,$userId,$backend=false) {
   if ($result) {
       $customer = mysqli_fetch_assoc($result);
       $customer = json_encode($customer);
-      $conn->close();
+      //$conn->close();
       if($backend)
       { 
         return $customer;   
@@ -154,7 +151,6 @@ function getCustomerIdByUserId($conn,$userId,$backend=false) {
 }}
 
 
-//getCustomerByUserId($conn);
 
 function addCustomer($conn,$cred,$userId) {
    if( !isset($cred)) 

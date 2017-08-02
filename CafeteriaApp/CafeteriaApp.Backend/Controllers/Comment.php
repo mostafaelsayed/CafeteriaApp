@@ -1,5 +1,4 @@
 <?php
-include 'CafeteriaApp.Backend\connection.php';
 
 function getCommentsByMenuItemId($conn,$id,$backend=false) {
   if( !isset($id)) 

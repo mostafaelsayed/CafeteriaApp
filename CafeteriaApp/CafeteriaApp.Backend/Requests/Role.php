@@ -1,5 +1,6 @@
 <?php
-require_once( 'CafeteriaApp.Backend/Controllers/PaymentMethod.php');
+require_once( 'CafeteriaApp.Backend/Controllers/Role.php');
+require_once("CafeteriaApp.Backend/connection.php");
 
 
 

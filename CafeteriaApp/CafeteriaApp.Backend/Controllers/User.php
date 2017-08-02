@@ -1,5 +1,4 @@
 <?php
-//include 'CafeteriaApp.Backend\connection.php';
 require_once( 'CafeteriaApp.Backend/Controllers/Customer.php');
 
 function getUsers($conn,$backend=false) {

@@ -1,5 +1,6 @@
 <?php
 require_once( 'CafeteriaApp.Backend/Controllers/Comment.php');
+require_once("CafeteriaApp.Backend/connection.php");
 
 
 
