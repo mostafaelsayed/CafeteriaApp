@@ -21,7 +21,7 @@
       </ol>
       <div class="carousel-inner">
         <div class="item active">
-          <a ng-href="/CafeteriaApp.Frontend/Areas/Customer/Cafeteria/Views/showing categories of a cafeteria.php?id={{cafeterias[0].Id}}">
+          <a ng-href="/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing categories of a cafeteria.php?id={{cafeterias[0].Id}}">
             <img style="display:block;margin:auto" ng-src={{cafeterias[0].Image}} width="500" height="400" />
           </a>
           <div class="carousel-caption">
