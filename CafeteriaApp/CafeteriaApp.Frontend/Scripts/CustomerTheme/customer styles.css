@@ -1,0 +1,16 @@
+h1,h3 {
+  font-style: italic;
+  color: white;
+  text-align: center;
+}
+.menu-name {
+
+  font-style: italic;
+  color: white;
+  text-align: left;
+}
+
+#thead {
+  color: white;
+  font-style: italic;
+}

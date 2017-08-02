@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST"){
     $data = json_decode(file_get_contents("php://input"));
     if (isset($data->action) && $data->action == "addTime"){
       if ($data->Name != null){
-        addTime($conn,$data->Name);
+        addTime($conn);
       }
       else{
         echo "Time is required";

@@ -9,28 +9,125 @@ app.config(['$locationProvider', function($locationProvider) {
 
 // controller for getting menuitems of a category from database
 
-app.controller('getMenuItems', function ($scope,$http,$location) {
-  $http.get('/CafeteriaApp.Backend/Requests/Customer.php')
-  .then(function(response){
-    console.log(response);
-  );
-//});
-
+app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location) {
   $scope.categoryId = $location.search().id;
 
-  $scope.getMenuItems = function(){
+  $scope.getMenuItems = function() {
    $http.get('/CafeteriaApp.Backend/Requests/MenuItem.php?categoryId='+$scope.categoryId)
-   .then(function (response) {
+   .then(function(response) {
        $scope.menuItems = response.data;
    });
   }
 
   $scope.getMenuItems();
 
-});
+  $scope.getCurrentCustomer = function() {
+    $http.get('/CafeteriaApp.Backend/Requests/Customer.php')
+    .then(function(response) {
+      //console.log(response);
+      $scope.currentCustomer = response.data;
+      $scope.customerId = $scope.currentCustomer.Id;
+      //console.log($scope.customerId);
+      $scope.getOrder();
+    });
+  }
 
-// controller for order
+  $scope.getTotalPrice = function() {
+    var price = 0;
+    for (i = 0;i<$scope.orderItems.length;i++) {
+      if ($scope.orderItems[i] != null) {
+        price = price + $scope.orderItems[i].Quantity*$scope.orderItems[i].Price;
+      }
+    }
+    return price;
+  }
 
-app.controller('order',function ($scope,$http,$location){
-  //$http.get('')
+  $scope.getOrderItems = function() {
+    $http.get('/CafeteriaApp.Backend/Requests/OrderItem.php?orderId='+$scope.orderId)
+    .then(function(response) {
+      $scope.orderItems = response.data;
+      console.log(response.data);
+      //$scope.TotalPrice = $scope.getTotalPrice();
+    });
+  }
+
+  $scope.getOrder = function() {
+    //console.log($scope.customerId);
+    $http.get('/CafeteriaApp.Backend/Requests/Order.php?customerId='+$scope.customerId)
+    .then(function(response) {
+      $scope.currentOrder = response.data;
+      $scope.orderId = $scope.currentOrder.Id;
+      if ($scope.orderId == undefined) {
+        $scope.orderId = null;
+      }
+      //console.log($scope.orderId);
+      if($scope.orderId != undefined) {
+        $scope.getOrderItems();
+      }
+      else if ($scope.orderId == undefined) {
+        $scope.orderItems = [];
+        //console.log($scope.orderItems);
+        $scope.TotalPrice = 0;
+      }
+    });
+  }
+
+  $scope.getCurrentCustomer();
+
+  $scope.addToOrder = function(menuItem) {
+    var x = $scope.orderItems.filter(o => o.MenuItemId == menuItem.Id);
+    if(x.length > 0) {
+      $scope.increaseQuantity(x[0]); // we extract the first element because x is array (x must be one length array)
+    }
+    else {
+      var data = {
+        OrderId: $scope.orderId,
+        MenuItemId: menuItem.Id,
+        Quantity: 1,
+        CustomerId: $scope.customerId
+      };
+      $http.post('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
+      .then(function(response) {
+        $scope.getOrderItems();
+      });
+    }
+  }
+
+  $scope.increaseQuantity = function(orderItem) {
+    console.log(orderItem.Id);
+    if($scope.orderId != null) {
+      var data = {
+        Id: orderItem.Id,
+        Quantity: parseInt(orderItem.Quantity)+1,
+      };
+      $http.put('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
+      .then(function(response) {
+        $scope.getOrderItems();
+      });
+    }
+  }
+
+  $scope.decreaseQuantity = function(orderItem) {
+    var data = {
+      Id: orderItem.Id,
+      Quantity: parseInt(orderItem.Quantity)-1,
+    };
+    if (orderItem.Quantity > 1) {
+      $http.put('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
+      .then(function(response) {
+        $scope.getOrderItems();
+      });
+    }
+    else {
+      $scope.deleteOrderItem(orderItem);
+    }
+  }
+
+  $scope.deleteOrderItem = function(orderItem) {
+    $http.delete('/CafeteriaApp.Backend/Requests/OrderItem.php?id='+orderItem.Id)
+    .then(function(response) {
+      $scope.getOrderItems();
+    });
+  }
+
 });

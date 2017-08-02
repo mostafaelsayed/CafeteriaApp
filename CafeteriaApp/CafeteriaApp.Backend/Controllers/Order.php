@@ -3,7 +3,7 @@ include 'CafeteriaApp.Backend\connection.php';
 
 
 function getClosedOrdersByCustomerId($conn,$id,$backend=false) {
-  if( !isset($id)) 
+  if( !isset($id))
  {
  echo "Error: Customer Id is not set";
   return;
@@ -16,21 +16,21 @@ function getClosedOrdersByCustomerId($conn,$id,$backend=false) {
       $orders = json_encode($orders);
       $conn->close();
        if($backend)
-      { 
-        return $orders;   
+      {
+        return $orders;
       }
       else
       {
        echo $orders;
       }
-      
+
   } else {
       echo "Error retrieving orders: " . $conn->error;
   }
 }}
 
 function getOrderById($conn,$id,$backend=false) {
-  if( !isset($id)) 
+  if( !isset($id))
  {
  echo "Error: Order Id is not set";
   return;
@@ -43,14 +43,14 @@ function getOrderById($conn,$id,$backend=false) {
       $orders = json_encode($orders);
       $conn->close();
       if($backend)
-      { 
-        return $orders;   
+      {
+        return $orders;
       }
       else
       {
        echo $orders;
       }
-    
+
   } else {
       echo "Error retrieving order: " . $conn->error;
   }
@@ -58,31 +58,31 @@ function getOrderById($conn,$id,$backend=false) {
 
 
 
-function getOpenOrderIdByCustomerId($conn,$id,$backend=false) {
+function getOpenOrderByCustomerId($conn,$id,$backend=false) {
    $openStatusId=1;
 
-    if( !isset($id)) 
+    if( !isset($id))
  {
  echo "Error: Customer Id is not set";
   return;
   }
   else
   {
-  $sql = "select Id from Order where CustomerId =".$id ."and OrderStatusId = ".$openStatusId ;
+  $sql = "select * from `Order` where CustomerId = ".$id ." and OrderStatusId = ".$openStatusId;
   $result = $conn->query($sql);
   if ($result) {
       $order = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $order = json_encode($order);
       $conn->close();
       if($backend)
-      { 
-        return $order;   
+      {
+        return $order;
       }
       else
       {
        echo $order;
       }
-     
+
   } else {
       echo "Error retrieving Open Order : " . $conn->error;
   }
@@ -91,7 +91,7 @@ function getOpenOrderIdByCustomerId($conn,$id,$backend=false) {
 
 
 function getOrdersByDeliveryDateId($conn,$id,$backend=false) {
-    if( !isset($id)) 
+    if( !isset($id))
  {
  echo "Error: DeliveryDate Id is not set";
   return;
@@ -104,8 +104,8 @@ function getOrdersByDeliveryDateId($conn,$id,$backend=false) {
       $orders = json_encode($orders);
       $conn->close();
       if($backend)
-      { 
-        return $orders;   
+      {
+        return $orders;
       }
       else
       {
@@ -118,7 +118,7 @@ function getOrdersByDeliveryDateId($conn,$id,$backend=false) {
 
 
 function getOrdersByDeliveryTimeId($conn,$id,$backend=false) {
-  if( !isset($id)) 
+  if( !isset($id))
  {
  echo "Error: DeliveryTime Id is not set";
   return;
@@ -131,8 +131,8 @@ function getOrdersByDeliveryTimeId($conn,$id,$backend=false) {
       $orders = json_encode($orders);
       $conn->close();
       if($backend)
-      { 
-        return $orders;   
+      {
+        return $orders;
       }
       else
       {
@@ -145,7 +145,7 @@ function getOrdersByDeliveryTimeId($conn,$id,$backend=false) {
 
 
 function getOrdersByOrderStatusId($conn,$id,$backend=false) {
-  if( !isset($id)) 
+  if( !isset($id))
  {
  echo "Error: OrderStatus Id is not set";
   return;
@@ -158,8 +158,8 @@ function getOrdersByOrderStatusId($conn,$id,$backend=false) {
       $orders = json_encode($orders);
       $conn->close();
       if($backend)
-      { 
-        return $orders;   
+      {
+        return $orders;
       }
       else
       {
@@ -172,7 +172,7 @@ function getOrdersByOrderStatusId($conn,$id,$backend=false) {
 
 
 function getOrdersByPaymentMethodId($conn,$id,$backend=false) {
-  if( !isset($id)) 
+  if( !isset($id))
  {
  echo "Error: PaymentMethod Id is not set";
   return;
@@ -185,8 +185,8 @@ function getOrdersByPaymentMethodId($conn,$id,$backend=false) {
       $orders = json_encode($orders);
       $conn->close();
       if($backend)
-      { 
-        return $orders;   
+      {
+        return $orders;
       }
       else
       {
@@ -202,7 +202,7 @@ function getOrdersByPaymentMethodId($conn,$id,$backend=false) {
 
 function addOrder( $conn,$deliveryDateId, $deliveryTimeId,  $deliveryPlace, $paid, $total, $paymentMethodId,$orderStatusId, $customerId) {
 
-   if( !isset($deliveryDateId)) 
+   if( !isset($deliveryDateId))
  {
  echo "Error: Order deliveryDateId is not set";
  return;
@@ -237,28 +237,37 @@ elseif (!isset($deliveryTimeId)) {
   }
   else
   {
-  $sql = "insert into Order (DeliveryDateId,DeliveryTimeId,DeliveryPlace,Paid,Total, PaymentMethodId,OrderStatusId,CustomerId) values (?,?,?,?,?,?,?,?)"; 
+  $sql = "insert into `Order` (DeliveryDateId,DeliveryTimeId,DeliveryPlace,Paid,Total,PaymentMethodId,OrderStatusId,CustomerId) values (?,?,?,?,?,?,?,?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("iisffiii",$DeliveryDateId, $DeliveryTimeId,  $DeliveryPlace, $Paid, $Total, $PaymentMethodId,$OrderStatusId, 
-    $CustomerId );
-  $DeliveryDateId=$deliveryDateId;
-  $DeliveryTimeId=$deliveryTimeId;
-  $DeliveryPlace=$deliveryPlace;
-  $Paid=$paid;
-  $Total=$total;
-  $PaymentMethodId=$paymentMethodId;
-  $OrderStatusId=$orderStatusId;
-  $CustomerId=$customerId;
-
-  if ($stmt->execute()===TRUE) {
-    echo "Order Added successfully";
-
-    return mysqli_insert_id($conn);
+  if($stmt === false) {
+    deleteDate($conn,$deliveryDateId);
+    deleteTime($conn,$deliveryTimeId);
+    echo $conn->error;
   }
   else {
-    echo "Error: ".$conn->error;
+    $stmt->bind_param("iiiddiii",$DeliveryDateId, $DeliveryTimeId,  $DeliveryPlace, $Paid, $Total, $PaymentMethodId,$OrderStatusId, $CustomerId );
+    $DeliveryDateId=$deliveryDateId;
+    $DeliveryTimeId=$deliveryTimeId;
+    $DeliveryPlace=$deliveryPlace;
+    $Paid=$paid;
+    $Total=$total;
+    $PaymentMethodId=$paymentMethodId;
+    $OrderStatusId=$orderStatusId;
+    $CustomerId=$customerId;
+
+    if ($stmt->execute()===TRUE) {
+      echo "Order Added successfully";
+
+      return mysqli_insert_id($conn);
+    }
+    else {
+      //$error = $conn->errno . ' ' . $conn->error;
+      //echo $error;
+    }
+    $conn->close();
   }
-  $conn->close();
+
+
 }
 }
 
