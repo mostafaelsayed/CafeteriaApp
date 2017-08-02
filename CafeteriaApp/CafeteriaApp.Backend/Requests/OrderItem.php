@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD']=="PUT"){
     //echo $data;
       //if ($data->Name != null && $data->Id != null) {
         //if ($data->action == "addcafeteria"){
-        editOrderItemQuantity($conn,$data->Quantity,$data->Id);
+        editOrderItemQuantity($conn,$data->Quantity,$data->Id,$data->Flag);
       //}
       //else{
         //echo "name is required";

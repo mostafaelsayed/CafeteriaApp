@@ -105,7 +105,8 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
     if($scope.orderId != null) {
       var data = {
         Id: orderItem.Id,
-        Quantity: parseInt(orderItem.Quantity)+1
+        Quantity: parseInt(orderItem.Quantity)+1,
+        Flag: true
       };
       $http.put('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
       .then(function(response) {
@@ -118,6 +119,7 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
     var data = {
       Id: orderItem.Id,
       Quantity: parseInt(orderItem.Quantity)-1,
+      Flag: false
     };
     if (orderItem.Quantity > 1) {
       $http.put('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
