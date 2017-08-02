@@ -6,7 +6,7 @@ require_once("CafeteriaApp.Backend/connection.php");
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
   if ($_GET["customerId"] != null) {
-    getOpenOrderByCustomerId($conn,$_GET["customerId"]);
+    getOpenOrderByCustomerId($conn);
   }
   else {
     echo "Error occured while returning Orders";
