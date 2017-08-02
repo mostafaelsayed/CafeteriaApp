@@ -3,6 +3,7 @@ require_once('CafeteriaApp.Backend/session.php');
 require_once('CafeteriaApp.Backend/Controllers/Order.php');
 require_once('CafeteriaApp.Backend/Controllers/Times.php');
 require_once('CafeteriaApp.Backend/Controllers/Dates.php');
+require_once('CafeteriaApp.Backend/Controllers/MenuItem.php');
 
 
 function getOrderItemsByClosedOrderId($conn,$id,$backend=false) {
@@ -32,6 +33,7 @@ function getOrderItemsByClosedOrderId($conn,$id,$backend=false) {
       echo "Error retrieving OrderItems : " . $conn->error;
   }
 }}
+
 
 function getOrderItemsByOpenOrderId($conn,$id,$backend=false) {
     if( !isset($id))
@@ -77,7 +79,7 @@ function getOrderItemById($conn,$id,$backend=false) {
   if ($result) {
       $orderItem = mysqli_fetch_assoc($result);
       $orderItem = json_encode($orderItem);
-      $conn->close();
+      //$conn->close();
        if($backend)
       {
         return $orderItem;
@@ -93,7 +95,29 @@ function getOrderItemById($conn,$id,$backend=false) {
 }}
 
 
- function editOrderItemQuantity($conn,$quantity,$id) {//**************************** update orederitem price, total of the order
+function getOrderItemTotalPriceById($conn , $id) {
+   if( !isset($id))
+ {
+ echo "Error:MenuItem Id is not set";
+  return;
+  }
+  else
+  {
+  $sql = "select TotalPrice from OrderItem where Id = ".$id." LIMIT 1";
+  //$result = $conn->query($sql);
+  if ($result = $conn->query($sql)) {
+      $MenuItem = mysqli_fetch_assoc($result);
+     // $conn->close();
+        return $MenuItem["TotalPrice"];   
+  } 
+  else {
+      echo "Error retrieving Order Item: " . $conn->error;
+  }
+}}
+
+
+
+ function editOrderItemQuantity($conn,$quantity,$id,$increaseDecrease) {//**************************** update oreder Total
   if( !isset($quantity))
  {
  echo "Error: OrderItem quantity is not set";
@@ -104,11 +128,21 @@ function getOrderItemById($conn,$id,$backend=false) {
     echo "Error: OrderItem id is not set";
   return;
   }
-  else{
-  $sql = "update OrderItem set Quantity = (?) where Id = (?)";
+  else
+  {
+  $MenuItemId = json_decode(getOrderItemById($conn,$id,true), true)["MenuItemId"];
+  $unitPrice =getMenuItemPriceById($conn,$MenuItemId);
+
+  $orderId =json_decode(getOpenOrderByCustomerId($conn,true), true)["Id"];
+  
+  updateOrderTotalById($conn,$orderId,$increaseDecrease ?+$unitPrice : -$unitPrice);
+
+  $totalPrice = $quantity * $unitPrice; 
+  $sql = "update OrderItem set Quantity = (?) , TotalPrice=(?)  where Id = (?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("ii",$Quantity,$Id);
+  $stmt->bind_param("idi",$Quantity,$TotalPrice,$Id);
   $Quantity = $quantity;
+  $TotalPrice = $totalPrice ;
   $Id = $id;
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
@@ -118,7 +152,6 @@ function getOrderItemById($conn,$id,$backend=false) {
     echo "Error: ".$conn->error;
   }
 }}
-
 
 
 
@@ -134,11 +167,16 @@ function addOrderItem($conn,$orderId,$menuItemId,$quantity) {
   return;
   }
 
-elseif ($orderId == null) // create order by default values
+$unitPrice =getMenuItemPriceById($conn,$menuItemId);
+$totalPrice  =  $quantity * $unitPrice ;
+
+if ($orderId == null) // create order by default values
 {
   $deliveryTimeId = getCurrentTimeId($conn);
   $deliveryDateId = getCurrentDateId($conn);
-  $orderId = addOrder($conn,$deliveryDateId,$deliveryTimeId,'Where?',0.0,0.0,1,1, $_SESSION["customerId"]);
+
+  $orderId = addOrder($conn,$deliveryDateId,$deliveryTimeId,'Where?',1,1, $_SESSION["customerId"], $totalPrice);//paid default to zero
+
   if ($orderId != null) {
     $sql = "insert into OrderItem (OrderId,MenuItemId,Quantity,TotalPrice) values (?,?,?,?)";
     $stmt = $conn->prepare($sql);
@@ -146,8 +184,7 @@ elseif ($orderId == null) // create order by default values
     $OrderId = $orderId;
     $MenuItemId = $menuItemId;
     $Quantity = $quantity;
-    $price =5 ;
-    $Price =$quantity * $price ; //$price;//*********************************get price from db.menuItems
+    $Price =$totalPrice ;
     //$conn->query($sql);
     if ($stmt->execute()===TRUE) {
       //echo "OrderItem Added successfully";
@@ -157,27 +194,18 @@ elseif ($orderId == null) // create order by default values
       echo "Error: ".$conn->error;
     }
   }
-  //addOrderItem($conn,$orderId,$menuItemId,$quantity,$customerId);
-  //$order = json_decode( getOpenOrderByCustomerId( $conn, $_SESSION["customer_id"]), true );
+}
+else
+   {
 
-  // if(isset($order)){
-  // $orderId = $order["Id"];
-  //   }
-  // else{
-  //   return false; // untill we can handle delivery_place and payment_method
-  // }
-
-  }
-  else {
+  updateOrderTotalById($conn,$orderId,$totalPrice);
   $sql = "insert into OrderItem (OrderId,MenuItemId,Quantity,TotalPrice) values (?,?,?,?)"; // add TotalPrice to total of the order
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("iiid",$OrderId,$MenuItemId,$Quantity,$Price);
   $OrderId = $orderId;
   $MenuItemId = $menuItemId;
   $Quantity = $quantity;
-  $price =5 ;
-  $Price =$quantity * $price ; //$price;//*********************************get price from db.menuItems
-  //$Price = $price;
+  $Price =$totalPrice ; 
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
     //echo "OrderItem Added successfully";
@@ -189,6 +217,7 @@ elseif ($orderId == null) // create order by default values
 }}
 
 
+
 function deleteOrderItem($conn,$id) {// remove TotalPrice to total of the order
  if (!isset($id))
   {
@@ -196,18 +225,19 @@ function deleteOrderItem($conn,$id) {// remove TotalPrice to total of the order
   return;
   }
   else{
-  //$conn->query("set foreign_key_checks = 0"); // ????????/
+
+  $orderId =json_decode(getOpenOrderByCustomerId($conn,true), true)["Id"];
+  $totalPrice=getOrderItemTotalPriceById($conn,$id);
+  updateOrderTotalById($conn,$orderId,-$totalPrice);
   $sql = "delete from OrderItem where Id = ".$id . " LIMIT 1";
-  if ($conn->query($sql)===TRUE) {
-    echo "OrderItem deleted successfully";
+  if ($conn->query($sql)===TRUE ) {
+    echo "Order Item deleted successfully";
   }
   else {
     echo "Error: ".$conn->error;
   }
 }
 }
-
-
 
 
  ?>

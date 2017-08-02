@@ -70,7 +70,7 @@ function getMenuItemPriceById($conn , $id) {
   else
   {
   $sql = "select Price from MenuItem where Id = ".$id." LIMIT 1";
-  //$result = $conn->query($sql);
+  $result = $conn->query($sql);
   if ($result = $conn->query($sql)) {
       $MenuItem = mysqli_fetch_assoc($result);
      // $conn->close();

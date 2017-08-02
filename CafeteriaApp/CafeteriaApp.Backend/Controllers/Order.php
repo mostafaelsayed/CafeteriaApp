@@ -1,5 +1,4 @@
 <?php
-//require_once('CafeteriaApp.Backend/connection.php');
 require_once('CafeteriaApp.Backend/session.php');
 
 
@@ -10,7 +9,7 @@ function getClosedOrdersByCustomerId($conn,$id,$backend=false) {
   return;
   }
   else{
-  $sql = "select * from order where CustomerId = ".$id;
+  $sql = "select * from `order` where CustomerId = ".$id;
   $result = $conn->query($sql);
   if ($result) {
       $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -38,7 +37,7 @@ function getOrderById($conn,$id,$backend=false) {
   return;
   }
   else{
-  $sql = "select * from order where Id = ".$id." LIMIT 1";
+  $sql = "select * from `order` where Id = ".$id." LIMIT 1";
   $result = $conn->query($sql);
   if ($result) {
       $orders = mysqli_fetch_assoc($result);
@@ -62,14 +61,7 @@ function getOrderById($conn,$id,$backend=false) {
 
 function getOpenOrderByCustomerId($conn,$backend=false) {
    $openStatusId=1;
-
-    if( !isset($id))
- {
- echo "Error: Customer Id is not set";
-  return;
-  }
-  else
-  {
+   $_SESSION["customerId"]=1;
   $sql = "select * from `Order` where CustomerId = ".$_SESSION["customerId"]." and OrderStatusId = ".$openStatusId;
   $result = $conn->query($sql);
   if ($result) {
@@ -86,9 +78,9 @@ function getOpenOrderByCustomerId($conn,$backend=false) {
       }
 
   } else {
-      echo "Error retrieving Open Order : " . $conn->error;
-  }
-}}
+      echo "Error retrieving Open Order : " . $conn->error;  
+}
+}
 
 
 
@@ -99,7 +91,7 @@ function getOrdersByDeliveryDateId($conn,$id,$backend=false) {
   return;
   }
   else{
-  $sql = "select * from order where DeliveryDateId = ".$id;
+  $sql = "select * from `order` where DeliveryDateId = ".$id;
   $result = $conn->query($sql);
   if ($result) {
       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
@@ -126,7 +118,7 @@ function getOrdersByDeliveryTimeId($conn,$id,$backend=false) {
   return;
   }
   else{
-  $sql = "select * from order where DeliveryTimeId = ".$id;
+  $sql = "select * from `order` where DeliveryTimeId = ".$id;
   $result = $conn->query($sql);
   if ($result) {
       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
@@ -153,7 +145,7 @@ function getOrdersByOrderStatusId($conn,$id,$backend=false) {
   return;
   }
   else{
-  $sql = "select * from order where OrderStatusId = ".$id;
+  $sql = "select * from `order` where OrderStatusId = ".$id;
   $result = $conn->query($sql);
   if ($result) {
       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
@@ -180,7 +172,7 @@ function getOrdersByPaymentMethodId($conn,$id,$backend=false) {
   return;
   }
   else{
-  $sql = "select * from order where PaymentMethodId = ".$id;
+  $sql = "select * from `order` where PaymentMethodId = ".$id;
   $result = $conn->query($sql);
   if ($result) {
       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
@@ -266,6 +258,7 @@ elseif (!isset($deliveryTimeId)) {
 }
 }
 
+
 function updateOrderTotalById($conn ,$orderId ,$plusValue)
 {
   if( !isset($plusValue))
@@ -280,7 +273,7 @@ function updateOrderTotalById($conn ,$orderId ,$plusValue)
   }
   else{
 
-  $sql = "update Order set `Total` = `Total`+(?)  where Id = (?)";
+  $sql = "update `Order` set `Total` = `Total`+(?)  where Id = (?)";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("di",$PlusValue,$OrderId);
   $PlusValue = $plusValue ;
@@ -295,7 +288,6 @@ function updateOrderTotalById($conn ,$orderId ,$plusValue)
 }
 }
 
-updateOrderTotal($conn,1,5.0);
 
 
 function updateOrderPaidById($conn ,$orderId ,$plusValue)
@@ -312,7 +304,7 @@ function updateOrderPaidById($conn ,$orderId ,$plusValue)
   }
   else{
 
-  $sql = "update Order set Paid = Paid+(?)  where Id = (?)";
+  $sql = "update `Order` set `Paid` = `Paid`+(?)  where Id = (?)";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("di",$PlusValue,$OrderId);
   $PlusValue = $plusValue ;
@@ -328,9 +320,7 @@ function updateOrderPaidById($conn ,$orderId ,$plusValue)
 }
 
 
-
-
-function deleteOrder($conn,$id) {
+function deleteOrder($conn,$id) {//remove  order items with cascading
  if (!isset($id))
   {
      echo "Error: Id is not set";
@@ -338,7 +328,7 @@ function deleteOrder($conn,$id) {
   }
   else{
   //$conn->query("set foreign_key_checks = 0"); // ????????/
-  $sql = "delete from Order where Id = ".$id . " LIMIT 1";
+  $sql = "delete from `Order` where Id = ".$id . " LIMIT 1";
   if ($conn->query($sql)===TRUE) {
     echo "Order deleted successfully";
   }
