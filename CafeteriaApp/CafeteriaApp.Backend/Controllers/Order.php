@@ -1,4 +1,6 @@
 <?php
+//require_once('CafeteriaApp.Backend/connection.php');
+require_once('CafeteriaApp.Backend/session.php');
 
 
 function getClosedOrdersByCustomerId($conn,$id,$backend=false) {
@@ -27,6 +29,7 @@ function getClosedOrdersByCustomerId($conn,$id,$backend=false) {
       echo "Error retrieving orders: " . $conn->error;
   }
 }}
+
 
 function getOrderById($conn,$id,$backend=false) {
   if( !isset($id))
@@ -57,7 +60,7 @@ function getOrderById($conn,$id,$backend=false) {
 
 
 
-function getOpenOrderByCustomerId($conn,$id,$backend=false) {
+function getOpenOrderByCustomerId($conn,$backend=false) {
    $openStatusId=1;
 
     if( !isset($id))
@@ -67,12 +70,12 @@ function getOpenOrderByCustomerId($conn,$id,$backend=false) {
   }
   else
   {
-  $sql = "select * from `Order` where CustomerId = ".$id ." and OrderStatusId = ".$openStatusId;
+  $sql = "select * from `Order` where CustomerId = ".$_SESSION["customerId"]." and OrderStatusId = ".$openStatusId;
   $result = $conn->query($sql);
   if ($result) {
       $order = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $order = json_encode($order);
-      $conn->close();
+     // $conn->close();
       if($backend)
       {
         return $order;
@@ -199,7 +202,7 @@ function getOrdersByPaymentMethodId($conn,$id,$backend=false) {
 
 
 
-function addOrder( $conn,$deliveryDateId, $deliveryTimeId,$deliveryPlace, $paid, $total, $paymentMethodId,$orderStatusId, $customerId)
+function addOrder( $conn,$deliveryDateId, $deliveryTimeId,$deliveryPlace, $paymentMethodId,$orderStatusId, $customerId,$total=0,$paid=0)
 {
    if( !isset($deliveryDateId))
  {
@@ -258,12 +261,72 @@ elseif (!isset($deliveryTimeId)) {
       //$error = $conn->errno . ' ' . $conn->error;
       //echo $error;
     }
-    $conn->close();
-
-
+    //$conn->close();
 
 }
 }
+
+function updateOrderTotalById($conn ,$orderId ,$plusValue)
+{
+  if( !isset($plusValue))
+ {
+ echo "Error: Order plusValue is not set";
+  return;
+  }
+  elseif(!isset($orderId))
+  {
+    echo "Error: order Id  is not set";
+  return;
+  }
+  else{
+
+  $sql = "update Order set `Total` = `Total`+(?)  where Id = (?)";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("di",$PlusValue,$OrderId);
+  $PlusValue = $plusValue ;
+  $OrderId = $orderId;
+  //$conn->query($sql);
+  if ($stmt->execute()===TRUE) {
+    return "Order Total updated successfully";
+  }
+  else {
+    echo "Error: ".$conn->error;
+  }
+}
+}
+
+updateOrderTotal($conn,1,5.0);
+
+
+function updateOrderPaidById($conn ,$orderId ,$plusValue)
+{
+  if( !isset($plusValue))
+ {
+ echo "Error: Order plusValue is not set";
+  return;
+  }
+  elseif(!isset($orderId))
+  {
+    echo "Error: order Id  is not set";
+  return;
+  }
+  else{
+
+  $sql = "update Order set Paid = Paid+(?)  where Id = (?)";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("di",$PlusValue,$OrderId);
+  $PlusValue = $plusValue ;
+  $OrderId = $orderId;
+  //$conn->query($sql);
+  if ($stmt->execute()===TRUE) {
+    return "Order Paid updated successfully";
+  }
+  else {
+    echo "Error: ".$conn->error;
+  }
+}
+}
+
 
 
 
