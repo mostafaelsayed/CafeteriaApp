@@ -24,11 +24,15 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
   $scope.getCurrentCustomer = function() {
     $http.get('/CafeteriaApp.Backend/Requests/Customer.php')
     .then(function(response) {
-      //console.log(response);
-      $scope.currentCustomer = response.data;
-      $scope.customerId = $scope.currentCustomer.Id;
-      console.log($scope.customerId);
-      $scope.getOrder();
+      $scope.customerId = response.data.Id;
+      if ($scope.customerId == undefined) {
+        document.location = "/CafeteriaApp.Frontend/Views/login.php";
+      }
+      else {
+        console.log($scope.customerId);
+        //$scope.customerId = response.Id;
+        $scope.getOrder();
+      }
     });
   }
 
@@ -53,7 +57,7 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
 
   $scope.getOrder = function() {
     //console.log($scope.customerId);
-    $http.get('/CafeteriaApp.Backend/Requests/Order.php?customerId='+$scope.customerId)
+    $http.get('/CafeteriaApp.Backend/Requests/Order.php')
     .then(function(response) {
       $scope.currentOrder = response.data;
       $scope.orderId = $scope.currentOrder.Id;
