@@ -1,6 +1,4 @@
-<?php
-require_once('CafeteriaApp.Backend/session.php');
-
+<?php require_once('CafeteriaApp.Backend/session.php');
 
 function getClosedOrdersByCustomerId($conn,$id,$backend=false) {
   if( !isset($id))
@@ -60,8 +58,7 @@ function getOrderById($conn,$id,$backend=false) {
 
 
 function getOpenOrderByCustomerId($conn,$backend=false) {
-   $openStatusId=1;
-   $_SESSION["customerId"]=1;
+  $openStatusId=1;
   $sql = "select * from `Order` where CustomerId = ".$_SESSION["customerId"]." and OrderStatusId = ".$openStatusId;
   $result = $conn->query($sql);
   if ($result) {
@@ -81,7 +78,6 @@ function getOpenOrderByCustomerId($conn,$backend=false) {
       echo "Error retrieving Open Order : " . $conn->error;  
 }
 }
-
 
 
 function getOrdersByDeliveryDateId($conn,$id,$backend=false) {
@@ -320,22 +316,37 @@ function updateOrderPaidById($conn ,$orderId ,$plusValue)
 }
 
 
-function deleteOrder($conn,$id) {//remove  order items with cascading
+function CheckOutOrder($conn,$id) {//remove  order items with cascading
  if (!isset($id))
   {
      echo "Error: Id is not set";
   return;
   }
   else{
+    $closedStatusId=1;
   //$conn->query("set foreign_key_checks = 0"); // ????????/
-  $sql = "delete from `Order` where Id = ".$id . " LIMIT 1";
+  $sql = "update `Order` set `OrderStatusId`= {$closedStatusId} where Id = ".$id . " LIMIT 1";
   if ($conn->query($sql)===TRUE) {
-    echo "Order deleted successfully";
+    echo "Order Checked Out successfully";
   }
   else {
     echo "Error: ".$conn->error;
   }
 }
+}
+
+
+function deleteOpenOrderById($conn) {//remove  order items with cascading
+  $openStatusId=1;
+  //$conn->query("set foreign_key_checks = 0"); // ????????/
+  $sql = "delete from `Order` where CustomerId = ". $_SESSION["customerId"] ." and `OrderStatusId`= {$openStatusId}  LIMIT 1";
+  if ($conn->query($sql)===TRUE) {
+    echo "Current Open Order deleted successfully";
+  }
+  else {
+    echo "Error: ".$conn->error;
+  }
+
 }
 
 
