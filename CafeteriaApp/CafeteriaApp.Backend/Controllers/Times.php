@@ -1,5 +1,4 @@
 <?php
-include 'CafeteriaApp.Backend\connection.php';
 
 function getTimes($conn,$backend=false) {
 
@@ -51,22 +50,21 @@ function getTimeById($conn,$id,$backend=false) {
 }
 }
 
-function addTime($conn) {
-  $sql = "insert into Times (Time) values (?)";
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param("s",$time);
+function getCurrentTimeId($conn) {
   $time = date("h:i:00");
-  //$conn->query($sql);
-  if ($stmt->execute()===TRUE) {
-    echo "Time Added successfully";
-    $stmt->close();
-    return mysqli_insert_id($conn);
-  }
+  $sql = "select Id from Times where Time=".$time." LIMIT 1";
+  $result = $conn->query($sql);
+  if ($result) {
+      $times = mysqli_fetch_assoc($result);
+      $conn->close();
+      return $times["Id"];
+    }
   else {
     echo "Error: ".$conn->error;
   }
 }
-addTime($conn);
+
+
 function deleteTime($conn,$id) {
   if (!isset($id)) {
    echo "Error: Id is not set";

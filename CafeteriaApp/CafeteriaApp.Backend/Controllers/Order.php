@@ -1,5 +1,4 @@
 <?php
-include 'CafeteriaApp.Backend\connection.php';
 
 
 function getClosedOrdersByCustomerId($conn,$id,$backend=false) {
@@ -200,8 +199,8 @@ function getOrdersByPaymentMethodId($conn,$id,$backend=false) {
 
 
 
-function addOrder( $conn,$deliveryDateId, $deliveryTimeId,  $deliveryPlace, $paid, $total, $paymentMethodId,$orderStatusId, $customerId) {
-
+function addOrder( $conn,$deliveryDateId, $deliveryTimeId,$deliveryPlace, $paid, $total, $paymentMethodId,$orderStatusId, $customerId) 
+{
    if( !isset($deliveryDateId))
  {
  echo "Error: Order deliveryDateId is not set";
@@ -239,12 +238,7 @@ elseif (!isset($deliveryTimeId)) {
   {
   $sql = "insert into `Order` (DeliveryDateId,DeliveryTimeId,DeliveryPlace,Paid,Total,PaymentMethodId,OrderStatusId,CustomerId) values (?,?,?,?,?,?,?,?)";
   $stmt = $conn->prepare($sql);
-  if($stmt === false) {
-    deleteDate($conn,$deliveryDateId);
-    deleteTime($conn,$deliveryTimeId);
-    echo $conn->error;
-  }
-  else {
+
     $stmt->bind_param("iiiddiii",$DeliveryDateId, $DeliveryTimeId,  $DeliveryPlace, $Paid, $Total, $PaymentMethodId,$OrderStatusId, $CustomerId );
     $DeliveryDateId=$deliveryDateId;
     $DeliveryTimeId=$deliveryTimeId;
@@ -265,7 +259,7 @@ elseif (!isset($deliveryTimeId)) {
       //echo $error;
     }
     $conn->close();
-  }
+  
 
 
 }

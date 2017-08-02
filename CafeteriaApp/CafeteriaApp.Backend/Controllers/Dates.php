@@ -1,9 +1,8 @@
 <?php
-include 'CafeteriaApp.Backend\connection.php';
 
 function getDates($conn,$backend=false) {
   
-  $sql = "select * from Dates";
+  $sql = "select * from `Dates`";
   $result = $conn->query($sql);
   if ($result)
    {    
@@ -30,7 +29,7 @@ function getDateById($conn ,$id,$backend=false) {
   return;
   }
   else {
-  $sql = "select Date from Dates where Id=".$id." LIMIT 1";
+  $sql = "select Date from `Dates` where Id=".$id." LIMIT 1";
   $result = $conn->query($sql);
   if ($result) {
       $Id = mysqli_fetch_assoc($result);
@@ -51,13 +50,13 @@ function getDateById($conn ,$id,$backend=false) {
 }}
 
 
-function getIdByDate($conn ,$value,$backend=false) {
+function getDateIdByDate($conn ,$value,$backend=false) {
   if (!isset($value)) {
  echo "Error: Date value  is not set";
   return;
   }
   else {
-  $sql = "select Id from Dates where Date=".$value;
+  $sql = "select Id from `Dates` where `Date` =".$value;
    $result = $conn->query($sql);
   if ($result) {
       $date = mysqli_fetch_assoc($result);
@@ -79,28 +78,30 @@ function getIdByDate($conn ,$value,$backend=false) {
 
 
 
-function getIdByTodayDate($conn,$backend=false) { //CURDATE() mysql
+function getCurrentDateId($conn) { //CURDATE() mysql
+ 
   $today = date("Y-m-d");
-  $sql = "select Id from Dates where Date = STR_TO_DATE('{$today}', '%Y-%m-%d')";
+  $sql = "select Id from `Dates` where `Date` = STR_TO_DATE('{$today}', '%Y-%m-%d')";
   $result = $conn->query($sql);
+  
   if ($result) {
       $date = mysqli_fetch_assoc($result);
-      //echo $date[0]["Id"] ;
-      $date= json_encode($date);
-      $conn->close();
-      if($backend)
-      { 
-        return $date;   
+     // $conn->close();
+      
+      if(isset($date["Id"]))
+     {
+       return $date["Id"];
       }
-      else
-      {
-       echo $date;
-      }
+     else
+     {
+       return false;
+      }    
+  }
 
-  } else {
-      echo "Error retrieving Dates: " . $conn->error;
+  else {
+      echo "Error retrieving Date Id: " . $conn->error;
   
-}
+      }
 }
 
 
@@ -110,7 +111,7 @@ function addDate($conn,$date) { // check format of the input
   return;
   }
   else {
-  $sql = "insert into Dates (Date) values (?)";
+  $sql = "insert into `Dates` (`Date`) values (?)";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("s",$Date);
   $Date = $date;
@@ -124,19 +125,25 @@ function addDate($conn,$date) { // check format of the input
 }}
 
 
-function addTodayDate($conn) { // check format of the input
- 
-  $sql = "insert into Dates (Date) values (?)";
+function addTodayDate($conn ,$backend=false) { // check format of the input  // ************************************************
+ //echo date("Y-m-d");;
+  $today=date("Y-m-d");
+  $sql = "insert into `mydb`.`Dates` (`Date`) values (?)";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("s",$Date);
-  $Date = date("Y/m/d");
+  $Date = $today ;
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
-    echo "Date Added successfully";
+    if($backend)
+    {
+      return true;
+    }
+    else{echo "Date Added successfully";}
+    
   }
   else {
     echo "Error: ".$conn->error;
-  }
+   }
 }
 
 

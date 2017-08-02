@@ -1,6 +1,9 @@
 <?php require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies ?> 
+<?php require_once("CafeteriaApp.Backend/connection.php"); ?>
 <?php require_once("CafeteriaApp.Backend/functions.php"); ?>
 <?php require_once("CafeteriaApp.Backend/validation_functions.php"); ?>
+<?php require_once("CafeteriaApp.Backend/Controllers/Dates.php"); ?>
+<?php require_once("CafeteriaApp.Backend/Controllers/Customer.php"); ?>
 
 <?php
 $username = "";
@@ -27,12 +30,20 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
 			$_SESSION["userName"] = $found_user["UserName"];
 
       //get customer id by user id from db 
-     $customer_id_json = getCustomerIdByUserId($conn ,$_SESSION["user_id"] ,true);
-      $_SESSION["customer_id"] = json_decode($customer_id_json, true)["Id"];
+     $customer_id_json = getCustomerIdByUserId($conn ,$_SESSION["UserId"] ,true);
+      $_SESSION["customerId"] = json_decode($customer_id_json, true)["Id"];
      
+     
+      if(!getCurrentDateId($conn)) // make the server add it automatically
+      {
+        addTodayDate($conn,true);
+      }
+      
 
-      redirect_to("index.php"); //                              3ala 7asab 
-    } else {
+      redirect_to(rawurldecode("CafeteriaApp.Frontend/Areas/Customer/Cafeteria/Views/showing cafeterias.php")); //                              3ala 7asab 
+    }
+
+     else {
       // Failure
       $_SESSION["message"] = "Username/password not found.";
     }

@@ -1,6 +1,5 @@
 <?php
 require_once('CafeteriaApp.Backend/session.php');
-include 'CafeteriaApp.Backend\connection.php';
 require_once('CafeteriaApp.Backend/Controllers/Order.php');
 require_once('CafeteriaApp.Backend/Controllers/Times.php');
 require_once('CafeteriaApp.Backend/Controllers/Dates.php');
@@ -94,7 +93,7 @@ function getOrderItemById($conn,$id,$backend=false) {
 }}
 
 
- function editOrderItemQuantity($conn,$quantity,$id) {
+ function editOrderItemQuantity($conn,$quantity,$id) {//**************************** update orederitem price, total of the order
   if( !isset($quantity))
  {
  echo "Error: OrderItem quantity is not set";
@@ -124,7 +123,7 @@ function getOrderItemById($conn,$id,$backend=false) {
 
 
 
-function addOrderItem($conn,$orderId,$menuItemId,$quantity,$customerId) {
+function addOrderItem($conn,$orderId,$menuItemId,$quantity) {
 
   if (!isset($menuItemId)) {
  echo "Error: OrderItem menuItemId is not set";
@@ -134,24 +133,21 @@ function addOrderItem($conn,$orderId,$menuItemId,$quantity,$customerId) {
  echo "Error: OrderItem quantity is not set";
   return;
   }
-//   elseif (!isset($price)) {
-//    echo "Error: OrderItem price is not set";
-//   return;
-// }
 
-elseif ($orderId == null) {
-
-  $deliveryTimeId = addTime($conn);
-  $deliveryDateId = addDate($conn);
-  $orderId = addOrder($conn,$deliveryDateId,$deliveryTimeId,5,0,0,1,1,$customerId);
+elseif ($orderId == null) // create order by default values
+{
+  $deliveryTimeId = getCurrentTimeId($conn);
+  $deliveryDateId = getCurrentDateId($conn);
+  $orderId = addOrder($conn,$deliveryDateId,$deliveryTimeId,'Where?',0.0,0.0,1,1, $_SESSION["customerId"]);
   if ($orderId != null) {
-    $sql = "insert into OrderItem (OrderId,MenuItemId,Quantity) values (?,?,?)";
+    $sql = "insert into OrderItem (OrderId,MenuItemId,Quantity,TotalPrice) values (?,?,?,?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iii",$OrderId,$MenuItemId,$Quantity);
+    $stmt->bind_param("iiid",$OrderId,$MenuItemId,$Quantity,$Price);
     $OrderId = $orderId;
     $MenuItemId = $menuItemId;
     $Quantity = $quantity;
-    //$Price = $price;
+    $price =5 ;
+    $Price =$quantity * $price ; //$price;//*********************************get price from db.menuItems
     //$conn->query($sql);
     if ($stmt->execute()===TRUE) {
       echo "OrderItem Added successfully";
@@ -173,13 +169,13 @@ elseif ($orderId == null) {
 
   }
   else {
-  $sql = "insert into OrderItem (OrderId,MenuItemId,Quantity) values (?,?,?)";
+  $sql = "insert into OrderItem (OrderId,MenuItemId,Quantity,TotalPrice) values (?,?,?,?)"; // add TotalPrice to total of the order
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("iii",$OrderId,$MenuItemId,$Quantity);
+  $stmt->bind_param("iiid",$OrderId,$MenuItemId,$Quantity,$Price);
   $OrderId = $orderId;
   $MenuItemId = $menuItemId;
   $Quantity = $quantity;
-  //$Price = $price;
+  $Price = $price;
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
     echo "OrderItem Added successfully";
@@ -191,7 +187,7 @@ elseif ($orderId == null) {
 }}
 
 
-function deleteOrderItem($conn,$id) {
+function deleteOrderItem($conn,$id) {// remove TotalPrice to total of the order
  if (!isset($id))
   {
      echo "Error: Id is not set";
