@@ -4,7 +4,7 @@ include 'CafeteriaApp.Backend\connection.php';
 require_once('CafeteriaApp.Backend/Controllers/Order.php');
 
 
-function getOrderItemsByOrderId($conn,$id,$backend=false) {
+function getOrderItemsByClosedOrderId($conn,$id,$backend=false) {
     if( !isset($id)) 
  {
  echo "Error: Order Id is not set";
@@ -31,6 +31,36 @@ function getOrderItemsByOrderId($conn,$id,$backend=false) {
       echo "Error retrieving OrderItems : " . $conn->error;
   }
 }}
+
+function getOrderItemsByOpenOrderId($conn,$id,$backend=false) {
+    if( !isset($id)) 
+ {
+ echo "Error: Order Id is not set";
+  return;
+  }
+  else
+  {
+  $sql = "select OrderItem.Id , MenuItem.Name , OrderItem.Quantity , OrderItem.TotalPrice  from OrderItem INNER JOIN MenuItem ON  OrderItem.MenuItemId = MenuItem.Id where OrderItem.OrderId=".$id ;
+  $result = $conn->query($sql);
+  if ($result) {
+      $orderItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $orderItems = json_encode($orderItems);
+      $conn->close();
+      if($backend)
+      { 
+        return $orderItems;   
+      }
+      else
+      {
+       echo $orderItems;
+      }
+      
+  } else {
+      echo "Error retrieving OrderItems : " . $conn->error;
+  }
+}}
+
+
 
 
 function getOrderItemById($conn,$id,$backend=false) {

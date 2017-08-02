@@ -10,10 +10,11 @@ app.config(['$locationProvider', function($locationProvider) {
 // controller for getting menuitems of a category from database
 
 app.controller('getMenuItems', function ($scope,$http,$location) {
-$http.get('/CafeteriaApp.Backend/Requests/Customer.php')
-.then(function(response){
-  console.log(response);
-});
+  $http.get('/CafeteriaApp.Backend/Requests/Customer.php')
+  .then(function(response){
+    console.log(response);
+  );
+//});
 
   $scope.categoryId = $location.search().id;
 

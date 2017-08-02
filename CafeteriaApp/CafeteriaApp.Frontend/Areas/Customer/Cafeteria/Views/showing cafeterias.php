@@ -7,9 +7,9 @@
 <script src="/CafeteriaApp.Frontend/Scripts/customer/showing cafeterias.js"></script>
 
 <div>
-  <div>
-    <h1 class="page-header" style="text-align:center;margin-top:70px">Our Cafeterias</h1>
-  </div>
+    <div>
+        <h1 class="page-header" style="text-align:center;margin-top:70px">Our Cafeterias</h1>
+    </div>
 </div>
 
 <div ng-app="myapp">

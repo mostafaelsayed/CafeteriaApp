@@ -8,8 +8,7 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
     getCustomer($conn);
   }
   else {
-    //echo "Error occured while returning Customer";
-    getCurrentCustomerByUserId($conn);
+    echo "Error occured while returning Customer";
   }
 }
 
