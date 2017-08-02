@@ -6,14 +6,14 @@ require_once("CafeteriaApp.Backend/connection.php");
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
   if (isset($_GET["categoryId"])) {
-    getMenuItemByCategoryId($conn,1);
+    getMenuItemByCategoryId($conn,$_GET["categoryId"]);
   }
-  elseif (isset($_GET["id"])) {
-    getMenuItemById($conn,$_GET["id"]);
-  }
-  else {
-    echo "Error occured while returning MenuItem";
-  }
+  // elseif (isset($_GET["id"])) {
+  //   getMenuItemById($conn,$_GET["id"]);
+  // }
+  // else {
+  //   echo "Error occured while returning MenuItem";
+  // }
 }
 
 // i don't know how to handle

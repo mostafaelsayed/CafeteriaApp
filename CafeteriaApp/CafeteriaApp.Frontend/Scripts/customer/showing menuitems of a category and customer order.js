@@ -27,7 +27,7 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
       //console.log(response);
       $scope.currentCustomer = response.data;
       $scope.customerId = $scope.currentCustomer.Id;
-      //console.log($scope.customerId);
+      console.log($scope.customerId);
       $scope.getOrder();
     });
   }
@@ -57,6 +57,7 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
     .then(function(response) {
       $scope.currentOrder = response.data;
       $scope.orderId = $scope.currentOrder.Id;
+      //console.log($scope.orderId);
       if ($scope.orderId == undefined) {
         $scope.orderId = null;
         $scope.orderItems = [];
@@ -86,11 +87,14 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
       var data = {
         OrderId: $scope.orderId,
         MenuItemId: menuItem.Id,
-        Quantity: 1,
-        CustomerId: $scope.customerId
+        Quantity: parseInt(1)
+        //CustomerId: $scope.customerId
       };
+      console.log($scope.orderId);
       $http.post('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
       .then(function(response) {
+        console.log(response);
+        $scope.orderId = response.data;
         $scope.getOrderItems();
       });
     }
@@ -101,7 +105,7 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
     if($scope.orderId != null) {
       var data = {
         Id: orderItem.Id,
-        Quantity: parseInt(orderItem.Quantity)+1,
+        Quantity: parseInt(orderItem.Quantity)+1
       };
       $http.put('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
       .then(function(response) {

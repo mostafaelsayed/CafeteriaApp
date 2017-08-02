@@ -1,23 +1,23 @@
 <?php
 
 function getDates($conn,$backend=false) {
-  
+
   $sql = "select * from `Dates`";
   $result = $conn->query($sql);
   if ($result)
-   {    
+   {
       $dates = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $dates = json_encode($dates);
       $conn->close();
        if($backend)
-      { 
-        return $dates;   
+      {
+        return $dates;
       }
       else
       {
        echo $dates;
       }
-      
+
   } else {
       echo "Error retrieving Dates: " . $conn->error;
   }
@@ -36,14 +36,14 @@ function getDateById($conn ,$id,$backend=false) {
       $Id= json_encode($Id);
       $conn->close();
       if($backend)
-      { 
-        return $Id;   
+      {
+        return $Id;
       }
       else
       {
        echo $Id;
       }
-      
+
   } else {
       echo "Error retrieving Date: " . $conn->error;
   }
@@ -63,14 +63,14 @@ function getDateIdByDate($conn ,$value,$backend=false) {
       $date= json_encode($date);
       $conn->close();
       if($backend)
-      { 
-        return $date;   
+      {
+        return $date;
       }
       else
       {
        echo $date;
       }
-      
+
   } else {
       echo "Error retrieving Dates: " . $conn->error;
   }
@@ -79,15 +79,15 @@ function getDateIdByDate($conn ,$value,$backend=false) {
 
 
 function getCurrentDateId($conn) { //CURDATE() mysql
- 
+
   $today = date("Y-m-d");
   $sql = "select Id from `Dates` where `Date` = STR_TO_DATE('{$today}', '%Y-%m-%d')";
   $result = $conn->query($sql);
-  
+
   if ($result) {
       $date = mysqli_fetch_assoc($result);
      // $conn->close();
-      
+
       if(isset($date["Id"]))
      {
        return $date["Id"];
@@ -95,12 +95,12 @@ function getCurrentDateId($conn) { //CURDATE() mysql
      else
      {
        return false;
-      }    
+      }
   }
 
   else {
       echo "Error retrieving Date Id: " . $conn->error;
-  
+
       }
 }
 
@@ -139,7 +139,7 @@ function addTodayDate($conn ,$backend=false) { // check format of the input  // 
       return true;
     }
     else{echo "Date Added successfully";}
-    
+
   }
   else {
     echo "Error: ".$conn->error;

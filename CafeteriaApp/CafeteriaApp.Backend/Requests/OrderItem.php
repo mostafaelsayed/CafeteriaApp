@@ -20,7 +20,8 @@ if ($_SERVER['REQUEST_METHOD']=="POST"){
     $data = json_decode(file_get_contents("php://input"));
     //if (isset($data->action) && $data->action == "addOrderItem"){
       //if ($data->Order != null){
-      $orderId = addOrderItem($conn,$data->OrderId,$data->MenuItemId,$data->Quantity,$data->CustomerId);
+      //echo $data;
+      $orderId = addOrderItem($conn,$data->OrderId,$data->MenuItemId,$data->Quantity);
       if($orderId != null)
       {
         echo $orderId;

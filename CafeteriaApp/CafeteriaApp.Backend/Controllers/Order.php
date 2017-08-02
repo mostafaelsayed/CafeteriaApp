@@ -199,7 +199,7 @@ function getOrdersByPaymentMethodId($conn,$id,$backend=false) {
 
 
 
-function addOrder( $conn,$deliveryDateId, $deliveryTimeId,$deliveryPlace, $paid, $total, $paymentMethodId,$orderStatusId, $customerId) 
+function addOrder( $conn,$deliveryDateId, $deliveryTimeId,$deliveryPlace, $paid, $total, $paymentMethodId,$orderStatusId, $customerId)
 {
    if( !isset($deliveryDateId))
  {
@@ -250,7 +250,7 @@ elseif (!isset($deliveryTimeId)) {
     $CustomerId=$customerId;
 
     if ($stmt->execute()===TRUE) {
-      echo "Order Added successfully";
+      //echo "Order Added successfully";
 
       return mysqli_insert_id($conn);
     }
@@ -259,7 +259,7 @@ elseif (!isset($deliveryTimeId)) {
       //echo $error;
     }
     $conn->close();
-  
+
 
 
 }

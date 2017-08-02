@@ -52,18 +52,17 @@ function getTimeById($conn,$id,$backend=false) {
 
 function getCurrentTimeId($conn) {
   $time = date("h:i:00");
-  $sql = "select Id from Times where Time=".$time." LIMIT 1";
+  $sql = "select Id from Times where Time='{$time}' LIMIT 1";
   $result = $conn->query($sql);
   if ($result) {
       $times = mysqli_fetch_assoc($result);
-      $conn->close();
+      //$conn->close();
       return $times["Id"];
     }
   else {
     echo "Error: ".$conn->error;
   }
 }
-
 
 function deleteTime($conn,$id) {
   if (!isset($id)) {
