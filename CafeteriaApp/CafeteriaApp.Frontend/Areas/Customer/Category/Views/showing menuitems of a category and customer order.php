@@ -35,6 +35,7 @@
           <tr>
             <th id="thead">OrderItem</th>
             <th id="thead">Quantity</th>
+            <th id="thead">Total Price</th>
             <th id="thead">Actions</th>
           </tr>
         </thead>
@@ -42,15 +43,17 @@
           <tr>
             <td ng-bind="o.Name" id="thead"></td>
             <td ng-bind="o.Quantity" id="thead"></td>
+            <td ng-bind="o.TotalPrice" id="thead"></td>
             <td ng-show="orderItems.length>0">
               <a title="Increase Quantity" id="creatNewCafeteria" ng-click="increaseQuantity(o)" class="btn"><i class="fa fa-plus"></i></a>
               <a title="Decrease Quantity" id="creatNewCafeteria" ng-click="decreaseQuantity(o)" class="btn"><i class="fa fa-minus"></i></a>
-              <a title="Remove From Order" ng-click="deleteOrderItem(o)" class="btn">Remove This Item</a>
+              <a title="Remove From Order" ng-click="deleteOrderItem(o)" style="color:white;font-style:italic" class="btn">Remove This Item</a>
             </td>
           </tr>
         </tbody>
       </table>
-      <button><div style="color:white;font-style:italic">Checkout</div></button>
+      <!-- <div id="thead">Total: <span ng-bind="currentOrder.Total"></span></div> -->
+      <div><a style="font-style:italic;color:white" class="btn" type="button" ng-href="/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}">Checkout</a></div>
     </div>
 
   <hr width="80%">

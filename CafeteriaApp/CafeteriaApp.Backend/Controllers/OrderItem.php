@@ -43,7 +43,7 @@ function getOrderItemsByOpenOrderId($conn,$id,$backend=false) {
   }
   else
   {
-  $sql = "select OrderItem.Id , MenuItem.Name , MenuItem.Id as MenuItemId , OrderItem.Quantity from OrderItem INNER JOIN MenuItem ON  OrderItem.MenuItemId = MenuItem.Id";
+  $sql = "select OrderItem.Id , MenuItem.Name , MenuItem.Id as MenuItemId , OrderItem.TotalPrice ,OrderItem.Quantity from OrderItem INNER JOIN MenuItem ON  OrderItem.MenuItemId = MenuItem.Id";
   $result = $conn->query($sql);
   if ($result) {
       $orderItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -108,8 +108,8 @@ function getOrderItemTotalPriceById($conn , $id) {
   if ($result = $conn->query($sql)) {
       $MenuItem = mysqli_fetch_assoc($result);
      // $conn->close();
-        return $MenuItem["TotalPrice"];   
-  } 
+        return $MenuItem["TotalPrice"];
+  }
   else {
       echo "Error retrieving Order Item: " . $conn->error;
   }
@@ -134,10 +134,10 @@ function getOrderItemTotalPriceById($conn , $id) {
   $unitPrice =getMenuItemPriceById($conn,$MenuItemId);
 
   $orderId =json_decode(getOpenOrderByCustomerId($conn,true), true)["Id"];
-  
+
   updateOrderTotalById($conn,$orderId,$increaseDecrease ?+$unitPrice : -$unitPrice);
 
-  $totalPrice = $quantity * $unitPrice; 
+  $totalPrice = $quantity * $unitPrice;
   $sql = "update OrderItem set Quantity = (?) , TotalPrice=(?)  where Id = (?)";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("idi",$Quantity,$TotalPrice,$Id);
@@ -205,7 +205,7 @@ else
   $OrderId = $orderId;
   $MenuItemId = $menuItemId;
   $Quantity = $quantity;
-  $Price =$totalPrice ; 
+  $Price =$totalPrice ;
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
     //echo "OrderItem Added successfully";

@@ -29,29 +29,28 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
         document.location = "/CafeteriaApp.Frontend/Views/login.php";
       }
       else {
-        console.log($scope.customerId);
-        //$scope.customerId = response.Id;
+        //console.log($scope.customerId);
         $scope.getOrder();
       }
     });
   }
 
   $scope.getTotalPrice = function() {
-    var price = 0;
-    for (i = 0;i<$scope.orderItems.length;i++) {
-      if ($scope.orderItems[i] != null) {
-        price = price + $scope.orderItems[i].Quantity*$scope.orderItems[i].Price;
-      }
-    }
-    return price;
+    // var price = 0;
+    // for (i = 0;i<$scope.orderItems.length;i++) {
+    //   if ($scope.orderItems[i] != null) {
+    //     price = price + $scope.orderItems[i].Quantity*$scope.orderItems[i].Price;
+    //   }
+    // }
+    // return price;
   }
 
   $scope.getOrderItems = function() {
     $http.get('/CafeteriaApp.Backend/Requests/OrderItem.php?orderId='+$scope.orderId)
     .then(function(response) {
-      console.log(response);
-      $scope.orderItems = response.data;
       console.log(response.data);
+      $scope.orderItems = response.data;
+      //console.log(response.data);
       //$scope.TotalPrice = $scope.getTotalPrice();
     });
   }
@@ -60,7 +59,7 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
     //console.log($scope.customerId);
     $http.get('/CafeteriaApp.Backend/Requests/Order.php')
     .then(function(response) {
-      console.log(response);
+      //console.log(response);
       $scope.currentOrder = response.data;
       $scope.orderId = $scope.currentOrder.Id;
       //console.log($scope.orderId);
@@ -96,10 +95,10 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
         Quantity: parseInt(1)
         //CustomerId: $scope.customerId
       };
-      console.log($scope.orderId);
+      //console.log($scope.orderId);
       $http.post('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
       .then(function(response) {
-        console.log(response);
+        //console.log(response);
         $scope.orderId = response.data;
         $scope.getOrderItems();
       });
@@ -107,7 +106,7 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
   }
 
   $scope.increaseQuantity = function(orderItem) {
-    console.log(orderItem.Id);
+    //console.log(orderItem.Id);
     if($scope.orderId != null) {
       var data = {
         Id: orderItem.Id,

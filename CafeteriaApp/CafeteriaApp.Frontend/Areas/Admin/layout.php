@@ -6,16 +6,19 @@
     <script src="/CafeteriaApp.Frontend/Scripts/libs/jquery-3.2.1.js"></script>
      <script src="/CafeteriaApp.Frontend/Scripts/libs/angular.min.js"></script>
     <script src="/CafeteriaApp.Frontend/Scripts/libs/bootstrap.min.js"></script>
+
     <script src="/CafeteriaApp.Frontend/Scripts/libs/bootstrap-gh-pages/ui-bootstrap-2.5.0.js"></script>
 
 <script src="/CafeteriaApp.Frontend/Scripts/libs/bootstrap-gh-pages/ui-bootstrap-tpls-2.5.0.js"></script>
     <!-- <script src="/CafeteriaApp.Frontend/Scripts/libs/angular-route.js"></script> -->
 
     <script src="/CafeteriaApp.Frontend/Scripts/libs/angular-modal-service.js"></script>
-    <!-- <script src="/CafeteriaApp.Frontend/Scripts/libs/knockout-3.4.2.js"></script> -->
+    <script src="/CafeteriaApp.Frontend/Scripts/libs/knockout-3.4.2.js"></script>
+    <script src="/CafeteriaApp.Frontend/Scripts/libs/knockout-file-bindings.js"></script>
 <!-- <script src="/CafeteriaApp.Frontend/Scripts/alertify/alertify.min.js"></script> -->
 <!-- Bootstrap Core CSS -->
  <link href="/CafeteriaApp.Frontend/Content/bootstrap.min.css" rel="stylesheet">
+ <link href="/CafeteriaApp.Frontend/Content/knockout-file-bindings.css" rel="stylesheet">
  <!-- MetisMenu CSS -->
  <link href="/CafeteriaApp.Frontend/Scripts/adminTheme/metisMenu/metisMenu.min.css" rel="stylesheet">
  <!-- DataTables CSS -->

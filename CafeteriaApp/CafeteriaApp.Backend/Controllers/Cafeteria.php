@@ -49,33 +49,43 @@ function getCafeteriaById($conn ,$id,$backend=false) {
 }
 
 
-function addCafeteria($conn,$name) {
+function addCafeteria($conn,$name,$image) {
 
-if( !isset($name))
- {
- echo "Error: Name is not set";
-  return;
+  if( !isset($name)) {
+    echo "Error: Name is not set";
+    return;
   }
-// elseif (!isset($image)) {
-//  echo "Error: Image is not set";
-//   return;
-//   }
-  else
-  {
 
-  $sql = "insert into cafeteria (Name) values (?)";
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param("s",$name);
-  $name = $name;
-  //$Image= $image;
-  //$conn->query($sql);
-  if ($stmt->execute()===TRUE) {
-    echo "Cafeteria Added successfully";
-  }
   else {
-    echo "Error: ".$conn->error;
+    // global $uploadedFile;
+    // if (isset($_FILES['imageToUpload'])) {
+    //   //echo "string";
+    //   $uploadDir = 'CafeteriaApp.Backend/uploads/';
+    //   $uploadedFile = $uploadDir.basename($_FILES['imageToUpload']['name']);
+    //   if (move_uploaded_file($_FILES['imageToUpload']['tmp_name'],$uploadedFile)) {
+    //     echo "File is successfully uploaded";
+    //   }
+    //   else {
+    //     echo "Error: ".$conn->error;
+    //   }
+    // }
+    // else {
+    //   $uploadedFile = null;
+    // }
+    $sql = "insert into cafeteria (Name,Image) values (?,?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss",$name,$Image);
+    $name = $name;
+    $Image= $image;
+    //$conn->query($sql);
+    if ($stmt->execute()===TRUE) {
+      echo "Cafeteria Added successfully";
+      //return mysqli_insert_id($conn);
+    }
+    else {
+      echo "Error: ".$conn->error;
+    }
   }
-}
 }
 
 
