@@ -8,7 +8,7 @@ class Role
 
 	public $drop="drop table `mydb`.`Role` ";
 
-	public $insert_all_Roles="insert into `mydb`.`Role` (Id,Name) values (1,'Admin'),(2,'Cashier'),(3,'Customer')";
+	public $insert_all_Roles="insert into `mydb`.`Role` (Id,Name) values (1,'Admin'),(2,'Customer'),(3,'Cashier')";
 
 
 }

@@ -1,6 +1,7 @@
 <?php 	
 //require_once("CafeteriaApp.Backend/Controllers/User.php"); 
- 
+ require_once('CafeteriaApp.Backend/session.php');
+ require_once("CafeteriaApp.Backend/connection.php"); 
 
 
 	function redirect_to($new_location) {
@@ -142,30 +143,35 @@ function confirmQuery($result_set) {
 
 
 //***************************			to be continued			 ********************************************
-function validatePageAccessWithRoleId($pageName  /*, $existing_hash*/) {
+function validatePageAccess ($conn) {/*, $existing_hash*/
     // existing hash contains format and salt at start
     //$hash = crypt($pageName, $existing_hash);
-
     //$safe_email = mysqli_real_escape_string($conn, $email);
-    
-    $query  = " SELECT *  FROM Pages_Roles WHERE PageId=(SELECT Id FROM  `mydb`.`Pages` WHERE Name = '{$pageName}' LIMIT 1) AND RoleId={$_SESSION["RoleId"]}";  // add RoleId index to the session var  on login
+    $query  = "SELECT `Dir` FROM `Dir` WHERE Id IN (SELECT DirId FROM Dir_Role WHERE RoleId= {$_SESSION["roleId"]} ) ";  // add RoleId index to the session var  on login
 
     $result_set = mysqli_query($conn, $query);
     confirmQuery($result_set);
-
     if($result_set) {
-    $result_no = mysqli_num_rows($result_set);
-
-    if ( $result_no > 0 ){
+    //$result_no = mysqli_num_rows($result_set);
+    $dirs = mysqli_fetch_all($result_set, MYSQLI_ASSOC); // ??
+	//print_r($dirs);
+	foreach ($dirs as $key => $value) {
+	
+    if ( strpos(getcwd() , $value["Dir"]) !== false ){
+    	
       return;
     }
-    }
-    else
-    {
-       return "<h1>Access denied . </h2>";
+    
+}
+
+  
+   
+    echo "<h1 style ='color:red;' > Access denied . </h2>";
+    exit(); 
     }
 
   }
+
 
 
 ?>
