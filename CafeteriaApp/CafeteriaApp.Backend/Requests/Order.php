@@ -23,4 +23,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST"){
         echo "error occured while creating Order";
       }
 }
+
+require_once("CafeteriaApp.Backend/footer.php");
+
 ?>

@@ -39,4 +39,6 @@ if ($_SERVER['REQUEST_METHOD']=="PUT"){
       }
 }
 
+require_once("CafeteriaApp.Backend/footer.php");
+
  ?>

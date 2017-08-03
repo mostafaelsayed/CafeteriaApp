@@ -6,6 +6,7 @@
 <?php require_once("CafeteriaApp.Backend/Controllers/Customer.php"); ?>
 
 <?php
+
 $username = "";
 
 if (isset($_POST['submit'])) { // check if the button 's been pressed
@@ -28,12 +29,13 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
 			// Mark user as logged in
 			$_SESSION["UserId"] = $found_user["Id"];
 			$_SESSION["userName"] = $found_user["UserName"];
-
+      $_SESSION["roleId"] = $found_user["RoleId"];
+      
       //get customer id by user id from db 
      $customer_id_json = getCustomerIdByUserId($conn ,$_SESSION["UserId"] ,true);
       $_SESSION["customerId"] = json_decode($customer_id_json, true)["Id"];
      
-     
+    
       if(!getCurrentDateId($conn)) // make the server add it automatically
       {
         addTodayDate($conn,true);
@@ -71,7 +73,7 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
     <form action="login.php" method="post" class="login-box" >
 
       <p>E-mail:
-        <input type="text" name="email" value="<?php echo htmlentities($username); ?>"  />
+        <input type="email" name="email" value="<?php echo htmlentities($username); ?>"  />
       </p>
       <p>Password:
         <input type="password" name="password" value="" />

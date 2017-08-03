@@ -7,7 +7,7 @@ function getCafeterias($conn,$backend=false) {
   if ($result = $conn->query($sql)) {
       $cafeterias = mysqli_fetch_all($result, MYSQLI_ASSOC); // ??
       $cafeterias = json_encode($cafeterias); // ??
-      $conn->close();
+      //$conn->close();
        if($backend)
       {
         return $cafeterias;
@@ -32,7 +32,7 @@ function getCafeteriaById($conn ,$id,$backend=false) {
   if ($result = $conn->query($sql)) {
       $cafeteria = mysqli_fetch_assoc($result); // fetch only the first row of the result
       $cafeteria = json_encode($cafeteria); // ??
-      $conn->close();
+      //$conn->close();
        if($backend)
       {
         return $cafeteria;
@@ -142,6 +142,7 @@ function deleteCafeteria($conn,$id) {
 }
 }
 
+require_once("CafeteriaApp.Backend/footer.php");
 
 
  ?>

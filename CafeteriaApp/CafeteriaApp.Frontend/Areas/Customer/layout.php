@@ -70,6 +70,6 @@
       </nav>
       </div>
         <!-- /#page-wrapper -->
-
+<div> Copyright &copy;<?php echo date("Y"); ?>, Restaurant</div>
     </body>
     </html>

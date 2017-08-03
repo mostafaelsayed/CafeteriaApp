@@ -49,4 +49,7 @@ if ($_SERVER['REQUEST_METHOD']=="DELETE") {
       }
 }
 
+
+require_once("CafeteriaApp.Backend/footer.php");
+
 ?>

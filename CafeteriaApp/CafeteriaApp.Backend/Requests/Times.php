@@ -42,4 +42,7 @@ require_once("CafeteriaApp.Backend/connection.php");
 //   //}
 // }
 
+ 
+require_once("CafeteriaApp.Backend/footer.php");
+
  ?>
