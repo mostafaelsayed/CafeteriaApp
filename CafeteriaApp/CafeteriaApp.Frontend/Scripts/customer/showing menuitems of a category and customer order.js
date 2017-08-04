@@ -25,6 +25,7 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
     $http.get('/CafeteriaApp.Backend/Requests/Customer.php')
     .then(function(response) {
       $scope.customerId = response.data.Id;
+      console.log($scope.customerId);
       if ($scope.customerId == undefined) {
         document.location = "/CafeteriaApp.Frontend/Views/login.php";
       }
