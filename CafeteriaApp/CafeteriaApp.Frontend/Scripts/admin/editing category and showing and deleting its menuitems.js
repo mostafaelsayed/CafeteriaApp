@@ -14,35 +14,35 @@ app.controller('ModalController', function($scope, close) {
 
 // controller for editing a category
 
-app.controller('editCategory',function($scope,$http,$location){
-  $scope.categoryId = $location.search().id;
-
-  $scope.getCategory = function(){
-    $http.get('/CafeteriaApp.Backend/Requests/Category.php?id='+$scope.categoryId)
-    .then(function(response){
-      $scope.name = response.data.Name;
-      console.log(response);
-      $scope.image = response.data.Image;
-    })
-  }
-
-  $scope.getCategory();
-
-  $scope.editCategory = function() {
-    var data = {
-      Name: $scope.name,
-      Id: $scope.categoryId
-    };
-    if ($scope.name != "") {
-      $http.put('/CafeteriaApp.Backend/Requests/Category.php',data)
-      .then(function(response){
-        console.log(response);
-        window.history.back();
-    // document.location = "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/index.php";
-      });
-    };
-  };
-});
+// app.controller('editCategory',function($scope,$http,$location){
+//   $scope.categoryId = $location.search().id;
+//
+//   $scope.getCategory = function(){
+//     $http.get('/CafeteriaApp.Backend/Requests/Category.php?id='+$scope.categoryId)
+//     .then(function(response){
+//       $scope.name = response.data.Name;
+//       console.log(response);
+//       $scope.image = response.data.Image;
+//     })
+//   }
+//
+//   $scope.getCategory();
+//
+//   $scope.editCategory = function() {
+//     var data = {
+//       Name: $scope.name,
+//       Id: $scope.categoryId
+//     };
+//     if ($scope.name != "") {
+//       $http.put('/CafeteriaApp.Backend/Requests/Category.php',data)
+//       .then(function(response){
+//         console.log(response);
+//         window.history.back();
+//     // document.location = "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/index.php";
+//       });
+//     };
+//   };
+// });
 
 
 // controller for showing and deleting menuitems

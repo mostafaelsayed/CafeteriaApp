@@ -1,7 +1,7 @@
-<?php require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies 
+<?php require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies
 
 function getCustomers($conn,$backend=false){
-  
+
   $sql = "select * from Customer";
   $result = $conn->query($sql);
   if ($result) {
@@ -10,14 +10,14 @@ function getCustomers($conn,$backend=false){
       $customers = json_encode($customers);
       $conn->close();
       if($backend)
-      { 
-        return $customers;   
+      {
+        return $customers;
       }
       else
       {
        echo $customers;
       }
-    
+
   } else {
       echo "Error retrieving customers: " . $conn->error;
   }
@@ -26,7 +26,7 @@ function getCustomers($conn,$backend=false){
 
 
 function getCustomerById($conn ,$id,$backend=false) {
-   if( !isset($id)) 
+   if( !isset($id))
  {
  echo "Error: Customer Id is not set";
   return;
@@ -40,8 +40,8 @@ function getCustomerById($conn ,$id,$backend=false) {
       $customers = json_encode($customers);
       $conn->close();
       if($backend)
-      { 
-        return $customers;   
+      {
+        return $customers;
       }
       else
       {
@@ -56,13 +56,13 @@ function getCustomerById($conn ,$id,$backend=false) {
 
 
 function getCurrentCustomerByUserId($conn,$backend=false) {
- 
- if(isset($_SESSION["UserId"])) 
+
+ if(isset($_SESSION["UserId"]))
   {
   $userId=$_SESSION["UserId"];
-  } 
+  }
 
-  if( !isset($userId)) 
+  if( !isset($userId))
  {
  echo "Error: User Id is not set";
   return;
@@ -74,16 +74,16 @@ function getCurrentCustomerByUserId($conn,$backend=false) {
   if ($result) {
       $customer = mysqli_fetch_assoc($result);
       $customer = json_encode($customer);
-      $conn->close();
+      //$conn->close();
       if($backend)
-      { 
-        return $customer;   
+      {
+        return $customer;
       }
       else
       {
        echo $customer;
       }
-     
+
   } else {
       echo "Error retrieving customer: " . $conn->error;
   }
@@ -91,9 +91,9 @@ function getCurrentCustomerByUserId($conn,$backend=false) {
 
 
 function getCustomerByUserId($conn,$userId,$backend=false) {
- 
 
-  if( !isset($userId)) 
+
+  if( !isset($userId))
  {
  echo "Error: User Id is not set";
   return;
@@ -107,14 +107,14 @@ function getCustomerByUserId($conn,$userId,$backend=false) {
       $customer = json_encode($customer);
       $conn->close();
       if($backend)
-      { 
-        return $customer;   
+      {
+        return $customer;
       }
       else
       {
        echo $customer;
       }
-     
+
   } else {
       echo "Error retrieving customer: " . $conn->error;
   }
@@ -123,7 +123,7 @@ function getCustomerByUserId($conn,$userId,$backend=false) {
 
 
 function getCustomerIdByUserId($conn,$userId,$backend=false) {
-  if( !isset($userId)) 
+  if( !isset($userId))
  {
  echo "Error: User Id is not set";
   return;
@@ -137,14 +137,14 @@ function getCustomerIdByUserId($conn,$userId,$backend=false) {
       $customer = json_encode($customer);
       //$conn->close();
       if($backend)
-      { 
-        return $customer;   
+      {
+        return $customer;
       }
       else
       {
        echo $customer;
       }
-     
+
   } else {
       echo "Error retrieving customer: " . $conn->error;
   }
@@ -153,7 +153,7 @@ function getCustomerIdByUserId($conn,$userId,$backend=false) {
 
 
 function addCustomer($conn,$cred,$userId) {
-   if( !isset($cred)) 
+   if( !isset($cred))
  {
  echo "Error: Credit is not set";
   return;
@@ -179,7 +179,7 @@ elseif (!isset($userId)) {
 
 
 function editCustomerCredit($conn,$cred,$userId) {
-  if( !isset($cred)) 
+  if( !isset($cred))
  {
  echo "Error: Credit is not set";
   return;

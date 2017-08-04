@@ -74,8 +74,8 @@ function getMenuItemPriceById($conn , $id) {
   if ($result = $conn->query($sql)) {
       $MenuItem = mysqli_fetch_assoc($result);
      // $conn->close();
-        return $MenuItem["Price"];   
-  } 
+        return $MenuItem["Price"];
+  }
   else {
       echo "Error retrieving MenuItem: " . $conn->error;
   }
@@ -188,6 +188,6 @@ function deleteMenuItem($conn,$id) {
   }
 }
 }
-
+require_once("CafeteriaApp.Backend/footer.php");
 
 ?>

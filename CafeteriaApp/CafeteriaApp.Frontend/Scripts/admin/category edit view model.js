@@ -1,4 +1,5 @@
-function categoryNewViewModel() {
+function categoryEditViewModel() {
+
   var self = this;
   self.categoryName = ko.observable();
   self.categoryImage = ko.observable();
@@ -8,40 +9,40 @@ function categoryNewViewModel() {
     base64String: ko.observable(),
     dataURL: ko.observable()
   });
+
   var x = window.location.href;
-  self.cafeteriaId = ko.observable(parseInt(x.split("?id=")[1]));
+  var id = parseInt(x.split("?id=")[1]);
 
-
-  // self.getCategory = function() {
-  //   $.ajax({
-  //     type: 'GET',
-  //     url: '/CafeteriaApp.Backend/Requests/Category.php?id='+self.cafeteriaId(),
-  //     contentType: 'application/json'
-  //   }).done(function(response){
-  //     var data = JSON.parse(response);
-  //     self.categoryName(data.Name);
-  //     self.categoryImage(data.Image);
-  //   }).fail(function(response){
-  //     console.log(response);
-  //   });
-  // }
+  self.getCategory = function() {
+    $.ajax({
+      type: 'GET',
+      url: '/CafeteriaApp.Backend/Requests/Category.php?id='+id,
+      contentType: 'application/json'
+    }).done(function(response){
+      //console.log(response);
+      var data = JSON.parse(response);
+      self.categoryName(data.Name);
+      self.categoryImage(data.Image);
+    }).fail(function(response){
+      console.log(response);
+    });
+  }
 
   $("#file").on('change' , function() {
         self.chooseImageClicked(1);
   });
 
-  //self.getCafeteria();
+  self.getCategory();
 
-  self.addCategory = function() {
-    //console.log(id);
+  self.editCategory = function() {
+    console.log(id);
     var data = {
-      //Id: id,
+      Id: id,
       Name: self.categoryName(),
-      Image: self.fileData().base64String(),
-      CafeteriaId: self.cafeteriaId()
+      Image: self.fileData().base64String()
     };
     $.ajax({
-      type: 'POST',
+      type: 'PUT',
       url: '/CafeteriaApp.Backend/Requests/Category.php',
       contentType: 'application/json; charset=utf-8',
       data: JSON.stringify(data)

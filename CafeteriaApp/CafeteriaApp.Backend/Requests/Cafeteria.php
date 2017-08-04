@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
   }
 }
 
-if ($_SERVER['REQUEST_METHOD']=="POST"){
+if ($_SERVER['REQUEST_METHOD']=="POST") {
   global $filePath;
   if ($_POST["name"] != null) {
     if (isset($_FILES['imageToUpload'])) {
@@ -49,13 +49,18 @@ if ($_SERVER['REQUEST_METHOD']=="POST"){
   }
 }
 
-if ($_SERVER['REQUEST_METHOD']=="PUT"){
+if ($_SERVER['REQUEST_METHOD']=="PUT") {
     //decode the json data
   $data = json_decode(file_get_contents("php://input"));
   if ($data->Name != null && $data->Id != null) {
-    editCafeteria($conn,$data->Name,$data->Id);
+    if(!isset($data->Image)) {
+      editCafeteria($conn,$data->Name,$data->Id);
+    }
+    else {
+      editCafeteria($conn,$data->Name,$data->Id,$data->Image);
+    }
   }
-  else{
+  else {
     echo "name is required";
   }
 }
@@ -65,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD']=="DELETE") {
   if ($cafeteriaIdToDelete != null) {
     deleteCafeteria($conn,$cafeteriaIdToDelete);
   }
-  else{
+  else {
     echo "No Id is provided";
   }
 }
