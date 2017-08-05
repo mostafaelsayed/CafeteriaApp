@@ -1,59 +1,133 @@
-function categoryNewViewModel() {
-  var self = this;
-  self.categoryName = ko.observable();
-  self.categoryImage = ko.observable();
-  self.chooseImageClicked = ko.observable(0);
-  ko.fileBindings.defaultOptions.buttonText = "Choose Image";
-  self.fileData = ko.observable({
-    base64String: ko.observable(),
-    dataURL: ko.observable()
+var app = angular.module('myapp', []);
+
+app.config(['$locationProvider', function($locationProvider) {
+  $locationProvider.html5Mode({
+    enabled: true,
+    requireBase: false
   });
-  var x = window.location.href;
-  self.cafeteriaId = ko.observable(parseInt(x.split("?id=")[1]));
+}]);
 
+// controller for adding menuitem to the database
 
-  // self.getCategory = function() {
-  //   $.ajax({
-  //     type: 'GET',
-  //     url: '/CafeteriaApp.Backend/Requests/Category.php?id='+self.cafeteriaId(),
-  //     contentType: 'application/json'
-  //   }).done(function(response){
-  //     var data = JSON.parse(response);
-  //     self.categoryName(data.Name);
-  //     self.categoryImage(data.Image);
-  //   }).fail(function(response){
-  //     console.log(response);
-  //   });
-  // }
+app.controller('addCategory',function($scope,$http,$location){
 
-  $("#file").on('change' , function() {
-        self.chooseImageClicked(1);
-  });
+  $scope.image = null;
+  $scope.imageFileName = '';
+  
+  $scope.uploadme = {};
+  $scope.uploadme.src = '';
 
-  //self.getCafeteria();
-
-  self.addCategory = function() {
-    //console.log(id);
+  $scope.name = "";
+  $scope.cafeteriaId = $location.search().id;
+  $scope.addCategory = function () {
     var data = {
-      //Id: id,
-      Name: self.categoryName(),
-      Image: self.fileData().base64String(),
-      CafeteriaId: self.cafeteriaId()
+      Name: $scope.name,
+      CafeteriaId: $scope.cafeteriaId,
+      Image: $scope.uploadme.src.split(',')[1]
     };
-    $.ajax({
-      type: 'POST',
-      url: '/CafeteriaApp.Backend/Requests/Category.php',
-      contentType: 'application/json; charset=utf-8',
-      data: JSON.stringify(data)
-    }).done(function(response){
-      console.log(response);
-      //self.getCafeteria();
-      window.history.back();
-      // var data = JSON.parse(response);
-      // self.cafeteriaName(data.Name);
-      // self.cafeteriaImage(data.Image);
-    }).fail(function(response){
-      console.log(response);
-    });
-   }
-}
+    if ($scope.name != "" && $scope.cafeteriaId != "") {
+      $http.post('/CafeteriaApp.Backend/Requests/Category.php',data)
+      .then(function(response){
+        console.log(response);
+        //First function handles success
+        window.history.back();
+        // document.location =  "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/edit.php?id="+$scope.cafeteriaid;
+      }, function(response) {
+        //Second function handles error
+      });
+    }
+  };
+});
+
+app.directive('fileDropzone', function() {
+  return {
+    restrict: 'A',
+    scope: {
+      file: '=',
+      fileName: '='
+    },
+    link: function(scope, element, attrs) {
+      var checkSize,
+          isTypeValid,
+          processDragOverOrEnter,
+          validMimeTypes;
+      
+      processDragOverOrEnter = function (event) {
+        if (event != null) {
+          event.preventDefault();
+        }
+        event.dataTransfer.effectAllowed = 'copy';
+        return false;
+      };
+      
+      validMimeTypes = attrs.fileDropzone;
+      
+      checkSize = function(size) {
+        var _ref;
+        if (((_ref = attrs.maxFileSize) === (void 0) || _ref === '') || (size / 1024) / 1024 < attrs.maxFileSize) {
+          return true;
+        } else {
+          alert("File must be smaller than " + attrs.maxFileSize + " MB");
+          return false;
+        }
+      };
+
+      isTypeValid = function(type) {
+        if ((validMimeTypes === (void 0) || validMimeTypes === '') || validMimeTypes.indexOf(type) > -1) {
+          return true;
+        } else {
+          alert("Invalid file type.  File must be one of following types " + validMimeTypes);
+          return false;
+        }
+      };
+      
+      element.bind('dragover', processDragOverOrEnter);
+      element.bind('dragenter', processDragOverOrEnter);
+
+      return element.bind('drop', function(event) {
+        var file, name, reader, size, type;
+        if (event != null) {
+          event.preventDefault();
+        }
+        reader = new FileReader();
+        reader.onload = function(evt) {
+          if (checkSize(size) && isTypeValid(type)) {
+            return scope.$apply(function() {
+              scope.file = evt.target.result;
+              if (angular.isString(scope.fileName)) {
+                return scope.fileName = name;
+              }
+            });
+          }
+        };
+        file = event.dataTransfer.files[0];
+        name = file.name;
+        type = file.type;
+        size = file.size;
+        //reader.readAsBinaryString(file);
+        reader.readAsDataURL(file);
+        return false;
+      });
+    }
+  };
+})
+
+
+.directive("fileread", [function () {
+    return {
+        scope: {
+            fileread: "="
+        },
+        link: function (scope, element, attributes) {
+            element.bind("change", function (changeEvent) {
+                var reader = new FileReader();
+                reader.onload = function (loadEvent) {
+                    scope.$apply(function () {
+                        scope.fileread = loadEvent.target.result;
+                    });
+                }
+                reader.readAsDataURL(changeEvent.target.files[0]);
+            });
+        }
+    }
+}]);

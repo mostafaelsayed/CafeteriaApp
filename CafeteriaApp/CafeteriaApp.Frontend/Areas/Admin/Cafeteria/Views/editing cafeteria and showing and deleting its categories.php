@@ -5,6 +5,7 @@
 ?>
 
 <script src="/CafeteriaApp.Frontend/Scripts/admin/editing cafeteria and showing and deleting its categories.js"></script>
+<link href="/CafeteriaApp.Frontend/Scripts/input_file.css" rel="stylesheet">
 
 <div id="page-wrapper" style="margin-top:-600px">
 
@@ -14,8 +15,8 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-lg-12">
+  <div class="row" ng-app="myapp">
+    <div class="col-lg-12" ng-controller="editCafeteria">
       <div class="panel panel-default">
         <div class="panel-heading">Edit Cafeteria</div>
         <div class="panel-body">
@@ -23,20 +24,19 @@
             <div class="col-lg-6">
               <form role="form">
                 <label>Name</label>
-                <input type="text" class="form-control" data-bind="textInput:cafeteriaName" autofocus="autofocus" name="name" id="name" required/>
+                <input type="text" class="form-control" ng-model="name" autofocus="autofocus" name="name" id="name" required/>
                 <label>Image</label>
-                <div data-bind="fileDrag: fileData">
-                  <div class="image-upload-preview" data-bind="if: chooseImageClicked()==0">
-                    <img width="370" height="266" data-bind="attr: { src: cafeteriaImage }">
+                <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name=" imageFileName" data-max-file-size="3">
                   </div>
-                  <div class="image-upload-preview" data-bind="if: chooseImageClicked()==1">
-                    <img width="370" height="266" data-bind="attr: { src: fileData().dataURL }, visible: fileData().dataURL">
+                  <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile">
+                  <div ng-if="uploadme.src != ''">
+                    <img ng-src="{{ uploadme.src }}" width="300" height="300">
                   </div>
-                  <div class="image-upload-input" id="file">
-                    <input name="imageToUpload" type="file" data-bind="fileInput: fileData,customFileInput: {}">
+                  <div ng-if="uploadme.src == ''">
+                    <img ng-src="{{ imageUrl }}" width="300" height="300">
                   </div>
-                </div>
-                <input type = "submit" value = "save" class="btn btn-primary" style="float:right" data-bind="click:editCafeteria">
+                  <button style="cursor:unset" class="btn btn-primary" type="button"><label for="file" style="cursor: pointer;">Choose Image</label></button>   
+                <input type = "submit" value = "save" class="btn btn-primary" style="float:right" ng-click="editCafeteria()">
               </form>
           </div>
         </div>
@@ -50,7 +50,7 @@
     </div>
   </div>
 
-  <div class="row" ng-app="myapp" ng-controller="showingAndDeletingCategories">
+  <div class="row" ng-controller="showingAndDeletingCategories">
     <script type="text/ng-template" id="modal.html">
       <div class="modal fade" id="mymodal" data-backdrop="false" style="background: rgba(0, 0, 0, 0.5)">
         <div class="modal-dialog">
@@ -105,11 +105,5 @@
      </div>
    </div>
   </div>
-
-  <script src="/CafeteriaApp.Frontend/Scripts/admin/cafeteria edit view model.js"></script>
-  <script>
-    var app = new cafeteriaEditViewModel();
-    ko.applyBindings(app);
-  </script>
 
 </div>

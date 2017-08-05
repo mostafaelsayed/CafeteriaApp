@@ -44,7 +44,6 @@
                 </div>
                 <div class="form-group" style="float: right">
                   <button ng-click="editMenuItem()" class="btn btn-primary">Save</button>
-                </div>
                 </div>             
               </form>
             </div>
@@ -53,3 +52,4 @@
       </div>
     </div>
   </div>
+</div>

@@ -5,6 +5,8 @@
 ?>
 
 <script src="/CafeteriaApp.Frontend/Scripts/admin/editing category and showing and deleting its menuitems.js"></script>
+<link href="/CafeteriaApp.Frontend/Scripts/input_file.css" rel="stylesheet">
+
 
 <div id="page-wrapper" style="margin-top:-600px">
 
@@ -14,44 +16,48 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">Edit Category</div>
-        <div class="panel-body">
-          <div class="row">
-            <div class="col-lg-6">
-              <form role="form">
-                <label>Name</label>
-                <input type="text" class="form-control" data-bind="textInput:categoryName" autofocus="autofocus" name="name" id="name" required/>
-                <label>Image</label>
-                <div data-bind="fileDrag: fileData">
-                  <div class="image-upload-preview" data-bind="if: chooseImageClicked()==0">
-                    <img width="370" height="266" data-bind="attr: { src: categoryImage }">
+  <div ng-app="myapp">
+    <div class="row">
+      <div class="col-lg-12" ng-controller="editCategory">
+        <div class="panel panel-default">
+          <div class="panel-heading">Edit Category</div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-lg-6">
+                <form role="form">
+                  <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" ng-model="name" autofocus="autofocus" name="name" id="name" required/>
+                    <label>Image</label>
+                    <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name=" imageFileName" data-max-file-size="3">
+                    </div>
+                    <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile">
+                    <div ng-if="uploadme.src != ''">
+                      <img ng-src="{{ uploadme.src }}" width="300" height="300">
+                    </div>
+                    <div ng-if="uploadme.src == ''">
+                      <img ng-src="{{ imageUrl }}" width="300" height="300">
+                    </div>
+                    <button style="cursor:unset" class="btn btn-primary" type="button"><label for="file" style="cursor: pointer;">Choose Image</label></button>
                   </div>
-                  <div class="image-upload-preview" data-bind="if: chooseImageClicked()==1">
-                    <img width="370" height="266" data-bind="attr: { src: fileData().dataURL }, visible: fileData().dataURL">
+                  <div class="form-group">
+                    <input type = "submit" value = "save" class="btn btn-primary" style="float:right" ng-click="editCategory()">
                   </div>
-                  <div class="image-upload-input" id="file">
-                    <input name="imageToUpload" type="file" data-bind="fileInput: fileData,customFileInput: {}">
-                  </div>
-                </div>
-                <input type = "submit" value = "save" class="btn btn-primary" style="float:right" data-bind="click:editCategory">
-              </form>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">MenuItems</h1>
+    
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="page-header">MenuItems</h1>
+      </div>
     </div>
-  </div>
 
-  <div ng-app="myapp">
+    
     <div class="row" ng-controller="showingAndDeletingMenuItems">
       <script type="text/ng-template" id="modal.html">
          <div class="modal fade" id="mymodal" data-backdrop="false" style="background: rgba(0, 0, 0, 0.5)">
@@ -113,8 +119,3 @@
     </div>
   </div>
 </div>
-<script src="/CafeteriaApp.Frontend/Scripts/admin/category edit view model.js"></script>
-<script>
-  var app = new categoryEditViewModel();
-  ko.applyBindings(app);
-</script>

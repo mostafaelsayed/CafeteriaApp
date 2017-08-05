@@ -1,77 +1,98 @@
 <?php
 
-function getCafeterias($conn,$backend=false) {
+function getCafeterias($conn,$backend=false)
+{
   $sql = "select * from Cafeteria";
-  if ($result = $conn->query($sql)) {
+  if ($result = $conn->query($sql))
+  {
     $cafeterias = mysqli_fetch_all($result, MYSQLI_ASSOC); // ??
     $cafeterias = json_encode($cafeterias); // ??
-    if ($backend) {
+    if ($backend)
+    {
       return $cafeterias;
     }
-    else {
+    else
+    {
      echo $cafeterias;
     }
   }
-  else {
+  else
+  {
     echo "Error retrieving Cafeterias : " . $conn->error;
   }
 }
 
-function getCafeteriaById($conn ,$id,$backend=false) {
+function getCafeteriaById($conn ,$id,$backend=false)
+{
   $sql = "select * from Cafeteria where Id =".$id." LIMIT 1";
-  if ($result = $conn->query($sql)) {
+  if ($result = $conn->query($sql))
+  {
     $cafeteria = mysqli_fetch_assoc($result); // fetch only the first row of the result
     $cafeteria = json_encode($cafeteria); // ??
-    if ($backend) {
+    if ($backend)
+    {
       return $cafeteria;
     }
-    else {
+    else
+    {
      echo $cafeteria;
     }
   }
-  else {
+  else
+  {
     echo "Error retrieving Cafeteria : " . $conn->error;
   }
 }
 
-function addCafeteria($conn,$name,$image) {
-  if (!isset($name)) {
+function addCafeteria($conn,$name,$image)
+{
+  if (!isset($name))
+  {
     echo "Error: Name is not set";
     return;
   }
 
-  else {
+  else
+  {
     $sql = "insert into cafeteria (Name,Image) values (?,?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss",$name,$Image);
     $name = $name;
     $Image= $image;
-    if ($stmt->execute()===TRUE) {
+    if ($stmt->execute()===TRUE)
+    {
       echo "Cafeteria Added successfully";
     }
-    else {
+    else
+    {
       echo "Error: ".$conn->error;
     }
   }
 }
 
-function editCafeteria($conn,$name,$id,$imageData = null) {
-  if(!isset($name)) {
+function editCafeteria($conn,$name,$id,$imageData = null)
+{
+  if(!isset($name))
+  {
     echo "Error: Name is not set";
     return;
   }
-  elseif (!isset($id)) {
+  elseif (!isset($id))
+  {
     echo "Error: Id is not set";
     return;
   }
-  else {
+  else
+  {
     $cafeteria = (mysqli_fetch_assoc($conn->query("select Image from cafeteria where Id = ".$id)));
     $cafeteriaImage = basename($cafeteria['Image']);
     global $newImageName;
-    if ($imageData != null) {
+    if ($imageData != null)
+    {
       $sql = "update cafeteria set Name = (?) , Image = (?) where Id = (?)";
       chdir("../uploads"); // go to uploads directory
-      if ($cafeteriaImage != null) {
+      if ($cafeteriaImage != null)
+      {
         unlink($cafeteriaImage);
       }
       $newImageName = str_replace(':',' ',(string)date("Y-m-d H:i:s")).".jpg";
@@ -84,7 +105,8 @@ function editCafeteria($conn,$name,$id,$imageData = null) {
       $Id = $id;
       $Image = "/CafeteriaApp.Backend/uploads/".$newImageName;
     }
-    else {
+    else
+    {
       $sql = "update cafeteria set Name = (?) where Id = (?)";
       $stmt = $conn->prepare($sql);
       $stmt->bind_param("si",$Name,$Id);
@@ -92,28 +114,34 @@ function editCafeteria($conn,$name,$id,$imageData = null) {
       $Id = $id;
     }
 
-    if ($stmt->execute()===TRUE) {
+    if ($stmt->execute()===TRUE)
+    {
       echo "Cafeteria updated successfully";
     }
-    else {
+    else
+    {
       echo "Error: ".$conn->error;
-
     }
   }
 }
 
-function deleteCafeteria($conn,$id) {
-  if (!isset($id)) {
+function deleteCafeteria($conn,$id)
+{
+  if (!isset($id))
+  {
     echo "Error: Id is not set";
     return;
   }
-  else {
+  else
+  {
     $conn->query("set foreign_key_checks = 0"); // ????????/
     $sql = "delete from cafeteria where Id = ".$id." LIMIT 1";
-    if ($conn->query($sql)===TRUE) {
+    if ($conn->query($sql)===TRUE)
+    {
       echo "Cafeteria deleted successfully";
     }
-    else {
+    else
+    {
       echo "Error: ".$conn->error;
     }
   }
@@ -121,4 +149,4 @@ function deleteCafeteria($conn,$id) {
 
 require_once("CafeteriaApp.Backend/footer.php");
 
- ?>
+?>
