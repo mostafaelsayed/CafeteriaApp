@@ -12,9 +12,9 @@
 <div class="row" ng-app="myapp" ng-controller="getMenuItemsAndCustomerOrder">
 
     <div class="col-lg-2">
-      <a href="" style="color:white;margin-left:40px">Back</a>
+      <a href="#" style="color:white;margin-left:40px">Back</a>
       <br><br>
-      <a href="" style="color:white;margin-left:40px">About This category</a>
+      <a href="#" style="color:white;margin-left:40px">About This category</a>
     </div>
 
     <div class="col-lg-5">

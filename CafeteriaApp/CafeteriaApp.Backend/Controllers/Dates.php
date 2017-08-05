@@ -8,7 +8,6 @@ function getDates($conn,$backend=false) {
    {
       $dates = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $dates = json_encode($dates);
-      $conn->close();
        if($backend)
       {
         return $dates;
@@ -34,7 +33,6 @@ function getDateById($conn ,$id,$backend=false) {
   if ($result) {
       $Id = mysqli_fetch_assoc($result);
       $Id= json_encode($Id);
-      $conn->close();
       if($backend)
       {
         return $Id;
@@ -61,7 +59,6 @@ function getDateIdByDate($conn ,$value,$backend=false) {
   if ($result) {
       $date = mysqli_fetch_assoc($result);
       $date= json_encode($date);
-      $conn->close();
       if($backend)
       {
         return $date;
@@ -86,7 +83,6 @@ function getCurrentDateId($conn) { //CURDATE() mysql
 
   if ($result) {
       $date = mysqli_fetch_assoc($result);
-     // $conn->close();
 
       if(isset($date["Id"]))
      {

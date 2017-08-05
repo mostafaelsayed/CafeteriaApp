@@ -7,7 +7,6 @@ function getTimes($conn,$backend=false) {
   if ($result) {
       $times = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $times = json_encode($times);
-      $conn->close();
       if($backend)
       {
         return $times;
@@ -34,7 +33,6 @@ function getTimeById($conn,$id,$backend=false) {
   if ($result) {
       $times = mysqli_fetch_assoc($result);
       $times = json_encode($times);
-      $conn->close();
       if($backend)
       {
         return $times;
@@ -56,7 +54,6 @@ function getCurrentTimeId($conn) {
   $result = $conn->query($sql);
   if ($result) {
       $times = mysqli_fetch_assoc($result);
-      //$conn->close();
       return $times["Id"];
     }
   else {

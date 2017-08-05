@@ -7,7 +7,6 @@ function getRoles($conn,$backend=false) {
   if ($result) {
       $roles = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $roles = json_encode($roles);
-      $conn->close();
       if($backend)
       { 
         return $roles;   
@@ -36,7 +35,6 @@ function getRoleById($conn,$id,$backend=false) {
   if ($result) {
       $roles = mysqli_fetch_assoc($result);
       $roles = json_encode($roles);
-      $conn->close();
       if($backend)
       { 
         return $roles;   
@@ -65,7 +63,6 @@ function getDirIdByRoleId($conn,$id,$backend=false) {
   if ($result) {
       $roles = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $roles = json_encode($roles);
-      $conn->close();
       if($backend)
       { 
         return $roles;   
@@ -95,7 +92,6 @@ function getDirById($conn,$id,$backend=false) {
   if ($result) {
       $roles = mysqli_fetch_assoc($result);
       $roles = json_encode($roles);
-      $conn->close();
       if($backend)
       { 
         return $roles;   

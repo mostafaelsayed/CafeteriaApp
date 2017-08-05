@@ -14,7 +14,6 @@ function getFavoriteItemsByCustomerId($conn,$Cid,$backend=false) {
   if ($result) {
       $favoriteItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $favoriteItems = json_encode($favoriteItems);
-      $conn->close();
        if($backend)
       { 
         return $favoriteItems;   
@@ -43,7 +42,6 @@ function getFavoriteItemById($conn,$id,$backend=false) {
   if ($result) {
       $favoriteItems = mysqli_fetch_assoc($result);
       $favoriteItems = json_encode($favoriteItems);
-      $conn->close();
        if($backend)
       { 
         return $favoriteItems;   

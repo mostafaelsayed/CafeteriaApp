@@ -8,7 +8,6 @@ function getAdditionsByCategoryId($conn,$id,$backend=false) {
   if ($result) {
       $additions = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $additions = json_encode($additions);
-      $conn->close();
       if($backend)
       { 
         return $additions;   
@@ -30,7 +29,6 @@ function getAdditionById($conn,$id,$backend=false) {
   if ($result) {
       $additions = mysqli_fetch_assoc($result);
       $additions = json_encode($additions);
-      $conn->close();
        if($backend)
       { 
         return $additions;   

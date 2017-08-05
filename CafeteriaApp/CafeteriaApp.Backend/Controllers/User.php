@@ -8,7 +8,6 @@ function getUsers($conn,$backend=false) {
   if ($result) {
       $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $users = json_encode($users);
-      $conn->close();
       if($backend)
       { 
         return $users;   
@@ -37,7 +36,6 @@ function getUserById($conn,$id,$backend=false) {
   if ($result) {
       $user = mysqli_fetch_assoc($result);
       $user = json_encode($user);
-      $conn->close();
       if($backend)
       { 
         return $user;   

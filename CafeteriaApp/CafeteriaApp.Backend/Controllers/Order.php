@@ -12,7 +12,6 @@ function getClosedOrdersByCustomerId($conn,$id,$backend=false) {
   if ($result) {
       $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $orders = json_encode($orders);
-      $conn->close();
        if($backend)
       {
         return $orders;
@@ -40,7 +39,6 @@ function getOrderById($conn,$id,$backend=false) {
   if ($result) {
       $orders = mysqli_fetch_assoc($result);
       $orders = json_encode($orders);
-      $conn->close();
       if($backend)
       {
         return $orders;
@@ -64,7 +62,6 @@ function getOpenOrderByCustomerId($conn,$backend=false) {
   if ($result) {
       $order = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $order = json_encode($order);
-     // $conn->close();
       if($backend)
       {
         return $order;
@@ -92,7 +89,6 @@ function getOrdersByDeliveryDateId($conn,$id,$backend=false) {
   if ($result) {
       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $orders = json_encode($orders);
-      $conn->close();
       if($backend)
       {
         return $orders;
@@ -119,7 +115,6 @@ function getOrdersByDeliveryTimeId($conn,$id,$backend=false) {
   if ($result) {
       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $orders = json_encode($orders);
-      $conn->close();
       if($backend)
       {
         return $orders;
@@ -146,7 +141,6 @@ function getOrdersByOrderStatusId($conn,$id,$backend=false) {
   if ($result) {
       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $orders = json_encode($orders);
-      $conn->close();
       if($backend)
       {
         return $orders;
@@ -173,7 +167,6 @@ function getOrdersByPaymentMethodId($conn,$id,$backend=false) {
   if ($result) {
       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $orders = json_encode($orders);
-      $conn->close();
       if($backend)
       {
         return $orders;
@@ -249,7 +242,6 @@ elseif (!isset($deliveryTimeId)) {
       //$error = $conn->errno . ' ' . $conn->error;
       //echo $error;
     }
-    //$conn->close();
 
 }
 }
@@ -283,7 +275,6 @@ function updateOrderTotalById($conn ,$orderId ,$plusValue)
   }
 }
 }
-
 
 
 function updateOrderPaidById($conn ,$orderId ,$plusValue)

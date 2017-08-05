@@ -49,6 +49,7 @@ app.controller('showingAndDeletingCategories',function($scope,$http,$location,Mo
   $scope.cafeteriaId = $location.search().id;
 
   $scope.getCategories = function(){
+    console.log(1);
     $http.get('/CafeteriaApp.Backend/Requests/Category.php?cafeteriaId='+$scope.cafeteriaId)
       .then(function (response) {
         $scope.categories = response.data;

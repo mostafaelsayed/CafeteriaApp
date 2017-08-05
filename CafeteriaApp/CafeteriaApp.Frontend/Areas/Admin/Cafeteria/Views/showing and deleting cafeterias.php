@@ -1,7 +1,12 @@
 <title>Cafeterias</title>
 
 <?php
+ //require_once("CafeteriaApp.Backend/functions.php"); 
+   //validatePageAccess($conn);
   include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
+
+
+
 ?>
 
 <script src="/CafeteriaApp.Frontend/Scripts/admin/showing and deleting cafeterias.js"></script>

@@ -1,4 +1,5 @@
 <?php
+//require_once("CafeteriaApp.Backend/connection.php");
 
 function getByCafeteriaId($conn,$id,$backend=false) {
   if (!isset($id)) {
@@ -10,7 +11,6 @@ function getByCafeteriaId($conn,$id,$backend=false) {
     if ($result = $conn->query($sql)) {
       $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $categories = json_encode($categories);
-      $conn->close();
       if ($backend) {
         return $categories;
       }
@@ -24,6 +24,7 @@ function getByCafeteriaId($conn,$id,$backend=false) {
   }
 }
 
+//getByCafeteriaId($conn,2);
 function getCategoryById($conn,$id,$backend=false) {
   if( !isset($id)) {
     echo "Error: Id is not set";
@@ -34,7 +35,6 @@ function getCategoryById($conn,$id,$backend=false) {
     if ($result = $conn->query($sql)) {
       $category = mysqli_fetch_assoc($result);
       $category = json_encode($category);
-      $conn->close();
       if ($backend)
       {
         return $category;
@@ -62,6 +62,7 @@ function addCategory($conn,$name,$cafeteriaId,$imageData) {
 
   else {
     if ($imageData != null) {
+      //echo "ay 7aga";
       $sql = "insert into category (Name,Image,CafeteriaId) values (?,?,?)";
       chdir("../uploads"); // go to uploads directory
       $newImageName = str_replace(':',' ',(string)date("Y-m-d H:i:s")).".jpg";
@@ -88,9 +89,10 @@ function addCategory($conn,$name,$cafeteriaId,$imageData) {
     else {
       echo "Error: ".$conn->error;
     }
-    $conn->close();
   }
 }
+
+//addCategory($conn,'scscscc',2,null);
 
 function editCategory($conn,$name,$id,$imageData = null) {
   if (!isset($name)) {
@@ -155,6 +157,6 @@ function deleteCategory($conn,$id) {
   }
 }
 
-require_once("CafeteriaApp.Backend/footer.php");
+//require_once("CafeteriaApp.Backend/footer.php");
 
 ?>

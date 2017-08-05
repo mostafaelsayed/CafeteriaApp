@@ -19,7 +19,6 @@ function getOrderItemsByClosedOrderId($conn,$id,$backend=false) {
   if ($result) {
       $orderItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $orderItems = json_encode($orderItems);
-      $conn->close();
       if($backend)
       {
         return $orderItems;
@@ -48,7 +47,6 @@ function getOrderItemsByOpenOrderId($conn,$id,$backend=false) {
   if ($result) {
       $orderItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $orderItems = json_encode($orderItems);
-      $conn->close();
       if($backend)
       {
         return $orderItems;
@@ -79,7 +77,6 @@ function getOrderItemById($conn,$id,$backend=false) {
   if ($result) {
       $orderItem = mysqli_fetch_assoc($result);
       $orderItem = json_encode($orderItem);
-      //$conn->close();
        if($backend)
       {
         return $orderItem;
@@ -107,7 +104,6 @@ function getOrderItemTotalPriceById($conn , $id) {
   //$result = $conn->query($sql);
   if ($result = $conn->query($sql)) {
       $MenuItem = mysqli_fetch_assoc($result);
-     // $conn->close();
         return $MenuItem["TotalPrice"];
   }
   else {

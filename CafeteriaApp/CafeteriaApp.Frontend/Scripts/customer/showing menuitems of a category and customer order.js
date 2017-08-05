@@ -13,19 +13,22 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
   $scope.categoryId = $location.search().id;
 
   $scope.getMenuItems = function() {
+  
    $http.get('/CafeteriaApp.Backend/Requests/MenuItem.php?categoryId='+$scope.categoryId)
    .then(function(response) {
        $scope.menuItems = response.data;
    });
   }
-
+ 
   $scope.getMenuItems();
 
+
   $scope.getCurrentCustomer = function() {
+
     $http.get('/CafeteriaApp.Backend/Requests/Customer.php')
     .then(function(response) {
       $scope.customerId = response.data.Id;
-      console.log($scope.customerId);
+      //console.log($scope.customerId);
       if ($scope.customerId == undefined) {
         document.location = "/CafeteriaApp.Frontend/Views/login.php";
       }
@@ -85,6 +88,7 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
   $scope.getCurrentCustomer();
 
   $scope.addToOrder = function(menuItem) {
+    console.log(1);
     var x = $scope.orderItems.filter(o => o.MenuItemId == menuItem.Id);
     if(x.length > 0) {
       $scope.increaseQuantity(x[0]); // we extract the first element because x is array (x must be one length array)
@@ -99,7 +103,7 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
       //console.log($scope.orderId);
       $http.post('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
       .then(function(response) {
-        //console.log(response);
+        console.log(response);
         $scope.orderId = response.data;
         $scope.getOrderItems();
       });
@@ -107,7 +111,7 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
   }
 
   $scope.increaseQuantity = function(orderItem) {
-    //console.log(orderItem.Id);
+    console.log(1);
     if($scope.orderId != null) {
       var data = {
         Id: orderItem.Id,
@@ -116,6 +120,7 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
       };
       $http.put('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
       .then(function(response) {
+        //console.log(response);
         $scope.getOrderItems();
       });
     }

@@ -7,7 +7,6 @@ function getPaymentMethods($conn,$backend=false) {
   if ($result) {
       $paymentMethods = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $paymentMethods = json_encode($paymentMethods);
-      $conn->close();
       if($backend)
       { 
         return $paymentMethods;   
@@ -35,7 +34,6 @@ function getPaymentMethodById($conn,$id,$backend=false) {
   if ($result) {
       $paymentMethods = mysqli_fetch_assoc($result);
       $paymentMethods = json_encode($paymentMethods);
-      $conn->close();
       if($backend)
       { 
         return $paymentMethods;   

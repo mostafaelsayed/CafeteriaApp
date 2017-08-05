@@ -2,6 +2,7 @@
 require_once( 'CafeteriaApp.Backend/Controllers/Category.php');
 require_once("CafeteriaApp.Backend/connection.php");
 
+
 if ($_SERVER['REQUEST_METHOD']=="GET") {
   if (isset($_GET["cafeteriaId"])) {
     getByCafeteriaId($conn,$_GET["cafeteriaId"]);

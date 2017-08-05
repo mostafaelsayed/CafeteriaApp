@@ -8,7 +8,6 @@ function getOrderStatus($conn,$backend=false) {
   if ($result) {
       $OrderStatus = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $OrderStatus = json_encode($OrderStatus);
-      $conn->close();
        if($backend)
       { 
         return $OrderStatus;   
@@ -36,7 +35,6 @@ function getOrderStatusById($conn ,$id,$backend=false) {
   if ($result) {
       $OrderStatus = mysqli_fetch_assoc($result);
       $OrderStatus = json_encode($OrderStatus);
-      $conn->close();
       if($backend)
       { 
         return $OrderStatus;   

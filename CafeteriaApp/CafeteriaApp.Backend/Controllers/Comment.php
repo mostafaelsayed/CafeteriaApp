@@ -13,7 +13,6 @@ function getCommentsByMenuItemId($conn,$id,$backend=false) {
   if ($result) {
       $comments = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $comments = json_encode($comments);
-      $conn->close();
       if($backend)
       { 
         return $comments;   
@@ -40,7 +39,6 @@ function getCommentById($conn,$id,$backend=false) {
   if ($result) {
       $comments = mysqli_fetch_assoc($result);
       $comments = json_encode($comments);
-      $conn->close();
       if($backend)
       { 
         return $comments;   
@@ -68,7 +66,6 @@ function getCommentsByCustomerId($conn,$id,$backend=false) {  // check in future
   if ($result) {
       $comments = mysqli_fetch_assoc($result);
       $comments = json_encode($comments);
-      $conn->close();
       if($backend)
       { 
         return $comments;   

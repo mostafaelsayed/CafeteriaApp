@@ -1,5 +1,4 @@
 <?php
-
 	// make the parameters const so none can play with the connection
 	define("DB_SERVER", "localhost"); 
 	define("DB_USER", "root");
@@ -13,6 +12,4 @@
     }
     
     
- 
-
 ?>

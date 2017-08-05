@@ -8,7 +8,6 @@ function getCustomers($conn,$backend=false){
       $result = $conn->query($sql);
       $customers = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $customers = json_encode($customers);
-      $conn->close();
       if($backend)
       {
         return $customers;
@@ -38,7 +37,6 @@ function getCustomerById($conn ,$id,$backend=false) {
   if ($result) {
       $customers = mysqli_fetch_assoc($result);
       $customers = json_encode($customers);
-      $conn->close();
       if($backend)
       {
         return $customers;
@@ -74,7 +72,6 @@ function getCurrentCustomerByUserId($conn,$backend=false) {
   if ($result) {
       $customer = mysqli_fetch_assoc($result);
       $customer = json_encode($customer);
-      //$conn->close();
       if($backend)
       {
         return $customer;
@@ -105,7 +102,6 @@ function getCustomerByUserId($conn,$userId,$backend=false) {
   if ($result) {
       $customer = mysqli_fetch_assoc($result);
       $customer = json_encode($customer);
-      $conn->close();
       if($backend)
       {
         return $customer;
@@ -135,7 +131,6 @@ function getCustomerIdByUserId($conn,$userId,$backend=false) {
   if ($result) {
       $customer = mysqli_fetch_assoc($result);
       $customer = json_encode($customer);
-      //$conn->close();
       if($backend)
       {
         return $customer;

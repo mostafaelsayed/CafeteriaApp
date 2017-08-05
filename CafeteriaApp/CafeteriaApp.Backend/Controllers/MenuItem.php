@@ -14,7 +14,6 @@ function getMenuItemByCategoryId($conn , $id,$backend=false) {
   if ($result = $conn->query($sql)) {
       $MenuItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $MenuItems = json_encode($MenuItems);
-      $conn->close();
       if($backend)
       {
         return $MenuItems;
@@ -44,7 +43,6 @@ function getMenuItemById($conn , $id,$backend=false) {
   if ($result = $conn->query($sql)) {
       $MenuItem = mysqli_fetch_assoc($result);
       $MenuItem = json_encode($MenuItem);
-      $conn->close();
        if($backend)
       {
         return $MenuItem;
@@ -73,7 +71,6 @@ function getMenuItemPriceById($conn , $id) {
   $result = $conn->query($sql);
   if ($result = $conn->query($sql)) {
       $MenuItem = mysqli_fetch_assoc($result);
-     // $conn->close();
         return $MenuItem["Price"];
   }
   else {
@@ -120,7 +117,6 @@ elseif (!isset($categoryId)) {
   else {
     echo "Error: ".$conn->error;
   }
-  $conn->close();
 }
 }
 

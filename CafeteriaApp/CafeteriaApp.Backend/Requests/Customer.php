@@ -5,13 +5,14 @@ require_once("CafeteriaApp.Backend/connection.php");
 
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
-  if (isset($_GET["action"]) && $_GET["action"]=="getCustomers"){
-    getCurrentCustomerByUserId($conn);
-  }
-  else {
+  // if (isset($_GET["action"]) && $_GET["action"]=="getCustomers"){
+  //   getCurrentCustomerByUserId($conn);
+  // }
+  ////else {
+    //echo '1';
     // echo "Error occured while returning Customer";
     getCurrentCustomerByUserId($conn);
-  }
+  //}
 }
 
 if ($_SERVER['REQUEST_METHOD']=="POST"){

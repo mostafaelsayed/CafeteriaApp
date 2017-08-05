@@ -3,8 +3,6 @@ require_once( 'CafeteriaApp.Backend/Controllers/Comment.php');
 require_once("CafeteriaApp.Backend/connection.php");
 
 
-
-
 if ($_SERVER['REQUEST_METHOD']=="GET") {
   if (isset($_GET["action"]) && $_GET["action"]=="getComments"){
     getComments($conn);
