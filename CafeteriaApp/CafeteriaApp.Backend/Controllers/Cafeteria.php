@@ -119,6 +119,5 @@ function deleteCafeteria($conn,$id) {
   }
 }
 
-require_once("CafeteriaApp.Backend/footer.php");
 
  ?>

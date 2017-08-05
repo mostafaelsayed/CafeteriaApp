@@ -236,6 +236,5 @@ function deleteMenuItem($conn,$id)
   }
 }
 
-require_once("CafeteriaApp.Backend/footer.php");
 
 ?>

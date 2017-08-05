@@ -1,5 +1,4 @@
 <?php
-//require_once("CafeteriaApp.Backend/connection.php");
 
 function getByCafeteriaId($conn,$id,$backend=false) {
   if (!isset($id)) {
@@ -156,6 +155,5 @@ function deleteCategory($conn,$id) {
   }
 }
 
-//require_once("CafeteriaApp.Backend/footer.php");
 
 ?>
