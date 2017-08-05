@@ -8,7 +8,7 @@ class OrderItem
 	 `Quantity` INT UNSIGNED NOT NULL ,
 	 `OrderId` INT NOT NULL ,
 	 `MenuItemId` INT NOT NULL ,
-	 `TotalPrice` DECIMAL NOT NULL ,
+	 `TotalPrice` DECIMAL(6,2) NOT NULL ,
 	 PRIMARY KEY (`Id`) ,
 	 foreign key (OrderId) references `Order`(Id) ON DELETE CASCADE , 
 	 foreign key (MenuItemId) references `MenuItem`(Id) ON DELETE CASCADE
