@@ -35,7 +35,7 @@
                   <div ng-if="uploadme.src == ''">
                     <img ng-src="{{ imageUrl }}" width="300" height="300">
                   </div>
-                  <button style="cursor:unset" class="btn btn-primary" type="button"><label for="file" style="cursor: pointer;">Choose Image</label></button>   
+                  <button class="btn btn-primary" onclick="mylabel.click()" id="mybutton">Choose image</button><label id="mylabel" for="file"></label>
                 <input type = "submit" value = "save" class="btn btn-primary" style="float:right" ng-click="editCafeteria()">
               </form>
           </div>

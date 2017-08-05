@@ -35,7 +35,7 @@
                   </div>
                   <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile">
                   <img ng-src="{{ uploadme.src }}" width="300" height="300">
-                  <button style="cursor:unset" class="btn btn-primary" type="button"><label for="file" style="cursor: pointer;">Choose Image</label></button>   
+                  <button class="btn btn-primary" onclick="mylabel.click()" id="mybutton">Choose image</button><label id="mylabel" for="file"></label> 
                 </div>
                 <div class="form-group" style="float: right">
                   <button ng-click="addMenuItem()" class="btn btn-primary">Save</button>
