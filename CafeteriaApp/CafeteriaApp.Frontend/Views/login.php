@@ -7,7 +7,7 @@
 
 <?php
 
-$username = "";
+//$username = "";
 
 if (isset($_POST['submit'])) { // check if the button 's been pressed
   // Process the form
@@ -45,13 +45,17 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
       redirect_to(rawurldecode("/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php")); //                              3ala 7asab 
     }
 
+   
      else {
       // Failure
       $_SESSION["message"] = "Username/password not found.";
     }
   }
-} else {
-  // This is probably a GET request
+}
+ elseif (isset($_SESSION["UserId"] ) && isset($_SESSION["userName"]) && isset($_SESSION["roleId"]) )// This is probably a GET request
+  {
+      redirect_to(rawurldecode("/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php")); //
+  
   
 } // end: if (isset($_POST['submit']))
 
@@ -73,7 +77,7 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
     <form action="login.php" method="post" class="login-box" >
 
       <p>E-mail:
-        <input type="email" name="email" value="<?php echo htmlentities($username); ?>"  />
+        <input type="email" name="email" value="<?php echo isset($_SESSION["userName"]) ?  htmlentities($_SESSION["userName"]) :'' ; ?>"  />
       </p>
       <p>Password:
         <input type="password" name="password" value="" />

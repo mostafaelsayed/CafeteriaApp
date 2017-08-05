@@ -6,7 +6,7 @@ Name varchar(130) not null,
 Image varchar(150),
 CafeteriaId int not null,
 foreign key (CafeteriaId) references `Cafeteria`(Id)
-)";
+) ENGINE = InnoDB; ";
 
 public $drop = "drop table `mydb`.`Category`";
 }

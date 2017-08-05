@@ -143,7 +143,7 @@ else
   $Email = $email;
   $PhoneNumber = $phoneNumber;
   $Password = $password;
-  $RoleId =3 ;    // customer role
+  $RoleId =2 ;    // customer role
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
     

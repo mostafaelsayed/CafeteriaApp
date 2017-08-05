@@ -10,8 +10,8 @@ class Order
 	 `DeliveryPlace` VARCHAR(200) NOT NULL ,
 	  `DeliveryDateId` INT NOT NULL ,
 	  `DeliveryTimeId` INT NOT NULL ,
-	  `Paid` DECIMAL NOT NULL ,
-	  `Total` DECIMAL NOT NULL ,
+	  `Paid` DECIMAL(6,2) NOT NULL ,
+	  `Total` DECIMAL(6,2) NOT NULL ,
 	  `OrderStatusId` INT NOT NULL ,
 	   `PaymentMethodId` INT NOT NULL ,
 		PRIMARY KEY (`Id`),
@@ -21,8 +21,7 @@ class Order
 		foreign key (OrderStatusId) references `OrderStatus`(Id),
 		foreign key (PaymentMethodId) references `PaymentMethod`(Id)
 
-
-	)";
+	) ENGINE = InnoDB;";
 
 	public $drop="drop table `mydb`.`Order` ";
 

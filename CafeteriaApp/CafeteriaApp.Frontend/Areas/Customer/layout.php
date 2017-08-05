@@ -51,6 +51,11 @@
  <script src="/CafeteriaApp.Frontend/Scripts/adminTheme/morrisjs/morris.min.js"></script>
  <!-- Custom Theme JavaScript -->
  <script src="/CafeteriaApp.Frontend/Scripts/adminTheme/sb-admin-2.js"></script>
+ 
+ <link href="/CafeteriaApp.Frontend/Areas/Customer/layout_style.css" rel="stylesheet" type="text/css">
+
+
+ 
  </head>
  <body style="background-image:	url('/CafeteriaApp.Frontend/Scripts/CustomerTheme/images/background image1.jpg')">
 <div id="wrapper">
@@ -58,12 +63,14 @@
       <nav class="navbar navbar-default navbar-fixed-top" style="background-image:	url('/CafeteriaApp.Frontend/Scripts/CustomerTheme/images/background image1.jpg')">
         <div class="container-fluid">
           <div class="navbar-header">
-            <a style="color:white" class="navbar-brand" href="/CafeteriaApp.Frontend/Areas/Customer/Cafeteria/Views/showing cafeterias.php">Cafeterias Page</a>
+            <a style="color:white" class="navbar-brand" href="/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php">Cafeterias Page</a>
           </div>
           <ul class="nav navbar-nav">
-            <li><a class="navbar-brand" style="color:white" href="#">Home</a></li>
-            <li><a class="navbar-brand" style="color:white" href="#">Contact</a></li>
-            <li><a class="navbar-brand" style="color:white" href="#">Help</a></li>
+            <li ><a class="navbar-brand"  href="#">Home</a></li>
+            <li><a class="navbar-brand"  href="#">Contact</a></li>
+            <li><a class="navbar-brand"  href="#">Help</a></li>
+            <li><a class="navbar-brand"  href="/CafeteriaApp.Frontend/Views/logout.php">Log out</a></li>
+
           </ul>
           </div>
 

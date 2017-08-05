@@ -12,7 +12,7 @@ PRIMARY KEY (`Id`),
 foreign key (DirId) references `Dir`(Id) , 
   foreign key (RoleId) references `Role`(Id) 
 
-)";
+) ENGINE = InnoDB; ";
 
 public $drop = "drop table `mydb`.`Dir_Role`";
 
