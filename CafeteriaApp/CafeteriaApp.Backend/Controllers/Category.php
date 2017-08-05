@@ -24,7 +24,6 @@ function getByCafeteriaId($conn,$id,$backend=false) {
   }
 }
 
-//getByCafeteriaId($conn,2);
 function getCategoryById($conn,$id,$backend=false) {
   if( !isset($id)) {
     echo "Error: Id is not set";

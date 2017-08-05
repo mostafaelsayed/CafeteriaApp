@@ -5,6 +5,7 @@
 ?>
 
 <script src="/CafeteriaApp.Frontend/Scripts/admin/editing menuitem.js"></script>
+<link href="/CafeteriaApp.Frontend/Scripts/input_file.css" rel="stylesheet">
 
 <div id="page-wrapper" style="margin-top:-600px">
 
@@ -29,10 +30,22 @@
                   <input type="text" class="form-control" ng-model="price" name="name" id="name" required>
                   <label>Description</label>
                   <input type="text" class="form-control" ng-model="description" name="name" id="name" required>
+                  <label>Image</label>
+                  <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name=" imageFileName" data-max-file-size="3">
+                  </div>
+                  <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile">
+                  <div ng-if="uploadme.src != ''">
+                    <img ng-src="{{ uploadme.src }}" width="300" height="300">
+                  </div>
+                  <div ng-if="uploadme.src == ''">
+                    <img ng-src="{{ imageUrl }}" width="300" height="300">
+                  </div>
+                  <button style="cursor:unset" class="btn btn-primary" type="button"><label for="file" style="cursor: pointer;">Choose Image</label></button>   
                 </div>
                 <div class="form-group" style="float: right">
                   <button ng-click="editMenuItem()" class="btn btn-primary">Save</button>
                 </div>
+                </div>             
               </form>
             </div>
           </div>
