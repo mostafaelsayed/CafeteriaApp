@@ -53,7 +53,7 @@
         </tbody>
       </table>
       <!-- <div id="thead">Total: <span ng-bind="currentOrder.Total"></span></div> -->
-      <div><a style="font-style:italic;color:white" class="btn" type="button" ng-href="/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}">Checkout</a></div>
+      <div><a style="font-style:italic;color:white;" class="btn" type="button" ng-href="/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}" target="_self"  >Checkout</a></div>
     </div>
 
   <hr width="80%">

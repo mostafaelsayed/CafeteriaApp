@@ -21,8 +21,7 @@ class Order
 		foreign key (OrderStatusId) references `OrderStatus`(Id),
 		foreign key (PaymentMethodId) references `PaymentMethod`(Id)
 
-
-	)";
+	) ENGINE = InnoDB;";
 
 	public $drop="drop table `mydb`.`Order` ";
 

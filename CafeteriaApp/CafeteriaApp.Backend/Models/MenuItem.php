@@ -8,7 +8,7 @@ Price decimal(5,2) not null,
 Description text,
 CategoryId int not null,
 foreign key (CategoryId) references `Category`(Id)
-)";
+) ENGINE = InnoDB; ";
 
 public $drop = "drop table `mydb`.`MenuItem`";
 }

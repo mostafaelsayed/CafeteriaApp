@@ -11,7 +11,7 @@ public $create="CREATE TABLE `mydb`.`FavoriteItem` (
  foreign key (CustomerId) references `Customer`(Id),
  foreign key (MenuItemId) references `MenuItem`(Id)
 
- ) ";
+ ) ENGINE = InnoDB; ";
 
 public $drop = "drop table `mydb`.`FavoriteItem`";
 

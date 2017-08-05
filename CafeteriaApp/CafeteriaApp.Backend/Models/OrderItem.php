@@ -10,11 +10,11 @@ class OrderItem
 	 `MenuItemId` INT NOT NULL ,
 	 `TotalPrice` DECIMAL NOT NULL ,
 	 PRIMARY KEY (`Id`) ,
-	 foreign key (OrderId) references `Order`(Id) , 
-	 foreign key (MenuItemId) references `MenuItem`(Id)
+	 foreign key (OrderId) references `Order`(Id) ON DELETE CASCADE , 
+	 foreign key (MenuItemId) references `MenuItem`(Id) ON DELETE CASCADE
 	 
 
-  );";
+  ) ENGINE = InnoDB;";
 
 public $drop = "drop table `mydb`.`OrderItem`";
 

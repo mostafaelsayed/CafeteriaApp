@@ -24,6 +24,14 @@ if ($_SERVER['REQUEST_METHOD']=="POST"){
       }
 }
 
+
+
+if($_SERVER['REQUEST_METHOD']=="DELETE"){
+  if(isset($_GET["orderId"])){
+    deleteOpenOrderById($conn,$_GET["orderId"]);
+  }
+}
+
 require_once("CafeteriaApp.Backend/footer.php");
 
 ?>
