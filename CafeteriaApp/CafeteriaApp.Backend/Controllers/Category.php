@@ -60,7 +60,7 @@ function getCategoryById($conn,$id,$backend=false)
   }
 }
 
-function addCategory($conn,$name,$cafeteriaId,$imageData)
+function addCategory($conn,$name,$cafeteriaId,$imageData = null)
 {
   if (!isset($name))
   {
@@ -77,7 +77,6 @@ function addCategory($conn,$name,$cafeteriaId,$imageData)
   {
     if ($imageData != null)
     {
-      //echo "ay 7aga";
       $sql = "insert into category (Name,Image,CafeteriaId) values (?,?,?)";
       chdir("../uploads"); // go to uploads directory
       $newImageName = str_replace(':',' ',(string)date("Y-m-d H:i:s")).".jpg";
@@ -128,8 +127,9 @@ function editCategory($conn,$name,$id,$imageData = null)
   {
     $category = (mysqli_fetch_assoc($conn->query("select Image from category where Id = ".$id)));
     $categoryImage = basename($category['Image']);
+    echo $categoryImage;
     global $newImageName;
-    if ($imageData != null)
+    if ($imageData != null && $imageData != $category['Image'])
     {
       $sql = "update category set Name = (?) , Image = (?) where Id = (?)";
       chdir("../uploads"); // go to uploads directory

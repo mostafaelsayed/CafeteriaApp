@@ -1,145 +1,144 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="/CafeteriaApp.Frontend/Scripts/libs/jquery-3.2.1.js"></script>
-     <script src="/CafeteriaApp.Frontend/Scripts/libs/angular.min.js"></script>
-    <script src="/CafeteriaApp.Frontend/Scripts/libs/bootstrap.min.js"></script>
+    <head>
+        <meta charset="utf-8" />
 
-    <script src="/CafeteriaApp.Frontend/Scripts/libs/bootstrap-gh-pages/ui-bootstrap-2.5.0.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="/CafeteriaApp.Frontend/Scripts/libs/jquery-3.2.1.min.js"></script>
+        <script src="/CafeteriaApp.Frontend/Scripts/libs/angular.min.js"></script>
+        <script src="/CafeteriaApp.Frontend/Scripts/libs/bootstrap.min.js"></script>
+        <script src="/CafeteriaApp.Frontend/Scripts/admin/myapp.js"></script>
 
-<script src="/CafeteriaApp.Frontend/Scripts/libs/bootstrap-gh-pages/ui-bootstrap-tpls-2.5.0.js"></script>
-    <!-- <script src="/CafeteriaApp.Frontend/Scripts/libs/angular-route.js"></script> -->
+        <script src="/CafeteriaApp.Frontend/Scripts/libs/bootstrap-gh-pages/ui-bootstrap-2.5.0.js"></script>
 
-    <script src="/CafeteriaApp.Frontend/Scripts/libs/angular-modal-service.js"></script>
-    <script src="/CafeteriaApp.Frontend/Scripts/libs/knockout-3.4.2.js"></script>
-    <script src="/CafeteriaApp.Frontend/Scripts/libs/knockout-file-bindings.js"></script>
-<!-- <script src="/CafeteriaApp.Frontend/Scripts/alertify/alertify.min.js"></script> -->
-<!-- Bootstrap Core CSS -->
- <link href="/CafeteriaApp.Frontend/Content/bootstrap.min.css" rel="stylesheet">
- <link href="/CafeteriaApp.Frontend/Content/knockout-file-bindings.css" rel="stylesheet">
- <!-- MetisMenu CSS -->
- <link href="/CafeteriaApp.Frontend/Scripts/adminTheme/metisMenu/metisMenu.min.css" rel="stylesheet">
- <!-- DataTables CSS -->
- <link href="/CafeteriaApp.Frontend/Scripts/adminTheme/datatables/css/dataTables.bootstrap.css" rel="stylesheet">
- <!-- DataTables Responsive CSS -->
- <link href="/CafeteriaApp.Frontend/Scripts/adminTheme/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
- <!-- Custom CSS -->
- <link href="/CafeteriaApp.Frontend/Scripts/adminTheme/sb-admin-2.css" rel="stylesheet">
- <!-- Morris Charts CSS -->
- <link href="/CafeteriaApp.Frontend/Scripts/adminTheme/morrisjs/morris.css" rel="stylesheet">
- <!-- Custom Fonts -->
- <link href="/CafeteriaApp.Frontend/Scripts/adminTheme/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
- <link href="/CafeteriaApp.Frontend/Scripts/adminTheme/font-awesome/fonts/fontawesome-webfont.woff" rel="font-woff">
- <link href="/CafeteriaApp.Frontend/Scripts/adminTheme/font-awesome/fonts/fontawesome-webfont.woff2" rel="octet-stream">
- <link href="/CafeteriaApp.Frontend/Scripts/adminTheme/font-awesome/fonts/fontawesome-webfont.ttf" rel="x-font-ttf">
- <script src="/CafeteriaApp.Frontend/Scripts/adminTheme/metisMenu/metisMenu.min.js"></script>
- <!-- DataTables JavaScript -->
- <script src="/CafeteriaApp.Frontend/Scripts/adminTheme/datatables/js/jquery.dataTables.min.js"></script>
- <script src="/CafeteriaApp.Frontend/Scripts/adminTheme/datatables-plugins/dataTables.bootstrap.min.js"></script>
- <script src="/CafeteriaApp.Frontend/Scripts/adminTheme/datatables-responsive/dataTables.responsive.js"></script>
- <!-- Morris Charts JavaScript -->
- <script src="/CafeteriaApp.Frontend/Scripts/adminTheme/raphael/raphael.min.js"></script>
- <script src="/CafeteriaApp.Frontend/Scripts/adminTheme/morrisjs/morris.min.js"></script>
- <!-- Custom Theme JavaScript -->
- <script src="/CafeteriaApp.Frontend/Scripts/adminTheme/sb-admin-2.js"></script>
- </head>
- <body>
-<div id="wrapper">
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+        <script src="/CafeteriaApp.Frontend/Scripts/libs/bootstrap-gh-pages/ui-bootstrap-tpls-2.5.0.js"></script>
+        <script src="/CafeteriaApp.Frontend/Scripts/libs/angular-modal-service.js"></script>
+        <!-- Bootstrap Core CSS -->
+        <link href="/CafeteriaApp.Frontend/Content/bootstrap.min.css" rel="stylesheet">
+        <link href="/CafeteriaApp.Frontend/Scripts/admin/form_validation.css" rel="stylesheet">
+
+        <link href="/CafeteriaApp.Frontend/Content/knockout-file-bindings.css" rel="stylesheet">
+        <!-- MetisMenu CSS -->
+        <link href="/CafeteriaApp.Frontend/Scripts/adminTheme/metisMenu/metisMenu.min.css" rel="stylesheet">
+        <!-- DataTables CSS -->
+        <link href="/CafeteriaApp.Frontend/Scripts/adminTheme/datatables/css/dataTables.bootstrap.css" rel="stylesheet">
+        <!-- DataTables Responsive CSS -->
+        <link href="/CafeteriaApp.Frontend/Scripts/adminTheme/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="/CafeteriaApp.Frontend/Scripts/adminTheme/sb-admin-2.css" rel="stylesheet">
+        <!-- Morris Charts CSS -->
+        <link href="/CafeteriaApp.Frontend/Scripts/adminTheme/morrisjs/morris.css" rel="stylesheet">
+        <!-- Custom Fonts -->
+        <link href="/CafeteriaApp.Frontend/Scripts/adminTheme/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="/CafeteriaApp.Frontend/Scripts/adminTheme/font-awesome/fonts/fontawesome-webfont.woff" rel="font-woff">
+        <link href="/CafeteriaApp.Frontend/Scripts/adminTheme/font-awesome/fonts/fontawesome-webfont.woff2" rel="octet-stream">
+        <link href="/CafeteriaApp.Frontend/Scripts/adminTheme/font-awesome/fonts/fontawesome-webfont.ttf" rel="x-font-ttf">
+        <script src="/CafeteriaApp.Frontend/Scripts/adminTheme/metisMenu/metisMenu.min.js"></script>
+        <!-- DataTables JavaScript -->
+        <script src="/CafeteriaApp.Frontend/Scripts/adminTheme/datatables/js/jquery.dataTables.min.js"></script>
+        <script src="/CafeteriaApp.Frontend/Scripts/adminTheme/datatables-plugins/dataTables.bootstrap.min.js"></script>
+        <script src="/CafeteriaApp.Frontend/Scripts/adminTheme/datatables-responsive/dataTables.responsive.js"></script>
+        <!-- Morris Charts JavaScript -->
+        <script src="/CafeteriaApp.Frontend/Scripts/adminTheme/raphael/raphael.min.js"></script>
+        <script src="/CafeteriaApp.Frontend/Scripts/adminTheme/morrisjs/morris.min.js"></script>
+        <!-- Custom Theme JavaScript -->
+        <script src="/CafeteriaApp.Frontend/Scripts/adminTheme/sb-admin-2.js"></script>
+    </head>
+    <body>
+        <div id="wrapper">
+            <!-- Navigation -->
+            <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
                 <a class="navbar-brand" href="/admin/Dashboard/Index">Cafeteria Admin Panel</a>
-            </div>
-            <!-- /.navbar-header -->
-            <ul class="nav navbar-top-links navbar-right">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-comment fa-fw"></i> New Comment
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                    <span class="pull-right text-muted small">12 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-tasks fa-fw"></i> New Task
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>See All Alerts</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-alerts -->
-                </li>
-                <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li>
-                            <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a onclick="gotologout()"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                        </li>
-                    </ul>
+                </div>
+                <!-- /.navbar-header -->
+                <ul class="nav navbar-top-links navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-alerts">
+                            <li>
+                                <a href="#">
+                                    <div>
+                                        <i class="fa fa-comment fa-fw"></i> New Comment
+                                        <span class="pull-right text-muted small">4 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                                            <span class="pull-right text-muted small">12 minutes ago</span>
+                                        </div>
+                                    </a>
+                                </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">
+                                    <div>
+                                        <i class="fa fa-envelope fa-fw"></i> Message Sent
+                                        <span class="pull-right text-muted small">4 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">
+                                    <div>
+                                        <i class="fa fa-tasks fa-fw"></i> New Task
+                                        <span class="pull-right text-muted small">4 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">
+                                    <div>
+                                        <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                        <span class="pull-right text-muted small">4 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a class="text-center" href="#">
+                                    <strong>See All Alerts</strong>
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-alerts -->
+                    </li>
+                    <!-- /.dropdown -->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a onclick="gotologout()"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            </li>
+                        </ul>
                     <!-- /.dropdown-user -->
-                </li>
+                    </li>
                 <!-- /.dropdown -->
-            </ul>
+                </ul>
             <!-- /.navbar-top-links -->
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
@@ -182,9 +181,8 @@
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-        <div id="page-wrapper">
-        </div>
+        <div id="page-wrapper"></div>
         <!-- /#page-wrapper -->
-    </div>
+        </div>
     </body>
-    </html>
+</html>

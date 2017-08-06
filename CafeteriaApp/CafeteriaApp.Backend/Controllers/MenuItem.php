@@ -83,7 +83,7 @@ function getMenuItemPriceById($conn , $id)
   }
 }
 
-function addMenuItem($conn,$name,$price,$description,$categoryId,$imageData)
+function addMenuItem($conn,$name,$price,$description,$categoryId,$imageData = null)
 {
   if( !isset($name))
   {
@@ -172,7 +172,7 @@ function editMenuItem($conn,$name,$price,$description,$id,$imageData)
     $menuItem = (mysqli_fetch_assoc($conn->query("select Image from menuitem where Id = ".$id)));
     $menuItemImage = basename($menuItem['Image']);
     global $newImageName;
-    if ($imageData != null)
+    if ($imageData != null && $imageData != $menuItem['Image'])
     {
       $sql = "update MenuItem set Name = (?) , Price = (?) , Description = (?) , Image = (?) where Id = (?)";
       chdir("../uploads"); // go to uploads directory

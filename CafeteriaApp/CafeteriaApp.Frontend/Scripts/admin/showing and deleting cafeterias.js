@@ -1,14 +1,6 @@
-﻿var app = angular.module('myapp', ['angularModalService','ui.bootstrap']);
+﻿// controller for getting and deleting cafeterias
 
-app.controller('ModalController', function($scope, close) {
-  $scope.close = function(result) {
-    close(result);
-  };
-});
-
-// controller for getting and deleting cafeterias
-
-app.controller('showingAndDeletingCafeterias', function ($scope,$http,ModalService) {
+app.controller('showingAndDeletingCafeterias',['$scope','$http','ModalService', function ($scope,$http,ModalService) {
   $scope.show = function() {
     ModalService.showModal({
       templateUrl: 'modal.html',
@@ -26,8 +18,8 @@ app.controller('showingAndDeletingCafeterias', function ($scope,$http,ModalServi
   $scope.getCafeterias = function() {
     $http.get('/CafeteriaApp.Backend/Requests/Cafeteria.php?action=getCafeterias')
     .then(function (response) {
-      $scope.cafeterias = response.data;
       console.log(response);
+      $scope.cafeterias = response.data;
     });
   }
 
@@ -42,4 +34,4 @@ app.controller('showingAndDeletingCafeterias', function ($scope,$http,ModalServi
      });
     };
   }
-});
+}]);

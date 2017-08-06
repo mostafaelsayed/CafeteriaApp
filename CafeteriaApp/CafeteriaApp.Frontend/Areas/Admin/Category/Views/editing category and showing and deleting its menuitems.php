@@ -5,6 +5,8 @@
 ?>
 
 <script src="/CafeteriaApp.Frontend/Scripts/admin/editing category and showing and deleting its menuitems.js"></script>
+<script src="/CafeteriaApp.Frontend/Scripts/admin/modal.js"></script>
+
 <link href="/CafeteriaApp.Frontend/Scripts/input_file.css" rel="stylesheet">
 
 
@@ -24,11 +26,12 @@
           <div class="panel-body">
             <div class="row">
               <div class="col-lg-6">
-                <form role="form">
+                <form role="form" name="myform">
                   <div class="form-group">
                     <label>Name</label>
-                    <input type="text" class="form-control" ng-model="name" autofocus="autofocus" name="name" id="name" required/>
-                    <label>Image</label>
+                    <input type="text" class="form-control" ng-model="name" autofocus="autofocus" name="name" required/>
+                    <span ng-show="myform.name.$invalid" id="inputControl">Category Name is Required</span>
+                    <div><label>Image</label></div>
                     <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name=" imageFileName" data-max-file-size="3">
                     </div>
                     <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile">
@@ -38,6 +41,7 @@
                     <div ng-if="uploadme.src == ''">
                       <img ng-src="{{ imageUrl }}" width="300" height="300">
                     </div>
+                    <br>
                     <button class="btn btn-primary" onclick="mylabel.click()" id="mybutton">Choose image</button><label id="mylabel" for="file"></label>
                   </div>
                   <div class="form-group">

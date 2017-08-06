@@ -10,6 +10,8 @@
 ?>
 
 <script src="/CafeteriaApp.Frontend/Scripts/admin/showing and deleting cafeterias.js"></script>
+<script src="/CafeteriaApp.Frontend/Scripts/admin/modal.js"></script>
+
 
 <div id="page-wrapper" style="margin-top:-600px">
 

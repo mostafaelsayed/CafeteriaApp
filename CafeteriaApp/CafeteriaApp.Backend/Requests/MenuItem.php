@@ -13,9 +13,9 @@ if ($_SERVER['REQUEST_METHOD']=="GET")
   {
     getMenuItemById($conn,$_GET["id"]);
   }
-  // else {
-  //   echo "Error occured while returning MenuItem";
-  // }
+  else {
+    echo "Error occured while returning MenuItem";
+  }
 }
 
 // i don't know how to handle
@@ -23,9 +23,16 @@ if ($_SERVER['REQUEST_METHOD']=="POST")
 {
   //decode the json data
   $data = json_decode(file_get_contents("php://input"));// ????????????
-  if (isset($data->CategoryId)&&isset($data->Name)&&isset($data->Description)&&$data->CategoryId != null && $data->Name != null && $data->Description != null)
+  if (isset($data->CategoryId) && isset($data->Name) && isset($data->Description) && $data->CategoryId != null && $data->Name != null && $data->Description != null)
   {
-    addMenuItem($conn,$data->Name ,$data->Price ,$data->Description , $data->CategoryId, $data->Image);
+    if (isset($data->Image))
+    {
+      addMenuItem($conn,$data->Name ,$data->Price ,$data->Description , $data->CategoryId, $data->Image);
+    }
+    else
+    {
+      addMenuItem($conn,$data->Name ,$data->Price ,$data->Description , $data->CategoryId);
+    }
   }
   else
   {

@@ -44,7 +44,7 @@ function getCafeteriaById($conn ,$id,$backend=false)
   }
 }
 
-function addCafeteria($conn,$name,$image)
+function addCafeteria($conn,$name,$imageData = null)
 {
   if (!isset($name))
   {
@@ -54,11 +54,27 @@ function addCafeteria($conn,$name,$image)
 
   else
   {
-    $sql = "insert into cafeteria (Name,Image) values (?,?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss",$name,$Image);
-    $name = $name;
-    $Image= $image;
+    if ($imageData != null)
+    {
+      $sql = "insert into cafeteria (Name,Image) values (?,?)";
+      chdir("../uploads"); // go to uploads directory
+      $newImageName = str_replace(':',' ',(string)date("Y-m-d H:i:s")).".jpg";
+      $ifp = fopen($newImageName,"x+");
+      fwrite($ifp,base64_decode($imageData));
+      fclose($ifp);
+      $stmt = $conn->prepare($sql);
+      $stmt->bind_param("ss",$Name,$Image);
+      $Name = $name;
+      $Image = "/CafeteriaApp.Backend/uploads/".$newImageName;
+    }
+    else
+    {
+      $sql = "insert into cafeteria (Name) values (?)";
+      $stmt = $conn->prepare($sql);
+      $stmt->bind_param("s",$Name);
+      $Name = $name;
+    }
+
     if ($stmt->execute()===TRUE)
     {
       echo "Cafeteria Added successfully";
@@ -85,13 +101,12 @@ function editCafeteria($conn,$name,$id,$imageData = null)
   else
   {
     $cafeteria = (mysqli_fetch_assoc($conn->query("select Image from cafeteria where Id = ".$id)));
-    $cafeteriaImage = basename($cafeteria['Image']);
-    global $newImageName;
-    if ($imageData != null)
+    if ($imageData != null && $imageData != $cafeteria['Image'])
     {
+      $cafeteriaImage = basename($cafeteria['Image']);    
       $sql = "update cafeteria set Name = (?) , Image = (?) where Id = (?)";
       chdir("../uploads"); // go to uploads directory
-      if ($cafeteriaImage != null)
+      if ($cafeteriaImage != null && file_exists($cafeteriaImage))
       {
         unlink($cafeteriaImage);
       }
