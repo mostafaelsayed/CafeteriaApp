@@ -223,7 +223,7 @@ elseif (!isset($deliveryTimeId)) {
   $sql = "insert into `Order` (DeliveryDateId,DeliveryTimeId,DeliveryPlace,Paid,Total,PaymentMethodId,OrderStatusId,CustomerId) values (?,?,?,?,?,?,?,?)";
   $stmt = $conn->prepare($sql);
 
-    $stmt->bind_param("iiiddiii",$DeliveryDateId, $DeliveryTimeId,  $DeliveryPlace, $Paid, $Total, $PaymentMethodId,$OrderStatusId, $CustomerId );
+    $stmt->bind_param("iisddiii",$DeliveryDateId, $DeliveryTimeId,$DeliveryPlace, $Paid, $Total, $PaymentMethodId,$OrderStatusId, $CustomerId );
     $DeliveryDateId=$deliveryDateId;
     $DeliveryTimeId=$deliveryTimeId;
     $DeliveryPlace=$deliveryPlace;
@@ -314,9 +314,9 @@ function CheckOutOrder($conn,$id) {//remove  order items with cascading
   return;
   }
   else{
-    $closedStatusId=1;
+    $closedStatusId=2;
   //$conn->query("set foreign_key_checks = 0"); // ????????/
-  $sql = "update `Order` set `OrderStatusId`= {$closedStatusId} where Id = ".$id . " LIMIT 1";
+  $sql = "update `Order` set `OrderStatusId`= ".$closedStatusId." where Id = ".$id . " LIMIT 1";
   if ($conn->query($sql)===TRUE) {
     echo "Order Checked Out successfully";
   }

@@ -42,7 +42,7 @@ function getOrderItemsByOpenOrderId($conn,$id,$backend=false) {
   }
   else
   {
-  $sql = "select OrderItem.Id , MenuItem.Name , MenuItem.Id as MenuItemId , OrderItem.TotalPrice ,OrderItem.Quantity from OrderItem INNER JOIN MenuItem ON  OrderItem.MenuItemId = MenuItem.Id";
+  $sql = "select OrderItem.Id , MenuItem.Name , MenuItem.Id as MenuItemId , OrderItem.TotalPrice ,OrderItem.Quantity from OrderItem INNER JOIN MenuItem ON  OrderItem.MenuItemId = MenuItem.Id where OrderItem.OrderId=".$id ;
   $result = $conn->query($sql);
   if ($result) {
       $orderItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -171,7 +171,7 @@ if ($orderId == null) // create order by default values
   $deliveryTimeId = getCurrentTimeId($conn);
   $deliveryDateId = getCurrentDateId($conn);
 
-  $orderId = addOrder($conn,$deliveryDateId,$deliveryTimeId,'Where?',1,1, $_SESSION["customerId"], $totalPrice);//paid default to zero
+  $orderId = addOrder($conn,$deliveryDateId,$deliveryTimeId,'',1,1, $_SESSION["customerId"], $totalPrice);//paid default to zero
 
   if ($orderId != null) {
     $sql = "insert into OrderItem (OrderId,MenuItemId,Quantity,TotalPrice) values (?,?,?,?)";

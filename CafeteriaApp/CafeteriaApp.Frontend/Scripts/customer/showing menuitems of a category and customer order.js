@@ -10,7 +10,9 @@ app.config(['$locationProvider', function($locationProvider) {
 // controller for getting menuitems of a category from database
 
 app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location) {
+
   $scope.categoryId = $location.search().id;
+
 
   $scope.getMenuItems = function() {
   
@@ -20,7 +22,6 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
    });
   }
  
-  $scope.getMenuItems();
 
 
   $scope.getCurrentCustomer = function() {
@@ -39,25 +40,17 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
     });
   }
 
-  $scope.getTotalPrice = function() {
-    // var price = 0;
-    // for (i = 0;i<$scope.orderItems.length;i++) {
-    //   if ($scope.orderItems[i] != null) {
-    //     price = price + $scope.orderItems[i].Quantity*$scope.orderItems[i].Price;
-    //   }
-    // }
-    // return price;
-  }
 
   $scope.getOrderItems = function() {
     $http.get('/CafeteriaApp.Backend/Requests/OrderItem.php?orderId='+$scope.orderId)
     .then(function(response) {
-      console.log(response.data);
+      //console.log(response.data);
       $scope.orderItems = response.data;
       //console.log(response.data);
       //$scope.TotalPrice = $scope.getTotalPrice();
     });
   }
+
 
   $scope.getOrder = function() {
     //console.log($scope.customerId);
@@ -77,18 +70,16 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
       else if($scope.orderId != undefined) {
         $scope.getOrderItems();
       }
-      // else if ($scope.orderId == undefined) {
-      //   $scope.orderItems = [];
-      //   //console.log($scope.orderItems);
-      //   $scope.TotalPrice = 0;
-      // }
+     
     });
   }
 
-  $scope.getCurrentCustomer();
+
+
+  
 
   $scope.addToOrder = function(menuItem) {
-    console.log(1);
+    //console.log(1);
     var x = $scope.orderItems.filter(o => o.MenuItemId == menuItem.Id);
     if(x.length > 0) {
       $scope.increaseQuantity(x[0]); // we extract the first element because x is array (x must be one length array)
@@ -103,15 +94,16 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
       //console.log($scope.orderId);
       $http.post('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
       .then(function(response) {
-        console.log(response);
+        //console.log(response);
         $scope.orderId = response.data;
         $scope.getOrderItems();
       });
     }
   }
 
+
+
   $scope.increaseQuantity = function(orderItem) {
-    console.log(1);
     if($scope.orderId != null) {
       var data = {
         Id: orderItem.Id,
@@ -125,6 +117,7 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
       });
     }
   }
+
 
   $scope.decreaseQuantity = function(orderItem) {
     var data = {
@@ -143,11 +136,21 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
     }
   }
 
+
   $scope.deleteOrderItem = function(orderItem) {
     $http.delete('/CafeteriaApp.Backend/Requests/OrderItem.php?id='+orderItem.Id)
     .then(function(response) {
       $scope.getOrderItems();
     });
   }
+
+
+
+
+
+$scope.getCurrentCustomer();
+$scope.getMenuItems();
+
+
 
 });

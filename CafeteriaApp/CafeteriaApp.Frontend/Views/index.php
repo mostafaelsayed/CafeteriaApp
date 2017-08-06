@@ -4,4 +4,9 @@
 
 <?php  ?>
 <hr/>
-<?php  echo nl2br("hello\r\nWorld");?>
+<?php  echo nl2br("hello\r\nWorld\r\n"); 
+
+print_r(date_default_timezone_get ());
+
+echo date('Y-M-D');
+?>

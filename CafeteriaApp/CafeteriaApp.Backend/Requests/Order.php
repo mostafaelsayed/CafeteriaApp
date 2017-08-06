@@ -17,11 +17,18 @@ if ($_SERVER['REQUEST_METHOD']=="POST"){
     //decode the json data
     $data = json_decode(file_get_contents("php://input"));
     if ($data->CustomerId != null){ // we will see other parameters later
-        addOrder($conn,$data->DeliveryDateId,$data->DeliveryTimeId,$data->DeliveryPlace,$data->Paid,$data->Total,$data->PaymentMethodId,$data->OrderStatusId,$data->CustomerId);
+        addOrder($conn,$data->DeliveryDateId,$data->DeliveryTimeId,$data->DeliveryPlace,$data->PaymentMethodId,$data->OrderStatusId,$data->CustomerId,$data->Total,$data->Paid);
       }
       else{
         echo "error occured while creating Order";
       }
+}
+
+if ($_SERVER['REQUEST_METHOD']=="PUT"){
+    //decode the json data
+   if(isset($_GET["orderId"])){
+    CheckOutOrder($conn,$_GET["orderId"]);
+  }
 }
 
 

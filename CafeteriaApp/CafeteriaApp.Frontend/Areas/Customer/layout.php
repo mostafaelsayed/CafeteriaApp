@@ -52,7 +52,7 @@
  <!-- Custom Theme JavaScript -->
  <script src="/CafeteriaApp.Frontend/Scripts/adminTheme/sb-admin-2.js"></script>
  
- <link href="/CafeteriaApp.Frontend/Areas/Customer/layout_style.css" rel="stylesheet" type="text/css">
+ <!-- <link href="/CafeteriaApp.Frontend/Areas/Customer/layout_style.css" rel="stylesheet" type="text/css"> -->
 
 
  

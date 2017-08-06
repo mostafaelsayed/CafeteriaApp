@@ -5,12 +5,12 @@ require_once("CafeteriaApp.Backend/connection.php");
 
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
-  if (isset($_GET["action"]) && $_GET["action"]=="getPaymentMethods"){
+ // if (isset($_GET["action"]) && $_GET["action"]=="getPaymentMethods"){
     getPaymentMethods($conn);
-  }
-  else {
-    echo "Error occured while returning PaymentMethods";
-  }
+ // }
+  //else {
+   // echo "Error occured while returning PaymentMethods";
+  //}
 }
 
 if ($_SERVER['REQUEST_METHOD']=="POST"){

@@ -1,4 +1,5 @@
-<?php require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies
+<?php 
+require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies
 
 function getCustomers($conn,$backend=false){
 
@@ -53,7 +54,7 @@ function getCustomerById($conn ,$id,$backend=false) {
 
 
 
-function getCurrentCustomerByUserId($conn,$backend=false) {
+function getCurrentCustomerinfoByUserId($conn,$backend=false) {
 
  if(isset($_SESSION["UserId"]))
   {
@@ -67,7 +68,7 @@ function getCurrentCustomerByUserId($conn,$backend=false) {
   }
   else
   {
-  $sql = "select * from Customer where UserId =".$userId." LIMIT 1";
+  $sql = "select * from Customer inner join User on Customer.UserId=User.Id  where Customer.UserId =".$userId." LIMIT 1";
   $result = $conn->query($sql);
   if ($result) {
       $customer = mysqli_fetch_assoc($result);

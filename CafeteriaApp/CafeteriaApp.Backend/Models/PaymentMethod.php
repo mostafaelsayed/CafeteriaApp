@@ -9,7 +9,7 @@ class PaymentMethod
 
 	public $drop="drop table `mydb`.`PaymentMethod` ";
 
-
+public $insert_all_PaymentMethods="insert into `mydb`.`PaymentMethod` (Id,Name) values (1,'Cash On Delivery'),(2,'Visa'),(3,'Online Bank')";
 }
 
 
