@@ -12,18 +12,20 @@
 <h1 class="page-header" style="text-align:center;margin-top:70px">Complete Order info.</h1>
 
 
-    <!-- <form action="" method="post" style="align-content:center;text-align:center;"> -->
-
+    <form  name="myForm" method="post" style="align-content:center;text-align:center;"> 
+<!-- <div ng-form name="myForm" >-->
       <p>Recepient Name:
-        <input type="text" name="recepientName"  ng-model="recepientName" />
+        <input type="text" name="recepientName"  ng-model="recepientName" required/>
+        <span ng-show=" myForm.$submitted  && myForm.recepientName.$invalid" >The name is required.</span>
       </p>
       <p>Phone:
-      <input type="checkbox" name="vehicle"  ng-model="phoneDisabled">Keep Old<br>
+      <input type="checkbox" name="vehicle"  ng-model="phoneDisabled" >Keep Old<br>
     
-        <input type="text" name="phone" ng-model="phone" ng-disabled="phoneDisabled" />
+        <input type="text" name="phone" ng-model="phone" ng-disabled="phoneDisabled" required/>
       </p>
        <p>Delivery Place:
-        <input type="text" name="deliveryPlace" placeholder="where to deliver ?" />
+        <input type="text" name="deliveryPlace" ng-model="deliveryPlace" placeholder="where to deliver ?" required/>
+         <span ng-show=" myForm.$submitted  && myForm.deliveryPlace.$invalid">The Delivery Place is required.</span>
       </p>
       <p>Order Status:
         <input type="text" name="orderStatus" value="Open" disabled />
@@ -50,21 +52,19 @@
       </p> -->
 
       <p>Payment Method:
-        <select   ng-model="selectedMehod"  ng-options=" mehod.Name for mehod in paymentMethods">
-    <!-- <option value="0"></option>
-	  <option value="1">Cash on Delivery</option>
-	  <option value="2">Visa</option>
-	  <option value="3">Online Bank</option> -->
+        <select  name="method"  ng-model="selectedMethod"  ng-options=" method.Name for method in paymentMethods" required>
+       
+    <!-- <option value="0"></option> -->
 		</select>
+     <span ng-show="  myForm.$submitted && myForm.method.$invalid">The Payment Method is required.</span>
       </p>
-      
-     
-    
-      <input type="submit" name="submit" value="Next" ng-click="closeOrder()" />
-            <input type="submit" name="cancel" value="Discard Order" ng-click="discardOrder()" />
+      <!-- </div> -->
+      <input type="submit" name="next" value="Next" ng-click="closeOrder()" />
+           
 
       <!-- <a href="manage_admins.php">Cancel</a> -->
-    <!-- </form> -->
+    </form>
+     <input type="submit" name="cancel" value="Discard Order" ng-click="discardOrder()" />
     <br />
 
 </div>

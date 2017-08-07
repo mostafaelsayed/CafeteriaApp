@@ -77,6 +77,28 @@ function getOpenOrderByCustomerId($conn,$backend=false) {
 }
 
 
+function calcOpenOrderDeliveryTime($conn,$orderId) {
+  if( !isset($orderId))
+ {
+ echo "Error: Order Id is not set";
+  return;
+  }
+  else
+  { 
+  $sql = "select sum(OrderItem.Quantity * MenuItem.ReadyInMins) from OrderItem inner join MenuItem on OrderItem.MenuItemId=MenuItem.Id  where OrderItem.OrderId = " . $orderId;
+  $result = $conn->query($sql);
+  if ($result) {
+      $order = mysqli_fetch_array($result, MYSQLI_NUM);
+     // $order = json_encode($order);
+        return $order[0];
+
+  } else {
+      echo "Error retrieving Open Order : " . $conn->error;  
+}
+}
+}
+
+
 function getOrdersByDeliveryDateId($conn,$id,$backend=false) {
     if( !isset($id))
  {
@@ -183,14 +205,14 @@ function getOrdersByPaymentMethodId($conn,$id,$backend=false) {
 
 
 
-function addOrder( $conn,$deliveryDateId, $deliveryTimeId,$deliveryPlace, $paymentMethodId,$orderStatusId, $customerId,$total=0,$paid=0)
+function addOrder( $conn,$deliveryDateId, $createdTimeId,$deliveryPlace, $paymentMethodId,$orderStatusId, $customerId,$total=0,$paid=0)
 {
    if( !isset($deliveryDateId))
  {
  echo "Error: Order deliveryDateId is not set";
  return;
   }
-elseif (!isset($deliveryTimeId)) {
+elseif (!isset($createdTimeId)) {
  echo "Error: Order deliveryTimeId is not set";
   return;
   }
@@ -225,7 +247,7 @@ elseif (!isset($deliveryTimeId)) {
 
     $stmt->bind_param("iisddiii",$DeliveryDateId, $DeliveryTimeId,$DeliveryPlace, $Paid, $Total, $PaymentMethodId,$OrderStatusId, $CustomerId );
     $DeliveryDateId=$deliveryDateId;
-    $DeliveryTimeId=$deliveryTimeId;
+    $DeliveryTimeId=$createdTimeId;
     $DeliveryPlace=$deliveryPlace;
     $Paid=$paid;
     $Total=$total;
@@ -245,6 +267,54 @@ elseif (!isset($deliveryTimeId)) {
 
 }
 }
+
+
+function CheckOutOrder( $conn,$orderId, $deliveryTimeId,$deliveryPlace, $paymentMethodId,$paid=0)
+{   $closedStatusId=2;
+
+   if( !isset($orderId))
+ {
+ echo "Error: Order deliveryDateId is not set";
+ return;
+  }
+elseif (!isset($deliveryTimeId)) {
+ echo "Error: Order deliveryTimeId is not set";
+  return;
+  }
+  elseif (!isset($deliveryPlace)) {
+ echo "Error: Order deliveryPlace is not set";
+  return;
+  }
+ 
+  elseif (!isset($paymentMethodId)) {
+ echo "Error: Order paymentMethodId is not set";
+  return;
+  }
+  else
+  {
+  $sql = "update `Order` set `DeliveryTimeId`=(?) , `DeliveryPlace`=(?) , `Paid`=(?) , `PaymentMethodId`=(?) , `OrderStatusId`=(?) where `Id` =(?) ";
+  $stmt = $conn->prepare($sql);
+
+    $stmt->bind_param("isdiii", $DeliveryTimeId,$DeliveryPlace, $Paid, $PaymentMethodId,$OrderStatusId,$OrderId);
+    $OrderId=$orderId;
+    $DeliveryTimeId=$deliveryTimeId;
+    $DeliveryPlace=$deliveryPlace;
+    $Paid=$paid;
+    $PaymentMethodId=$paymentMethodId;
+    $OrderStatusId=$closedStatusId;
+
+    if ($stmt->execute()===TRUE) {
+      echo "Order Checked Out successfully";
+
+      //return mysqli_insert_id($conn);
+    }
+    else {
+      //$error = $conn->errno . ' ' . $conn->error;
+      //echo $error;
+    }
+}
+}
+
 
 
 function updateOrderTotalById($conn ,$orderId ,$plusValue)
@@ -307,24 +377,9 @@ function updateOrderPaidById($conn ,$orderId ,$plusValue)
 }
 
 
-function CheckOutOrder($conn,$id) {//remove  order items with cascading
- if (!isset($id))
-  {
-     echo "Error: Id is not set";
-  return;
-  }
-  else{
-    $closedStatusId=2;
-  //$conn->query("set foreign_key_checks = 0"); // ????????/
-  $sql = "update `Order` set `OrderStatusId`= ".$closedStatusId." where Id = ".$id . " LIMIT 1";
-  if ($conn->query($sql)===TRUE) {
-    echo "Order Checked Out successfully";
-  }
-  else {
-    echo "Error: ".$conn->error;
-  }
-}
-}
+
+
+
 
 
 function deleteOpenOrderById($conn) {//remove  order items with cascading

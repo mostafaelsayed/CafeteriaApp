@@ -64,20 +64,39 @@ $scope.getOrderInfo = function(){
 
 
 $scope.closeOrder = function(){
-   $http.put('/CafeteriaApp.Backend/Requests/Order.php?orderId='+$scope.orderId)
+  if($scope.selectedMethod != undefined){
+ 
+ var data = {                   //date need to be updated also
+        orderId: $scope.orderId,
+        deliveryTimeId: $scope.deliveryTimeId,
+        deliveryPlace:$scope.deliveryPlace,
+        paymentMethodId:parseInt($scope.selectedMethod.Id),
+        paid: $scope.total
+      };
+  //update order info and close the state
+   $http.put('/CafeteriaApp.Backend/Requests/Order.php',data)
    .then(function(response) {
        //$scope.paymentMethods = response.data;
-    document.location =  "/CafeteriaApp.Frontend/Areas/Customer/checkout2.php";
+    document.location =  "/CafeteriaApp.Frontend/Areas/Customer/checkout2.php?orderId="+$scope.orderId+'&deliveryTimeDuration='+$scope.deliveryTimeDuration;
 
    });
   }
 
+  }
 
+
+$scope.getOrderDeliveryTime = function(){
+   $http.get('/CafeteriaApp.Backend/Requests/Order.php?orderId='+$scope.orderId)
+   .then(function(response) {
+       $scope.deliveryTimeId = response.data.Id;
+      $scope.deliveryTimeDuration = response.data.Duration;
+   });
+  }
   
 
 $scope.getUserInfo();
 $scope.getOrderInfo();
 $scope.getpaymentMethods();
-
+$scope.getOrderDeliveryTime();
 
 });
