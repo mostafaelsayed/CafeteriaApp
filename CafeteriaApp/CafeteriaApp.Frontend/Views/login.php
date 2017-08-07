@@ -6,7 +6,6 @@
 <?php require_once("CafeteriaApp.Backend/Controllers/Customer.php"); ?>
 
 <?php
-
 //$username = "";
 
 if (isset($_POST['submit'])) { // check if the button 's been pressed
@@ -27,6 +26,7 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
     if ($found_user) {
       // Success
 			// Mark user as logged in
+      
 			$_SESSION["UserId"] = $found_user["Id"];
 			$_SESSION["userName"] = $found_user["UserName"];
       $_SESSION["roleId"] = $found_user["RoleId"];
@@ -38,11 +38,12 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
     
       if(!getCurrentDateId($conn)) // make the server add it automatically
       {
+
         addTodayDate($conn,true);
       }
       
 
-      redirect_to(rawurldecode("/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php")); //                              3ala 7asab 
+      redirect_to(rawurldecode("/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php")); //3ala 7asab                               
     }
 
    

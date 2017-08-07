@@ -8,47 +8,63 @@
 <script src="/CafeteriaApp.Frontend/Scripts/customer/checkout.js"></script>
 
 
- <div ng-app="myapp" ng-controller="OrderCheckout" style="align-content:center;text-align:center;">
+ <div ng-app="myapp" ng-controller="OrderCheckout" ng-init="phoneDisabled=true" style="align-content:center;text-align:center;">
 <h1 class="page-header" style="text-align:center;margin-top:70px">Complete Order info.</h1>
 
 
-    <!-- <form action="register.php" method="post" style="align-content:center;text-align:center;"> -->
+    <form  name="myForm" method="post" style="align-content:center;text-align:center;"> 
+<!-- <div ng-form name="myForm" >-->
       <p>Recepient Name:
-        <input type="text" name="userName" value="" />
+        <input type="text" name="recepientName"  ng-model="recepientName" required/>
+        <span ng-show=" myForm.$submitted  && myForm.recepientName.$invalid" >The name is required.</span>
+      </p>
+      <p>Phone:
+      <input type="checkbox" name="vehicle"  ng-model="phoneDisabled" >Keep Old<br>
+    
+        <input type="text" name="phone" ng-model="phone" ng-disabled="phoneDisabled" required/>
       </p>
        <p>Delivery Place:
-        <input type="text" name="deliveryPlace" value="" />
+        <input type="text" name="deliveryPlace" ng-model="deliveryPlace" placeholder="where to deliver ?" required/>
+         <span ng-show=" myForm.$submitted  && myForm.deliveryPlace.$invalid">The Delivery Place is required.</span>
       </p>
       <p>Order Status:
         <input type="text" name="orderStatus" value="Open" disabled />
       </p>
+      <p>Delivery Fees:
+        <input type="text" name="deliveryFees" ng-model="deliveryFees" disabled />
+      </p>
+      <div>
+      <p>Discount:
+        <input type="text" name="discount" ng-model="discount" disabled /> <span>%</span>
+        </p>
+      </div>
+
+      <br>
+         <hr>
+        <br>
+
       <p>Total:
-        <input type="text" name="total" value="" />
+        <input type="text" name="total" ng-model="total" disabled />
       </p>
-      <p>E-mail:
+
+     <!--  <p>E-mail:
         <input type="text" name="email" value="" />
-      </p>
+      </p> -->
 
       <p>Payment Method:
-        <select>
-	  <option value="1">Visa</option>
-	  <option value="2">Cash</option>
-	  <option value="3">Paypal</option>
+        <select  name="method"  ng-model="selectedMethod"  ng-options=" method.Name for method in paymentMethods" required>
+       
+    <!-- <option value="0"></option> -->
 		</select>
-
+     <span ng-show="  myForm.$submitted && myForm.method.$invalid">The Payment Method is required.</span>
       </p>
-      <p>Phone:
-      <input type="checkbox" name="vehicle" value="Bike">choose another<br>
-  	<!-- <input type="checkbox" name="vehicle" value="Car" checked> I have a car<br> -->
-        <input type="text" name="phone" value="" />
-      </p>
-     
-    
-      <input type="submit" name="submit" value="Next" />
-            <input type="submit" name="cancel" value="Discard Order" ng-click="discardOrder()"  />
+      <!-- </div> -->
+      <input type="submit" name="next" value="Next" ng-click="closeOrder()" />
+           
 
       <!-- <a href="manage_admins.php">Cancel</a> -->
-    <!-- </form> -->
+    </form>
+     <input type="submit" name="cancel" value="Discard Order" ng-click="discardOrder()" />
     <br />
 
 </div>

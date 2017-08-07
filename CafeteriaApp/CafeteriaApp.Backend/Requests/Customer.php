@@ -3,7 +3,6 @@ require_once( 'CafeteriaApp.Backend/Controllers/Customer.php');
 require_once("CafeteriaApp.Backend/connection.php");
 
 
-
 if ($_SERVER['REQUEST_METHOD']=="GET") {
   // if (isset($_GET["action"]) && $_GET["action"]=="getCustomers"){
   //   getCurrentCustomerByUserId($conn);
@@ -11,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
   ////else {
     //echo '1';
     // echo "Error occured while returning Customer";
-    getCurrentCustomerByUserId($conn);
+    getCurrentCustomerinfoByUserId($conn);
   //}
 }
 

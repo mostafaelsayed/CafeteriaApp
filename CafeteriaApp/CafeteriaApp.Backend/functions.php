@@ -50,6 +50,7 @@
 	  $hash = crypt($password, $format_and_salt);
 		return $hash;
 	}
+
 	
 	function generate_salt($length) {
 	  // Not 100% unique, not 100% random, but good enough for a salt
@@ -129,6 +130,8 @@ function confirmQuery($result_set) {
     }
   }
 
+
+
   function passwordCheck($password, $existing_hash) {
     // existing hash contains format and salt at start
     $hash = crypt($password, $existing_hash);
@@ -138,7 +141,6 @@ function confirmQuery($result_set) {
       return false;
     }
   }
-
 
 
 
@@ -161,11 +163,8 @@ function validatePageAccess ($conn) {/*, $existing_hash*/
     	
       return;
     }
-    
-}
+	}
 
-  
-   
     echo "<h1 style ='color:red;' > Access denied . </h2>";
     exit(); 
     }

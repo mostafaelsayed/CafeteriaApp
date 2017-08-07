@@ -48,6 +48,19 @@ function getTimeById($conn,$id,$backend=false) {
 }
 }
 
+function getTimeIdByTime($conn,$time) {
+  $sql = "select Id from Times where Time='{$time}' LIMIT 1";
+  $result = $conn->query($sql);
+  if ($result) {
+      $times = mysqli_fetch_assoc($result);
+      return $times["Id"];
+    }
+  else {
+    echo "Error: ".$conn->error;
+  }
+}
+
+
 function getCurrentTimeId($conn) {
   $time = date("h:i:00");
   $sql = "select Id from Times where Time='{$time}' LIMIT 1";

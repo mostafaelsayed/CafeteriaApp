@@ -30,7 +30,7 @@
     </div>
 
     <div class="col-lg-5" style="margin-left:-10px">
-      <table class="table table-bordered">
+      <table class="table table-bordered" ng-show="orderItems.length > 0"  >
         <thead>
           <tr>
             <th id="thead">OrderItem</th>
@@ -39,7 +39,7 @@
             <th id="thead">Actions</th>
           </tr>
         </thead>
-        <tbody ng-repeat="o in orderItems">
+        <tbody ng-repeat="o in orderItems" >
           <tr>
             <td ng-bind="o.Name" id="thead"></td>
             <td ng-bind="o.Quantity" id="thead"></td>
@@ -53,7 +53,7 @@
         </tbody>
       </table>
       <!-- <div id="thead">Total: <span ng-bind="currentOrder.Total"></span></div> -->
-      <div><a style="font-style:italic;color:white;" class="btn" type="button" ng-href="/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}" target="_self"  >Checkout</a></div>
+      <div><a style="font-style:italic;color:white;" class="btn" type="button" ng-href="/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}"  ng-show="orderItems.length > 0"  target="_self"  >Checkout</a></div>
     </div>
 
   <hr width="80%">
