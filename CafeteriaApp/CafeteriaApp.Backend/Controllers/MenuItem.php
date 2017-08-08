@@ -223,7 +223,14 @@ function deleteMenuItem($conn,$id)
   }
   else
   {
+    $sql = "select Image from MenuItem where Id = ".$id." LIMIT 1";
+    $result =  mysqli_fetch_assoc($conn->query($sql))['Image'];
+    chdir("../uploads");
+    if (file_exists($result)) {
+      unlink($result);
+    }
     //$conn->query("set foreign_key_checks = 0"); // ????????/
+
     $sql = "delete from MenuItem where Id = ".$id. " LIMIT 1";
     if ($conn->query($sql)===TRUE)
     {

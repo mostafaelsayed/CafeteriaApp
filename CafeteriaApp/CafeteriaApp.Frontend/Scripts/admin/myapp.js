@@ -103,10 +103,9 @@ app.directive("numberCheck",function() {
     restrict: 'A',
     require: 'ngModel',
     link: function(scope,elem,attr,ctrl) {
-      var regExpNumber = new RegExp('[0-9]');
-      var regExpString = new RegExp('[a-z]');
+      var regExp = /^\d{0,9}(\.\d{0,2}){0,1}$/; // regular expression for matching floating point numbers only
       function checkType(val) {
-        if (regExpNumber.test(val) && !regExpString.test(val)) {
+        if (regExp.test(val) && !isEmpty(val)) {
           return true;
         }
         else {

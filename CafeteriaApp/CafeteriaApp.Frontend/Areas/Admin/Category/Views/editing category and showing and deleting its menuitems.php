@@ -7,6 +7,8 @@
 <script src="/CafeteriaApp.Frontend/Scripts/admin/editing category and showing and deleting its menuitems.js"></script>
 <script src="/CafeteriaApp.Frontend/Scripts/admin/modal.js"></script>
 
+<script src="/CafeteriaApp.Frontend/Scripts/CustomerTheme/modal.js"></script>
+
 <link href="/CafeteriaApp.Frontend/Scripts/input_file.css" rel="stylesheet">
 
 
@@ -64,7 +66,7 @@
     
     <div class="row" ng-controller="showingAndDeletingMenuItems">
       <script type="text/ng-template" id="modal.html">
-         <div class="modal fade" id="mymodal" data-backdrop="false" style="background: rgba(0, 0, 0, 0.5)">
+         <div class="modal fade" id="mymodal" style="background: rgba(0, 0, 0, 0.5)">
            <div class="modal-dialog">
              <div class="modal-content">
                <div class="modal-header">
@@ -87,7 +89,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">Manage Your MenuItems
             <div>
-              <a style="float: right;margin-top: -23px;" title="Add MenuItem" id="creatNewCategory" ng-href="/CafeteriaApp.Frontend/Areas/Admin/MenuItem/Views/adding menuitem.php?id={{categoryId}}" target="_self"class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a>
+              <a style="float: right;margin-top: -23px;" title="Add MenuItem" id="creatNewCategory" href="/CafeteriaApp.Frontend/Areas/Admin/MenuItem/Views/adding menuitem.php?id={{categoryId}}" target="_self" class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a>
             </div>
           </div>
           <div class="panel-body">
@@ -106,7 +108,7 @@
                   <td ng-bind="m.Price"></td>
                   <td ng-bind="m.Description"></td>
                   <td class="center">
-                    <a id="myButton" ng-href="/CafeteriaApp.Frontend/Areas/Admin/MenuItem/Views/editing menuitem.php?id={{m.Id}}" target="_self" class="btn btn-success">Edit</a>
+                    <a id="myButton" href="/CafeteriaApp.Frontend/Areas/Admin/MenuItem/Views/editing menuitem.php?id={{m.Id}}" target="_self" class="btn btn-success">Edit</a>
                     <button ng-click="deleteMenuItem(m.Id)" class="btn btn-danger">Delete</button>
                   </td>
                 </tr>

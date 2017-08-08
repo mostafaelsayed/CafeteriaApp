@@ -29,7 +29,7 @@
                   <span ng-show="myform.name.$invalid" id="inputControl">MenuItem Name is Required</span>
                   <div><label>Price</label></div>
                   <input type="text" class="form-control" number-check ng-model="price" name="price" required>
-                  <span ng-show="myform.price.$error.numberCheck" id="inputControl">Price must be Number</span>
+                  <span ng-show="myform.price.$error.numberCheck" id="inputControl">Price is invalid.it must be a number of at most 9 digits and optinally followed by at most 2 digit</span>
                   <span ng-show="myform.price.$error.numberEmpty" id="inputControl">Price is Required</span>
                   <div><label>Description</label></div>
                   <input type="text" class="form-control" ng-model="description" name="description" required>

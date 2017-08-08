@@ -6,6 +6,7 @@
 
 <script src="/CafeteriaApp.Frontend/Scripts/admin/editing cafeteria and showing and deleting its categories.js"></script>
 <script src="/CafeteriaApp.Frontend/Scripts/admin/modal.js"></script>
+<script src="/CafeteriaApp.Frontend/Scripts/CustomerTheme/modal.js"></script>
 
 <link href="/CafeteriaApp.Frontend/Scripts/input_file.css" rel="stylesheet">
 
@@ -56,7 +57,7 @@
 
   <div class="row" ng-controller="showingAndDeletingCategories">
     <script type="text/ng-template" id="modal.html">
-      <div class="modal fade" id="mymodal" data-backdrop="false" style="background: rgba(0, 0, 0, 0.5)">
+      <div class="modal fade" id="mymodal" style="background: rgba(0, 0, 0, 0.5)">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -79,7 +80,7 @@
      <div class="panel panel-default">
        <div class="panel-heading">Manage Your categories
          <div>
-           <a style="float: right;margin-top: -23px;" title="Add Category" id="creatNewCategory" target="_self" ng-href="/CafeteriaApp.Frontend/Areas/Admin/Category/Views/adding category.php?id={{cafeteriaId}}"class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a>
+           <a style="float: right;margin-top: -23px;" title="Add Category" id="creatNewCategory" href="/CafeteriaApp.Frontend/Areas/Admin/Category/Views/adding category.php?id={{cafeteriaId}}" target="_self" class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a>
          </div>
        </div>
        <div class="panel-body">
@@ -94,7 +95,7 @@
              <tr class="odd gradeX">
                <td ng-bind="c.Name"></td>
                <td class="center">
-                 <a id="myButton" ng-href="/CafeteriaApp.Frontend/Areas/Admin/Category/Views/editing category and showing and deleting its menuitems.php?id={{c.Id}}" target="_self" class="btn btn-success">Edit</a>
+                 <a id="myButton" href="/CafeteriaApp.Frontend/Areas/Admin/Category/Views/editing category and showing and deleting its menuitems.php?id={{c.Id}}" target="_self" class="btn btn-success">Edit</a>
                  <button ng-click="deleteCategory(c.Id)" class="btn btn-danger">Delete</button>
                </td>
              </tr>

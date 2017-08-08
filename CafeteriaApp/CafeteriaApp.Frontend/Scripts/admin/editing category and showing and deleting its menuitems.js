@@ -40,7 +40,6 @@ app.controller('editCategory',['$scope','$http','$location',function($scope,$htt
   };
 }]);
 
-
 // controller for showing and deleting menuitems
 
 app.controller('showingAndDeletingMenuItems',['$scope','$http','$location','ModalService',function($scope,$http,$location,ModalService) {
@@ -59,6 +58,7 @@ app.controller('showingAndDeletingMenuItems',['$scope','$http','$location','Moda
     $scope.delete = function(){
       $http.delete('/CafeteriaApp.Backend/Requests/MenuItem.php?menuItemId='+menuItemId)
       .then(function(response){
+        console.log(response);
         $scope.getMenuItems();
       });
     };
