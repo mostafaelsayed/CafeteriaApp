@@ -149,6 +149,12 @@ function deleteCafeteria($conn,$id)
   }
   else
   {
+    $sql = "select Image from cafeteria where Id = ".$id." LIMIT 1";
+    $result = basename(mysqli_fetch_assoc($conn->query($sql))['Image']);
+    chdir("../uploads");
+    if (file_exists($result)) {
+      unlink($result);
+    }
     $conn->query("set foreign_key_checks = 0"); // ????????/
     $sql = "delete from cafeteria where Id = ".$id." LIMIT 1";
     if ($conn->query($sql)===TRUE)
