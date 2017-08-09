@@ -1,12 +1,10 @@
-<?php require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies ?> 
-<?php require_once("CafeteriaApp.Backend/connection.php"); ?>
-<?php require_once("CafeteriaApp.Backend/functions.php"); ?>
-<?php require_once("CafeteriaApp.Backend/validation_functions.php"); ?>
-<?php require_once("CafeteriaApp.Backend/Controllers/Dates.php"); ?>
-<?php require_once("CafeteriaApp.Backend/Controllers/Customer.php"); ?>
+<?php require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies 
+ require_once("CafeteriaApp.Backend/connection.php");
+ require_once("CafeteriaApp.Backend/functions.php");
+ require_once("CafeteriaApp.Backend/validation_functions.php"); 
+ require_once("CafeteriaApp.Backend/Controllers/Dates.php"); 
+ require_once("CafeteriaApp.Backend/Controllers/Customer.php"); 
 
-<?php
-//$username = "";
 
 if (isset($_POST['submit'])) { // check if the button 's been pressed
   // Process the form
@@ -38,7 +36,6 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
     
       if(!getCurrentDateId($conn)) // make the server add it automatically
       {
-
         addTodayDate($conn,true);
       }
       
@@ -86,14 +83,21 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
 
 
       <input type="submit" name="submit" value="Next" />
-
-
     </form>
+<br>
+
+ <input type="submit" name="submit" value="Forgot Password! " />
+<div>
+     <button  class="btn waves-effect waves-light btn" type="submit" name="action">Facebook Login
+                <img src="icons/facebook.png" width="50px" height="50px">
+                 </button>
+</div>
+
   </div>
 </div>
 
 
 <div style="align-content:center;text-align:center;">&copy; 2010-<?php echo date("Y") ;?></div>
-<?php  //include("../includes/layouts/footer.php"); ?>
+
 
 

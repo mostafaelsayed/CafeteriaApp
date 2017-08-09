@@ -1,6 +1,8 @@
 <title>Adding MenuItem</title>
 
 <?php
+ require_once("CafeteriaApp.Backend/functions.php"); 
+   validatePageAccess($conn);
   include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
 ?>
 

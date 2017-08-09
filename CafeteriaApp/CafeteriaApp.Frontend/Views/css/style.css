@@ -1,0 +1,118 @@
+
+.header_title{
+    color: blue;
+    font-family: Comic Sans MS;
+    font-size: xx-large;
+    margin-top: 75px;
+}
+.button {
+    display: block;
+    width: 140px;
+    height: 25px;
+    background: #4E9CAF;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: 900;
+    margin-top: 10px;
+}
+#Submit {
+    display: block;
+    width: 160px;
+    height: 45px;
+    background: #4E9CAF;
+    border-radius: 5px;
+    color: white;
+    font-weight: 900;
+    margin-top: 10px;
+    border-style: none;
+}
+.ip{
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 35%;
+}
+/*#ip2{
+    padding: 12px 20px;
+    margin: 8px 0;
+    margin-right: 15px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 35%;
+}*/
+#x_addproject{float: right;
+              top: -108px;
+              position: relative;
+              display: block;
+              width: 140px;
+              /*   height: 45px;*/
+              background: #4E9CAF;
+              border-radius: 5px;
+              color: white;
+              font-weight: 900;
+              margin-top: 10px;
+              border-style: none;
+              left: -45px;
+}
+.back{
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+.task_time{padding: 12px 20px;
+           margin: 8px 0;
+           display: inline-block;
+           border: 1px solid #ccc;
+           border-radius: 4px;
+           box-sizing: border-box;
+           width: 35%;}
+.labels{
+    font-size: large;
+    font-family: cursive;
+}
+table {
+    width:50%;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+}
+table#t1 tr:nth-child(even) {
+    background-color: white;
+}
+table#t1 tr:nth-child(odd) {
+   background-color:#4E9CAF;
+}
+table#t1 th {
+/*    background-color:LightSkyBlue;*/
+background-color:DarkSlateGray;
+    color: white;
+}
+.red {
+    color: red;
+}
+.hide{display: none;}
+.error{color: red;
+       font-size: large;}
+
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 22, 2017, 10:59:40 AM
+    Author     : lenovo pc
+*/
+

@@ -1,6 +1,8 @@
 <title> Order info</title>
 
 <?php
+ require_once("CafeteriaApp.Backend/functions.php"); 
+   validatePageAccess($conn);
   include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
     if( !isset($_GET["orderId"]) || !isset($_GET["deliveryTimeDuration"]) )
     	{
@@ -32,12 +34,14 @@
             Status : Shipped</td>
           </tr>
         <tr><td>
-            Delivered within &nbsp; &gt; <span><?php echo "{$_GET["deliveryTimeDuration"]}"; ?></span> &nbsp; Minutes</td>
+            Preparation Time within &nbsp; &gt; <span><?php echo "{$_GET["deliveryTimeDuration"]}"; ?></span> &nbsp; Minutes</td>
           </tr>
-        <tr>
-            
+        <tr><td>
+            Delivered Time within: depends on your location </td>
           </tr>
-        
+        <tr><td>
+            Other Fees : i.e. for delivery </td>
+          </tr>
         </tbody>
       </table>
       </div>

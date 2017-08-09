@@ -53,7 +53,6 @@
   <script src="/CafeteriaApp.Frontend/Scripts/adminTheme/sb-admin-2.js"></script>
  
   <link href="/CafeteriaApp.Frontend/Areas/Customer/layout_style.css" rel="stylesheet" type="text/css">
- <!-- <link href="/CafeteriaApp.Frontend/Areas/Customer/layout_style.css" rel="stylesheet" type="text/css"> -->
 
 
  
@@ -71,13 +70,15 @@
             <li><a class="navbar-brand"  href="#"> <?php echo _("Contact");?></a></li>
             <li><a class="navbar-brand"  href="#"><?php echo _("Help");?></a></li>
             <li><a class="navbar-brand"  href="/CafeteriaApp.Frontend/Views/logout.php">Log out</a></li>
+
+          </ul>
+
             <form action="/TestI18N/language.php" method="post" style="float:right">
               <input type="submit" name="english" value="English" />
               <input type="submit" name="german" value="German" />
             </form>
 
 
-          </ul>
           </div>
 
       </nav>

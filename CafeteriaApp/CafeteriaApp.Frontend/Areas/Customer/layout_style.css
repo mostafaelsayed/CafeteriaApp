@@ -1,18 +1,25 @@
 
-a:link
+.navbar-default .navbar-nav>li>a:link
 {
 color: blue;
 }
-a:hover
+.navbar-default .navbar-nav>li>a:hover
 {
-color: red;
+background-color: red;
+color: yellow;
 }
-a:active
+.navbar-default .navbar-nav>li>a:active
 {
   color: yellow;
 }
 
-.navbar-brand{
+/*.navbar-default .navbar-nav>li:hover
+{
+
+color: yellow;
+
+}*/
+/*.navbar-brand{
 color:white;
 
 }
@@ -28,4 +35,5 @@ table tr:nth-child(odd) {
 table tr:nth-child(even) {
   background-color: #ffffff;
 }
-
+*/
+/* Red , Green , Orange ,Yellow ,Gray ,Blue */

@@ -3,18 +3,18 @@
  require_once('CafeteriaApp.Backend/session.php');
  require_once("CafeteriaApp.Backend/connection.php"); 
 
+function test_input($conn,$data) {
+    $data = trim($data);
+    $data = mysqli_real_escape_string($conn , $data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
 
 	function redirect_to($new_location) {
 	  header("Location: " . $new_location);
 	  exit;
 	}
 
-	function mysql_prep($string) {
-		global $connection;
-		
-		$escaped_string = mysqli_real_escape_string($connection, $string);
-		return $escaped_string;
-	}
 	
 	function confirm_query($result_set) {
 		if (!$result_set) {
@@ -72,12 +72,12 @@
 	
 
 	function islogged_in() {
-		return isset($_SESSION['admin_id']);
+		return isset($_SESSION['UserId']);
 	}
 	
 	function confirm_logged_in() {
 		if (!islogged_in()) {
-			redirect_to("login.php");
+			redirect_to("/CafeteriaApp.Frontend/Views/login.php");
 		}
 	}
 
@@ -144,12 +144,9 @@ function confirmQuery($result_set) {
 
 
 
-//***************************			to be continued			 ********************************************
-function validatePageAccess ($conn) {/*, $existing_hash*/
-    // existing hash contains format and salt at start
-    //$hash = crypt($pageName, $existing_hash);
-    //$safe_email = mysqli_real_escape_string($conn, $email);
-    $query  = "SELECT `Dir` FROM `Dir` WHERE Id IN (SELECT DirId FROM Dir_Role WHERE RoleId= {$_SESSION["roleId"]} ) ";  // add RoleId index to the session var  on login
+function validatePageAccess ($conn) {/*  using hash*/
+	confirm_logged_in();
+    $query  = "SELECT `Dir` FROM `Dir` WHERE Id IN (SELECT DirId FROM Dir_Role WHERE RoleId= {$_SESSION["roleId"]} ) ";  // add RoleId 
 
     $result_set = mysqli_query($conn, $query);
     confirmQuery($result_set);

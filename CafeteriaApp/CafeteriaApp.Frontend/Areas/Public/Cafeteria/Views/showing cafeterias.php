@@ -1,6 +1,8 @@
 <title>Cafeterias</title>
 
 <?php
+ require_once("CafeteriaApp.Backend/functions.php"); 
+   validatePageAccess($conn);
   include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
 ?>
 
@@ -38,3 +40,5 @@
     </a>
   </div>
 </div>
+
+<?php //require_once("CafeteriaApp.Backend/footer.php");?>

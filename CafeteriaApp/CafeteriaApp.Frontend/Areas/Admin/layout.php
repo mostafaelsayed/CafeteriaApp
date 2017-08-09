@@ -8,7 +8,7 @@
 <!--         <script src="/CafeteriaApp.Frontend/Scripts/libs/bootstrap.min.js"></script>
  -->
         <script src="/CafeteriaApp.Frontend/Scripts/libs/angular.min.js"></script>
-        <script src="/CafeteriaApp.Frontend/Scripts/admin/myapp.js"></script>
+        <script src="/CafeteriaApp.Frontend/Scripts/myapp.js"></script>
 
         <script src="/CafeteriaApp.Frontend/Scripts/libs/bootstrap-gh-pages/ui-bootstrap-2.5.0.js"></script>
 

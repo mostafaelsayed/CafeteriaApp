@@ -1,6 +1,8 @@
  <title> Order Checkout </title>
 
 <?php
+ require_once("CafeteriaApp.Backend/functions.php"); 
+   validatePageAccess($conn);
   include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
   // $_GET["orderId"]
 ?>
@@ -12,14 +14,15 @@
 <h1 class="page-header" style="text-align:center;margin-top:70px">Complete Order info.</h1>
 
 
-    <form  name="myForm" method="post" style="align-content:center;text-align:center;"> 
+    <form novalidate name="myForm" method="post" style="align-content:center;text-align:center;"> 
 <!-- <div ng-form name="myForm" >-->
       <p>Recepient Name:
-        <input type="text" name="recepientName"  ng-model="recepientName" required/>
+        <input type="text" name="recepientName"  ng-model="recepientName" required />
         <span ng-show=" myForm.$submitted  && myForm.recepientName.$invalid" >The name is required.</span>
       </p>
+      {{myForm.$submitted}}
       <p>Phone:
-      <input type="checkbox" name="vehicle"  ng-model="phoneDisabled" >Keep Old<br>
+      <input type="checkbox" name="phonecheck"  ng-model="phoneDisabled" >Keep Old<br>
     
         <input type="text" name="phone" ng-model="phone" ng-disabled="phoneDisabled" required/>
       </p>
@@ -44,7 +47,8 @@
         <br>
 
       <p>Total:
-        <input type="text" name="total" ng-model="total" disabled />
+        <!-- <input type="text" name="total" ng-model="total" disabled /> -->
+        {{ total | currency : "$" : 2 }}
       </p>
 
      <!--  <p>E-mail:
@@ -59,11 +63,11 @@
      <span ng-show="  myForm.$submitted && myForm.method.$invalid">The Payment Method is required.</span>
       </p>
       <!-- </div> -->
-      <input type="submit" name="next" value="Next" ng-click="closeOrder()" />
-           
-
+      <input type="submit" name="next" value="Next" ng-disabled="myForm.recepientName.$invalid||myForm.deliveryPlace.$invalid||myForm.method.$invalid||myForm.phone.$invalid"  ng-click="closeOrder()" />      
       <!-- <a href="manage_admins.php">Cancel</a> -->
     </form>
+
+
      <input type="submit" name="cancel" value="Discard Order" ng-click="discardOrder()" />
     <br />
 

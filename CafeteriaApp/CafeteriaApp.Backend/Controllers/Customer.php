@@ -148,7 +148,7 @@ function getCustomerIdByUserId($conn,$userId,$backend=false) {
 
 
 
-function addCustomer($conn,$cred,$userId) {
+function addCustomer($conn,$cred,$dob,$userId,$genderId) {
    if( !isset($cred))
  {
  echo "Error: Credit is not set";
@@ -159,11 +159,13 @@ elseif (!isset($userId)) {
   return;
   }
   else {
-  $sql = "insert into Customer (Credit,UserId) values (?,?)";
+  $sql = "insert into Customer (Credit,DateOfBirth,UserId,GenderId) values (?,?,?,?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("di",$Credit,$UserId);
+  $stmt->bind_param("dsii",$Credit,$Dob,$UserId,$GenderId);
   $Credit = $cred;
+  $Dob=$dob;
   $UserId=$userId;
+  $GenderId=$genderId;
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
     return true;
@@ -185,7 +187,7 @@ elseif (!isset($userId)) {
   return;
   }
   else {
-  $sql = "update Customer set Credit = (?) where UserId = (?)";
+  $sql = "update Customer set Credit = Credit+(?) where UserId = (?)";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("fi",$Credit,$UserId);
   $Credit = $cred;
@@ -200,7 +202,6 @@ elseif (!isset($userId)) {
 }}
 
 
-// deleting a customer is on cascading
 
 
 

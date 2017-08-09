@@ -122,7 +122,7 @@ else
 
 
 
-function registerCustomerUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password ) {
+function registerCustomerUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password,$dob,$genderId ) {
    if(checkExistingEmail($conn ,$email ,true)) 
  { echo "User Email already exists !";
   return;
@@ -150,7 +150,7 @@ else
     $user_id =  mysqli_insert_id($conn);
     echo $user_id;
 
-    if(addCustomer($conn,0.0,$user_id))
+    if(addCustomer($conn,0.0,$dob,$user_id,$genderId))
     {
      echo "Customer User Added successfully !";
      return true;

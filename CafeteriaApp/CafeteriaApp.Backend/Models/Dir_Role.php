@@ -18,9 +18,9 @@ public $drop = "drop table `mydb`.`Dir_Role`";
 
 public $insert ="INSERT INTO  `mydb`.`Dir_Role` (`Id`, `DirId`, `RoleId`) VALUES
 (1,1,1 ),
-(2,2,3),
+(2,2,2),
 (3,3,1),
-(4,3,3)";
+(4,3,2)";
 
 }
 
