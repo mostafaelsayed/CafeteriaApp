@@ -13,6 +13,7 @@ function getMenuItemByCategoryId($conn , $id,$backend=false)
     if ($result = $conn->query($sql))
     {
       $MenuItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      mysqli_free_result($result);
       $MenuItems = json_encode($MenuItems);
       if ($backend)
       {
@@ -20,9 +21,9 @@ function getMenuItemByCategoryId($conn , $id,$backend=false)
       }
       else
       {
-       echo $MenuItems;
+        echo $MenuItems;
       }
-    } 
+    }
     else
     {
       echo "Error retrieving MenuItems: " . $conn->error;
@@ -32,7 +33,7 @@ function getMenuItemByCategoryId($conn , $id,$backend=false)
 
 function getMenuItemById($conn , $id,$backend=false)
 {
-  if( !isset($id))
+  if (!isset($id))
   {
     echo "Error:MenuItem Id is not set";
     return;
@@ -43,6 +44,7 @@ function getMenuItemById($conn , $id,$backend=false)
     if ($result = $conn->query($sql))
     {
       $MenuItem = mysqli_fetch_assoc($result);
+      mysqli_free_result($result);
       $MenuItem = json_encode($MenuItem);
        if($backend)
       {
@@ -50,9 +52,9 @@ function getMenuItemById($conn , $id,$backend=false)
       }
       else
       {
-       echo $MenuItem;
+        echo $MenuItem;
       }
-    } 
+    }
     else
     {
       echo "Error retrieving MenuItem: " . $conn->error;
@@ -62,7 +64,7 @@ function getMenuItemById($conn , $id,$backend=false)
 
 function getMenuItemPriceById($conn , $id)
 {
-  if( !isset($id))
+  if (!isset($id))
   {
     echo "Error:MenuItem Id is not set";
     return;
@@ -70,10 +72,10 @@ function getMenuItemPriceById($conn , $id)
   else
   {
     $sql = "select Price from MenuItem where Id = ".$id." LIMIT 1";
-    $result = $conn->query($sql);
     if ($result = $conn->query($sql))
     {
       $MenuItem = mysqli_fetch_assoc($result);
+      mysqli_free_result($result);
       return $MenuItem["Price"];
     }
     else
@@ -85,7 +87,7 @@ function getMenuItemPriceById($conn , $id)
 
 function addMenuItem($conn,$name,$price,$description,$categoryId,$imageData = null)
 {
-  if( !isset($name))
+  if (!isset($name))
   {
     echo "Error: MenuItem name is not set";
     return;
@@ -147,7 +149,7 @@ function addMenuItem($conn,$name,$price,$description,$categoryId,$imageData = nu
 
 function editMenuItem($conn,$name,$price,$description,$id,$imageData)
 {
-  if( !isset($name))
+  if (!isset($name))
   {
     echo "Error: MenuItem name is not set";
     return;
@@ -169,7 +171,9 @@ function editMenuItem($conn,$name,$price,$description,$id,$imageData)
   }
   else
   {
-    $menuItem = (mysqli_fetch_assoc($conn->query("select Image from menuitem where Id = ".$id)));
+    $result = $conn->query("select Image from menuitem where Id = ".$id);
+    $menuItem = (mysqli_fetch_assoc($result));
+    mysqli_free_result($result);
     $menuItemImage = basename($menuItem['Image']);
     global $newImageName;
     if ($imageData != null && $imageData != $menuItem['Image'])
@@ -211,6 +215,7 @@ function editMenuItem($conn,$name,$price,$description,$id,$imageData)
     {
       echo "Error: ".$conn->error;
     }
+    mysqli_free_result($result);
   }
 }
 
@@ -224,11 +229,14 @@ function deleteMenuItem($conn,$id)
   else
   {
     $sql = "select Image from MenuItem where Id = ".$id." LIMIT 1";
-    $result = basename(mysqli_fetch_assoc($conn->query($sql))['Image']);
+    $result = $conn->query($sql);
+    $resultImage = basename(mysqli_fetch_assoc($result)['Image']);
+    mysqli_free_result($result);
     chdir("../uploads");
-    if (file_exists($result)) {
-      unlink($result);
+    if (file_exists($resultImage)) {
+      unlink($resultImage);
     }
+    mysqli_free_result($result);
     //$conn->query("set foreign_key_checks = 0"); // ????????/
     $sql = "delete from MenuItem where Id = ".$id. " LIMIT 1";
     if ($conn->query($sql)===TRUE)
@@ -241,6 +249,5 @@ function deleteMenuItem($conn,$id)
     }
   }
 }
-
 
 ?>
