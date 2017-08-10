@@ -7,7 +7,7 @@
   // $_GET["orderId"]
 ?>
 
-<script src="/CafeteriaApp.Frontend/Scripts/customer/checkout.js"></script>
+<script src="/CafeteriaApp.Frontend/javascript/checkout.js"></script>
 
 
  <div ng-app="myapp" ng-controller="OrderCheckout" ng-init="phoneDisabled=true" style="align-content:center;text-align:center;">

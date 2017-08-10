@@ -3,7 +3,7 @@ class MenuItem {
 public $create = "create table `mydb`.`MenuItem` (
 Id int auto_increment primary key,
 Name varchar(130) not null,
-Image varchar(150),
+Image varchar(150) not null,
 Price decimal(6,2) not null,
 Description text,
 ReadyInMins int  not null  DEFAULT '0',

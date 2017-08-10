@@ -21,7 +21,7 @@
         <!-- <link href='https://fonts.google.com/?category=Serif,Sans+Serif,Monospace&selection.family=Roboto+Slab' rel='stylesheet'> -->
         <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'>
 
-            <script src="/CafeteriaApp.Frontend/Scripts/libs/angular.min.js"></script>
+            <script src="/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
         <!-- <script src= "/CafeteriaApp.Frontend/Scripts/myapp.js"></script> -->
         <script src= "/CafeteriaApp.Frontend/Views/register.js"></script>
     </head>

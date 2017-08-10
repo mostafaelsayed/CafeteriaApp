@@ -6,11 +6,11 @@
   include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
 ?>
 
-<script src="/CafeteriaApp.Frontend/Scripts/admin/editing cafeteria and showing and deleting its categories.js"></script>
-<script src="/CafeteriaApp.Frontend/Scripts/admin/modal.js"></script>
-<script src="/CafeteriaApp.Frontend/Scripts/CustomerTheme/modal.js"></script>
+<script src="/CafeteriaApp.Frontend/javascript/editing cafeteria and showing and deleting its categories.js"></script>
+<script src="/CafeteriaApp.Frontend/javascript/modal_controller.js"></script>
+<script src="/CafeteriaApp.Frontend/javascript/modal.js"></script>
 
-<link href="/CafeteriaApp.Frontend/Scripts/input_file.css" rel="stylesheet">
+<link href="/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
 
 <div id="page-wrapper" style="margin-top:-600px">
 

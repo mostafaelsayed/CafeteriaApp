@@ -6,8 +6,8 @@
   include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
 ?>
 
-<script src="/CafeteriaApp.Frontend/Scripts/admin/adding menuitem.js"></script>
-<link href="/CafeteriaApp.Frontend/Scripts/input_file.css" rel="stylesheet">
+<script src="/CafeteriaApp.Frontend/javascript/adding menuitem.js"></script>
+<link href="/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
 
 
 <div id="page-wrapper" style="margin-top:-600px">

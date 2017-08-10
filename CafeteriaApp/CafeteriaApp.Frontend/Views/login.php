@@ -82,7 +82,7 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
       </p>
 
 
-    <input type="check" id="rememberme" name="remember" >
+    <input type="checkbox" id="rememberme" name="remember" >
     <label for="rememberme">Remeber me</label>
 
       <input type="submit" name="submit" value="Next" />

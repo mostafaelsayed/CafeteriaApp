@@ -6,7 +6,7 @@
   include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
 ?>
 
-<script src="/CafeteriaApp.Frontend/Scripts/customer/showing cafeterias.js"></script>
+<script src="/CafeteriaApp.Frontend/javascript/showing cafeterias.js"></script>
 
 <h1 class="page-header" style="text-align:center;margin-top:70px">Our Cafeterias</h1>
 

@@ -3,7 +3,7 @@ class Cafeteria {
 public $create = "create table `mydb`.`Cafeteria` (
 Id int auto_increment primary key,
 Name varchar(130) not null,
-Image varchar(150)
+Image varchar(150) not null
 ) ENGINE = InnoDB;";
 
  public $drop = "drop table `mydb`.`Cafeteria`";

@@ -6,9 +6,9 @@
   include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
 ?>
 
-<script src="/CafeteriaApp.Frontend/Scripts/admin/adding cafeteria.js"></script>
+<script src="/CafeteriaApp.Frontend/javascript/adding cafeteria.js"></script>
 
-<link href="/CafeteriaApp.Frontend/Scripts/input_file.css" rel="stylesheet">
+<link href="/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
 
 <head>
   <meta name="viewport" content="width=device-width" />

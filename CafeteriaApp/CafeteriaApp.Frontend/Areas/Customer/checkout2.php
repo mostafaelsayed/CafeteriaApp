@@ -12,7 +12,7 @@
 
 ?>
 
-<script src="/CafeteriaApp.Frontend/Scripts/customer/checkout2.js"></script>
+<script src="/CafeteriaApp.Frontend/javascript/checkout2.js"></script>
 
 <br>
 <div ng-app="myapp" ng-controller="OrderCheckout2" ng-init=<?php echo "orderno={$_GET["orderId"]}" ?>  style="align-content:center;text-align:center;">

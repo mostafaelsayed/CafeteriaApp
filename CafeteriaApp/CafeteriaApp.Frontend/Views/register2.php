@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST")
     $password= $data->password ;//$_POST["password"];
     $hashed_password = password_encrypt($password);
 
-   $result=registerCustomerUser($conn, $userName,$firstName,$lastName,$image,$email,$phoneNumber,$hashed_password,$dob );
+   $result=registerCustomerUser($conn, $userName,$firstName,$lastName,$image,$email,$phoneNumber,$hashed_password,$dob,  $gender );
 
     if ($result) {
       // Success

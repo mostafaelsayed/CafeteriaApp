@@ -7,10 +7,10 @@
 
 ?>
 
-<script src="/CafeteriaApp.Frontend/Scripts/admin/showing and deleting cafeterias.js"></script>
-<script src="/CafeteriaApp.Frontend/Scripts/admin/modal.js"></script>
+<script src="/CafeteriaApp.Frontend/javascript/showing and deleting cafeterias.js"></script>
+<script src="/CafeteriaApp.Frontend/javascript/modal_controller.js"></script>
 
-<script src="/CafeteriaApp.Frontend/Scripts/CustomerTheme/modal.js"></script>
+<script src="/CafeteriaApp.Frontend/javascript/modal.js"></script>
 
 <div id="page-wrapper" style="margin-top:-600px">
 

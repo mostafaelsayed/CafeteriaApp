@@ -6,8 +6,8 @@
   include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
 ?>
 
-<script src="/CafeteriaApp.Frontend/Scripts/customer/showing menuitems of a category and customer order.js"></script>
-<link href="/CafeteriaApp.Frontend/Scripts/CustomerTheme/customer styles.css" rel="stylesheet">
+<script src="/CafeteriaApp.Frontend/javascript/showing menuitems of a category and customer order.js"></script>
+<link href="/CafeteriaApp.Frontend/css/customer styles.css" rel="stylesheet">
 
 <h1 style="margin-top:70px">MenuItems</h1>
 
@@ -22,7 +22,7 @@
     <div class="col-lg-5">
       <div ng-repeat="m in menuItems" style="width:90%;margin-left:40px">
         <h1 ng-bind="m.Name" class="menu-name"></h1>
-        <a title="Add To Order" id="creatNewCafeteria" ng-click="addToOrder(m)" class="btn btn-circle" style="color:white;margin-left:140px;margin-top:-40px"><i class="fa fa-plus"></i></a>
+        <a title="Add To Order" id="creatNewCafeteria" ng-click="addToOrder(m)" class="btn btn-circle" style="color:white;float:right;margin-right:80px;margin-top:-40px"><i class="fa fa-plus"></i></a>
         <div style="color:white;font-style:italic">Name:  <span ng-bind="m.Name" style="color:white"></span></div>
         <div style="color:white;font-style:italic">Price:  <span ng-bind="m.Price" style="color:white"></span></div>
         <div style="color:white;font-style:italic">Description:  <span ng-bind="m.Description" style="color:white"></span></div>
