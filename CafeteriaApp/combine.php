@@ -26,9 +26,9 @@
 
 
 	$cache 	  = true;
-	$cachedir = dirname(__FILE__) . '/cache';
-	$cssdir   = dirname(__FILE__) . '/css';
-	$jsdir    = dirname(__FILE__) . '/javascript';
+	$cachedir = dirname(__FILE__) . '/CafeteriaApp.Frontend/cache';
+	$cssdir   = dirname(__FILE__) . '/CafeteriaApp.Frontend/css';
+	$jsdir    = dirname(__FILE__) . '/CafeteriaApp.Frontend/javascript';
 
 	// Determine the directory and type we should use
 	switch ($_GET['type']) {
