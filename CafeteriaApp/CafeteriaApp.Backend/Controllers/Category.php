@@ -13,6 +13,7 @@ function getByCafeteriaId($conn,$id,$backend=false)
     if ($result = $conn->query($sql))
     {
       $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      mysqli_free_result($result);
       $categories = json_encode($categories);
       if ($backend)
       {
@@ -32,7 +33,7 @@ function getByCafeteriaId($conn,$id,$backend=false)
 
 function getCategoryById($conn,$id,$backend=false)
 {
-  if( !isset($id))
+  if (!isset($id))
   {
     echo "Error: Id is not set";
     return;
@@ -43,6 +44,7 @@ function getCategoryById($conn,$id,$backend=false)
     if ($result = $conn->query($sql))
     {
       $category = mysqli_fetch_assoc($result);
+      mysqli_free_result($result);
       $category = json_encode($category);
       if ($backend)
       {
@@ -50,8 +52,8 @@ function getCategoryById($conn,$id,$backend=false)
       }
       else
       {
-       echo $category;
-      }
+        echo $category;
+      }  
     }
     else
     {
@@ -125,7 +127,9 @@ function editCategory($conn,$name,$id,$imageData = null)
   }
   else
   {
-    $category = (mysqli_fetch_assoc($conn->query("select Image from category where Id = ".$id)));
+    $result = $conn->query("select Image from category where Id = ".$id);
+    $category = (mysqli_fetch_assoc($result));
+    mysqli_free_result($result);
     $categoryImage = basename($category['Image']);
     echo $categoryImage;
     global $newImageName;
@@ -164,6 +168,7 @@ function editCategory($conn,$name,$id,$imageData = null)
     {
       echo "Error: ".$conn->error;
     }
+   
   }
 }
 
@@ -177,12 +182,15 @@ function deleteCategory($conn,$id)
   else
   {
     $sql = "select Image from category where Id = ".$id." LIMIT 1";
-    $result = basename(mysqli_fetch_assoc($conn->query($sql))['Image']);
+    $result = $conn->query($sql);
+    $resultImage = basename(mysqli_fetch_assoc($result)['Image']);
+    mysqli_free_result($result);
     chdir("../uploads");
-    if (file_exists($result)) {
-      unlink($result);
+    if (file_exists($resultImage))
+    {
+      unlink($resultImage);
     }
-    $conn->query("set foreign_key_checks=0");
+    //$conn->query("set foreign_key_checks=0");
     $sql = "delete from category where Id = ".$id." LIMIT 1";
     if ($conn->query($sql)===TRUE)
     {
@@ -194,6 +202,5 @@ function deleteCategory($conn,$id)
     }
   }
 }
-
 
 ?>

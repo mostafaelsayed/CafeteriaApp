@@ -1,7 +1,7 @@
 <?php
 // Include FB config file && User class
 require_once 'fbConfig.php';
-require_once 'User.php';
+require_once 'fbUser.php';
 
 if(isset($accessToken)){
     if(isset($_SESSION['facebook_access_token'])){
@@ -63,7 +63,7 @@ if(isset($accessToken)){
     $_SESSION['userData'] = $userData;
     
     // Get logout url
-    $logoutURL = $helper->getLogoutUrl($accessToken, $redirectURL.'logout.php');
+    $logoutURL = $helper->getLogoutUrl($accessToken, $redirectURL.'fblogout.php');
     
     // Render facebook profile data
     if(!empty($userData)){

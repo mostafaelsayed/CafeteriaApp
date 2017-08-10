@@ -6,6 +6,7 @@ function getCafeterias($conn,$backend=false)
   if ($result = $conn->query($sql))
   {
     $cafeterias = mysqli_fetch_all($result, MYSQLI_ASSOC); // ??
+    mysqli_free_result($result);
     $cafeterias = json_encode($cafeterias); // ??
     if ($backend)
     {
@@ -13,7 +14,7 @@ function getCafeterias($conn,$backend=false)
     }
     else
     {
-     echo $cafeterias;
+      echo $cafeterias;
     }
   }
   else
@@ -28,6 +29,7 @@ function getCafeteriaById($conn ,$id,$backend=false)
   if ($result = $conn->query($sql))
   {
     $cafeteria = mysqli_fetch_assoc($result); // fetch only the first row of the result
+    mysqli_free_result($result);
     $cafeteria = json_encode($cafeteria); // ??
     if ($backend)
     {
@@ -35,8 +37,8 @@ function getCafeteriaById($conn ,$id,$backend=false)
     }
     else
     {
-     echo $cafeteria;
-    }
+      echo $cafeteria;
+    }   
   }
   else
   {
@@ -100,7 +102,9 @@ function editCafeteria($conn,$name,$id,$imageData = null)
   }
   else
   {
-    $cafeteria = (mysqli_fetch_assoc($conn->query("select Image from cafeteria where Id = ".$id)));
+    $result = $conn->query("select Image from cafeteria where Id = ".$id);
+    $cafeteria = (mysqli_fetch_assoc($result));
+    mysqli_free_result($result);
     if ($imageData != null && $imageData != $cafeteria['Image'])
     {
       $cafeteriaImage = basename($cafeteria['Image']);    
@@ -150,12 +154,15 @@ function deleteCafeteria($conn,$id)
   else
   {
     $sql = "select Image from cafeteria where Id = ".$id." LIMIT 1";
-    $result = basename(mysqli_fetch_assoc($conn->query($sql))['Image']);
+    $result = $conn->query($sql);
+    $resultImage = basename(mysqli_fetch_assoc($result)['Image']);
+    mysqli_free_result($result);
     chdir("../uploads");
-    if (file_exists($result)) {
-      unlink($result);
+    if (file_exists($resultImage))
+    {
+      unlink($resultImage);
     }
-    $conn->query("set foreign_key_checks = 0"); // ????????/
+    //$conn->query("set foreign_key_checks = 0"); // ????????/
     $sql = "delete from cafeteria where Id = ".$id." LIMIT 1";
     if ($conn->query($sql)===TRUE)
     {
@@ -167,6 +174,5 @@ function deleteCafeteria($conn,$id)
     }
   }
 }
-
 
 ?>

@@ -82,15 +82,20 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
       </p>
 
 
+    <input type="check" id="rememberme" name="remember" >
+    <label for="rememberme">Remeber me</label>
+
       <input type="submit" name="submit" value="Next" />
+
     </form>
 <br>
 
  <input type="submit" name="submit" value="Forgot Password! " />
 <div>
+<a href="fbindex.php">
      <button  class="btn waves-effect waves-light btn" type="submit" name="action">Facebook Login
-                <img src="icons/facebook.png" width="50px" height="50px">
-                 </button>
+                <img src="icons/facebook.png" width="50px" height="50px" >
+                 </button></a>
 </div>
 
   </div>
