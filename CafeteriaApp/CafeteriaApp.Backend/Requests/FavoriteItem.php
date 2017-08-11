@@ -1,16 +1,25 @@
 <?php
 require_once( 'CafeteriaApp.Backend/Controllers/FavoriteItem.php');
 require_once("CafeteriaApp.Backend/connection.php");
+require_once("CafeteriaApp.Backend/session.php");
 
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
-  if (isset($_GET["action"]) && $_GET["action"]=="getFavoriteItems"){
-    getFavoriteItems($conn);
+  
+    getFavoriteItemsByCustomerId($conn,$_SESSION["customerId"]);
+
+}
+
+
+if ($_SERVER['REQUEST_METHOD']=="DELETE") {
+  if (isset($_GET["Id"])){
+    deleteFavoriteItem($conn,$_GET["Id"]);
   }
   else {
-    echo "Error occured while returning FavoriteItems";
+    echo "Error occured while deleting Favorite Item ";
   }
 }
+
 
 if ($_SERVER['REQUEST_METHOD']=="POST"){
     //decode the json data

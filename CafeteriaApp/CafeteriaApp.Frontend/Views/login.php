@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
     }
   }
 }
- elseif (isset($_SESSION["UserId"] ) && isset($_SESSION["userName"]) && isset($_SESSION["roleId"]) )// This is probably a GET request
+ elseif (isset($_SESSION["UserId"] ) && isset($_SESSION["userName"]) && isset($_SESSION["roleId"]) || isset($_SESSION["userData"]) )// This is probably a GET request
   {
       redirect_to(rawurldecode("/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php")); //
   
@@ -92,7 +92,7 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
 
  <input type="submit" name="submit" value="Forgot Password! " />
 <div>
-<a href="fbindex.php">
+<a href="index.php">
      <button  class="btn waves-effect waves-light btn" type="submit" name="action">Facebook Login
                 <img src="icons/facebook.png" width="50px" height="50px" >
                  </button></a>

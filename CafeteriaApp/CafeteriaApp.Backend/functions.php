@@ -72,7 +72,7 @@ function test_input($conn,$data) {
 	
 
 	function islogged_in() {
-		return isset($_SESSION['UserId']);
+		return (isset($_SESSION['UserId']) || isset($_SESSION['facebook_access_token']) );// for normal user and fb user check
 	}
 	
 	function confirm_logged_in() {
@@ -155,7 +155,6 @@ function validatePageAccess ($conn) {/*  using hash*/
     $dirs = mysqli_fetch_all($result_set, MYSQLI_ASSOC); // ??
 	//print_r($dirs);
 	foreach ($dirs as $key => $value) {
-	
     if ( strpos(getcwd() , $value["Dir"]) !== false ){
     	
       return;

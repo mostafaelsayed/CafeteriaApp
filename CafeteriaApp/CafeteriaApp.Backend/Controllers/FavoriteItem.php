@@ -9,7 +9,7 @@ function getFavoriteItemsByCustomerId($conn,$Cid,$backend=false)
   }
   else
   {
-    $sql = "select FavoriteItem.Id , MenuItem.Name from FavoriteItem INNER JOIN MenuItem ON FavoriteItem.MenuItemId = MenuItem.Id where CustomerId =".$Cid;
+    $sql = "select FavoriteItem.Id , MenuItem.Name , MenuItem.Description , MenuItem.Price ,MenuItem.Image  from FavoriteItem INNER JOIN MenuItem ON FavoriteItem.MenuItemId = MenuItem.Id where CustomerId =".$Cid;
     $result = $conn->query($sql);
     if ($result)
     {

@@ -7,7 +7,7 @@ unset($_SESSION['facebook_access_token']);
 
 // Remove user data from session
 unset($_SESSION['userData']);
-
+// print_r($_SESSION['facebook_access_token']);
 // Redirect to the homepage
-header("Location:index.php");
+header("Location:login.php");
 ?>
