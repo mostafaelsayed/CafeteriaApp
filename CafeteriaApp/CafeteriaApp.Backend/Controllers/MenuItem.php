@@ -236,7 +236,6 @@ function deleteMenuItem($conn,$id)
     if (file_exists($resultImage)) {
       unlink($resultImage);
     }
-    mysqli_free_result($result);
     //$conn->query("set foreign_key_checks = 0"); // ????????/
     $sql = "delete from MenuItem where Id = ".$id. " LIMIT 1";
     if ($conn->query($sql)===TRUE)

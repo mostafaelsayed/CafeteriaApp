@@ -10,25 +10,24 @@
 
 <link href="/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
 
-<div id="page-wrapper" style="margin-top:-600px">
+<div>
 
   <div class="row">
-    <div class="col-lg-12">
+    <div>
       <h1 class="page-header">Create Category</h1>
     </div>
   </div>
 
-  <div class="col-lg-12" ng-app="myapp" ng-controller="addCategory">
-    <div class="panel panel-default">
-      <div class="panel-heading">Adding New Category</div>
-      <div class="panel-body">
+  <div ng-app="myapp" ng-controller="addCategory">
+    <div>
+      <div>
         <div class="row">
-          <div class="col-lg-6">
-            <form role="form" name="myform">
+          <div>
+            <form role="form" name="myform" id="centerBlock">
               <div class="form-group">
                 <label>Name</label>
-                <input type="text" class="form-control" ng-model="name" autofocus="autofocus" name="name" required/>
-                <span ng-show="myform.name.$invalid" id="inputControl">Category Name is Required</span>
+                <input id="inputField" type="text" class="form-control" ng-model="name" autofocus="autofocus" name="name" required/>
+                <span ng-show="myform.name.$invalid" id="inputControl">Category Name is Required<br></span><br>
                 <div><label>Image</label></div>
                 <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name=" imageFileName" data-max-file-size="3">
                 </div>
@@ -38,7 +37,7 @@
                 <div><button class="btn btn-primary" onclick="mylabel.click()" id="mybutton">Choose image</button><label id="mylabel" for="file"></label></div>
               </div>
               <div class="form-group">
-                <input type = "submit" value = "save" class="btn btn-primary" style="float:right" ng-click="addCategory()">
+                <input type = "submit" value = "save" class="btn btn-primary" ng-click="addCategory()">
               </div>
             </form>
           </div>

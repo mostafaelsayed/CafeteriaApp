@@ -8,7 +8,7 @@
 
 <script src="/CafeteriaApp.Frontend/javascript/showing categories of a cafeteria.js"></script>
 
-<h1 class="page-header" style="text-align:center;margin-top:70px">Categories</h1>
+<h1 class="page-header" id="header">Categories</h1>
 
 <div ng-app="myapp" ng-controller="getCategories">
   <div ng-repeat="c in categories" style="width:15%;margin:auto">

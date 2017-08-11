@@ -57,19 +57,17 @@
 
  
  </head>
- <body style="background-image:	url('/CafeteriaApp.Frontend/images/background image1.jpg')">
-<div id="wrapper">
+  <body style="background-image:	url('/CafeteriaApp.Frontend/images/customer background image4.jpg')">
+    <div id="wrapper">
         <!-- Navigation -->
-      <nav class="navbar navbar-default navbar-fixed-top" style="background-image:	url('/CafeteriaApp.Frontend/images/background image1.jpg')">
+      <nav class="navbar navbar-default navbar-fixed-top" style="background-image:  url('/CafeteriaApp.Frontend/images/customer background image4.jpg')">
         <div class="container-fluid">
-          <div class="navbar-header">
-            <a style="color:white" class="navbar-brand" href="/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php">Cafeterias Page</a>
-          </div>
           <ul class="nav navbar-nav">
-            <li ><a class="navbar-brand"  href="#">Home</a></li>
-            <li><a class="navbar-brand"  href="#"> <?php echo _("Contact");?></a></li>
-            <li><a class="navbar-brand"  href="#"><?php echo _("Help");?></a></li>
-            <li><a class="navbar-brand"  href="/CafeteriaApp.Frontend/Views/logout.php">Log out</a></li>
+            <li><a class="navbar-brand" style="color: blue" href="/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php">Cafeterias Page</a></li>
+            <li><a class="navbar-brand" style="color: blue" href="#">Home</a></li>
+            <li><a class="navbar-brand" style="color: blue" href="#"> <?php echo _("Contact");?></a></li>
+            <li><a class="navbar-brand" style="color: blue" href="#"><?php echo _("Help");?></a></li>
+            <li><a class="navbar-brand" style="color: blue" href="/CafeteriaApp.Frontend/Views/logout.php">Log out</a></li>
 
           </ul>
 
@@ -82,8 +80,8 @@
           </div>
 
       </nav>
-      </div>
+    </div>
         <!-- /#page-wrapper -->
 <div> Copyright &copy;<?php echo date("Y"); ?>, Restaurant</div>
-    </body>
-    </html>
+  </body>
+</html>

@@ -8,7 +8,7 @@
 
 <script src="/CafeteriaApp.Frontend/javascript/showing cafeterias.js"></script>
 
-<h1 class="page-header" style="text-align:center;margin-top:70px">Our Cafeterias</h1>
+<h1 class="page-header" id="header">Our Cafeterias</h1>
 
 <div ng-app="myapp" ng-controller="getCafeterias">
   <div  id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -24,7 +24,7 @@
         <h3 ng-bind="cafeterias[0].Name" class="carousel-caption"></h3>
       </div>
       <div ng-repeat="c in cafeterias.slice(1,cafeterias.length)" class="item">
-        <a ng-href="/CafeteriaApp.Frontend/Areas/Customer/Cafeteria/Views/showing categories of a cafeteria.php?id={{c.Id}}">
+        <a ng-href="/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing categories of a cafeteria.php?id={{c.Id}}">
           <img style="display:block;margin:auto" ng-src={{c.Image}} width="500" height="400" />
         </a>
         <h3 ng-bind="c.Name" class="carousel-caption"></h3>

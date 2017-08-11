@@ -12,6 +12,12 @@ color: yellow;
 {
   color: yellow;
 }
+#header {
+	text-align:center;
+	margin-top:70px;
+	color: white;
+	font-style: italic;
+}
 
 /*.navbar-default .navbar-nav>li:hover
 {

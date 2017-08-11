@@ -12,7 +12,7 @@
 
 <script src="/CafeteriaApp.Frontend/javascript/modal.js"></script>
 
-<div id="page-wrapper" style="margin-top:-600px">
+<div>
 
   <div class="row">
     <div class="col-lg-12">
@@ -42,26 +42,26 @@
       </div>
      </script>
       <div class="col-lg-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">Manage Your Cafeterias
+        <div style="margin: auto">
+          <div><h3 >Manage Your Cafeterias</h3>
             <div>
-              <a style="float: right;margin-top: -23px;" title="Add Cafeteria" id="creatNewCafeteria" href="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/adding cafeteria.php" class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a>
+              <a id="add" title="Add Cafeteria" id="creatNewCafeteria" href="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/adding cafeteria.php" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
             </div>
           </div>
-          <div class="panel-body">
-            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-cafeteria">
+          <div>
+            <table width="50%" class="table" style="border-collapse:collapse" border="0" cellspacing="0" cellpadding="0">
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Actions</th>
+                  <th id="alignText">Name</th>
+                  <th id="alignText">Actions</th>
                 </tr>
               </thead>
               <tbody ng-repeat="c in cafeterias">
-                <tr class="odd gradeX">
-                  <td ng-bind="c.Name"></td>
-                  <td class="center">
-                    <a id="myButton" href="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/editing cafeteria and showing and deleting its categories.php?id={{c.Id}}" class="btn btn-success">Edit</a>
-                    <button type="button" ng-click="deleteCafeteria(c.Id)" class="btn btn-danger">Delete</button>
+                <tr>
+                  <td id="alignText" ng-bind="c.Name"></td>
+                  <td id="alignText" class="center">
+                    <a type="button" href="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/editing cafeteria and showing and deleting its categories.php?id={{c.Id}}">Edit</a>&nbsp;&nbsp;
+                    <a type="button" ng-click="deleteCafeteria(c.Id)">Delete</a>
                   </td>
                 </tr>
               </tbody>

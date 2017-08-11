@@ -14,27 +14,26 @@
 <link href="/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
 
 
-<div id="page-wrapper" style="margin-top:-600px">
+<div>
 
   <div class="row">
-    <div class="col-lg-12">
+    <div>
       <h1 class="page-header">Edit Category</h1>
     </div>
   </div>
 
   <div ng-app="myapp">
-    <div class="row">
-      <div class="col-lg-12" ng-controller="editCategory">
-        <div class="panel panel-default">
-          <div class="panel-heading">Edit Category</div>
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-lg-6">
-                <form role="form" name="myform">
+    <div>
+      <div ng-controller="editCategory">
+        <div>
+          <div>
+            <div>
+              <div>
+                <form novalidate role="form" name="myform" id="centerBlock">
                   <div class="form-group">
                     <label>Name</label>
-                    <input type="text" class="form-control" ng-model="name" autofocus="autofocus" name="name" required/>
-                    <span ng-show="myform.name.$invalid" id="inputControl">Category Name is Required</span>
+                    <input id="inputField" type="text" class="form-control" ng-model="name" autofocus="autofocus" name="name" required/>
+                    <span ng-show="myform.name.$invalid" id="inputControl">Category Name is Required<br></span><br>
                     <div><label>Image</label></div>
                     <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name=" imageFileName" data-max-file-size="3">
                     </div>
@@ -49,7 +48,7 @@
                     <button class="btn btn-primary" onclick="mylabel.click()" id="mybutton">Choose image</button><label id="mylabel" for="file"></label>
                   </div>
                   <div class="form-group">
-                    <input type = "submit" value = "save" class="btn btn-primary" style="float:right" ng-click="editCategory()">
+                    <input type = "submit" value = "save" class="btn btn-primary" ng-click="editCategory()">
                   </div>
                 </form>
               </div>
@@ -60,7 +59,7 @@
     </div>
     
     <div class="row">
-      <div class="col-lg-12">
+      <div>
         <h1 class="page-header">MenuItems</h1>
       </div>
     </div>
@@ -87,31 +86,31 @@
          </div>
       </script>
 
-      <div class="col-lg-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">Manage Your MenuItems
+      <div>
+        <div>
+          <div><h3>Manage Your MenuItems</h3>
             <div>
-              <a style="float: right;margin-top: -23px;" title="Add MenuItem" id="creatNewCategory" href="/CafeteriaApp.Frontend/Areas/Admin/MenuItem/Views/adding menuitem.php?id={{categoryId}}" target="_self" class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a>
+              <a id="add" title="Add MenuItem" id="creatNewCategory" href="/CafeteriaApp.Frontend/Areas/Admin/MenuItem/Views/adding menuitem.php?id={{categoryId}}" target="_self" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
             </div>
           </div>
-          <div class="panel-body">
-            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-category">
+          <div>
+            <table width="50%" class="table table-bordered">
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Price</th>
-                  <th>Description</th>
-                  <th>Actions</th>
+                  <th id="alignText">Name</th>
+                  <th id="alignText">Price</th>
+                  <th id="alignText">Description</th>
+                  <th id="alignText">Actions</th>
                 </tr>
               </thead>
               <tbody ng-repeat="m in menuItems">
                 <tr class="odd gradeX">
-                  <td ng-bind="m.Name"></td>
-                  <td ng-bind="m.Price"></td>
-                  <td ng-bind="m.Description"></td>
-                  <td class="center">
-                    <a id="myButton" href="/CafeteriaApp.Frontend/Areas/Admin/MenuItem/Views/editing menuitem.php?id={{m.Id}}" target="_self" class="btn btn-success">Edit</a>
-                    <button ng-click="deleteMenuItem(m.Id)" class="btn btn-danger">Delete</button>
+                  <td id="alignText" ng-bind="m.Name"></td>
+                  <td id="alignText" ng-bind="m.Price"></td>
+                  <td id="alignText" ng-bind="m.Description"></td>
+                  <td id="alignText" class="center">
+                    <a id="myButton" href="/CafeteriaApp.Frontend/Areas/Admin/MenuItem/Views/editing menuitem.php?id={{m.Id}}" target="_self">Edit</a>&nbsp;
+                    <a ng-click="deleteMenuItem(m.Id)">Delete</a>
                   </td>
                 </tr>
               </tbody>

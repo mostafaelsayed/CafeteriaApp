@@ -1,0 +1,37 @@
+h1,h3 {
+  font-style: italic;
+/*  color: white;
+*/  text-align: center;
+}
+.name {
+
+  font-style: italic;
+  color: white;
+  text-align: left;
+}
+
+#thead {
+/*  color: white;
+*/  font-style: italic;
+}
+#alignText {
+	text-align: center;
+	font-style: italic;
+	/*color: white;*/
+}
+#add {
+	margin-right:150px;
+	margin-top:-50px;
+	float: right;
+}
+#centerBlock {
+	/*margin-left: auto;
+	margin-right: auto;*/
+	/*margin: auto;*/
+	text-align: center;
+}
+#inputField {
+	width: 170px;
+	margin:auto;
+	text-align:center;
+}
