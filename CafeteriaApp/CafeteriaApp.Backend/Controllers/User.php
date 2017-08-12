@@ -62,7 +62,7 @@ function getUserById($conn,$id,$backend=false)
 
 function registerAdminUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password )
 {
-  if (checkExistingEmail($conn ,$email ,true)) 
+  if (checkExistingEmail($conn ,$email )) 
   {
     echo "User Email already exists !";
   }
@@ -72,7 +72,7 @@ function registerAdminUser($conn,$userName,$firstName,$lastName,$image,$email,$p
   }
   else
   {
-    $sql = "insert into User (UserName , FirstName , LastName , Image , Email , PhoneNumber , Password, RoleId) values (?,?,?,?,?,?,?,?)";
+    $sql = "insert into User (UserName , FirstName , LastName , Image , Email , PhoneNumber , PasswordHash, RoleId) values (?,?,?,?,?,?,?,?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sssssssi",$UserName,$FirstName,$LastName,$Image,$Email,$PhoneNumber,$Password,$RoleId);
     $UserName = $userName;
@@ -97,7 +97,7 @@ function registerAdminUser($conn,$userName,$firstName,$lastName,$image,$email,$p
 
 function registerCashierUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password )
 {
-  if (checkExistingEmail($conn ,$email ,true)) 
+  if (checkExistingEmail($conn ,$email)) 
   {
     echo "User Email already exists !";
   }
@@ -107,7 +107,7 @@ function registerCashierUser($conn,$userName,$firstName,$lastName,$image,$email,
   } 
   else
   {
-    $sql = "insert into User (UserName , FirstName , LastName , Image , Email , PhoneNumber , Password, RoleId) values (?,?,?,?,?,?,?,?)";
+    $sql = "insert into User (UserName , FirstName , LastName , Image , Email , PhoneNumber , PasswordHash, RoleId) values (?,?,?,?,?,?,?,?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sssssssi",$UserName,$FirstName,$LastName,$Image,$Email,$PhoneNumber,$Password,$RoleId);
     $UserName = $userName;
@@ -133,7 +133,7 @@ function registerCashierUser($conn,$userName,$firstName,$lastName,$image,$email,
 
 
 function registerCustomerUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password,$dob,$genderId ) {
-   if(checkExistingEmail($conn ,$email ,true)) 
+   if(checkExistingEmail($conn ,$email )) 
  { echo "User Email already exists !";
   return;
   }
@@ -182,9 +182,9 @@ else
 
 
 
-function editCustomerUser($conn,$userName,$image,$email,$phoneNumber,$password ,$id )
+function editCustomerUser($conn,$userName,$image,$phoneNumber,$password ,$id )
 {
-  if(checkExistingEmail($conn ,$email ,false)) 
+  if(checkExistingEmail($conn ,$email )) 
   {
     echo "User Email already exists !";
   }
@@ -194,12 +194,11 @@ function editCustomerUser($conn,$userName,$image,$email,$phoneNumber,$password ,
   }
   else
   {
-    $sql = "update User set UserName = (?), Image = (?), Email = (?), PhoneNumber= (?) , Password= (?) where Id = (?)"; 
+    $sql = "update User set UserName = (?), Image = (?), PhoneNumber= (?) , PasswordHash= (?) where Id = (?)"; 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssi",$UserName,$Image,$Email,$PhoneNumber,$Password,$Id);
+    $stmt->bind_param("ssssi",$UserName,$Image,$PhoneNumber,$Password,$Id);
     $UserName=$userName;
     $Image =$image;
-    $Email =$email;
     $PhoneNumber=$phoneNumber;
     $Password=$password;
     $Id=$id;
@@ -213,6 +212,33 @@ function editCustomerUser($conn,$userName,$image,$email,$phoneNumber,$password ,
     }
   }
 }
+
+
+function updateUserPassword($conn,$password ,$email)
+{
+  if(empty($password)) 
+  {
+    echo "User password is empty !";
+    return;
+  }
+  else
+  {
+    $sql = "update User set PasswordHash= (?) where Email = (?)"; 
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss",$Password,$Email);
+    $Email=$email;
+    $Password=$password;
+    if ($stmt->execute()===TRUE)
+    {
+      echo "User updated successfully";
+    }
+    else
+    {
+      echo "Error: ".$conn->error;
+    }
+  }
+}
+
 
 function checkExistingUserName($conn,$userName ,$register_edit)
 {
@@ -240,15 +266,16 @@ function checkExistingUserName($conn,$userName ,$register_edit)
   
 // need to know if he's entering the same email or not as the condition will differ
 
-function checkExistingEmail($conn,$email,$register_edit) // problem if he wants to edit his info cause' of his email
-{
+function checkExistingEmail($conn,$email) // problem if he wants to edit his info cause' of his email
+{ 
+  $email = trim($email);
   $Email=mysqli_real_escape_string($conn, $email);
   $sql = "select count(*) from User where Email= '{$Email}' ";
   $result = $conn->query($sql);
   if ($result)
   {
     $result = mysqli_fetch_array($result, MYSQLI_NUM); 
-    mysqli_free_result($result);
+    
     if ($result[0]>0) // if he wants to change the mail and not keeping the old
     { 
       return true; // exist
@@ -257,6 +284,7 @@ function checkExistingEmail($conn,$email,$register_edit) // problem if he wants 
     {
       return false;//not exist
     }
+    mysqli_free_result($result);
   }
   else
   {

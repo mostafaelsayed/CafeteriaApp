@@ -1,11 +1,11 @@
-var app = angular.module('myapp', []);
+// var app = angular.module('myapp', []);
 
-app.config(['$locationProvider', function($locationProvider) {
-  $locationProvider.html5Mode({
-    enabled: true,
-    requireBase: false
-  });
-}]);
+// app.config(['$locationProvider', function($locationProvider) {
+//   $locationProvider.html5Mode({
+//     enabled: true,
+//     requireBase: false
+//   });
+// }]);
 
 // controller for getting categories of a cafeteria from database
 

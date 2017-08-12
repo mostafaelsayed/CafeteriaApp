@@ -1,5 +1,10 @@
+<?php require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies 
+ //require_once("CafeteriaApp.Backend/functions.php"); ?>
+
 <!DOCTYPE html>
 <html>
+
+
 <head>
 <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,14 +56,23 @@
   <script src="/CafeteriaApp.Frontend/javascript/morris.min.js"></script>
   <!-- Custom Theme JavaScript -->
   <script src="/CafeteriaApp.Frontend/javascript/sb-admin-2.js"></script>
- 
+
+
   <link href="/CafeteriaApp.Frontend/css/layout_style.css" rel="stylesheet" type="text/css">
 
+    <script src="/CafeteriaApp.Frontend/javascript/myapp.js"></script>
+    <!-- <script src="/CafeteriaApp.Frontend/javascript/layout.js"></script> -->
 
+
+            <!-- <link rel="stylesheet" type="text/css" href="/CafeteriaApp.Frontend/Views/css/materialize.css"/> -->
+        <!-- <script src="/CafeteriaApp.Frontend/Views/js/materialize.js"></script>   -->
+
+  
  
  </head>
-  <body style="background-image:	url('/CafeteriaApp.Frontend/images/customer background image4.jpg')">
-    <div id="wrapper">
+  <body style="background-image:	url('/CafeteriaApp.Frontend/images/customer background image4.jpg')" ng-app="myapp">
+
+    <div id="wrapper"  >
         <!-- Navigation -->
       <nav class="navbar navbar-default navbar-fixed-top" style="background-image:  url('/CafeteriaApp.Frontend/images/customer background image4.jpg')">
         <div class="container-fluid">
@@ -71,17 +85,44 @@
 
           </ul>
 
-            <form action="/TestI18N/language.php" method="post" style="float:right">
-              <input type="submit" name="english" value="English" />
-              <input type="submit" name="german" value="German" />
-            </form>
+         <div class="input-field col s12"   ng-controller="Language"  >
+            <select   title="Display language" ng-model="selectedLang" ng-options="l.Name for l in languages" > 
+            <option value="" disabled selected >Choose the language</option></select>
+           <?php $_SESSION["langId"]="{{selectedLang.Id}}" ;  //echo __FILE__;        ?>
 
-
+       </div>
+    
           </div>
 
       </nav>
     </div>
         <!-- /#page-wrapper -->
 <div> Copyright &copy;<?php echo date("Y"); ?>, Restaurant</div>
-  </body>
+
+<script type="text/javascript">
+
+app.controller('Language' , function ($scope,$http) {
+
+$scope.getLanguages=function () {
+
+$http.get('/CafeteriaApp.Backend/Requests/Languages.php')
+.then(function(response) {
+
+  $scope.languages=response.data;
+},function(response) {
+
+    console.log( "Something went wrong");
+}
+);
+}
+
+
+$scope.getLanguages();
+
+  
+});
+
+</script>
+
+ </body>
 </html>

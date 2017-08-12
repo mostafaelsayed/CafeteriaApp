@@ -1,16 +1,19 @@
-<title>Cafeterias</title>
-
 <?php
- require_once("CafeteriaApp.Backend/functions.php"); 
-   validatePageAccess($conn);
-  include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
+ //require_once("CafeteriaApp.Backend/functions.php"); 
+   //validatePageAccess($conn);
+  require_once('/CafeteriaApp.Frontend/Areas/Customer/layout.php');
 ?>
 
-<script src="/CafeteriaApp.Frontend/javascript/showing cafeterias.js"></script>
+<title>Cafeterias</title>
+
+
+    <!-- <script src="/CafeteriaApp.Frontend/javascript/myapp.js"></script> -->
+ <script src="/CafeteriaApp.Frontend/javascript/showing cafeterias.js"></script>
 
 <h1 class="page-header" id="header">Our Cafeterias</h1>
 
-<div ng-app="myapp" ng-controller="getCafeterias">
+<div  ng-controller="Cafeterias">
+<div >
   <div  id="myCarousel" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to=0 class="active"></li>
@@ -39,6 +42,10 @@
       <span class="sr-only">Next</span>
     </a>
   </div>
+  </div>
 </div>
+ 
 
-<?php //require_once("CafeteriaApp.Backend/footer.php");?>
+
+
+

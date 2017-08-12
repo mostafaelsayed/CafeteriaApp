@@ -30,7 +30,7 @@
             <td ng-bind="fi.Description" id="thead"></td>
             <td ng-bind="fi.Price" id="thead"></td>
             <td><img src="{{fi.Image}}"></td>
-            <td> <a class="btn" title="Remove Favorite Item" ng-click="deleteFavorItem(fi.Id)" style="color:white;font-style:italic" class="btn"><i class="fa fa-minus"></i> </a></td>
+            <td> <a class="btn btn-primary btn-circle" title="Remove Favorite Item" ng-click="deleteFavorItem(fi.Id)" style="color:white;font-style:italic" class="btn"><i class="fa fa-minus"></i> </a></td>
              
             
           </tr>

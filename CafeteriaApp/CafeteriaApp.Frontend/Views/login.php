@@ -39,6 +39,10 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
         addTodayDate($conn,true);
       }
       
+      if( isset($_POST['remember'] ))//set the cookie to a long date
+      {
+        setcookie(session_name(), session_id(),time()+42000000,'/');
+      }
 
       redirect_to(rawurldecode("/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php")); //3ala 7asab                               
     }
@@ -90,7 +94,7 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
     </form>
 <br>
 
- <input type="submit" name="submit" value="Forgot Password! " />
+ <a href="resetPassword.php" name="submit" />Forgot Password! </a>
 <div>
 <a href="index.php">
      <button  class="btn waves-effect waves-light btn" type="submit" name="action">Facebook Login

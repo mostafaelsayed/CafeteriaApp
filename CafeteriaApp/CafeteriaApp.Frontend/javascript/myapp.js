@@ -79,6 +79,8 @@ app.directive('fileDropzone', function() {
   };
 });
 
+
+
 app.directive("fileread", [function () {
     return {
         scope: {
@@ -159,3 +161,17 @@ app.directive("numberCheck",function() {
     }
   }
 });
+
+
+// app.service('Languages' , function ($http) {
+
+//    this.getLanguages = function () {
+//   $http.get('/CafeteriaApp.Backend/Requests/Languages.php')
+// .then(function(response) {
+
+//  return response.data;
+// });
+
+
+//     }
+// });
