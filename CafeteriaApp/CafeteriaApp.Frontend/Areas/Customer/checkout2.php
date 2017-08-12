@@ -1,10 +1,13 @@
+<?php
+ require_once("CafeteriaApp.Backend/functions.php"); 
+   validatePageAccess($conn);
+  include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
+   
+?>
 <title>Order info</title>
 
 <?php
 
-  require_once("CafeteriaApp.Backend/functions.php"); 
-  validatePageAccess($conn);
-  include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
   if (!isset($_GET["orderId"]) || !isset($_GET["deliveryTimeDuration"]))
   {
 	 $_GET["orderId"]=0;
@@ -16,7 +19,7 @@
 <script src="/CafeteriaApp.Frontend/javascript/checkout2.js"></script>
 
 <br>
-<div ng-app="myapp" ng-controller="OrderCheckout2" ng-init=<?php echo "orderno={$_GET["orderId"]}" ?>  style="align-content:center;text-align:center;">
+<div  ng-controller="OrderCheckout2" ng-init=<?php echo "orderno={$_GET["orderId"]}" ?>  style="align-content:center;text-align:center;">
 
   <table align="center" >
     <thead>

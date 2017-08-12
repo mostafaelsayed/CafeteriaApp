@@ -1,21 +1,21 @@
-<title> Favorite Items</title>
-
 <?php
  require_once("CafeteriaApp.Backend/functions.php"); 
    validatePageAccess($conn);
   include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
    
 ?>
-<script src="/CafeteriaApp.Frontend/javascript/myapp.js"></script>
+<title> Favorite Items</title>
+
+
 
 <script src="/CafeteriaApp.Frontend/javascript/favorite items.js"></script>
 <link href="/CafeteriaApp.Frontend/css/customer styles.css" rel="stylesheet">
 
 <br>
-<div class="col-lg-5" ng-app="myapp" ng-controller="favorites"  style="align-content:center;text-align:center;">
+<div class="col-lg-5"  ng-controller="favorites"  style="align-content:center;text-align:center;">
+<h2   style=" color:orange;text-align:center;margin-top: 50px;">My Favorites</h2>
 
-
-<table align="center"  class="table" style=" margin:20px;" ng-show="favoriteItems.length > 0"  >
+<table align="center"  class="table" style=" margin:30px;" ng-show="favoriteItems.length > 0"  >
         <thead>
           <tr>
             <th id="thead">Name</th>

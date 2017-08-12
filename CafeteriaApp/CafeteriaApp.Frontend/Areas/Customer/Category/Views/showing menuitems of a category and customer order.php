@@ -1,17 +1,16 @@
-<title>MenuItems</title>
-
 <?php
  require_once("CafeteriaApp.Backend/functions.php"); 
    validatePageAccess($conn);
   include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
 ?>
+<title>MenuItems</title>
 
 <script src="/CafeteriaApp.Frontend/javascript/showing menuitems of a category and customer order.js"></script>
 <link href="/CafeteriaApp.Frontend/css/customer styles.css" rel="stylesheet">
 
 <h1 style="margin-top:70px">MenuItems</h1>
 
-<div class="row" ng-app="myapp" ng-controller="getMenuItemsAndCustomerOrder">
+<div class="row"  ng-controller="getMenuItemsAndCustomerOrder">
 
     <div class="col-lg-2">
       <a href="#" style="color:white;margin-left:40px">Back</a>

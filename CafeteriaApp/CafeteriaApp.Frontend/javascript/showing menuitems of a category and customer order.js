@@ -1,11 +1,4 @@
-var app = angular.module('myapp', []);
 
-app.config(['$locationProvider', function($locationProvider) {
-  $locationProvider.html5Mode({
-    enabled: true,
-    requireBase: false
-  });
-}]);
 
 // controller for getting menuitems of a category from database
 

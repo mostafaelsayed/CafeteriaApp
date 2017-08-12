@@ -1,13 +1,12 @@
 <?php
- //require_once("CafeteriaApp.Backend/functions.php"); 
-   //validatePageAccess($conn);
-  require_once('/CafeteriaApp.Frontend/Areas/Customer/layout.php');
+ require_once("CafeteriaApp.Backend/functions.php"); 
+   validatePageAccess($conn);
+  require_once('CafeteriaApp.Frontend/Areas/Customer/layout.php');
 ?>
 
 <title>Cafeterias</title>
 
 
-    <!-- <script src="/CafeteriaApp.Frontend/javascript/myapp.js"></script> -->
  <script src="/CafeteriaApp.Frontend/javascript/showing cafeterias.js"></script>
 
 <h1 class="page-header" id="header">Our Cafeterias</h1>

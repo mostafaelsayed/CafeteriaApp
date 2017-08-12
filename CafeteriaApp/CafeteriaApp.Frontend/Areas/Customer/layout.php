@@ -85,13 +85,24 @@
 
           </ul>
 
-         <div class="input-field col s12"   ng-controller="Language"  >
+          
+            <div class="input-field col s12">
+            <!-- <div class="select-wrapper"> -->
+         <div  ng-controller="Language"  >
+         <ul class="nav navbar-nav navbar-right ">
+         <li>
             <select   title="Display language" ng-model="selectedLang" ng-options="l.Name for l in languages" > 
             <option value="" disabled selected >Choose the language</option></select>
            <?php $_SESSION["langId"]="{{selectedLang.Id}}" ;  //echo __FILE__;        ?>
-
+        </li>
+         <li>
+         <?php echo "<a title='Go to profile' href='/CafeteriaApp.Frontend/Areas/Customer/favorite items.php'><h4>Hi, {$_SESSION['userName']}</h4></a>"; ?>
+         </li>
+         
        </div>
-    
+         <!-- </div> -->
+          </div>
+           </ul>
           </div>
 
       </nav>

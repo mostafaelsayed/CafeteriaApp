@@ -1,7 +1,5 @@
 app.controller('favorites' , function($scope,$http) {
 
-	
-
 	$scope.getFavoriteItems=function () {
 	
 	$http.get('/CafeteriaApp.Backend/Requests/FavoriteItem.php')

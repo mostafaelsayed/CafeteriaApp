@@ -1,16 +1,15 @@
- <title> Order Checkout </title>
-
-<?php
+ <?php
  require_once("CafeteriaApp.Backend/functions.php"); 
    validatePageAccess($conn);
   include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
   // $_GET["orderId"]
 ?>
+ <title> Order Checkout </title>
 
 <script src="/CafeteriaApp.Frontend/javascript/checkout.js"></script>
 
 
- <div ng-app="myapp" ng-controller="OrderCheckout" ng-init="phoneDisabled=true" style="align-content:center;text-align:center;">
+ <div  ng-controller="OrderCheckout" ng-init="phoneDisabled=true" style="align-content:center;text-align:center;">
 <h1 class="page-header" style="text-align:center;margin-top:70px">Complete Order info.</h1>
 
 
