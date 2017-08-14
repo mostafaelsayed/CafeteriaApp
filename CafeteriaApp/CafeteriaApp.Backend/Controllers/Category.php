@@ -1,10 +1,10 @@
 <?php
 
-function getByCafeteriaId($conn,$id,$backend=false)
+function getByCafeteriaId($conn,$id)
 {
   if (!isset($id))
   {
-    echo "Error: Id is not set";
+    //echo "Error: Id is not set";
     return;
   }
   else
@@ -14,16 +14,8 @@ function getByCafeteriaId($conn,$id,$backend=false)
     {
       $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      if ($backend)
-      {
         return $categories;
-      }
-      else
-      {
-      $categories = json_encode($categories);
-
-        echo $categories;
-      }
+  
     }
     else
     {
@@ -32,11 +24,11 @@ function getByCafeteriaId($conn,$id,$backend=false)
   }
 }
 
-function getCategoryById($conn,$id,$backend=false)
+function getCategoryById($conn,$id)
 {
   if (!isset($id))
   {
-    echo "Error: Id is not set";
+    //echo "Error: Id is not set";
     return;
   }
   else
@@ -46,16 +38,7 @@ function getCategoryById($conn,$id,$backend=false)
     {
       $category = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      
-      if ($backend)
-      {
         return $category;
-      }
-      else
-      {
-        $category = json_encode($category);
-        echo $category;
-      }  
     }
     else
     {
@@ -66,17 +49,11 @@ function getCategoryById($conn,$id,$backend=false)
 
 function addCategory($conn,$name,$cafeteriaId,$imageData = null)
 {
-  if (!isset($name))
+  if (!isset($name) || !isset($cafeteriaId))
   {
-    echo "Error: Name is not set";
+    //echo "Error: Name is not set";
     return;
   }
-  elseif (!isset($cafeteriaId))
-  {
-    echo "Error: Cafeteria Id is not set";
-    return;
-  }
-
   else
   {
     if ($imageData != null)
@@ -104,7 +81,7 @@ function addCategory($conn,$name,$cafeteriaId,$imageData = null)
 
     if ($stmt->execute()===TRUE)
     {
-      echo "Category Added successfully";
+      return "Category Added successfully";
     }
     else
     {
@@ -117,14 +94,9 @@ function addCategory($conn,$name,$cafeteriaId,$imageData = null)
 
 function editCategory($conn,$name,$id,$imageData = null)
 {
-  if (!isset($name))
+  if (!isset($name) || !isset($id))
   {
-    echo "Error: Name is not set";
-    return;
-  }
-  elseif (!isset($id))
-  {
-    echo "Error: Id is not set";
+   // echo "Error: Name is not set";
     return;
   }
   else
@@ -164,7 +136,7 @@ function editCategory($conn,$name,$id,$imageData = null)
 
     if ($stmt->execute()===TRUE)
     {
-      echo "Category updated successfully";
+      return "Category updated successfully";
     }
     else
     {
@@ -178,7 +150,7 @@ function deleteCategory($conn,$id)
 {
   if (!isset($id))
   {
-    echo "Error: Id is not set";
+    //echo "Error: Id is not set";
     return;
   }
   else
@@ -196,7 +168,7 @@ function deleteCategory($conn,$id)
     $sql = "delete from category where Id = ".$id." LIMIT 1";
     if ($conn->query($sql)===TRUE)
     {
-      echo "Category deleted successfully";
+      return "Category deleted successfully";
     }
     else
     {

@@ -45,7 +45,7 @@ if($scope.checkExistingMailAndUserName()){
 
       };
 
- $http.post('/CafeteriaApp.Backend/Requests/Register.php',data) 
+ $http.put('/CafeteriaApp.Backend/Requests/Register.php',data) 
  .then(function(response) {
       console.log(response.data);
      document.location=response.data;

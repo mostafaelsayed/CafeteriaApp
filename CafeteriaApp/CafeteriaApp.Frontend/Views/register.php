@@ -47,8 +47,8 @@
 
       <div class="input-field col s12"  >
       <label  for="un">User Name</label>
-        <input id="un" type="text" name="userName" ng-model="userName"   required/>
-        <span  ng-show=" myForm.$submitted && myForm.userName.$invalid" >User Name is required.</span>
+        <input id="un" type="text" name="userName" ng-model="userName"  ng-maxlength="30" maxlength="30"  required/>
+        <span  ng-show=" myForm.$submitted && myForm.userName.$invalid || myForm.userName.length>30 " >User Name is required.</span>
       </div>
 
        <div class="input-field col s12" >

@@ -1,10 +1,10 @@
 <?php
 
-function getMenuItemByCategoryId($conn,$id,$backend=false,$customer=false)
+function getMenuItemByCategoryId($conn,$id,$backend=false,$customer=false)//????????????????
 {
   if (!isset($id))
   {
-    echo "Error:Category Id is not set";
+   // echo "Error:Category Id is not set";
     return;
   }
   else
@@ -36,11 +36,11 @@ function getMenuItemByCategoryId($conn,$id,$backend=false,$customer=false)
   }
 }
 
-function getMenuItemById($conn , $id,$backend=false)
+function getMenuItemById($conn , $id)
 {
   if (!isset($id))
   {
-    echo "Error:MenuItem Id is not set";
+    //echo "Error:MenuItem Id is not set";
     return;
   }
   else
@@ -50,16 +50,7 @@ function getMenuItemById($conn , $id,$backend=false)
     {
       $MenuItem = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-       if($backend)
-      {
         return $MenuItem;
-      }
-      else
-      {
-      $MenuItem = json_encode($MenuItem);
- 
-        echo $MenuItem;
-      }
     }
     else
     {
@@ -72,7 +63,7 @@ function getMenuItemPriceById($conn , $id)
 {
   if (!isset($id))
   {
-    echo "Error:MenuItem Id is not set";
+    //echo "Error:MenuItem Id is not set";
     return;
   }
   else
@@ -95,22 +86,22 @@ function addMenuItem($conn,$name,$price,$description,$categoryId,$imageData = nu
 {
   if (!isset($name))
   {
-    echo "Error: MenuItem name is not set";
+    //echo "Error: MenuItem name is not set";
     return;
   }
   elseif (!isset($price))
   {
-    echo "Error: MenuItem price is not set";
+   // echo "Error: MenuItem price is not set";
     return;
   }
   elseif (!isset($description))
   {
-    echo "Error: MenuItem description is not set";
+   // echo "Error: MenuItem description is not set";
     return;
   }
   elseif (!isset($categoryId))
   {
-    echo "Error: Category Id is not set";
+    //echo "Error: Category Id is not set";
     return;
   }
   else
@@ -144,7 +135,7 @@ function addMenuItem($conn,$name,$price,$description,$categoryId,$imageData = nu
 
     if ($stmt->execute()===TRUE)
     {
-      echo "MenuItem Added successfully";
+      return "MenuItem Added successfully";
     }
     else
     {
@@ -157,22 +148,22 @@ function editMenuItem($conn,$name,$price,$description,$id,$imageData)
 {
   if (!isset($name))
   {
-    echo "Error: MenuItem name is not set";
+    //echo "Error: MenuItem name is not set";
     return;
   }
   elseif (!isset($price))
   {
-    echo "Error: MenuItem price is not set";
+    //echo "Error: MenuItem price is not set";
     return;
   }
   elseif (!isset($description))
   {
-    echo "Error: MenuItem description is not set";
+    //echo "Error: MenuItem description is not set";
     return;
   }
   elseif (!isset($id))
   {
-    echo "Error: MenuItem id is not set";
+    //echo "Error: MenuItem id is not set";
     return;
   }
   else
@@ -215,13 +206,13 @@ function editMenuItem($conn,$name,$price,$description,$id,$imageData)
 
     if ($stmt->execute()===TRUE)
     {
-      echo "MenuItem updated successfully";
+      return "MenuItem updated successfully";
     }
     else
     {
       echo "Error: ".$conn->error;
     }
-    mysqli_free_result($result);
+    mysqli_free_result($result);//???????????????????????????????????????????????
   }
 }
 
@@ -229,7 +220,7 @@ function deleteMenuItem($conn,$id)
 {
  if (!isset($id))
   {
-    echo "Error: Id is not set";
+    //echo "Error: Id is not set";
     return;
   }
   else
@@ -246,7 +237,7 @@ function deleteMenuItem($conn,$id)
     $sql = "delete from MenuItem where Id = ".$id. " LIMIT 1";
     if ($conn->query($sql)===TRUE)
     {
-      echo "MenuItem deleted successfully";
+      return "MenuItem deleted successfully";
     }
     else
     {

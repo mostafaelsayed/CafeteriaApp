@@ -2,6 +2,7 @@
 //result=getCommentsByMenuItemId();
 //if(result)
  // echo json_encode(result);
+//if add or edit , echo a message
 //else
 // redirect to fear the hacker
 
@@ -30,7 +31,7 @@
   } 
 }
 
-function getCommentById($conn,$id,$backend=false)
+function getCommentById($conn,$id)
 {
   if (!isset($id)) 
   {
@@ -44,17 +45,9 @@ function getCommentById($conn,$id,$backend=false)
     if ($result)
     {
       $comments = mysqli_fetch_assoc($result);
-      mysqli_free_result($result);
-      if ($backend)
-      { 
+      mysqli_free_result($result); 
         return $comments;   
-      }
-      else
-      {
-      $comments = json_encode($comments);
-
-        echo $comments;
-      }
+      
     }
     else
     {
@@ -63,11 +56,11 @@ function getCommentById($conn,$id,$backend=false)
   } 
 }
 
-function getCommentsByCustomerId($conn,$id,$backend=false) // check in future if it's redundunt
+function getCommentsByCustomerId($conn,$id) // check in future if it's redundunt
 {  
   if (!isset($id)) 
   {
-    echo "Error: Id is not set";
+    //echo "Error: Id is not set";
     return;
   }
   else
@@ -78,16 +71,8 @@ function getCommentsByCustomerId($conn,$id,$backend=false) // check in future if
     {
       $comments = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      
-      if ($backend)
-      { 
         return $comments;   
-      }
-      else
-      {
-        $comments = json_encode($comments);
-        echo $comments;
-      }
+    
     }
     else
     {
@@ -100,17 +85,17 @@ function addComment($conn,$details ,$Cid,$Mid)
 {
   if (!isset($details)) 
   {
-    echo "Error: Comment Details is not set";
+    //echo "Error: Comment Details is not set";
     return;
   }
   elseif (!isset($Cid))
   {
-    echo "Error: Customer Id is not set";
+   // echo "Error: Customer Id is not set";
     return;
   }
   elseif (!isset($Mid))
   {
-    echo "Error: MenuItem Id is not set";
+    //echo "Error: MenuItem Id is not set";
     return;
   }
   else
@@ -123,7 +108,7 @@ function addComment($conn,$details ,$Cid,$Mid)
     $MenuItemId=$Mid;
     if ($stmt->execute()===TRUE)
     {
-      echo "Comment Added successfully";
+      return "Comment Added successfully";
     }
     else
     {
@@ -136,12 +121,12 @@ function editComment($conn,$details,$id)
 {
   if (!isset($details)) 
   {
-    echo "Error: Comment Details is not set";
+    //echo "Error: Comment Details is not set";
     return;
   }
   elseif (!isset($id))
   {
-    echo "Error: Id is not set";
+    //echo "Error: Id is not set";
     return;
   }
   else
@@ -153,7 +138,7 @@ function editComment($conn,$details,$id)
     $Id = $id;
     if ($stmt->execute()===TRUE)
     {
-      echo "Comment updated successfully";
+      return "Comment updated successfully";
     }
     else
     {
@@ -162,11 +147,12 @@ function editComment($conn,$details,$id)
   } 
 }
 
+
 function deleteComment($conn,$id)
 {
   if (!isset($id))
   {
-    echo "Error: Id is not set";
+    //echo "Error: Id is not set";
     return;
   }
   else
@@ -175,7 +161,7 @@ function deleteComment($conn,$id)
     $sql = "delete from Comment where Id = ".$id. " LIMIT 1";
     if ($conn->query($sql)===TRUE)
     {
-      echo "Comment deleted successfully";
+      return "Comment deleted successfully";
     }
     else
     {
