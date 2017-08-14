@@ -4,10 +4,8 @@ require_once("CafeteriaApp.Backend/functions.php");
 require_once("CafeteriaApp.Backend/validation_functions.php"); 
 require_once( 'CafeteriaApp.Backend/Controllers/User.php');
 require_once("CafeteriaApp.Backend/connection.php");
-require_once ('checkResult.php');
 
 
-<<<<<<< HEAD
 
 
 
@@ -23,9 +21,7 @@ require_once ('checkResult.php');
 
 if ($_SERVER['REQUEST_METHOD']=="POST")
 {
-=======
 if ($_SERVER['REQUEST_METHOD']=="POST"){
->>>>>>> origin/master
     //decode the json data
     $data = json_decode(file_get_contents("php://input"));
     if (isset($data->userName) && isset($data->email))
@@ -46,9 +42,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST"){
             echo "User Email already exists !";
         }
     }
-<<<<<<< HEAD
 }
-=======
   }
 }
 
@@ -60,7 +54,6 @@ if ($_SERVER['REQUEST_METHOD']=="PUT"){
     //echo $data;
       if ($data->userName != null && $data->firstName != null &&  $data->lastName != null  && $data->phone != null && $data->email != null  && $data->gender != null && $data->dob != null  && $data->password != null) {
 
->>>>>>> origin/master
 
 // $required_fields = array("userName", "password","firstName","lastName","email","phone","image",);
 //validate_presences($required_fields);
