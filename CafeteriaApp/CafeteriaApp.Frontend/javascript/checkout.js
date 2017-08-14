@@ -37,7 +37,7 @@ $scope.getOrderInfo = function(){
    $http.get('/CafeteriaApp.Backend/Requests/Order.php')
    .then(function(response) {
        $scope.orderInfo = response.data;
-       // $scope.deliveryPlace=$scope.orderInfo.DeliveryPlace;
+        $scope.deliveryPlace=$scope.orderInfo.DeliveryPlace;
       $scope.total=$scope.orderInfo.Total;
        //console.log(response);
     //document.location =  "/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php";
@@ -55,26 +55,28 @@ $scope.getOrderInfo = function(){
   }
 
 
-$scope.closeOrder = function(){
-  if($scope.selectedMethod != undefined){
+// $scope.closeOrder = function(){
+//   if($scope.selectedMethod != undefined){
  
- var data = {                   //date need to be updated also
-        orderId: $scope.orderId,
-        deliveryTimeId: $scope.deliveryTimeId,
-        deliveryPlace:$scope.deliveryPlace,
-        paymentMethodId:parseInt($scope.selectedMethod.Id),
-        paid: $scope.total
-      };
-  //update order info and close the state
-   $http.put('/CafeteriaApp.Backend/Requests/Order.php',data)
-   .then(function(response) {
-       //$scope.paymentMethods = response.data;
-    document.location =  "/CafeteriaApp.Frontend/Areas/Customer/checkout2.php?orderId="+$scope.orderId+'&deliveryTimeDuration='+$scope.deliveryTimeDuration;
+//  var data = {                   //date need to be updated also
+//         orderId: $scope.orderId,
+//         deliveryTimeId: $scope.deliveryTimeId,
+//         deliveryPlace:$scope.deliveryPlace,
+//         paymentMethodId:parseInt($scope.selectedMethod.Id),
+//         paid: $scope.total
+//       };
+//   //update order info and close the state
+//    $http.put('/CafeteriaApp.Backend/Requests/Order.php',data)
+//    .then(function(response) {
+//     //window.location = response.data;
+//     //console.log(response);
+//        //$scope.paymentMethods = response.data;
+//     // document.location =  "/CafeteriaApp.Frontend/Areas/Customer/checkout2.php?orderId="+$scope.orderId+'&deliveryTimeDuration='+$scope.deliveryTimeDuration;
 
-   });
-  }
+//    });
+//   }
 
-  }
+//   }
 
 
 $scope.getOrderDeliveryTime = function(){

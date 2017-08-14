@@ -13,8 +13,12 @@
 <h1 class="page-header" style="text-align:center;margin-top:70px">Complete Order info.</h1>
 
 
-    <form novalidate name="myForm" method="post" style="align-content:center;text-align:center;"> 
-<!-- <div ng-form name="myForm" >-->
+    <form novalidate name="myForm" action="/CafeteriaApp.Backend/Requests/Order.php" method="post" style="align-content:center;text-align:center;">
+    <input type="text" style="visibility: hidden" ng-model="orderId" name="orderId">
+    <input type="text" style="visibility: hidden" ng-model="deliveryTimeId" name="deliveryTimeId">
+    <input type="text" style="visibility: hidden" ng-model="deliveryPlace" name="deliveryPlace">
+    <input type="text" style="visibility: hidden" ng-model="selectedMethod.Id" name="selectedMethodId">
+    <input type="text" style="visibility: hidden" ng-model="total" name="total">
       <p>Recepient Name:
         <input type="text" name="recepientName"  ng-model="recepientName" required />
         <span ng-show=" myForm.$submitted  && myForm.recepientName.$invalid" >The name is required.</span>
