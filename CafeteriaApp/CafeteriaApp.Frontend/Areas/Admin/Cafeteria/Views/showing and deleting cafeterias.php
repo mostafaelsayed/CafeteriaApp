@@ -61,7 +61,7 @@
                   <td id="alignText" ng-bind="c.Name"></td>
                   <td id="alignText" class="center">
                     <a type="button" href="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/editing cafeteria and showing and deleting its categories.php?id={{c.Id}}">Edit</a>&nbsp;&nbsp;
-                    <a type="button" ng-click="deleteCafeteria(c.Id)">Delete</a>
+                    <a type="button" style="cursor: pointer" ng-click="deleteCafeteria(c.Id)">Delete</a>
                   </td>
                 </tr>
               </tbody>

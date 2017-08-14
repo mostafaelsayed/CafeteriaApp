@@ -8,7 +8,7 @@ app.controller('Cafeterias', function ($scope,$http) {
       $scope.cafeterias = response.data;
     }, function(response) {
         //Second function handles error
-        console.log( "Something went wrong");
+        //console.log( "Something went wrong");
     }
     );
   }

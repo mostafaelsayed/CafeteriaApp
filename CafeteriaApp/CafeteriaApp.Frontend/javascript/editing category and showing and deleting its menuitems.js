@@ -47,6 +47,7 @@ app.controller('showingAndDeletingMenuItems',['$scope','$http','$location','Moda
   $scope.getMenuItems = function(){
     $http.get('/CafeteriaApp.Backend/Requests/MenuItem.php?categoryId='+$scope.categoryId)
     .then(function (response) {
+      console.log(response);
       $scope.menuItems = response.data;
     });
   }

@@ -4,6 +4,5 @@ app.controller('ModalController',['$scope','close', function($scope, close) {
   }
   $scope.closeModal = function() {
   	close(null);
-  	//this.closed = true;
   }
 }]);

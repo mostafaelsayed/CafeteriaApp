@@ -1,6 +1,6 @@
 <?php
 
-function getMenuItemByCategoryId($conn,$id,$backend=false,$customer=false)//????????????????
+function getMenuItemByCategoryId($conn,$id,$customer=false)//????????????????
 {
   if (!isset($id))
   {
@@ -18,16 +18,7 @@ function getMenuItemByCategoryId($conn,$id,$backend=false,$customer=false)//????
     {
       $MenuItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      if ($backend)
-      {
-        return $MenuItems;
-      }
-      else
-      {
-        $MenuItems = json_encode($MenuItems);
-
-        echo $MenuItems;
-      }
+      return $MenuItems;
     }
     else
     {

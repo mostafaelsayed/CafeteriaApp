@@ -7,8 +7,7 @@ function getCafeterias($conn)
   {
     $cafeterias = mysqli_fetch_all($result, MYSQLI_ASSOC); // ??
     mysqli_free_result($result);
-      return $cafeterias;
-    
+    return $cafeterias;
   }
   else
   {
@@ -16,35 +15,26 @@ function getCafeterias($conn)
   }
 }
 
-
 function getCafeteriaById($conn ,$id)
-{if (!isset($id)) 
+{
+  if (!isset($id)) 
   {
     return;
   }
   else
   {
-  $sql = "select * from Cafeteria where Id =".$id." LIMIT 1";
-  if ($result = $conn->query($sql))
-  {
-    $cafeteria = mysqli_fetch_assoc($result); // fetch only the first row of the result
-    mysqli_free_result($result);
-    if ($backend)
+    $sql = "select * from Cafeteria where Id =".$id." LIMIT 1";
+    if ($result = $conn->query($sql))
     {
+      $cafeteria = mysqli_fetch_assoc($result); // fetch only the first row of the result
+      mysqli_free_result($result);
       return $cafeteria;
     }
     else
-    {   
-     $cafeteria = json_encode($cafeteria); // ??
-
-      echo $cafeteria;
-    }   
+    {
+      echo "Error retrieving Cafeteria : " . $conn->error;
+    }
   }
-  else
-  {
-    echo "Error retrieving Cafeteria : " . $conn->error;
-  }
-}
 }
 
 function addCafeteria($conn,$name,$imageData = null) // if image null ?????? 
