@@ -7,13 +7,13 @@ function getCafeterias($conn,$backend=false)
   {
     $cafeterias = mysqli_fetch_all($result, MYSQLI_ASSOC); // ??
     mysqli_free_result($result);
-    $cafeterias = json_encode($cafeterias); // ??
     if ($backend)
     {
       return $cafeterias;
     }
     else
-    {
+    {    $cafeterias = json_encode($cafeterias); // ??
+
       echo $cafeterias;
     }
   }
@@ -30,13 +30,14 @@ function getCafeteriaById($conn ,$id,$backend=false)
   {
     $cafeteria = mysqli_fetch_assoc($result); // fetch only the first row of the result
     mysqli_free_result($result);
-    $cafeteria = json_encode($cafeteria); // ??
     if ($backend)
     {
       return $cafeteria;
     }
     else
-    {
+    {   
+     $cafeteria = json_encode($cafeteria); // ??
+
       echo $cafeteria;
     }   
   }

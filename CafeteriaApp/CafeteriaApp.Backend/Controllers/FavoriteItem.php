@@ -15,13 +15,14 @@ function getFavoriteItemsByCustomerId($conn,$Cid,$backend=false)
     {
       $favoriteItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      $favoriteItems = json_encode($favoriteItems);
       if ($backend)
       { 
         return $favoriteItems;   
       }
       else
       {
+      $favoriteItems = json_encode($favoriteItems);
+
         echo $favoriteItems;
       }
     }
@@ -47,13 +48,14 @@ function getFavoriteItemById($conn,$id,$backend=false)
     {
       $favoriteItems = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      $favoriteItems = json_encode($favoriteItems);
       if ($backend)
       { 
         return $favoriteItems;   
       }
       else
       {
+      $favoriteItems = json_encode($favoriteItems);
+
         echo $favoriteItems;
       }  
     }

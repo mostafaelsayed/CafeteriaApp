@@ -8,13 +8,14 @@ function getDates($conn,$backend=false)
   {
     $dates = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-    $dates = json_encode($dates);
     if ($backend)
     {
       return $dates;
     }
     else
-    {
+    {   
+     $dates = json_encode($dates);
+
       echo $dates;
     }
   }
@@ -39,13 +40,14 @@ function getDateById($conn ,$id,$backend=false)
     {
       $Id = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      $Id= json_encode($Id);
       if($backend)
       {
         return $Id;
       }
       else
       {
+      $Id= json_encode($Id);
+
         echo $Id;
       }
     }
@@ -71,13 +73,14 @@ function getDateIdByDate($conn ,$value,$backend=false)
     {
       $date = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      $date= json_encode($date);
       if ($backend)
       {
         return $date;
       }
       else
       {
+      $date= json_encode($date);
+
         echo $date;
       }
     }

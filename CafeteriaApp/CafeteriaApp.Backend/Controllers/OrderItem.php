@@ -21,13 +21,14 @@ function getOrderItemsByClosedOrderId($conn,$id,$backend=false)
     {
       $orderItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      $orderItems = json_encode($orderItems);
       if ($backend)
       {
         return $orderItems;
       }
       else
       {
+   $orderItems = json_encode($orderItems);
+
         echo $orderItems;
       }
     }
@@ -53,13 +54,14 @@ function getOrderItemsByOpenOrderId($conn,$id,$backend=false)
     {
       $orderItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      $orderItems = json_encode($orderItems);
       if ($backend)
       {
         return $orderItems;
       }
       else
       {
+      $orderItems = json_encode($orderItems);
+    
         echo $orderItems;
       }
     }
@@ -85,13 +87,14 @@ function getOrderItemById($conn,$id,$backend=false)
     {
       $orderItem = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      $orderItem = json_encode($orderItem);
       if ($backend)
       {
         return $orderItem;
       }
       else
       {
+         $orderItem = json_encode($orderItem);
+     
         echo $orderItem;
       }
     }

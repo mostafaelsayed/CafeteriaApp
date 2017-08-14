@@ -8,13 +8,14 @@ function getTimes($conn,$backend=false)
   {
     $times = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-    $times = json_encode($times);
     if ($backend)
     {
       return $times;
     }
     else
     {
+    $times = json_encode($times);
+
       echo $times;
     }
   }
@@ -39,13 +40,14 @@ function getTimeById($conn,$id,$backend=false)
     {
       $times = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      $times = json_encode($times);
       if ($backend)
       {
         return $times;
       }
       else
       {
+      $times = json_encode($times);
+  
         echo $times;
       }
     }

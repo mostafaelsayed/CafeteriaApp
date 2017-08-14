@@ -10,13 +10,14 @@ function getUsers($conn,$backend=false)
   {
     $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-    $users = json_encode($users);
     if ($backend)
     { 
       return $users;   
     }
     else
     {
+         $users = json_encode($users);
+ 
       echo $users;
     }
   }
@@ -43,13 +44,14 @@ function getUserById($conn,$id,$backend=false)
     {
       $user = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      $user = json_encode($user);
       if ($backend)
       { 
         return $user;   
       }
       else
       {
+      $user = json_encode($user);
+  
         echo $user;
       } 
     }
@@ -159,16 +161,16 @@ else
   if ($stmt->execute()===TRUE) {
     
     $user_id =  mysqli_insert_id($conn);
-    echo $user_id;
+    //echo $user_id;
 
     if(addCustomer($conn,0.0,$dob,$user_id,$genderId))
       {
-        echo "Customer User Added successfully !";
+        //echo "Customer User Added successfully !";
         return true;
       }
       else
       {
-        echo "Error: failed to create a Customer user !";
+        //echo "Error: failed to create a Customer user !";
         return false;
       }
     }
@@ -214,7 +216,7 @@ function editCustomerUser($conn,$userName,$image,$phoneNumber,$password ,$id )
 }
 
 
-function updateUserPassword($conn,$password ,$email)
+function updateUserPasswordByEmail($conn,$password ,$email)
 {
   if(empty($password)) 
   {
@@ -230,7 +232,32 @@ function updateUserPassword($conn,$password ,$email)
     $Password=$password;
     if ($stmt->execute()===TRUE)
     {
-      echo "User updated successfully";
+      //echo "User updated successfully";
+    }
+    else
+    {
+      echo "Error: ".$conn->error;
+    }
+  }
+}
+
+function updateUserPasswordById($conn,$password ,$id)
+{
+  if(empty($password)) 
+  {
+    echo "User password is empty !";
+    return;
+  }
+  else
+  {
+    $sql = "update User set PasswordHash= (?) where Id = (?)"; 
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("si",$Password,$Id);
+    $Id=$id;
+    $Password=$password;
+    if ($stmt->execute()===TRUE)
+    {
+      //echo "User updated successfully";
     }
     else
     {
@@ -248,7 +275,7 @@ function checkExistingUserName($conn,$userName ,$register_edit)
   if ($result)
   {
     $result = mysqli_fetch_array($result, MYSQLI_NUM); 
-    mysqli_free_result($result);
+    //mysqli_free_result($result);
     if ($result[0]>0) // if he wnats to change the mail and not keeping the old
     { 
       return true; // exist

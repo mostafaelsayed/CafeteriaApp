@@ -1,6 +1,6 @@
 <?php
 
-function getMenuItemByCategoryId($conn , $id,$backend=false)
+function getMenuItemByCategoryId($conn,$id,$backend=false,$customer=false)
 {
   if (!isset($id))
   {
@@ -10,17 +10,22 @@ function getMenuItemByCategoryId($conn , $id,$backend=false)
   else
   {
     $sql = "select * from MenuItem where CategoryId = ".$id;
+    if($customer)
+    {
+      $sql.=" and Visible = 1 ";
+    }
     if ($result = $conn->query($sql))
     {
       $MenuItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      $MenuItems = json_encode($MenuItems);
       if ($backend)
       {
         return $MenuItems;
       }
       else
       {
+        $MenuItems = json_encode($MenuItems);
+
         echo $MenuItems;
       }
     }
@@ -45,13 +50,14 @@ function getMenuItemById($conn , $id,$backend=false)
     {
       $MenuItem = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      $MenuItem = json_encode($MenuItem);
        if($backend)
       {
         return $MenuItem;
       }
       else
       {
+      $MenuItem = json_encode($MenuItem);
+ 
         echo $MenuItem;
       }
     }

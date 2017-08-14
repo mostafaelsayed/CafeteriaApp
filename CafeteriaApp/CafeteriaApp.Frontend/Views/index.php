@@ -2,8 +2,8 @@
 // Include FB config file && User class
 require_once 'fbConfig.php';
 require_once 'fbUser.php';
-require_once("CafeteriaApp.Backend/functions.php");
-
+//require_once("CafeteriaApp.Backend/functions.php");
+GetACCESS ();
 if(isset($accessToken)){
     
     if(isset($_SESSION['facebook_access_token']))
@@ -28,9 +28,9 @@ if(isset($accessToken)){
     
 
     // Redirect the user back to the same page if url has "code" parameter in query string
-    if(isset($_GET['code'])){
+   /* if(isset($_GET['code'])){
         header('Location: ./');
-    }
+    }*/
     
 
     // Getting user facebook profile info
@@ -49,10 +49,17 @@ if(isset($accessToken)){
     catch(FacebookSDKException $e)
      {
         echo 'Facebook SDK returned an error: ' . $e->getMessage();
+          echo "\r\n";
+        echo $e->getCode();
+        echo "\r\n";
+        echo $e->getFile();
+          echo "\r\n";
+        echo $e->getLine();
         exit;
     }
     
     // Initialize User class
+   
     $user = new User();
     
     // Insert or update user data to the database
@@ -67,14 +74,14 @@ if(isset($accessToken)){
         'picture'       => $fbUserProfile['picture']['url'],
         'link'          => $fbUserProfile['link']
     );
-    
+
     $userData = $user->checkUser($fbUserData);
     
     // Put user data into session
     $_SESSION['userData'] = $userData;
-    $_SESSION["roleId"] =2;
+    //$_SESSION["roleId"] =2;
     // Get logout url
-    $logoutURL = $helper->getLogoutUrl($accessToken, 'fblogout.php'.'Views/fblogout.php');
+    $logoutURL = $helper->getLogoutUrl($accessToken, 'fblogout.php');
     
     // Render facebook profile data
     if(!empty($userData)){
@@ -91,7 +98,7 @@ if(isset($accessToken)){
 
         // $output .= '<br/>Logout from <a href="'.$logoutURL.'">Facebook</a>'; 
 
-       redirect_to(("/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php"));
+       //redirect_to(("/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php"));
     }
     else
     {
@@ -99,15 +106,16 @@ if(isset($accessToken)){
     }
     
 }
-else
-{
+//else
+//{
     // Get login url
-    $loginURL = $helper->getLoginUrl($redirectURL, $fbPermissions);// lazmet el 'redirectURL' eeh ??
-    
+     
+  
+   
     
     // Render facebook login button
     //$output = '<a href="'.htmlspecialchars($loginURL).'"><img src="images/fblogin-btn.png"></a>';
     // redirect_to(($loginURL));
-    header("Location:".$loginURL);
-}
+   // header("Location:".$loginURL);
+//}
 ?>

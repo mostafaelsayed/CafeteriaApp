@@ -8,13 +8,13 @@ function getAdditionsByCategoryId($conn,$id,$backend=false)
   {
     $additions = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-    $additions = json_encode($additions);
     if ($backend)
     { 
       return $additions;   
     }
     else
-    {
+    {   
+     $additions = json_encode($additions);
       echo $additions;
     }  
   }
@@ -32,13 +32,13 @@ function getAdditionById($conn,$id,$backend=false)
   {
     $additions = mysqli_fetch_assoc($result);
     mysqli_free_result($result);
-    $additions = json_encode($additions);
     if ($backend)
     { 
       return $additions;   
     }
     else
-    {
+    {    $additions = json_encode($additions);
+
       echo $additions;
     }
   }

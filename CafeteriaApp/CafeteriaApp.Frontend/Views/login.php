@@ -1,9 +1,11 @@
-<?php require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies 
- require_once("CafeteriaApp.Backend/connection.php");
- require_once("CafeteriaApp.Backend/functions.php");
- require_once("CafeteriaApp.Backend/validation_functions.php"); 
- require_once("CafeteriaApp.Backend/Controllers/Dates.php"); 
- require_once("CafeteriaApp.Backend/Controllers/Customer.php"); 
+<?php 
+require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies 
+require_once("CafeteriaApp.Backend/connection.php");
+require_once("CafeteriaApp.Backend/functions.php");
+require_once("CafeteriaApp.Backend/validation_functions.php"); 
+require_once("CafeteriaApp.Backend/Controllers/Dates.php"); 
+require_once("CafeteriaApp.Backend/Controllers/Customer.php"); 
+require_once 'fbConfig.php';
 
 
 if (isset($_POST['submit'])) { // check if the button 's been pressed
@@ -31,7 +33,7 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
       
       //get customer id by user id from db 
      $customer_id_json = getCustomerIdByUserId($conn ,$_SESSION["UserId"] ,true);
-      $_SESSION["customerId"] = json_decode($customer_id_json, true)["Id"];
+      $_SESSION["customerId"] = $customer_id_json["Id"];
      
     
       if(!getCurrentDateId($conn)) // make the server add it automatically
@@ -63,6 +65,7 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
 
 ?>
 
+  <link href="/CafeteriaApp.Frontend/css/errors.css" rel="stylesheet" type="text/css">
 
 <?php //include("../includes/layouts/header.php"); ?>
 <div id="main">
@@ -94,9 +97,14 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
     </form>
 <br>
 
- <a href="resetPassword.php" name="submit" />Forgot Password! </a>
 <div>
-<a href="index.php">
+ <a href="register.php" name="submit" />New User ! </a>
+ </div>
+ <a href="resetPassword.php" name="submit" />Forgot Password ! </a>
+<div>
+
+<?php  $loginURL = $helper->getLoginUrl($redirectURL, $fbPermissions);      ?>
+<a href="<?php echo htmlspecialchars($loginURL)  ?>">
      <button  class="btn waves-effect waves-light btn" type="submit" name="action">Facebook Login
                 <img src="icons/facebook.png" width="50px" height="50px" >
                  </button></a>

@@ -14,6 +14,9 @@ public $create="CREATE TABLE `mydb`.`User` (
  `PhoneNumber` VARCHAR(13) NOT NULL ,
  `RoleId` INT  NOT NULL ,
  PRIMARY KEY (`Id`) ,
+ UNIQUE KEY `UserName_UNIQUE` (`UserName`),
+  UNIQUE KEY `Email_UNIQUE` (`Email`),
+
   foreign key (RoleId) references `Role`(Id)
   )
  ENGINE = InnoDB; ";

@@ -14,13 +14,14 @@ function getByCafeteriaId($conn,$id,$backend=false)
     {
       $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      $categories = json_encode($categories);
       if ($backend)
       {
         return $categories;
       }
       else
       {
+      $categories = json_encode($categories);
+
         echo $categories;
       }
     }
@@ -45,13 +46,14 @@ function getCategoryById($conn,$id,$backend=false)
     {
       $category = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      $category = json_encode($category);
+      
       if ($backend)
       {
         return $category;
       }
       else
       {
+        $category = json_encode($category);
         echo $category;
       }  
     }

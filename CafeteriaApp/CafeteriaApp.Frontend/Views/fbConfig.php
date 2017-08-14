@@ -29,7 +29,8 @@ $fb = new Facebook(array(
 $helper = $fb->getRedirectLoginHelper();
 
 // Try to get access token
-try {
+
+  try {
     if(isset($_SESSION['facebook_access_token'])){
         $accessToken = $_SESSION['facebook_access_token'];
     }else{
@@ -39,8 +40,22 @@ try {
      echo 'Graph returned an error: ' . $e->getMessage();
       exit;
 } catch(FacebookSDKException $e) {
-    echo 'Facebook SDK returned an error: ' . $e->getMessage();
+     echo 'Facebook SDK returned an error: ' . $e->getMessage();
+    //  echo "\r\n";
+    //     echo $e->getCode();
+    //     echo "\r\n";
+    //     echo $e->getFile();
+    //       echo "\r\n";
+    //     echo $e->getLine();
+    //   echo "\r\n";
+  //     echo $e->getTraceAsString();  
+  //echo "<pre>";
+      //print_r($e->getTrace()) ; 
+      //echo "</pre>";
       exit;
 }
+ 
+
+
 
 ?>

@@ -8,13 +8,14 @@ function getLanguages($conn,$backend=false)
   {
     $languages = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-    $languages = json_encode($languages);
     if ($backend)
     { 
       return $languages;   
     }
     else
     {
+      $languages = json_encode($languages);
+
       echo $languages;
     }  
   }

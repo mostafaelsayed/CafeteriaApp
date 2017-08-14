@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD']=="GET")
 {
   if (isset($_GET["categoryId"]))
   {
-    getMenuItemByCategoryId($conn,$_GET["categoryId"]);
+    getMenuItemByCategoryId($conn,$_GET["categoryId"],false,true);
   }
   elseif (isset($_GET["id"]))
   {

@@ -1,8 +1,8 @@
 <?php 
  require_once("CafeteriaApp.Backend/functions.php");
 require_once( 'CafeteriaApp.Backend/Controllers/User.php');
-require_once("CafeteriaApp.Frontend/Views/PHPMailer/class.phpmailer.php");
-require_once("CafeteriaApp.Frontend/Views/PHPMailer/class.smtp.php");
+require 'CafeteriaApp.Frontend/Views/PHPMailer/PHPMailerAutoload.php';
+
 //require_once("CafeteriaApp.Frontend/Views/PHPMailer/Language/phpmailer.lang-en.php");
 
 
@@ -18,21 +18,28 @@ if(isset($_POST['mail']))
 		{
 		$pass =	randomPassword();
 		$hashed =password_encrypt($pass);
-		updateUserPassword($conn,$hashed,$_POST['mail']);
+		updateUserPasswordByEmail($conn,$hashed,$_POST['mail']);
 			//send the new password and store its hash
 
 		$mail =new PHPMailer();
-		$mail->FromName = "Cafetria App";
-		$mail->From = "mm_h424@yahoo.com";
-		$mail->AddAddress($_POST['mail'],"");
-		$mail->Subject= "Cafetria App Reset Password";
+
+		$mail->isSMTP();                                      // Set mailer to use SMTP
+		$mail->Host = "smtp.gmail.com";  // Specify main and backup SMTP servers
+		$mail->SMTPAuth = true;                               // Enable SMTP authentication
+		$mail->Username = 'mmhnabawy@gmail.com';                 // SMTP username
+		$mail->Password = 'mmhnabawy';                           // SMTP password
+		$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+		$mail->Port = 587;                                    // TCP port to connect to
+		$mail->setFrom ('mm_h424@yahoo.com', 'Cafetria App');
+		$mail->addAddress($_POST['mail'],"");
+		$mail->Subject = "Cafetria App Reset Password";
 		$mail->Body = "your new password is : ".$pass;
 		
 		$result =$mail->Send();
 
 		if($result)
 		{
-			redirect_to('/CafeteriaApp.Frontend/Views/login.php'); 
+			redirect_to('CafeteriaApp.Frontend/Views/login.php'); 
 		}
 		else
 		{echo "Error Occured while sending the new password !";

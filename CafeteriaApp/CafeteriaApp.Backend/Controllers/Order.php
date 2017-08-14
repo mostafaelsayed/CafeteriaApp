@@ -15,13 +15,14 @@ function getClosedOrdersByCustomerId($conn,$id,$backend=false)
     {
       $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      $orders = json_encode($orders);
       if ($backend)
       {
         return $orders;
       }
       else
       {
+      $orders = json_encode($orders);
+
         echo $orders;
       }
     }
@@ -47,13 +48,14 @@ function getOrderById($conn,$id,$backend=false)
     {
       $orders = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      $orders = json_encode($orders);
       if ($backend)
       {
         return $orders;
       }
       else
       {
+          $orders = json_encode($orders);
+    
         echo $orders;
       }
     }
@@ -73,13 +75,14 @@ function getOpenOrderByCustomerId($conn,$backend=false)
   {
     $order = mysqli_fetch_array($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-    $order = json_encode($order);
     if ($backend)
     {
       return $order;
     }
     else
     {
+     $order = json_encode($order);
+     
       echo $order;
     }
   }
@@ -129,13 +132,14 @@ function getOrdersByDeliveryDateId($conn,$id,$backend=false)
     {
       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      $orders = json_encode($orders);
       if ($backend)
       {
         return $orders;
       }
       else
       {
+         $orders = json_encode($orders);
+     
         echo $orders;
       }
     }
@@ -161,13 +165,14 @@ function getOrdersByDeliveryTimeId($conn,$id,$backend=false)
     {
       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      $orders = json_encode($orders);
       if ($backend)
       {
         return $orders;
       }
       else
       {
+        $orders = json_encode($orders);
+      
         echo $orders;
       }
     }
@@ -193,13 +198,14 @@ function getOrdersByOrderStatusId($conn,$id,$backend=false)
     {
       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      $orders = json_encode($orders);
       if ($backend)
       {
         return $orders;
       }
       else
       {
+      $orders = json_encode($orders);
+
         echo $orders;
       }
     }
@@ -225,13 +231,14 @@ function getOrdersByPaymentMethodId($conn,$id,$backend=false)
     {
       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      $orders = json_encode($orders);
       if ($backend)
       {
         return $orders;
       }
       else
       {
+        $orders = json_encode($orders);
+      
         echo $orders;
       }
     }

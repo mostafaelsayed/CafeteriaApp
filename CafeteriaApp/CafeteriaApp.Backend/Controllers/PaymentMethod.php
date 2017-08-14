@@ -8,13 +8,14 @@ function getPaymentMethods($conn,$backend=false)
   {
     $paymentMethods = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-    $paymentMethods = json_encode($paymentMethods);
     if ($backend)
     { 
       return $paymentMethods;   
     }
     else
     {
+       $paymentMethods = json_encode($paymentMethods);
+   
       echo $paymentMethods;
     }     
   }
@@ -39,13 +40,14 @@ function getPaymentMethodById($conn,$id,$backend=false)
     {
       $paymentMethods = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      $paymentMethods = json_encode($paymentMethods);
       if ($backend)
       { 
         return $paymentMethods;   
       }
       else
       {
+          $paymentMethods = json_encode($paymentMethods);
+    
         echo $paymentMethods;
       }   
     }

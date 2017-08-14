@@ -1,7 +1,7 @@
 <?php require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies 
  require_once("CafeteriaApp.Backend/functions.php"); 
  require_once("CafeteriaApp.Backend/validation_functions.php"); 
- require_once("CafeteriaApp.Frontend/Views/register2.php");?>
+ //require_once("CafeteriaApp.Frontend/Views/register2.php");?>
 
 <head>
     
@@ -24,6 +24,10 @@
             <script src="/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
         <!-- <script src= "/CafeteriaApp.Frontend/Scripts/myapp.js"></script> -->
         <script src= "/CafeteriaApp.Frontend/Views/register.js"></script>
+      <link href="/CafeteriaApp.Frontend/css/errors.css" rel="stylesheet" type="text/css">
+        <script src="/CafeteriaApp.Frontend/javascript/alertify.min.js"></script>
+
+
     </head>
     <body>
 <div id="main">
@@ -88,7 +92,7 @@
         <label  for="em">E-mail</label>
 
         <input id="em" type="text" name="email"  ng-model="email"   required/>
-        <span  ng-show=" myForm.$submitted && myForm.email.$invalid" >Email is required.</span>
+        <span id="emailConfirm" ng-show=" myForm.$submitted && myForm.email.$invalid" >Email is required.</span>
 
       </div>
 

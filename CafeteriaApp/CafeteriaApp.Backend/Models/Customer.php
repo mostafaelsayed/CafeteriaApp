@@ -11,7 +11,7 @@ class Customer
 	   `UserId` INT NOT NULL ,
 	   `GenderId` INT NOT NULL ,
 	    PRIMARY KEY (`Id`),
-foreign key (UserId) references `User`(Id),
+foreign key (UserId) references `User`(Id) ON DELETE CASCADE ,
 foreign key (GenderId) references `Gender`(Id) cascade ON DELETE CASCADE
 
 	)

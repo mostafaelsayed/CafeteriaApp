@@ -1,10 +1,15 @@
 <?php
+//result=getCommentsByMenuItemId();
+//if(result)
+ // echo json_encode(result);
+//else
+// redirect to fear the hacker
 
-function getCommentsByMenuItemId($conn,$id,$backend=false)
+ function getCommentsByMenuItemId($conn,$id)
 {
   if (!isset($id)) 
   {
-    echo "Error: MenuItem Id is not set";
+    //echo "Error: MenuItem Id is not set";//hacker
     return;
   }
   else
@@ -15,20 +20,13 @@ function getCommentsByMenuItemId($conn,$id,$backend=false)
     {
       $comments = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      $comments = json_encode($comments);
-      if ($backend)
-      { 
         return $comments;   
-      }
-      else
-      {
-        echo $comments;
-      }
     }
     else
-    {
-      echo "Error retrieving Comments: " . $conn->error;
+    { //server
+      echo "Error retrieving Comments: " . $conn->error;//developer
     }
+
   } 
 }
 
@@ -36,7 +34,7 @@ function getCommentById($conn,$id,$backend=false)
 {
   if (!isset($id)) 
   {
-    echo "Error: Comment Id is not set";
+   // echo "Error: Comment Id is not set";
     return;
   }
   else
@@ -47,13 +45,14 @@ function getCommentById($conn,$id,$backend=false)
     {
       $comments = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      $comments = json_encode($comments);
       if ($backend)
       { 
         return $comments;   
       }
       else
       {
+      $comments = json_encode($comments);
+
         echo $comments;
       }
     }
@@ -79,13 +78,14 @@ function getCommentsByCustomerId($conn,$id,$backend=false) // check in future if
     {
       $comments = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      $comments = json_encode($comments);
+      
       if ($backend)
       { 
         return $comments;   
       }
       else
       {
+        $comments = json_encode($comments);
         echo $comments;
       }
     }

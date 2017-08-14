@@ -10,13 +10,14 @@ function getCustomers($conn,$backend=false)
     $result = $conn->query($sql);
     $customers = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-    $customers = json_encode($customers);
     if ($backend)
     {
       return $customers;
     }
     else
     {
+    $customers = json_encode($customers);
+
       echo $customers;
     }
   }
@@ -40,13 +41,14 @@ function getCustomerById($conn ,$id,$backend=false)
     if ($result) {
       $customers = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      $customers = json_encode($customers);
       if ($backend)
       {
         return $customers;
       }
       else
       {
+      $customers = json_encode($customers);
+
         echo $customers;
       }
     }
@@ -76,13 +78,14 @@ function getCurrentCustomerinfoByUserId($conn,$backend=false)
     {
       $customer = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      $customer = json_encode($customer);
       if ($backend)
       {
         return $customer;
       }
       else
       {
+      $customer = json_encode($customer);
+
         echo $customer;
       }
     }
@@ -108,13 +111,14 @@ function getCustomerByUserId($conn,$userId,$backend=false)
     {
       $customer = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      $customer = json_encode($customer);
       if ($backend)
       {
         return $customer;
       }
       else
       {
+        $customer = json_encode($customer);
+
         echo $customer;
       }
     }
@@ -140,13 +144,14 @@ function getCustomerIdByUserId($conn,$userId,$backend=false)
     {
       $customer = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      $customer = json_encode($customer);
       if ($backend)
       {
         return $customer;
       }
       else
       {
+      $customer = json_encode($customer);
+
         echo $customer;
       }
     }

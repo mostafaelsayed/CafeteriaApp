@@ -8,13 +8,14 @@ function getOrderStatus($conn,$backend=false)
   {
     $OrderStatus = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-    $OrderStatus = json_encode($OrderStatus);
     if ($backend)
     { 
       return $OrderStatus;   
     }
     else
     {
+      $OrderStatus = json_encode($OrderStatus);
+    
       echo $OrderStatus;
     }  
   }
@@ -39,13 +40,14 @@ function getOrderStatusById($conn ,$id,$backend=false)
     {
       $OrderStatus = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      $OrderStatus = json_encode($OrderStatus);
       if ($backend)
       { 
         return $OrderStatus;   
       }
       else
       {
+    $OrderStatus = json_encode($OrderStatus);
+  
         echo $OrderStatus;
       }
     }
