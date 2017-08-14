@@ -1,6 +1,6 @@
 <?php
 
-function getDates($conn,$backend=false)
+function getDates($conn)
 {
   $sql = "select * from `Dates`";
   $result = $conn->query($sql);
@@ -8,16 +8,8 @@ function getDates($conn,$backend=false)
   {
     $dates = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-    if ($backend)
-    {
       return $dates;
-    }
-    else
-    {   
-     $dates = json_encode($dates);
-
-      echo $dates;
-    }
+   
   }
   else
   {
@@ -25,11 +17,11 @@ function getDates($conn,$backend=false)
   }
 }
 
-function getDateById($conn ,$id,$backend=false)
+function getDateById($conn ,$id)
 {
   if (!isset($id))
   {
-    echo "Error: Date id is not set";
+    //echo "Error: Date id is not set";
     return;
   }
   else
@@ -40,16 +32,8 @@ function getDateById($conn ,$id,$backend=false)
     {
       $Id = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      if($backend)
-      {
         return $Id;
-      }
-      else
-      {
-      $Id= json_encode($Id);
-
-        echo $Id;
-      }
+      
     }
     else
     {
@@ -58,11 +42,11 @@ function getDateById($conn ,$id,$backend=false)
   }
 }
 
-function getDateIdByDate($conn ,$value,$backend=false)
+function getDateIdByDate($conn ,$value)
 {
   if (!isset($value))
   {
-    echo "Error: Date value  is not set";
+    //echo "Error: Date value  is not set";
     return;
   }
   else
@@ -73,16 +57,8 @@ function getDateIdByDate($conn ,$value,$backend=false)
     {
       $date = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      if ($backend)
-      {
         return $date;
-      }
-      else
-      {
-      $date= json_encode($date);
-
-        echo $date;
-      }
+     
     }
     else
     {
@@ -90,6 +66,7 @@ function getDateIdByDate($conn ,$value,$backend=false)
     }
   }
 }
+
 
 function getCurrentDateId($conn) //CURDATE() mysql
 { 
@@ -119,7 +96,7 @@ function addDate($conn,$date) // check format of the input
 { 
   if (!isset($date))
   {
-    echo "Error: Date is not set";
+    //echo "Error: Date is not set";
     return;
   }
   else
@@ -130,7 +107,7 @@ function addDate($conn,$date) // check format of the input
     $Date = $date;
     if ($stmt->execute()===TRUE)
     {
-      echo "Date Added successfully";
+      return "Date Added successfully";
     }
     else
     {
@@ -139,7 +116,7 @@ function addDate($conn,$date) // check format of the input
   }
 }
 
-function addTodayDate($conn ,$backend=false) // check format of the input  // ************************************************
+function addTodayDate($conn) // check format of the input  // ************************************************
  //echo date("Y-m-d");;
 { 
   $today=date("Y-m-d");
@@ -149,14 +126,7 @@ function addTodayDate($conn ,$backend=false) // check format of the input  // **
   $Date = $today ;
   if ($stmt->execute()===TRUE)
   {
-    if ($backend)
-    {
       return true;
-    }
-    else
-    {
-      echo "Date Added successfully";
-    }
   }
   else
   {
@@ -168,12 +138,12 @@ function editDate($conn,$date,$id)
 {
   if (!isset($id))
   {
-    echo "Error: Id is not set";
+   // echo "Error: Id is not set";
     return;
   }
   elseif (!isset($date))
   {
-    echo "Error: Date is not set";
+    //echo "Error: Date is not set";
     return;
   }
   else
@@ -185,7 +155,7 @@ function editDate($conn,$date,$id)
     $Id = $id;
     if ($stmt->execute()===TRUE)
     {
-      echo "Date updated successfully";
+      return "Date updated successfully";
     }
     else
     {
@@ -198,7 +168,7 @@ function deleteDate($conn,$id)
 {
   if (!isset($id))
   {
-    echo "Error: Id is not set";
+    //echo "Error: Id is not set";
     return;
   }
   else
@@ -207,7 +177,7 @@ function deleteDate($conn,$id)
     $sql = "delete from Dates where Id = ".$id. " LIMIT 1";
     if ($conn->query($sql)===TRUE)
     {
-      echo "Date deleted successfully";
+      return "Date deleted successfully";
     }
     else
     {

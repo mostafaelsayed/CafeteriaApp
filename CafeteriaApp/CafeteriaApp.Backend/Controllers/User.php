@@ -2,7 +2,7 @@
 
 require_once('CafeteriaApp.Backend/Controllers/Customer.php');
 
-function getUsers($conn,$backend=false)
+function getUsers($conn)
 {  
   $sql = "select * from User";
   $result = $conn->query($sql);
@@ -10,16 +10,8 @@ function getUsers($conn,$backend=false)
   {
     $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-    if ($backend)
-    { 
       return $users;   
-    }
-    else
-    {
-         $users = json_encode($users);
- 
-      echo $users;
-    }
+    
   }
   else
   {
@@ -29,11 +21,11 @@ function getUsers($conn,$backend=false)
 
 
 
-function getUserById($conn,$id,$backend=false)
+function getUserById($conn,$id)
 {
   if (!isset($id)) 
   {
-    echo "Error: User Id is not set";
+    //echo "Error: User Id is not set";
     return;
   }
   else
@@ -44,16 +36,8 @@ function getUserById($conn,$id,$backend=false)
     {
       $user = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      if ($backend)
-      { 
         return $user;   
-      }
-      else
-      {
-      $user = json_encode($user);
-  
-        echo $user;
-      } 
+     
     }
     else
     {
@@ -64,13 +48,13 @@ function getUserById($conn,$id,$backend=false)
 
 function registerAdminUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password )
 {
-  if (checkExistingEmail($conn ,$email )) 
+  if (checkExistingEmail($conn ,$email ) || checkExistingUserName($conn ,$userName,true)) 
   {
-    echo "User Email already exists !";
+   return;
   }
-  elseif (checkExistingUserName($conn ,$userName,true))
+  elseif(!isset($firstName) ||!isset($lastName) || !isset($phoneNumber) || !isset($password))
   {
-    echo "User Name already exists !";
+  return;
   }
   else
   {
@@ -88,7 +72,7 @@ function registerAdminUser($conn,$userName,$firstName,$lastName,$image,$email,$p
     if ($stmt->execute()===TRUE)
     {
       $user_id =  mysqli_insert_id($conn);
-      echo "Admin User Added successfully !";
+      return "Admin User Added successfully !";
     }
     else
     {
@@ -99,14 +83,14 @@ function registerAdminUser($conn,$userName,$firstName,$lastName,$image,$email,$p
 
 function registerCashierUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password )
 {
-  if (checkExistingEmail($conn ,$email)) 
+  if (checkExistingEmail($conn ,$email ) || checkExistingUserName($conn ,$userName,true)) 
   {
-    echo "User Email already exists !";
+   return;
   }
-  elseif (checkExistingUserName($conn ,$userName,true))
+  elseif(!isset($firstName) ||!isset($lastName) || !isset($phoneNumber) || !isset($password))
   {
-    echo "User Name already exists !";
-  } 
+  return;
+  }
   else
   {
     $sql = "insert into User (UserName , FirstName , LastName , Image , Email , PhoneNumber , PasswordHash, RoleId) values (?,?,?,?,?,?,?,?)";
@@ -123,7 +107,7 @@ function registerCashierUser($conn,$userName,$firstName,$lastName,$image,$email,
     if ($stmt->execute()===TRUE)
     {
       $user_id =  mysqli_insert_id($conn);
-      echo "Cashier User Added successfully !";
+      return "Cashier User Added successfully !";
     }
     else
     {
@@ -135,17 +119,16 @@ function registerCashierUser($conn,$userName,$firstName,$lastName,$image,$email,
 
 
 function registerCustomerUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password,$dob,$genderId ) {
-   if(checkExistingEmail($conn ,$email )) 
- { echo "User Email already exists !";
+   if (checkExistingEmail($conn ,$email ) || checkExistingUserName($conn ,$userName,true)) 
+  {
+   return;
+  }
+  elseif(!isset($firstName) ||!isset($lastName) || !isset($phoneNumber) || !isset($password) || !isset($dob) || !isset($genderId))
+  {
   return;
   }
-  elseif (checkExistingUserName($conn ,$userName,true))
+  else
   {
-    echo "User Name already exists !";
-    return;
-  }
-else
-{
   $sql = "insert into User (UserName , FirstName , LastName , Image , Email , PhoneNumber , PasswordHash, RoleId) values (?,?,?,?,?,?,?,?)";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("sssssssi",$UserName,$FirstName,$LastName,$Image,$Email,$PhoneNumber,$Password,$RoleId);
@@ -165,12 +148,10 @@ else
 
     if(addCustomer($conn,0.0,$dob,$user_id,$genderId))
       {
-        //echo "Customer User Added successfully !";
         return true;
       }
       else
       {
-        //echo "Error: failed to create a Customer user !";
         return false;
       }
     }
@@ -186,13 +167,13 @@ else
 
 function editCustomerUser($conn,$userName,$image,$phoneNumber,$password ,$id )
 {
-  if(checkExistingEmail($conn ,$email )) 
+   if ( checkExistingUserName($conn ,$userName,true)) 
   {
-    echo "User Email already exists !";
+   return;
   }
-  elseif (checkExistingUserName($conn ,$userName,false))
+  elseif(!isset($phoneNumber) || !isset($password) || !isset($image))
   {
-    echo "User Name already exists !";
+  return;
   }
   else
   {
@@ -206,7 +187,7 @@ function editCustomerUser($conn,$userName,$image,$phoneNumber,$password ,$id )
     $Id=$id;
     if ($stmt->execute()===TRUE)
     {
-      echo "User updated successfully";
+      return "User updated successfully";
     }
     else
     {
@@ -218,9 +199,9 @@ function editCustomerUser($conn,$userName,$image,$phoneNumber,$password ,$id )
 
 function updateUserPasswordByEmail($conn,$password ,$email)
 {
-  if(empty($password)) 
+  if( !isset($password) || !isset($email)) 
   {
-    echo "User password is empty !";
+    //echo "User password is empty !";
     return;
   }
   else
@@ -232,7 +213,7 @@ function updateUserPasswordByEmail($conn,$password ,$email)
     $Password=$password;
     if ($stmt->execute()===TRUE)
     {
-      //echo "User updated successfully";
+      return "User updated successfully";
     }
     else
     {
@@ -243,9 +224,9 @@ function updateUserPasswordByEmail($conn,$password ,$email)
 
 function updateUserPasswordById($conn,$password ,$id)
 {
-  if(empty($password)) 
+   if( !isset($password) || !isset($id)) 
   {
-    echo "User password is empty !";
+    //echo "User password is empty !";
     return;
   }
   else
@@ -257,7 +238,7 @@ function updateUserPasswordById($conn,$password ,$id)
     $Password=$password;
     if ($stmt->execute()===TRUE)
     {
-      //echo "User updated successfully";
+      return "User updated successfully";
     }
     else
     {
@@ -323,7 +304,7 @@ function deleteUser($conn,$id) // cascaded delete ??
 { 
   if (!isset($id))
   {
-    echo "Error: Id is not set";
+    //echo "Error: Id is not set";
     return;
   }
   else
@@ -332,7 +313,7 @@ function deleteUser($conn,$id) // cascaded delete ??
     $sql = "delete from User where Id = ".$id . " LIMIT 1";
     if ($conn->query($sql)===TRUE)
     {
-      echo "User deleted successfully";
+      return "User deleted successfully";
     }
     else
     {

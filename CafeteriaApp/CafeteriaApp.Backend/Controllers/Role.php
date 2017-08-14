@@ -1,6 +1,6 @@
 <?php
 
-function getRoles($conn,$backend=false)
+function getRoles($conn)
 {
   $sql = "select * from Role";
   $result = $conn->query($sql);
@@ -8,16 +8,7 @@ function getRoles($conn,$backend=false)
   {
     $roles = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-    if ($backend)
-    { 
       return $roles;   
-    }
-    else
-    {
-    $roles = json_encode($roles);
- 
-      echo $roles;
-    }
   }
   else
   {
@@ -25,11 +16,11 @@ function getRoles($conn,$backend=false)
   }
 }
 
-function getRoleById($conn,$id,$backend=false)
+function getRoleById($conn,$id)
 {
   if (!isset($id)) 
   {
-    echo "Error: Role Id is not set";
+    //echo "Error: Role Id is not set";
     return;
   }
   else
@@ -40,16 +31,8 @@ function getRoleById($conn,$id,$backend=false)
     {
       $roles = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      if ($backend)
-      { 
         return $roles;   
-      }
-      else
-      {
-          $roles = json_encode($roles);
-    
-        echo $roles;
-      }
+      
     }
     else
     {
@@ -62,7 +45,7 @@ function getDirIdByRoleId($conn,$id,$backend=false)
 {
   if (!isset($id)) 
   {
-    echo "Error: Role Id is not set";
+    //echo "Error: Role Id is not set";
     return;
   }
   else
@@ -73,16 +56,8 @@ function getDirIdByRoleId($conn,$id,$backend=false)
     {
       $roles = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      if ($backend)
-      { 
         return $roles;   
-      }
-      else
-      {
-          $roles = json_encode($roles);
-    
-        echo $roles;
-      } 
+      
     }
     else
     {
@@ -91,11 +66,11 @@ function getDirIdByRoleId($conn,$id,$backend=false)
   }
 }
 
-function getDirById($conn,$id,$backend=false)
+function getDirById($conn,$id)
 {
   if (!isset($id)) 
   {
-    echo "Error: Role Id is not set";
+    //echo "Error: Role Id is not set";
     return;
   }
   else
@@ -106,16 +81,8 @@ function getDirById($conn,$id,$backend=false)
     {
       $roles = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      if ($backend)
-      { 
         return $roles;   
-      }
-      else
-      {
-          $roles = json_encode($roles);
-    
-        echo $roles;
-      } 
+      
     }
     else
     {
@@ -128,7 +95,7 @@ function addRole($conn,$name)
 {
   if (!isset($name)) 
   {
-    echo "Error: Role name is not set";
+    //echo "Error: Role name is not set";
     return;
   }
   else
@@ -139,7 +106,7 @@ function addRole($conn,$name)
     $Name = $name;
     if ($stmt->execute()===TRUE)
     {
-      echo "Role Added successfully";
+      return "Role Added successfully";
     }
     else
     {
@@ -152,12 +119,12 @@ function addDir($conn,$name,$path)
 {
   if( !isset($name)) 
   {
-    echo "Error: Dir name is not set";
+   // echo "Error: Dir name is not set";
     return;
   }
   elseif (!isset($path)) 
   {
-    echo "Error: Dir path is not set";
+    //echo "Error: Dir path is not set";
     return;
   }
   else
@@ -169,7 +136,7 @@ function addDir($conn,$name,$path)
     $Path = $path;
     if ($stmt->execute()===TRUE)
     {
-      echo "Dir name and path added successfully";
+      return "Dir name and path added successfully";
     }
     else
     {
@@ -182,12 +149,12 @@ function addRoleForDir($conn,$roleId,$dirId)
 {
   if (!isset($roleId))
   {
-    echo "Error: Role Id is not set";
+    //echo "Error: Role Id is not set";
     return;
   }
   elseif (!isset($dirId)) 
   {
-    echo "Error: Dir Id is not set";
+    //echo "Error: Dir Id is not set";
     return;
   }
   else
@@ -199,7 +166,7 @@ function addRoleForDir($conn,$roleId,$dirId)
     $RoleId = $roleId;
     if ($stmt->execute()===TRUE)
     {
-      echo "Role and Dir added successfully";
+      return "Role and Dir added successfully";
     }
     else
     {
@@ -212,12 +179,12 @@ function editRole($conn,$name,$id)
 {
   if (!isset($name)) 
   {
-    echo "Error: Role name is not set";
+    //echo "Error: Role name is not set";
     return;
   }
   elseif (!isset($id))
   {
-    echo "Error: Role id is not set";
+   // echo "Error: Role id is not set";
     return;
   }
   else
@@ -229,7 +196,7 @@ function editRole($conn,$name,$id)
     $Id = $id;
     if ($stmt->execute()===TRUE)
     {
-      echo "Role updated successfully";
+      return "Role updated successfully";
     }
     else
     {
@@ -242,7 +209,7 @@ function deleteRole($conn,$id) // cascaded delete ??
 { 
   if (!isset($id))
   {
-    echo "Error: Id is not set";
+    //echo "Error: Id is not set";
     return;
   }
   else
@@ -251,7 +218,7 @@ function deleteRole($conn,$id) // cascaded delete ??
     $sql = "delete from Role where Id = ".$id . " LIMIT 1";
     if ($conn->query($sql)===TRUE)
     {
-      echo "Role deleted successfully";
+      return "Role deleted successfully";
     }
     else
     {

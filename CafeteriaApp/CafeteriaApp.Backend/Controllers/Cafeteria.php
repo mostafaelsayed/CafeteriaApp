@@ -1,21 +1,14 @@
 <?php
 
-function getCafeterias($conn,$backend=false)
+function getCafeterias($conn)
 {
   $sql = "select * from Cafeteria";
   if ($result = $conn->query($sql))
   {
     $cafeterias = mysqli_fetch_all($result, MYSQLI_ASSOC); // ??
     mysqli_free_result($result);
-    if ($backend)
-    {
       return $cafeterias;
-    }
-    else
-    {    $cafeterias = json_encode($cafeterias); // ??
-
-      echo $cafeterias;
-    }
+    
   }
   else
   {
@@ -23,8 +16,14 @@ function getCafeterias($conn,$backend=false)
   }
 }
 
-function getCafeteriaById($conn ,$id,$backend=false)
-{
+
+function getCafeteriaById($conn ,$id)
+{if (!isset($id)) 
+  {
+    return;
+  }
+  else
+  {
   $sql = "select * from Cafeteria where Id =".$id." LIMIT 1";
   if ($result = $conn->query($sql))
   {
@@ -46,12 +45,13 @@ function getCafeteriaById($conn ,$id,$backend=false)
     echo "Error retrieving Cafeteria : " . $conn->error;
   }
 }
+}
 
-function addCafeteria($conn,$name,$imageData = null)
+function addCafeteria($conn,$name,$imageData = null) // if image null ?????? 
 {
-  if (!isset($name))
+  if (!isset($name)) //deal with the hacker
   {
-    echo "Error: Name is not set";
+    //echo "Error: Name is not set";
     return;
   }
 
@@ -80,7 +80,7 @@ function addCafeteria($conn,$name,$imageData = null)
 
     if ($stmt->execute()===TRUE)
     {
-      echo "Cafeteria Added successfully";
+      return "Cafeteria Added successfully";
     }
     else
     {
@@ -91,14 +91,9 @@ function addCafeteria($conn,$name,$imageData = null)
 
 function editCafeteria($conn,$name,$id,$imageData = null)
 {
-  if(!isset($name))
+  if(!isset($name) || !isset($id))
   {
-    echo "Error: Name is not set";
-    return;
-  }
-  elseif (!isset($id))
-  {
-    echo "Error: Id is not set";
+   // echo "Error: Name is not set";
     return;
   }
   else
@@ -136,7 +131,7 @@ function editCafeteria($conn,$name,$id,$imageData = null)
 
     if ($stmt->execute()===TRUE)
     {
-      echo "Cafeteria updated successfully";
+      return "Cafeteria updated successfully";
     }
     else
     {
@@ -149,7 +144,7 @@ function deleteCafeteria($conn,$id)
 {
   if (!isset($id))
   {
-    echo "Error: Id is not set";
+    //echo "Error: Id is not set";
     return;
   }
   else
@@ -167,7 +162,7 @@ function deleteCafeteria($conn,$id)
     $sql = "delete from cafeteria where Id = ".$id." LIMIT 1";
     if ($conn->query($sql)===TRUE)
     {
-      echo "Cafeteria deleted successfully";
+      return "Cafeteria deleted successfully";
     }
     else
     {

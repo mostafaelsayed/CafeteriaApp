@@ -1,6 +1,6 @@
 <?php
 
-function getPaymentMethods($conn,$backend=false)
+function getPaymentMethods($conn)
 {  
   $sql = "select * from PaymentMethod";
   $result = $conn->query($sql);
@@ -8,16 +8,8 @@ function getPaymentMethods($conn,$backend=false)
   {
     $paymentMethods = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-    if ($backend)
-    { 
       return $paymentMethods;   
-    }
-    else
-    {
-       $paymentMethods = json_encode($paymentMethods);
-   
-      echo $paymentMethods;
-    }     
+    
   }
   else
   {
@@ -25,11 +17,11 @@ function getPaymentMethods($conn,$backend=false)
   }
 }
 
-function getPaymentMethodById($conn,$id,$backend=false)
+function getPaymentMethodById($conn,$id)
 {
   if (!isset($id)) 
   {
-    echo "Error: PaymentMethod Id is not set";
+    //echo "Error: PaymentMethod Id is not set";
     return;
   }
   else
@@ -40,16 +32,8 @@ function getPaymentMethodById($conn,$id,$backend=false)
     {
       $paymentMethods = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      if ($backend)
-      { 
         return $paymentMethods;   
-      }
-      else
-      {
-          $paymentMethods = json_encode($paymentMethods);
-    
-        echo $paymentMethods;
-      }   
+     
     }
     else
     {
@@ -62,7 +46,7 @@ function addPaymentMethod($conn,$name)
 {
   if (!isset($name)) 
   {
-    echo "Error: PaymentMethod name is not set";
+    //echo "Error: PaymentMethod name is not set";
     return;
   }
   else
@@ -73,7 +57,7 @@ function addPaymentMethod($conn,$name)
     $Name = $name;
     if ($stmt->execute()===TRUE)
     {
-      echo "PaymentMethod Added successfully";
+      return "PaymentMethod Added successfully";
     }
     else
     {
@@ -86,12 +70,12 @@ function editPaymentMethod($conn,$name,$id)
 {
   if (!isset($name)) 
   {
-    echo "Error: PaymentMethod name is not set";
+    //echo "Error: PaymentMethod name is not set";
     return;
   }
   elseif (!isset($id))
   {
-    echo "Error: PaymentMethod id is not set";
+    //echo "Error: PaymentMethod id is not set";
     return;
   }
   else
@@ -103,7 +87,7 @@ function editPaymentMethod($conn,$name,$id)
     $Id = $id;
     if ($stmt->execute()===TRUE)
     {
-      echo "PaymentMethod updated successfully";
+      return "PaymentMethod updated successfully";
     }
     else
     {
@@ -116,7 +100,7 @@ function deletePaymentMethod($conn,$id)
 {
   if (!isset($id))
   {
-    echo "Error: Id is not set";
+    //echo "Error: Id is not set";
     return;
   }
   else
@@ -125,7 +109,7 @@ function deletePaymentMethod($conn,$id)
     $sql = "delete from PaymentMethod where Id = ".$id . " LIMIT 1";
     if ($conn->query($sql)===TRUE)
     {
-      echo "PaymentMethod deleted successfully";
+      return "PaymentMethod deleted successfully";
     }
     else
     {

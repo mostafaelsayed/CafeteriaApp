@@ -6,11 +6,11 @@ require_once('CafeteriaApp.Backend/Controllers/Times.php');
 require_once('CafeteriaApp.Backend/Controllers/Dates.php');
 require_once('CafeteriaApp.Backend/Controllers/MenuItem.php');
 
-function getOrderItemsByClosedOrderId($conn,$id,$backend=false)
+function getOrderItemsByClosedOrderId($conn,$id)
 {
   if (!isset($id))
   {
-    echo "Error: Order Id is not set";
+    //echo "Error: Order Id is not set";
     return;
   }
   else
@@ -21,16 +21,8 @@ function getOrderItemsByClosedOrderId($conn,$id,$backend=false)
     {
       $orderItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      if ($backend)
-      {
         return $orderItems;
-      }
-      else
-      {
-   $orderItems = json_encode($orderItems);
-
-        echo $orderItems;
-      }
+      
     }
     else
     {
@@ -39,11 +31,11 @@ function getOrderItemsByClosedOrderId($conn,$id,$backend=false)
   }
 }
 
-function getOrderItemsByOpenOrderId($conn,$id,$backend=false)
+function getOrderItemsByOpenOrderId($conn,$id)
 {
   if (!isset($id))
   {
-    echo "Error: Order Id is not set";
+    //echo "Error: Order Id is not set";
     return;
   }
   else
@@ -54,16 +46,8 @@ function getOrderItemsByOpenOrderId($conn,$id,$backend=false)
     {
       $orderItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      if ($backend)
-      {
         return $orderItems;
-      }
-      else
-      {
-      $orderItems = json_encode($orderItems);
-    
-        echo $orderItems;
-      }
+      
     }
     else
     {
@@ -72,11 +56,11 @@ function getOrderItemsByOpenOrderId($conn,$id,$backend=false)
   }
 }
 
-function getOrderItemById($conn,$id,$backend=false)
+function getOrderItemById($conn,$id)
 {
   if (!isset($id))
   {
-    echo "Error: OrderItem Id is not set";
+    //echo "Error: OrderItem Id is not set";
     return;
   }
   else
@@ -87,16 +71,8 @@ function getOrderItemById($conn,$id,$backend=false)
     {
       $orderItem = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      if ($backend)
-      {
-        return $orderItem;
-      }
-      else
-      {
-         $orderItem = json_encode($orderItem);
+    return $orderItem;
      
-        echo $orderItem;
-      }
     }
     else
     {
@@ -109,7 +85,7 @@ function getOrderItemTotalPriceById($conn , $id)
 {
   if( !isset($id))
   {
-    echo "Error:MenuItem Id is not set";
+    //echo "Error:MenuItem Id is not set";
     return;
   }
   else
@@ -128,16 +104,16 @@ function getOrderItemTotalPriceById($conn , $id)
   }
 }
 
-function editOrderItemQuantity($conn,$quantity,$id,$increaseDecrease) //**************************** update oreder Total
+function editOrderItemQuantity($conn,$quantity,$id,$increaseDecrease) 
 {
   if (!isset($quantity))
   {
-    echo "Error: OrderItem quantity is not set";
+    //echo "Error: OrderItem quantity is not set";
     return;
   }
   elseif (!isset($id))
   {
-    echo "Error: OrderItem id is not set";
+    //echo "Error: OrderItem id is not set";
     return;
   }
   else
@@ -155,7 +131,7 @@ function editOrderItemQuantity($conn,$quantity,$id,$increaseDecrease) //********
     $Id = $id;
     if ($stmt->execute()===TRUE)
     {
-      echo "OrderItem updated successfully";
+      return "OrderItem updated successfully";
     }
     else
     {
@@ -168,12 +144,12 @@ function addOrderItem($conn,$orderId,$menuItemId,$quantity)
 {
   if (!isset($menuItemId))
   {
-    echo "Error: OrderItem menuItemId is not set";
+    //echo "Error: OrderItem menuItemId is not set";
     return;
   }
   elseif (!isset($quantity))
   {
-    echo "Error: OrderItem quantity is not set";
+    //echo "Error: OrderItem quantity is not set";
     return;
   }
   $unitPrice =getMenuItemPriceById($conn,$menuItemId);
@@ -228,7 +204,7 @@ function addOrderItem($conn,$orderId,$menuItemId,$quantity)
 function deleteOrderItem($conn,$id) {// remove TotalPrice to total of the order
  if (!isset($id))
   {
-     echo "Error: Id is not set";
+    // echo "Error: Id is not set";
     return;
   }
   else
@@ -239,7 +215,7 @@ function deleteOrderItem($conn,$id) {// remove TotalPrice to total of the order
     $sql = "delete from OrderItem where Id = ".$id . " LIMIT 1";
     if ($conn->query($sql)===TRUE )
     {
-      echo "Order Item deleted successfully";
+      return "Order Item deleted successfully";
     }
     else
     {

@@ -1,7 +1,7 @@
 <?php 
 require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies
 
-function getCustomers($conn,$backend=false)
+function getCustomers($conn)
 {
   $sql = "select * from Customer";
   $result = $conn->query($sql);
@@ -10,16 +10,8 @@ function getCustomers($conn,$backend=false)
     $result = $conn->query($sql);
     $customers = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-    if ($backend)
-    {
       return $customers;
-    }
-    else
-    {
-    $customers = json_encode($customers);
-
-      echo $customers;
-    }
+    
   }
   else
   {
@@ -27,11 +19,11 @@ function getCustomers($conn,$backend=false)
   }
 }
 
-function getCustomerById($conn ,$id,$backend=false)
+function getCustomerById($conn ,$id)
 {
   if (!isset($id))
   {
-    echo "Error: Customer Id is not set";
+    //echo "Error: Customer Id is not set";
     return;
   }
   else
@@ -41,16 +33,8 @@ function getCustomerById($conn ,$id,$backend=false)
     if ($result) {
       $customers = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      if ($backend)
-      {
         return $customers;
-      }
-      else
-      {
-      $customers = json_encode($customers);
-
-        echo $customers;
-      }
+     
     }
     else
     {
@@ -59,7 +43,7 @@ function getCustomerById($conn ,$id,$backend=false)
   }
 }
 
-function getCurrentCustomerinfoByUserId($conn,$backend=false)
+function getCurrentCustomerinfoByUserId($conn)
 {
   if (isset($_SESSION["UserId"]))
   {
@@ -67,7 +51,7 @@ function getCurrentCustomerinfoByUserId($conn,$backend=false)
   }
   if (!isset($userId))
   {
-    echo "Error: User Id is not set";
+    //echo "Error: User Id is not set";
     return;
   }
   else
@@ -78,16 +62,7 @@ function getCurrentCustomerinfoByUserId($conn,$backend=false)
     {
       $customer = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      if ($backend)
-      {
         return $customer;
-      }
-      else
-      {
-      $customer = json_encode($customer);
-
-        echo $customer;
-      }
     }
     else
     {
@@ -96,11 +71,11 @@ function getCurrentCustomerinfoByUserId($conn,$backend=false)
   }
 }
 
-function getCustomerByUserId($conn,$userId,$backend=false)
+function getCustomerByUserId($conn,$userId)
 {
   if (!isset($userId))
   {
-    echo "Error: User Id is not set";
+    //echo "Error: User Id is not set";
     return;
   }
   else
@@ -111,16 +86,8 @@ function getCustomerByUserId($conn,$userId,$backend=false)
     {
       $customer = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      if ($backend)
-      {
         return $customer;
-      }
-      else
-      {
-        $customer = json_encode($customer);
-
-        echo $customer;
-      }
+      
     }
     else
     {
@@ -129,7 +96,8 @@ function getCustomerByUserId($conn,$userId,$backend=false)
   }
 }
 
-function getCustomerIdByUserId($conn,$userId,$backend=false)
+
+function getCustomerIdByUserId($conn,$userId)
 {
   if (!isset($userId))
   {
@@ -144,16 +112,8 @@ function getCustomerIdByUserId($conn,$userId,$backend=false)
     {
       $customer = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      if ($backend)
-      {
+     
         return $customer;
-      }
-      else
-      {
-      $customer = json_encode($customer);
-
-        echo $customer;
-      }
     }
     else
     {
@@ -165,13 +125,9 @@ function getCustomerIdByUserId($conn,$userId,$backend=false)
 
 
 function addCustomer($conn,$cred,$dob,$userId,$genderId) {
-   if( !isset($cred))
+   if( !isset($cred) || !isset($dob) || !isset($userId)  || !isset($genderId))
  {
- echo "Error: Credit is not set";
-  return;
-  }
-elseif (!isset($userId)) {
- echo "Error: User Id is not set";
+ //echo "Error: Credit is not set";
   return;
   }
   else {
@@ -195,11 +151,11 @@ elseif (!isset($userId)) {
 function editCustomerCredit($conn,$cred,$userId) {
   if( !isset($cred))
  {
- echo "Error: Credit is not set";
+ //echo "Error: Credit is not set";
   return;
   }
 elseif (!isset($userId)) {
- echo "Error: User Id is not set";
+ //echo "Error: User Id is not set";
   return;
   }
   else {
@@ -210,7 +166,7 @@ elseif (!isset($userId)) {
   $UserId = $userId;
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
-    echo "Customer Credit updated successfully";
+    return "Customer Credit updated successfully";
   }
   else {
     echo "Error: ".$conn->error;

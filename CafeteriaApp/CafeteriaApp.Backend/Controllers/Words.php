@@ -1,6 +1,6 @@
 <?php
 
-function getWords($conn,$backend=false)
+function getWords($conn)
 {
   $sql = "select * from Words ";
   $result = $conn->query($sql);
@@ -8,15 +8,9 @@ function getWords($conn,$backend=false)
   {
     $words = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-    
-    if ($backend)
-    { 
+     
       return $words;   
-    }
-    else
-    {$words = json_encode($words);
-      echo $words;
-    }  
+
   }
   else
   {
@@ -33,7 +27,7 @@ function addWord($conn,$name)
   $Name = $name;
   if ($stmt->execute()===TRUE)
   {
-    echo "Word Added successfully";
+    return "Word Added successfully";
   }
   else
   {
@@ -50,7 +44,7 @@ function editWord($conn,$name,$id)
   $Id = $id;
   if ($stmt->execute()===TRUE)
   {
-    echo "Word updated successfully";
+    return "Word updated successfully";
   }
   else
   {
@@ -62,7 +56,7 @@ function deleteWord($conn,$id) // drop the colun also ???????
 {
   if (!isset($id))
   {
-    echo "Error: Id is not set";
+    //echo "Error: Id is not set";
     return;
   }
   else
@@ -71,7 +65,7 @@ function deleteWord($conn,$id) // drop the colun also ???????
     $sql = "delete from Words where Id = ".$id . " LIMIT 1";
     if ($conn->query($sql)===TRUE)
     {
-      echo "Word deleted successfully";
+      return "Word deleted successfully";
     }
     else
     {

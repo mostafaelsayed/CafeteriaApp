@@ -1,6 +1,6 @@
 <?php
 
-function getLanguages($conn,$backend=false)
+function getLanguages($conn)
 {
   $sql = "select * from Languages ";
   $result = $conn->query($sql);
@@ -8,16 +8,7 @@ function getLanguages($conn,$backend=false)
   {
     $languages = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-    if ($backend)
-    { 
       return $languages;   
-    }
-    else
-    {
-      $languages = json_encode($languages);
-
-      echo $languages;
-    }  
   }
   else
   {
@@ -27,23 +18,36 @@ function getLanguages($conn,$backend=false)
 
 
 function addLanguage($conn,$name)
-{
+{ if (!isset($name))
+  {
+    //echo "Error: Customer Id is not set";
+    return;
+  }
+  else
+  {
   $sql = "insert into Languages (Name) values (?)";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("s",$Name);
   $Name = $name;
   if ($stmt->execute()===TRUE)
   {
-    echo "Language Added successfully";
+    return "Language Added successfully";
   }
   else
   {
     echo "Error: ".$conn->error;
   }
 }
+}
 
 function editLanguage($conn,$name,$id)
-{
+{ if (!isset($name) ||!isset($id))
+  {
+    //echo "Error: Customer Id is not set";
+    return;
+  }
+  else
+  {
   $sql = "update Languages set Name = (?) , where Id = (?)";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("si",$Name,$Id);
@@ -51,19 +55,19 @@ function editLanguage($conn,$name,$id)
   $Id = $id;
   if ($stmt->execute()===TRUE)
   {
-    echo "Language updated successfully";
+    return "Language updated successfully";
   }
   else
   {
     echo "Error: ".$conn->error;
   }
-}
+}}
 
 function deleteLanguage($conn,$id) // drop the colun also ???????
 {
   if (!isset($id))
   {
-    echo "Error: Id is not set";
+    //echo "Error: Id is not set";
     return;
   }
   else
@@ -72,7 +76,7 @@ function deleteLanguage($conn,$id) // drop the colun also ???????
     $sql = "delete from Languages where Id = ".$id . " LIMIT 1";
     if ($conn->query($sql)===TRUE)
     {
-      echo "Language deleted successfully";
+      return "Language deleted successfully";
     }
     else
     {

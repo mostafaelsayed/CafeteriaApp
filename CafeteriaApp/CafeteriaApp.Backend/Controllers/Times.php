@@ -1,6 +1,6 @@
 <?php
 
-function getTimes($conn,$backend=false)
+function getTimes($conn)
 {
   $sql = "select * from Times";
   $result = $conn->query($sql);
@@ -8,16 +8,8 @@ function getTimes($conn,$backend=false)
   {
     $times = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-    if ($backend)
-    {
       return $times;
-    }
-    else
-    {
-    $times = json_encode($times);
-
-      echo $times;
-    }
+   
   }
   else
   {
@@ -25,7 +17,7 @@ function getTimes($conn,$backend=false)
   }
 }
 
-function getTimeById($conn,$id,$backend=false)
+function getTimeById($conn,$id)
 {
   if (!isset($id))
   {
@@ -40,16 +32,8 @@ function getTimeById($conn,$id,$backend=false)
     {
       $times = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      if ($backend)
-      {
         return $times;
-      }
-      else
-      {
-      $times = json_encode($times);
-  
-        echo $times;
-      }
+      
     }
     else
     {
@@ -104,7 +88,7 @@ function deleteTime($conn,$id)
     $sql = "delete from Times where Id = ".$id. " LIMIT 1";
     if ($conn->query($sql)===TRUE)
     {
-      echo "Time deleted successfully";
+      return "Time deleted successfully";
     }
     else
     {

@@ -1,10 +1,10 @@
 <?php
 
-function getFavoriteItemsByCustomerId($conn,$Cid,$backend=false)
+function getFavoriteItemsByCustomerId($conn,$Cid)
 {
   if (!isset($Cid)) 
   {
-    echo "Error: Customer Id is not set";
+    //echo "Error: Customer Id is not set";
     return;
   }
   else
@@ -15,16 +15,8 @@ function getFavoriteItemsByCustomerId($conn,$Cid,$backend=false)
     {
       $favoriteItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      if ($backend)
-      { 
         return $favoriteItems;   
-      }
-      else
-      {
-      $favoriteItems = json_encode($favoriteItems);
-
-        echo $favoriteItems;
-      }
+   
     }
     else
     {
@@ -33,11 +25,11 @@ function getFavoriteItemsByCustomerId($conn,$Cid,$backend=false)
   }
 }
 
-function getFavoriteItemById($conn,$id,$backend=false)
+function getFavoriteItemById($conn,$id)
 {
   if (!isset($id)) 
   {
-    echo "Error: FavoriteItem Id is not set";
+    //echo "Error: FavoriteItem Id is not set";
     return;
   }
   else
@@ -47,17 +39,9 @@ function getFavoriteItemById($conn,$id,$backend=false)
     if ($result)
     {
       $favoriteItems = mysqli_fetch_assoc($result);
-      mysqli_free_result($result);
-      if ($backend)
-      { 
+      mysqli_free_result($result); 
         return $favoriteItems;   
-      }
-      else
-      {
-      $favoriteItems = json_encode($favoriteItems);
-
-        echo $favoriteItems;
-      }  
+      
     }
     else
     {
@@ -70,12 +54,12 @@ function addFavoriteItem($conn,$Cid,$Mid)
 {
   if (!isset($Cid))
   {
-    echo "Error: Customer Id is not set";
+    //echo "Error: Customer Id is not set";
     return;
   }
   elseif (!isset($Mid))
   {
-    echo "Error: MenuItem Id is not set";
+   // echo "Error: MenuItem Id is not set";
     return;
   }
   else
@@ -87,7 +71,7 @@ function addFavoriteItem($conn,$Cid,$Mid)
     $MenuItemId=$Mid;
     if ($stmt->execute()===TRUE)
     {
-      echo "FavoriteItem Added successfully";
+      return "FavoriteItem Added successfully";
     }
     else
     {
@@ -100,7 +84,7 @@ function deleteFavoriteItem($conn,$id)
 {
   if (!isset($id))
   {
-    echo "Error: Id is not set";
+    //echo "Error: Id is not set";
     return;
   }
   else
@@ -109,7 +93,7 @@ function deleteFavoriteItem($conn,$id)
     $sql = "delete from FavoriteItem where Id = ".$id. " LIMIT 1";
     if ($conn->query($sql)===TRUE)
     {
-      echo "FavoriteItem deleted successfully";
+      return "FavoriteItem deleted successfully";
     }
     else
     {

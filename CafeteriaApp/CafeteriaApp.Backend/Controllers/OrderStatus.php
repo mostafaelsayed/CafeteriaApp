@@ -1,23 +1,15 @@
 <?php
 
-function getOrderStatus($conn,$backend=false)
+function getOrderStatus($conn)
 {  
   $sql = "select * from OrderStatus";
   $result = $conn->query($sql);
   if ($result)
   {
     $OrderStatus = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    mysqli_free_result($result);
-    if ($backend)
-    { 
+    mysqli_free_result($result); 
       return $OrderStatus;   
-    }
-    else
-    {
-      $OrderStatus = json_encode($OrderStatus);
-    
-      echo $OrderStatus;
-    }  
+   
   }
   else
   {
@@ -25,11 +17,11 @@ function getOrderStatus($conn,$backend=false)
   }
 }
 
-function getOrderStatusById($conn ,$id,$backend=false)
+function getOrderStatusById($conn ,$id)
 {
   if (!isset($id)) 
   {
-    echo "Error: OrderStatus Id is not set";
+    //echo "Error: OrderStatus Id is not set";
     return;
   }
   else
@@ -39,17 +31,9 @@ function getOrderStatusById($conn ,$id,$backend=false)
     if ($result)
     {
       $OrderStatus = mysqli_fetch_assoc($result);
-      mysqli_free_result($result);
-      if ($backend)
-      { 
+      mysqli_free_result($result); 
         return $OrderStatus;   
-      }
-      else
-      {
-    $OrderStatus = json_encode($OrderStatus);
-  
-        echo $OrderStatus;
-      }
+      
     }
     else
     {
@@ -62,7 +46,7 @@ function addOrderStatus($conn,$name)
 {
   if (!isset($name)) 
   {
-    echo "Error:OrderStatus name is not set";
+    //echo "Error:OrderStatus name is not set";
     return;
   }
   else
@@ -73,7 +57,7 @@ function addOrderStatus($conn,$name)
     $Name = $name;
     if ($stmt->execute()===TRUE)
     {
-      echo "OrderStatus Added successfully";
+      return "OrderStatus Added successfully";
     }
     else
     {
@@ -86,12 +70,12 @@ function editOrderStatus($conn,$name,$id)
 {
   if (!isset($name)) 
   {
-    echo "Error:OrderStatus name is not set";
+    //echo "Error:OrderStatus name is not set";
     return;
   }
   elseif (!isset($id))
   {
-    echo "Error:OrderStatus Id is not set";
+    //echo "Error:OrderStatus Id is not set";
     return;
   }
   else
@@ -103,7 +87,7 @@ function editOrderStatus($conn,$name,$id)
     $Id = $id;
     if ($stmt->execute()===TRUE)
     {
-      echo "OrderStatus updated successfully";
+      return "OrderStatus updated successfully";
     }
     else
     {
@@ -116,7 +100,7 @@ function deleteOrderStatus($conn,$id)
 {
   if (!isset($id))
   {
-    echo "Error: Id is not set";
+    //echo "Error: Id is not set";
     return;
   }
   else
@@ -125,7 +109,7 @@ function deleteOrderStatus($conn,$id)
     $sql = "delete from OrderStatus where Id = ".$id . " LIMIT 1";
     if ($conn->query($sql)===TRUE)
     {
-      echo "OrderStatus deleted successfully";
+      return "OrderStatus deleted successfully";
     }
     else
     {

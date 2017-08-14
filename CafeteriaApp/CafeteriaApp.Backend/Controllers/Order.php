@@ -1,10 +1,10 @@
 <?php require_once('CafeteriaApp.Backend/session.php');
 
-function getClosedOrdersByCustomerId($conn,$id,$backend=false)
+function getClosedOrdersByCustomerId($conn,$id)
 {
   if( !isset($id))
   {
-    echo "Error: Customer Id is not set";
+    //echo "Error: Customer Id is not set";
     return;
   }
   else
@@ -15,16 +15,8 @@ function getClosedOrdersByCustomerId($conn,$id,$backend=false)
     {
       $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      if ($backend)
-      {
+      
         return $orders;
-      }
-      else
-      {
-      $orders = json_encode($orders);
-
-        echo $orders;
-      }
     }
     else
     {
@@ -33,11 +25,11 @@ function getClosedOrdersByCustomerId($conn,$id,$backend=false)
   }
 }
 
-function getOrderById($conn,$id,$backend=false)
+function getOrderById($conn,$id)
 {
   if( !isset($id))
   {
-    echo "Error: Order Id is not set";
+    //echo "Error: Order Id is not set";
     return;
   }
   else
@@ -48,16 +40,8 @@ function getOrderById($conn,$id,$backend=false)
     {
       $orders = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      if ($backend)
-      {
         return $orders;
-      }
-      else
-      {
-          $orders = json_encode($orders);
-    
-        echo $orders;
-      }
+      
     }
     else
     {
@@ -66,7 +50,7 @@ function getOrderById($conn,$id,$backend=false)
   }
 }
 
-function getOpenOrderByCustomerId($conn,$backend=false)
+function getOpenOrderByCustomerId($conn)
 {
   $openStatusId=1;
   $sql = "select * from `Order` where CustomerId = ".$_SESSION["customerId"]." and OrderStatusId = ".$openStatusId;
@@ -75,16 +59,8 @@ function getOpenOrderByCustomerId($conn,$backend=false)
   {
     $order = mysqli_fetch_array($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-    if ($backend)
-    {
       return $order;
-    }
-    else
-    {
-     $order = json_encode($order);
-     
-      echo $order;
-    }
+    
   }
   else
   {
@@ -96,7 +72,7 @@ function calcOpenOrderDeliveryTime($conn,$orderId)
 {
   if (!isset($orderId))
   {
-    echo "Error: Order Id is not set";
+   // echo "Error: Order Id is not set";
     return;
   }
   else
@@ -117,11 +93,11 @@ function calcOpenOrderDeliveryTime($conn,$orderId)
   }
 }
 
-function getOrdersByDeliveryDateId($conn,$id,$backend=false)
+function getOrdersByDeliveryDateId($conn,$id)
 {
   if (!isset($id))
   {
-    echo "Error: DeliveryDate Id is not set";
+    //echo "Error: DeliveryDate Id is not set";
     return;
   }
   else
@@ -132,16 +108,8 @@ function getOrdersByDeliveryDateId($conn,$id,$backend=false)
     {
       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      if ($backend)
-      {
         return $orders;
-      }
-      else
-      {
-         $orders = json_encode($orders);
-     
-        echo $orders;
-      }
+      
     }
     else
     {
@@ -150,11 +118,11 @@ function getOrdersByDeliveryDateId($conn,$id,$backend=false)
   }
 }
 
-function getOrdersByDeliveryTimeId($conn,$id,$backend=false)
+function getOrdersByDeliveryTimeId($conn,$id)
 {
   if (!isset($id))
   {
-    echo "Error: DeliveryTime Id is not set";
+    //echo "Error: DeliveryTime Id is not set";
     return;
   }
   else
@@ -165,16 +133,8 @@ function getOrdersByDeliveryTimeId($conn,$id,$backend=false)
     {
       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      if ($backend)
-      {
         return $orders;
-      }
-      else
-      {
-        $orders = json_encode($orders);
-      
-        echo $orders;
-      }
+     
     }
     else
     {
@@ -183,11 +143,11 @@ function getOrdersByDeliveryTimeId($conn,$id,$backend=false)
   }
 }
 
-function getOrdersByOrderStatusId($conn,$id,$backend=false)
+function getOrdersByOrderStatusId($conn,$id)
 {
   if (!isset($id))
   {
-    echo "Error: OrderStatus Id is not set";
+    //echo "Error: OrderStatus Id is not set";
     return;
   }
   else
@@ -198,16 +158,8 @@ function getOrdersByOrderStatusId($conn,$id,$backend=false)
     {
       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      if ($backend)
-      {
         return $orders;
-      }
-      else
-      {
-      $orders = json_encode($orders);
-
-        echo $orders;
-      }
+      
     }
     else
     {
@@ -216,11 +168,11 @@ function getOrdersByOrderStatusId($conn,$id,$backend=false)
   }
 }
 
-function getOrdersByPaymentMethodId($conn,$id,$backend=false)
+function getOrdersByPaymentMethodId($conn,$id)
 {
   if (!isset($id))
   {
-    echo "Error: PaymentMethod Id is not set";
+    //echo "Error: PaymentMethod Id is not set";
     return;
   }
   else
@@ -231,16 +183,8 @@ function getOrdersByPaymentMethodId($conn,$id,$backend=false)
     {
       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      if ($backend)
-      {
         return $orders;
-      }
-      else
-      {
-        $orders = json_encode($orders);
       
-        echo $orders;
-      }
     }
     else
     {
@@ -253,42 +197,42 @@ function addOrder( $conn,$deliveryDateId, $createdTimeId,$deliveryPlace, $paymen
 {
   if (!isset($deliveryDateId))
   {
-    echo "Error: Order deliveryDateId is not set";
+    //echo "Error: Order deliveryDateId is not set";
     return;
   }
   elseif (!isset($createdTimeId))
   {
-    echo "Error: Order deliveryTimeId is not set";
+    //echo "Error: Order deliveryTimeId is not set";
     return;
   }
   elseif (!isset($deliveryPlace))
   {
-    echo "Error: Order deliveryPlace is not set";
+    //echo "Error: Order deliveryPlace is not set";
     return;
   }
   elseif (!isset($paid))
   {
-    echo "Error: Order paid is not set";
+    //echo "Error: Order paid is not set";
     return;
   }
   elseif (!isset($total))
   {
-    echo "Error: Order total is not set";
+    //echo "Error: Order total is not set";
     return;
   }
   elseif (!isset($paymentMethodId))
   {
-    echo "Error: Order paymentMethodId is not set";
+    //echo "Error: Order paymentMethodId is not set";
     return;
   }
   elseif (!isset($orderStatusId))
   {
-    echo "Error: Order orderStatusId is not set";
+    //echo "Error: Order orderStatusId is not set";
     return;
   }
   elseif (!isset($customerId))
   {
-    echo "Error: Order customerId is not set";
+   // echo "Error: Order customerId is not set";
     return;
   }
   else
@@ -312,7 +256,7 @@ function addOrder( $conn,$deliveryDateId, $createdTimeId,$deliveryPlace, $paymen
     }
     else
     {
-      //$error = $conn->errno . ' ' . $conn->error;
+      echo "Error adding order: " . $conn->error;
       //echo $error;
     }
   }
@@ -323,22 +267,22 @@ function CheckOutOrder( $conn,$orderId, $deliveryTimeId,$deliveryPlace, $payment
   $closedStatusId=2;
   if (!isset($orderId))
   {
-    echo "Error: Order deliveryDateId is not set";
+    //echo "Error: Order deliveryDateId is not set";
     return;
   }
   elseif (!isset($deliveryTimeId))
   {
-    echo "Error: Order deliveryTimeId is not set";
+   // echo "Error: Order deliveryTimeId is not set";
     return;
   }
   elseif (!isset($deliveryPlace))
   {
-    echo "Error: Order deliveryPlace is not set";
+    //echo "Error: Order deliveryPlace is not set";
     return;
   }
   elseif (!isset($paymentMethodId))
   {
-    echo "Error: Order paymentMethodId is not set";
+    //echo "Error: Order paymentMethodId is not set";
     return;
   }
   else
@@ -354,12 +298,12 @@ function CheckOutOrder( $conn,$orderId, $deliveryTimeId,$deliveryPlace, $payment
     $OrderStatusId=$closedStatusId;
     if ($stmt->execute()===TRUE)
     {
-      echo "Order Checked Out successfully";
+      return "Order Checked Out successfully";
       //return mysqli_insert_id($conn);
     }
     else
     {
-      //$error = $conn->errno . ' ' . $conn->error;
+      echo "Error checkout order: " . $conn->error;
       //echo $error;
     }
   }
@@ -369,12 +313,12 @@ function updateOrderTotalById($conn ,$orderId ,$plusValue)
 {
   if (!isset($plusValue))
   {
-    echo "Error: Order plusValue is not set";
+    //echo "Error: Order plusValue is not set";
     return;
   }
   elseif (!isset($orderId))
   {
-    echo "Error: order Id  is not set";
+    //echo "Error: order Id  is not set";
     return;
   }
   else
@@ -399,12 +343,12 @@ function updateOrderPaidById($conn ,$orderId ,$plusValue)
 {
   if (!isset($plusValue))
   {
-    echo "Error: Order plusValue is not set";
+    //echo "Error: Order plusValue is not set";
     return;
   }
   elseif (!isset($orderId))
   {
-    echo "Error: order Id  is not set";
+    //echo "Error: order Id  is not set";
     return;
   }
   else
@@ -432,7 +376,7 @@ function deleteOpenOrderById($conn) // remove  order items with cascading
   $sql = "delete from `Order` where CustomerId = ". $_SESSION["customerId"] ." and `OrderStatusId`= {$openStatusId}  LIMIT 1";
   if ($conn->query($sql)===TRUE)
   {
-    echo "Current Open Order deleted successfully";
+    return "Current Open Order deleted successfully";
   }
   else
   {
