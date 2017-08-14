@@ -4,6 +4,7 @@ require_once( 'CafeteriaApp.Backend/Controllers/Order.php');
 require_once( 'CafeteriaApp.Backend/Controllers/Times.php');
 require_once("CafeteriaApp.Backend/connection.php");
 require ('paypal/start.php');
+require_once ('checkResult.php');
 
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
@@ -15,17 +16,20 @@ use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
 //header("Access-Control-Allow-Origin: *");
 
-if ($_SERVER['REQUEST_METHOD']=="GET") {
-  if (isset($_GET["orderId"])) {
+if ($_SERVER['REQUEST_METHOD']=="GET")
+{
+  if (isset($_GET["orderId"]))
+  {
     $Duration = calcOpenOrderDeliveryTime($conn,$_GET["orderId"]);
     $time = time("h:i:00")+($Duration*60);
     $time =date("h:i:00",$time);
     $Id = getTimeIdByTime($conn,$time);
-      echo json_encode(array("Id"=>(string)$Id , "Duration"=>(string)$Duration));
+    //echo json_encode(array("Id"=>(string)$Id , "Duration"=>(string)$Duration));
+    checkResult(array("Id"=>(string)$Id , "Duration"=>(string)$Duration));
   }
   else
-   {
-    getOpenOrderByCustomerId($conn);
+  {
+    checkResult(getOpenOrderByCustomerId($conn));
   }
 }
 
@@ -38,10 +42,11 @@ if ($_SERVER['REQUEST_METHOD']=="POST")
   //}
   //else
   //{
-  if(isset($_POST["orderId"]))
+  if (isset($_POST["orderId"]))
   {
-    $price = $_POST["total"];
-    $shipping = 2.00;
+    $price = 1;
+    //$price = $_POST["total"];
+    $shipping = 0.00;
     $total = $price + $shipping;
     // Create new payer and method
     $payer = new Payer();
@@ -98,17 +103,17 @@ if ($_SERVER['REQUEST_METHOD']=="POST")
   }
 }
 
-
-if ($_SERVER['REQUEST_METHOD']=="PUT"){
+if ($_SERVER['REQUEST_METHOD']=="PUT")
+{
   //echo "most";
   //$data = json_decode(file_get_contents("php://input"));
   
 }
 
-
-
-if($_SERVER['REQUEST_METHOD']=="DELETE"){
-  if(isset($_GET["orderId"])){
+if ($_SERVER['REQUEST_METHOD']=="DELETE")
+{
+  if (isset($_GET["orderId"]) && $_GET["orderId"] != null)
+  {
     deleteOpenOrderById($conn,$_GET["orderId"]);
   }
 }

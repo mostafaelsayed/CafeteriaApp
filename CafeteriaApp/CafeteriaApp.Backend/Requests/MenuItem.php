@@ -2,18 +2,20 @@
 
 require_once('CafeteriaApp.Backend/Controllers/MenuItem.php');
 require_once("CafeteriaApp.Backend/connection.php");
+require_once ('checkResult.php');
 
 if ($_SERVER['REQUEST_METHOD']=="GET")
 {
   if (isset($_GET["categoryId"]))
   {
-    getMenuItemByCategoryId($conn,$_GET["categoryId"],false,true);
+    checkResult(getMenuItemByCategoryId($conn,$_GET["categoryId"],false,true));
   }
   elseif (isset($_GET["id"]))
   {
-    getMenuItemById($conn,$_GET["id"]);
+    checkResult(getMenuItemById($conn,$_GET["id"]));
   }
-  else {
+  else
+  {
     echo "Error occured while returning MenuItem";
   }
 }

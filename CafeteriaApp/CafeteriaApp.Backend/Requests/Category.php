@@ -2,16 +2,17 @@
 
 require_once( 'CafeteriaApp.Backend/Controllers/Category.php');
 require_once("CafeteriaApp.Backend/connection.php");
+require_once ('checkResult.php');
 
 if ($_SERVER['REQUEST_METHOD']=="GET")
 {
   if (isset($_GET["cafeteriaId"]) && $_GET["cafeteriaId"] != null && !isset($_GET["id"]))
   {
-    getByCafeteriaId($conn,$_GET["cafeteriaId"]);
+    checkResult(getByCafeteriaId($conn,$_GET["cafeteriaId"]));
   }
   elseif (isset($_GET["id"]) && $_GET["id"] != null && !isset($_GET["cafeteriaId"]))
   {
-    getCategoryById($conn,$_GET["id"]);
+    checkResult(getCategoryById($conn,$_GET["id"]));
   }
   else
   {
@@ -35,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST")
   }
   else
   {
-    if(!isset($data->Name) || $data->Name == null)
+    if (!isset($data->Name) || $data->Name == null)
     {
       echo "Error: Name is Required";
     }
@@ -52,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD']=="PUT")
   $data = json_decode(file_get_contents("php://input"));
   if ($data->Name != null && $data->Id != null)
   {
-    if(!isset($data->Image))
+    if (!isset($data->Image))
     {
       editCategory($conn,$data->Name,$data->Id);
     }

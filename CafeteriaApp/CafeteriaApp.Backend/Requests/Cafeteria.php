@@ -2,16 +2,17 @@
 
 require_once( 'CafeteriaApp.Backend/Controllers/Cafeteria.php');
 require_once("CafeteriaApp.Backend/connection.php");
+require_once ('checkResult.php');
 
 if ($_SERVER['REQUEST_METHOD']=="GET")
 {
   if (isset($_GET["id"]))
   {
-    getCafeteriaById($conn,$_GET["id"]);
+    checkResult(getCafeteriaById($conn,$_GET["id"]));
   }
   else
   {
-    getCafeterias($conn);
+    checkResult(getCafeterias($conn));
   }
 }
 
@@ -34,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD']=="PUT")
   $data = json_decode(file_get_contents("php://input"));
   if (isset($data->Name) && isset($data->Id) && $data->Name != null && $data->Id != null)
   {
-    if(!isset($data->Image))
+    if (!isset($data->Image))
     {
       editCafeteria($conn,$data->Name,$data->Id);
     }

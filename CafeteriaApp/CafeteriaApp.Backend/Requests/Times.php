@@ -1,8 +1,10 @@
 <?php
+
 require_once( 'CafeteriaApp.Backend/Controllers/Times.php');
 require_once("CafeteriaApp.Backend/connection.php");
+require_once ('checkResult.php');
 
- getCurrentTimeId($conn);
+checkResult(getCurrentTimeId($conn));
 //
 // if ($_SERVER['REQUEST_METHOD']=="GET") {
 //   if (isset($_GET["action"]) && $_GET["action"]=="getTimes"){
@@ -45,4 +47,4 @@ require_once("CafeteriaApp.Backend/connection.php");
  
 require_once("CafeteriaApp.Backend/footer.php");
 
- ?>
+?>

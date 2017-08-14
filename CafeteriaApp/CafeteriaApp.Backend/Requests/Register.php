@@ -51,6 +51,7 @@
 
 require_once( 'CafeteriaApp.Backend/Controllers/User.php');
 require_once("CafeteriaApp.Backend/connection.php");
+require_once ('checkResult.php');
 
 
 
@@ -66,33 +67,28 @@ require_once("CafeteriaApp.Backend/connection.php");
 //   }
 // }
 
-if ($_SERVER['REQUEST_METHOD']=="POST"){
+if ($_SERVER['REQUEST_METHOD']=="POST")
+{
     //decode the json data
     $data = json_decode(file_get_contents("php://input"));
-    if (isset($data->userName) && isset($data->email) ){
-    $email = checkExistingEmail($conn,$data->email);
-     $userName = checkExistingUserName($conn,$data->userName,true);
-
-    if($email && $userName )
+    if (isset($data->userName) && isset($data->email))
     {
-    echo "User Name and Email already exist !";
+        $email = checkExistingEmail($conn,$data->email);
+        $userName = checkExistingUserName($conn,$data->userName,true);
 
+        if ($email && $userName)
+        {
+            echo "User Name and Email already exist !";
+        }
+        else if ($userName)
+        {
+            echo "User Name already exists !";
+        }
+        else if ($email)
+        {
+            echo "User Email already exists !";
+        }
     }
-    else if($userName)
-    {
-    echo "User Name already exists !";
-
-
-    }
-    else if($email)
-    {
-    echo "User Email already exists !";
-
-    }
-  }
-
-
-
 }
 
 // if ($_SERVER['REQUEST_METHOD']=="PUT"){
@@ -112,4 +108,4 @@ if ($_SERVER['REQUEST_METHOD']=="POST"){
 
 require_once("CafeteriaApp.Backend/footer.php");
 
- ?>
+?>
