@@ -30,6 +30,8 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
 			$_SESSION["UserId"] = $found_user["Id"];
 			$_SESSION["userName"] = $found_user["UserName"];
       $_SESSION["roleId"] = $found_user["RoleId"];
+
+      $_SESSION["langId"]=1;// if not found
       
       //get customer id by user id from db 
      $customer_id_json = getCustomerIdByUserId($conn ,$_SESSION["UserId"] ,true);

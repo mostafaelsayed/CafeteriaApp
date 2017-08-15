@@ -1,15 +1,14 @@
 <?php
 
-function getWords($conn)
+function getWords($conn ,$AssocOrNum)
 {
   $sql = "select * from Words ";
   $result = $conn->query($sql);
   if ($result)
   {
-    $words = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    $words = mysqli_fetch_all($result,$AssocOrNum );
     mysqli_free_result($result);
-     
-      return $words;   
+    return $words;
 
   }
   else

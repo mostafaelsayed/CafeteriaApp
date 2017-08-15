@@ -1,5 +1,5 @@
 <?php
-
+ require_once("CafeteriaApp.Backend/session.php");
 require_once( 'CafeteriaApp.Backend/Controllers/Languages.php');
 require_once("CafeteriaApp.Backend/connection.php");
 require_once ('checkResult.php');
@@ -26,13 +26,13 @@ if ($_SERVER['REQUEST_METHOD']=="POST")
 {
   //decode the json data
   $data = json_decode(file_get_contents("php://input"));
-  if ($data->Name != null)
+  if ($data->langId != null)
   {
-    addLanguage($conn,$data->Name);
+    $_SESSION["langId"]=$data->langId;
   }
   else
   {
-    echo "name is required";
+    echo "language Id is required";
   }
 }
 

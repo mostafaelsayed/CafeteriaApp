@@ -1,10 +1,17 @@
 <?php require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies 
- //require_once("CafeteriaApp.Backend/functions.php"); ?>
+ //require_once("CafeteriaApp.Backend/functions.php"); 
+?>
 
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html >
+<html  > 
 
-
+<?php $memcache = memcache_connect('localhost', 11211); 
+      $Words = $memcache->get('obj_key');
+      //$_SESSION["langId"]=2;
+      $lang_id=$_SESSION["langId"];
+     //  $lang_id=2;
+    
+?>
 <head>
 <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +32,7 @@
 
   <script src="/CafeteriaApp.Frontend/javascript/angular-modal-service.js"></script>
   <!-- <script src="/CafeteriaApp.Frontend/Scripts/libs/knockout-3.4.2.js"></script> -->
-  <!-- <script src="/CafeteriaApp.Frontend/Scripts/alertify/alertify.min.js"></script> -->
+  <script src="/CafeteriaApp.Frontend/javascript//alertify.min.js"></script>
   <!-- Bootstrap Core CSS -->
   <link href="/CafeteriaApp.Frontend/css/bootstrap.min.css" rel="stylesheet">
 
@@ -70,18 +77,18 @@
   
  
  </head>
-  <body style="background-image:	url('/CafeteriaApp.Frontend/images/customer background image4.jpg')" ng-app="myapp">
+  <body style="background-image:  url('/CafeteriaApp.Frontend/images/customer background image4.jpg')" ng-app="myapp">
 
     <div id="wrapper"  >
         <!-- Navigation -->
       <nav class="navbar navbar-default navbar-fixed-top" style="background-image:  url('/CafeteriaApp.Frontend/images/customer background image4.jpg')">
         <div class="container-fluid">
           <ul class="nav navbar-nav">
-            <li><a class="navbar-brand" style="color: blue" href="/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php">Cafeterias Page</a></li>
-            <li><a class="navbar-brand" style="color: blue" href="#">Home</a></li>
-            <li><a class="navbar-brand" style="color: blue" href="#"> <?php echo _("Contact");?></a></li>
-            <li><a class="navbar-brand" style="color: blue" href="#"><?php echo _("Help");?></a></li>
-            <li><a class="navbar-brand" style="color: blue" href="/CafeteriaApp.Frontend/Views/logout.php">Log out</a></li>
+            <li><a class="navbar-brand" style="color: blue" href="/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php"><?php echo "{$Words['Cafeterias'][$lang_id]} {$Words['Page'][$lang_id]}" ?></a></li>
+            <li><a class="navbar-brand" style="color: blue" href="#"><?php echo "{$Words['Home'][$lang_id]}" ?> </a></li>
+            <li><a class="navbar-brand" style="color: blue" href="#"><?php echo "{$Words['Contact'][$lang_id]}" ?> </a></li>
+            <li><a class="navbar-brand" style="color: blue" href="#"><?php echo "{$Words['Help'][$lang_id]}" ?></a></li>
+            <li><a class="navbar-brand" style="color: blue" href="/CafeteriaApp.Frontend/Views/logout.php"><?php echo "{$Words['Log out'][$lang_id]}" ?></a></li>
 
           </ul>
 
@@ -91,12 +98,24 @@
          <div  ng-controller="Language"  >
          <ul class="nav navbar-nav navbar-right ">
          <li>
-            <select   title="Display language" ng-model="selectedLang" ng-options="l.Name for l in languages" > 
-            <option value="" disabled selected >Choose the language</option></select>
-           <?php $_SESSION["langId"]="{{selectedLang.Id}}" ;  //echo __FILE__;        ?>
+            <select   title="Display language" ng-model="selectedLang" ng-options="l.Name for l in languages" ng-change="changeLanguage(selectedLang.Id)" > 
+            <!-- <option value="" disabled >Choose the language</option>-->
+            
+            </select> 
+
+            <?php //$_SESSION["langId"]= "{{selectedLang.Id}}" ;  //echo __FILE__;        ?>
+        </li>
+        <li>
+        
         </li>
          <li>
-         <?php echo "<a title='Go to profile' href='/CafeteriaApp.Frontend/Areas/Customer/favorite items.php'><h4>Hi, {$_SESSION['userName']}</h4></a>"; ?>
+         <?php echo "<a target=\"_self\" title='Go to profile' href='/CafeteriaApp.Frontend/Areas/Customer/favorite items.php'><h4>Hi, {$_SESSION['userName']}</h4></a>"; ?>
+
+         </li>
+
+          <li>
+         
+         
          </li>
          
        </div>
@@ -112,14 +131,19 @@
 
 <script type="text/javascript">
 
-app.controller('Language' , function ($scope,$http) {
+
+app.controller('Language' , function ($scope,$http,$timeout) {
+ //$scope.selectedLang.Id=<?php //echo $lang_id ;?>
+ 
 
 $scope.getLanguages=function () {
 
 $http.get('/CafeteriaApp.Backend/Requests/Languages.php')
 .then(function(response) {
-
-  $scope.languages=response.data;
+ 
+  $scope.languages = response.data;
+  $scope.selectedLang=$scope.languages[<?php echo $lang_id-1 ; ?>]
+  
 },function(response) {
 
     console.log( "Something went wrong");
@@ -127,9 +151,27 @@ $http.get('/CafeteriaApp.Backend/Requests/Languages.php')
 );
 }
 
+$scope.changeLanguage=function (languageId) {
+ //$timeout(function () {
+       //}, 1000);
+    var data={langId:languageId};
+  $http.post('/CafeteriaApp.Backend/Requests/Languages.php',data)
+.then(function(response) {
+  location.reload();
+  //document.location=<?php //echo "\"{$_SERVER['PHP_SELF']}\"" ;//current executing script , __FILE__ gets the current file?>
+},function(response) {
 
-$scope.getLanguages();
+    console.log( "Something went wrong");
+}
+);
 
+
+}
+
+ $scope.getLanguages();
+  //console.log($scope.languages);
+//console.log($scope.languages);
+ //$scope.selectedLang = $scope.languages[0];
   
 });
 

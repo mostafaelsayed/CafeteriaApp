@@ -9,7 +9,7 @@ function getFavoriteItemsByCustomerId($conn,$Cid)
   }
   else
   {
-    $sql = "select FavoriteItem.Id , MenuItem.Name , MenuItem.Description , MenuItem.Price ,MenuItem.Image  from FavoriteItem INNER JOIN MenuItem ON FavoriteItem.MenuItemId = MenuItem.Id where CustomerId =".$Cid;
+    $sql = "select FavoriteItem.Id , MenuItem.Name , MenuItem.Description , MenuItem.Price ,MenuItem.Image , FavoriteItem.MenuItemId from FavoriteItem INNER JOIN MenuItem ON FavoriteItem.MenuItemId = MenuItem.Id where CustomerId =".$Cid;
     $result = $conn->query($sql);
     if ($result)
     {
@@ -67,7 +67,7 @@ function addFavoriteItem($conn,$Cid,$Mid)
     $sql = "insert into FavoriteItem (CustomerId,MenuItemId) values (?,?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii",$CustomerId,$MenuItemId);
-    $name = $Cid;
+    $CustomerId = $Cid;
     $MenuItemId=$Mid;
     if ($stmt->execute()===TRUE)
     {
@@ -91,6 +91,28 @@ function deleteFavoriteItem($conn,$id)
   {
     //$conn->query("set foreign_key_checks=0");
     $sql = "delete from FavoriteItem where Id = ".$id. " LIMIT 1";
+    if ($conn->query($sql)===TRUE)
+    {
+      return "FavoriteItem deleted successfully";
+    }
+    else
+    {
+      echo "Error: ".$conn->error;
+    }
+  }
+}
+
+function deleteFavoriteItemByMenuItemId($conn,$Cid,$Mid)
+{
+  if (!isset($Cid) || !isset($Mid))
+  {
+    //echo "Error: Id is not set";
+    return;
+  }
+  else
+  {
+    //$conn->query("set foreign_key_checks=0");
+    $sql = "delete from FavoriteItem where MenuItemId = ".$Mid. " and  CustomerId=".$Cid." LIMIT 1";
     if ($conn->query($sql)===TRUE)
     {
       return "FavoriteItem deleted successfully";

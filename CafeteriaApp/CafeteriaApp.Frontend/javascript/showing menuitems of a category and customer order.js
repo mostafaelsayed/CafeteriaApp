@@ -138,12 +138,75 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
   }
 
 
+$scope.toggleFavoriteItem = function(menuItemId) {
+    var data = {
+        menuItemId: menuItemId
+      };
+
+   if ( document.getElementById(menuItemId).style.color==="red")
+    {
+      $http.post('/CafeteriaApp.Backend/Requests/FavoriteItem.php',data)
+      .then(function(response) {
+        if(response.data!=="")
+        {
+        alertify.error( response.data);
+        }
+        else{
+
+          document.getElementById(menuItemId).style.color="yellow";
+        }
+
+      });
+    }
+    else
+    {//console.log('HI');
+  
+  $http.delete('/CafeteriaApp.Backend/Requests/FavoriteItem.php?Id='+menuItemId)
+      .then(function(response) {
+        if(response.data!=="")
+        {
+        alertify.error( response.data);
+        }
+        else{
+
+          document.getElementById(menuItemId).style.color="red";
+        }
+
+      });
+
+
+    }
+    
+  }
+
+$scope.loadFavoriteItems = function() {
+
+ $http.get('/CafeteriaApp.Backend/Requests/FavoriteItem.php')
+   .then(function(response) {
+       $scope.favoItems = response.data;
+
+for (var i = $scope.menuItems.length - 1; i >= 0; i--) {
+       for (var j = $scope.favoItems.length - 1; j >= 0; j--) {
+         
+       if($scope.menuItems[i].Id ==$scope.favoItems[j].MenuItemId)
+       {
+      document.getElementById($scope.menuItems[i].Id).style.color="yellow";
+       }
+        }
+
+}
+
+//var x = $scope.favoItems.filter(o => o.MenuItemId == $scope.menuItems[i].Id);  
+
+   });
+
+}
 
 
 
 $scope.getCurrentCustomer();
 $scope.getMenuItems();
-
+$scope.loadFavoriteItems();
 
 
 });

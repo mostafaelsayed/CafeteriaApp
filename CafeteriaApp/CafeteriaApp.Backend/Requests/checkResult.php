@@ -1,7 +1,7 @@
 <?php
 function checkResult($result)
 {
-	if ($result)
+	if (isset($result))
 	{
 		echo json_encode($result);
 	}
@@ -9,6 +9,7 @@ function checkResult($result)
 	{
 		$returnUrl = "CafeteriaApp.Frontend/Areas/Public/showing cafeterias.php";
 		header("Location: {$returnUrl}");
+		exit;
 	}
 }
 ?>

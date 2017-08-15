@@ -5,6 +5,7 @@ require_once("CafeteriaApp.Backend/connection.php");
 require_once("CafeteriaApp.Backend/session.php");
 require_once ('checkResult.php');
 
+
 if ($_SERVER['REQUEST_METHOD']=="GET")
 {  
   checkResult(getFavoriteItemsByCustomerId($conn,$_SESSION["customerId"]));
@@ -14,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD']=="DELETE")
 {
   if (isset($_GET["Id"]))
   {
-    deleteFavoriteItem($conn,$_GET["Id"]);
+    deleteFavoriteItemByMenuItemId($conn,$_SESSION["customerId"],$_GET["Id"]);
   }
   else
   {
@@ -26,17 +27,16 @@ if ($_SERVER['REQUEST_METHOD']=="POST")
 {
   //decode the json data
   $data = json_decode(file_get_contents("php://input"));
-  if (isset($data->action) && $data->action == "addFavoriteItem")
-  {
-    if ($data->Name != null)
+  
+    if ($data->menuItemId != null)
     {
-      addFavoriteItem($conn,$data->Name);
+      addFavoriteItem($conn,$_SESSION["customerId"],$data->menuItemId);
     }
     else
     {
-      echo "name is required";
+      echo "menuItem Id is required";
     }
-  }
+  
 }
 
 if ($_SERVER['REQUEST_METHOD']=="PUT")
