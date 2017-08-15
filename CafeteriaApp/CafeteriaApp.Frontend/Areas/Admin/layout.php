@@ -58,6 +58,8 @@
             <li><a style="color:white" class="navbar-brand"  href="#"> <?php echo _("Contact");?></a></li>
             <li><a style="color:white" class="navbar-brand"  href="#"><?php echo _("Help");?></a></li>
             <li><a style="color:white" class="navbar-brand"  href="/CafeteriaApp.Frontend/Views/logout.php">Log out</a></li>
+            <li><a style="color:white" class="navbar-brand"  href="/CafeteriaApp.Frontend/Views/user.php">Manage Users</a></li>
+
 
           </ul>
 
