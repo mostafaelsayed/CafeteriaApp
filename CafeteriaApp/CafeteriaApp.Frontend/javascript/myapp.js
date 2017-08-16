@@ -1,10 +1,62 @@
-var app = angular.module('myapp', ['angularModalService','ui.bootstrap']);
+var app = angular.module('myapp', ['angularModalService','ui.bootstrap','ngRoute']);
 
 app.config(['$locationProvider',function($locationProvider) {
   $locationProvider.html5Mode({
     enabled: true,
     requireBase: false
   });
+}]);
+
+app.config(['$routeProvider',function($routeProvider) {
+  $routeProvider
+  // add user
+  .when("/CafeteriaApp.Frontend/Areas/Admin/User/Views/add_user.php/1" , {
+    templateUrl: "/CafeteriaApp.Frontend/Templates/Views/add_admin.php",
+    controller: "addAdmin"
+  })
+  .when("/CafeteriaApp.Frontend/Areas/Admin/User/Views/add_user.php/2", {
+    templateUrl: "/CafeteriaApp.Frontend/Templates/Views/add_cashier.php",
+    controller: "addCashier"
+  })
+  .when("/CafeteriaApp.Frontend/Areas/Admin/User/Views/add_user.php/3", {
+    templateUrl: "/CafeteriaApp.Frontend/Templates/Views/add_customer.php",
+    controller: "addCustomer"
+  })
+  // edit user
+  .when("/CafeteriaApp.Frontend/Areas/Admin/User/Views/edit_user.php/1", {
+    templateUrl: "/CafeteriaApp.Frontend/Templates/Views/edit_admin.php",
+    controller: "editAdmin"
+  })
+  .when("/CafeteriaApp.Frontend/Areas/Admin/User/Views/edit_user.php/2", {
+    templateUrl: "/CafeteriaApp.Frontend/Templates/Views/edit_cashier.php",
+    controller: "editCashier"
+  })
+  .when("/CafeteriaApp.Frontend/Areas/Admin/User/Views/edit_user.php/3", {
+    templateUrl: "/CafeteriaApp.Frontend/Templates/Views/edit_customer.php",
+    controller: "editCustomer"
+  })
+}]);
+
+app.factory('userService',['$rootScope', function($rootScope) {
+
+  var userServiceInstance = {};
+  userServiceInstance.UserData = {};
+
+  userServiceInstance.getUserData = function () {
+    return userServiceInstance;
+  };
+
+  $rootScope.$on('getData',function() {
+    $rootScope.$broadcast('getYourData');
+  });
+
+  $rootScope.$on('hereIsMyData',function(event,data) {
+    userServiceInstance.UserData = data;
+    $rootScope.$broadcast('dataSent',userServiceInstance.UserData);
+  });
+
+  return userServiceInstance;
+  
 }]);
 
 app.directive('fileDropzone', function() {
@@ -166,7 +218,7 @@ app.directive('checkPhoneNumber',function(){
     restrict: 'A',
     require: 'ngModel',
     link: function(scope,elem,attr,ctrl) {
-      var regExp = /^\d{0,9}$/;
+      var regExp = /^\d{0,11}$/;
       ctrl.$parsers.unshift(function(val) {
         if (checkType(val,regExp)) {
           ctrl.$setValidity('checkPhoneNumber',true);

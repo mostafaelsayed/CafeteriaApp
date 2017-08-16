@@ -1,6 +1,9 @@
 <?php
 
 require_once( 'CafeteriaApp.Backend/Controllers/User.php');
+require_once('CafeteriaApp.Backend/Controllers/Customer.php');
+require_once('CafeteriaApp.Backend/Controllers//Admin.php');
+require_once('CafeteriaApp.Backend/Controllers/Cashier.php');
 require_once("CafeteriaApp.Backend/connection.php");
 require_once ('CheckResult.php');
 
@@ -47,6 +50,18 @@ if ($_SERVER['REQUEST_METHOD']=="PUT")
   if ($data->UserName != null && $data->Id != null)
   {
     editUser($conn,$data->UserName,$data->FirstName,$data->LastName,$data->Email,$data->Image,$data->PhoneNumber,$data->RoleId,$data->Id);
+    if ($data->RoleId == 3) // customer
+    {
+      editCustomer($conn,$data->Credit,$data->GenderId,$data->DateOfBirth,$data->Id);
+    }
+    elseif ($data->RoleId == 2)
+    {
+      
+    }
+    elseif ($data->RoleId == 1)
+    {
+
+    }
   }
   else
   {

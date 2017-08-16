@@ -11,9 +11,17 @@ if ($_SERVER['REQUEST_METHOD'] == "GET")
   //   getCurrentCustomerByUserId($conn);
   // }
   ////else {
+  if (isset($_GET["userId"]) && $_GET["userId"] != null)
+  {
+    checkResult(getCustomerByUserId($conn,$_GET["userId"]));
+  }
+  else
+  {
+    checkResult(getCurrentCustomerinfoByUserId($conn));
+  }
     //echo '1';
     // echo "Error occured while returning Customer";
-    checkResult(getCurrentCustomerinfoByUserId($conn));
+    
   //}
 }
 

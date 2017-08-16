@@ -8,6 +8,8 @@
 <!--         <script src="/CafeteriaApp.Frontend/Scripts/libs/bootstrap.min.js"></script>
  -->
         <script src="/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
+        <script src="/CafeteriaApp.Frontend/javascript/angular-route.js"></script>
+
         <script src="/CafeteriaApp.Frontend/javascript/myapp.js"></script>
 
         <script src="/CafeteriaApp.Frontend/javascript/ui-bootstrap-2.5.0.js"></script>

@@ -62,7 +62,7 @@
                   <td id="alignText" ng-bind="u.UserName"></td>
                   <td id="alignText" ng-bind="u.Email"></td>
                   <td id="alignText" class="center">
-                    <a type="button" href="/CafeteriaApp.Frontend/Areas/Admin/User/Views/edit_user.php?id={{u.Id}}">Edit</a>&nbsp;&nbsp;
+                    <a type="button" href="/CafeteriaApp.Frontend/Areas/Admin/User/Views/edit_user.php/{{u.RoleId}}?id={{u.Id}}">Edit</a>&nbsp;&nbsp;
                     <a type="button" style="cursor: pointer" ng-click="deleteUser(u)">Delete</a>
                   </td>
                 </tr>

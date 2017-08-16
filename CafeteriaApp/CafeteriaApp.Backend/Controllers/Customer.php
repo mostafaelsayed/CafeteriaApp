@@ -148,7 +148,7 @@ function addCustomer($conn,$cred,$dob,$userId,$genderId) {
 }}
 
 
-function editCustomerCredit($conn,$cred,$userId) {
+function editCustomer($conn,$cred,$genderId,$dob,$userId) {
   if( !isset($cred))
  {
  //echo "Error: Credit is not set";
@@ -159,14 +159,15 @@ elseif (!isset($userId)) {
   return;
   }
   else {
-  $sql = "update Customer set Credit = Credit+(?) where UserId = (?)";
+  $sql = "update `Customer` set `Credit` = (?) , GenderId = (?) , DateOfBirth = (?) where UserId = (?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("fi",$Credit,$UserId);
+  $stmt->bind_param("disi",$Credit,$GenderId,$DateOfBirth,$UserId);
   $Credit = $cred;
+  $GenderId = $genderId;
+  $DateOfBirth = ($dob);
   $UserId = $userId;
-  //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
-    return "Customer Credit updated successfully";
+    return "Customer updated successfully";
   }
   else {
     echo "Error: ".$conn->error;

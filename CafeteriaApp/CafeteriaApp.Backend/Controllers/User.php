@@ -82,7 +82,8 @@ function addUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber
 
 function editUser($conn,$userName,$firstName,$lastName,$email,$image,$phoneNumber,$roleId,$id)
 {
-  if (checkExistingUserName($conn ,$userName,true)) 
+  $userUserName = mysqli_fetch_assoc($conn->query("select UserName from User where Id = ".$id))['UserName'];
+  if (!($userUserName == $userName) && checkExistingUserName($conn ,$userName,true)) 
   {
     return;
   }
@@ -99,14 +100,16 @@ function editUser($conn,$userName,$firstName,$lastName,$email,$image,$phoneNumbe
     $PhoneNumber = $phoneNumber;
     $RoleId = $roleId;
     $Id = $id;
+
     if ($stmt->execute()===TRUE)
     {
-      return "User updated successfully";
+      echo "User updated successfully";
     }
     else
     {
       echo "Error: ".$conn->error;
     }
+    
   }
 }
 
