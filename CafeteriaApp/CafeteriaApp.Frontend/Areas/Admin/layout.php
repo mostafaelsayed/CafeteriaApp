@@ -51,14 +51,14 @@
       <nav class="navbar navbar-default navbar-fixed-top" style="background-image: url('/CafeteriaApp.Frontend/images/admin background image.jpg')">
         <div class="container-fluid">
           <div class="navbar-header">
-            <a style="color:white" class="navbar-brand" href="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/showing and deleting cafeterias.php">Cafeterias Page</a>
+            <a style="color:white" class="navbar-brand" href="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php">Cafeterias Page</a>
           </div>
           <ul class="nav navbar-nav">
             <li ><a style="color:white" class="navbar-brand"  href="#">Home</a></li>
             <li><a style="color:white" class="navbar-brand"  href="#"> <?php echo _("Contact");?></a></li>
             <li><a style="color:white" class="navbar-brand"  href="#"><?php echo _("Help");?></a></li>
             <li><a style="color:white" class="navbar-brand"  href="/CafeteriaApp.Frontend/Views/logout.php">Log out</a></li>
-            <li><a style="color:white" class="navbar-brand"  href="/CafeteriaApp.Frontend/Views/user.php">Manage Users</a></li>
+            <li><a style="color:white" class="navbar-brand"  href="/CafeteriaApp.Frontend/Areas/Admin/User/Views/show_and_delete_users.php">Manage Users</a></li>
 
 
           </ul>

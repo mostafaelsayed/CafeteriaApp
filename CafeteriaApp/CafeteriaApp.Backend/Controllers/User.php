@@ -1,6 +1,6 @@
 <?php
 
-require_once('CafeteriaApp.Backend/Controllers/Customer.php');
+require_once('CafeteriaApp.Backend/functions.php');
 
 function getUsers($conn)
 {  
@@ -10,16 +10,13 @@ function getUsers($conn)
   {
     $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-      return $users;   
-    
+    return $users;
   }
   else
   {
     echo "Error retrieving Users: " . $conn->error;
   }
 }
-
-
 
 function getUserById($conn,$id)
 {
@@ -36,8 +33,7 @@ function getUserById($conn,$id)
     {
       $user = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-        return $user;   
-     
+      return $user;
     }
     else
     {
@@ -46,114 +42,33 @@ function getUserById($conn,$id)
   }
 }
 
-function registerAdminUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password )
+function addUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password,$roleId)
 {
   if (checkExistingEmail($conn ,$email ) || checkExistingUserName($conn ,$userName,true)) 
   {
-   return;
+    return;
   }
   elseif(!isset($firstName) ||!isset($lastName) || !isset($phoneNumber) || !isset($password))
   {
-  return;
+    return;
   }
   else
   {
     $sql = "insert into User (UserName , FirstName , LastName , Image , Email , PhoneNumber , PasswordHash, RoleId) values (?,?,?,?,?,?,?,?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssssi",$UserName,$FirstName,$LastName,$Image,$Email,$PhoneNumber,$Password,$RoleId);
+    $stmt->bind_param("sssssssi",$UserName,$FirstName,$LastName,$Image,$Email,$PhoneNumber,$PasswordHash,$RoleId);
     $UserName = $userName;
     $FirstName = $firstName;
     $LastName = $lastName;
     $Image = $image;
     $Email = $email;
     $PhoneNumber = $phoneNumber;
-    $Password = $password;
-    $RoleId =1 ;    // customer role
+    $PasswordHash = password_encrypt($password);
+    $RoleId = $roleId;
     if ($stmt->execute()===TRUE)
-    {
+    {    
       $user_id =  mysqli_insert_id($conn);
-      return "Admin User Added successfully !";
-    }
-    else
-    {
-      echo "Error: ".$conn->error;
-    }
-  }
-}
-
-function registerCashierUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password )
-{
-  if (checkExistingEmail($conn ,$email ) || checkExistingUserName($conn ,$userName,true)) 
-  {
-   return;
-  }
-  elseif(!isset($firstName) ||!isset($lastName) || !isset($phoneNumber) || !isset($password))
-  {
-  return;
-  }
-  else
-  {
-    $sql = "insert into User (UserName , FirstName , LastName , Image , Email , PhoneNumber , PasswordHash, RoleId) values (?,?,?,?,?,?,?,?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssssi",$UserName,$FirstName,$LastName,$Image,$Email,$PhoneNumber,$Password,$RoleId);
-    $UserName = $userName;
-    $FirstName = $firstName;
-    $LastName = $lastName;
-    $Image = $image;
-    $Email = $email;
-    $PhoneNumber = $phoneNumber;
-    $Password = $password;
-    $RoleId =2 ;    // customer role
-    if ($stmt->execute()===TRUE)
-    {
-      $user_id =  mysqli_insert_id($conn);
-      return "Cashier User Added successfully !";
-    }
-    else
-    {
-      echo "Error: ".$conn->error;
-    }
-  }
-}
-
-
-
-function registerCustomerUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password,$dob,$genderId ) {
-   if (checkExistingEmail($conn ,$email ) || checkExistingUserName($conn ,$userName,true)) 
-  {
-   return;
-  }
-  elseif(!isset($firstName) ||!isset($lastName) || !isset($phoneNumber) || !isset($password) || !isset($dob) || !isset($genderId))
-  {
-  return;
-  }
-  else
-  {
-  $sql = "insert into User (UserName , FirstName , LastName , Image , Email , PhoneNumber , PasswordHash, RoleId) values (?,?,?,?,?,?,?,?)";
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param("sssssssi",$UserName,$FirstName,$LastName,$Image,$Email,$PhoneNumber,$Password,$RoleId);
-  $UserName = $userName;
-  $FirstName = $firstName;
-  $LastName = $lastName;
-  $Image = $image;
-  $Email = $email;
-  $PhoneNumber = $phoneNumber;
-  $Password = $password;
-  $RoleId =2 ;    // customer role
-  //$conn->query($sql);
-  if ($stmt->execute()===TRUE) {
-    
-    $user_id =  mysqli_insert_id($conn);
-    //echo $user_id;
-
-    if(addCustomer($conn,0.0,$dob,$user_id,$genderId))
-      {
-        return true;
-      }
-      else
-      {
-        return false;
-      }
+      return $user_id;
     }
     else
     {
@@ -165,26 +80,25 @@ function registerCustomerUser($conn,$userName,$firstName,$lastName,$image,$email
 
 
 
-function editCustomerUser($conn,$userName,$image,$phoneNumber,$password ,$id )
+function editUser($conn,$userName,$firstName,$lastName,$email,$image,$phoneNumber,$roleId,$id)
 {
-   if ( checkExistingUserName($conn ,$userName,true)) 
+  if (checkExistingUserName($conn ,$userName,true)) 
   {
-   return;
-  }
-  elseif(!isset($phoneNumber) || !isset($password) || !isset($image))
-  {
-  return;
+    return;
   }
   else
   {
-    $sql = "update User set UserName = (?), Image = (?), PhoneNumber= (?) , PasswordHash= (?) where Id = (?)"; 
+    $sql = "update User set UserName = (?), FirstName = (?) , LastName = (?) , Email = (?) , Image = (?) , PhoneNumber = (?) , RoleId = (?) where Id = (?)"; 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssi",$UserName,$Image,$PhoneNumber,$Password,$Id);
-    $UserName=$userName;
+    $stmt->bind_param("sssssiii",$UserName,$FirstName,$LastName,$Email,$Image,$PhoneNumber,$RoleId,$Id);
+    $UserName = $userName;
+    $FirstName = $firstName;
+    $LastName = $lastName;
+    $Email = $email;
     $Image =$image;
-    $PhoneNumber=$phoneNumber;
-    $Password=$password;
-    $Id=$id;
+    $PhoneNumber = $phoneNumber;
+    $RoleId = $roleId;
+    $Id = $id;
     if ($stmt->execute()===TRUE)
     {
       return "User updated successfully";
@@ -199,7 +113,7 @@ function editCustomerUser($conn,$userName,$image,$phoneNumber,$password ,$id )
 
 function updateUserPasswordByEmail($conn,$password ,$email)
 {
-  if( !isset($password) || !isset($email)) 
+  if (!isset($password) || !isset($email)) 
   {
     //echo "User password is empty !";
     return;
@@ -224,7 +138,7 @@ function updateUserPasswordByEmail($conn,$password ,$email)
 
 function updateUserPasswordById($conn,$password ,$id)
 {
-   if( !isset($password) || !isset($id)) 
+   if (!isset($password) || !isset($id)) 
   {
     //echo "User password is empty !";
     return;
@@ -246,7 +160,6 @@ function updateUserPasswordById($conn,$password ,$id)
     }
   }
 }
-
 
 function checkExistingUserName($conn,$userName ,$register_edit)
 {
@@ -282,8 +195,7 @@ function checkExistingEmail($conn,$email) // problem if he wants to edit his inf
   $result = $conn->query($sql);
   if ($result)
   {
-    $result = mysqli_fetch_array($result, MYSQLI_NUM); 
-    
+    $result = mysqli_fetch_array($result, MYSQLI_NUM);
     if ($result[0]>0) // if he wants to change the mail and not keeping the old
     { 
       return true; // exist
@@ -309,9 +221,24 @@ function deleteUser($conn,$id) // cascaded delete ??
   }
   else
   {
-    //$conn->query("set foreign_key_checks = 0"); // ????????/
+    global $result;
+    $conn->query("set foreign_key_checks = 0"); // ????????/
     $sql = "delete from User where Id = ".$id . " LIMIT 1";
-    if ($conn->query($sql)===TRUE)
+    $user = getUserById($conn,$id);
+    if ($user['RoleId'] == 1)
+    {
+      $result = $conn->query("delete from Admin where UserId = ".$user['Id']);
+    }
+    else if ($user['RoleId'] == 2)
+    {
+      $result = $conn->query("delete from Cashier where UserId = ".$user['Id']);
+    }
+    else if ($user['RoleId'] == 3)
+    {
+      $result = $conn->query("delete from Customer where UserId = ".$user['Id']);
+    }
+
+    if ($conn->query($sql)===TRUE && $result === TRUE)
     {
       return "User deleted successfully";
     }

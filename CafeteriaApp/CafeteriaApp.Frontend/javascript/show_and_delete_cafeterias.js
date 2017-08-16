@@ -1,6 +1,6 @@
 ﻿// controller for getting and deleting cafeterias
 
-app.controller('showingAndDeletingCafeterias',['$scope','$http','ModalService', function ($scope,$http,ModalService) {
+app.controller('showAndDeleteCafeterias',['$scope','$http','ModalService', function ($scope,$http,ModalService) {
   $scope.show = function() {
     ModalService.showModal({
       templateUrl: 'modal.html',
@@ -16,7 +16,7 @@ app.controller('showingAndDeletingCafeterias',['$scope','$http','ModalService', 
   };
 
   $scope.getCafeterias = function() {
-    $http.get('/CafeteriaApp.Backend/Requests/Cafeteria.php?action=getCafeterias')
+    $http.get('/CafeteriaApp.Backend/Requests/Cafeteria.php')
     .then(function (response) {
       console.log(response);
       $scope.cafeterias = response.data;

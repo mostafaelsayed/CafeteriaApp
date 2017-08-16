@@ -44,7 +44,7 @@ app.controller('editCafeteria',['$scope','$http','$location',function($scope,$ht
 
 // controller for showing and deleting categories
 
-app.controller('showingAndDeletingCategories',['$scope','$http','$location','ModalService',function($scope,$http,$location,ModalService) {
+app.controller('showAndDeleteCategories',['$scope','$http','$location','ModalService',function($scope,$http,$location,ModalService) {
   $scope.cafeteriaId = $location.search().id;
 
   $scope.getCategories = function(){

@@ -6,7 +6,7 @@
   include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
 ?>
 
-<script src="/CafeteriaApp.Frontend/javascript/editing category and showing and deleting its menuitems.js"></script>
+<script src="/CafeteriaApp.Frontend/javascript/edit_category_and_show_and_delete_its_menuitems.js"></script>
 <script src="/CafeteriaApp.Frontend/javascript/modal_controller.js"></script>
 
 <script src="/CafeteriaApp.Frontend/javascript/modal.js"></script>
@@ -65,7 +65,7 @@
     </div>
 
     
-    <div class="row" ng-controller="showingAndDeletingMenuItems">
+    <div class="row" ng-controller="showAndDeleteMenuItems">
       <script type="text/ng-template" id="modal.html">
          <div class="modal fade" id="mymodal" style="background: rgba(0, 0, 0, 0.5)">
            <div class="modal-dialog">
@@ -90,7 +90,7 @@
         <div>
           <div><h3>Manage Your MenuItems</h3>
             <div>
-              <a id="add" title="Add MenuItem" id="creatNewCategory" href="/CafeteriaApp.Frontend/Areas/Admin/MenuItem/Views/adding menuitem.php?id={{categoryId}}" target="_self" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
+              <a id="add" title="Add MenuItem" id="creatNewCategory" href="/CafeteriaApp.Frontend/Areas/Admin/MenuItem/Views/add_menuitem.php?id={{categoryId}}" target="_self" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
             </div>
           </div>
           <div>
@@ -109,14 +109,14 @@
                   <td id="alignText" ng-bind="m.Price"></td>
                   <td id="alignText" ng-bind="m.Description"></td>
                   <td id="alignText" class="center">
-                    <a id="myButton" href="/CafeteriaApp.Frontend/Areas/Admin/MenuItem/Views/editing menuitem.php?id={{m.Id}}" target="_self">Edit</a>&nbsp;
+                    <a id="myButton" href="/CafeteriaApp.Frontend/Areas/Admin/MenuItem/Views/edit_menuitem.php?id={{m.Id}}" target="_self">Edit</a>&nbsp;
                     <a style="cursor: pointer" ng-click="deleteMenuItem(m.Id)">Delete</a>
                   </td>
                 </tr>
               </tbody>
               <tbody>
                 <tr ng-show="menuItems.length == 0">
-                  <td colspan="5"> There are no records.</td>
+                  <td colspan="5" style="text-align: center"> There are no MenuItems in this Category.</td>
                 </tr>
               </tbody>
             </table>

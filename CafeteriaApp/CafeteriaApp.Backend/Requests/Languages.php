@@ -2,7 +2,7 @@
  require_once("CafeteriaApp.Backend/session.php");
 require_once( 'CafeteriaApp.Backend/Controllers/Languages.php');
 require_once("CafeteriaApp.Backend/connection.php");
-require_once ('checkResult.php');
+require_once ('CheckResult.php');
 
 if ($_SERVER['REQUEST_METHOD']=="GET")
 {  
