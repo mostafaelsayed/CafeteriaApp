@@ -7,15 +7,17 @@
 </head>
 <body ng-app= "myapp">
 <div ng-controller ="Ctrl" >
+<div>
 <select 
     ng-model="selectedOption" 
     ng-options="option.Name for option in options"   ng-init=""  ng-change="getStuff(data.selectedOption)">
 </select>
 </div>
+<div>
+  <textarea ng-model="ddd"></textarea>
 
-
-
-
+</div>
+</div>
 </body>
 </html>
 
@@ -25,27 +27,36 @@ var app = angular.module('myapp', []);
 
 var langs=[];
 
-app.controller('Ctrl',function function_name($scope,$http) {
-  
-  $scope.getLanguages=function () {
+app.controller('Ctrl',function($scope,$http) {
 
+  $scope.getLanguages=function () {
+//$scope.selectedOption ="";
 $http.get('/CafeteriaApp.Backend/Requests/Languages.php')
 .then(function(response) {
- 
-  $scope.options = response.data;
-$scope.selectedOption=$scope.options[1];
+ $scope.options = response.data;
+ $scope.func();
+   $scope.ddd="dddddddddd";
+  // console.log($scope.selectedOption);
+
   //langs= response.data;
   //console.log(langs);
  // console.log($scope.options );
-},function(response) {
+// },function(response) {
 
-    console.log( "Something went wrong");
+//     console.log( "Something went wrong");
+  });
 }
-);
+		
+
+$scope.func = function() {
+  $scope.selectedOption = $scope.options[1];
+
 }
-		$scope.getLanguages();
-		//console.log(langs);
-    //  $scope.selectedOption = $scope.options[1].Id;
+ var dd="sss"+3;
+ console.log(dd);
+    $scope.getLanguages();
+		//console.log($scope.options);
+     // $scope.selectedOption = $scope.options[1];
 });
 	
 

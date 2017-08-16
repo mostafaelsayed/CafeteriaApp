@@ -12,6 +12,8 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
    $http.get('/CafeteriaApp.Backend/Requests/MenuItem.php?categoryId='+$scope.categoryId)
    .then(function(response) {
        $scope.menuItems = response.data;
+       $scope.loadFavoriteItems();
+       $scope.initializeMenuItemCommmentFlags();
    });
   }
  
@@ -143,7 +145,7 @@ $scope.toggleFavoriteItem = function(menuItemId) {
         menuItemId: menuItemId
       };
 
-   if ( document.getElementById(menuItemId).style.color==="red")
+   if ( document.getElementById('favorites'+menuItemId).style.color==="red")
     {
       $http.post('/CafeteriaApp.Backend/Requests/FavoriteItem.php',data)
       .then(function(response) {
@@ -153,7 +155,7 @@ $scope.toggleFavoriteItem = function(menuItemId) {
         }
         else{
 
-          document.getElementById(menuItemId).style.color="yellow";
+          document.getElementById('favorites'+menuItemId).style.color="yellow";
         }
 
       });
@@ -169,7 +171,7 @@ $scope.toggleFavoriteItem = function(menuItemId) {
         }
         else{
 
-          document.getElementById(menuItemId).style.color="red";
+          document.getElementById("favorites"+menuItemId).style.color="red";
         }
 
       });
@@ -190,23 +192,135 @@ for (var i = $scope.menuItems.length - 1; i >= 0; i--) {
          
        if($scope.menuItems[i].Id ==$scope.favoItems[j].MenuItemId)
        {
-      document.getElementById($scope.menuItems[i].Id).style.color="yellow";
+      document.getElementById('favorites'+$scope.menuItems[i].Id).style.color="yellow";
        }
         }
+}
+//var x = $scope.favoItems.filter(o => o.MenuItemId == $scope.menuItems[i].Id);  
+
+   });
+}
+
+
+$scope.ShowHides = new Array();
+$scope.initializeMenuItemCommmentFlags=function(){
+
+//1-  create flages
+
+for (var i = $scope.menuItems.length - 1; i >= 0; i--) {
+  
+  $scope.ShowHides.push(false);  
+}
+//ShowHide='Show Comments';
+}
+
+
+$scope.getCurrentDate=function(){
+ //  var dateform = ` ${date.getUTCDay()}/${date.getUTCMonth()}/${date.getFullYear()}`
+  var today = new Date();
+var dd = today.getDate();//get day
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+if(dd<10){
+    dd='0'+dd;
+} 
+if(mm<10){
+    mm='0'+mm;
+} 
+    return dd+'/'+mm+'/'+yyyy;
 
 }
+
+
+$scope.AddCommentinPageOnly = function (MenuItemId,commentDetails,CustomerName){
+//var code = (e.keyCode ? e.keyCode : e.which);//which for firefox
+   // if(code == 13) { //Enter keycode
+   // alert('enter press');
+  MenuItemId ='tbody'+MenuItemId;
+  //console.log(MenuItemId);
+      var hr = document.createElement("hr");
+   var tr1 = document.createElement("tr");
+var tdCustomer = document.createElement("td");
+    var textCustomer = document.createTextNode(CustomerName);
+    tdCustomer.appendChild(textCustomer);
+     var tdDate = document.createElement("td");
+    var textDate = document.createTextNode($scope.getCurrentDate());
+    tdDate.appendChild(textDate);
+      tr1.appendChild(tdCustomer);
+      tr1.appendChild(tdDate);
+   var tr2 = document.createElement("tr");
+   var tdComment = document.createElement("td");
+    var textComment = document.createTextNode(commentDetails);
+    tdComment.appendChild(textComment);
+    tr2.appendChild(tdComment);
+  document.getElementById(MenuItemId).appendChild(tr1);
+    document.getElementById(MenuItemId).appendChild(tr2);
+
+    document.getElementById(MenuItemId).appendChild(hr);
+
+    //console.log(Id);
+//}
+}
+
+
+
+$scope.loadCommentsforMenuItem = function (MenuItemId){
+
+ $http.get('/CafeteriaApp.Backend/Requests/Comment.php?MenuItemId='+MenuItemId)
+   .then(function(response) {
+      for (var i = response.data.length - 1; i >= 0; i--) {
+       $scope.AddCommentinPageOnly(MenuItemId,response.data[i].Details,response.data[i].UserName);
+      }
 
 //var x = $scope.favoItems.filter(o => o.MenuItemId == $scope.menuItems[i].Id);  
 
    });
 
+
+}
+
+
+$scope.ToggleMenuItemComments = function (index,MenuItemId){
+$scope.ShowHides[index]=! $scope.ShowHides[index];
+
+if($scope.ShowHides[index])
+{
+$scope.loadCommentsforMenuItem(MenuItemId);
+}
+
+}
+
+
+$scope.AddCommentBackAndFront = function (MenuItemId,commentDetails,CustomerName){
+
+var data ={Details:commentDetails ,
+    MenuItemId:MenuItemId
+          };  
+
+
+ $http.post('/CafeteriaApp.Backend/Requests/Comment.php',data)
+      .then(function(response) {
+        if(response.data!=="")
+        {
+        alertify.error( response.data);
+        }
+        else{
+          
+          $scope.AddCommentinPageOnly (MenuItemId,commentDetails,CustomerName);
+        }
+
+      });
 }
 
 
 
 $scope.getCurrentCustomer();
 $scope.getMenuItems();
-$scope.loadFavoriteItems();
+
+
+
 
 
 });
+
+

@@ -15,7 +15,7 @@
   }
   else
   {
-    $sql = "select * from Comment where MenuItemId =".$id;
+    $sql = "select User.UserName , Comment.Details  from Comment inner join Customer on Comment.CustomerId=Customer.Id inner join User on User.Id=Customer.UserId  where MenuItemId =".$id;
     $result = $conn->query($sql);
     if ($result)
     {
@@ -31,32 +31,7 @@
   } 
 }
 
-function getCommentById($conn,$id)
-{
-  if (!isset($id)) 
-  {
-   // echo "Error: Comment Id is not set";
-    return;
-  }
-  else
-  {
-    $sql = "select * from Comment where Id =".$id." LIMIT 1";
-    $result = $conn->query($sql);
-    if ($result)
-    {
-      $comments = mysqli_fetch_assoc($result);
-      mysqli_free_result($result); 
-        return $comments;   
-      
-    }
-    else
-    {
-      echo "Error retrieving Comment: " . $conn->error;
-    }
-  } 
-}
-
-function getCommentsByCustomerId($conn,$id) // check in future if it's redundunt
+function getCommentsByCustomerId($conn,$id) // used for editing or deleting comments of a user
 {  
   if (!isset($id)) 
   {
@@ -80,6 +55,7 @@ function getCommentsByCustomerId($conn,$id) // check in future if it's redundunt
     }
   } 
 }
+
 
 function addComment($conn,$details ,$Cid,$Mid)
 {

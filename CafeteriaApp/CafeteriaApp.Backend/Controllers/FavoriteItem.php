@@ -50,9 +50,40 @@ function getFavoriteItemById($conn,$id)
   }
 }
 
-function addFavoriteItem($conn,$Cid,$Mid)
+function checkExisitingFavoriteItem($conn,$Cid,$Mid)
 {
-  if (!isset($Cid))
+  if (!isset($Cid)|| !isset($Mid)) 
+  {
+    //echo "Error: FavoriteItem Id is not set";
+    return;
+  }
+  else
+  {
+    $sql = "select count(*) from FavoriteItem where CustomerId =".$Cid." and MenuItemId =".$Mid;
+    $result = $conn->query($sql);
+    $result = mysqli_fetch_array($result, MYSQLI_NUM); 
+    if ($result[0]>0) 
+    { 
+      return true; // exist
+    }
+    else
+    {
+      return false;//not exist
+    }
+    
+    if (isset($conn->error)) 
+    {
+      echo "Error retrieving FavoriteItem: " . $conn->error;
+    }
+  }
+}
+
+function addFavoriteItem($conn,$Cid,$Mid)
+{ if(checkExisitingFavoriteItem($conn,$Cid,$Mid))
+  {
+    return;
+  }
+  elseif (!isset($Cid))
   {
     //echo "Error: Customer Id is not set";
     return;
