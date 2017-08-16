@@ -79,8 +79,6 @@ app.directive('fileDropzone', function() {
   };
 });
 
-
-
 app.directive("fileread", [function () {
     return {
         scope: {
@@ -100,28 +98,29 @@ app.directive("fileread", [function () {
     }
 }]);
 
+function checkType(val,regExp) {
+  if (regExp.test(val) && !isEmpty(val)) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+function isEmpty(val) {
+  if (val == "") {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
 app.directive("numberCheck",function() {
   return {
     restrict: 'A',
     require: 'ngModel',
     link: function(scope,elem,attr,ctrl) {
       var regExp = /^\d{0,9}(\.\d{0,2}){0,1}$/; // regular expression for matching floating point numbers only
-      function checkType(val) {
-        if (regExp.test(val) && !isEmpty(val)) {
-          return true;
-        }
-        else {
-          return false;
-        }
-      }
-      function isEmpty(val) {
-        if (val == "") {
-          return true;
-        }
-        else {
-          return false;
-        }
-      }
       ctrl.$parsers.unshift(function(val) {
         if (checkType(val)) {
           ctrl.$setValidity('numberCheck',true);
@@ -162,6 +161,51 @@ app.directive("numberCheck",function() {
   }
 });
 
+app.directive('checkPhoneNumber',function(){
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    link: function(scope,elem,attr,ctrl) {
+      var regExp = /^\d{0,9}$/;
+      ctrl.$parsers.unshift(function(val) {
+        if (checkType(val,regExp)) {
+          ctrl.$setValidity('checkPhoneNumber',true);
+          ctrl.$setValidity('numberEmpty',true);
+          return val;
+        }
+        else {
+          if (isEmpty(val)) {
+            ctrl.$setValidity('numberEmpty',false);
+            ctrl.$setValidity('checkPhoneNumber',true);
+            return undefined;
+          }
+          else {
+            ctrl.$setValidity('checkPhoneNumber',false);
+            ctrl.$setValidity('numberEmpty',true);
+            return undefined;
+          }
+        }
+      });
+      ctrl.$formatters.unshift(function(val) {
+        if (checkType(val,regExp)) {
+          ctrl.$setValidity('numberEmpty',true);
+          ctrl.$setValidity('checkPhoneNumber',true);
+        }
+        else {
+          if (!isEmpty(val)) {
+            ctrl.$setValidity('checkPhoneNumber',false);
+            ctrl.$setValidity('numberEmpty',true);
+          }
+          else {
+            ctrl.$setValidity('numberEmpty',false);
+            ctrl.$setValidity('checkPhoneNumber',true);
+          }
+        }
+        return val;
+      });
+    }
+  }
+})
 
 // app.service('Languages' , function ($http) {
 

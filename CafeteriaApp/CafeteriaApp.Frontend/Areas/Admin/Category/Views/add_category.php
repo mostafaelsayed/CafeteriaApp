@@ -6,7 +6,7 @@
   include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
 ?>
 
-<script src="/CafeteriaApp.Frontend/javascript/adding category.js"></script>
+<script src="/CafeteriaApp.Frontend/javascript/add_category.js"></script>
 
 <link href="/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
 
@@ -23,7 +23,7 @@
       <div>
         <div class="row">
           <div>
-            <form role="form" name="myform" id="centerBlock">
+            <form novalidate role="form" name="myform" id="centerBlock">
               <div class="form-group">
                 <label>Name</label>
                 <input id="inputField" type="text" class="form-control" ng-model="name" autofocus="autofocus" name="name" required/>

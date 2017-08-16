@@ -6,7 +6,7 @@
   include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
 ?>
 
-<script src="/CafeteriaApp.Frontend/javascript/editing cafeteria and showing and deleting its categories.js"></script>
+<script src="/CafeteriaApp.Frontend/javascript/edit_cafeteria_and_show_and_delete_its_categories.js"></script>
 <script src="/CafeteriaApp.Frontend/javascript/modal_controller.js"></script>
 <script src="/CafeteriaApp.Frontend/javascript/modal.js"></script>
 
@@ -60,7 +60,7 @@
     </div>
   </div>
 
-  <div class="row" ng-controller="showingAndDeletingCategories">
+  <div class="row" ng-controller="showAndDeleteCategories">
     <script type="text/ng-template" id="modal.html">
       <div class="modal fade" id="mymodal" style="background: rgba(0, 0, 0, 0.5)">
         <div class="modal-dialog">
@@ -85,7 +85,7 @@
      <div>
        <div><h3>Manage Your categories</h3>
          <div>
-           <a id="add" title="Add Category" href="/CafeteriaApp.Frontend/Areas/Admin/Category/Views/adding category.php?id={{cafeteriaId}}" target="_self" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
+           <a id="add" title="Add Category" href="/CafeteriaApp.Frontend/Areas/Admin/Category/Views/add_category.php?id={{cafeteriaId}}" target="_self" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
          </div>
        </div>
        <div>
@@ -100,14 +100,14 @@
              <tr>
                <td id="alignText" ng-bind="c.Name"></td>
                <td id="alignText" class="center">
-                 <a id="myButton" href="/CafeteriaApp.Frontend/Areas/Admin/Category/Views/editing category and showing and deleting its menuitems.php?id={{c.Id}}" target="_self">Edit</a>&nbsp;
+                 <a id="myButton" href="/CafeteriaApp.Frontend/Areas/Admin/Category/Views/edit_category_and_show_and_delete_its_menuitems.php?id={{c.Id}}" target="_self">Edit</a>&nbsp;
                  <a style="cursor: pointer" ng-click="deleteCategory(c.Id)">Delete</button>
                </td>
              </tr>
            </tbody>
            <tbody>
              <tr ng-show="categories.length == 0">
-               <td colspan="5"> There are no records.</td>
+               <td colspan="5" style="text-align: center"> There are no Categories in this Cafeteria.</td>
              </tr>
            </tbody>
          </table>

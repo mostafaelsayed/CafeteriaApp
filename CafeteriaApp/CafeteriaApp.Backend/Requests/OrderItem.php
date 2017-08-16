@@ -1,7 +1,7 @@
 <?php
 require_once( 'CafeteriaApp.Backend/Controllers/OrderItem.php');
 require_once("CafeteriaApp.Backend/connection.php");
-require_once ('checkResult.php');
+require_once ('CheckResult.php');
 
 if ($_SERVER['REQUEST_METHOD']=="GET")
 {

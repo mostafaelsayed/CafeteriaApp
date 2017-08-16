@@ -7,7 +7,7 @@
 
 ?>
 
-<script src="/CafeteriaApp.Frontend/javascript/showing and deleting cafeterias.js"></script>
+<script src="/CafeteriaApp.Frontend/javascript/show_and_delete_cafeterias.js"></script>
 <script src="/CafeteriaApp.Frontend/javascript/modal_controller.js"></script>
 
 <script src="/CafeteriaApp.Frontend/javascript/modal.js"></script>
@@ -21,7 +21,7 @@
   </div>
 
   <div class="row" ng-app="myapp">
-    <div ng-controller="showingAndDeletingCafeterias">
+    <div ng-controller="showAndDeleteCafeterias">
      <script type="text/ng-template" id="modal.html">
        <div class="modal fade" id="mymodal">
         <div class="modal-dialog">
@@ -45,7 +45,7 @@
         <div style="margin: auto">
           <div><h3 >Manage Your Cafeterias</h3>
             <div>
-              <a id="add" title="Add Cafeteria" id="creatNewCafeteria" href="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/adding cafeteria.php" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
+              <a id="add" title="Add Cafeteria" id="creatNewCafeteria" href="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/add_cafeteria.php" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
             </div>
           </div>
           <div>
@@ -60,7 +60,7 @@
                 <tr>
                   <td id="alignText" ng-bind="c.Name"></td>
                   <td id="alignText" class="center">
-                    <a type="button" href="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/editing cafeteria and showing and deleting its categories.php?id={{c.Id}}">Edit</a>&nbsp;&nbsp;
+                    <a type="button" href="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/edit_cafeteria_and_show_and_delete_its_categories.php?id={{c.Id}}">Edit</a>&nbsp;&nbsp;
                     <a type="button" style="cursor: pointer" ng-click="deleteCafeteria(c.Id)">Delete</a>
                   </td>
                 </tr>

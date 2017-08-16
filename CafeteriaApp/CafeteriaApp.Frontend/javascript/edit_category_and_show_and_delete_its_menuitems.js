@@ -42,7 +42,7 @@ app.controller('editCategory',['$scope','$http','$location',function($scope,$htt
 
 // controller for showing and deleting menuitems
 
-app.controller('showingAndDeletingMenuItems',['$scope','$http','$location','ModalService',function($scope,$http,$location,ModalService) {
+app.controller('showAndDeleteMenuItems',['$scope','$http','$location','ModalService',function($scope,$http,$location,ModalService) {
   $scope.categoryId = $location.search().id;
   $scope.getMenuItems = function(){
     $http.get('/CafeteriaApp.Backend/Requests/MenuItem.php?categoryId='+$scope.categoryId)

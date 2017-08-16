@@ -174,6 +174,26 @@ elseif (!isset($userId)) {
 }}
 
 
-
+// function deleteUser($conn,$id) // cascaded delete ??
+// { 
+//   if (!isset($id))
+//   {
+//     //echo "Error: Id is not set";
+//     return;
+//   }
+//   else
+//   {
+//     //$conn->query("set foreign_key_checks = 0"); // ????????/
+//     $sql = "delete from Customer where Id = ".$id . " LIMIT 1";
+//     if ($conn->query($sql)===TRUE)
+//     {
+//       return "Customer deleted successfully";
+//     }
+//     else
+//     {
+//       echo "Error: ".$conn->error;
+//     }
+//   }
+// }
 
 ?>

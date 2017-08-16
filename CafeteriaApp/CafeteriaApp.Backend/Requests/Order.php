@@ -4,7 +4,7 @@ require_once( 'CafeteriaApp.Backend/Controllers/Order.php');
 require_once( 'CafeteriaApp.Backend/Controllers/Times.php');
 require_once("CafeteriaApp.Backend/connection.php");
 require ('paypal/start.php');
-require_once ('checkResult.php');
+require_once ('CheckResult.php');
 
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
