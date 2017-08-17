@@ -20,8 +20,9 @@
 
         <!-- <link href='https://fonts.google.com/?category=Serif,Sans+Serif,Monospace&selection.family=Roboto+Slab' rel='stylesheet'> -->
         <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'>
+  <script src="/CafeteriaApp.Frontend/javascript/jquery-3.2.1.min.js"></script>
 
-            <script src="/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
+        <script src="/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
         <!-- <script src= "/CafeteriaApp.Frontend/Scripts/myapp.js"></script> -->
         <script src= "/CafeteriaApp.Frontend/Views/register.js"></script>
       <link href="/CafeteriaApp.Frontend/css/errors.css" rel="stylesheet" type="text/css">
@@ -112,14 +113,17 @@
 
       <div class="input-field col s12">
       Image
-        <input type="text" name="image" ng-model="image"  required/>
-     <span  ng-show=" myForm.$submitted && myForm.image.$invalid" >Image is required.</span>
+        <input type="file" ng-model="image"  name="upload" id="personalImg" />
+        <div id="error-div">
+          <p id="view-err"> </p>
+        </div>
+        <!-- <input type="text" name="image" ng-model="image"  /> -->
+     <!-- <span  ng-show=" myForm.$submitted && myForm.image.$invalid" >Image is required.</span> -->
 
         </div>
      
-      <input type="submit" name="submit" value="Next" ng-click="registerfn()" />
+      <input id="save" type="submit" name="submit" value="Next" ng-click="registerfn()" />
         
-  
         </form>
       
  </div>
@@ -132,3 +136,38 @@
 </body>
 <?php //ng-disabled="myForm.userName.$invalid||myForm.password.$invalid||myForm.firstName.$invalid||myForm.lastName.$invalid" 
 //include("../includes/layouts/footer.php"); ?>
+ <script>
+        $(function(){
+            $("#save").click(function () {
+                // 1- check if it's empty
+                //if ($("#personalImg").val() == "") {
+                //    $("#error-div").fadeIn();
+                //    $("#view-err").append("Please, Choose an image for the job !");
+                //    return false;
+                //}
+
+                //2- check  image extension is valid
+                if ($("#personalImg").val() != "") {
+
+                    var filename = document.getElementById("personalImg").value;
+                    var extension = filename.substr(filename.lastIndexOf('.') + 1);
+                    var validExtensions = ['jpeg', 'png', 'gif', 'bmp']; // like a list
+                    if ($.inArray(extension, validExtensions) == -1) {
+                        $("#error-div").fadeIn();
+                        $("#view-err").append("Please, Choose a valid image for the job !");
+                        return false;//no save or no redirect
+                    }
+
+                    //3-check image size
+                    var fileSize = document.getElementById("personalImg").files[0].size / 1024 / 1024;//to get the size in megabytes
+                    if (fileSize > 2) {
+                        $("#error-div").fadeIn();
+                        $("#view-err").append("Please, Choose a smaler image for the job !");
+                        return false;
+                    }
+                }
+
+            });
+        });
+
+    </script>

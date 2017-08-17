@@ -118,9 +118,9 @@ function editOrderItemQuantity($conn,$quantity,$id,$increaseDecrease)
   }
   else
   {
-    $MenuItemId = json_decode(getOrderItemById($conn,$id,true), true)["MenuItemId"];
+    $MenuItemId = json_decode(getOrderItemById($conn,$id), true)["MenuItemId"];
     $unitPrice =getMenuItemPriceById($conn,$MenuItemId);
-    $orderId =json_decode(getOpenOrderByCustomerId($conn,true), true)["Id"];
+    $orderId =json_decode(getOpenOrderByCustomerId($conn), true)["Id"];
     updateOrderTotalById($conn,$orderId,$increaseDecrease ?+$unitPrice : -$unitPrice);
     $totalPrice = $quantity * $unitPrice;
     $sql = "update OrderItem set Quantity = (?) , TotalPrice=(?)  where Id = (?)";
@@ -209,7 +209,7 @@ function deleteOrderItem($conn,$id) {// remove TotalPrice to total of the order
   }
   else
   {
-    $orderId =json_decode(getOpenOrderByCustomerId($conn,true), true)["Id"];
+    $orderId =json_decode(getOpenOrderByCustomerId($conn) , true)["Id"];
     $totalPrice=getOrderItemTotalPriceById($conn,$id);
     updateOrderTotalById($conn,$orderId,-$totalPrice);
     $sql = "delete from OrderItem where Id = ".$id . " LIMIT 1";
@@ -223,5 +223,60 @@ function deleteOrderItem($conn,$id) {// remove TotalPrice to total of the order
     }
   }
 }
+
+function deleteOrderItemsByMenuItemId($conn,$id) {// remove TotalPrice to total of the order
+ if (!isset($id))
+  {
+    // echo "Error: Id is not set";
+    return;
+  }
+  else
+  {
+   // $orderId =json_decode(getOpenOrderByCustomerId($conn), true)["Id"];
+    //$totalPrice=getOrderItemTotalPriceById($conn,$id);
+    //updateOrderTotalById($conn,$orderId,-$totalPrice);
+    $sql = "delete from OrderItem where MenuItemId = ".$id ;
+    if ($conn->query($sql)===TRUE )
+    {
+      return "Order Item deleted successfully";
+    }
+    else
+    {
+      echo "Error: ".$conn->error;
+    }
+  }
+}
+
+
+function editOrderItemTotalPrice($conn,$totalPrice,$id) 
+{
+  if (!isset($totalPrice))
+  {
+    //echo "Error: OrderItem quantity is not set";
+    return;
+  }
+  elseif (!isset($id))
+  {
+    //echo "Error: OrderItem id is not set";
+    return;
+  }
+  else
+  {
+    $sql = "update OrderItem set  TotalPrice=(?)  where Id = (?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("di",$TotalPrice,$Id);
+    $TotalPrice = $totalPrice ;
+    $Id = $id;
+    if ($stmt->execute()===TRUE)
+    {
+      return "OrderItem updated successfully";
+    }
+    else
+    {
+      echo "Error: ".$conn->error;
+    }
+  }
+}
+
 
 ?>

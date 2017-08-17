@@ -50,6 +50,29 @@ function getMenuItemById($conn , $id)
   }
 }
 
+function getMenuItemsByIds($conn , $ids)
+{
+  if (!isset($ids))
+  {
+    //echo "Error:MenuItem Id is not set";
+    return;
+  }
+  else
+  {
+    $sql = "select * from MenuItem where Id in (". implode(',', $ids) . ")";
+    if ($result = $conn->query($sql))
+    {
+      $MenuItem = mysqli_fetch_all($result,MYSQLI_ASSOC);
+      mysqli_free_result($result);
+        return $MenuItem;
+    }
+    else
+    {
+      echo "Error retrieving MenuItem: " . $conn->error;
+    }
+  }
+}
+
 function getMenuItemPriceById($conn , $id)
 {
   if (!isset($id))

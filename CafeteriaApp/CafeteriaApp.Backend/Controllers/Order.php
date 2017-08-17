@@ -156,7 +156,7 @@ function getOrdersByOrderStatusId($conn,$id)
     $result = $conn->query($sql);
     if ($result)
     {
-      $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
         return $orders;
       
@@ -383,5 +383,30 @@ function deleteOpenOrderById($conn) // remove  order items with cascading
     echo "Error: ".$conn->error;
   }
 }
+
+
+
+function calcAndUpdateOrderTotalById($conn ,$orderId)
+{
+  if (!isset($orderId))
+  {
+    //echo "Error: order Id  is not set";
+    return;
+  }
+  else
+  {
+    $sql = "update `Order` set `Total`= IFNULL((select sum(TotalPrice) from `OrderItem` where OrderId ={$orderId}), 0) where Id={$orderId}";
+    $result = $conn->query($sql);
+    if ($result===TRUE)
+    {
+      return "Order Total updated successfully";
+    }
+    else
+    {
+      echo "Error: ".$conn->error;
+    }
+  }
+}
+
 
 ?>
