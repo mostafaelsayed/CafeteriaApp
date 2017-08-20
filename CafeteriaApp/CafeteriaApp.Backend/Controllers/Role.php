@@ -41,6 +41,32 @@ function getRoleById($conn,$id)
   }
 }
 
+function getRoleIdByName($conn,$name)
+{
+  if (!isset($name)) 
+  {
+    //echo "Error: Role Id is not set";
+    return;
+  }
+  else
+  {
+    $name = mysqli_real_escape_string($conn , $name);
+    $sql = "select `Id` from `Role` where `Name` = '{$name}' ";
+    $result = $conn->query($sql);
+    if ($result)
+    {
+      $roles = mysqli_fetch_assoc($result);
+      mysqli_free_result($result);
+        return $roles["Id"];   
+      
+    }
+    else
+    {
+      echo "Error retrieving Role: " . $conn->error;
+    }
+  }
+}
+
 function getDirIdByRoleId($conn,$id,$backend=false)
 {
   if (!isset($id)) 

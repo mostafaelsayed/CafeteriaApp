@@ -51,13 +51,13 @@ function getDateIdByDate($conn ,$value)
   }
   else
   {
-    $sql = "select Id from `Dates` where `Date` =".$value;
+    $sql = "select Id from `Dates` where `Date` ='{$value}'";
     $result = $conn->query($sql);
     if ($result)
     {
-      $date = mysqli_fetch_assoc($result);
+      $dateId = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-        return $date;
+        return $dateId["Id"];
      
     }
     else

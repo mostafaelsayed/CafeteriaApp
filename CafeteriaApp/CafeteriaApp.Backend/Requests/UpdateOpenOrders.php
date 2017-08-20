@@ -2,6 +2,7 @@
 require_once( 'CafeteriaApp.Backend/Controllers/Order.php');
 require_once( 'CafeteriaApp.Backend/Controllers/OrderItem.php');
 require_once('CafeteriaApp.Backend/Controllers/MenuItem.php');
+require_once('CafeteriaApp.Backend/Controllers/Notification.php');
 require_once("CafeteriaApp.Backend/connection.php");
 
 $ids= array();
@@ -26,10 +27,16 @@ function explodeArray1($arr1)
 //1-get all open orders where open status id =1
 $orders = getOrdersByOrderStatusId($conn , 1);
 
+if(!empty($orders)){
+// get users who should get notified by the change happened
+$usersIds=array();
+
 //2-get all order items 
 $orderItems = array();
 foreach ($orders as $key => $order) {
 array_push($orderItems, getOrderItemsByOpenOrderId($conn ,$order["Id"])) ;
+array_push($usersIds,$order["UserId"] ) ;
+
 }
 
 //get Menu Items distinct Ids in array and flatten order items 
@@ -48,22 +55,34 @@ $menuItems =getMenuItemsByIds($conn,$ids);
 //delete invisible from orderitems  
 //total price for order items
 foreach ($menuItems as $key => $menuItem) {
+	
 	if(!$menuItem["Visible"])
 	{
-	deleteOrderItemsByMenuItemId($conn, $menuItem["Id"]);	//remove from db
+	deleteOrderItemsByMenuItemId($conn, $menuItem["Id"]);	//remove from db at once
 	}
 	
 	foreach ($flattenOrderItems as $key => $OrderItem) {
-	if($menuItem["Id"]===$OrderItem["MenuItemId"] ){
+	if($menuItem["Id"]===$OrderItem["MenuItemId"] ){ // remove from front end also as at the end , you'll update the visible only in front and back 
 		if(!$menuItem["Visible"])
 		{
+			foreach ($orders as $key => $order) {//send notification foreach user by items removal
+			if($order['Id']=== $OrderItem['OrderId'])
+			addNotification($conn,$order['UserId'] ,1);
+			}
+
 			unset($flattenOrderItems[$key]);//remove from front
+
 		}
 		else{
 	 			//update price
 			//$flattenOrderItems[$key]["TotalPrice"]=$menuItem["Price"]*$OrderItem["Quantity"];
 			//update order items total price in db
 			editOrderItemTotalPrice($conn,$menuItem["Price"]*$OrderItem["Quantity"],$OrderItem["Id"]  );
+	
+			foreach ($orders as $key => $order) {//send notification foreach user by price changes
+			if($order['Id']=== $OrderItem['OrderId'])
+			addNotification($conn,$order['UserId'] ,2);
+			}
 		}
 	}
 	}
@@ -78,7 +97,7 @@ foreach ($orders as $key => $order) {
 
 
 
-
+}
 //5-leave a message for the customer who ordered
 
 

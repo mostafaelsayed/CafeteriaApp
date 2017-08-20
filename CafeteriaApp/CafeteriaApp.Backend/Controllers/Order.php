@@ -1,6 +1,6 @@
 <?php require_once('CafeteriaApp.Backend/session.php');
 
-function getClosedOrdersByCustomerId($conn,$id)
+function getClosedOrdersByUserId($conn,$id)
 {
   if( !isset($id))
   {
@@ -9,7 +9,7 @@ function getClosedOrdersByCustomerId($conn,$id)
   }
   else
   {
-    $sql = "select * from `order` where CustomerId = ".$id;
+    $sql = "select * from `order` where UserId = ".$id;
     $result = $conn->query($sql);
     if ($result)
     {
@@ -50,10 +50,10 @@ function getOrderById($conn,$id)
   }
 }
 
-function getOpenOrderByCustomerId($conn)
+function getOpenOrderByUserId($conn)
 {
   $openStatusId=1;
-  $sql = "select * from `Order` where CustomerId = ".$_SESSION["customerId"]." and OrderStatusId = ".$openStatusId;
+  $sql = "select * from `Order` where UserId = ".$_SESSION["userId"]." and OrderStatusId = ".$openStatusId;
   $result = $conn->query($sql);
   if ($result)
   {
@@ -193,7 +193,7 @@ function getOrdersByPaymentMethodId($conn,$id)
   }
 }
 
-function addOrder( $conn,$deliveryDateId, $createdTimeId,$deliveryPlace, $paymentMethodId,$orderStatusId, $customerId,$total=0,$paid=0)
+function addOrder( $conn,$deliveryDateId, $createdTimeId,$deliveryPlace, $paymentMethodId,$orderStatusId, $userId,$total=0,$paid=0)
 {
   if (!isset($deliveryDateId))
   {
@@ -230,17 +230,17 @@ function addOrder( $conn,$deliveryDateId, $createdTimeId,$deliveryPlace, $paymen
     //echo "Error: Order orderStatusId is not set";
     return;
   }
-  elseif (!isset($customerId))
+  elseif (!isset($userId))
   {
    // echo "Error: Order customerId is not set";
     return;
   }
   else
   {
-    $sql = "insert into `Order` (DeliveryDateId,DeliveryTimeId,DeliveryPlace,Paid,Total,PaymentMethodId,OrderStatusId,CustomerId) values (?,?,?,?,?,?,?,?)";
+    $sql = "insert into `Order` (DeliveryDateId,DeliveryTimeId,DeliveryPlace,Paid,Total,PaymentMethodId,OrderStatusId,UserId) values (?,?,?,?,?,?,?,?)";
     $stmt = $conn->prepare($sql);
 
-    $stmt->bind_param("iisddiii",$DeliveryDateId, $DeliveryTimeId,$DeliveryPlace, $Paid, $Total, $PaymentMethodId,$OrderStatusId, $CustomerId );
+    $stmt->bind_param("iisddiii",$DeliveryDateId, $DeliveryTimeId,$DeliveryPlace, $Paid, $Total, $PaymentMethodId,$OrderStatusId, $UserId );
     $DeliveryDateId=$deliveryDateId;
     $DeliveryTimeId=$createdTimeId;
     $DeliveryPlace=$deliveryPlace;
@@ -248,7 +248,7 @@ function addOrder( $conn,$deliveryDateId, $createdTimeId,$deliveryPlace, $paymen
     $Total=$total;
     $PaymentMethodId=$paymentMethodId;
     $OrderStatusId=$orderStatusId;
-    $CustomerId=$customerId;
+    $UserId=$userId;
     if ($stmt->execute()===TRUE)
     {
       //echo "Order Added successfully";
@@ -373,7 +373,7 @@ function deleteOpenOrderById($conn) // remove  order items with cascading
 {
   $openStatusId=1;
   //$conn->query("set foreign_key_checks = 0"); // ????????/
-  $sql = "delete from `Order` where CustomerId = ". $_SESSION["customerId"] ." and `OrderStatusId`= {$openStatusId}  LIMIT 1";
+  $sql = "delete from `Order` where UserId = ". $_SESSION["userId"] ." and `OrderStatusId`= {$openStatusId}  LIMIT 1";
   if ($conn->query($sql)===TRUE)
   {
     return "Current Open Order deleted successfully";

@@ -3,12 +3,7 @@
  require_once('CafeteriaApp.Backend/session.php');
  require_once("CafeteriaApp.Backend/connection.php"); 
 
-function test_input($conn,$data) {
-    $data = trim($data);
-    $data = mysqli_real_escape_string($conn , $data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
+
 
 	function redirect_to($new_location) {
 	  header("Location: " . $new_location);
@@ -72,7 +67,7 @@ function test_input($conn,$data) {
 	
 
 	function islogged_in() {
-		return (isset($_SESSION['UserId']) || isset($_SESSION['facebook_access_token']) );// for normal user and fb user check
+		return (isset($_SESSION['userId']) || isset($_SESSION['facebook_access_token']) );// for normal user and fb user check
 	}
 	
 	function confirm_logged_in() {

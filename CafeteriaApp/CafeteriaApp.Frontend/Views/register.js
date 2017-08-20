@@ -1,7 +1,12 @@
-var app = angular.module('myapp', []);
+//var app = angular.module('myapp', []);
 
 app.controller('Register', function($scope,$http){
 
+$scope.image = null;
+$scope.imageFileName = '';
+  
+  $scope.uploadme = {};
+  $scope.uploadme.src = '';
 
 $scope.checkExistingMailAndUserName=function () {
 
@@ -38,7 +43,7 @@ if($scope.checkExistingMailAndUserName()){
         lastName:$scope.lastName,
         phone:$scope.phone,
         email: $scope.email,
-        image:$scope.image,
+    image: $scope.uploadme.src.split(',')[1],
         gender:$scope.gender,
        dob:$scope.DOB,
 		password:$scope.password

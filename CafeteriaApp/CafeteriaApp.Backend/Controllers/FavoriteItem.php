@@ -1,6 +1,6 @@
 <?php
 
-function getFavoriteItemsByCustomerId($conn,$Cid)
+function getFavoriteItemsByUserId($conn,$Cid)
 {
   if (!isset($Cid)) 
   {
@@ -9,7 +9,7 @@ function getFavoriteItemsByCustomerId($conn,$Cid)
   }
   else
   {
-    $sql = "select FavoriteItem.Id , MenuItem.Name , MenuItem.Description , MenuItem.Price ,MenuItem.Image , FavoriteItem.MenuItemId from FavoriteItem INNER JOIN MenuItem ON FavoriteItem.MenuItemId = MenuItem.Id where CustomerId =".$Cid;
+    $sql = "select FavoriteItem.Id , MenuItem.Name , MenuItem.Description , MenuItem.Price ,MenuItem.Image , FavoriteItem.MenuItemId from FavoriteItem INNER JOIN MenuItem ON FavoriteItem.MenuItemId = MenuItem.Id where UserId =".$Cid;
     $result = $conn->query($sql);
     if ($result)
     {
@@ -59,10 +59,11 @@ function checkExisitingFavoriteItem($conn,$Cid,$Mid)
   }
   else
   {
-    $sql = "select count(*) from FavoriteItem where CustomerId =".$Cid." and MenuItemId =".$Mid;
+    $sql = "select count(*) from FavoriteItem where UserId =".$Cid." and MenuItemId =".$Mid;
     $result = $conn->query($sql);
     $result = mysqli_fetch_array($result, MYSQLI_NUM); 
-    if ($result[0]>0) 
+    $result=(int)$result[0];
+    if ($result>0) 
     { 
       return true; // exist
     }
@@ -95,10 +96,10 @@ function addFavoriteItem($conn,$Cid,$Mid)
   }
   else
   {
-    $sql = "insert into FavoriteItem (CustomerId,MenuItemId) values (?,?)";
+    $sql = "insert into FavoriteItem (UserId,MenuItemId) values (?,?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii",$CustomerId,$MenuItemId);
-    $CustomerId = $Cid;
+    $stmt->bind_param("ii",$UserId,$MenuItemId);
+    $UserId = $Cid;
     $MenuItemId=$Mid;
     if ($stmt->execute()===TRUE)
     {
@@ -143,7 +144,7 @@ function deleteFavoriteItemByMenuItemId($conn,$Cid,$Mid)
   else
   {
     //$conn->query("set foreign_key_checks=0");
-    $sql = "delete from FavoriteItem where MenuItemId = ".$Mid. " and  CustomerId=".$Cid." LIMIT 1";
+    $sql = "delete from FavoriteItem where MenuItemId = ".$Mid. " and  UserId=".$Cid." LIMIT 1";
     if ($conn->query($sql)===TRUE)
     {
       return "FavoriteItem deleted successfully";

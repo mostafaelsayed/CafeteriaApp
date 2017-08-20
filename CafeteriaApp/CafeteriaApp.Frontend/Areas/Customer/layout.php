@@ -24,6 +24,7 @@
 
   <script src="/CafeteriaApp.Frontend/javascript/jquery-3.2.1.min.js"></script>
   <script src="/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
+  <script src="/CafeteriaApp.Frontend/javascript/angular-route.js"></script>
   <script src="/CafeteriaApp.Frontend/javascript/bootstrap.min.js"></script>
   <script src="/CafeteriaApp.Frontend/javascript/ui-bootstrap-2.5.0.js"></script>
 
@@ -97,26 +98,54 @@
             <!-- <div class="select-wrapper"> -->
          <div  ng-controller="Language"  >
          <ul class="nav navbar-nav navbar-right ">
-         <li>
-            <select   title="Display language" ng-model="selectedLang" ng-options="l.Name for l in languages" ng-change="changeLanguage(selectedLang.Id)" > 
+         <li style="margin-right:50px;">
+            <select    title="Display language" ng-model="selectedLang" ng-options="l.Name for l in languages" ng-change="changeLanguage(selectedLang.Id)" > 
             <!-- <option value="" disabled >Choose the language</option>-->
             
             </select> 
 
             <?php //$_SESSION["langId"]= "{{selectedLang.Id}}" ;  //echo __FILE__;        ?>
         </li>
-        <li>
-        
+
+        <li style="margin-right:50px;cursor: pointer;"   onclick="showNotifications()">
+        <?php  
+          $length = 0 ;
+         if(!empty($_SESSION["notifications"]) && is_array($_SESSION["notifications"]))
+          { 
+              $ul="<ul style='color:blue;'>";
+            foreach ($_SESSION["notifications"] as  $value) {
+               $length++;
+               $ul.= "<li>".$value[0]."</li>";
+            }
+
+            $ul.="</ul>";
+            $_SESSION["notifications"] =  $ul;
+
+          }
+         
+
+      //print_r($_SESSION["notifications"]);
+        ?>
+       
+        <?php 
+        if ( $length > 0) {
+          echo " <img  src='/CafeteriaApp.Frontend/alarm-1.png' width='55' height='55' >";
+           echo "<label id='notifyLabel' style='color:blue;font-size:2em;'>{$length}</label>";
+         }
+         else
+         {
+          echo " <img  src='/CafeteriaApp.Frontend/alarm.png' width='55' height='55' >";
+
+         }
+         ?>
+
         </li>
+
          <li>
          <?php echo "<a target=\"_self\" title='Go to profile' href='/CafeteriaApp.Frontend/Areas/Customer/favorite items.php'><h4>Hi, {$_SESSION['userName']}</h4></a>"; ?>
 
          </li>
 
-          <li>
-         
-         
-         </li>
          
        </div>
          <!-- </div> -->
@@ -174,6 +203,7 @@ $scope.changeLanguage=function (languageId) {
  //$scope.selectedLang = $scope.languages[0];
   
 });
+
 
 </script>
 

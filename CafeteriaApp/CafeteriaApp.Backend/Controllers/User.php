@@ -173,7 +173,8 @@ function checkExistingUserName($conn,$userName ,$register_edit)
   {
     $result = mysqli_fetch_array($result, MYSQLI_NUM); 
     //mysqli_free_result($result);
-    if ($result[0]>0) // if he wnats to change the mail and not keeping the old
+    $result=(int)$result[0];
+    if ($result>0) // if he wnats to change the mail and not keeping the old
     { 
       return true; // exist
     }
@@ -199,7 +200,8 @@ function checkExistingEmail($conn,$email) // problem if he wants to edit his inf
   if ($result)
   {
     $result = mysqli_fetch_array($result, MYSQLI_NUM);
-    if ($result[0]>0) // if he wants to change the mail and not keeping the old
+    $result=(int)$result[0];
+    if ($result>0) // if he wants to change the mail and not keeping the old
     { 
       return true; // exist
     }

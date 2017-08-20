@@ -2,7 +2,7 @@
 function checkResult($result)
 {
 	if (isset($result))
-	{
+	{	
 		echo json_encode($result);
 	}
 	else

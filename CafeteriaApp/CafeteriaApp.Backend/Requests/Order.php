@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD']=="GET")
   }
   else
   {
-    checkResult(getOpenOrderByCustomerId($conn));
+    checkResult(getOpenOrderByUserId($conn));
   }
 }
 

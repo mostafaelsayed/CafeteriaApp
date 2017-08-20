@@ -15,12 +15,12 @@ app.controller('favorites' , function($scope,$http) {
 
 
 
-	$scope.deleteFavorItem=function (Id) {
+	$scope.deleteFavorItem=function (menuItemId,index) {
 	
-	$http.delete('/CafeteriaApp.Backend/Requests/FavoriteItem.php?Id='+Id)
+	$http.delete('/CafeteriaApp.Backend/Requests/FavoriteItem.php?MenuItemId='+menuItemId)
 	.then(function (response) {
       //console.log(response);
-      //$scope.favoriteItems = response.data;
+      $scope.favoriteItems.splice( index ,1) ;
     });
 
 	}

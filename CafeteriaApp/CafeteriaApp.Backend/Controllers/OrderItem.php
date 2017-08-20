@@ -40,7 +40,7 @@ function getOrderItemsByOpenOrderId($conn,$id)
   }
   else
   {
-    $sql = "select OrderItem.Id , MenuItem.Name , MenuItem.Id as MenuItemId , OrderItem.TotalPrice ,OrderItem.Quantity from OrderItem INNER JOIN MenuItem ON  OrderItem.MenuItemId = MenuItem.Id where OrderItem.OrderId=".$id ;
+    $sql = "select  MenuItem.Name , MenuItem.Id as MenuItemId , OrderItem.Id ,OrderItem.OrderId, OrderItem.TotalPrice ,OrderItem.Quantity from OrderItem INNER JOIN MenuItem ON  OrderItem.MenuItemId = MenuItem.Id where OrderItem.OrderId=".$id ;
     $result = $conn->query($sql);
     if ($result)
     {
@@ -120,7 +120,7 @@ function editOrderItemQuantity($conn,$quantity,$id,$increaseDecrease)
   {
     $MenuItemId = json_decode(getOrderItemById($conn,$id), true)["MenuItemId"];
     $unitPrice =getMenuItemPriceById($conn,$MenuItemId);
-    $orderId =json_decode(getOpenOrderByCustomerId($conn), true)["Id"];
+    $orderId =json_decode(getOpenOrderByUserId($conn), true)["Id"];
     updateOrderTotalById($conn,$orderId,$increaseDecrease ?+$unitPrice : -$unitPrice);
     $totalPrice = $quantity * $unitPrice;
     $sql = "update OrderItem set Quantity = (?) , TotalPrice=(?)  where Id = (?)";
@@ -158,7 +158,7 @@ function addOrderItem($conn,$orderId,$menuItemId,$quantity)
   {
     $deliveryTimeId = getCurrentTimeId($conn);
     $deliveryDateId = getCurrentDateId($conn);
-    $orderId = addOrder($conn,$deliveryDateId,$deliveryTimeId,'',1,1, $_SESSION["customerId"], $totalPrice);//paid default to zero
+    $orderId = addOrder($conn,$deliveryDateId,$deliveryTimeId,'',1,1, $_SESSION["userId"], $totalPrice);//paid default to zero
     if ($orderId != null)
     {
       $sql = "insert into OrderItem (OrderId,MenuItemId,Quantity,TotalPrice) values (?,?,?,?)";
@@ -209,7 +209,7 @@ function deleteOrderItem($conn,$id) {// remove TotalPrice to total of the order
   }
   else
   {
-    $orderId =json_decode(getOpenOrderByCustomerId($conn) , true)["Id"];
+    $orderId =json_decode(getOpenOrderByUserId($conn) , true)["Id"];
     $totalPrice=getOrderItemTotalPriceById($conn,$id);
     updateOrderTotalById($conn,$orderId,-$totalPrice);
     $sql = "delete from OrderItem where Id = ".$id . " LIMIT 1";

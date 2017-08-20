@@ -9,13 +9,19 @@
 <link href="/CafeteriaApp.Frontend/css/customer styles.css" rel="stylesheet">
 <style type="text/css">
   
-table{
+.blueTable{
 
 border: 1px solid blue;
- width = 500px;
+ /*width = 500px;*/
 }
 
-  table,td,tr{
+  .blueTable>tr{
+    margin: 10px;
+    /*color: white;*/
+  }
+   .blueTable>td{
+  text-align:center;
+    margin: 10px;
     color: white;
   }
 
@@ -33,11 +39,9 @@ border: 1px solid blue;
 
     <div class="col-lg-5">
       <div ng-repeat="m in menuItems" style="width:90%;margin-left:40px">
-        <h1 ng-bind="m.Name" class="menu-name"></h1>
+        <h1 ng-bind="m.Name" class="menu-name" ></h1>
         
-
-
-
+        <!-- <h2 ng-show="ShowCallsInNGRepeat()"></h2> -->
 
         <a id="{{'favorites'+m.Id}}" title="add to favorites" style="color:red;float:right;" ng-click="toggleFavoriteItem(m.Id)" class="btn btn-info btn-lg">
           <span class="glyphicon glyphicon-heart"></span></a>
@@ -47,7 +51,7 @@ border: 1px solid blue;
         <a title="Add To Order" id="creatNewCafeteria" ng-click="addToOrder(m)" class="btn btn-circle" style="color:white;float:right;margin-top:-40px"><i class="fa fa-plus"></i></a>
     
 
-     <a  title="Show/Hide Comments" style="color:blue;float:right;" ng-click="ToggleMenuItemComments($index,m.Id)" class="btn btn-lg">
+     <a  title="Show/Hide Comments" style="color:blue;float:right;" ng-click="toggleMenuItemComments($index,m.Id)" class="btn btn-lg">
           <span class="" >{{ ShowHides[$index] ?'Hide Comments':'Show Comments'}}</span></a>
 
 
@@ -57,29 +61,37 @@ border: 1px solid blue;
         
 
 
-        <table id="{{'comments'+m.Id}}" ng-show="ShowHides[$index]"  >
+        <table class="blueTable" id="{{'comments'+m.Id}}" ng-if="ShowHides[$index]"  >
           <caption style="color:blue;font-weight:bold;">{{m.Name}} Comments</caption>
-          <tbody id="{{'tbody'+m.Id}}">
-        <!-- Here, we put comments of customers-->
-       </tbody>
+         
+          <tbody id="" >
+        <tr ng-repeat="comm in comments[$index]">
+          <td>{{comm.UserName}}</td>
+          <td>{{comm.Date}}</td>
+         
+          <td><p>{{comm.Details}} &nbsp;&nbsp;</p> </td>
+
+          <td ng-if="checkEditAndRemove(comm.Id, menuItems.indexOf(m))">
+          <a style="cursor: pointer;" ng-click="editComment( $index , menuItems.indexOf(m))">edit</a> &nbsp; <a ng-click="deleteComment( comm.Id, $index , menuItems.indexOf(m) )"  style="cursor: pointer;" >remove</a>
+          </td>
+       </tr>
+        </tbody>
 
            <tbody>
-          <tr>    
-         <td> <textarea ng-KeyPress="$event.keyCode ==13 ? AddCommentBackAndFront(m.Id,commentDetails,customer) :null" type="textarea" placeholder="add your comment ........" ng-model="commentDetails"   style="width: auto; display: block;width:100%;"></textarea>
+          <tr>   
+          <!-- <textarea ng-KeyPress="$event.keyCode ==13 ? addCommentBackAndFront(m.Id,commentDetails,customer) :null" ></textarea> -->
+         <td><textarea  id="{{'textarea'+ $index}}" type="textarea" placeholder="add your comment ........" ng-model="commentDetails[$index]"   style="width: auto; display: block;width:100%;"></textarea></td>
+         <td><input id="{{'addUpdateBtn'+ $index}}" class="btn btn-info btn-lg" type="submit" name="addComment" value="Add" ng-click="addCommentBackAndFront($index , m.Id , commentDetails[$index] , customer , add_edits[$index] ) "></td>
         </tr>
       </tbody>
         </table>
 
 
-
-
-
-
-
-
-        <div ng-show="menuItems.indexOf(m)<menuItems.length-1"><hr width="100%"></div>
-
+        <div ng-show="menuItems.indexOf(m) < menuItems.length-1"><hr width="100%"></div>
       </div>
+
+
+
       <br>
     </div>
 
@@ -112,9 +124,13 @@ border: 1px solid blue;
 
   <hr width="80%">
 
-  <textarea >  <?php echo ("Hi\r\nscscsc"); ?> </textarea>
 
 
   <h1>About This Category</h1><br>
   <h3>we have special menuitems here with affordable price.Take a look at our dishes and have fun!</h3>
 </div>
+
+
+<script type="text/javascript">
+  var redirect_to = <?php $file=__File__ ;echo "\"" .(string)(urlencode($file))."\""  ; ?>
+</script>

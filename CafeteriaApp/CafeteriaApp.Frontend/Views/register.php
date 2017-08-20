@@ -19,43 +19,57 @@
     
 
         <!-- <link href='https://fonts.google.com/?category=Serif,Sans+Serif,Monospace&selection.family=Roboto+Slab' rel='stylesheet'> -->
-        <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'>
-  <script src="/CafeteriaApp.Frontend/javascript/jquery-3.2.1.min.js"></script>
-
+        <!-- <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'> -->
         <script src="/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
-        <!-- <script src= "/CafeteriaApp.Frontend/Scripts/myapp.js"></script> -->
+          <script src="/CafeteriaApp.Frontend/javascript/myapp.js"></script>
         <script src= "/CafeteriaApp.Frontend/Views/register.js"></script>
+
       <link href="/CafeteriaApp.Frontend/css/errors.css" rel="stylesheet" type="text/css">
         <script src="/CafeteriaApp.Frontend/javascript/alertify.min.js"></script>
+      <link href="/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
 
 
+
+<style>
+input.ng-toutched {
+    color: red;
+    background-color:red;
+}
+</style>
     </head>
-    <body>
+
+
+<body>
+
 <div id="main">
   <div id="navigation">
     &nbsp;
   </div>
+
   <div id="page" class="row" style="align-content:center; text-align:center;" >
     <?php echo message(); ?>
-    <?php echo form_errors($errors); ?>
+    <?php echo form_errors($errors); ?></div>
     
     <h2> New User </h2>
-          <center> 
-     <div class="row"  ng-app="myapp" ng-controller="Register">  
+     <div class="row"   ng-controller="Register">  
 
-    <form  novalidate    name="myForm" class="col s12"   method="post" style="align-content:center;text-align:center;width:70%;">
+          <!-- enctype="multipart/form-data" -->
+
+    <form  novalidate  role="form"   name="myform" class="col s12"    style="align-content:center;text-align:center;width:70%;margin-left: 50px">
  
 
       <div class="input-field col s12"  >
       <label  for="un">User Name</label>
-        <input id="un" type="text" name="userName" ng-model="userName"  ng-maxlength="30" maxlength="30"  required/>
-        <span  ng-show=" myForm.$submitted && myForm.userName.$invalid || myForm.userName.length>30 " >User Name is required.</span>
+        <input id="un" type="text" name="userName" ng-model="userName"  ng-maxlength="30"   ng-required ="dddd"/>
+        <span  ng-show=" myform.$submitted && myform.userName.$invalid  " >User Name is required.</span>
+        <span  ng-show=" myform.userName.$invalid  " >User Name must be less than 30 character or numbers .</span>
+
       </div>
 
        <div class="input-field col s12" >
        <label  for="ps">Password</label>
         <input id="ps" type="password" name="password" ng-model="password"   required/>
-        <span  ng-show=" myForm.$submitted && myForm.password.$invalid" >Password is required.</span>
+        <span  ng-show=" myform.$submitted && myform.password.$invalid" >Password is required.</span>
 
       </div >
 
@@ -63,14 +77,14 @@
       <div class="input-field col s12" >    
         <label  for="fn">First Name</label>
         <input id="fn" type="text" name="firstName"  ng-model="firstName"  required/>
-      <span  ng-show=" myForm.$submitted && myForm.firstName.$invalid" >First Name is required.</span>
+      <span  ng-show=" myform.$submitted && myform.firstName.$invalid" >First Name is required.</span>
 
       </div>
 
       <div class="input-field col s12">
       <label  for="ln">Last Name</label>
         <input id="ln" type="text" name="lastName" ng-model="lastName"   required/>
-      <span  ng-show=" myForm.$submitted && myForm.lastName.$invalid" >Last Name is required.</span>
+      <span  ng-show=" myform.$submitted && myform.lastName.$invalid" >Last Name is required.</span>
 
       </div>
         <br>
@@ -86,39 +100,48 @@
                     <label for="other">Other</label>
                     <br><br>
              
-                    <div class="input-field col s12">
+                  
 
 
       <div class="input-field col s12">
         <label  for="em">E-mail</label>
 
         <input id="em" type="text" name="email"  ng-model="email"   required/>
-        <span id="emailConfirm" ng-show=" myForm.$submitted && myForm.email.$invalid" >Email is required.</span>
+        <span id="emailConfirm" ng-show=" myform.$submitted && myform.email.$invalid" >Email is required.</span>
 
       </div>
 
       <div class="input-field col s12">
         <label  for="pn">Phone Number</label>
         <input id="pn" type="text" name="phone" ng-model="phone"  required/>
-   <span  ng-show=" myForm.$submitted && myForm.phone.$invalid" >Phone Number is required.</span>
+   <span  ng-show=" myform.$submitted && myform.phone.$invalid" >Phone Number is required.</span>
 
       </div>
 
       <div class="input-field col s12" >
         <i class="material-icons prefix">today</i>
         <input id="DOB" name="DOB" type="date" class="datepicker" ng-model="DOB" style="width:70%" required>
-        <span  ng-show=" myForm.$submitted && myForm.DOB.$invalid" >Date of Birth is required.</span>
+        <span  ng-show=" myform.$submitted && myform.DOB.$invalid" >Date of Birth is required.</span>
         <label for="DOB">Select your Date of Birth</label>
         </div>
 
       <div class="input-field col s12">
-      Image
-        <input type="file" ng-model="image"  name="upload" id="personalImg" />
-        <div id="error-div">
-          <p id="view-err"> </p>
+    
+       <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="3">
+        
+        <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile">
+        <img ng-src="{{ uploadme.src }}" width="100" height="100">
         </div>
+
+        <div><button class="btn btn-primary" onclick="mylabel.click()">Choose image</button>
+               <label id="mylabel" for="file"></label>
+               </div> 
+
+      <!--   <div id="error-div">
+          <p id="view-err"> </p>
+        </div> -->
         <!-- <input type="text" name="image" ng-model="image"  /> -->
-     <!-- <span  ng-show=" myForm.$submitted && myForm.image.$invalid" >Image is required.</span> -->
+     <!-- <span  ng-show=" myform.$submitted && myform.image.$invalid" >Image is required.</span> -->
 
         </div>
      
@@ -127,47 +150,45 @@
         </form>
       
  </div>
-    </center>
    <input type="submit" name="cancel" value="Cancel" />
-    <br />
+    <br>
     
   </div>
-</div>
+
 </body>
-<?php //ng-disabled="myForm.userName.$invalid||myForm.password.$invalid||myForm.firstName.$invalid||myForm.lastName.$invalid" 
-//include("../includes/layouts/footer.php"); ?>
- <script>
-        $(function(){
-            $("#save").click(function () {
-                // 1- check if it's empty
-                //if ($("#personalImg").val() == "") {
-                //    $("#error-div").fadeIn();
-                //    $("#view-err").append("Please, Choose an image for the job !");
-                //    return false;
-                //}
+<?php //ng-disabled="myform.userName.$invalid||myform.password.$invalid||myform.firstName.$invalid||myform.lastName.$invalid" 
+//include("../includes/layouts/footer.php");
+        // $(function(){
+        //     $("#save").click(function () {
+        //         // 1- check if it's empty
+        //         //if ($("#personalImg").val() == "") {
+        //         //    $("#error-div").fadeIn();
+        //         //    $("#view-err").append("Please, Choose an image for the job !");
+        //         //    return false;
+        //         //}
 
-                //2- check  image extension is valid
-                if ($("#personalImg").val() != "") {
+        //         //2- check  image extension is valid
+        //         if ($("#personalImg").val() != "") {
 
-                    var filename = document.getElementById("personalImg").value;
-                    var extension = filename.substr(filename.lastIndexOf('.') + 1);
-                    var validExtensions = ['jpeg', 'png', 'gif', 'bmp']; // like a list
-                    if ($.inArray(extension, validExtensions) == -1) {
-                        $("#error-div").fadeIn();
-                        $("#view-err").append("Please, Choose a valid image for the job !");
-                        return false;//no save or no redirect
-                    }
+        //             var filename = document.getElementById("personalImg").value;
+        //             var extension = filename.substr(filename.lastIndexOf('.') + 1);
+        //             var validExtensions = ['jpeg', 'png', 'gif', 'bmp']; // like a list
+        //             if ($.inArray(extension, validExtensions) == -1) {
+        //                 $("#error-div").fadeIn();
+        //                 $("#view-err").append("Please, Choose a valid image for the job !");
+        //                 return false;//no save or no redirect
+        //             }
 
-                    //3-check image size
-                    var fileSize = document.getElementById("personalImg").files[0].size / 1024 / 1024;//to get the size in megabytes
-                    if (fileSize > 2) {
-                        $("#error-div").fadeIn();
-                        $("#view-err").append("Please, Choose a smaler image for the job !");
-                        return false;
-                    }
-                }
+        //             //3-check image size
+        //             var fileSize = document.getElementById("personalImg").files[0].size / 1024 / 1024;//to get the size in megabytes
+        //             if (fileSize > 2) {
+        //                 $("#error-div").fadeIn();
+        //                 $("#view-err").append("Please, Choose a smaler image for the job !");
+        //                 return false;
+        //             }
+        //         }
 
-            });
-        });
+        //     });
+        // });
 
-    </script>
+ ?>

@@ -4,15 +4,18 @@ require_once( 'CafeteriaApp.Backend/Controllers/Comment.php');
 require_once("CafeteriaApp.Backend/connection.php");
 require_once ('CheckResult.php');
 
+
+
 if ($_SERVER['REQUEST_METHOD']=="GET")
   { 
-  if (isset($_GET["MenuItemId"]))
+ if(isset($_GET["MenuItemId"]))
   {
-    checkResult(getCommentsByMenuItemId($conn,$_GET["MenuItemId"]));
+    $comments =(getCommentsByMenuItemId($conn,$_GET["MenuItemId"]));
+    checkResult(array($comments ,$commentsIdsForCustomer));
   }
   else
   {
-    echo "Error occured while returning Details";
+    echo "Error occured while returning Comments";
   }
 }
 
@@ -22,11 +25,10 @@ if ($_SERVER['REQUEST_METHOD']=="POST")
   $data = json_decode(file_get_contents("php://input"));
     if ($data->Details != null)
     {
-      addComment($conn,$data->Details,$_SESSION["customerId"],$data->MenuItemId );
     }
     else
     {
-      echo "Details is required";
+    echo "";
     }
   }
 
@@ -37,13 +39,28 @@ if ($_SERVER['REQUEST_METHOD']=="PUT")
   $data = json_decode(file_get_contents("php://input"));
   if ($data->Details != null && $data->Id != null)
   {
-    editComment($conn,$data->Details,$data->Id);
+      editComment($conn,$data->Details,$data->Id);
+
   }
   else
   {
-    echo "Details is required";
+    echo "Error occured while returning Comments";
   }
 }
+
+if ($_SERVER['REQUEST_METHOD']=="DELETE")
+{ 
+  if (isset($_GET["id"]))
+     { deleteComment($conn,$_GET["id"]);
+   
+   }
+  }
+  else
+  {
+    echo "Error occured while returning Comments";
+  }
+}
+
 
 require_once("CafeteriaApp.Backend/footer.php");
 

@@ -1,3 +1,18 @@
+<?php require_once("CafeteriaApp.Backend/Controllers/Notification.php"); 
+require_once("CafeteriaApp.Backend/connection.php");
+
+// if(!empty($_SESSION["notifications"]))
+      //     { 
+      //         $ul="<ul style='color:blue;'>";
+      //       foreach ($_SESSION["notifications"] as  $value) {
+      //          $ul.= "<li>".$value."</li>";
+      //       }
+      //     }
+      //     $ul.="</ul>";
+      // echo $ul;
+      print_r(getNotificationByUserId($conn , 3 )) ;// if not founds
+
+ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +30,6 @@
 </div>
 <div>
   <textarea ng-model="ddd"></textarea>
-
 </div>
 </div>
 </body>
@@ -61,3 +75,5 @@ $scope.func = function() {
 	
 
 </script>
+
+<?php  ?> 

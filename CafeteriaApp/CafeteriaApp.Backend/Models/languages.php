@@ -12,7 +12,7 @@ public $create="CREATE TABLE `mydb`.`Languages` (
 
    PRIMARY KEY (`Id`)
    ) ENGINE = InnoDB;
-";
+";//TxtDirection if false >> means left to right
 
 public $drop = "drop table `mydb`.`Languages`";
 

@@ -5,8 +5,14 @@ require_once("CafeteriaApp.Backend/functions.php");
 require_once("CafeteriaApp.Backend/validation_functions.php"); 
 require_once("CafeteriaApp.Backend/Controllers/Dates.php"); 
 require_once("CafeteriaApp.Backend/Controllers/Customer.php"); 
+require_once("CafeteriaApp.Backend/Controllers/Notification.php"); 
 require_once 'fbConfig.php';
 
+
+if(isset($_GET['redirect_to']))
+{
+  $_POST['redirect_to']=$_GET['redirect_to'];
+}
 
 if (isset($_POST['submit'])) { // check if the button 's been pressed
   // Process the form
@@ -27,15 +33,21 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
       // Success
 			// Mark user as logged in
       
-			$_SESSION["UserId"] = $found_user["Id"];
+			$_SESSION["userId"] = $found_user["Id"];
 			$_SESSION["userName"] = $found_user["UserName"];
       $_SESSION["roleId"] = $found_user["RoleId"];
       $_SESSION["langId"]=1;// if not found
+
       //get customer id by user id from db 
-      $customer_id_json = getCustomerIdByUserId($conn ,$_SESSION["UserId"] ,true);
-      $_SESSION["customerId"] = $customer_id_json["Id"];
+      $customer_id_json = getCustomerIdByUserId($conn ,$_SESSION["userId"] ,true);
+      //$_SESSION["customerId"] = $customer_id_json["Id"];
      
+     //get notification messages
+      $_SESSION["notifications"]= getNotificationByUserId($conn , $_SESSION["userId"] );// if not found
     
+        deleteNotificationsByUserId($conn,$_SESSION["userId"]) ;
+
+      //record date
       if(!getCurrentDateId($conn)) // make the server add it automatically
       {
         addTodayDate($conn,true);
@@ -46,13 +58,17 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
         setcookie(session_name(), session_id(),time()+42000000,'/');
       }
 
-      if(isset($_SERVER['HTTP_REFERER']))//make restrictions on pages that request this page ,otherwise redirect to the same page to cancel his header
+      if(isset($_POST['redirect_to']))//make restrictions on pages that request this page ,otherwise redirect to the same page to cancel his header
       {
-        redirect_to(rawurldecode($_SERVER['HTTP_REFERER']));
+        if(basename($_POST['redirect_to'])==="showing menuitems of a category and customer order.php" )//restrictions on redirectionsfile_exists()
+        {redirect_to(rawurldecode($_POST['redirect_to']));}
+        else{
+          redirect_to(rawurldecode("/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php"));
+        }
       }
       else
       {
-      //redirect_to(rawurldecode("/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php"));
+      redirect_to(rawurldecode("/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php"));
       } //3ala 7asab                               
     }
 
@@ -64,9 +80,9 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
   }
 }
 //if already logged in and called login page
- elseif (isset($_SESSION["UserId"] ) && isset($_SESSION["userName"]) && isset($_SESSION["roleId"]) || isset($_SESSION["userData"]) )// This is probably a GET request
+ elseif (isset($_SESSION["userId"] ) && isset($_SESSION["userName"]) && isset($_SESSION["roleId"]) || isset($_SESSION["userData"]) )// This is probably a GET request
   {
-    //  redirect_to(rawurldecode("/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php")); //
+     redirect_to(rawurldecode("/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php")); //
   
   
 } // end: if (isset($_POST['submit']))

@@ -2,6 +2,29 @@
 
 $errors = array();
 
+
+
+function test_inputs($conn,$array) {
+   
+    foreach($array as $data) {
+    $data = trim($data);
+    if(has_presence($data))
+    {
+    	$data = mysqli_real_escape_string($conn , $data);//for sql injection
+    	$data = htmlspecialchars($data);
+    	echo $data;
+	}
+	else
+	{
+
+		return false;
+	}
+  }
+
+	return $array;
+
+}
+
 function fieldname_as_text($fieldname) {
   $fieldname = str_replace("_", " ", $fieldname);
   $fieldname = ucfirst($fieldname);

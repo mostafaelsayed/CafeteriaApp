@@ -14,6 +14,7 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
        $scope.menuItems = response.data;
        $scope.loadFavoriteItems();
        $scope.initializeMenuItemCommmentFlags();
+
    });
   }
  
@@ -24,9 +25,9 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
     $http.get('/CafeteriaApp.Backend/Requests/Customer.php')
     .then(function(response) {
       $scope.customerId = response.data.Id;
-      //console.log($scope.customerId);
+     // console.log($scope.customerId);
       if ($scope.customerId == undefined) {
-        document.location = "/CafeteriaApp.Frontend/Views/login.php";
+        document.location = "/CafeteriaApp.Frontend/Views/login.php?redirect_to="+redirect_to;
       }
       else {
         //console.log($scope.customerId);
@@ -187,8 +188,8 @@ $scope.loadFavoriteItems = function() {
    .then(function(response) {
        $scope.favoItems = response.data;
 
-for (var i = $scope.menuItems.length - 1; i >= 0; i--) {
-       for (var j = $scope.favoItems.length - 1; j >= 0; j--) {
+for (var i =0 ; i < $scope.menuItems.length; i++) {
+       for (var j = 0 ; j < $scope.favoItems.length; j++) {
          
        if($scope.menuItems[i].Id ==$scope.favoItems[j].MenuItemId)
        {
@@ -202,16 +203,19 @@ for (var i = $scope.menuItems.length - 1; i >= 0; i--) {
 }
 
 
-$scope.ShowHides = new Array();
+
 $scope.initializeMenuItemCommmentFlags=function(){
 
 //1-  create flages
 
-for (var i = $scope.menuItems.length - 1; i >= 0; i--) {
+for (var i = 0 ; i < $scope.menuItems.length ;  i++) {
   
   $scope.ShowHides.push(false);  
+  $scope.add_edits.push(true);  
+  $scope.commentDetails.push("");
+
 }
-//ShowHide='Show Comments';
+
 }
 
 
@@ -227,51 +231,21 @@ if(dd<10){
 if(mm<10){
     mm='0'+mm;
 } 
-    return dd+'/'+mm+'/'+yyyy;
+    return yyyy+'/'+mm+'/'+dd;//to work with db format
 
 }
 
 
-$scope.AddCommentinPageOnly = function (MenuItemId,commentDetails,CustomerName){
-//var code = (e.keyCode ? e.keyCode : e.which);//which for firefox
-   // if(code == 13) { //Enter keycode
-   // alert('enter press');
-  MenuItemId ='tbody'+MenuItemId;
-  //console.log(MenuItemId);
-      var hr = document.createElement("hr");
-   var tr1 = document.createElement("tr");
-var tdCustomer = document.createElement("td");
-    var textCustomer = document.createTextNode(CustomerName);
-    tdCustomer.appendChild(textCustomer);
-     var tdDate = document.createElement("td");
-    var textDate = document.createTextNode($scope.getCurrentDate());
-    tdDate.appendChild(textDate);
-      tr1.appendChild(tdCustomer);
-      tr1.appendChild(tdDate);
-   var tr2 = document.createElement("tr");
-   var tdComment = document.createElement("td");
-    var textComment = document.createTextNode(commentDetails);
-    tdComment.appendChild(textComment);
-    tr2.appendChild(tdComment);
-  document.getElementById(MenuItemId).appendChild(tr1);
-    document.getElementById(MenuItemId).appendChild(tr2);
 
-    document.getElementById(MenuItemId).appendChild(hr);
+$scope.loadCommentsforMenuItem = function (menuItemId,menuItemIndex){
 
-    //console.log(Id);
-//}
-}
-
-
-
-$scope.loadCommentsforMenuItem = function (MenuItemId){
-
- $http.get('/CafeteriaApp.Backend/Requests/Comment.php?MenuItemId='+MenuItemId)
+ $http.get('/CafeteriaApp.Backend/Requests/Comment.php?MenuItemId='+menuItemId)
    .then(function(response) {
-      for (var i = response.data.length - 1; i >= 0; i--) {
-       $scope.AddCommentinPageOnly(MenuItemId,response.data[i].Details,response.data[i].UserName);
-      }
+    //console.log(response);
+      $scope.comments[menuItemIndex] = response.data[0];
 
+    $scope.customerCommentsIds[menuItemIndex] = response.data[1];
+     
 //var x = $scope.favoItems.filter(o => o.MenuItemId == $scope.menuItems[i].Id);  
 
    });
@@ -280,47 +254,158 @@ $scope.loadCommentsforMenuItem = function (MenuItemId){
 }
 
 
-$scope.ToggleMenuItemComments = function (index,MenuItemId){
-$scope.ShowHides[index]=! $scope.ShowHides[index];
+$scope.toggleMenuItemComments = function (menuItemIndex,menuItemId){
+$scope.ShowHides[menuItemIndex]=! $scope.ShowHides[menuItemIndex];
 
-if($scope.ShowHides[index])
+if($scope.ShowHides[menuItemIndex])
 {
-$scope.loadCommentsforMenuItem(MenuItemId);
+$scope.loadCommentsforMenuItem(menuItemId,menuItemIndex);
 }
 
 }
 
 
-$scope.AddCommentBackAndFront = function (MenuItemId,commentDetails,CustomerName){
+$scope.addCommentBackAndFront = function (menuItemIndex,menuItemId,commentDetails,CustomerName,add_update){
+  if($scope.commentDetails[menuItemIndex]!==""  ) // check empty box doesn't work
+  {
+  
+  if(add_update){
 
-var data ={Details:commentDetails ,
-    MenuItemId:MenuItemId
-          };  
-
-
+  var date=$scope.getCurrentDate(); 
+  var data ={
+    Details:commentDetails ,
+    MenuItemId:menuItemId,
+    Date:date
+          };
+          
  $http.post('/CafeteriaApp.Backend/Requests/Comment.php',data)
-      .then(function(response) {
+      .then(function(response) { //response.data=id of new comment
         if(response.data!=="")
-        {
-        alertify.error( response.data);
+        { 
+          $scope.customerCommentsIds[menuItemIndex].push(response.data);
+          $scope.comments[menuItemIndex].push({UserName:CustomerName , Date:date ,Details:commentDetails,Id:response.data });
+
         }
         else{
-          
-          $scope.AddCommentinPageOnly (MenuItemId,commentDetails,CustomerName);
+                alertify.error( response.data);
+        }
+      });
+    }
+
+  else {//update
+
+    $scope.updateCommentBackAndFront (menuItemIndex, menuItemId , commentDetails);
+
+    }
+   
+       $scope.commentDetails[menuItemIndex]="";
+
+  }
+ 
+}
+
+
+$scope.updateCommentBackAndFront = function (menuItemIndex,menuItemId,commentDetails){
+  var date=$scope.getCurrentDate(); 
+
+  var data ={Details:commentDetails ,
+       Id:$scope.comments[menuItemIndex][$scope.commentIndex].Id,
+          };  
+
+ $http.put('/CafeteriaApp.Backend/Requests/Comment.php',data)
+      .then(function(response) { //response.data=id of new comment
+        if(response.data!=="")
+        {
+           alertify.error( response.data);
+
+        }
+        else{ //update page content
+          $scope.comments[menuItemIndex][$scope.commentIndex].Details=commentDetails ;
+          $scope.comments[menuItemIndex][$scope.commentIndex].Date=date;
+        document.getElementById('addUpdateBtn'+menuItemIndex).value='Add';
+       $scope.add_edits[menuItemIndex]=true;
+              
         }
 
       });
 }
 
 
+$scope.editComment=function(commentIndex,menuItemIndex)
+{
+    $scope.commentIndex=commentIndex;
+  $scope.toggleUpdateAddButton(menuItemIndex,$scope.comments[menuItemIndex][commentIndex].Details );
+
+}
+
+$scope.toggleUpdateAddButton=function(menuItemIndex,commentDetails)
+{
+  $scope.commentDetails[menuItemIndex]=commentDetails;
+if($scope.add_edits[menuItemIndex])
+{
+  document.getElementById('addUpdateBtn'+menuItemIndex).value='Update';
+   $scope.add_edits[menuItemIndex]=false;
+}
+
+}
+
+
+$scope.deleteComment= function(commentId , commentIndex , menuItemIndex)
+{
+ if($scope.add_edits[menuItemIndex]){//only if not in edit mode
+ 
+ $http.delete('/CafeteriaApp.Backend/Requests/Comment.php?id='+commentId)
+      .then(function(response) {
+        if(response.data != "")
+        {
+        alertify.error( response.data);
+        }
+        else{
+
+          $scope.customerCommentsIds[menuItemIndex].splice($scope.customerCommentsIds[menuItemIndex].indexOf($scope.comments[menuItemIndex][commentIndex].Id),1);
+          $scope.comments[menuItemIndex].splice(commentIndex,1);
+
+
+        }
+
+      });
+}
+}
+
+
+$scope.checkEditAndRemove=function(commentId,index)
+{      
+ return $.inArray( commentId , $scope.customerCommentsIds[index]) === -1 ? false : true;
+
+}
+
+
+
+
+
+$scope.ShowCallsInNGRepeat=function () {
+  
+     console.log(1);
+    return true;
+}
+
+$scope.commentDetails = new Array();//menuitems
+$scope.add_edits = new Array();//menuitems
+$scope.ShowHides = new Array();//menuitems
+$scope.comments = new Array();//menuitems
+$scope.customerCommentsIds = new Array();//menuitems
 
 $scope.getCurrentCustomer();
 $scope.getMenuItems();
 
 
 
+//can use menuitem id instead of index to discriminate the indexes of the array
+
+
 
 
 });
+
 
 
