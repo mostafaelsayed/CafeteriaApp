@@ -6,14 +6,21 @@ require_once ('CheckResult.php');
 
 if ($_SERVER['REQUEST_METHOD']=="GET")
 {
-  if (isset($_GET["action"]) && $_GET["action"]=="getRoles")
+  //if (isset($_GET["action"]) && $_GET["action"]=="getRoles")
+  //{
+  if (isset($_GET["id"]) && $_GET["id"] != null)
   {
-    checkResult(getRoles($conn));
+    checkResult(getRoleById($conn,$_GET["id"]));
   }
   else
   {
-    echo "Error occured while returning Roles";
+    checkResult(getRoles($conn));
   }
+  //}
+  // else
+  // {
+  //   echo "Error occured while returning Roles";
+  // }
 }
 
 if ($_SERVER['REQUEST_METHOD']=="POST")

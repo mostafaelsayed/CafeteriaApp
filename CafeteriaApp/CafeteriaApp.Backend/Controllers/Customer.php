@@ -45,9 +45,9 @@ function getCustomerById($conn ,$id)
 
 function getCurrentCustomerinfoByUserId($conn)
 {
-  if (isset($_SESSION["UserId"]))
+  if (isset($_SESSION["userId"]))
   {
-    $userId=$_SESSION["UserId"];
+    $userId=$_SESSION["userId"];
   }
   if (!isset($userId))
   {
@@ -73,6 +73,7 @@ function getCurrentCustomerinfoByUserId($conn)
 
 function getCustomerByUserId($conn,$userId)
 {
+  //echo "1";
   if (!isset($userId))
   {
     //echo "Error: User Id is not set";
@@ -80,8 +81,9 @@ function getCustomerByUserId($conn,$userId)
   }
   else
   {
-    $sql = "select * from Customer where UserId =".$userId." LIMIT 1";
+    $sql = "select * from Customer where UserId = '{$userId}' LIMIT 1";
     $result = $conn->query($sql);
+    //print_r($result);
     if ($result)
     {
       $customer = mysqli_fetch_assoc($result);
@@ -97,8 +99,7 @@ function getCustomerByUserId($conn,$userId)
 }
 
 
-function getCustomerIdByUserId($conn,$userId)
-{
+function getCustomerIdByUserId($conn,$userIds) {
   if (!isset($userId))
   {
     echo "Error: User Id is not set";
@@ -164,7 +165,7 @@ elseif (!isset($userId)) {
   $stmt->bind_param("disi",$Credit,$GenderId,$DateOfBirth,$UserId);
   $Credit = $cred;
   $GenderId = $genderId;
-  $DateOfBirth = ($dob);
+  $DateOfBirth = $dob;
   $UserId = $userId;
   if ($stmt->execute()===TRUE) {
     return "Customer updated successfully";
@@ -175,26 +176,48 @@ elseif (!isset($userId)) {
 }}
 
 
-// function deleteUser($conn,$id) // cascaded delete ??
-// { 
-//   if (!isset($id))
-//   {
-//     //echo "Error: Id is not set";
-//     return;
-//   }
-//   else
-//   {
-//     //$conn->query("set foreign_key_checks = 0"); // ????????/
-//     $sql = "delete from Customer where Id = ".$id . " LIMIT 1";
-//     if ($conn->query($sql)===TRUE)
-//     {
-//       return "Customer deleted successfully";
-//     }
-//     else
-//     {
-//       echo "Error: ".$conn->error;
-//     }
-//   }
-// }
+function deleteCustomerByUserId($conn,$userId) // cascaded delete ??
+{ 
+  if (!isset($userId))
+  {
+    //echo "Error: Id is not set";
+    return;
+  }
+  else
+  {
+    //$conn->query("set foreign_key_checks = 0"); // ????????/
+    $sql = "delete from Customer where UserId = ".$userId . " LIMIT 1";
+    if ($conn->query($sql)===TRUE)
+    {
+      return "Customer deleted successfully";
+    }
+    else
+    {
+      echo "Error: ".$conn->error;
+    }
+  }
+}
+
+function deleteCustomer($conn,$id)
+{
+  if (!isset($id))
+  {
+    //echo "Error: Id is not set";
+    return;
+  }
+  else
+  {
+    //$conn->query("set foreign_key_checks = 0"); // ????????/
+    $sql = "delete from Customer where Id = ".$id . " LIMIT 1";
+    if ($conn->query($sql)===TRUE)
+    {
+      return "Customer deleted successfully";
+    }
+    else
+    {
+      echo "Error: ".$conn->error;
+    }
+  }
+}
 
 ?>

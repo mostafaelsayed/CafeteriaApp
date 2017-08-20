@@ -22,37 +22,21 @@ app.config(['$routeProvider',function($routeProvider) {
     templateUrl: "/CafeteriaApp.Frontend/Templates/Views/add_customer.php",
     controller: "addCustomer"
   })
-  // edit user
-  .when("/CafeteriaApp.Frontend/Areas/Admin/User/Views/edit_user.php/1", {
-    templateUrl: "/CafeteriaApp.Frontend/Templates/Views/edit_admin.php",
-    controller: "editAdmin"
-  })
-  .when("/CafeteriaApp.Frontend/Areas/Admin/User/Views/edit_user.php/2", {
-    templateUrl: "/CafeteriaApp.Frontend/Templates/Views/edit_cashier.php",
-    controller: "editCashier"
-  })
-  .when("/CafeteriaApp.Frontend/Areas/Admin/User/Views/edit_user.php/3", {
-    templateUrl: "/CafeteriaApp.Frontend/Templates/Views/edit_customer.php",
-    controller: "editCustomer"
-  })
+  
 }]);
 
 app.factory('userService',['$rootScope', function($rootScope) {
 
   var userServiceInstance = {};
-  userServiceInstance.UserData = {};
+  userServiceInstance.userData = {};
 
-  userServiceInstance.getUserData = function () {
-    return userServiceInstance;
-  };
-
-  $rootScope.$on('getData',function() {
-    $rootScope.$broadcast('getYourData');
+  $rootScope.$on('getAddData',function() {
+    $rootScope.$broadcast('getYourAddData');
   });
 
-  $rootScope.$on('hereIsMyData',function(event,data) {
-    userServiceInstance.UserData = data;
-    $rootScope.$broadcast('dataSent',userServiceInstance.UserData);
+  $rootScope.$on('hereIsMyAddData',function(event,data) {
+    userServiceInstance.userData = data;
+    $rootScope.$broadcast('addDataSent');
   });
 
   return userServiceInstance;

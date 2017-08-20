@@ -1,4 +1,4 @@
-// controller for cafeteria image
+// controller for adding cafeteria
 
 app.controller('addCafeteria',['$scope','$http',function($scope,$http){
 

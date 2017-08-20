@@ -18,7 +18,7 @@ app.controller('showAndDeleteUsers',['$scope','$http','ModalService', function (
   $scope.getUsers = function() {
     $http.get('/CafeteriaApp.Backend/Requests/User.php')
     .then(function (response) {
-      console.log(response);
+      //console.log(response);
       $scope.users = response.data;
     });
   }
@@ -33,18 +33,21 @@ app.controller('showAndDeleteUsers',['$scope','$http','ModalService', function (
        $scope.getUsers();
      });
      if (user.RoleId == 1) {
-      $http.delete('/CafeteriaApp.Backend/Requests/Admin.php?adminId='+user.Id)
+      $http.delete('/CafeteriaApp.Backend/Requests/Admin.php?userId='+user.Id)
       .then(function(response) {
-      });
-     }
-     else if (user.RoleId == 2) {
-      $http.delete('/CafeteriaApp.Backend/Requests/Cashier.php?cashierId='+user.Id)
-      .then(function(response) {
+        console.log(response);
       });
      }
      else if (user.RoleId == 3) {
-      $http.delete('/CafeteriaApp.Backend/Requests/Cashier.php?customerId='+user.Id)
+      $http.delete('/CafeteriaApp.Backend/Requests/Cashier.php?userId='+user.Id)
       .then(function(response) {
+        console.log(response);
+      });
+     }
+     else if (user.RoleId == 2) {
+      $http.delete('/CafeteriaApp.Backend/Requests/Customer.php?userId='+user.Id)
+      .then(function(response) {
+        console.log(response);
       });
      }
     };

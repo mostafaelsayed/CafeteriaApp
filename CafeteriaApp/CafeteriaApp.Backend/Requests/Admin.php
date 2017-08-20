@@ -8,8 +8,19 @@ require_once ('CheckResult.php');
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
 	$data = json_decode(file_get_contents("php://input"));
-	$user_id = addUser($conn,$data->UserName,$data->FirstName,$data->LastName,"image",$data->Email,$data->PhoneNumber,$data->Password,1);
-	//addAdmin();
+	addAdmin($conn,$data->UserId);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "DELETE")
+{
+	if (isset($_GET["userId"]) && $_GET["userId"] != null)
+	{
+		deleteAdminByUserId($conn,$_GET["userId"]);
+	}
+	else if (isset($_GET["adminId"]) && $_GET["adminId"] != null)
+	{
+		deleteAdmin($conn,$_GET["adminId"]);
+	}
 }
 
 ?>
