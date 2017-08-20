@@ -1,7 +1,40 @@
 app.controller('addAdmin',['$scope','$http',function($scope,$http){
-	$http.post('/CafeteriaApp.Backend/Requests/Admin.php',data)
-	.then(function(response) {
-		console.log(response);
-		document.location = "/CafeteriaApp.Frontend/Areas/Admin/User/Views/show_and_delete_users.php";
+	
+	$scope.addAdminUser = function () {
+		$scope.$emit('getAddData'); // this is a child scope so we use $emit to send this message to the root scope
+	};
+
+	$scope.$on('addDataSent' , function () {
+
+		// we now extract the data provided by the service and send it
+		// along with the customer data to the database to insert the cashier
+		$scope.userData = userService.userData;
+		$scope.userData.RoleId = 1; // admin role id
+
+		$http.post('/CafeteriaApp.Backend/Requests/User.php',$scope.userData)
+		.then(function(response) {
+
+			// validate user input first
+			var checkInput = $scope.userName != "" && $scope.firstName != "" && $scope.lastName != ""
+			&& $scope.email != "" && $scope.phoneNumber != "" && $scope.password != ""
+			&& $scope.userName == $scope.email && $scope.confirmPassword == $scope.password;
+
+			if (checkInput) {
+
+				var adminData = {
+					UserId: parseInt(response.data)
+				}
+
+				$http.post('/CafeteriaApp.Backend/Requests/Admin.php',adminData)
+				.then(function(response) {
+					console.log(response);
+					document.location = "/CafeteriaApp.Frontend/Areas/Admin/User/Views/show_and_delete_users.php";
+				});
+
+			}
+
+		});
+
 	});
+	
 }]);

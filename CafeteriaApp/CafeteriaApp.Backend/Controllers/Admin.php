@@ -1,32 +1,58 @@
 <?php
 
-function addAdmin($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password )
+function addAdmin($conn,$userId)
 {
-  if (checkExistingEmail($conn ,$email ) || checkExistingUserName($conn ,$userName,true)) 
+  $sql = "insert into admin (UserId) values (?)";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("i",$UserId);
+  $UserId = $userId;
+  if ($stmt->execute()===TRUE)
   {
-   return;
-  }
-  elseif(!isset($firstName) ||!isset($lastName) || !isset($phoneNumber) || !isset($password))
-  {
-  return;
+    $user_id =  mysqli_insert_id($conn);
+    return "Admin User Added successfully !";
   }
   else
   {
-    $sql = "insert into User (UserName , FirstName , LastName , Image , Email , PhoneNumber , PasswordHash, RoleId) values (?,?,?,?,?,?,?,?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssssi",$UserName,$FirstName,$LastName,$Image,$Email,$PhoneNumber,$Password,$RoleId);
-    $UserName = $userName;
-    $FirstName = $firstName;
-    $LastName = $lastName;
-    $Image = $image;
-    $Email = $email;
-    $PhoneNumber = $phoneNumber;
-    $Password = $password;
-    $RoleId =1 ;    // admin role
-    if ($stmt->execute()===TRUE)
+    echo "Error: ".$conn->error;
+  }
+}
+
+function deleteAdminByUserId($conn,$userId)
+{
+  if (!isset($userId))
+  {
+    //echo "Error: Id is not set";
+    return;
+  }
+  else
+  {
+    $conn->query("set foreign_key_checks=0");
+    $sql = "delete from Admin where UserId = ".$userId. " LIMIT 1";
+    if ($conn->query($sql)===TRUE)
     {
-      $user_id =  mysqli_insert_id($conn);
-      return "Admin User Added successfully !";
+      return "Admin deleted successfully";
+    }
+    else
+    {
+      echo "Error: ".$conn->error;
+    }
+  } 
+}
+
+function deleteAdmin($conn,$id)
+{
+  if (!isset($id))
+  {
+    //echo "Error: Id is not set";
+    return;
+  }
+  else
+  {
+    //$conn->query("set foreign_key_checks = 0"); // ????????/
+    $sql = "delete from Admin where Id = ".$id . " LIMIT 1";
+    if ($conn->query($sql)===TRUE)
+    {
+      return "Admin deleted successfully";
     }
     else
     {
