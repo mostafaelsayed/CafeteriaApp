@@ -1,4 +1,4 @@
-app.controller('addAdmin',['$scope','$http',function($scope,$http){
+app.controller('addAdmin',['$scope','$http','userService',function($scope,$http,userService) {
 	
 	$scope.addAdminUser = function () {
 		$scope.$emit('getAddData'); // this is a child scope so we use $emit to send this message to the root scope
@@ -15,9 +15,11 @@ app.controller('addAdmin',['$scope','$http',function($scope,$http){
 		.then(function(response) {
 
 			// validate user input first
-			var checkInput = $scope.userName != "" && $scope.firstName != "" && $scope.lastName != ""
-			&& $scope.email != "" && $scope.phoneNumber != "" && $scope.password != ""
-			&& $scope.userName == $scope.email && $scope.confirmPassword == $scope.password;
+			var checkInput = $scope.userData.userName != "" && $scope.userData.firstName != ""
+			&& $scope.userData.lastName != "" && $scope.userData.email != ""
+			&& $scope.userData.phoneNumber != "" && $scope.userData.password != ""
+			&& $scope.userData.userName == $scope.userData.email
+			&& $scope.userData.confirmPassword == $scope.userData.password;
 
 			if (checkInput) {
 
@@ -36,5 +38,5 @@ app.controller('addAdmin',['$scope','$http',function($scope,$http){
 		});
 
 	});
-	
+
 }]);

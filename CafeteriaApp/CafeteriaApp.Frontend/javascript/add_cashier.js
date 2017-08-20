@@ -1,4 +1,4 @@
-app.controller('addCashier',['$scope','$http',function($scope,$http) {
+app.controller('addCashier',['$scope','$http','userService',function($scope,$http,userService) {
 
 	$scope.addCashierUser = function () {
 		$scope.$emit('getAddData'); // this is a child scope so we use $emit to send this message to the root scope
@@ -9,15 +9,18 @@ app.controller('addCashier',['$scope','$http',function($scope,$http) {
 		// we now extract the data provided by the service and send it
 		// along with the customer data to the database to insert the customer
 		$scope.userData = userService.userData;
+		console.log($scope)
 		$scope.userData.RoleId = 3; // cashier role id
 
 		$http.post('/CafeteriaApp.Backend/Requests/User.php',$scope.userData)
 		.then(function(response) {
 
 			// validate user input first
-			var checkInput = $scope.userName != "" && $scope.firstName != "" && $scope.lastName != ""
-			&& $scope.email != "" && $scope.phoneNumber != "" && $scope.password != ""
-			&& $scope.userName == $scope.email && $scope.confirmPassword == $scope.password;
+			var checkInput = $scope.userData.userName != "" && $scope.userData.firstName != ""
+			&& $scope.userData.lastName != "" && $scope.userData.email != ""
+			&& $scope.userData.phoneNumber != "" && $scope.userData.password != ""
+			&& $scope.userData.userName == $scope.userData.email
+			&& $scope.userData.confirmPassword == $scope.userData.password;
 
 			if (checkInput) {
 

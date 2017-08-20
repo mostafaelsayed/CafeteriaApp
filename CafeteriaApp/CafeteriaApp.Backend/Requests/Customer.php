@@ -29,14 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] == "PUT")
   //decode the json data
   //echo "1";
   $data = json_decode(file_get_contents("php://input"));
-  //if ($data->Credit != null && $data->UserId != null)
-  //{
+  if (isset($data->UserId))
+  {
     echo editCustomer($conn,$data->Credit,$data->GenderId,$data->DateOfBirth,$data->UserId);
-  //}
-  //else
-  //{
-    //echo "name is required";
-  //}
+  }
+  else
+  {
+    echo "error";
+  }
 }
 
 if ($_SERVER['REQUEST_METHOD']=="DELETE")

@@ -55,7 +55,7 @@ app.controller('addCustomer',['$scope','userService','$http',function($scope,use
 				var customerData = {
 					GenderId: $scope.selectedGender,
 					UserId: parseInt(response.data),
-					Credit: 0,
+					Credit: $scope.credit,
 					DateOfBirth: dateOfBirth
 				}
 

@@ -89,6 +89,7 @@ app.controller('editUser',['$scope','$http','$location',function($scope,$http,$l
 
       //console.log(response);
       $scope.selectedGender = response.data.GenderId;
+      $scope.credit = response.data.Credit;
       if ($scope.selectedGender == 1) {
         $scope.maleInput.trigger('click');
       }
@@ -139,7 +140,7 @@ app.controller('editUser',['$scope','$http','$location',function($scope,$http,$l
           if (x == 2) {
 
             var customerData = {
-              Credit: 0,
+              Credit: $scope.credit,
               UserId: parseInt($scope.userData.id),
               DateOfBirth: String($scope.selectedYear) + '-' + String($scope.selectedMonth) + '-' + String($scope.selectedDay),
               GenderId: parseInt($scope.selectedGender)
@@ -155,11 +156,11 @@ app.controller('editUser',['$scope','$http','$location',function($scope,$http,$l
           }
 
           else if (x == 1) { // admin role
-
+            window.history.back();
           }
 
           else if (x == 3) { // cashier role
-
+            window.history.back();
           }
 
       }
@@ -212,7 +213,7 @@ app.controller('editUser',['$scope','$http','$location',function($scope,$http,$l
         else if ($scope.selectedRole.Id == 2) {
 
           var customerData = {
-            Credit: 0,
+            Credit: $scope.credit,
             DateOfBirth: String($scope.selectedYear) + '-' + String($scope.selectedMonth) + '-'
             + String($scope.selectedDay),
             UserId: $scope.userData.id,

@@ -43,6 +43,10 @@
            </span>
 
             <div ng-show="selectedRole.Name=='Customer'">
+             <div><label>Credit</label></div>
+             <span style="margin: auto">
+              <input type="text" ng-model="credit">
+             </span>
              <div><label>Gender</label></div>
              <span style="margin: auto;margin-right: 20px">
               <label>Female</label><input id="femaleInput" type="checkbox">
