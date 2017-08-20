@@ -13,9 +13,13 @@ if ($_SERVER['REQUEST_METHOD'] == "GET")
   }
   else
   {
-    return "error";
+    //return "error";
+    //echo $_SESSION["userId"];
+    checkResult($_SESSION["userId"]);
   }
 }
+
+//checkResult($_SESSION["userId"]);
 
 if ($_SERVER['REQUEST_METHOD'] == "POST")
 {
