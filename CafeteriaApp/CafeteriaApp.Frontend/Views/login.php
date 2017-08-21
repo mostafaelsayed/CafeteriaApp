@@ -14,14 +14,16 @@ if(isset($_GET['redirect_to']))
   $_POST['redirect_to']=$_GET['redirect_to'];
 }
 
-if (isset($_POST['submit'])) { // check if the button 's been pressed
+if (isset($_POST['submit']))
+{ // check if the button 's been pressed
   // Process the form
   
   // validations
   $required_fields = array("email", "password");
   validate_presences($required_fields);
   
-  if (empty($errors)) {
+  if (empty($errors))
+  {
     // Attempt Login
 
 		$email = $_POST["email"];
@@ -29,7 +31,8 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
 		
 		$found_user = attempt_login($conn,$email, $password);
 
-    if ($found_user) {
+    if ($found_user)
+    {
       // Success
 			// Mark user as logged in
       
@@ -61,19 +64,37 @@ if (isset($_POST['submit'])) { // check if the button 's been pressed
       if(isset($_POST['redirect_to']))//make restrictions on pages that request this page ,otherwise redirect to the same page to cancel his header
       {
         if(basename($_POST['redirect_to'])==="showing menuitems of a category and customer order.php" )//restrictions on redirectionsfile_exists()
-        {redirect_to(rawurldecode($_POST['redirect_to']));}
-        else{
-          redirect_to(rawurldecode("/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php"));
+        {
+          redirect_to(rawurldecode($_POST['redirect_to']));
+        }
+        else
+        {
+          if ($_SESSION["roleId"] == 2)
+          {
+            redirect_to(rawurldecode("/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php"));
+          }
+          elseif ($_SESSION["roleId"] == 1)
+          {
+            redirect_to(rawurldecode("/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php"));
+          }
         }
       }
       else
       {
-      redirect_to(rawurldecode("/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php"));
+        if ($_SESSION["roleId"] == 2)
+        {
+          redirect_to(rawurldecode("/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php"));
+        }
+        elseif ($_SESSION["roleId"] == 1) 
+        {
+          redirect_to(rawurldecode("/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php"));
+        }
       } //3ala 7asab                               
     }
 
    
-     else {
+    else
+    {
       // Failure
       $_SESSION["message"] = "Username/password not found.";
     }

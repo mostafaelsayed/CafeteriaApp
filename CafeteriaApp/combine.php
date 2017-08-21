@@ -26,7 +26,7 @@
 
 
 	$cache 	  = true;
-	$cachedir = dirname(__FILE__) . '/CafeteriaApp.Frontend/cache';
+	$cachedir = dirname(__FILE__) . '/cache';
 	$cssdir   = dirname(__FILE__) . '/CafeteriaApp.Frontend/css';
 	$jsdir    = dirname(__FILE__) . '/CafeteriaApp.Frontend/javascript';
 
@@ -153,5 +153,5 @@
 				fclose($fp);
 			}
 		}
-	}	
+	}
 	
