@@ -1,6 +1,6 @@
 <?php
  require_once("CafeteriaApp.Backend/functions.php"); 
-   validatePageAccess($conn);
+   //validatePageAccess($conn);
   require_once('CafeteriaApp.Frontend/Areas/Customer/layout.php');
 ?>
 

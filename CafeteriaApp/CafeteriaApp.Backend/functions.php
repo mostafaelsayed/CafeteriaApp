@@ -67,7 +67,7 @@
 	
 
 	function islogged_in() {
-		return (isset($_SESSION['userId']) || isset($_SESSION['facebook_access_token']) );// for normal user and fb user check
+		return (isset($_SESSION['userId']));// for normal user and fb user check
 	}
 	
 	function confirm_logged_in() {

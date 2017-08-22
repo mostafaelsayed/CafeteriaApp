@@ -1,6 +1,8 @@
 <?php
 
-	session_start();
+	if(!session_id()){
+    session_start();
+		}
 	
 	// to use session to send a message to another page
 	function message() {

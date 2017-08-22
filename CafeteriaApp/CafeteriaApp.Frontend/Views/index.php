@@ -1,9 +1,10 @@
 <?php
 // Include FB config file && User class
+require_once("CafeteriaApp.Backend/Controllers/Notification.php"); 
 require_once 'fbConfig.php';
 require_once 'fbUser.php';
 //require_once("CafeteriaApp.Backend/functions.php");
-GetACCESS ();
+
 if(isset($accessToken)){
     
     if(isset($_SESSION['facebook_access_token']))
@@ -59,7 +60,7 @@ if(isset($accessToken)){
     }
     
     // Initialize User class
-   
+   //echo "string";
     $user = new User();
     
     // Insert or update user data to the database
@@ -78,10 +79,14 @@ if(isset($accessToken)){
     $userData = $user->checkUser($fbUserData);
     
     // Put user data into session
-    $_SESSION['userData'] = $userData;
-    //$_SESSION["roleId"] =2;
+   // $_SESSION['userData'] = $userData;
+    $_SESSION["userId"] = $userData["Id"];
+    $_SESSION["userName"] = $userData["UserName"];
+      $_SESSION["roleId"] = $userData["RoleId"];
+      $_SESSION["langId"]=$userData["LocaleId"];
+    $_SESSION["notifications"]= $userData["notifyme"];
     // Get logout url
-    $logoutURL = $helper->getLogoutUrl($accessToken, 'fblogout.php');
+    $logoutURL = $helper->getLogoutUrl($accessToken ,'fblogout.php');
     
     // Render facebook profile data
     if(!empty($userData)){
@@ -97,8 +102,8 @@ if(isset($accessToken)){
         // $output .= '<br/><a href="'.$userData['Link'].'" target="_blank">Click to Visit Facebook Page</a>';
 
         // $output .= '<br/>Logout from <a href="'.$logoutURL.'">Facebook</a>'; 
+        header("Location:/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php");
 
-       //redirect_to(("/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php"));
     }
     else
     {
@@ -106,16 +111,15 @@ if(isset($accessToken)){
     }
     
 }
-//else
-//{
+else
+{
     // Get login url
      
-  
-   
     
     // Render facebook login button
-    //$output = '<a href="'.htmlspecialchars($loginURL).'"><img src="images/fblogin-btn.png"></a>';
-    // redirect_to(($loginURL));
+ $loginURL = $helper->getLoginUrl($redirectURL, $fbPermissions);
+     header("Location:".($loginURL));
+     
    // header("Location:".$loginURL);
-//}
+}
 ?>

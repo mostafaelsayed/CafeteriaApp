@@ -138,7 +138,7 @@ class FacebookRedirectLoginHelper
      * @return string
      */
     public function getLoginUrl($redirectUrl, array $scope = [], $separator = '&')
-    {
+    {   //echo "<script> console.log(1);</script>";
         return $this->makeUrl($redirectUrl, $scope, [], $separator);
     }
 

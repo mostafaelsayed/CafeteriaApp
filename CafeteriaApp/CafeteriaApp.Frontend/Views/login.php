@@ -6,8 +6,9 @@ require_once("CafeteriaApp.Backend/validation_functions.php");
 require_once("CafeteriaApp.Backend/Controllers/Dates.php"); 
 require_once("CafeteriaApp.Backend/Controllers/Customer.php"); 
 require_once("CafeteriaApp.Backend/Controllers/Notification.php"); 
-require_once 'fbConfig.php';
-
+//require_once 'fbConfig.php';
+//echo $_SESSION['FBRLH_state'];
+//echo $_SESSION['EMAIL'];
 
 if(isset($_GET['redirect_to']))
 {
@@ -42,7 +43,7 @@ if (isset($_POST['submit']))
       $_SESSION["langId"]=1;// if not found
 
       //get customer id by user id from db 
-      $customer_id_json = getCustomerIdByUserId($conn ,$_SESSION["userId"] ,true);
+     //$customer_id_json = getCustomerIdByUserId($conn ,$_SESSION["userId"] ,true);
       //$_SESSION["customerId"] = $customer_id_json["Id"];
      
      //get notification messages
@@ -101,7 +102,7 @@ if (isset($_POST['submit']))
   }
 }
 //if already logged in and called login page
- elseif (isset($_SESSION["userId"] ) && isset($_SESSION["userName"]) && isset($_SESSION["roleId"]) || isset($_SESSION["userData"]) )// This is probably a GET request
+ elseif (isset($_SESSION["userId"] ) && isset($_SESSION["userName"]) && isset($_SESSION["roleId"]) )// This is probably a GET request
   {
      redirect_to(rawurldecode("/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php")); //
   
@@ -148,8 +149,15 @@ if (isset($_POST['submit']))
  <a href="resetPassword.php" name="submit" />Forgot Password ! </a>
 <div>
 
-<?php  $loginURL = $helper->getLoginUrl($redirectURL, $fbPermissions);      ?>
-<a href="<?php echo htmlspecialchars($loginURL)  ?>">
+    <?php // $_SESSION['fbLogin'] = isset($_SESSION['fbLogin'])? $_SESSION['fbLogin'] : 
+
+   //echo $_SESSION['FBRLH_state'];
+   ?>
+
+<a href="<?php //echo htmlspecialchars($_SESSION['fbLogin'])  ;
+  echo "http://localhost/CafeteriaApp.Frontend/Views/index.php";
+
+  ?>">
      <button  class="btn waves-effect waves-light btn" type="submit" name="action">Facebook Login
                 <img src="icons/facebook.png" width="50px" height="50px" >
                  </button></a>
