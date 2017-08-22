@@ -4,7 +4,7 @@
 
 app.controller('OrderCheckout', function ($scope,$http,$location) {
   $scope.orderId = $location.search().orderId;
- 
+  $scope.selectedMethod = "";
 
 
 
@@ -22,6 +22,7 @@ app.controller('OrderCheckout', function ($scope,$http,$location) {
 $scope.getUserInfo = function(){
    $http.get('/CafeteriaApp.Backend/Requests/Customer.php')
    .then(function(response) {
+    console.log(response);
        $scope.customerInfo = response.data;
         $scope.recepientName= $scope.customerInfo.FirstName+' '+$scope.customerInfo.LastName;
         $scope.phone= $scope.customerInfo.PhoneNumber;

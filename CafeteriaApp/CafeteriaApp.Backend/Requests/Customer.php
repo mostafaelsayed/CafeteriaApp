@@ -9,13 +9,14 @@ if ($_SERVER['REQUEST_METHOD'] == "GET")
 {
   if (isset($_GET["userId"]) && $_GET["userId"] != null)
   {
-    checkResult(getCustomerByUserId($conn,$_GET["userId"]));
+    checkResult(getCustomerByUserId($conn,$_SESSION["userId"]));
   }
-  else
+  elseif (isset($_SESSION["userId"]) && $_SESSION["userId"] != null)
   {
     //return "error";
     //echo $_SESSION["userId"];
-    checkResult($_SESSION["userId"]);
+    //checkResult($_SESSION["userId"]);
+    checkResult(getCurrentCustomerinfoByUserId($conn));
   }
 }
 

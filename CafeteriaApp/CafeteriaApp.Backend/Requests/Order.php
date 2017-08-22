@@ -35,55 +35,38 @@ if ($_SERVER['REQUEST_METHOD']=="GET")
 
 if ($_SERVER['REQUEST_METHOD']=="POST")
 {
-//decode the json data
-//$data = json_decode(file_get_contents("php://input"));
-//if (isset($data->CustomerId) && $data->CustomerId != null){ // we will see other parameters later
-  //  addOrder($conn,$data->DeliveryDateId,$data->DeliveryTimeId,$data->DeliveryPlace,$data->PaymentMethodId,$data->OrderStatusId,$data->CustomerId,$data->Total,$data->Paid);
-  //}
-  //else
-  //{
   if (isset($_POST["orderId"]))
   {
-    $price = 1;
-    //$price = $_POST["total"];
-    $shipping = 0.00;
-    $total = $price + $shipping;
     // Create new payer and method
     $payer = new Payer();
     $payer->setPaymentMethod('paypal');
 
-    $item = new Item();
-    $item->setName("products")->setCurrency('GBP')->setQuantity(1)->setPrice($price);
+    //$item = new Item();
+    //$item->setName("products")->setCurrency('GBP')->setQuantity(1)->setPrice($price);
 
-    $itemList = new ItemList();
-    $itemList->setItems([$item]);
+    //$itemList = new ItemList();
+    //$itemList->setItems([$item]);
 
     $details = new Details();
-    $details->setShipping($shipping)->setSubtotal($price);
+    $details->setShipping('2.00')->setTax('0.00')->setSubtotal('20.00');
 
     // Set redirect urls
     $redirectUrls = new RedirectUrls();
-    $redirectUrls->setReturnUrl(SITE_URL . '/pay.php?success=true')
-      ->setCancelUrl(SITE_URL . '/pay.php?success=false');
+    $redirectUrls->setReturnUrl(SITE_URL . '/pay.php?success=true')->setCancelUrl(SITE_URL . '/pay.php?success=false');
 
     // Set payment amount
     $amount = new Amount();
-    $amount->setCurrency('GBP')
-      ->setTotal($total)->setDetails($details);
+    $amount->setCurrency('GBP')->setTotal('22.00')->setDetails($details);
     // Set transaction object
     $transaction = new Transaction();
-    $transaction->setAmount($amount)
-      ->setItemList($itemList)->setDescription('Payment done');
+    $transaction->setAmount($amount)->setDescription('Payment done');
 
     // Create the full payment object
     $payment = new Payment();
-    $payment->setIntent('sale')
-      ->setPayer($payer)
-      ->setRedirectUrls($redirectUrls)
-      ->setTransactions([$transaction]);
+    $payment->setIntent('sale')->setPayer($payer)->setRedirectUrls($redirectUrls)->setTransactions([$transaction]);
+
     try
     {
-      //header("Access-Control-Allow-Origin: *");
       $payment->create($paypal);
       //CheckOutOrder($conn,$data->orderId,$data->deliveryTimeId ,$data->deliveryPlace,$data->paymentMethodId , $data->paid );
     }
@@ -93,9 +76,17 @@ if ($_SERVER['REQUEST_METHOD']=="POST")
       die($ex);
     }
     //Access-Control-Allow-Origin: *;
-    $approvalUrl = $payment->getApprovalLink();
-    //header();
-    header("Location: " . $approvalUrl);
+    foreach ($payment->getLinks() as $link) {
+      if ($link->getRel() == 'approval_url') {
+        $redirectUrl = $link->getHref();
+      }
+    }
+    header("Location: " . $redirectUrl);
+    //$approvalUrl = $payment->getApprovalLink();
+    //header("Location: " . $approvalUrl);
+    // Create new payer and method
+
+
   }
   else
   {

@@ -45,6 +45,7 @@ function getCustomerById($conn ,$id)
 
 function getCurrentCustomerinfoByUserId($conn)
 {
+  global $userId;
   if (isset($_SESSION["userId"]))
   {
     $userId=$_SESSION["userId"];
@@ -56,7 +57,7 @@ function getCurrentCustomerinfoByUserId($conn)
   }
   else
   {
-    $sql = "select * from Customer inner join User on Customer.UserId=User.Id  where Customer.UserId =".$userId." LIMIT 1";
+    $sql = "select * from Customer inner join User on Customer.UserId = User.Id where Customer.UserId =".$userId." LIMIT 1";
     $result = $conn->query($sql);
     if ($result)
     {
