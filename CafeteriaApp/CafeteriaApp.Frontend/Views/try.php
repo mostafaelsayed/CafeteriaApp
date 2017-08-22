@@ -11,7 +11,7 @@ require_once("CafeteriaApp.Backend/connection.php");
       //     $ul.="</ul>";
       // echo $ul;
       print_r(getNotificationByUserId($conn , 3 )) ;// if not founds
-
+//header("location:try.php");
  ?>
 <!DOCTYPE html>
 <html>

@@ -1,6 +1,6 @@
 <?php
 // Autoload SDK package for composer based installations
-require 'C:/Users/DELL/vendor/autoload.php';
+require 'C:/Users/HP/vendor/autoload.php';
 
 // define('site_url','http://127.0.0.1/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php');
 define('SITE_URL','http://127.0.0.1/paypal');

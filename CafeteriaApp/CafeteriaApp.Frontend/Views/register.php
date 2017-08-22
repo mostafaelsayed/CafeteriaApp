@@ -1,7 +1,5 @@
-<?php require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies 
- require_once("CafeteriaApp.Backend/functions.php"); 
- require_once("CafeteriaApp.Backend/validation_functions.php"); 
- //require_once("CafeteriaApp.Frontend/Views/register2.php");?>
+<!DOCTYPE html>
+<html>
 
 <head>
     
@@ -13,6 +11,8 @@
       <link rel="stylesheet" type="text/css" href="css/materialize.css"/>
         <!-- <link rel="stylesheet" type="text/css" href="css/style.css"/> -->
         <link rel="stylesheet" type="text/css" href="icons/icons.css"/>
+              <link href="/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
+                    <link href="/CafeteriaApp.Frontend/css/errors.css" rel="stylesheet" type="text/css">
         <script src="js/jquery-3.1.1.min.js"></script>
         <script src="js/materialize.js"></script>
         <script src="js/newjavascript.js"></script>
@@ -21,12 +21,14 @@
         <!-- <link href='https://fonts.google.com/?category=Serif,Sans+Serif,Monospace&selection.family=Roboto+Slab' rel='stylesheet'> -->
         <!-- <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'> -->
         <script src="/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
-          <script src="/CafeteriaApp.Frontend/javascript/myapp.js"></script>
+        <script src="/CafeteriaApp.Frontend/javascript/angular-route.js"></script>
+        <script src="/CafeteriaApp.Frontend/javascript/ui-bootstrap-2.5.0.js"></script>
+        <script src="/CafeteriaApp.Frontend/javascript/ui-bootstrap-tpls-2.5.0.js"></script>
+        <script src="/CafeteriaApp.Frontend/javascript/angular-modal-service.js"></script>
+        <script src="/CafeteriaApp.Frontend/javascript/myapp.js"></script>
         <script src= "/CafeteriaApp.Frontend/Views/register.js"></script>
-
-      <link href="/CafeteriaApp.Frontend/css/errors.css" rel="stylesheet" type="text/css">
         <script src="/CafeteriaApp.Frontend/javascript/alertify.min.js"></script>
-      <link href="/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
+
 
 
 
@@ -39,7 +41,7 @@ input.ng-toutched {
     </head>
 
 
-<body>
+<body ng-app="myapp">
 
 <div id="main">
   <div id="navigation">
@@ -47,8 +49,10 @@ input.ng-toutched {
   </div>
 
   <div id="page" class="row" style="align-content:center; text-align:center;" >
-    <?php echo message(); ?>
-    <?php echo form_errors($errors); ?></div>
+    <?php// echo message(); ?>
+    <?php //echo form_errors($errors); ?>
+      
+    </div>
     
     <h2> New User </h2>
      <div class="row"   ng-controller="Register">  
@@ -130,12 +134,12 @@ input.ng-toutched {
        <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="3">
         
         <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile">
-        <img ng-src="{{ uploadme.src }}" width="100" height="100">
+        <img ng-src="{{uploadme.src}}" width="100" height="100" >
         </div>
 
         <div><button class="btn btn-primary" onclick="mylabel.click()">Choose image</button>
                <label id="mylabel" for="file"></label>
-               </div> 
+               </div>
 
       <!--   <div id="error-div">
           <p id="view-err"> </p>
@@ -145,7 +149,7 @@ input.ng-toutched {
 
         </div>
      
-      <input id="save" type="submit" name="submit" value="Next" ng-click="registerfn()" />
+      <input id="save" type="submit" name="submit" value="Next" " />
         
         </form>
       
@@ -156,6 +160,7 @@ input.ng-toutched {
   </div>
 
 </body>
+</html>
 <?php //ng-disabled="myform.userName.$invalid||myform.password.$invalid||myform.firstName.$invalid||myform.lastName.$invalid" 
 //include("../includes/layouts/footer.php");
         // $(function(){
