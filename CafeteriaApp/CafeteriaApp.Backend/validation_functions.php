@@ -24,6 +24,8 @@ function test_inputs($conn,$array) {
 
 }
 
+
+
 function fieldname_as_text($fieldname) {
   $fieldname = str_replace("_", " ", $fieldname);
   $fieldname = ucfirst($fieldname);

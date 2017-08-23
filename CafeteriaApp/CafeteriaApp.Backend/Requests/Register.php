@@ -57,7 +57,6 @@ if (!empty(test_inputs($conn,$required_fields)))
     $dob= $data->dob ;
     $gender= $data->gender ;
     $password= $data->password ;//$_POST["password"];
-    $hashed_password = password_encrypt($password);
 
 
 if ($image != null)
@@ -77,8 +76,8 @@ if ($image != null)
   }
       //get customer role id from db 
           $roleId = getRoleIdByName($conn,'Customer');
-  $localiId=1;
-  $user_id = addUser($conn,$userName,$firstName,$lastName,$Image,$email,$phoneNumber,$hashed_password ,$roleId, $localiId);
+  $localeId=1;
+  $user_id = addUser($conn,$userName,$firstName,$lastName,$Image,$email,$phoneNumber,$password ,$roleId, $localeId);
   $result = addCustomer($conn,0.0,$dob,$user_id,$gender);
     if($result){
          echo "/CafeteriaApp.Frontend/Views/indexs.php";// confirm  mail by sending a message and check link
@@ -91,8 +90,6 @@ if ($image != null)
       }
   }
   }
-
-
 
 require_once("CafeteriaApp.Backend/footer.php");
 
