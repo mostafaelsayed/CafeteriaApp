@@ -1,7 +1,8 @@
-<?php require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies ?> 
-<?php require_once("CafeteriaApp.Backend/functions.php"); ?>
+<?php require_once("CafeteriaApp.Backend/session.php");
+ require_once("CafeteriaApp.Backend/functions.php");
+require_once 'fbConfig.php';
+ 
 
-<!-- <?php
 	// v1: simple logout
 	// session_start();
 	//$_SESSION["user_id"] = null;
@@ -9,12 +10,15 @@
 	//$_SESSION["customer_id"] = null;
 
 	//redirect_to("login.php");
-?> -->
 
-<?php
+
+// Include FB config file
+
+
+// Remove access token from session
+	unset($_SESSION['facebook_access_token']);
 	// v2: destroy session
 	// assumes nothing else in session to keep
-	// session_start();
 	$_SESSION = array();
 	if (isset($_COOKIE[session_name()])) {
 	  setcookie(session_name(), null, time()-42000, '/');
