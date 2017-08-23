@@ -52,7 +52,7 @@ class User {
 
                
                 //Insert user data into Customer Table
-                $dateOfBirth='1900-08-01';
+                $dateOfBirth=isset($userData['birthday'])&&$userData['birthday']!==null ? $userData['birthday'] :'1900-08-01';
               $query = "INSERT INTO Customer SET Credit = '0.0' , UserId='".$userId."' , DateOfBirth='". $dateOfBirth ."', GenderId = (select Id from Gender where LCASE(Name) ='".$userData['gender']."')  ";
                 $insert = $this->db->query($query);
 

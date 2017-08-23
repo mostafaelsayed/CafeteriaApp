@@ -42,7 +42,7 @@ function getUserById($conn,$id)
   }
 }
 
-function addUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password,$roleId)
+function addUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password,$roleId,$localeId)
 {
   if (checkExistingEmail($conn ,$email ) || checkExistingUserName($conn ,$userName,true)) 
   {
@@ -54,9 +54,9 @@ function addUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber
   }
   else
   {
-    $sql = "insert into User (UserName , FirstName , LastName , Image , Email , PhoneNumber , PasswordHash, RoleId) values (?,?,?,?,?,?,?,?)";
+    $sql = "insert into User (UserName , FirstName , LastName , Image , Email , PhoneNumber , PasswordHash, RoleId, LocaleId) values (?,?,?,?,?,?,?,?,?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssssi",$UserName,$FirstName,$LastName,$Image,$Email,$PhoneNumber,$PasswordHash,$RoleId);
+    $stmt->bind_param("sssssssii",$UserName,$FirstName,$LastName,$Image,$Email,$PhoneNumber,$PasswordHash,$RoleId,$LocaleId);
     $UserName = $userName;
     $FirstName = $firstName;
     $LastName = $lastName;
@@ -65,6 +65,7 @@ function addUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber
     $PhoneNumber = $phoneNumber;
     $PasswordHash = password_encrypt($password);
     $RoleId = $roleId;
+    $LocaleId =$localeId;
     if ($stmt->execute()===TRUE)
     {    
       $user_id =  mysqli_insert_id($conn);

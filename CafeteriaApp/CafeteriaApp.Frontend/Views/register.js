@@ -19,14 +19,16 @@ var data = {                   //date need to be updated also
     .then(function(response) {
 
      // document.getElemntById('emailConfirm').innerHtml= response.data;
-    
-    if(response.data==="")
-    {
-      return true;
+  console.log(response);
+    if(response.data === "")
+    {  //console.log(response);
+      $scope.registerfn();
+     
     }
     else{
-      alertify.error( response.data);
+      alertify.error(response.data);
       return false;
+
     }
    });
     
@@ -34,9 +36,11 @@ var data = {                   //date need to be updated also
 
 
 $scope.registerfn=function () {
-if($scope.checkExistingMailAndUserName()){
+
+//if($scope.checkExistingMailAndUserName()){
 //if($scope.userName!=null && $scope.password!=null && $scope.firstName!=null && $scope.lastName!=null && $scope.email!=null&& $scope.phone!=null )
-{
+//{
+
 	var data = {                   //date need to be updated also
         userName: $scope.userName,
         firstName: $scope.firstName,
@@ -49,16 +53,16 @@ if($scope.checkExistingMailAndUserName()){
 		password:$scope.password
 
       };
-
+ //console.log(data);
  $http.put('/CafeteriaApp.Backend/Requests/Register.php',data) 
  .then(function(response) {
-      console.log(response.data);
+     // console.log(response);
      document.location=response.data;
    });
    
 
-}
-}
+//}
+//}
 
 }
 

@@ -7,9 +7,7 @@ require_once( 'CafeteriaApp.Backend/Controllers/Customer.php');
 require_once("CafeteriaApp.Backend/connection.php");
 
 
-/*
-if ($_SERVER['REQUEST_METHOD']=="POST")
-{
+
 if ($_SERVER['REQUEST_METHOD']=="POST"){
     //decode the json data
     $data = json_decode(file_get_contents("php://input"));
@@ -32,8 +30,8 @@ if ($_SERVER['REQUEST_METHOD']=="POST"){
         }
     }
 }
-  }
-*/
+
+
 
 
 
@@ -79,7 +77,8 @@ if ($image != null)
   }
       //get customer role id from db 
           $roleId = getRoleIdByName($conn,'Customer');
-  $user_id = addUser($conn,$userName,$firstName,$lastName,$Image,$email,$phoneNumber,$hashed_password ,$roleId);
+  $localiId=1;
+  $user_id = addUser($conn,$userName,$firstName,$lastName,$Image,$email,$phoneNumber,$hashed_password ,$roleId, $localiId);
   $result = addCustomer($conn,0.0,$dob,$user_id,$gender);
     if($result){
          echo "/CafeteriaApp.Frontend/Views/indexs.php";// confirm  mail by sending a message and check link

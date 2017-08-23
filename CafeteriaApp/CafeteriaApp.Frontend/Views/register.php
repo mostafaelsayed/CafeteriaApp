@@ -149,7 +149,7 @@ input.ng-toutched {
 
         </div>
      
-      <input id="save" type="submit" name="submit" value="Next" " />
+      <input id="save" type="submit" name="submit" value="Next" ng-click="registerfn()" />
         
         </form>
       

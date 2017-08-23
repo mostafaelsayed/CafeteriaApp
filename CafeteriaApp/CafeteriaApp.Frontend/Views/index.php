@@ -36,7 +36,7 @@ if(isset($accessToken)){
 
     // Getting user facebook profile info
     try {
-        $profileRequest = $fb->get('/me?fields=name,first_name,last_name,email,link,gender,locale,picture');
+        $profileRequest = $fb->get('/me?fields=name,first_name,last_name,email,link,gender,locale,picture,birthday');
         $fbUserProfile = $profileRequest->getGraphNode()->asArray();
     } 
     catch(FacebookResponseException $e)
@@ -73,7 +73,9 @@ if(isset($accessToken)){
         'gender'        => $fbUserProfile['gender'],
         'locale'        => $fbUserProfile['locale'],
         'picture'       => $fbUserProfile['picture']['url'],
-        'link'          => $fbUserProfile['link']
+        'link'          => $fbUserProfile['link'],
+        'birthday'          => $fbUserProfile['birthday'],
+
     );
 
     $userData = $user->checkUser($fbUserData);

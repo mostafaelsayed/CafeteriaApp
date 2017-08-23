@@ -12,7 +12,6 @@ function test_inputs($conn,$array) {
     {
     	$data = mysqli_real_escape_string($conn , $data);//for sql injection
     	$data = htmlspecialchars($data);
-    	echo $data;
 	}
 	else
 	{
