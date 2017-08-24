@@ -5,51 +5,81 @@
 ?>
 <title>MenuItems</title>
 
+
 <script src="/CafeteriaApp.Frontend/javascript/showing menuitems of a category and customer order.js"></script>
-<link href="/CafeteriaApp.Frontend/css/customer styles.css" rel="stylesheet">
+<link type="text/css"  href="/CafeteriaApp.Frontend/css/normalize.css" rel="stylesheet">
+<link type="text/css" href="/CafeteriaApp.Frontend/css/customer styles.css" rel="stylesheet">
+
 <style type="text/css">
   
-.blueTable{
+.row .col-lg-5  table{
 
-border: 1px solid blue;
- /*width = 500px;*/
+border : 1px solid blue;
+ width : 100%;
 }
 
-  .blueTable>tr{
-    margin: 10px;
-    /*color: white;*/
-  }
-   .blueTable>td{
-  text-align:center;
-    margin: 10px;
-    color: white;
-  }
+.row .col-lg-5 .blueTable tr:hover
+ {
+  background-color: #CECECE
+
+ }
+
+.row .col-lg-5 .blueTable>tr{/*first tr child in table */
+margin: 10px;
+/*color: white;*/
+}
+
+.row .col-lg-5 .blueTable td{
+text-align:center;
+margin: 10px;
+color: white;
+ display:block;
+
+}
+
+.row .col-lg-5 .blueTable td>a{
+
+text-decoration: none;
+}
+
+.row .col-lg-5 .addToOrder a:hover{
+
+ background-color: #E7E7E7
+}
+
+.row .col-lg-5 .addToOrder  a {
+color:white;
+float:right;
+margin-top:-40px
+}
+
+.bottom a{
+color: white;
+}
+
+.about{
+  display: none;
+}
 
 </style>
 
 <h1 style="margin-top:70px">MenuItems</h1>
 
 <div class="row"  ng-controller="getMenuItemsAndCustomerOrder" ng-init="customer='<?php echo $_SESSION['userName']; ?>'" >
-    <div class="col-lg-2">
-      <a href="#" style="color:white;margin-left:40px">Back</a>
-      <br><br>
-      <a href="#" style="color:white;margin-left:40px">About This category</a>
-    </div>
-
 
     <div class="col-lg-5">
       <div ng-repeat="m in menuItems" style="width:90%;margin-left:40px">
         <h1 ng-bind="m.Name" class="menu-name" ></h1>
         
         <!-- <h2 ng-show="ShowCallsInNGRepeat()"></h2> -->
-
+       
         <a id="{{'favorites'+m.Id}}" title="add to favorites" style="color:red;float:right;" ng-click="toggleFavoriteItem(m.Id)" class="btn btn-info btn-lg">
           <span class="glyphicon glyphicon-heart"></span></a>
 
 
-
-        <a title="Add To Order" id="creatNewCafeteria" ng-click="addToOrder(m)" class="btn btn-circle" style="color:white;float:right;margin-top:-40px"><i class="fa fa-plus"></i></a>
-    
+    <div class="addToOrder">
+        <a  title="Add To Order"  ng-click="addToOrder(m)" class="btn btn-circle" ><i class="fa fa-plus"></i></a>
+        </div>
 
      <a  title="Show/Hide Comments" style="color:blue;float:right;" ng-click="toggleMenuItemComments($index,m.Id)" class="btn btn-lg">
           <span class="" >{{ ShowHides[$index] ?'Hide Comments':'Show Comments'}}</span></a>
@@ -69,7 +99,7 @@ border: 1px solid blue;
           <td>{{comm.UserName}}</td>
           <td>{{comm.Date}}</td>
          
-          <td><p>{{comm.Details}} &nbsp;&nbsp;</p> </td>
+          <td><p>{{comm.Details}} </p> </td>
 
           <td ng-if="checkEditAndRemove(comm.Id, menuItems.indexOf(m))">
           <a style="cursor: pointer;" ng-click="editComment( $index , menuItems.indexOf(m))">edit</a> &nbsp; <a ng-click="deleteComment( comm.Id, $index , menuItems.indexOf(m) )"  style="cursor: pointer;" >remove</a>
@@ -111,26 +141,38 @@ border: 1px solid blue;
             <td ng-bind="o.Quantity" id="thead"></td>
             <td ng-bind="o.TotalPrice" id="thead"></td>
             <td ng-show="orderItems.length>0">
-              <a title="Increase Quantity" id="creatNewCafeteria" ng-click="increaseQuantity(o)" class="btn"><i class="fa fa-plus"></i></a>
-              <a title="Decrease Quantity" id="creatNewCafeteria" ng-click="decreaseQuantity(o)" class="btn"><i class="fa fa-minus"></i></a>
+              <a title="Increase Quantity" ng-click="increaseQuantity(o)" class="btn"><i class="fa fa-plus"></i></a>
+              <a title="Decrease Quantity"  ng-click="decreaseQuantity(o)" class="btn"><i class="fa fa-minus"></i></a>
               <a title="Remove From Order" ng-click="deleteOrderItem(o)" style="color:white;font-style:italic" class="btn">Remove This Item</a>
             </td>
           </tr>
         </tbody>
       </table>
       <!-- <div id="thead">Total: <span ng-bind="currentOrder.Total"></span></div> -->
-      <div><a style="font-style:italic;color:white;" class="btn" type="button" ng-href="/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}"  ng-show="orderItems.length > 0"  target="_self"  >Checkout</a></div>
+      <div><a style="font-style:italic;color:white;" class="btn" type="button" ng-href="/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}"  ng-show="orderItems.length > 0"  target="_self"  >Checkout</a></div>
     </div>
 
-  <hr width="80%">
+          <hr width="90%">
 
+             <div class="bottom" style="margin:0 auto;text-align:center;">
+                  <a target="_self" href="/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing categories of a cafeteria.php?id={{cafeteriaId}}" >Back</a>
+                  <br><br>
+                  <a onclick="slideAbout()" >About This category</a>
+                </div>
 
+  <div class="about" style="margin:0 auto;text-align:center;color:white;">
+    <h1>About This Category</h1>
+    <p>we have special menuitems here with affordable price.Take a look at our dishes and have fun!</p>
+    </div>
 
-  <h1>About This Category</h1><br>
-  <h3>we have special menuitems here with affordable price.Take a look at our dishes and have fun!</h3>
 </div>
 
 
 <script type="text/javascript">
   var redirect_to = <?php $file=__File__ ;echo "\"" .(string)(urlencode($file))."\""  ; ?>
+
+  function slideAbout() {
+  $(".about").slideToggle("slow");
+
+  }
 </script>
