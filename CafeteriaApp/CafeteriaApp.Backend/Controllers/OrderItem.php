@@ -118,9 +118,9 @@ function editOrderItemQuantity($conn,$quantity,$id,$increaseDecrease)
   }
   else
   {
-    $MenuItemId = json_decode(getOrderItemById($conn,$id), true)["MenuItemId"];
+    $MenuItemId = (getOrderItemById($conn,$id))["MenuItemId"];
     $unitPrice =getMenuItemPriceById($conn,$MenuItemId);
-    $orderId =json_decode(getOpenOrderByUserId($conn), true)["Id"];
+    $orderId =(getOpenOrderByUserId($conn))["Id"];
     updateOrderTotalById($conn,$orderId,$increaseDecrease ?+$unitPrice : -$unitPrice);
     $totalPrice = $quantity * $unitPrice;
     $sql = "update OrderItem set Quantity = (?) , TotalPrice=(?)  where Id = (?)";
@@ -159,26 +159,27 @@ function addOrderItem($conn,$orderId,$menuItemId,$quantity)
     $deliveryTimeId = getCurrentTimeId($conn);
     $deliveryDateId = getCurrentDateId($conn);
     $orderId = addOrder($conn,$deliveryDateId,$deliveryTimeId,'',1,1, $_SESSION["userId"], $totalPrice);//paid default to zero
-    if ($orderId != null)
-    {
-      $sql = "insert into OrderItem (OrderId,MenuItemId,Quantity,TotalPrice) values (?,?,?,?)";
-      $stmt = $conn->prepare($sql);
-      $stmt->bind_param("iiid",$OrderId,$MenuItemId,$Quantity,$Price);
-      $OrderId = $orderId;
-      $MenuItemId = $menuItemId;
-      $Quantity = $quantity;
-      $Price =$totalPrice ;
-      if ($stmt->execute()===TRUE)
-      {
-        //echo "OrderItem Added successfully";
-        return $orderId;
-      }
-      else
-      {
-        echo "Error: ".$conn->error;
-      }
-    }
   }
+  // if ($orderId != null)
+  // {
+  //   $sql = "insert into OrderItem (OrderId,MenuItemId,Quantity,TotalPrice) values (?,?,?,?)";
+  //   $stmt = $conn->prepare($sql);
+  //   $stmt->bind_param("iiid",$OrderId,$MenuItemId,$Quantity,$Price);
+  //   $OrderId = $orderId;
+  //   $MenuItemId = $menuItemId;
+  //   $Quantity = $quantity;
+  //   $Price =$totalPrice ;
+  //   if ($stmt->execute()===TRUE)
+  //   {
+  //     //echo "OrderItem Added successfully";
+  //     return $orderId;
+  //   }
+  //   else
+  //   {
+  //     echo "Error: ".$conn->error;
+  //   }
+  // }
+  
   else
   {
     updateOrderTotalById($conn,$orderId,$totalPrice);

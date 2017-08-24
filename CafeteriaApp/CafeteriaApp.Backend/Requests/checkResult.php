@@ -7,9 +7,9 @@ function checkResult($result)
 	}
 	else
 	{
-		$returnUrl = "CafeteriaApp.Frontend/Areas/Public/showing cafeterias.php";
-		header("Location: {$returnUrl}");
-		exit;
+		//$returnUrl = "CafeteriaApp.Frontend/Areas/Public/showing cafeterias.php";
+		//header("Location: {$returnUrl}");
+		//exit;
 	}
 }
 ?>

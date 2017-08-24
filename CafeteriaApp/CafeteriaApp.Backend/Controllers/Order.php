@@ -1,4 +1,18 @@
-<?php require_once('CafeteriaApp.Backend/session.php');
+<?php
+
+require_once('CafeteriaApp.Backend/session.php');
+require_once('CafeteriaApp.Backend/connection.php');
+require_once('paypal/start.php');
+
+use PayPal\Api\Amount;
+use PayPal\Api\Details;
+use PayPal\Api\Item;
+use PayPal\Api\ItemList;
+use PayPal\Api\Payer;
+use PayPal\Api\Payment;
+use PayPal\Api\RedirectUrls;
+use PayPal\Api\Transaction;
+use PayPal\Exception\PayPalConnectionException;
 
 function getClosedOrdersByUserId($conn,$id)
 {
@@ -408,5 +422,92 @@ function calcAndUpdateOrderTotalById($conn ,$orderId)
   }
 }
 
+function getOrderDetails($conn,$orderId)
+{
+  $orderDetailsStatment = "select MenuItem.Name , MenuItem.Price , OrderItem.Quantity , OrderItem.TotalPrice , Order.DeliveryPlace , Order.Total from `Order` , `OrderItem` inner join MenuItem on MenuItem.Id = OrderItem.MenuItemId where Order.Id = " . $orderId;
+  $result = $conn->query($orderDetailsStatment);
+  $orderDetails = mysqli_fetch_all($result);
+  mysqli_free_result($result);
+  return $orderDetails;
+}
+
+function processPayment($conn,$orderId,$selectedMethodId,$apiContext)
+{
+  $orderDetails = getOrderDetails($conn,$orderId);
+
+  $fees = mysqli_fetch_all($conn->query("select * from fees");
+  //print_r($orderDetails);
+  if ($selectedMethodId == 2) // paypal payment
+  {
+    $itemList = new ItemList();
+
+    foreach ($orderDetails as $orderItem)
+    {
+      $item = new Item();
+      $item->setName($orderItem[0])->setCurrency('GBP')->setQuantity($orderItem[2])->setPrice($orderItem[1]);
+      $itemList->addItem($item);
+    }
+
+    // determine shipping and tax later from frontend
+    $shippingResult = $conn->query("select Price from fees where Id = " . 2); // id of shipping fee
+    $shipping = mysqli_fetch_assoc($shippingResult);
+    mysqli_free_result($shippingResult);
+
+    $taxResult = $conn->query("select Price from fees where Id = " . 3); // id of tax fee
+    $tax = mysqli_fetch_assoc($taxResult);
+    mysqli_free_result($taxResult);
+
+    // other fees goes here .. 
+
+    $details = new Details();
+    $details->setShipping($shipping)
+    ->setTax($tax)
+    ->setSubtotal($orderDetails[0][5]);
+
+    // Set redirect urls
+    $redirectUrls = new RedirectUrls();
+    $redirectUrls->setReturnUrl(SITE_URL . '/CafeteriaApp.Frontend/Areas/Customer/review_order_and_charge_customer.php?orderId='.$orderId)
+    ->setCancelUrl(SITE_URL . '/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId='.$orderId);
+
+    // Set payment amount
+    $amount = new Amount();
+    $amount->setCurrency('GBP')->setTotal($orderDetails[0][5]
+      + $shipping + $tax)->setDetails($details);
+
+    // Set transaction object
+    $transaction = new Transaction();
+    $transaction->setAmount($amount)
+    ->setDescription('Payment done')
+    ->setItemList($itemList);
+
+    // Set payer
+    $payer = new Payer();
+    $payer->setPaymentMethod('paypal'); // maybe determine this from frontend too
+
+    // Create the full payment object
+    $payment = new Payment();
+    $payment->setIntent('sale')->setPayer($payer)->setRedirectUrls($redirectUrls)->setTransactions([$transaction]);
+
+    try
+    {
+      $payment->create($apiContext);
+      // CheckOutOrder($conn,$data->orderId,$data->deliveryTimeId ,$data->deliveryPlace,$data->paymentMethodId , $data->paid );
+    }
+
+    catch (PayPalConnectionException $ex)
+    {
+      echo $ex->getData();
+      die($ex);
+    }
+
+    $approvalUrl = $payment->getApprovalLink();
+
+    header("Location: " . $approvalUrl);
+
+  }
+
+}
+
+//processPayment($conn,2,$paypal);
 
 ?>
