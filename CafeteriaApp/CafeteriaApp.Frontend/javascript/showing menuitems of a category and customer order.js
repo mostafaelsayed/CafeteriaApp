@@ -4,12 +4,6 @@
 
 app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location) {
 
-<<<<<<< HEAD
-  $scope.categoryId = $location.search().categoryId;
-
-=======
->>>>>>> origin/master
-
   $scope.categoryId = $location.search().categoryId;
   $scope.cafeteriaId = $location.search().cafeteriaId;
   
