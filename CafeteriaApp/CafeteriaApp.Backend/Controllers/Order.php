@@ -435,7 +435,7 @@ function processPayment($conn,$orderId,$selectedMethodId,$apiContext)
 {
   $orderDetails = getOrderDetails($conn,$orderId);
 
-  $fees = mysqli_fetch_all($conn->query("select * from fees");
+  $fees = mysqli_fetch_all($conn->query("select * from fees"));
   //print_r($orderDetails);
   if ($selectedMethodId == 2) // paypal payment
   {
