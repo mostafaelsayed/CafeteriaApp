@@ -1,7 +1,7 @@
 <?php
 
 // Autoload SDK package for composer based installations
-require 'vendor/autoload.php';
+require_once('vendor/autoload.php');
 
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;

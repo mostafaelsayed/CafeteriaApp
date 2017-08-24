@@ -424,14 +424,14 @@ function calcAndUpdateOrderTotalById($conn ,$orderId)
 
 function getOrderDetails($conn,$orderId)
 {
-  $orderDetailsStatment = "select MenuItem.Name , MenuItem.Price , OrderItem.Quantity , OrderItem.TotalPrice , Order.DeliveryPlace , Order.Total from `Order` , `OrderItem` inner join MenuItem on MenuItem.Id = OrderItem.MenuItemId where Order.Id = " . $orderId;
+  $orderDetailsStatment = "select MenuItem.Name , MenuItem.Price , OrderItem.Quantity , OrderItem.TotalPrice , Order.DeliveryPlace , DeliveryTimeId , PaymentMethodId , Order.Total from `Order` , `OrderItem` inner join MenuItem on MenuItem.Id = OrderItem.MenuItemId where Order.Id = " . $orderId;
   $result = $conn->query($orderDetailsStatment);
   $orderDetails = mysqli_fetch_all($result);
   mysqli_free_result($result);
   return $orderDetails;
 }
 
-function processPayment($conn,$orderId,$selectedMethodId,$apiContext)
+function processPayment($conn,$orderId,$selectedMethodId,$categoryId,$apiContext)
 {
   $orderDetails = getOrderDetails($conn,$orderId);
 
@@ -450,11 +450,11 @@ function processPayment($conn,$orderId,$selectedMethodId,$apiContext)
 
     // determine shipping and tax later from frontend
     $shippingResult = $conn->query("select Price from fees where Id = " . 2); // id of shipping fee
-    $shipping = mysqli_fetch_assoc($shippingResult);
+    $shipping = mysqli_fetch_assoc($shippingResult)['Price'];
     mysqli_free_result($shippingResult);
 
     $taxResult = $conn->query("select Price from fees where Id = " . 3); // id of tax fee
-    $tax = mysqli_fetch_assoc($taxResult);
+    $tax = mysqli_fetch_assoc($taxResult)['Price'];
     mysqli_free_result($taxResult);
 
     // other fees goes here .. 
@@ -462,16 +462,16 @@ function processPayment($conn,$orderId,$selectedMethodId,$apiContext)
     $details = new Details();
     $details->setShipping($shipping)
     ->setTax($tax)
-    ->setSubtotal($orderDetails[0][5]);
+    ->setSubtotal($orderDetails[0][7]);
 
     // Set redirect urls
     $redirectUrls = new RedirectUrls();
-    $redirectUrls->setReturnUrl(SITE_URL . '/CafeteriaApp.Frontend/Areas/Customer/review_order_and_charge_customer.php?orderId='.$orderId)
-    ->setCancelUrl(SITE_URL . '/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId='.$orderId);
+    $redirectUrls->setReturnUrl(SITE_URL . '/CafeteriaApp.Frontend/Areas/Customer/review_order_and_charge_customer.php?orderId=' . $orderId . '&categoryId=' . $categoryId)
+    ->setCancelUrl(SITE_URL . '/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId=' . $orderId . '&categoryId=' . $categoryId);
 
     // Set payment amount
     $amount = new Amount();
-    $amount->setCurrency('GBP')->setTotal($orderDetails[0][5]
+    $amount->setCurrency('GBP')->setTotal($orderDetails[0][7]
       + $shipping + $tax)->setDetails($details);
 
     // Set transaction object

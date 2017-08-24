@@ -19,7 +19,7 @@
 <script src="/CafeteriaApp.Frontend/javascript/review_order_and_charge_customer.js"></script>
 
 <br>
-<div  ng-controller="OrderCheckout2" style="align-content:center;text-align:center;">
+<div  ng-controller="reviewOrderAndChargeCustomer" style="align-content:center;text-align:center;">
 
   <table align="center" >
     <thead>
@@ -55,6 +55,7 @@
       </tr>
     </tbody>
   </table>
+
   <div ng-repeat="o in orderItemsDetails">
     <div><label>OrderItem Name : </label><span ng-bind="o[0]"></span></div>
     <div><label>OrderItem Unit Price : </label><span ng-bind="o[1]"></span></div>
@@ -62,10 +63,25 @@
     <div><label>OrderItem Total Price : </label><span ng-bind="o[3]"></span></div>
     <div ng-show="orderItemsDetails.indexOf(o) == orderItemsDetails.length-1"><hr></div>
   </div>
+
   <label>Total : </label><span ng-bind="total"></span>
   <label>DeliveryPlace : </label><span ng-bind="deliveryPlace"></span>
-  <button type="submit" class="btn btn-primary" ng-click="chargeCustomer()">Pay Now</button>
+
+  <form novalidate name="myForm" action="/CafeteriaApp.Backend/Requests/Order.php" method="post" style="align-content:center;text-align:center;">
+  
+    <input type="text" style="visibility: hidden" ng-model="categoryId" name="categoryId">
+    <input type="text" style="visibility: hidden" name="orderId" ng-model="orderId">
+    <input type="text" style="visibility: hidden" ng-model="paymentId" name="paymentId">
+    <input type="text" style="visibility: hidden" ng-model="payerId" name="payerId">
+    <input type="text" style="visibility: hidden" ng-model="deliveryTimeId" name="deliveryTimeId">
+    <input type="text" style="visibility: hidden" ng-model="deliveryPlace" name="deliveryPlace">
+    <input type="text" style="visibility: hidden" ng-model="paymentMethodId" name="paymentMethodId">
+
+    <input type="submit" class="btn btn-primary" value="Pay Now">
+  </form>
+
 </div>
+
 <br>
 
     

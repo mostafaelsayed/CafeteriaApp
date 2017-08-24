@@ -5,6 +5,7 @@
 app.controller('OrderCheckout', function ($scope,$http,$location) {
   $scope.orderId = $location.search().orderId;
   $scope.selectedMethod = "";
+  $scope.categoryId = $location.search().categoryId;
 
 
 
