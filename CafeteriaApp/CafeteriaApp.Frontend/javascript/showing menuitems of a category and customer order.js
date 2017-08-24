@@ -4,9 +4,10 @@
 
 app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location) {
 
-  $scope.categoryId = $location.search().id;
 
-
+  $scope.categoryId = $location.search().categoryId;
+  $scope.cafeteriaId = $location.search().cafeteriaId;
+  
   $scope.getMenuItems = function() {
   
    $http.get('/CafeteriaApp.Backend/Requests/MenuItem.php?categoryId='+$scope.categoryId)

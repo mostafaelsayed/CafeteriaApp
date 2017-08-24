@@ -25,7 +25,7 @@ ALTER TABLE `user`
 
 
 ALTER TABLE `user`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`RoleId`) REFERENCES `role` (`Id`),
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`RoleId`) REFERENCES `role` (`Id`) ON DELETE CASCADE ,
   ADD CONSTRAINT `user_ibfk_4` FOREIGN KEY (`LocaleId`) REFERENCES `locale` (`Id`);
 
  ";

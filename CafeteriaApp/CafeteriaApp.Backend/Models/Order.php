@@ -15,7 +15,7 @@ class Order
 	  `OrderStatusId` INT NOT NULL ,
 	   `PaymentMethodId` INT NOT NULL ,
 		PRIMARY KEY (`Id`),
-		foreign key (UserId) references `User`(Id),
+		foreign key (UserId) references `User`(Id) ON DELETE CASCADE  ,
 		foreign key (DeliveryDateId) references `Dates`(Id),
 		foreign key (DeliveryTimeId) references `Times`(Id),
 		foreign key (OrderStatusId) references `OrderStatus`(Id),

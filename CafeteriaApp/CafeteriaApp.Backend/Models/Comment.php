@@ -10,8 +10,8 @@ CREATE TABLE `mydb`.`Comment` (
    `MenuItemId` INT NOT NULL ,
      `DateId` INT NOT NULL , 
      PRIMARY KEY (`Id`),
-    foreign key (UserId) references `User`(Id) ,
-    foreign key (MenuItemId) references `MenuItem`(Id) ,
+    foreign key (UserId) references `User`(Id) ON DELETE CASCADE  ,
+    foreign key (MenuItemId) references `MenuItem`(Id) ON DELETE CASCADE  ,
         foreign key (DateId) references `Dates`(Id) 
     )
      ENGINE = InnoDB;

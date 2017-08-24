@@ -4,7 +4,12 @@
 class Role
 {
 
-	public $create= "CREATE TABLE `mydb`.`Role` ( `Id` INT NOT NULL AUTO_INCREMENT , `Name` VARCHAR(50) NOT NULL , PRIMARY KEY (`Id`), UNIQUE `unique_role` (`Name`(50))) ENGINE = InnoDB;";
+	public $create= "CREATE TABLE `mydb`.`Role` ( 
+	`Id` INT NOT NULL AUTO_INCREMENT ,
+	 `Name` VARCHAR(50) NOT NULL ,
+	  PRIMARY KEY (`Id`),
+	   UNIQUE `unique_role` (`Name`(50))
+	  ) ENGINE = InnoDB;";
 
 	public $drop="drop table `mydb`.`Role` ";
 
