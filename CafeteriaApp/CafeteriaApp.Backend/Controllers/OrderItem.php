@@ -120,9 +120,9 @@ function editOrderItemQuantity($conn,$quantity,$id,$increaseDecrease)
   }
   else
   {
-    $MenuItemId = (getOrderItemById($conn,$id))["MenuItemId"];
+    $MenuItemId = getOrderItemById($conn,$id)["MenuItemId"];
     $unitPrice =getMenuItemPriceById($conn,$MenuItemId);
-    $orderId =(getOpenOrderByUserId($conn))["Id"];
+    $orderId =getOpenOrderByUserId($conn)["Id"];
     updateOrderTotalById($conn,$orderId,$increaseDecrease ?+$unitPrice : -$unitPrice);
     $totalPrice = $quantity * $unitPrice;
     $sql = "update OrderItem set Quantity = (?) , TotalPrice=(?)  where Id = (?)";
