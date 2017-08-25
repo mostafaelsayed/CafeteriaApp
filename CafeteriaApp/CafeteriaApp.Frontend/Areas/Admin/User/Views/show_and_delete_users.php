@@ -16,6 +16,7 @@
 
 <div class="row" ng-app="myapp">
   <div ng-controller="showAndDeleteUsers">
+  
    <script type="text/ng-template" id="modal.html">
      <div class="modal fade" id="mymodal">
       <div class="modal-dialog">
@@ -35,6 +36,7 @@
       </div>
     </div>
    </script>
+
    <div style="margin: auto">
     <div><h3 >Manage Your Users</h3>
       <div>

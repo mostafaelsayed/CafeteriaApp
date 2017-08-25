@@ -1,6 +1,6 @@
 // controller for editing a cafeteria
 
-app.controller('editCafeteria',['$scope','$http','$location',function($scope,$http,$location){
+app.controller('editCafeteria',['$scope','$http','$location',function($scope,$http,$location) {
 
   $scope.image = null;
   $scope.imageFileName = '';

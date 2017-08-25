@@ -1,10 +1,10 @@
 app.controller('addCashier',['$scope','$http','userService',function($scope,$http,userService) {
 
 	$scope.addCashierUser = function () {
-		$scope.$emit('getAddData'); // this is a child scope so we use $emit to send this message to the root scope
+		$scope.$emit('getUserData'); // this is a child scope so we use $emit to send this message to the root scope
 	};
 
-	$scope.$on('addDataSent' , function () {
+	$scope.$on('userDataSent' , function () {
 
 		// we now extract the data provided by the service and send it
 		// along with the customer data to the database to insert the customer

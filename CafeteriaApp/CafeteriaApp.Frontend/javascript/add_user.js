@@ -8,7 +8,7 @@ app.controller('addUser',['$scope','$http',function($scope,$http) {
 	$scope.password = "";
 	$scope.confirmPassword = "";
 
-	$scope.$on('getYourAddData',function() {
+	$scope.$on('getYourUserData',function() {
 
 		var data = {
 			UserName: $scope.userName,
@@ -20,7 +20,7 @@ app.controller('addUser',['$scope','$http',function($scope,$http) {
 			PhoneNumber: $scope.phoneNumber
 		};
 
-		$scope.$emit('hereIsMyAddData',data);
+		$scope.$emit('hereIsMyUserData',data);
 
 	});
 	

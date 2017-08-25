@@ -1,9 +1,9 @@
-
 <?php
- require_once("CafeteriaApp.Backend/functions.php"); 
-   validatePageAccess($conn);
 
+  require_once("CafeteriaApp.Backend/functions.php"); 
+  validatePageAccess($conn);
   include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
+
 ?>
 
 <script src="/CafeteriaApp.Frontend/javascript/add_cafeteria.js"></script>

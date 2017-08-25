@@ -30,13 +30,13 @@ app.factory('userService',['$rootScope', function($rootScope) {
   var userServiceInstance = {};
   userServiceInstance.userData = {};
 
-  $rootScope.$on('getAddData',function() {
-    $rootScope.$broadcast('getYourAddData');
+  $rootScope.$on('getUserData',function() {
+    $rootScope.$broadcast('getYourUserData');
   });
 
-  $rootScope.$on('hereIsMyAddData',function(event,data) {
+  $rootScope.$on('hereIsMyUserData',function(event,data) {
     userServiceInstance.userData = data;
-    $rootScope.$broadcast('addDataSent');
+    $rootScope.$broadcast('userDataSent');
   });
 
   return userServiceInstance;
