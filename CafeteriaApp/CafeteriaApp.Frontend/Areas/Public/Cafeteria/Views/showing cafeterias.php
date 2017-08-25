@@ -29,13 +29,13 @@
     <div class="carousel-inner">
       <div class="item active">
         <a ng-href="/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing categories of a cafeteria.php?id={{cafeterias[0].Id}}">
-          <img style="display:block;margin:auto" ng-src={{cafeterias[0].Image}} width="500" height="400" />
+          <img style="display:block;margin:auto;width:300px ;height:300px" ng-src={{cafeterias[0].Image}}  />
         </a>
         <h3 ng-bind="cafeterias[0].Name" class="carousel-caption"></h3>
       </div>
       <div ng-repeat="c in cafeterias.slice(1,cafeterias.length)" class="item">
         <a ng-href="/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing categories of a cafeteria.php?id={{c.Id}}">
-          <img style="display:block;margin:auto" ng-src={{c.Image}} width="500" height="400" />
+          <img style="display:block;margin:auto;width:300px ;height:300px" ng-src={{c.Image}} />
         </a>
         <h3 ng-bind="c.Name" class="carousel-caption"></h3>
       </div>

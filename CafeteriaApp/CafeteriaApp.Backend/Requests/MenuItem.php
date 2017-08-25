@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD']=="PUT")
   $data = json_decode(file_get_contents("php://input"));
   if ($data->Name != null && $data->Id != null)
   {
-    editMenuItem($conn,$data->Name,$data->Price,$data->Description,$data->Id,$data->Image);
+    editMenuItem($conn,$data->Name,$data->Price,$data->Description,$data->Id,$data->Image,$data->Visible);
   }
   else
   {

@@ -158,7 +158,7 @@ function addMenuItem($conn,$name,$price,$description,$categoryId,$imageData = nu
   }
 }
 
-function editMenuItem($conn,$name,$price,$description,$id,$imageData)
+function editMenuItem($conn,$name,$price,$description,$id,$imageData,$visible)
 {
   if (!isset($name))
   {
@@ -209,13 +209,14 @@ function editMenuItem($conn,$name,$price,$description,$id,$imageData)
     }
     else
     {
-      $sql = "update MenuItem set Name = (?) , Price = (?) , Description = (?) where Id = (?)";
+      $sql = "update MenuItem set Name = (?) , Price = (?) , Description = (?) , Visible = (?) where Id = (?)";
       $stmt = $conn->prepare($sql);
-      $stmt->bind_param("sdsi",$Name,$Price,$Description,$Id);
+      $stmt->bind_param("sdsii",$Name,$Price,$Description,$Visible,$Id);
       $Name = $name;
       $Price = $price;
       $Description = $description;
       $Id = $id;
+      $Visible = $visible;
     }
 
     if ($stmt->execute()===TRUE)

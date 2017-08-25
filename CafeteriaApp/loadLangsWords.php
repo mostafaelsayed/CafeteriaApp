@@ -19,7 +19,7 @@ $memcache = memcache_connect('localhost', 11211);
 		 unset($object);
 	
 
-	$object = new StdClass;
+//object = new StdClass;
 	//$object->attribute = 'test';
 	$memcache->set("obj_key", $object2);
 

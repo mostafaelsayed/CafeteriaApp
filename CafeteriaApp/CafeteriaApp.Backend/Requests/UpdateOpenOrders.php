@@ -5,7 +5,9 @@ require_once('CafeteriaApp.Backend/Controllers/MenuItem.php');
 require_once('CafeteriaApp.Backend/Controllers/Notification.php');
 require_once("CafeteriaApp.Backend/connection.php");
 
-$ids= array();
+if ($_SERVER["REQUEST_METHOD"] == "GET")
+{
+	$ids= array();
 $flattenOrderItems= array();
 
 function explodeArray2($n)
@@ -108,4 +110,6 @@ foreach ($orders as $key => $order) {
 
 //merge arrays
 //$ids =array_merge_recursive($orderItems);
+}
+
 ?>

@@ -36,13 +36,13 @@
                   </div>
                   <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile">
                   <div ng-if="uploadme.src != ''">
-                    <img ng-src="{{ uploadme.src }}" width="300" height="300">
+                    <img ng-src="{{ uploadme.src }}" style="width: 300px;height: 300px" />
                   </div>
                   <div ng-if="uploadme.src == ''">
-                    <img ng-src="{{ imageUrl }}" width="300" height="300">
+                    <img ng-src="{{ imageUrl }}" style="text-align: center;width: 300px;height: 300px">&nbsp;
+                    <span><button class="btn btn-primary" onclick="mylabel.click()" style="position: absolute;margin-top: 150px" id="mybutton">Choose image</button><label id="mylabel" for="file"></label></span>
+                    <br>
                   </div>
-                  <br>
-                  <button class="btn btn-primary" onclick="mylabel.click()" id="mybutton">Choose image</button><label id="mylabel" for="file"></label>
                 </div>
                 <div class="form-group">
                   <input type = "submit" value = "save" class="btn btn-primary" ng-click="editCafeteria()">

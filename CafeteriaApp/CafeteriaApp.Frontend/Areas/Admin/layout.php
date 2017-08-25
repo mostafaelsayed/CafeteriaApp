@@ -56,12 +56,12 @@
             <a style="color:white" class="navbar-brand" href="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php">Cafeterias Page</a>
           </div>
           <ul class="nav navbar-nav">
-            <li ><a style="color:white" class="navbar-brand"  href="#">Home</a></li>
-            <li><a style="color:white" class="navbar-brand"  href="#"> <?php echo _("Contact");?></a></li>
-            <li><a style="color:white" class="navbar-brand"  href="#"><?php echo _("Help");?></a></li>
-            <li><a style="color:white" class="navbar-brand"  href="/CafeteriaApp.Frontend/Views/logout.php">Log out</a></li>
+            <!-- <li ><a style="color:white" class="navbar-brand"  href="#">Home</a></li> -->
+            <!-- <li><a style="color:white" class="navbar-brand"  href="#"> <?php echo _("Contact");?></a></li> -->
+            <!-- <li><a style="color:white" class="navbar-brand"  href="#"><?php echo _("Help");?></a></li> -->
             <li><a style="color:white" class="navbar-brand"  href="/CafeteriaApp.Frontend/Areas/Admin/User/Views/show_and_delete_users.php">Manage Users</a></li>
-
+            <li><a style="color:white" class="navbar-brand"  href="/CafeteriaApp.Frontend/Areas/Admin/AppSettings/Views/show_and_delete_fees.php">Manage Fees</a>
+            <li><a style="color:white" class="navbar-brand"  href="/CafeteriaApp.Frontend/Views/logout.php">Log out</a></li>
 
           </ul>
 
