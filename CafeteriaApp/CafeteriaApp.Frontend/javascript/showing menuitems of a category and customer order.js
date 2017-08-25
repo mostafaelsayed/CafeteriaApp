@@ -467,12 +467,12 @@ $scope.addRatingOrUpdate=function(MenuItemId,value)
 }
 
 
-$scope.commentDetails = new Array();//menuitems
-$scope.add_edits = new Array();//menuitems
-$scope.ShowHides = new Array();//menuitems
-$scope.comments = new Array();//menuitems
-$scope.customerCommentsIds = new Array();//menuitems
- $scope.ItemRating=new Array();
+$scope.commentDetails = [];//menuitems
+$scope.add_edits = [];//menuitems
+$scope.ShowHides = [];//menuitems
+$scope.comments = [];//menuitems
+$scope.customerCommentsIds = [];//menuitems
+ $scope.ItemRating=[];
  
 $scope.getCurrentCustomer();
 $scope.getMenuItems();
