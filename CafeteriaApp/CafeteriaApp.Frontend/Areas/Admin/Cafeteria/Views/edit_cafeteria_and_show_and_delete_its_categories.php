@@ -101,7 +101,7 @@
                <td id="alignText" ng-bind="c.Name"></td>
                <td id="alignText" class="center">
                  <a id="myButton" href="/CafeteriaApp.Frontend/Areas/Admin/Category/Views/edit_category_and_show_and_delete_its_menuitems.php?id={{c.Id}}" target="_self">Edit</a>&nbsp;
-                 <a style="cursor: pointer" ng-click="deleteCategory(c.Id)">Delete</button>
+                 <a style="cursor: pointer" ng-click="deleteCategory(c)">Delete</button>
                </td>
              </tr>
            </tbody>

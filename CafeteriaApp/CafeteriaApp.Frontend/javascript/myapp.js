@@ -142,6 +142,7 @@ function checkType(val,regExp) {
     return false;
   }
 }
+
 function isEmpty(val) {
   if (val == "") {
     return true;
@@ -158,7 +159,7 @@ app.directive("numberCheck",function() {
     link: function(scope,elem,attr,ctrl) {
       var regExp = /^\d{0,9}(\.\d{0,2}){0,1}$/; // regular expression for matching floating point numbers only
       ctrl.$parsers.unshift(function(val) {
-        if (checkType(val)) {
+        if (checkType(val,regExp)) {
           ctrl.$setValidity('numberCheck',true);
           ctrl.$setValidity('numberEmpty',true);
           return val;
@@ -177,7 +178,7 @@ app.directive("numberCheck",function() {
         }
       });
       ctrl.$formatters.unshift(function(val) {
-        if (checkType(val)) {
+        if (checkType(val,regExp)) {
           ctrl.$setValidity('numberEmpty',true);
           ctrl.$setValidity('numberCheck',true);
         }

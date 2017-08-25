@@ -110,7 +110,7 @@
                   <td id="alignText" ng-bind="m.Description"></td>
                   <td id="alignText" class="center">
                     <a id="myButton" href="/CafeteriaApp.Frontend/Areas/Admin/MenuItem/Views/edit_menuitem.php?id={{m.Id}}" target="_self">Edit</a>&nbsp;
-                    <a style="cursor: pointer" ng-click="deleteMenuItem(m.Id)">Delete</a>
+                    <a style="cursor: pointer" ng-click="deleteMenuItem(m)">Delete</a>
                   </td>
                 </tr>
               </tbody>

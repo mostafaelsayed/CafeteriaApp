@@ -12,7 +12,7 @@
 
 <div  ng-controller="getCategories">
   <div ng-repeat="c in categories" style="width:15%;margin:auto">
-
+  <a href="/CafeteriaApp.Frontend/Areas/Customer/Category/Views/showing menuitems of a category and customer order.php?categoryId={{c.Id}}" style="color: blue" target="_self"><span ng-bind="c.Name"></span></a>
     <br />
   </div>
 </div>

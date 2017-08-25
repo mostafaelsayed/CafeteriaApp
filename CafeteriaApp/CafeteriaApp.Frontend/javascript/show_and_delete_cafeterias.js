@@ -7,8 +7,8 @@ app.controller('showAndDeleteCafeterias',['$scope','$http','ModalService', funct
       controller: "ModalController"
     }).then(function(modal) {
       modal.element.modal();
-      modal.close.then(function(result){
-        if (result == "Yes"){
+      modal.close.then(function(result) {
+        if (result == "Yes") {
           $scope.delete();
         }
       });
@@ -25,13 +25,21 @@ app.controller('showAndDeleteCafeterias',['$scope','$http','ModalService', funct
 
   $scope.getCafeterias();
 
-  $scope.deleteCafeteria = function(cafeteriaId) {
+  $scope.deleteCafeteria = function(cafeteria) {
+
     $scope.show();
+
     $scope.delete = function() {
-     $http.delete('/CafeteriaApp.Backend/Requests/Cafeteria.php?cafeteriaId='+cafeteriaId)
-     .then(function(response){
-       $scope.getCafeterias();
+
+     $http.delete('/CafeteriaApp.Backend/Requests/Cafeteria.php?cafeteriaId='+cafeteria.Id)
+     .then(function(response) {
+
+       $scope.cafeterias.splice($scope.cafeterias.indexOf(cafeteria),1);
+
      });
+
     };
+
   }
+
 }]);
