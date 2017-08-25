@@ -30,9 +30,19 @@ function chargeCustomer($paymentId,$payerId,$paypal,$categoryId,$orderId,$delive
 		if ($transactionStatment->execute() === true)
 		{
 			$result = $payment->execute($execution, $paypal); // Execute payment (charge customer here)
-			$returnUrl = "http://127.0.0.1/CafeteriaApp.Frontend/Areas/Customer/Category/Views/showing menuitems of a category and customer order.php?categoryId=" . $categoryId;
-			CheckOutOrder($conn,$orderId,$deliveryTimeId,$deliveryPlace,$selectedMethodId);
-			header("Location: " . $returnUrl);
+			
+			if ($result)
+			{
+				CheckOutOrder($conn,$orderId,$deliveryTimeId,$deliveryPlace,$selectedMethodId);
+				$returnUrl = "http://127.0.0.1/CafeteriaApp.Frontend/Areas/Customer/Category/Views/showing menuitems of a category and customer order.php?categoryId=" . $categoryId;
+				header("Location: " . $returnUrl);
+			}
+			else
+			{
+				$returnUrl = "http://127.0.0.1/CafeteriaApp.Frontend/Areas/Customer/checkout.php?categoryId=" . $categoryId;
+				header("Location: " . $returnUrl);
+			}
+			
 		}
 		else
 		{

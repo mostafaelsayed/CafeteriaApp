@@ -56,12 +56,12 @@
     </tbody>
   </table>
 
-  <div ng-repeat="o in orderItemsDetails">
+  <div ng-repeat="o in orderDetails">
     <div><label>OrderItem Name : </label><span ng-bind="o[0]"></span></div>
     <div><label>OrderItem Unit Price : </label><span ng-bind="o[1]"></span></div>
     <div><label>OrderItem Quantity : </label><span ng-bind="o[2]"></span></div>
     <div><label>OrderItem Total Price : </label><span ng-bind="o[3]"></span></div>
-    <div ng-show="orderItemsDetails.indexOf(o) == orderItemsDetails.length-1"><hr></div>
+    <div ng-show="orderDetails.indexOf(o) == orderDetails.length-1"><hr></div>
   </div>
 
   <label>Total : </label><span ng-bind="total"></span>

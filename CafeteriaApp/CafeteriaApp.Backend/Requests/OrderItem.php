@@ -18,15 +18,14 @@ if ($_SERVER['REQUEST_METHOD']=="POST")
 {
   //decode the json data
   $data = json_decode(file_get_contents("php://input"));
+
   $orderId = addOrderItem($conn,$data->OrderId,$data->MenuItemId,$data->Quantity);
+
   if ($orderId != null)
   {
     echo $orderId;
   }
-  else
-  {
-    echo "Error: ".$conn->error;
-  }
+
 }
 
 if ($_SERVER['REQUEST_METHOD']=="PUT")

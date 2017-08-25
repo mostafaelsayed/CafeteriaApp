@@ -104,6 +104,8 @@ function getOrderItemTotalPriceById($conn , $id)
   }
 }
 
+//print_r(getOrderItemTotalPriceById($conn,25));
+
 function editOrderItemQuantity($conn,$quantity,$id,$increaseDecrease) 
 {
   if (!isset($quantity))
@@ -152,14 +154,23 @@ function addOrderItem($conn,$orderId,$menuItemId,$quantity)
     //echo "Error: OrderItem quantity is not set";
     return;
   }
-  $unitPrice =getMenuItemPriceById($conn,$menuItemId);
-  $totalPrice  =  $quantity * $unitPrice ;
-  if ($orderId == null) // create order by default values
+
+  $unitPrice = getMenuItemPriceById($conn,$menuItemId);
+  $totalPrice  =  $quantity * $unitPrice;
+
+  if ($orderId == null)
   {
     $deliveryTimeId = getCurrentTimeId($conn);
     $deliveryDateId = getCurrentDateId($conn);
-    $orderId = addOrder($conn,$deliveryDateId,$deliveryTimeId,'',1,1, $_SESSION["userId"], $totalPrice);//paid default to zero
+
+     // create order by default values
+    $orderId = addOrder($conn,$deliveryDateId,$deliveryTimeId,'',1,1, $_SESSION["userId"], 0);//paid default to zero
   }
+
+  // if ($orderId == null)
+  // {
+  //   return $orderId;
+  // }
   // if ($orderId != null)
   // {
   //   $sql = "insert into OrderItem (OrderId,MenuItemId,Quantity,TotalPrice) values (?,?,?,?)";
@@ -180,26 +191,26 @@ function addOrderItem($conn,$orderId,$menuItemId,$quantity)
   //   }
   // }
   
+  //else
+  //{
+  updateOrderTotalById($conn,$orderId,$totalPrice);
+  $sql = "insert into OrderItem (OrderId,MenuItemId,Quantity,TotalPrice) values (?,?,?,?)"; // add TotalPrice to total of the order
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("iiid",$OrderId,$MenuItemId,$Quantity,$Price);
+  $OrderId = $orderId;
+  $MenuItemId = $menuItemId;
+  $Quantity = $quantity;
+  $Price =$totalPrice ;
+  if ($stmt->execute()===TRUE)
+  {
+    //echo "OrderItem Added successfully";
+    return $orderId;
+  }
   else
   {
-    updateOrderTotalById($conn,$orderId,$totalPrice);
-    $sql = "insert into OrderItem (OrderId,MenuItemId,Quantity,TotalPrice) values (?,?,?,?)"; // add TotalPrice to total of the order
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iiid",$OrderId,$MenuItemId,$Quantity,$Price);
-    $OrderId = $orderId;
-    $MenuItemId = $menuItemId;
-    $Quantity = $quantity;
-    $Price =$totalPrice ;
-    if ($stmt->execute()===TRUE)
-    {
-      //echo "OrderItem Added successfully";
-      return $orderId;
-    }
-    else
-    {
-      echo "Error: ".$conn->error;
-    }
+    echo "Error: ".$conn->error;
   }
+  //}
 }
 
 function deleteOrderItem($conn,$id) {// remove TotalPrice to total of the order
@@ -210,13 +221,14 @@ function deleteOrderItem($conn,$id) {// remove TotalPrice to total of the order
   }
   else
   {
-    $orderId =json_decode(getOpenOrderByUserId($conn) , true)["Id"];
+    $orderId =getOpenOrderByUserId($conn)["Id"];
     $totalPrice=getOrderItemTotalPriceById($conn,$id);
     updateOrderTotalById($conn,$orderId,-$totalPrice);
     $sql = "delete from OrderItem where Id = ".$id . " LIMIT 1";
     if ($conn->query($sql)===TRUE )
     {
-      return "Order Item deleted successfully";
+      //return "Order Item deleted successfully";
+      return $orderId;
     }
     else
     {
@@ -224,6 +236,8 @@ function deleteOrderItem($conn,$id) {// remove TotalPrice to total of the order
     }
   }
 }
+
+//print_r(deleteOrderItem($conn,25));
 
 function deleteOrderItemsByMenuItemId($conn,$id) {// remove TotalPrice to total of the order
  if (!isset($id))
