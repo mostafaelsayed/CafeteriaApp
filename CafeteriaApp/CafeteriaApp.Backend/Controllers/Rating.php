@@ -1,36 +1,37 @@
 <?php
-
-
-
-function getRatingIdsByUserIdAndMenuItemId($conn,$cid,$mid) // used for editing or deleting comments of a user
+function getMenuItemsIdsThatHaveRatingsByUserId($conn,$cid) // used for editing or deleting comments of a user
 {  
-  if ( !isset($cid) || !isset($mid))
+  if ( !isset($cid) )
   {
     //echo "Error: Id is not set";
-    return 1;
+    return ;
   }
   else
   {
-    $sql = "select count(*) from Rating where UserId ='".$cid."' and MenuItemId=".$mid ;
+    $sql = "select MenuItemId , Value from Rating where UserId =".$cid ;
     $result = $conn->query($sql);
     if ($result)
     {
-    $count = mysqli_fetch_all($result, MYSQLI_NUM);
+    $ratings = mysqli_fetch_all($result, MYSQLI_NUM);
        mysqli_free_result($result);
-      
-        return $count;   
-    
+       $Ids= array();
+        foreach ($ratings as $key => $value) {
+         $Ids[$key]= ($value[0]) ;
+       }
+        return Array($ratings,$Ids);   
     }
     else
     {
-      echo "Error retrieving Comments: " . $conn->error;
+      echo "Error retrieving Ratings: " . $conn->error;
     }
   } 
 }
 
-function addComment($conn,$details ,$Cid,$Mid)
+
+
+function addRating($conn,$Cid,$Mid,$value)
 {
-  if (!isset($details))
+  if (!isset($value))
   {
     //echo "Error: Comment Details is not set";
     return;
@@ -48,17 +49,53 @@ function addComment($conn,$details ,$Cid,$Mid)
   else
   {
 
-    $DateId =getDateIdByDate($conn,date("Y-m-d"));
-
-    $sql = "insert into Comment (Details , UserId , MenuItemId , DateId ) values (?,?,?,?)";
+    $sql = "insert into `Rating` ( UserId , MenuItemId , Value ) values (?,?,?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("siii",$Details, $UserId ,$MenuItemId,$DateId);
-    $Details = $details;
+    $stmt->bind_param("iid", $UserId ,$MenuItemId,$Value);
+    $Value = $value;
     $UserId = $Cid;
     $MenuItemId=$Mid;
     if ($stmt->execute()===TRUE)
     {
-       return  mysqli_insert_id($conn);
+       return true;
+      //return "Comment Added successfully";
+    }
+    else
+    {
+      echo "Error: ".$conn->error;
+    }
+  }
+}
+
+function updateRating($conn,$Cid,$Mid,$value)
+{
+  if (!isset($value))
+  {
+    //echo "Error: Comment Details is not set";
+    return;
+  }
+  elseif (!isset($Cid))
+  {
+   // echo "Error: Customer Id is not set";
+    return;
+  }
+  elseif (!isset($Mid))
+  {
+    //echo "Error: MenuItem Id is not set";
+    return;
+  }
+  else
+  {
+
+    $sql = "update `Rating` set   Value= (?) where UserId = (?) and  MenuItemId =(?) ";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("dii", $Value ,$UserId ,$MenuItemId);
+    $Value = $value;
+    $UserId = $Cid;
+    $MenuItemId=$Mid;
+    if ($stmt->execute()===TRUE)
+    {
+       return true;
       //return "Comment Added successfully";
     }
     else
@@ -69,17 +106,16 @@ function addComment($conn,$details ,$Cid,$Mid)
 }
 
 
-
-function checkOwnershipOfComment($conn,$id,$cid)//check if its for the customer before deleting
+function checkOwnershipOfRatingForUserId($conn,$Mid,$Cid)//check if its for the customer before deleting
 {
-  if (!isset($id))
+  if (!isset($Mid) || !isset($Cid))
   {
     //echo "Error: Id is not set";
     return;
   }
   else
   {
-    $sql = "select count(*) from Comment where Id = ".$id. " and UserId=".$cid;
+    $sql = "select count(*) from Rating where MenuItemId = ".$Mid. " and UserId=".$Cid;
     $result = $conn->query($sql);
     if ($result) {
       $count= mysqli_fetch_array($result , MYSQLI_NUM);
@@ -111,7 +147,7 @@ function checkOwnershipOfComment($conn,$id,$cid)//check if its for the customer 
     $result = $conn->query($sql);
     if ($result)
     {
-      $avg = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $avg = mysqli_fetch_all($result, MYSQLI_NUM);
       mysqli_free_result($result);
         return $avg;
     }

@@ -15,3 +15,51 @@ h1,h3 {
   font-style: italic;
 }
 
+.row .col-lg-5  table{
+
+border : 1px solid blue;
+ width : 100%;
+}
+
+.row .col-lg-5 .blueTable tr:hover
+ {
+  background-color: #CECECE
+
+ }
+
+.row .col-lg-5 .blueTable>tr{/*first tr child in table */
+margin: 10px;
+/*color: white;*/
+}
+
+.row .col-lg-5 .blueTable td{
+text-align:center;
+margin: 10px;
+color: white;
+ display:block;
+
+}
+
+.row .col-lg-5 .blueTable td>a{
+
+text-decoration: none;
+}
+
+.row .col-lg-5 .addToOrder a:hover{
+
+ background-color: #E7E7E7
+}
+
+.row .col-lg-5 .addToOrder  a {
+color:white;
+float:right;
+margin-top:-40px
+}
+
+.bottom a{
+color: white;
+}
+
+.about{
+  display: none;
+}

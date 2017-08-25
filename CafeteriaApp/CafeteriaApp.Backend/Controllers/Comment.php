@@ -63,7 +63,7 @@ function getCommentsIdsByUserIdAndMenuItemId($conn,$cid,$mid) // used for editin
   if ( !isset($cid) || !isset($mid)) 
   {
     //echo "Error: Id is not set";
-    return 1;
+    return ;
   }
   else
   {

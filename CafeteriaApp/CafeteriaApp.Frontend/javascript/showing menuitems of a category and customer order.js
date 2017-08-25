@@ -11,11 +11,11 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
   
    $http.get('/CafeteriaApp.Backend/Requests/MenuItem.php?categoryId='+$scope.categoryId)
    .then(function(response) {
-    console.log(response);
+    //console.log(response);
        $scope.menuItems = response.data;
        $scope.loadFavoriteItems();
        $scope.initializeMenuItemCommmentFlags();
-
+       $scope.loadRatedMenuItemsForUser();
    });
   }
  
@@ -26,12 +26,12 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
     $http.get('/CafeteriaApp.Backend/Requests/Customer.php')
     .then(function(response) {
       $scope.customerId = response.data;
-      console.log($scope.customerId);
+      //console.log($scope.customerId);
       if ($scope.customerId == undefined) {
         document.location = "/CafeteriaApp.Frontend/Views/login.php?redirect_to="+redirect_to;
       }
       else {
-        //console.log($scope.customerId);
+        ////console.log($scope.customerId);
         $scope.getOrder();
       }
     });
@@ -41,29 +41,29 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
   $scope.getOrderItems = function() {
     $http.get('/CafeteriaApp.Backend/Requests/OrderItem.php?orderId='+$scope.orderId)
     .then(function(response) {
-      //console.log(response.data);
+      //console.log(response);
       $scope.orderItems = response.data;
-      //console.log(response.data);
+      ////console.log(response.data);
       //$scope.TotalPrice = $scope.getTotalPrice();
     });
   }
 
 
   $scope.getOrder = function() {
-    //console.log($scope.customerId);
+    ////console.log($scope.customerId);
     $http.get('/CafeteriaApp.Backend/Requests/Order.php')
     .then(function(response) {
       //console.log(response);
       $scope.currentOrder = response.data;
       $scope.orderId = $scope.currentOrder.Id;
-      //console.log($scope.orderId);
+      ////console.log($scope.orderId);
       if ($scope.orderId == undefined) {
         $scope.orderId = null;
         $scope.orderItems = [];
-        //console.log($scope.orderItems);
+        ////console.log($scope.orderItems);
         $scope.TotalPrice = 0;
       }
-      //console.log($scope.orderId);
+      ////console.log($scope.orderId);
       else if($scope.orderId != undefined) {
         $scope.getOrderItems();
       }
@@ -76,7 +76,7 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
   
 
   $scope.addToOrder = function(menuItem) {
-    //console.log(1);
+    ////console.log(1);
     var x = $scope.orderItems.filter(o => o.MenuItemId == menuItem.Id);
     if(x.length > 0) {
       $scope.increaseQuantity(x[0]); // we extract the first element because x is array (x must be one length array)
@@ -88,7 +88,7 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
         Quantity: parseInt(1)
         //CustomerId: $scope.customerId
       };
-      //console.log($scope.orderId);
+      ////console.log($scope.orderId);
       $http.post('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
       .then(function(response) {
         //console.log(response);
@@ -109,7 +109,7 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
       };
       $http.put('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
       .then(function(response) {
-        //console.log(response);
+        ////console.log(response);
         $scope.getOrderItems();
       });
     }
@@ -163,7 +163,7 @@ $scope.toggleFavoriteItem = function(menuItemId) {
       });
     }
     else
-    {//console.log('HI');
+    {////console.log('HI');
   
   $http.delete('/CafeteriaApp.Backend/Requests/FavoriteItem.php?Id='+menuItemId)
       .then(function(response) {
@@ -242,7 +242,7 @@ $scope.loadCommentsforMenuItem = function (menuItemId,menuItemIndex){
 
  $http.get('/CafeteriaApp.Backend/Requests/Comment.php?MenuItemId='+menuItemId)
    .then(function(response) {
-    //console.log(response);
+    console.log(response);
       $scope.comments[menuItemIndex] = response.data[0];
 
     $scope.customerCommentsIds[menuItemIndex] = response.data[1];
@@ -381,23 +381,102 @@ $scope.checkEditAndRemove=function(commentId,index)
 }
 
 
-
-
-
-$scope.ShowCallsInNGRepeat=function () {
+// $scope.ShowCallsInNGRepeat=function () {
   
-     console.log(1);
-    return true;
+//      //console.log(1);
+//     return true;
+// }
+
+$scope.loadRatedMenuItemsForUser = function (){
+
+ $http.get('/CafeteriaApp.Backend/Requests/Rating.php')
+   .then(function(response) {
+
+       $scope.ratedMenuItemsIds=response.data[1];//for updating 
+
+       for (var j = 0 ; j < $scope.menuItems.length ; j++) {
+          for (var i = 0; i < response.data[0].length; i++) {
+            if ($scope.menuItems[j].Id===response.data[0][i][0] )
+            $scope.ItemRating[j]=response.data[0][i][1];//get the value of rating for item of index j
+
+       }
+
+       }
+      
+      
+   });
+
 }
+
+$scope.checkaddUpdateRating=function (MenuItemId) {
+ return $.inArray( MenuItemId , $scope.ratedMenuItemsIds) === -1 ? false : true;
+
+}
+
+
+
+$scope.addRatingOrUpdate=function(MenuItemId,value)
+{
+  if($scope.checkaddUpdateRating(MenuItemId))//update
+  {
+    var data={MenuItemId:MenuItemId,
+      Value:value
+
+    };
+
+    $http.put('/CafeteriaApp.Backend/Requests/Rating.php',data)
+        .then(function(response) {
+          if(response.data!=="")
+          {// 
+            
+        //  alertify.error( response.data);
+          }
+          else{  
+              
+           console.log(response);
+            // hide the stars ,show thanks !
+          }
+
+        });
+
+  }
+  else{//add
+
+  var data={MenuItemId:MenuItemId,
+    Value:value
+
+  };
+
+  $http.post('/CafeteriaApp.Backend/Requests/Rating.php',data)
+      .then(function(response) {
+        if(response.data!=="")
+        {// 
+           $scope.ratedMenuItemsIds.push(MenuItemId);
+      //  alertify.error( response.data);
+        }
+        else{  
+            
+         console.log(response);
+          // hide the stars ,show thanks !
+        }
+
+      });
+
+  }
+ 
+}
+
 
 $scope.commentDetails = new Array();//menuitems
 $scope.add_edits = new Array();//menuitems
 $scope.ShowHides = new Array();//menuitems
 $scope.comments = new Array();//menuitems
 $scope.customerCommentsIds = new Array();//menuitems
-
+ $scope.ItemRating=new Array();
+ 
 $scope.getCurrentCustomer();
 $scope.getMenuItems();
+
 
 
 
