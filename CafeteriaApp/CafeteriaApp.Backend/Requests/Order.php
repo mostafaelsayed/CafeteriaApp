@@ -4,8 +4,8 @@ require_once( 'CafeteriaApp.Backend/Controllers/Order.php');
 require_once( 'CafeteriaApp.Backend/Controllers/Times.php');
 require_once("CafeteriaApp.Backend/connection.php");
 require_once ('CheckResult.php');
-require_once('paypal/start.php');
-require_once('paypal/pay.php');
+require_once('PayPal/start.php');
+require_once('PayPal/pay.php');
 
 if ($_SERVER['REQUEST_METHOD']=="GET")
 {
@@ -21,6 +21,10 @@ if ($_SERVER['REQUEST_METHOD']=="GET")
   elseif (isset($_GET["orderId"]) && isset($_GET["flag"]))
   {
     checkResult(getOrderDetails($conn,$_GET["orderId"]));
+  }
+  elseif(isset($_GET['flag']))
+  {
+    checkResult(getOrders($conn));
   }
   else
   {

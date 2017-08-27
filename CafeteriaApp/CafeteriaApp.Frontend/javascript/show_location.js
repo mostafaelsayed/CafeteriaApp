@@ -1,57 +1,66 @@
-var button = jQuery('.button');
-var preloader = jQuery('#preloader');
-var longitudediv = jQuery('.longitude');
-var lattitudediv = jQuery('.lattitude');
-var locationdiv = jQuery('.location');
-//var latitude = "";
-//var longitude = "";
-if (navigator.geolocation) {    
-    // Browser supports it, we're good to go!     
-    } else {    
-    alert('Sorry your browser doesn\'t support the Geolocation API');    
-    }
-    
+var map,infoWindow;
 
-button.click(function(e) {
-    e.preventDefault(); // ??
-    preloader.show();
-    navigator.geolocation.getCurrentPosition(exportPosition, errorPosition);
-    console.log(1);
-    
+function initMap() {
+
+  map = new google.maps.Map(document.getElementById('map'),{
+    // initializations
+    center: {lat: -34.397, lng: 150.644},
+    zoom: 6
   });
 
-function errorPosition() {                  
-    alert('Sorry couldn\'t find your location');                 
-    pretext.show();         
-    }
-    function exportPosition(position) {
- 
-    // Get the geolocation properties and set them as variables
-    latitude = position.coords.latitude;
-    longitude  = position.coords.longitude;
-    //appLatitude = 30.7;
-    //appLongitude = 30;
-    console.log(latitude);
-    console.log(longitude);
-    // Insert the google maps iframe and change the location using the variables returned from the API
-    jQuery('#map').html('<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/?ie=UTF8&amp;ll='+latitude+','+longitude+'&amp;spn=0.332359,0.617294&amp;t=m&amp;z=11&amp;output=embed"></iframe>');
-    longitudediv.html('Longitude: '+longitude);
-    lattitudediv.html('Latitude: '+latitude);
+  infoWindow = new google.maps.InfoWindow();
 
-    //Make a call to the Google maps api to get the name of the location
-    jQuery.ajax({
-      url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude,
-      type: 'POST',
-      dataType: 'json',
-      success: function(data) {
-        console.log(data);
-        //If Successful add the data to the 'location' div
-     locationdiv.html('Location: '+data.results[0].address_components[2].long_name);
-      },
-      error: function(xhr, textStatus, errorThrown) {
-        console.log(1);
-             errorPosition();
-      }
+  // check if browser supports geolocation
+  if (navigator.geolocation) {
+
+    navigator.geolocation.getCurrentPosition(function(position) {
+
+    var pos = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude
+    };
+
+    // call places service passing in request object containing placeId (which may returned from place search response)
+    // var request = {
+    //   placeId: 'ChIJxfbuHsg9WBQR3bhtVLZHOCI' // returned from a search result
+    //   //location: pos,
+    //   //radius: '500',
+    //   //type: ['restaurant']
+    // };
+
+    // service = new google.maps.places.PlacesService(map);
+    // //service.nearbySearch(request,callback)
+    // service.getDetails(request,callback);
+
+    infoWindow.setPosition(pos);
+    infoWindow.setContent('Location found.');
+    infoWindow.open(map);
+    map.setCenter(pos);
+
+    }, function() {
+      handleLocationError(true, infoWindow, map.getCenter());
     });
-     
-}
+  } else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
+  }
+};
+
+function callback(results,status) { // returned from the request to places service
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+    console.log(results);
+    // for (var i = 0; i < results.length; i++) {
+    //   var place = results[i];
+    //   //console.log(place);
+    //   //createMarker(results[i]);
+    // }
+  }
+};
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(browserHasGeolocation ?
+                      'Error: The Geolocation service failed.' :
+                      'Error: Your browser doesn\'t support geolocation.');
+  infoWindow.open(map);
+};

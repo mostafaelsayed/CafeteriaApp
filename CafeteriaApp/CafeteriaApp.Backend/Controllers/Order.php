@@ -2,7 +2,7 @@
 
 require_once('CafeteriaApp.Backend/session.php');
 require_once('CafeteriaApp.Backend/connection.php');
-require_once('paypal/start.php');
+require_once('PayPal/start.php');
 
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
@@ -154,6 +154,22 @@ function getOrdersByDeliveryTimeId($conn,$id)
     {
       echo "Error retrieving orders: " . $conn->error;
     }
+  }
+}
+
+function getOrders($conn)
+{
+  $sql = "select * from `order`";
+  $result = $conn->query($sql);
+  if ($result)
+  {
+    $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    mysqli_free_result($result);
+    return $orders;
+  }
+  else
+  {
+    echo "Error retrieving orders: " . $conn->error;
   }
 }
 
@@ -424,7 +440,7 @@ function calcAndUpdateOrderTotalById($conn ,$orderId)
 
 function getOrderDetails($conn,$orderId)
 {
-  $orderDetailsStatment = "select MenuItem.Name , MenuItem.Price , OrderItem.Quantity , Order.Total from `OrderItem` inner join MenuItem on MenuItem.Id = OrderItem.MenuItemId inner join `Order` on Order.Id = OrderItem.OrderId where OrderItem.OrderId = " . $orderId;
+  $orderDetailsStatment = "select MenuItem.Name , MenuItem.Price , OrderItem.Quantity , OrderItem.TotalPrice , Order.Total from `OrderItem` inner join MenuItem on MenuItem.Id = OrderItem.MenuItemId inner join `Order` on Order.Id = OrderItem.OrderId where OrderItem.OrderId = " . $orderId;
   $result = $conn->query($orderDetailsStatment);
   $orderDetails = mysqli_fetch_all($result);
   mysqli_free_result($result);
@@ -461,7 +477,7 @@ function processPayment($conn,$orderId,$selectedMethodId,$deliveryPlace,$deliver
     $details = new Details();
     $details->setShipping($shipping)
     ->setTax($tax)
-    ->setSubtotal($orderDetails[0][3]);
+    ->setSubtotal($orderDetails[0][4]);
 
     // Set redirect urls
     $redirectUrls = new RedirectUrls();
@@ -470,7 +486,7 @@ function processPayment($conn,$orderId,$selectedMethodId,$deliveryPlace,$deliver
 
     // Set payment amount
     $amount = new Amount();
-    $amount->setCurrency('GBP')->setTotal($orderDetails[0][3]
+    $amount->setCurrency('GBP')->setTotal($orderDetails[0][4]
       + $shipping + $tax)->setDetails($details);
 
     // Set transaction object

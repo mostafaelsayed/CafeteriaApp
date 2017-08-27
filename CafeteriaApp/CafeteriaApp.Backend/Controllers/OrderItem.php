@@ -125,7 +125,7 @@ function editOrderItemQuantity($conn,$quantity,$id,$increaseDecrease)
     $orderId =getOpenOrderByUserId($conn)["Id"];
     updateOrderTotalById($conn,$orderId,$increaseDecrease ?+$unitPrice : -$unitPrice);
     $totalPrice = $quantity * $unitPrice;
-    $sql = "update OrderItem set Quantity = (?) , TotalPrice=(?)  where Id = (?)";
+    $sql = "update OrderItem set Quantity = (?) , TotalPrice = (?)  where Id = (?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("idi",$Quantity,$TotalPrice,$Id);
     $Quantity = $quantity;
