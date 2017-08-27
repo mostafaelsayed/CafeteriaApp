@@ -245,40 +245,47 @@ app.directive('checkPhoneNumber',function(){
 })
 
 
-app.factory('Order_Info' , ['$http','$rootScope', function($http,$rootScope)  {
+app.factory('Order_Info' , ['$http','$rootScope','$q',function($http,$rootScope,$q)  {
 
   var order_info = {};
   order_info.orderItems = {};
 
-order_info.getOrder = function() {
+  order_info.getOrder = function() { // this is asyhnchronous
+    var q = $q.defer();
     $http.get('/CafeteriaApp.Backend/Requests/Order.php')
     .then(function(response) {
       var currentOrder = response.data;
       var orderId = currentOrder.Id;
-    
       if (orderId == undefined) {
         orderId = null;
         orderItems = [];
         TotalPrice = 0;
+        q.reject(0);
       }
       else if(orderId != undefined) {
-      order_info.getOrderItems(orderId);
-
+        order_info.getOrderItems(orderId).then(function(data) {
+          q.resolve(1);
+        });
       }
-     
     });
-  }
+    return q.promise;
+  };
 
-   order_info.getOrderItems = function(orderId) {
+  order_info.getOrderItems = function(orderId) { // this is asyhnchronous
+    var q = $q.defer();
     $http.get('/CafeteriaApp.Backend/Requests/OrderItem.php?orderId='+orderId)
     .then(function(response) {
         console.log(response);
         order_info.orderItems=response.data;
-    
-      //return response.data;
+        if (order_info.orderItems != null) {
+          q.resolve(1);
+        }
+        else {
+          q.reject(0);
+        }
     });
-  }
-
+    return q.promise;
+  };
 
   order_info.increaseQuantity = function(orderItem) {
     if(orderItem.orderId != null) {
@@ -289,9 +296,7 @@ order_info.getOrder = function() {
       };
       $http.put('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
       .then(function(response) {
-       // this.getOrderItems();
         $rootScope.$broadcast('loadOrderItems',order_info.orderItems);
-
       });
     }
   }
@@ -321,6 +326,6 @@ order_info.getOrder = function() {
   //     this.getOrderItems();
   //   });
   // }
-return order_info;
+  return order_info;
 
-  }]);
+}]);

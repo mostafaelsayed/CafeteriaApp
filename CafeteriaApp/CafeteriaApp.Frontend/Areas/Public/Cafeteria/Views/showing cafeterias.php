@@ -4,11 +4,11 @@
   require_once('CafeteriaApp.Frontend/Areas/Customer/layout.php');
 ?>
 
-<div style="display:none;margin-bottom:50px;margin-top:50px;" id="notifyme">
+<div style="display:none;margin-bottom:50px;margin-top:50px" id="notifyme">
 
-<h1 style="color: blue;">Notifications :</h1> 
+<h1 style="color: blue">Notifications :</h1> 
 
-<?php echo !empty( $_SESSION["notifications"])? $_SESSION["notifications"] : "<h2 style='color: blue;'>Nothing has been changed !</h2>" ;?>
+<?php echo !empty( $_SESSION["notifications"])? $_SESSION["notifications"] : "<h2 style='color: blue'>Nothing has been changed !</h2>" ;?>
 
 </div>
 
