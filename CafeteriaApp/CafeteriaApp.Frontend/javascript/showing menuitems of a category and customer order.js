@@ -50,20 +50,19 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
 
 
   $scope.getOrder = function() {
-    ////console.log($scope.customerId);
     $http.get('/CafeteriaApp.Backend/Requests/Order.php')
     .then(function(response) {
-      //console.log(response);
+      
       $scope.currentOrder = response.data;
       $scope.orderId = $scope.currentOrder.Id;
-      ////console.log($scope.orderId);
+    
       if ($scope.orderId == undefined) {
         $scope.orderId = null;
         $scope.orderItems = [];
-        ////console.log($scope.orderItems);
+     
         $scope.TotalPrice = 0;
       }
-      ////console.log($scope.orderId);
+    
       else if($scope.orderId != undefined) {
         $scope.getOrderItems();
       }
@@ -450,13 +449,19 @@ $scope.addRatingOrUpdate=function(MenuItemId,value)
   $http.post('/CafeteriaApp.Backend/Requests/Rating.php',data)
       .then(function(response) {
         if(response.data!=="")
-        {// 
+        { 
            $scope.ratedMenuItemsIds.push(MenuItemId);
+
+      for (var i = $scope.menuItems.length - 1; i >= 0; i--) {
+              if($scope.menuItems[i].Id==MenuItemId)   
+                $scope.menuItems[i].RatingUsersNo++;
+          }
+        //console.log(  x.RatingUsersNo);
       //  alertify.error( response.data);
         }
         else{  
-            
-         console.log(response);
+             
+         
           // hide the stars ,show thanks !
         }
 
