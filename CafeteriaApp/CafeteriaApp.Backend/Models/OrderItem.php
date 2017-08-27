@@ -14,7 +14,20 @@ class OrderItem
 	 foreign key (MenuItemId) references `MenuItem`(Id) ON DELETE CASCADE
 	 
 
-  ) ENGINE = InnoDB;";
+  ) ENGINE = InnoDB;
+
+
+CREATE TRIGGER `OrderTotalAfterDelete` BEFORE DELETE ON `orderitem`
+ FOR EACH ROW UPDATE `Order`SET Total=IFNULL((SELECT SUM(TotalPrice) FROM OrderItem WHERE OrderId=Order.Id),0) WHERE Order.Id=OLD.OrderId;
+
+
+CREATE TRIGGER `OrderTotalAfterInsert` AFTER INSERT ON `orderitem`
+ FOR EACH ROW UPDATE `Order`SET Total=IFNULL((SELECT SUM(TotalPrice) FROM OrderItem WHERE OrderId=Order.Id),0) WHERE Order.Id=New.OrderId;
+
+CREATE TRIGGER `OrderTotalAfterUpdate` AFTER UPDATE ON `orderitem`
+ FOR EACH ROW UPDATE `Order`SET Total=IFNULL((SELECT SUM(TotalPrice) FROM OrderItem WHERE OrderId=Order.Id),0) WHERE Order.Id=New.OrderId;
+
+  ";
 
 public $drop = "drop table `mydb`.`OrderItem`";
 

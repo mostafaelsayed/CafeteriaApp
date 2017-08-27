@@ -1,0 +1,1 @@
+<div> Copyright &copy;<?php echo date("Y"); ?>, Restaurant</div>

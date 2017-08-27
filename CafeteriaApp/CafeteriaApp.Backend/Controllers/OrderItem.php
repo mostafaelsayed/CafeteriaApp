@@ -123,9 +123,9 @@ function editOrderItemQuantity($conn,$quantity,$id,$increaseDecrease)
     $MenuItemId = getOrderItemById($conn,$id)["MenuItemId"];
     $unitPrice =getMenuItemPriceById($conn,$MenuItemId);
     $orderId =getOpenOrderByUserId($conn)["Id"];
-    updateOrderTotalById($conn,$orderId,$increaseDecrease ?+$unitPrice : -$unitPrice);
+   // updateOrderTotalById($conn,$orderId,$increaseDecrease ?+$unitPrice : -$unitPrice);
     $totalPrice = $quantity * $unitPrice;
-    $sql = "update OrderItem set Quantity = (?) , TotalPrice = (?)  where Id = (?)";
+    $sql = "update OrderItem set Quantity = (?) , TotalPrice=(?)  where Id = (?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("idi",$Quantity,$TotalPrice,$Id);
     $Quantity = $quantity;
@@ -193,7 +193,7 @@ function addOrderItem($conn,$orderId,$menuItemId,$quantity)
   
   //else
   //{
-  updateOrderTotalById($conn,$orderId,$totalPrice);
+//  updateOrderTotalById($conn,$orderId,$totalPrice);
   $sql = "insert into OrderItem (OrderId,MenuItemId,Quantity,TotalPrice) values (?,?,?,?)"; // add TotalPrice to total of the order
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("iiid",$OrderId,$MenuItemId,$Quantity,$Price);
@@ -223,7 +223,7 @@ function deleteOrderItem($conn,$id) {// remove TotalPrice to total of the order
   {
     $orderId =getOpenOrderByUserId($conn)["Id"];
     $totalPrice=getOrderItemTotalPriceById($conn,$id);
-    updateOrderTotalById($conn,$orderId,-$totalPrice);
+   //updateOrderTotalById($conn,$orderId,-$totalPrice);
     $sql = "delete from OrderItem where Id = ".$id . " LIMIT 1";
     if ($conn->query($sql)===TRUE )
     {

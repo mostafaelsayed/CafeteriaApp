@@ -244,15 +244,83 @@ app.directive('checkPhoneNumber',function(){
   }
 })
 
-// app.service('Languages' , function ($http) {
 
-//    this.getLanguages = function () {
-//   $http.get('/CafeteriaApp.Backend/Requests/Languages.php')
-// .then(function(response) {
+app.factory('Order_Info' , ['$http','$rootScope', function($http,$rootScope)  {
 
-//  return response.data;
-// });
+  var order_info = {};
+  order_info.orderItems = {};
+
+order_info.getOrder = function() {
+    $http.get('/CafeteriaApp.Backend/Requests/Order.php')
+    .then(function(response) {
+      var currentOrder = response.data;
+      var orderId = currentOrder.Id;
+    
+      if (orderId == undefined) {
+        orderId = null;
+        orderItems = [];
+        TotalPrice = 0;
+      }
+      else if(orderId != undefined) {
+      order_info.getOrderItems(orderId);
+
+      }
+     
+    });
+  }
+
+   order_info.getOrderItems = function(orderId) {
+    $http.get('/CafeteriaApp.Backend/Requests/OrderItem.php?orderId='+orderId)
+    .then(function(response) {
+        console.log(response);
+        order_info.orderItems=response.data;
+    
+      //return response.data;
+    });
+  }
 
 
-//     }
-// });
+  order_info.increaseQuantity = function(orderItem) {
+    if(orderItem.orderId != null) {
+      var data = {
+        Id: orderItem.Id,
+        Quantity: parseInt(orderItem.Quantity)+1,
+        Flag: true
+      };
+      $http.put('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
+      .then(function(response) {
+       // this.getOrderItems();
+        $rootScope.$broadcast('loadOrderItems',order_info.orderItems);
+
+      });
+    }
+  }
+
+
+  // this.decreaseQuantity = function(orderItem) {
+  //   var data = {
+  //     Id: orderItem.Id,
+  //     Quantity: parseInt(orderItem.Quantity)-1,
+  //     Flag: false
+  //   };
+  //   if (orderItem.Quantity > 1) {
+  //     $http.put('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
+  //     .then(function(response) {
+  //       this.getOrderItems();
+  //     });
+  //   }
+  //   else {
+  //     this.deleteOrderItem(orderItem);
+  //   }
+  // }
+
+
+  // this.deleteOrderItem = function(orderItem) {
+  //   $http.delete('/CafeteriaApp.Backend/Requests/OrderItem.php?id='+orderItem.Id)
+  //   .then(function(response) {
+  //     this.getOrderItems();
+  //   });
+  // }
+return order_info;
+
+  }]);
