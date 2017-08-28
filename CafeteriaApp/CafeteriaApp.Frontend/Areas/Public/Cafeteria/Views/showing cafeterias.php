@@ -3,7 +3,21 @@
    //validatePageAccess($conn);
   require_once('CafeteriaApp.Frontend/Areas/Customer/layout.php');
 ?>
+<title>Cafeterias</title>
 
+ <script src="/CafeteriaApp.Frontend/javascript/showing cafeterias.js"></script>
+
+<style type="text/css">
+  .container{
+    position: static;
+
+
+  }
+
+
+</style>
+
+<div class="container" >
 <div style="display:none;margin-bottom:50px;margin-top:50px" id="notifyme">
 
 <h1 style="color: blue">Notifications :</h1> 
@@ -12,10 +26,6 @@
 
 </div>
 
-<title>Cafeterias</title>
-
-
- <script src="/CafeteriaApp.Frontend/javascript/showing cafeterias.js"></script>
 
 <h1 class="page-header" id="header">Our Cafeterias</h1>
 
@@ -51,9 +61,10 @@
   </div>
   </div>
 </div>
- 
+ </div>
 
-
+<?php require_once("CafeteriaApp.Frontend/Areas/footer.php");
+?>
 
 
 <script type="text/javascript"> 

@@ -22,5 +22,6 @@ if ($_SERVER["REQUEST_METHOD"] == "DELETE")
 		deleteAdmin($conn,$_GET["adminId"]);
 	}
 }
+require_once("CafeteriaApp.Backend/footer.php");
 
 ?>

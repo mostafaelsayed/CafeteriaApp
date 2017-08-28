@@ -275,7 +275,7 @@ app.factory('Order_Info' , ['$http','$rootScope','$q',function($http,$rootScope,
     var q = $q.defer();
     $http.get('/CafeteriaApp.Backend/Requests/OrderItem.php?orderId='+orderId)
     .then(function(response) {
-        console.log(response);
+        //console.log(response);
         order_info.orderItems=response.data;
         if (order_info.orderItems != null) {
           q.resolve(1);

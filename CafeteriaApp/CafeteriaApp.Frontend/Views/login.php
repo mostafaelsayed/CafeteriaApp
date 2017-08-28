@@ -4,8 +4,11 @@ require_once("CafeteriaApp.Backend/connection.php");
 require_once("CafeteriaApp.Backend/functions.php");
 require_once("CafeteriaApp.Backend/validation_functions.php"); 
 require_once("CafeteriaApp.Backend/Controllers/Dates.php"); 
+require_once("CafeteriaApp.Backend/Controllers/Times.php"); 
 require_once("CafeteriaApp.Backend/Controllers/Customer.php"); 
 require_once("CafeteriaApp.Backend/Controllers/Notification.php"); 
+require_once('CafeteriaApp.Backend/Controllers/Order.php');
+
 //require_once 'fbConfig.php';
 //echo $_SESSION['FBRLH_state'];
 //echo $_SESSION['EMAIL'];
@@ -43,9 +46,15 @@ if (isset($_POST['submit']))
       $_SESSION["langId"]=1;// if not found
 
       //get customer id by user id from db 
-     //$customer_id_json = getCustomerIdByUserId($conn ,$_SESSION["userId"] ,true);
-      //$_SESSION["customerId"] = $customer_id_json["Id"];
+     if(! $_SESSION["orderId"]= getOpenOrderByUserId($conn))//if not found open order>>open a new one
+     {
+        $deliveryTimeId = getCurrentTimeId($conn);
+        $deliveryDateId = getCurrentDateId($conn);
+        $_SESSION["orderId"] = addOrder($conn,$deliveryDateId,$deliveryTimeId,'',1,1, $_SESSION["userId"], 0);
+     }
      
+
+
      //get notification messages
       $_SESSION["notifications"]= getNotificationByUserId($conn , $_SESSION["userId"] );// if not found
     
