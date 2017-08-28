@@ -2,9 +2,8 @@
 
 function addLocation($conn,$placeId,$placeName,$placeAddress,$userId)
 {
-	$sql = "select * from `location` where `PlaceId` = '$placeId'";
+	$sql = "select Id from `location` where `PlaceId` = '$placeId'";
 	$result = $conn->query($sql);
-	echo $conn->error;
 	if ($result->num_rows == 0) // no place in the database with this id
 	{
 		$sql = "insert into `location` (PlaceId,PlaceName,PlaceAddress) values (?,?,?)";
@@ -26,7 +25,28 @@ function addLocation($conn,$placeId,$placeName,$placeAddress,$userId)
 	}
 	else
 	{
-		echo "location already exists";
+		global $flag;
+		$flag = 0;
+		$userLocations = getUserLocations($conn,$userId);
+		foreach ($userLocations as $location)
+		{
+			if ($location[0] == $placeId)
+			{
+				// $locationId = mysqli_fetch_assoc($result)["Id"];
+				// addUserLocation($conn,$locationId,$userId);
+				$flag = 1;
+				break;
+			}
+		}
+		if ($flag === 0)
+		{
+			$locationId = mysqli_fetch_assoc($result)["Id"];
+			addUserLocation($conn,$locationId,$userId);
+		}
+		else
+		{
+			return "location already exists";
+		}
 	}
 }
 
@@ -68,6 +88,7 @@ function getUserLocations($conn,$userId)
 	if ($result = $conn->query($sql))
 	{
 		$userLocation = mysqli_fetch_all($result);
+		var_dump($userLocation);
 		return $userLocation;
 	}
 	else
@@ -76,6 +97,9 @@ function getUserLocations($conn,$userId)
 	}
 }
 
+// require_once('CafeteriaApp.Backend/connection.php');
+
+// addLocation($conn,"ChIJf4-dC8k9WBQR3fUzN3JwYaM","Al Hay Al Asher, Madinet Nasr, Cairo Governorate, Egypt","Bad El Sharkya",5);
 // function getLocationByUserId($conn,$userId)
 // {
 // 	$sql = "select * from userlocation where UserId = " . $userId;
