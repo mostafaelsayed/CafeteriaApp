@@ -48,7 +48,7 @@ $scope.changeLanguage=function (languageId) {
 // }
 Order_Info.getOrder().then(function(x) {
   $scope.orderItems = Order_Info.orderItems;
-  console.log($scope.orderItems);
+  //console.log($scope.orderItems);
 })
 
 // $q(Order_Info.getOrder()).then(function() {

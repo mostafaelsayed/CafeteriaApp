@@ -10,8 +10,7 @@
       $Languages= $memcache->get('languages');
       //$_SESSION["langId"]=2;
       $lang_id=$_SESSION["langId"];
-     //  $lang_id=2;
-    
+     $orderId= $_SESSION['orderId'];
 ?>
 <head>
 <meta charset="utf-8" />
@@ -276,7 +275,7 @@ clear: both;
   
  
  </head>
-  <body style="background-image:  url('/CafeteriaApp.Frontend/images/customer background image4.jpg')" ng-app="myapp"  >
+  <body style="background-image:  url('/CafeteriaApp.Frontend/images/customer background image4.jpg')" ng-app="myapp"   >
   
     <div id="wrapper"  >
         <!-- Navigation -->
@@ -295,7 +294,7 @@ clear: both;
           
             <div class="input-field col s12">
             <!-- <div class="select-wrapper"> -->
-         <div  ng-controller="Language_Order"  ng-init=" languages=<?php echo htmlspecialchars($Languages);?>;selectedLang=languages[<?php echo ($lang_id-1) ; ?>];" >
+         <div  ng-controller="Language_Order"  ng-init=" languages=<?php echo htmlspecialchars($Languages);?>;selectedLang=languages[<?php echo ($lang_id-1) ; ?>];orderId=<?php echo $orderId;?>" >
 
 
 

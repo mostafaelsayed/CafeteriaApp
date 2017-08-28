@@ -46,7 +46,7 @@ if (isset($_POST['submit']))
       $_SESSION["langId"]=1;// if not found
 
       //get customer id by user id from db 
-     if(! $_SESSION["orderId"]= getOpenOrderByUserId($conn))//if not found open order>>open a new one
+     if(! $_SESSION["orderId"] = getOpenOrderByUserId($conn)["Id"])//if not found open order>>open a new one
      {
         $deliveryTimeId = getCurrentTimeId($conn);
         $deliveryDateId = getCurrentDateId($conn);
