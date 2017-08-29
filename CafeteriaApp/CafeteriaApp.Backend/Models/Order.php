@@ -14,6 +14,7 @@ class Order
 	  `Total` DECIMAL(6,2) NOT NULL ,
 	  `OrderStatusId` INT NOT NULL ,
 	   `PaymentMethodId` INT NOT NULL ,
+		`Type` BOOLEAN NOT NULL DEFAULT TRUE ,/* 0 takeaway , 1 delivery*/
 		PRIMARY KEY (`Id`),
 		foreign key (UserId) references `User`(Id) ON DELETE CASCADE  ,
 		foreign key (DeliveryDateId) references `Dates`(Id),

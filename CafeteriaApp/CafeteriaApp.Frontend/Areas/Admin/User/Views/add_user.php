@@ -29,26 +29,26 @@
       <div class="form-group">
        <label>User Name</label>
        <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="userName" name="userName" required/>
-       <span ng-show="myform.userName.$invalid" id="inputControl">User Name is Required<br></span><br>
+       <span ng-show="myform.$submitted && myform.userName.$invalid" id="inputControl">User Name is Required<br></span><br>
        <label>First Name</label>
        <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="firstName" name="firstName" required/>
-       <span ng-show="myform.firstName.$invalid" id="inputControl">First Name is Required<br></span><br>
+       <span ng-show="myform.$submitted && myform.firstName.$invalid" id="inputControl">First Name is Required<br></span><br>
        <label>Last Name</label>
        <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="lastName" name="lastName" required/>
-       <span ng-show="myform.lastName.$invalid" id="inputControl">Last Name is Required<br></span><br>
+       <span ng-show="myform.$submitted && myform.lastName.$invalid" id="inputControl">Last Name is Required<br></span><br>
        <label>Email</label>
        <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="email" name="email" required/>
-       <span ng-show="myform.email.$invalid" id="inputControl">Email is Required<br></span><br>
+       <span ng-show="myform.$submitted && myform.email.$invalid" id="inputControl">Email is Required<br></span><br>
        <label>Phone Number</label>
        <input id="inputField" type="text" class="form-control" autofocus="autofocus" check-phone-number ng-model="phoneNumber" name="phoneNumber" required/>
-       <span ng-show="myform.phoneNumber.$error.checkPhoneNumber" id="inputControl">Phone Number is invalid.it must be a number of at most 11 digits<br></span>
-       <span ng-show="myform.phoneNumber.$error.numberEmpty" id="inputControl">Phone Number is Required<br></span><br>
+       <span ng-show="myform.$submitted && myform.phoneNumber.$error.checkPhoneNumber" id="inputControl">Phone Number is invalid.it must be a number of at most 11 digits<br></span>
+       <span ng-show="myform.$submitted && myform.phoneNumber.$error.numberEmpty" id="inputControl">Phone Number is Required<br></span><br>
        <label>Password</label>
        <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="password" name="password" required/>
-       <span ng-show="myform.password.$invalid" id="inputControl">Password is Required<br></span><br>
+       <span ng-show="myform.$submitted && myform.password.$invalid" id="inputControl">Password is Required<br></span><br>
        <label>Confirm Password</label>
        <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="confirmPassword" name="confirmPassword" required/>
-       <span ng-show="myform.password.$invalid" id="inputControl">Confirm Password is Required<br></span><br>
+       <span ng-show="myform.$submitted && myform.password.$invalid" id="inputControl">Confirm Password is Required<br></span><br>
        <!-- <label>Image</label>
        <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="image" name="image" required/>
        <span ng-show="myform.image.$invalid" id="inputControl">Image is Required<br></span><br> -->

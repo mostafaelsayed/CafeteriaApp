@@ -2,7 +2,7 @@
 
 // controller for getting menuitems of a category from database
 
-app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location) {
+app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location,$rootScope,$timeout,Order_Info) {
 
   $scope.categoryId = $location.search().categoryId;
   $scope.cafeteriaId = $location.search().cafeteriaId;
@@ -21,62 +21,60 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
  
 
 
-  $scope.getCurrentCustomer = function() {
+  // $scope.getCurrentCustomer = function() {
 
-    $http.get('/CafeteriaApp.Backend/Requests/Customer.php')
-    .then(function(response) {
-      $scope.customerId = response.data;
-      //console.log($scope.customerId);
-      if ($scope.customerId == undefined) {
-        document.location = "/CafeteriaApp.Frontend/Views/login.php?redirect_to="+redirect_to;
-      }
-      else {
-        ////console.log($scope.customerId);
-        $scope.getOrder();
-      }
-    });
-  }
-
-
-  $scope.getOrderItems = function() {
-    $http.get('/CafeteriaApp.Backend/Requests/OrderItem.php?orderId='+$scope.orderId)
-    .then(function(response) {
-      //console.log(response);
-      $scope.orderItems = response.data;
-      ////console.log(response.data);
-      //$scope.TotalPrice = $scope.getTotalPrice();
-    });
-  }
+  //   $http.get('/CafeteriaApp.Backend/Requests/Customer.php')
+  //   .then(function(response) {
+  //     $scope.customerId = response.data;
+  //     //console.log($scope.customerId);
+  //     if ($scope.customerId == undefined) {
+  //       document.location = "/CafeteriaApp.Frontend/Views/login.php?redirect_to="+redirect_to;
+  //     }
+  //     else {
+  //       ////console.log($scope.customerId);
+  //      // $scope.getOrder();
+  //     }
+  //   });
+  // }
 
 
-  $scope.getOrder = function() {
-    $http.get('/CafeteriaApp.Backend/Requests/Order.php')
-    .then(function(response) {
+  // $scope.getOrderItems = function() {
+  //   $http.get('/CafeteriaApp.Backend/Requests/OrderItem.php?orderId='+$scope.orderId)
+  //   .then(function(response) {
+  //     //console.log(response);
+  //     $scope.orderItems = response.data;
+  //     ////console.log(response.data);
+  //     //$scope.TotalPrice = $scope.getTotalPrice();
+  //   });
+  // }
+
+
+  // $scope.getOrder = function() {
+  //   $http.get('/CafeteriaApp.Backend/Requests/Order.php')
+  //   .then(function(response) {
       
-      $scope.currentOrder = response.data;
-      $scope.orderId = $scope.currentOrder.Id;
+  //     $scope.currentOrder = response.data;
+  //     $scope.orderId = $scope.currentOrder.Id;
     
-      if ($scope.orderId == undefined) {
-        $scope.orderId = null;
-        $scope.orderItems = [];
+  //     if ($scope.orderId == undefined) {
+  //       $scope.orderId = null;
+  //       $scope.orderItems = [];
      
-        $scope.TotalPrice = 0;
-      }
+  //       $scope.TotalPrice = 0;
+  //     }
     
-      else if($scope.orderId != undefined) {
-        $scope.getOrderItems();
-      }
+  //     else if($scope.orderId != undefined) {
+  //       $scope.getOrderItems();
+  //     }
      
-    });
-  }
-
-
+  //   });
+  // }
 
   
 
   $scope.addToOrder = function(menuItem) {
     ////console.log(1);
-    var x = $scope.orderItems.filter(o => o.MenuItemId == menuItem.Id);
+    var x = $rootScope.orderItems.filter(o => o.MenuItemId == menuItem.Id);
     if(x.length > 0) {
       $scope.increaseQuantity(x[0]); // we extract the first element because x is array (x must be one length array)
     }
@@ -92,53 +90,31 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location)
       .then(function(response) {
         //console.log(response);
         $scope.orderId = response.data;
-        $scope.getOrderItems();
+      $scope.togglePopup('Menu Item added successfully !');
+
+      order_info.getOrderItems($rootScope.OrderId);
       });
     }
   }
 
 
 
-  $scope.increaseQuantity = function(orderItem) {
-    if($scope.orderId != null) {
-      var data = {
-        Id: orderItem.Id,
-        Quantity: parseInt(orderItem.Quantity)+1,
-        Flag: true
-      };
-      $http.put('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
-      .then(function(response) {
-        ////console.log(response);
-        $scope.getOrderItems();
-      });
-    }
-  }
+   $scope.increaseQuantity =function (OrderItem) 
+ { Order_Info.increaseQuantity(OrderItem);
+ $scope.togglePopup( 'Menu Item added successfully  !');
+}
+
+$scope.decreaseQuantity =function (OrderItem) 
+ { Order_Info.decreaseQuantity(OrderItem);
+   $scope.togglePopup( 'Menu Item removed successfully  !');
+}
+
+$scope.deleteOrderItem =function (OrderItem) 
+ { Order_Info.deleteOrderItem(OrderItem);
+   $scope.togglePopup('Menu Item removed successfully !');
+}
 
 
-  $scope.decreaseQuantity = function(orderItem) {
-    var data = {
-      Id: orderItem.Id,
-      Quantity: parseInt(orderItem.Quantity)-1,
-      Flag: false
-    };
-    if (orderItem.Quantity > 1) {
-      $http.put('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
-      .then(function(response) {
-        $scope.getOrderItems();
-      });
-    }
-    else {
-      $scope.deleteOrderItem(orderItem);
-    }
-  }
-
-
-  $scope.deleteOrderItem = function(orderItem) {
-    $http.delete('/CafeteriaApp.Backend/Requests/OrderItem.php?id='+orderItem.Id)
-    .then(function(response) {
-      $scope.getOrderItems();
-    });
-  }
 
 
 $scope.toggleFavoriteItem = function(menuItemId) {
@@ -146,7 +122,7 @@ $scope.toggleFavoriteItem = function(menuItemId) {
         menuItemId: menuItemId
       };
 
-   if ( document.getElementById('favorites'+menuItemId).style.color==="red")
+   if ( document.getElementById('favorites'+menuItemId).style.color==="red")//add favorite
     {
       $http.post('/CafeteriaApp.Backend/Requests/FavoriteItem.php',data)
       .then(function(response) {
@@ -157,6 +133,8 @@ $scope.toggleFavoriteItem = function(menuItemId) {
         else{
 
           document.getElementById('favorites'+menuItemId).style.color="yellow";
+            $scope.togglePopup('favorite Item added successfully !');
+
         }
 
       });
@@ -173,6 +151,8 @@ $scope.toggleFavoriteItem = function(menuItemId) {
         else{
 
           document.getElementById("favorites"+menuItemId).style.color="red";
+          $scope.togglePopup('favorite Item removed successfully !');
+
         }
 
       });
@@ -427,7 +407,7 @@ $scope.addRatingOrUpdate=function(MenuItemId,value)
         .then(function(response) {
           if(response.data!=="")
           {// 
-            
+            $scope.togglePopup('Item rateing updated successfully !');
         //  alertify.error( response.data);
           }
           else{  
@@ -439,7 +419,7 @@ $scope.addRatingOrUpdate=function(MenuItemId,value)
         });
 
   }
-  else{//add
+  else{           //add
 
   var data={MenuItemId:MenuItemId,
     Value:value
@@ -456,6 +436,8 @@ $scope.addRatingOrUpdate=function(MenuItemId,value)
               if($scope.menuItems[i].Id==MenuItemId)   
                 $scope.menuItems[i].RatingUsersNo++;
           }
+        $scope.togglePopup('Item rateing added successfully !');
+
         //console.log(  x.RatingUsersNo);
       //  alertify.error( response.data);
         }
@@ -471,6 +453,16 @@ $scope.addRatingOrUpdate=function(MenuItemId,value)
  
 }
 
+$scope.togglePopup=function (message) {
+       var popup = document.getElementById("myPopup");
+      popup.innerHTML  =message;
+      popup.classList.toggle("show");
+      $timeout(function() {
+        popup.classList.toggle("show");
+      }, 2000);
+}
+
+  var self = this;
 
 $scope.commentDetails = [];//menuitems
 $scope.add_edits = [];//menuitems
@@ -479,10 +471,19 @@ $scope.comments = [];//menuitems
 $scope.customerCommentsIds = [];//menuitems
  $scope.ItemRating=[];
  
-$scope.getCurrentCustomer();
+//$scope.getCurrentCustomer();
+
+ // $scope.$watch(
+ //                    "Order_Info.orderItems",
+ //                    function handleFooChange( newValue, oldValue ) {
+ //                       $scope.orderItems =oldValue;
+ //                       console.log(oldValue);
+ //                    },true
+ //                );
+
 $scope.getMenuItems();
 
-
+ //self.orderItems = Order_Info.orderItems;
 
 
 //can use menuitem id instead of index to discriminate the indexes of the array

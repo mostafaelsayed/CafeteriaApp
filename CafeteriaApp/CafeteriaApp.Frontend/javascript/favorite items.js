@@ -1,4 +1,4 @@
-app.controller('favorites' , function($scope,$http) {
+app.controller('favorites' , function($scope,$http,$rootScope,$timeout) {
 
 	$scope.getFavoriteItems=function () {
 	
@@ -19,43 +19,14 @@ app.controller('favorites' , function($scope,$http) {
 	.then(function (response) {
       //console.log(response);
       $scope.favoriteItems.splice( index ,1) ;
+      $scope.togglePopup('Favorite Item successfully removed !');
+
     });
 
 	}
 
 
-  $scope.getOrder = function() {
-    $http.get('/CafeteriaApp.Backend/Requests/Order.php')
-    .then(function(response) {
-      
-      $scope.currentOrder = response.data;
-      $scope.orderId = $scope.currentOrder.Id;
-    
-      if ($scope.orderId == undefined) {
-        $scope.orderId = null;
-        $scope.orderItems = [];
-     
-        $scope.TotalPrice = 0;
-      }
-    
-      else if($scope.orderId != undefined) {
-        $scope.getOrderItems();
-      }
-     
-    });
-  }
 
-
-  
-  $scope.getOrderItems = function() {
-    $http.get('/CafeteriaApp.Backend/Requests/OrderItem.php?orderId='+$scope.orderId)
-    .then(function(response) {
-      //console.log(response);
-      $scope.orderItems = response.data;
-      ////console.log(response.data);
-      //$scope.TotalPrice = $scope.getTotalPrice();
-    });
-  }
 
 
 	 $scope.addToOrder = function(menuItemId) {
@@ -76,7 +47,8 @@ app.controller('favorites' , function($scope,$http) {
       .then(function(response) {
         //console.log(response);
         $scope.orderId = response.data;
-        $scope.getOrderItems();
+        $scope.togglePopup('Favorite Item added successfully to the order removed !');
+        //$scope.getOrderItems();
       });
     }
   }
@@ -91,16 +63,28 @@ $scope.increaseQuantity = function(orderItem) {
       $http.put('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
       .then(function(response) {
         ////console.log(response);
-        $scope.getOrderItems();
+       // $scope.getOrderItems();
       });
     }
   }
+$rootScope.orderItems=function () {
+  
+}
+
+$scope.togglePopup=function (message) {
+       var popup = document.getElementById("myPopup");
+      popup.innerHTML  =message;
+      popup.classList.toggle("show");
+      $timeout(function() {
+        popup.classList.toggle("show");
+      }, 2000);
+}
 
 
 
 $scope.getFavoriteItems();
 
-  $scope.getOrder();
+  //$scope.getOrder();
 
 });
 

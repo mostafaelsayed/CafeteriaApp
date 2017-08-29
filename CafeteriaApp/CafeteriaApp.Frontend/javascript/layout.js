@@ -19,8 +19,7 @@ function selectpickerDirective($parse) {
 
 
 
-app.controller('Language_Order' ,['$scope','$http','Order_Info','$q',function ($scope,$http,Order_Info,$q) {
-
+app.controller('Language_Order' ,['$rootScope','$scope','$http','Order_Info',function ($rootScope,$scope,$http,Order_Info) {
 
 $scope.changeLanguage=function (languageId) {
  //$timeout(function () {
@@ -35,52 +34,32 @@ $scope.changeLanguage=function (languageId) {
     console.log( "Something went wrong");
 }
 );
-
 }
 
-// $scope.getOrder = function() {
-//   var q = $q.defer();
-//   $scope.orderItems = Order_Info.getOrder();
-//   //console.log($scope.orderItems);
-//   if ($scope.orderItems != null) {
-//     q.resolve($scope.orderItems);
-//  }
-// }
-Order_Info.getOrder().then(function(x) {
-  $scope.orderItems = Order_Info.orderItems;
-  //console.log($scope.orderItems);
-})
 
-// $q(Order_Info.getOrder()).then(function() {
-//   $scope.orderItems = Order_Info.orderItems;
 
+// Order_Info.getOrderItems($scope.orderId).then(function(x) {
+//   $scope.orderItems =
 // })
-// $q(function(resolve, reject) {
-//   Order_Info.getOrder().then(Order_Info.orderItems);
-// }).then(doSomething);
 
-// function doSomething() {
-//   $scope.orderItems = Order_Info.orderItems;
-// }
-
-
-// var promise = Promise.resolve(Order_Info.getOrder());
- // Order_Info.getOrder().then(function(){$scope.orderItems = Order_Info.orderItems;console.log($scope.orderItems);});
- //});
- 
-
- // $scope.orderItems = Order_Info.orderItems; 
-
+ Order_Info.getOrderItems($scope.orderId);
 
  $scope.increaseQuantity =function (OrderItem) 
  { Order_Info.increaseQuantity(OrderItem);
 }
- 
- $scope.$on('loadOrderItems',function(data) {
- $scope.orderItems =data;
- })
 
-  
+$scope.decreaseQuantity =function (OrderItem) 
+ { Order_Info.decreaseQuantity(OrderItem);
+}
+
+$scope.deleteOrderItem =function (OrderItem) 
+ { Order_Info.deleteOrderItem(OrderItem);
+}
+ 
+ // $scope.$on('loadOrderItems',function(data) {
+ // $scope.orderItems =data;
+ // })
+
 }]);
 
 
