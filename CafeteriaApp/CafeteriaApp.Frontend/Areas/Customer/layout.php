@@ -89,22 +89,16 @@
 
                 </button>
 
-                <li class="inner">
+                <!-- <li class="inner">
 
                   <a class="navbar-brand"  href="/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing 
                   cafeterias.php"><?php echo "{$Words['Cafeterias'][$lang_id]} {$Words['Page'][$lang_id]}"?></a>
 
-                </li>
+                </li> -->
 
                 <li class="inner">
 
-                  <a class="navbar-brand" href="#"><?php echo "{$Words['Home'][$lang_id]}"?></a>
-
-                </li>
-
-                <li class="inner">
-
-                  <a class="navbar-brand"  href="#"><?php echo "{$Words['Contact'][$lang_id]}"?></a>
+                  <a class="navbar-brand" href="/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php"><?php echo "{$Words['Home'][$lang_id]}"?></a>
 
                 </li>
 
