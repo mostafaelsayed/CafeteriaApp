@@ -1,51 +1,35 @@
 
-/*.navbar-default .navbar-nav>li:hover
-{
 
-color: yellow;
 
-}*/
-/*.navbar-brand{
-color:white;
+
+#wrapper{
+position: static;
 
 }
-
-table, th , td  {
-  border: 1px solid grey;
-  border-collapse: collapse;
-  padding: 5px;
-}
-table tr:nth-child(odd) {
-  background-color: #f1f1f1;
-}
-table tr:nth-child(even) {
-  background-color: #ffffff;
-}
-*/
-/* Red , Green , Orange ,Yellow ,Gray ,Blue */
-
 nav{
   height: 57px;
-  background-image:  url('/CafeteriaApp.Frontend/images/customer background image4.jpg')
+  background-image:  url('/CafeteriaApp.Frontend/images/customer background image4.jpg');
+
 }
 
 
-#left_ul >ul>li>a{
+#left_ul >li>a{
  color: blue;
 }
 
 #right_ul>li>a {
  color: #FFAD33; 
- /*position: absolute;*/
+ position: absolute;
  padding-top: 0px;
 }
 
 #right_ul {
- /* margin-left: 30px;*/
+  margin-left: 30px;
+
 }
 
 
-#left_ul>ul>li>a:hover
+#left_ul>li>a:hover
 {
   border-radius: 5px;
 background-color: #6A8500;
