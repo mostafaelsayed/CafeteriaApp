@@ -294,7 +294,7 @@ app.factory('Order_Info' , ['$http','$rootScope',function($http,$rootScope)  {
       .then(function(response) {
 
         order_info.getOrderItems(orderItem.OrderId);
-
+       
         //$rootScope.$broadcast('loadOrderItems',order_info.orderItems);
       });
     }

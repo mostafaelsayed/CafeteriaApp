@@ -83,8 +83,7 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location,
         //console.log(response);
         $scope.orderId = response.data;
       $scope.togglePopup('Menu Item added successfully !');
-
-      order_info.getOrderItems($rootScope.OrderId);
+      Order_Info.getOrderItems(  $scope.orderId);
       });
     }
   }
