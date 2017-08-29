@@ -38,15 +38,7 @@ app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location,
   // }
 
 
-  // $scope.getOrderItems = function() {
-  //   $http.get('/CafeteriaApp.Backend/Requests/OrderItem.php?orderId='+$scope.orderId)
-  //   .then(function(response) {
-  //     //console.log(response);
-  //     $scope.orderItems = response.data;
-  //     ////console.log(response.data);
-  //     //$scope.TotalPrice = $scope.getTotalPrice();
-  //   });
-  // }
+
 
 
   // $scope.getOrder = function() {

@@ -98,3 +98,6 @@
 </div>
 
 <br>
+
+<?php require_once("CafeteriaApp.Frontend/Areas/footer.php");
+?>

@@ -69,5 +69,5 @@
         </tbody>
       </table>
       </div>
-
-      <!-- </body> -->
+<?php require_once("CafeteriaApp.Frontend/Areas/footer.php");
+?>

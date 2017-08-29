@@ -153,7 +153,8 @@
 
 </div>
 
-
+<?php require_once("CafeteriaApp.Frontend/Areas/footer.php");
+?>
 <script type="text/javascript">
   //var redirect_to = <?php $file=__File__ ;echo "\"" .(string)(urlencode($file))."\""  ; ?>
 
@@ -165,3 +166,4 @@
 
 
 </script>
+

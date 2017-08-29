@@ -17,3 +17,5 @@
   </div>
 </div>
 
+<?php require_once("CafeteriaApp.Frontend/Areas/footer.php");
+?>

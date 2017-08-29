@@ -164,3 +164,7 @@
   <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 
 </div>
+
+
+<?php require_once("CafeteriaApp.Frontend/Areas/footer.php");
+?>
