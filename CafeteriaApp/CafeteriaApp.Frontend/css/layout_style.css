@@ -29,21 +29,51 @@ nav{
   background-image:  url('/CafeteriaApp.Frontend/images/customer background image4.jpg')
 }
 
-
-#left_ul >ul>li>a{
- color: blue;
+.container-fluid ,.navbar-header{
+padding-left: 10px;
 }
 
-#right_ul>li>a {
+#right_ul li {
+/*width: 100px;*/
+margin-right:50px; !important
+  float: right ;
+}
+#right_ul li> a {
  color: #FFAD33; 
  /*position: absolute;*/
  padding-top: 0px;
 }
 
-#right_ul {
+#right_ul  {
+
+  margin: 10px 0px  0px 0px ;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  /*margin-right: 20px;*/
  /* margin-left: 30px;*/
 }
 
+#notification{
+cursor:pointer;
+width: 55px;
+}
+
+#myProfile{
+width : 100px;
+height : 70px;
+padding-bottom : 0px;
+}
+
+#shoppingCart{
+  cursor:pointer;
+  width: 50px;
+overflow: visible;
+}
+
+#left_ul >li>a{
+ color: blue;
+}
 
 #left_ul>ul>li>a:hover
 {
@@ -66,30 +96,13 @@ transition: all 0.3s;
   font-style: italic;
 }
 
-#notification{
 
-margin-right:50px;
-cursor:pointer;
-width: 55px;
-}
 
 #notification:hover{
 transform: rotate(15deg) scale(1.3);
 }
 
-#myProfile{
-  margin-right: 200px;
-width : 100px;
-height : 70px;
-padding-bottom : 0px;
-}
 
-#shoppingCart{
-margin-right: 50px; 
-  cursor:pointer;
-  width: 50px;
-overflow: visible;
-}
 
 #shoppingCart_Button:hover{
 transform: rotate(15deg) ;

@@ -10,6 +10,7 @@ public $create="CREATE TABLE `user` (
   `LastName` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `LocaleId` int(11) NOT NULL DEFAULT '1',
   `Email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `Confirmed` BOOLEAN NOT NULL DEFAULT FALSE  ,/* 0 takeaway , 1 delivery*/
   `Image` varchar(500) COLLATE utf8_unicode_ci DEFAULT 'CafeteriaApp.Backend/defaultCustomerImage.png' ,
   `PasswordHash` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `PhoneNumber` varchar(13) COLLATE utf8_unicode_ci NOT NULL,

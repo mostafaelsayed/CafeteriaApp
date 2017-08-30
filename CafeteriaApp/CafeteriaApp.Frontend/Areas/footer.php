@@ -1,11 +1,12 @@
 <style type="text/css">
+	
 	.footer{
 		font-weight: bold;
 		text-align: center;
 		color: white;
 		margin-top: 100px;
 		/*border:5px solid black;*/
-		height: 300px;
+		/*height: 300px;*/
 	}
 
 	.footerLinks ul{
@@ -13,7 +14,7 @@
 		float: left;
 		/*margin: 0 auto;*/
 		text-align: left;
-		margin-left: 200px; 
+		margin-left: 100px; 
 		/*line-height: 20px;*/
 		/*width: 33.333333%;*/
 	}
@@ -36,7 +37,7 @@
 	/*position: absolute;
 	top: 10px;*/
 	   /*display: block;*/
-	padding-top: 10px;
+		padding-top: 10px;
 		padding-bottom: 10px;
 		 height : 25px;
 }
@@ -72,14 +73,15 @@ transition: 0.3s;
 <div id="ads"  >
 	<img style="width:200px;height:200px;" src="/CafeteriaApp.Frontend/footerIcons/hotOffer.jpg">
 	<a href="">Go to offer</a>
-
 </div>
+
 
 <div class="footer"> 
 
 <div class="footerLinks">
+
 <ul id="followUs">
-<h3>Follow Us</h3>
+<h4>Follow Us</h4>
 	<li><a style="color: #475993;" href="#"><img class="footerImage" src="/CafeteriaApp.Frontend/footerIcons/facebook.png">Facebook</a></li>
 	<li><a style="color: #76A9EA;" href="#"><img  class="footerImage" src="/CafeteriaApp.Frontend/footerIcons/twitter.png">Twitter</a></li>
 	<li><a  style="color: #F34A38;" href="#"><img  class="footerImage" src="/CafeteriaApp.Frontend/footerIcons/google-plus.png">Google+</a></li>
@@ -87,24 +89,28 @@ transition: 0.3s;
 
 </ul>
 
-<ul>News
+<ul><h4>News</h4>
 	<li><a href="#">ssss</a></li>
 	<li><a href="#">ssssss</a></li>
 	<li><a href="#">sssssssss</a></li>
+	<li><a href="#">ssssss</a></li>
 	
 </ul>
 <ul>
-	Contact us
-	<li><a href="#"></a></li>
-	<li><a href="#"></a></li>
-	<li><a href="#"></a></li>
+	<h4>Contact us</h4>
+	<!-- show a form for feedback like ads -->
+	<li><a href="#">Send Feedback</a></li>
+	<li>Phone:</li>
+	<li>+201016415791</li>
+	<li>Email:</li>
+	<li>mm_h434@yahoo.com</li>
 </ul>
 
 <ul>
-	About us
-	<li><a href="#"></a></li>
-	<li><a href="#"></a></li>
-	<li><a href="#"></a></li>
+	<h4>About us</h4>
+	<li><a href="#">Our History</a></li>
+	<li><a href="#">Our Story</a></li>
+	
 </ul>
 </div>
 

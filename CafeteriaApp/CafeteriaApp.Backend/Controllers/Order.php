@@ -328,7 +328,10 @@ function CheckOutOrder( $conn,$orderId, $deliveryTimeId,$deliveryPlace, $payment
     $OrderStatusId=$closedStatusId;
     if ($stmt->execute()===TRUE)
     {
-      return "Order Checked Out successfully";
+      //open a new order
+      $_SESSION["orderId"] = addOrder($conn,$deliveryDateId,$deliveryTimeId,'',1,1, $_SESSION["userId"], 0);
+      return true;
+
       //return mysqli_insert_id($conn);
     }
     else

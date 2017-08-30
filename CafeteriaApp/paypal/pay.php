@@ -23,7 +23,7 @@ function chargeCustomer($paymentId,$payerId,$paypal,$categoryId,$orderId,$delive
 	{
 		$sql = "insert into `transaction` values (?,?)";
 		$transactionStatment = $conn->prepare($sql);
-		$transactionStatment->bind_param("ss",$PaymentId,$PayerId);
+		$transactionStatment->bind_param("ii",$PaymentId,$PayerId);
 		$PaymentId = $paymentId;
 		$PayerId = $payerId;
 		
@@ -33,9 +33,16 @@ function chargeCustomer($paymentId,$payerId,$paypal,$categoryId,$orderId,$delive
 			
 			if ($result)
 			{
-				CheckOutOrder($conn,$orderId,$deliveryTimeId,$deliveryPlace,$selectedMethodId);
-				$returnUrl = "http://127.0.0.1/CafeteriaApp.Frontend/Areas/Customer/Category/Views/showing menuitems of a category and customer order.php?categoryId=" . $categoryId;
-				header("Location: " . $returnUrl);
+				$result=CheckOutOrder($conn,$orderId,$deliveryTimeId,$deliveryPlace,$selectedMethodId);
+				if ($result)
+				{
+					$returnUrl = "http://127.0.0.1/CafeteriaApp.Frontend/Areas/Customer/Category/Views/showing menuitems of a category and customer order.php?categoryId=" . $categoryId;
+					$_SESSION['notifications'] = array('order payment' => 'Payment Succeeseded !' );
+					header("Location: " . $returnUrl);
+				}
+				else{
+					echo "Error :payment succeeded but order still open !";
+				}
 			}
 			else
 			{

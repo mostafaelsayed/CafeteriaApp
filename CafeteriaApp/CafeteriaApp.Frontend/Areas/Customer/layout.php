@@ -20,7 +20,6 @@
       <link href="/CafeteriaApp.Frontend/fonts/glyphicons-halflings-regular.woff" rel="font-woff">
       <link href="/CafeteriaApp.Frontend/fonts/glyphicons-halflings-regular.woff2" rel="font-woff">
       <link href="/CafeteriaApp.Frontend/css/font face.css" rel="stylesheet">
-      <link rel="stylesheet" type="text/css" href="/CafeteriaApp.Frontend/css/shopping_cart_and_notifications.css">
       <!-- MetisMenu CSS -->
       <link href="/CafeteriaApp.Frontend/css/metisMenu.min.css" rel="stylesheet">
       <!-- DataTables CSS -->
@@ -35,9 +34,11 @@
       <link href="/CafeteriaApp.Frontend/css/font-awesome.min.css" rel="stylesheet" type="text/css">
       <!-- Bootstrap Core CSS -->
       <!-- Latest compiled and minified CSS -->
-      <link href="/CafeteriaApp.Frontend/css/layout_style.css" rel="stylesheet" type="text/css">
       <link href="/CafeteriaApp.Frontend/css/bootstrap.min.css" rel="stylesheet">
       <link rel="stylesheet" href="/CafeteriaApp.Frontend/css/bootstrap-select.min.css">
+      <link href="/CafeteriaApp.Frontend/css/layout_style.css" rel="stylesheet" type="text/css">
+      <!-- <link rel="stylesheet" type="text/css" href="/CafeteriaApp.Frontend/css/shopping_cart_and_notifications.css"> -->
+
       <script src="/CafeteriaApp.Frontend/javascript/jquery-3.2.1.min.js"></script>
       <script src="/CafeteriaApp.Frontend/javascript/bootstrap.min.js"></script>
       <script src="/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
@@ -70,11 +71,14 @@
     ng-init="orderId=<?php echo $orderId ;?>;">
   
       <div ng-controller="Language_Order" ng-init=" languages=<?php echo htmlspecialchars($Languages);?>;selectedLang=languages[<?php echo ($lang_id-1);?>];orderId=<?php echo $orderId;?>" id="myctrl">
+      
+
+
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-fixed-top">
 
           <div class="container-fluid">
-
+          <div class="row">
             <div class="navbar-header">
 
               <button class="navbar-toggle" data-toggle="collapse" data-target="#optionsNavbar" id="mybutton" style="float: left">
@@ -89,7 +93,7 @@
 
             </div>
 
-            <div class="collapse navbar-collapse" id="optionsNavbar">
+            <div id="optionsNavbar" class="collapse navbar-collapse" >
 
               <ul id="left_ul" class="nav navbar-nav navbar-left">
 
@@ -145,39 +149,23 @@
               </ul>
 
               
-
-            
-
             <!-- </div> -->
 
-
-</div>
-            </div>
+        </div>
 
 
-            
-            </nav>
+          <!-- <div > -->
 
-
-            <ul style="margin-right: -200px;margin-top: 45px;float: right">
+            <ul id="right_ul">
 
             <li style="margin-right:-1px;display: inline-block">
 
-                    <!-- <div class="row"> -->
-
-                      <!-- <div> -->
-
-                        <!-- <div class="form-group" style="margin-right: 20px"> -->
+              <!-- <div class="form-group" style="margin-right: 20px"> -->
 
                           <select id="languages" class="selectpicker show-tick" select-picker ng-model="selectedLang"  ng-options="l.Name for l in languages" ng-change="changeLanguage(selectedLang.Id)" data-width="fit">
 
                           </select>
 
-                        <!-- </div> -->
-
-                     <!-- </div> -->
-
-                    <!-- </div> -->
 
                   </li>
 
@@ -225,7 +213,7 @@
 
                               <td style="display:block;width:100%; padding: 0px;">
 
-                                <ul style="list-style: none; margin: 0px;padding: 0px">
+                                <ul  style="list-style: none; margin: 0px;padding: 0px">
 
                                   <li>
 
@@ -295,9 +283,18 @@
 
                   </li>
 
-</ul>
+      </ul>
+        <!-- </div> -->
 
 
+        </div>
+            </div>
+
+
+            
+            </nav>
+
+      
 
 
             <!-- <div id="right_ul" style="margin-top: 40px"> -->
