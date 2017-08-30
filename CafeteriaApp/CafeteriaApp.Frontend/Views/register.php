@@ -1,166 +1,204 @@
 <!DOCTYPE html>
+
 <html>
 
-<head>
-    
-        <title>Register Form</title>
-        <link rel="icon" href="images/icon.png">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-      <link rel="stylesheet" type="text/css" href="css/materialize.css"/>
-        <!-- <link rel="stylesheet" type="text/css" href="css/style.css"/> -->
-        <link rel="stylesheet" type="text/css" href="icons/icons.css"/>
-              <link href="/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
-                    <link href="/CafeteriaApp.Frontend/css/errors.css" rel="stylesheet" type="text/css">
-        <script src="js/jquery-3.1.1.min.js"></script>
-        <script src="js/materialize.js"></script>
-        <script src="js/newjavascript.js"></script>
-    
+  <head>
 
-        <!-- <link href='https://fonts.google.com/?category=Serif,Sans+Serif,Monospace&selection.family=Roboto+Slab' rel='stylesheet'> -->
-        <!-- <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'> -->
-        <script src="/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
-        <script src="/CafeteriaApp.Frontend/javascript/angular-route.js"></script>
-        <script src="/CafeteriaApp.Frontend/javascript/ui-bootstrap-2.5.0.js"></script>
-        <script src="/CafeteriaApp.Frontend/javascript/ui-bootstrap-tpls-2.5.0.js"></script>
-        <script src="/CafeteriaApp.Frontend/javascript/angular-modal-service.js"></script>
-        <script src="/CafeteriaApp.Frontend/javascript/myapp.js"></script>
-        <script src= "/CafeteriaApp.Frontend/Views/register.js"></script>
-        <script src="/CafeteriaApp.Frontend/javascript/alertify.min.js"></script>
+    <title>Register Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/icon.png">
+    <link rel="stylesheet" type="text/css" href="css/materialize.css"/>
+    <!-- <link rel="stylesheet" type="text/css" href="css/style.css"/> -->
+    <link rel="stylesheet" type="text/css" href="icons/icons.css"/>
+    <link href="/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
+    <link href="/CafeteriaApp.Frontend/css/errors.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/register.css">
 
+    <!-- <link href='https://fonts.google.com/?category=Serif,Sans+Serif,Monospace&selection.family=Roboto+Slab' rel='stylesheet'> -->
+    <!-- <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'> -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/materialize.js"></script>
+    <script src="js/newjavascript.js"></script>
+    <script src="/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
+    <script src="/CafeteriaApp.Frontend/javascript/angular-route.js"></script>
+    <script src="/CafeteriaApp.Frontend/javascript/ui-bootstrap-2.5.0.js"></script>
+    <script src="/CafeteriaApp.Frontend/javascript/ui-bootstrap-tpls-2.5.0.js"></script>
+    <script src="/CafeteriaApp.Frontend/javascript/angular-modal-service.js"></script>
+    <script src="/CafeteriaApp.Frontend/javascript/myapp.js"></script>
+    <script src= "/CafeteriaApp.Frontend/Views/register.js"></script>
+    <script src="/CafeteriaApp.Frontend/javascript/alertify.min.js"></script>
 
+  </head>
 
+  <body ng-app="myapp" style="background-image:url('/CafeteriaApp.Frontend/images/register5.jpg')">
 
-<style>
-input.ng-toutched {
-    color: red;
-    background-color:red;
-}
-</style>
-    </head>
+    <div id="main">
 
+      <div id="navigation">
 
-<body ng-app="myapp">
+        &nbsp;
 
-<div id="main">
-  <div id="navigation">
-    &nbsp;
-  </div>
+      </div>
 
-  <div id="page" class="row" style="align-content:center; text-align:center;" >
-    <?php// echo message(); ?>
-    <?php //echo form_errors($errors); ?>
+      <div id="page" class="row" style="align-content:center;text-align:center">
+
+        <?php// echo message(); ?>
+
+        <?php //echo form_errors($errors); ?>
+
+      </div>
+      
+      <h2 style="text-align: center;color: white"> New User </h2>
+
+      <div class="row" ng-controller="Register">  
+
+        <!-- enctype="multipart/form-data" -->
+
+        <form novalidate role="form" name="myform" style="width:40%;margin:auto;text-align:center">
+   
+          <div class="input-field col s12">
+
+            <label for="un" style="margin-left: 234px">User Name</label>
+
+            <input id="un" type="text" name="userName" ng-model="userName" style="text-align: center" ng-maxlength="30" ng-required ="dddd"/>
+
+            <span ng-show=" myform.$submitted && myform.userName.$invalid">User Name is required.</span>
+
+            <span ng-show=" myform.userName.$invalid">User Name must be less than 30 character or numbers .</span>
+
+          </div>
+
+          <div class="input-field col s12">
+
+            <label for="ps" style="margin-left: 234px">Password</label>
+
+            <input id="ps" type="password" name="password" ng-model="password" style="text-align: center" required/>
+
+            <span ng-show=" myform.$submitted && myform.password.$invalid">Password is required.</span>
+
+          </div>
+
+          <div class="input-field col s12">
+
+            <label for="fn" style="margin-left: 234px">First Name</label>
+
+            <input id="fn" type="text" name="firstName" ng-model="firstName" style="text-align: center" required/>
+
+            <span ng-show="myform.$submitted && myform.firstName.$invalid">First Name is required.</span>
+
+          </div>
+
+          <div class="input-field col s12">
+
+            <label for="ln" style="margin-left: 234px">Last Name</label>
+
+            <input id="ln" type="text" name="lastName" ng-model="lastName" style="text-align: center" required/>
+
+            <span ng-show=" myform.$submitted && myform.lastName.$invalid" >Last Name is required.</span>
+
+            <div><br><br></div>
+
+          </div>
+
+          
+
+          <label class="labels" style="font-size: 16px">Gender</label><br>
+
+          <br>
+
+          <input class="with-gap" name="gender" ng-model="gender" type="radio" id="male" value="1" />
+
+          <label for="male">Male</label>
+
+          <br>
+
+          <input class="with-gap" name="gender" ng-model="gender" type="radio" id="female" value="2" />
+
+          <label for="female" style="margin-right: -16px">Female</label>
+
+          <br>
+
+          <input class="with-gap" name="gender" ng-model="gender" type="radio" id="other" value="3" />
+
+          <label for="other" style="margin-right: -5px">Other</label>
+
+          <br><br>
+
+          <div class="input-field col s12">
+
+            <label for="em" style="margin-left: 244px">E-mail</label>
+
+            <input id="em" type="text" name="email" ng-model="email" style="text-align: center" required/>
+
+            <span id="emailConfirm" ng-show=" myform.$submitted && myform.email.$invalid" >Email is required.</span>
+
+          </div>
+
+          <div class="input-field col s12">
+
+            <label for="pn" style="margin-left: 224px">Phone Number</label>
+
+            <input id="pn" type="text" name="phone" ng-model="phone" style="text-align: center" required />
+
+            <span ng-show=" myform.$submitted && myform.phone.$invalid" >Phone Number is required.</span>
+
+          </div>
+
+          <div class="input-field col s12">
+
+            <i class="material-icons prefix">today</i>
+
+            <input id="DOB" name="DOB" type="date" class="datepicker" ng-model="DOB" style="width:70%" required />
+
+            <span ng-show="myform.$submitted && myform.DOB.$invalid">Date of Birth is required.</span>
+
+            <label for="DOB">Select your Date of Birth</label>
+
+          </div>
+
+          <div class="input-field col s12">
+      
+            <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="3">
+          
+              <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile">
+
+              <img ng-src="{{uploadme.src}}" width="200" height="200">
+
+              <div><br></div>
+
+            </div>
+
+            <div>
+
+              <button class="btn btn-primary" onclick="mylabel.click()">Choose image</button>
+
+              <label id="mylabel" for="file"></label>
+
+              <div><br><br><br></div>
+
+            </div>
+
+          </div>
+       
+          <input id="save" type="submit" class="btn btn-primary" name="submit" value="Next" ng-click="registerfn()" />
+
+          <input type="submit" name="cancel" class="btn btn-primary" value="Cancel" ng-click="cancel()"/>
+          
+        </form>
+
+      </div>
+
+      <br>
       
     </div>
-    
-    <h2> New User </h2>
-     <div class="row"   ng-controller="Register">  
 
-          <!-- enctype="multipart/form-data" -->
+  </body>
 
-    <form  novalidate  role="form"   name="myform" class="col s12"    style="align-content:center;text-align:center;width:70%;margin-left: 50px">
- 
-
-      <div class="input-field col s12"  >
-      <label  for="un">User Name</label>
-        <input id="un" type="text" name="userName" ng-model="userName"  ng-maxlength="30"   ng-required ="dddd"/>
-        <span  ng-show=" myform.$submitted && myform.userName.$invalid  " >User Name is required.</span>
-        <span  ng-show=" myform.userName.$invalid  " >User Name must be less than 30 character or numbers .</span>
-
-      </div>
-
-       <div class="input-field col s12" >
-       <label  for="ps">Password</label>
-        <input id="ps" type="password" name="password" ng-model="password"   required/>
-        <span  ng-show=" myform.$submitted && myform.password.$invalid" >Password is required.</span>
-
-      </div >
-
-
-      <div class="input-field col s12" >    
-        <label  for="fn">First Name</label>
-        <input id="fn" type="text" name="firstName"  ng-model="firstName"  required/>
-      <span  ng-show=" myform.$submitted && myform.firstName.$invalid" >First Name is required.</span>
-
-      </div>
-
-      <div class="input-field col s12">
-      <label  for="ln">Last Name</label>
-        <input id="ln" type="text" name="lastName" ng-model="lastName"   required/>
-      <span  ng-show=" myform.$submitted && myform.lastName.$invalid" >Last Name is required.</span>
-
-      </div>
-        <br>
-                    <label class="labels">Gender</label><br>
-                    <br>
-                    <input class="with-gap" name="gender" ng-model="gender" type="radio" id="male" value="1" />
-                    <label for="male">Male</label>
-                    <br>
-                    <input class="with-gap" name="gender" ng-model="gender" type="radio" id="female" value="2"  />
-                    <label for="female">Female</label>
-                    <br>
-                    <input class="with-gap" name="gender" ng-model="gender" type="radio" id="other" value="3"  />
-                    <label for="other">Other</label>
-                    <br><br>
-             
-                  
-
-
-      <div class="input-field col s12">
-        <label  for="em">E-mail</label>
-
-        <input id="em" type="text" name="email"  ng-model="email"   required/>
-        <span id="emailConfirm" ng-show=" myform.$submitted && myform.email.$invalid" >Email is required.</span>
-
-      </div>
-
-      <div class="input-field col s12">
-        <label  for="pn">Phone Number</label>
-        <input id="pn" type="text" name="phone" ng-model="phone"  required/>
-   <span  ng-show=" myform.$submitted && myform.phone.$invalid" >Phone Number is required.</span>
-
-      </div>
-
-      <div class="input-field col s12" >
-        <i class="material-icons prefix">today</i>
-        <input id="DOB" name="DOB" type="date" class="datepicker" ng-model="DOB" style="width:70%" required>
-        <span  ng-show=" myform.$submitted && myform.DOB.$invalid" >Date of Birth is required.</span>
-        <label for="DOB">Select your Date of Birth</label>
-        </div>
-
-      <div class="input-field col s12">
-    
-       <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="3">
-        
-        <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile">
-        <img ng-src="{{uploadme.src}}" width="100" height="100" >
-        </div>
-
-        <div><button class="btn btn-primary" onclick="mylabel.click()">Choose image</button>
-               <label id="mylabel" for="file"></label>
-               </div>
-
-      <!--   <div id="error-div">
-          <p id="view-err"> </p>
-        </div> -->
-        <!-- <input type="text" name="image" ng-model="image"  /> -->
-     <!-- <span  ng-show=" myform.$submitted && myform.image.$invalid" >Image is required.</span> -->
-
-        </div>
-     
-      <input id="save" type="submit" name="submit" value="Next" ng-click="registerfn()" />
-        
-        </form>
-      
- </div>
-   <input type="submit" name="cancel" value="Cancel" />
-    <br>
-    
-  </div>
-
-</body>
 </html>
+
+
+
 <?php //ng-disabled="myform.userName.$invalid||myform.password.$invalid||myform.firstName.$invalid||myform.lastName.$invalid" 
 //include("../includes/layouts/footer.php");
         // $(function(){

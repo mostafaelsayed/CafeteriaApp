@@ -120,63 +120,111 @@ if (isset($_POST['submit']))
 
 ?>
 
-  <link href="/CafeteriaApp.Frontend/css/errors.css" rel="stylesheet" type="text/css">
+<!DOCTYPE html>
 
-<?php //include("../includes/layouts/header.php"); ?>
-<div id="main">
-  <div id="navigation">
-    &nbsp;
-  </div>
+<html>
+
+  <head>
   
+    <link href="/CafeteriaApp.Frontend/css/errors.css" rel="stylesheet" type="text/css">
 
-  <div id="page" style="align-content:center;text-align:center;">
-    <?php echo message(); ?>
-    <?php echo form_errors($errors); ?>
-    
-    <h2  style="font-style: italic; color: green;" >Login</h2>
-    <form action="login.php" method="post" class="login-box" >
+    <link rel="stylesheet" href="css/materialize.css">
 
-      <p>E-mail:
-        <input type="email" name="email" value="<?php echo isset($_SESSION["userName"]) ?  htmlentities($_SESSION["userName"]) :'' ; ?>"  />
-      </p>
-      <p>Password:
-        <input type="password" name="password" value="" />
-      </p>
+    <script src="js/jquery-3.1.1.min.js"></script>
 
+    <script src="js/materialize.min.js"></script>
 
-    <input type="checkbox" id="rememberme" name="remember" >
-    <label for="rememberme">Remeber me</label>
+  </head>
 
-      <input type="submit" name="submit" value="Next" />
+  <body style="background-image:url('/CafeteriaApp.Frontend/images/login.jpg')">
 
-    </form>
-<br>
+    <div id="main">
 
-<div>
- <a href="register.php" name="submit" />New User ! </a>
- </div>
- <a href="resetPassword.php" name="submit" />Forgot Password ! </a>
-<div>
+      <div id="navigation">
 
-    <?php // $_SESSION['fbLogin'] = isset($_SESSION['fbLogin'])? $_SESSION['fbLogin'] : 
+        &nbsp;
 
-   //echo $_SESSION['FBRLH_state'];
-   ?>
+      </div>  
 
-<a href="<?php //echo htmlspecialchars($_SESSION['fbLogin'])  ;
-  echo "http://localhost/CafeteriaApp.Frontend/Views/index.php";
+      <div id="page" style="align-content:center;text-align:center">
 
-  ?>">
-     <button  class="btn waves-effect waves-light btn" type="submit" name="action">Facebook Login
-                <img src="icons/facebook.png" width="50px" height="50px" >
-                 </button></a>
-</div>
+        <?php echo message(); ?>
 
-  </div>
-</div>
+        <?php echo form_errors($errors); ?>
+        
+        <h1 style="font-style: italic;color: white">Login</h1>
 
+        <form action="login.php" method="post" class="login-box" style="width:30%;margin:auto;text-align:center">
 
-<div style="align-content:center;text-align:center;">&copy; 2010-<?php echo date("Y") ;?></div>
+          <div class="input-field col s12">
 
+            <label for="email" style="font-size: 25px;color: white">E-mail</label>
 
+            <input type="email" id="email" name="email" value="<?php echo isset($_SESSION["userName"]) ?  htmlentities($_SESSION["userName"]) :'' ; ?>" />
 
+          </div>
+
+          <div class="input-field col s12">
+
+            <label for="password" style="font-size: 25px;color: white">Password</label>
+
+            <input type="password" name="password" style="color: white" />
+
+          </div>
+
+          <div class="input-field col s12" style="margin-left: 55px">
+
+            <input type="checkbox" id="rememberme" name="remember">
+
+            <label for="rememberme" style="color: white">Remeber me</label>
+
+          </div>
+
+          <br><br>
+
+          <input type="submit" class="btn" name="submit" value="Next" />
+
+        </form>
+
+        <br>
+
+        <a href="<?php echo "http://localhost/CafeteriaApp.Frontend/Views/index.php";?>">
+
+          <button class="btn waves-effect waves-light btn" type="submit" name="action">Facebook Login
+
+            <img src="icons/facebook.png" width="30px" height="30px" style="margin-top: 2px">
+
+          </button>
+
+        </a>
+
+        <div><br></div>
+
+        <div>
+
+          <?php // $_SESSION['fbLogin'] = isset($_SESSION['fbLogin'])? $_SESSION['fbLogin'] : 
+
+            //echo $_SESSION['FBRLH_state'];
+          ?>
+
+          <div>
+
+            <a href="register.php" name="submit" />New User ! </a>
+
+          </div>
+
+          <a href="resetPassword.php" name="submit" />Forgot Password ! </a>
+
+          <div><br></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </body>
+
+</html>
+
+<div style="align-content:center;text-align:center;font-style: italic;color: white">&copy; 2010-<?php echo date("Y") ;?></div>
