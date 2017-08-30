@@ -6,7 +6,6 @@
 <title>MenuItems</title>
 
 
-<link   href="/CafeteriaApp.Frontend/css/normalize.css" rel="stylesheet">
 <link  href="/CafeteriaApp.Frontend/css/customer styles.css" rel="stylesheet">
 <!-- <link  href="/CafeteriaApp.Frontend/css/customer styles.css" rel="stylesheet"> -->
 <link href="/CafeteriaApp.Frontend/css/popup.css" rel="stylesheet">

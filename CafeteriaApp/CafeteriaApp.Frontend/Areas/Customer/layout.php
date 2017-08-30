@@ -36,8 +36,9 @@
       <!-- Latest compiled and minified CSS -->
       <link href="/CafeteriaApp.Frontend/css/bootstrap.min.css" rel="stylesheet">
       <link rel="stylesheet" href="/CafeteriaApp.Frontend/css/bootstrap-select.min.css">
+      <link href="/CafeteriaApp.Frontend/css/normalize.css" rel="stylesheet">
       <link href="/CafeteriaApp.Frontend/css/layout_style.css" rel="stylesheet" type="text/css">
-      <!-- <link rel="stylesheet" type="text/css" href="/CafeteriaApp.Frontend/css/shopping_cart_and_notifications.css"> -->
+
 
       <script src="/CafeteriaApp.Frontend/javascript/jquery-3.2.1.min.js"></script>
       <script src="/CafeteriaApp.Frontend/javascript/bootstrap.min.js"></script>
@@ -158,9 +159,7 @@
 
             <ul id="right_ul">
 
-            <li style="margin-right:-1px;display: inline-block">
-
-              <!-- <div class="form-group" style="margin-right: 20px"> -->
+            <li style="display: inline-block">
 
                           <select id="languages" class="selectpicker show-tick" select-picker ng-model="selectedLang"  ng-options="l.Name for l in languages" ng-change="changeLanguage(selectedLang.Id)" data-width="fit">
 
@@ -169,7 +168,7 @@
 
                   </li>
 
-                  <li id="shoppingCart" title="Show Shopping Cart Items" style="display: inline-block;width:50px;height:50px;margin-top:-5px;margin-right: -3px">
+                  <li id="shoppingCart" title="Show Shopping Cart Items" style="display: inline-block;width:50px;height:50px;">
 
                     <div id="shoppingCart_Button">
 
@@ -284,7 +283,6 @@
                   </li>
 
       </ul>
-        <!-- </div> -->
 
 
         </div>

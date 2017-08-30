@@ -6,7 +6,6 @@
 ?>
 <title> Favorite Items</title>
 
-<link href="/CafeteriaApp.Frontend/css/normalize.css" rel="stylesheet">
 <link href="/CafeteriaApp.Frontend/css/favorite items.css" rel="stylesheet">
 <link href="/CafeteriaApp.Frontend/css/popup.css" rel="stylesheet">
 

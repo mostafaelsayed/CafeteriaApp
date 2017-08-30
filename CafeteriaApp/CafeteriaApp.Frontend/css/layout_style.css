@@ -33,18 +33,7 @@ nav{
 padding-left: 10px;
 }
 
-#right_ul li {
-/*width: 100px;*/
-margin-right:50px; !important
-  float: right ;
-}
-#right_ul li> a {
- color: #FFAD33; 
- /*position: absolute;*/
- padding-top: 0px;
-}
-
-#right_ul  {
+#right_ul {
 
   margin: 10px 0px  0px 0px ;
   position: absolute;
@@ -54,7 +43,22 @@ margin-right:50px; !important
  /* margin-left: 30px;*/
 }
 
+#right_ul li {
+/*width: 100px;*/
+margin-right:50px; 
+  float: right ;
+}
+
+#right_ul li> a {
+ color: #FFAD33; 
+ /*position: absolute;*/
+ padding-top: 0px;
+}
+
+
 #notification{
+margin-right:50px;
+margin-left:50px;
 cursor:pointer;
 width: 55px;
 }
@@ -66,16 +70,20 @@ padding-bottom : 0px;
 }
 
 #shoppingCart{
+margin-right: 50px; 
   cursor:pointer;
   width: 50px;
 overflow: visible;
 }
 
+
 #left_ul >li>a{
  color: blue;
 }
 
-#left_ul>ul>li>a:hover
+
+
+#left_ul>li>a:hover
 {
   border-radius: 5px;
 background-color: #6A8500;

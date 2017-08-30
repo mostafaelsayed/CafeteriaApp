@@ -1,0 +1,1 @@
+like ads ,but hide what's in back , capatcha
