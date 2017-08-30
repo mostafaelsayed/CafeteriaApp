@@ -71,248 +71,253 @@
   
       <div ng-controller="Language_Order" ng-init=" languages=<?php echo htmlspecialchars($Languages);?>;selectedLang=languages[<?php echo ($lang_id-1);?>];orderId=<?php echo $orderId;?>" id="myctrl">
         <!-- Navigation -->
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-default navbar-fixed-top">
 
           <div class="container-fluid">
 
-            <!-- <div id="dropdowncontainer"> -->
+            <div class="navbar-header">
+
+              <button class="navbar-toggle" data-toggle="collapse" data-target="#optionsNavbar" id="mybutton" style="float: left">
+
+                <span class="icon-bar"></span>
+
+                <span class="icon-bar"></span>
+
+                <span class="icon-bar"></span>
+
+              </button>
+
+            </div>
 
             <div class="collapse navbar-collapse" id="optionsNavbar">
 
-              <ul id="left_ul" class="nav navbar-nav navbar-fixed-top">
+              <ul id="left_ul" class="nav navbar-nav navbar-left">
 
-                <button class="navbar-toggle" data-target="#optionsNavbar" data-toggle="collapse" type="button">options
-
-                  <!-- <button class="btn btn-primary dropdown-toggle" id="orderdropdownbutton" type="button" style="display: none" data-toggle="orderdrop">order and stuff -->
-
-                  <span class="caret">&nbsp;</span>
-
-                </button>
-
-                <!-- <li class="inner">
-
-                  <a class="navbar-brand"  href="/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing 
-                  cafeterias.php"><?php echo "{$Words['Cafeterias'][$lang_id]} {$Words['Page'][$lang_id]}"?></a>
-
-                </li> -->
-
-                <li class="inner">
+                <li>
 
                   <a class="navbar-brand" href="/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php"><?php echo "{$Words['Home'][$lang_id]}"?></a>
 
                 </li>
 
-                <li class="inner">
+                <li>
 
-                  <a class="navbar-brand"  href="#"><?php echo "{$Words['Help'][$lang_id]}"?></a>
+                  <a class="navbar-brand" href="#"><?php echo "{$Words['Help'][$lang_id]}"?></a>
 
                 </li>
 
+                <li id="notification" title="Show Notifications" onclick="showNotifications()">
+
+                    <?php
+
+                      $length = 0;
+                      if(!empty($_SESSION["notifications"]) && is_array($_SESSION["notifications"]))
+                      { 
+                        $ul="<ul style='color:blue;'>";
+                        foreach ($_SESSION["notifications"] as  $value)
+                        {
+                          $length++;
+                          $ul.= "<li>".$value[0]."</li>";
+                        }
+
+                        $ul.="</ul>";
+                        $_SESSION["notifications"] =  $ul;
+                      }
+                      if ($length > 0)
+                      {
+                        echo " <img  src='/CafeteriaApp.Frontend/alarm-1.png' width='50' height='50' >";
+                        echo "<label id='notifyLabel' style='color:blue;font-size:2em;'>{$length}</label>";
+                      }
+                      else
+                      {
+                        echo " <img  src='/CafeteriaApp.Frontend/alarm.png' width='55' height='55' >";
+                      }
+
+                    ?>
+
+                  </li>
+
                 <li class="inner">
 
-                  <a class="navbar-brand"  href="/CafeteriaApp.Frontend/Views/logout.php"><?php echo "{$Words['Log out'][$lang_id]}" ?></a>
+                  <a class="navbar-brand" style="margin-left: -50px" href="/CafeteriaApp.Frontend/Views/logout.php"><?php echo "{$Words['Log out'][$lang_id]}" ?></a>
 
                 </li>
 
               </ul>
 
+              
+
+            
+
+            <!-- </div> -->
+
+
+</div>
             </div>
 
-           <!--  </div> -->
 
-            <div class="input-field">
+            
+            </nav>
 
-              <!-- <div class="select-wrapper"> -->
 
-              <!-- <div> -->
+            <ul style="margin-right: -200px;margin-top: 45px;float: right">
 
-                <ul id="right_ul" class="nav navbar-nav navbar-fixed-top" style="margin-left: 600px">
+            <li style="margin-right:-1px;display: inline-block">
 
-                  <!-- <div id="myid"> -->
+                    <!-- <div class="row"> -->
 
-                    <li style="margin-right:50px">
+                      <!-- <div> -->
 
-                      <div class="row">
+                        <!-- <div class="form-group" style="margin-right: 20px"> -->
+
+                          <select id="languages" class="selectpicker show-tick" select-picker ng-model="selectedLang"  ng-options="l.Name for l in languages" ng-change="changeLanguage(selectedLang.Id)" data-width="fit">
+
+                          </select>
+
+                        <!-- </div> -->
+
+                     <!-- </div> -->
+
+                    <!-- </div> -->
+
+                  </li>
+
+                  <li id="shoppingCart" title="Show Shopping Cart Items" style="display: inline-block;width:50px;height:50px;margin-top:-5px;margin-right: -3px">
+
+                    <div id="shoppingCart_Button">
+
+                      <img src="/CafeteriaApp.Frontend/IconoCompraPaquetigos.png" style="width:100%;height:100%">
+
+                    </div>
+
+                    <div id="shoppingCartDetails">
+
+                      <h3 id="OrderItemsHeader">Order Items</h3>
+
+                      <div id="OrderContents">
+           
+                        <table id="orderTable" class="table table-bordered" ng-show="orderItems.length > 0">
+
+                          <thead>
+
+                            <tr>
+
+                              <th id="thead">OrderItem</th>
+
+                              <th id="thead">Quantity</th>
+
+                              <th id="thead">Total Price</th>
+
+                              <th id="thead">Actions</th>
+
+                            </tr>
+
+                          </thead>
+
+                          <tbody ng-repeat="o in orderItems">
+
+                            <tr>
+
+                              <td ng-bind="o.Name" id="thead"></td>
+
+                              <td ng-bind="o.Quantity" id="thead"></td>
+
+                              <td ng-bind="o.TotalPrice" id="thead"></td>
+
+                              <td style="display:block;width:100%; padding: 0px;">
+
+                                <ul style="list-style: none; margin: 0px;padding: 0px">
+
+                                  <li>
+
+                                    <a title="Increase Quantity" ng-click="increaseQuantity(o)" class="btn"><i class="fa fa-plus"></i></a>
+
+                                  </li>
+
+                                  <li>
+
+                                    <a  title="Decrease Quantity"  ng-click="decreaseQuantity(o)" class="btn"><i class="fa fa-minus"></i></a>
+
+                                  </li>
+
+                                  <li>
+
+                                    <a title="Remove From Order" ng-click="deleteOrderItem(o)" style="font-weight:bold;" class="btn">X</a>
+
+                                  </li>
+
+                                </ul>
+
+                              </td>
+
+                            </tr>
+
+                          </tbody>
+
+                        </table> 
 
                         <div>
 
-                          <div class="form-group" style="margin-top: 10px;margin-right: 20px">
-
-                            <select id="languages" class="selectpicker show-tick" select-picker ng-model="selectedLang"  ng-options="l.Name for l in languages" ng-change="changeLanguage(selectedLang.Id)" data-width="fit">
-
-                                   <!-- <option value="" disabled >Choose the language</option> -->
-
-                            </select>
-
-                          </div>
-
-                       </div>
-
-                      </div>
-                          <?php //$_SESSION["langId"]= "{{selectedLang.Id}}" ;  //echo __FILE__;        ?>
-                    </li>
-
-                    <li id="shoppingCart" title="Show Shopping Cart Items" style="width:50px;height:50px;float: left">
-
-                      <div id="shoppingCart_Button" style="margin-top: 5px">
-
-                        <img src="/CafeteriaApp.Frontend/IconoCompraPaquetigos.png" style="width:100%;height:100%">
-
-                      </div>
-
-                      <div id="shoppingCartDetails">
-
-                        <h3 id="OrderItemsHeader">Order Items</h3>
-
-                        <div id="OrderContents">
-             
-                          <table id="orderTable" class="table table-bordered" ng-show="orderItems.length > 0">
-
-                            <thead>
-
-                              <tr>
-
-                                <th id="thead">OrderItem</th>
-
-                                <th id="thead">Quantity</th>
-
-                                <th id="thead">Total Price</th>
-
-                                <th id="thead">Actions</th>
-
-                              </tr>
-
-                            </thead>
-
-                            <tbody ng-repeat="o in orderItems">
-
-                              <tr>
-
-                                <td ng-bind="o.Name" id="thead"></td>
-
-                                <td ng-bind="o.Quantity" id="thead"></td>
-
-                                <td ng-bind="o.TotalPrice" id="thead"></td>
-
-                                <td style="display:block;width:100%; padding: 0px;">
-
-                                  <ul style="list-style: none; margin: 0px;padding: 0px">
-
-                                    <li>
-
-                                      <a title="Increase Quantity" ng-click="increaseQuantity(o)" class="btn"><i class="fa fa-plus"></i></a>
-
-                                    </li>
-
-                                    <li>
-
-                                      <a  title="Decrease Quantity"  ng-click="decreaseQuantity(o)" class="btn"><i class="fa fa-minus"></i></a>
-
-                                    </li>
-
-                                    <li>
-
-                                      <a title="Remove From Order" ng-click="deleteOrderItem(o)" style="font-weight:bold;" class="btn">X</a>
-
-                                    </li>
-
-                                  </ul>
-
-                                </td>
-
-                              </tr>
-
-                            </tbody>
-
-                          </table>
-
-                          <!-- <div id="thead">Total: <span ng-bind="currentOrder.Total"></span></div> -->
-
-                          <div>
-
-                            <a id="checkout" title="Check out this order" class="btn" type="button" ng-href="/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}" ng-show="orderItems.length>0"  target="_self">Checkout</a>
-
-                          </div>
+                          <a id="checkout" title="Check out this order" class="btn" type="button" ng-href="/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}" ng-show="orderItems.length>0"  target="_self">Checkout</a>
 
                         </div>
-                    
+
                       </div>
+                  
+                    </div>
 
-                    </li>
+                  </li>
 
-                    <li id="notification" title="Show Notifications" onclick="showNotifications()">
+                  <li id="myProfile" style="display: inline-block">
 
-                      <?php
+                    <div class="btn-group">
 
-                        $length = 0;
-                        if(!empty($_SESSION["notifications"]) && is_array($_SESSION["notifications"]))
-                        { 
-                          $ul="<ul style='color:blue;'>";
-                          foreach ($_SESSION["notifications"] as  $value)
-                          {
-                            $length++;
-                            $ul.= "<li>".$value[0]."</li>";
-                          }
+                      <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                          $ul.="</ul>";
-                          $_SESSION["notifications"] =  $ul;
-                        }
-                        if ($length > 0)
-                        {
-                          echo " <img  src='/CafeteriaApp.Frontend/alarm-1.png' width='50' height='50' >";
-                          echo "<label id='notifyLabel' style='color:blue;font-size:2em;'>{$length}</label>";
-                        }
-                        else
-                        {
-                          echo " <img  src='/CafeteriaApp.Frontend/alarm.png' width='55' height='55' >";
-                        }
+                        MyProfile
 
-                      ?>
+                      </button>
 
-                    </li>
+                      <div class="dropdown-menu">
 
-                    <li id="myProfile">
+                        <a class="dropdown_item" href="/CafeteriaApp.Frontend/Areas/Customer/favorite items.php">My Favorites</a>
 
-                      <div class="btn-group">
+                        <a class="dropdown_item" href="#">Another action</a>
 
-                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="dropdown_item" href="#">Something else here</a>
 
-                          MyProfile
+                        <div class="dropdown-divider"></div>
 
-                        </button>
-
-                        <div class="dropdown-menu">
-
-                          <a class="dropdown_item" href="/CafeteriaApp.Frontend/Areas/Customer/favorite items.php">My Favorites</a>
-
-                          <a class="dropdown_item" href="#">Another action</a>
-
-                          <a class="dropdown_item" href="#">Something else here</a>
-
-                          <div class="dropdown-divider"></div>
-
-                          <a class="dropdown_item" href="#">Separated link</a>
-
-                        </div>
+                        <a class="dropdown_item" href="#">Separated link</a>
 
                       </div>
 
-                    </li>
+                    </div>
 
-                  <!-- </div> -->
+                  </li>
 
-                </ul>
+</ul>
 
-              <!-- </div> -->
 
-            </div>
 
-          </div>
 
-        </nav>
+            <!-- <div id="right_ul" style="margin-top: 40px"> -->
 
-      </div>
+                  
+                <!-- </div> -->
+            <!-- <div> -->
+            <!-- <nav class="navbar navbar-default navbar-fixed-top "> -->
+              
 
-    <!-- <script src="/CafeteriaApp.Frontend/javascript/window_resize.js"></script> -->  
+              <!-- </nav> -->
+
+            
+
+         
+
+        
+
+     
+
+    <script src="/CafeteriaApp.Frontend/javascript/window_resize.js"></script>  
 
     <script src="/CafeteriaApp.Frontend/javascript/layout.js"></script>
