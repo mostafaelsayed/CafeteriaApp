@@ -450,7 +450,7 @@ function getOrderDetails($conn,$orderId)
   return $orderDetails;
 }
 
-function processPayment($conn,$orderId,$selectedMethodId,$deliveryPlace,$deliveryTimeId,$apiContext)
+function processPayment($conn,$orderId,$selectedMethodId,$deliveryPlace,$deliveryTimeId,$categoryId,$apiContext)
 {
   $orderDetails = getOrderDetails($conn,$orderId);
 
@@ -484,8 +484,8 @@ function processPayment($conn,$orderId,$selectedMethodId,$deliveryPlace,$deliver
 
     // Set redirect urls
     $redirectUrls = new RedirectUrls();
-    $redirectUrls->setReturnUrl(SITE_URL . '/CafeteriaApp.Frontend/Areas/Customer/review_order_and_charge_customer.php?orderId=' . $orderId . '&deliveryPlace=' . $deliveryPlace . '&paymentMethodId=' . $selectedMethodId . '&deliveryTimeId=' . $deliveryTimeId)
-    ->setCancelUrl(SITE_URL . '/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId=' . $orderId . '&deliveryPlace=' . $deliveryPlace . '&paymentMethodId=' . $selectedMethodId . '&deliveryTimeId=' . $deliveryTimeId);
+    $redirectUrls->setReturnUrl(SITE_URL . '/CafeteriaApp.Frontend/Areas/Customer/review_order_and_charge_customer.php?orderId=' . $orderId . '&categoryId=' . $categoryId . '&deliveryPlace=' . $deliveryPlace . '&paymentMethodId=' . $selectedMethodId . '&deliveryTimeId=' . $deliveryTimeId)
+    ->setCancelUrl(SITE_URL . '/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId=' . $orderId . '&categoryId=' . $categoryId . '&deliveryPlace=' . $deliveryPlace . '&paymentMethodId=' . $selectedMethodId . '&deliveryTimeId=' . $deliveryTimeId);
 
     // Set payment amount
     $amount = new Amount();

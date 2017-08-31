@@ -106,6 +106,8 @@
 
   <form novalidate name="myForm" action="/CafeteriaApp.Backend/Requests/Order.php" method="post" style="align-content:center;text-align:center">
 
+    <input type="text" style="visibility:hidden" ng-model="categoryId" name="categoryId">
+
     <input type="text" style="visibility:hidden" name="orderId" ng-model="orderId">
 
     <input type="text" style="visibility:hidden" ng-model="paymentId" name="paymentId">

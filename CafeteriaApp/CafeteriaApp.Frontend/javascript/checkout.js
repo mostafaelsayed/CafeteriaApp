@@ -1,5 +1,5 @@
-
 // controller for order checkout
+
 layoutApp.controller('OrderCheckout',['$scope','$http','$location',function ($scope,$http,$location) {
 
   $scope.orderId = $location.search().orderId;
@@ -7,6 +7,7 @@ layoutApp.controller('OrderCheckout',['$scope','$http','$location',function ($sc
   $scope.categoryId = $location.search().categoryId;
   $scope.orderTypes = [{id: 0,name: "Take Away"},{id: 1,name: "Delivery"}];
   
+
   $scope.discardOrder = function() {
    $http.delete('/CafeteriaApp.Backend/Requests/Order.php?orderId='+$scope.orderId)
    .then(function(response) {
@@ -111,6 +112,7 @@ layoutApp.controller('OrderCheckout',['$scope','$http','$location',function ($sc
                 $scope.userLocations.push([result['place_id'],result['name'],result['formatted_address']]);
                 $scope.selectedLocation = $scope.userLocations[0];
               }
+              console.log(response);
             });
           }
         });
@@ -125,6 +127,30 @@ layoutApp.controller('OrderCheckout',['$scope','$http','$location',function ($sc
                       'Error: Your browser doesn\'t support geolocation.');
     infoWindow.open(map);
   };
+
+// $scope.closeOrder = function(){
+//   if($scope.selectedMethod != undefined){
+ 
+//  var data = {                   //date need to be updated also
+//         orderId: $scope.orderId,
+//         deliveryTimeId: $scope.deliveryTimeId,
+//         deliveryPlace:$scope.deliveryPlace,
+//         paymentMethodId:parseInt($scope.selectedMethod.Id),
+//         paid: $scope.total
+//       };
+//   //update order info and close the state
+//    $http.put('/CafeteriaApp.Backend/Requests/Order.php',data)
+//    .then(function(response) {
+//     //window.location = response.data;
+//     //console.log(response);
+//        //$scope.paymentMethods = response.data;
+//     // document.location =  "/CafeteriaApp.Frontend/Areas/Customer/checkout2.php?orderId="+$scope.orderId+'&deliveryTimeDuration='+$scope.deliveryTimeDuration;
+
+//    });
+//   }
+
+//   }
+
 
   $scope.getOrderDeliveryTime = function() {
    $http.get('/CafeteriaApp.Backend/Requests/Order.php?orderId='+$scope.orderId)

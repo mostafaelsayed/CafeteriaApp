@@ -1,4 +1,4 @@
-var edit_menuitemApp = angular.module('edit_menuitem',['location_provider','image','price']);
+var edit_menuitemApp = angular.module('edit_menuitem',['location_provider','image']);
 
 // controller for editing menuitem
 edit_menuitemApp.controller('editMenuItem',['$scope','$http','$location',function($scope,$http,$location) {
@@ -17,6 +17,7 @@ edit_menuitemApp.controller('editMenuItem',['$scope','$http','$location',functio
     $http.get('/CafeteriaApp.Backend/Requests/MenuItem.php?id='+$scope.menuItemId)
     .then(function(response) {
 
+      console.log(response);
       $scope.name = response.data.Name;
       $scope.price = response.data.Price;
       $scope.description = response.data.Description;
@@ -61,6 +62,7 @@ edit_menuitemApp.controller('editMenuItem',['$scope','$http','$location',functio
 
       $http.put('/CafeteriaApp.Backend/Requests/MenuItem.php',data)
       .then(function(response) {
+        console.log(response);
         window.history.back();
       });
 
@@ -72,7 +74,7 @@ edit_menuitemApp.controller('editMenuItem',['$scope','$http','$location',functio
 
     $http.get('/CafeteriaApp.Backend/Requests/UpdateOpenOrders.php')
     .then(function(response) {
-      window.history.back();
+       window.history.back();
     });
 
   };

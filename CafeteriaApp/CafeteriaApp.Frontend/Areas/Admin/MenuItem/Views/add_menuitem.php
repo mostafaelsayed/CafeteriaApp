@@ -18,8 +18,6 @@
 
   <script src="/CafeteriaApp.Frontend/javascript/image_module.js"></script>
 
-  <script src="/CafeteriaApp.Frontend/javascript/price_module.js"></script>
-
   <script src="/CafeteriaApp.Frontend/javascript/add_menuitem.js"></script>
 
 </head>
@@ -42,7 +40,7 @@
 
         <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="name" name="name" required />
 
-        <span ng-show="myform.$submitted && myform.name.$invalid" id="inputControl" ng-cloak>
+        <span ng-show="myform.$submitted && myform.name.$invalid" id="inputControl">
 
           MenuItem Name is Required
 
@@ -56,7 +54,7 @@
 
         <input id="inputField" type="text" class="form-control" ng-model="price" number-check name="price">
 
-        <span ng-show="myform.$submitted && myform.price.$error.numberCheck" id="inputControl" ng-cloak>
+        <span ng-show="myform.$submitted && myform.price.$error.numberCheck" id="inputControl">
 
           Price is invalid.it must be a number of at most 9 digits and optinally followed by at most 2 digit
 
@@ -64,7 +62,7 @@
 
         </span>
 
-        <span ng-show="myform.$submitted && myform.price.$error.numberEmpty" id="inputControl" ng-cloak>
+        <span ng-show="myform.$submitted && myform.price.$error.numberEmpty" id="inputControl">
 
           Price is Required
 
@@ -78,7 +76,7 @@
 
         <input id="inputField" type="text" class="form-control" ng-model="description" name="description" required />
 
-        <span ng-show="myform.$submitted && myform.description.$invalid" id="inputControl" ng-cloak>
+        <span ng-show="myform.$submitted && myform.description.$invalid" id="inputControl">
 
           Description is Required
 

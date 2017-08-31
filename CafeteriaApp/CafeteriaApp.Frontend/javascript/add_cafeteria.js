@@ -21,7 +21,7 @@ add_cafeteriaApp.controller('addCafeteria',['$scope','$http',function($scope,$ht
       
       $http.post('/CafeteriaApp.Backend/Requests/Cafeteria.php',data)
       .then(function(response) {
-        document.location = "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php";
+        window.history.back();
       });
 
     };

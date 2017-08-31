@@ -1,25 +1,24 @@
-var phone_numberApp = angular.module('phone_number',[]);
+var phone_numberApp = angular.module('phone_number',['']);
 
-phone_numberApp.directive('checkPhoneNumber',function() {
+function checkType(val,regExp) {
+  if (regExp.test(val) && !isEmpty(val)) {
+    return true;
+  }
+  else {
+    return false;
+  }
+};
 
-  function checkType(val,regExp) {
-    if (regExp.test(val) && !isEmpty(val)) {
-      return true;
-    }
-    else {
-      return false;
-    }
-  };
+function isEmpty(val) {
+  if (val == "") {
+    return true;
+  }
+  else {
+    return false;
+  }
+};
 
-  function isEmpty(val) {
-    if (val == "") {
-      return true;
-    }
-    else {
-      return false;
-    }
-  };
-
+phone_numberApp.directive('checkPhoneNumber',function(){
   return {
     restrict: 'A',
     require: 'ngModel',

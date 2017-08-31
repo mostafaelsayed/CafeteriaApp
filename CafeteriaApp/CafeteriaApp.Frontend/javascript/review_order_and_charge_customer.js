@@ -1,6 +1,6 @@
 
 // controller for reviewing customer order
-layoutApp.controller('reviewOrderAndChargeCustomer',['$scope','$http','$location',function ($scope,$http,$location) {
+app.controller('reviewOrderAndChargeCustomer',['$scope','$http','$location',function ($scope,$http,$location) {
 
 	$scope.orderId = $location.search().orderId;
 	$scope.paymentId = $location.search().paymentId;
