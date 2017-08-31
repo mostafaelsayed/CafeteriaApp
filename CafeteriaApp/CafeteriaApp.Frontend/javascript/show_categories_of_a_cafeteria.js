@@ -1,3 +1,4 @@
+
 // controller for getting categories of a cafeteria from database
 layoutApp.controller('getCategories',['$scope','$http','$location',function ($scope,$http,$location) {
 
@@ -8,7 +9,6 @@ layoutApp.controller('getCategories',['$scope','$http','$location',function ($sc
    $http.get('/CafeteriaApp.Backend/Requests/Category.php?cafeteriaId='+$scope.cafeteriaId)
    .then(function(response) {
        $scope.categories = response.data;
-       console.log(response);
    });
 
   };

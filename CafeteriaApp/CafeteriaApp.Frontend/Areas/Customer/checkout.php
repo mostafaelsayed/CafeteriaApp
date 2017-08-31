@@ -30,8 +30,6 @@
 
     <input type="text" style="visibility:hidden" ng-model="orderId" name="orderId">
 
-    <input type="text" style="visibility:hidden" ng-model="categoryId" name="categoryId">
-
     <input type="text" style="visibility:hidden" ng-model="deliveryTimeId" name="deliveryTimeId">
 
     <input type="text" style="visibility:hidden" ng-model="deliveryPlace" name="deliveryPlace">
@@ -48,7 +46,7 @@
 
         <input type="text" name="recepientName" style="text-align: center" ng-model="recepientName" required />
 
-        <span ng-show=" myForm.$submitted  && myForm.recepientName.$invalid" >The name is required.</span>
+        <span ng-show=" myForm.$submitted  && myForm.recepientName.$invalid" ng-cloak>The name is required.</span>
 
         <br><br><br>
 
@@ -84,7 +82,7 @@
 
           <select name="place" ng-model="selectedLocation" ng-options=" place[1] for place in userLocations"></select>
 
-          <span ng-show=" myForm.$submitted  && myForm.deliveryPlace.$invalid">The Delivery Place is required.</span>
+          <span ng-show="myForm.$submitted && myForm.deliveryPlace.$invalid" ng-cloak>The Delivery Place is required.</span>
 
           <br><br><br>
 
@@ -143,7 +141,7 @@
         <select name="method" ng-model="selectedMethod" ng-options=" method.Name for method in paymentMethods" required />
        	</select>
 
-        <span ng-show="myForm.$submitted && myForm.method.$invalid">The Payment Method is required.</span>
+        <span ng-show="myForm.$submitted && myForm.method.$invalid" ng-cloak>The Payment Method is required.</span>
 
       </div>
 

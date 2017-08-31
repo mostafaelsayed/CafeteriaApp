@@ -13,11 +13,9 @@ show_and_delete_usersApp.controller('showAndDeleteUsers',['$scope','$http','Moda
       modal.element.modal();
 
       modal.close.then(function(result) {
-
         if (result == "Yes") {
           $scope.delete();
         }
-
       });
 
     });
@@ -27,10 +25,8 @@ show_and_delete_usersApp.controller('showAndDeleteUsers',['$scope','$http','Moda
   $scope.getUsers = function() {
 
     $http.get('/CafeteriaApp.Backend/Requests/User.php')
-    .then(function (response) {
-
+    .then(function(response) {
       $scope.users = response.data;
-
     });
 
   };
@@ -45,9 +41,7 @@ show_and_delete_usersApp.controller('showAndDeleteUsers',['$scope','$http','Moda
 
      $http.delete('/CafeteriaApp.Backend/Requests/User.php?userId='+user.Id)
      .then(function(response) {
-
        $scope.users.splice($scope.users.indexOf(user),1);
-
      });
 
      if (user.RoleId == 1) {

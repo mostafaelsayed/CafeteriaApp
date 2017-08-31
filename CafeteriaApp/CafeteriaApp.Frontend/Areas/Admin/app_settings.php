@@ -1,6 +1,6 @@
 <?php
 
-	require_once("CafeteriaApp.Backend/functions.php");
+	require_once('CafeteriaApp.Backend/functions.php');
 
    	validatePageAccess($conn);
 
@@ -18,10 +18,14 @@
 
 	<h1 class="page-header">Manage Your App Settings</h1>
 
-	<a href="/CafeteriaApp.Frontend/Areas/Admin/AppSettings/Views/show_and_delete_fees.php" style="margin: auto">
+	<div style="text-align:center;font-size:30px">
 
-		Fees
-		
-	</a>
+		<a href="/CafeteriaApp.Frontend/Areas/Admin/AppSettings/Views/show_and_delete_fees.php">
+
+			Fees
+			
+		</a>
+
+	</div>
 
 </div>

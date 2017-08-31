@@ -44,7 +44,6 @@ edit_cafeteria_and_show_and_delete_its_categoriesApp.controller('editCafeteria',
 
       $http.put('/CafeteriaApp.Backend/Requests/Cafeteria.php',data)
       .then(function(response) {
-        console.log(response);
         window.history.back();
       });
 

@@ -12,6 +12,8 @@
 
   <title>Cafeterias</title>
 
+  <script src="/CafeteriaApp.Frontend/javascript/show_notifications.js"></script>
+
   <script src="/CafeteriaApp.Frontend/javascript/show_cafeterias.js"></script>
 
 </head>
@@ -91,5 +93,3 @@
 </div>
 
 <?php require_once('CafeteriaApp.Frontend/Areas/footer.php'); ?>
-
-<script src="/CafeteriaApp.Frontend/javascript/show_notifications.js"></script>
