@@ -1,6 +1,7 @@
 <?php
 
 require_once('CafeteriaApp.Backend/Controllers/Order.php');
+require_once('CafeteriaApp.Backend/session.php');
 
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
@@ -10,7 +11,7 @@ use PayPal\Api\PaymentExecution;
 use PayPal\Api\Transaction;
 use PayPal\Exception\PayPalConnectionException;
 
-function chargeCustomer($paymentId,$payerId,$paypal,$categoryId,$orderId,$deliveryTimeId,$deliveryPlace,$selectedMethodId,$conn)
+function chargeCustomer($paymentId,$payerId,$paypal,$orderId,$deliveryTimeId,$deliveryPlace,$selectedMethodId,$conn)
 {
 	// Get payment object by passing paymentId
 	$payment = Payment::get($paymentId, $paypal);
@@ -21,9 +22,10 @@ function chargeCustomer($paymentId,$payerId,$paypal,$categoryId,$orderId,$delive
 
 	try
 	{
-		$sql = "insert into `transaction` values (?,?)";
+		$sql = "insert into `transaction` (UserId,PaymentId,PayerId) values (?,?,?)";
 		$transactionStatment = $conn->prepare($sql);
-		$transactionStatment->bind_param("ii",$PaymentId,$PayerId);
+		$transactionStatment->bind_param("iss",$UserId,$PaymentId,$PayerId);
+		$UserId = $_SESSION["userId"];
 		$PaymentId = $paymentId;
 		$PayerId = $payerId;
 		
@@ -36,17 +38,18 @@ function chargeCustomer($paymentId,$payerId,$paypal,$categoryId,$orderId,$delive
 				$result=CheckOutOrder($conn,$orderId,$deliveryTimeId,$deliveryPlace,$selectedMethodId);
 				if ($result)
 				{
-					$returnUrl = "http://127.0.0.1/CafeteriaApp.Frontend/Areas/Customer/Category/Views/showing menuitems of a category and customer order.php?categoryId=" . $categoryId;
-					$_SESSION['notifications'] = array('order payment' => 'Payment Succeeseded !' );
+					$returnUrl = "http://127.0.0.1/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php";
+					$_SESSION['notifications'] = array('order payment' => 'Payment Succeeseded !');
 					header("Location: " . $returnUrl);
 				}
-				else{
+				else
+				{
 					echo "Error :payment succeeded but order still open !";
 				}
 			}
 			else
 			{
-				$returnUrl = "http://127.0.0.1/CafeteriaApp.Frontend/Areas/Customer/checkout.php?categoryId=" . $categoryId;
+				$returnUrl = "http://127.0.0.1/CafeteriaApp.Frontend/Areas/Customer/checkout.php";
 				header("Location: " . $returnUrl);
 			}
 			

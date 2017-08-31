@@ -1,3 +1,4 @@
+
 // controller for adding customer
 add_userApp.controller('addCustomer',['$scope','addUserService','$http',function($scope,addUserService,$http) {
 

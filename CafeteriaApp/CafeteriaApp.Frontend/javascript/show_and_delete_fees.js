@@ -12,11 +12,9 @@ show_and_delete_feesApp.controller('showAndDeleteFees',['$scope','$http','ModalS
       		modal.element.modal();
 
       		modal.close.then(function(result) {
-
         		if (result == "Yes") {
-          			$scope.delete();
+          		$scope.delete();
         		}
-
       		});
 
     	});
@@ -27,11 +25,9 @@ show_and_delete_feesApp.controller('showAndDeleteFees',['$scope','$http','ModalS
 
 		$http.get('/CafeteriaApp.Backend/Requests/Fee.php')
 		.then(function(response) {
-
-      console.log(response);
 			$scope.fees = response.data;
-
 		});
+
 	};
 
 	$scope.getFees();
@@ -44,9 +40,7 @@ show_and_delete_feesApp.controller('showAndDeleteFees',['$scope','$http','ModalS
 
      		$http.delete('/CafeteriaApp.Backend/Requests/Fee.php?feeId='+fee.Id)
      		.then(function(response) {
-
-       			$scope.fees.splice($scope.fees.indexOf(fee),1);
-
+       		$scope.fees.splice($scope.fees.indexOf(fee),1);
      		});
 
     	};

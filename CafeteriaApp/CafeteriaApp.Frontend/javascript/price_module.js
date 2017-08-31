@@ -1,24 +1,25 @@
-var priceApp = angular.module('price',['']);
-
-function checkType(val,regExp) {
-  if (regExp.test(val) && !isEmpty(val)) {
-    return true;
-  }
-  else {
-    return false;
-  }
-};
-
-function isEmpty(val) {
-  if (val == "") {
-    return true;
-  }
-  else {
-    return false;
-  }
-};
+var priceApp = angular.module('price',[]);
 
 priceApp.directive("numberCheck",function() {
+
+  function checkType(val,regExp) {
+    if (regExp.test(val) && !isEmpty(val)) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  };
+
+  function isEmpty(val) {
+    if (val == "") {
+      return true;
+    }
+    else {
+      return false;
+    }
+  };
+
   return {
     restrict: 'A',
     require: 'ngModel',

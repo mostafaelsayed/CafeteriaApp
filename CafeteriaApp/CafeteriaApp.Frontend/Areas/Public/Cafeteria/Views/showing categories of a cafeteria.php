@@ -22,15 +22,19 @@
 
   <div ng-controller="getCategories">
 
-    	<div ng-repeat="c in categories" style="width:15%;margin:auto">
+    	<div ng-repeat="c in categories">
 
-    		<a href="/CafeteriaApp.Frontend/Areas/Customer/Category/Views/showing menuitems of a category and customer order.php?categoryId={{c.Id}}" style="color: blue" target="_self">
+        <div style="text-align:center;font-size:20px">
 
-    			<span ng-bind="c.Name"></span>
+      		<a href="/CafeteriaApp.Frontend/Areas/Customer/Category/Views/showing menuitems of a category and customer order.php?categoryId={{c.Id}}" style="color: blue" target="_self">
 
-    		</a>
+      			<span ng-bind="c.Name"></span>
 
-     		<br>
+      		</a>
+
+       		<br>
+
+        </div>
 
     	</div>
 

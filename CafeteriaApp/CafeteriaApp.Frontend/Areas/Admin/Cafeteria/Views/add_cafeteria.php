@@ -40,7 +40,7 @@
 
         <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="name" name="name" required />
 
-        <span ng-show=" myform.$submitted &&myform.name.$invalid" id="inputControl">
+        <span ng-show=" myform.$submitted &&myform.name.$invalid" id="inputControl" ng-cloak>
 
           Cafeteria Name is Required
 

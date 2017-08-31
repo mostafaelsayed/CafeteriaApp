@@ -24,7 +24,6 @@ show_and_delete_cafeteriasApp.controller('showAndDeleteCafeterias',['$scope','$h
 
     $http.get('/CafeteriaApp.Backend/Requests/Cafeteria.php')
     .then(function (response) {
-      console.log(response);
       $scope.cafeterias = response.data;
     });
 
