@@ -1,6 +1,6 @@
 // controller for order checkout
 
-app.controller('OrderCheckout',['$scope','$http','$location',function ($scope,$http,$location) {
+layoutApp.controller('OrderCheckout',['$scope','$http','$location',function ($scope,$http,$location) {
 
   $scope.orderId = $location.search().orderId;
   $scope.selectedMethod = "";
@@ -164,6 +164,5 @@ app.controller('OrderCheckout',['$scope','$http','$location',function ($scope,$h
   $scope.getOrderInfo();
   $scope.getpaymentMethods();
   $scope.getOrderDeliveryTime();
-  // $scope.currentLocation();
 
 }]);

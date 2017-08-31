@@ -1,4 +1,7 @@
-app.controller('editMenuItem',['$scope','$http','$location',function($scope,$http,$location) {
+var edit_menuitemApp = angular.module('edit_menuitem',['location_provider','image']);
+
+// controller for editing menuitem
+edit_menuitemApp.controller('editMenuItem',['$scope','$http','$location',function($scope,$http,$location) {
 
   $scope.image = null;
   $scope.imageFileName = '';
@@ -59,10 +62,8 @@ app.controller('editMenuItem',['$scope','$http','$location',function($scope,$htt
 
       $http.put('/CafeteriaApp.Backend/Requests/MenuItem.php',data)
       .then(function(response) {
-
         console.log(response);
         window.history.back();
-
       });
 
     }

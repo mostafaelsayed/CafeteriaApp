@@ -1,4 +1,5 @@
-app.controller('addCustomer',['$scope','userService','$http',function($scope,userService,$http) {
+// controller for adding customer
+add_userApp.controller('addCustomer',['$scope','addUserService','$http',function($scope,addUserService,$http) {
 
 	$scope.selectedGender = 1; 
 	$scope.years = Array.from(Array(68), (x,i) => i+1950);
@@ -7,6 +8,7 @@ app.controller('addCustomer',['$scope','userService','$http',function($scope,use
 	$scope.selectedYear = 2017;
 	$scope.selectedMonth = 1;
 	$scope.selectedDay = 1;
+	$scope.credit = 0;
 
 	$scope.maleInput = angular.element("#maleInput");
 	$scope.femaleInput = angular.element("#femaleInput");
@@ -35,20 +37,20 @@ app.controller('addCustomer',['$scope','userService','$http',function($scope,use
 
 		// we now extract the data provided by the service and send it
 		// along with the customer data to the database to insert the customer
-		$scope.userData = userService.userData;
+		$scope.userData = addUserService.userData;
 		$scope.userData.RoleId = 2; // customer role id
 
 		$http.post('/CafeteriaApp.Backend/Requests/User.php',$scope.userData)
 		.then(function(response) {
 
 			// validate user input first
-			var checkInput = $scope.userName != "" && $scope.firstName != "" && $scope.lastName != ""
-			&& $scope.email != "" && $scope.phoneNumber != "" && $scope.password != ""
-			&& $scope.userName == $scope.email && $scope.confirmPassword == $scope.password;
+			var checkInput = $scope.userData.userName != "" && $scope.userData.firstName != ""
+			&& $scope.userData.lastName != "" && $scope.userData.email != "" && $scope.userData.phoneNumber != ""
+			&& $scope.userData.password != "" && $scope.userData.userName == $scope.userData.email
+			&& $scope.userData.confirmPassword == $scope.userData.password;
 			
 			if (checkInput) {
 
-				//console.log(response);
 				var dateOfBirth = String($scope.selectedYear) + '-' + String($scope.selectedMonth) + '-'
 				+ String($scope.selectedDay);
 
@@ -58,11 +60,9 @@ app.controller('addCustomer',['$scope','userService','$http',function($scope,use
 					Credit: $scope.credit,
 					DateOfBirth: dateOfBirth
 				}
-
 				
 				$http.post('/CafeteriaApp.Backend/Requests/Customer.php',customerData)
 				.then(function(response) {
-					console.log(response);
 					document.location = "/CafeteriaApp.Frontend/Areas/Admin/User/Views/show_and_delete_users.php";
 				});
 			}

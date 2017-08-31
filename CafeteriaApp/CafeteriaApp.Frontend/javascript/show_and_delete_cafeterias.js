@@ -1,22 +1,19 @@
-﻿// controller for getting and deleting cafeterias
+﻿var show_and_delete_cafeteriasApp = angular.module('show_and_delete_cafeterias',['modal','angularModalService','ui.bootstrap']);
 
-app.controller('showAndDeleteCafeterias',['$scope','$http','ModalService', function ($scope,$http,ModalService) {
+show_and_delete_cafeteriasApp.controller('showAndDeleteCafeterias',['$scope','$http','ModalService', function ($scope,$http,ModalService) {
 
   $scope.show = function() {
 
     ModalService.showModal({
       templateUrl: 'modal.html',
       controller: "ModalController"
+      
     }).then(function(modal) {
-
       modal.element.modal();
-
       modal.close.then(function(result) {
-
         if (result == "Yes") {
           $scope.delete();
         }
-
       });
 
     });
@@ -27,10 +24,8 @@ app.controller('showAndDeleteCafeterias',['$scope','$http','ModalService', funct
 
     $http.get('/CafeteriaApp.Backend/Requests/Cafeteria.php')
     .then(function (response) {
-
       console.log(response);
       $scope.cafeterias = response.data;
-
     });
 
   };
@@ -42,12 +37,9 @@ app.controller('showAndDeleteCafeterias',['$scope','$http','ModalService', funct
     $scope.show();
 
     $scope.delete = function() {
-
      $http.delete('/CafeteriaApp.Backend/Requests/Cafeteria.php?cafeteriaId='+cafeteria.Id)
      .then(function(response) {
-
        $scope.cafeterias.splice($scope.cafeterias.indexOf(cafeteria),1);
-
      });
 
     };

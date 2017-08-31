@@ -1,6 +1,6 @@
-// controller for adding menuitem to the database
+var add_categoryApp = angular.module('add_category',['location_provider','image']);
 
-app.controller('addCategory',['$scope','$http','$location',function($scope,$http,$location){
+add_categoryApp.controller('addCategory',['$scope','$http','$location',function($scope,$http,$location) {
 
   $scope.image = null;
   $scope.imageFileName = '';
@@ -10,17 +10,24 @@ app.controller('addCategory',['$scope','$http','$location',function($scope,$http
 
   $scope.name = "";
   $scope.cafeteriaId = $location.search().id;
+
   $scope.addCategory = function () {
+
     var data = {
       Name: $scope.name,
       CafeteriaId: $scope.cafeteriaId,
       Image: $scope.uploadme.src.split(',')[1]
     };
+
     if ($scope.name != "" && $scope.cafeteriaId != "") {
+
       $http.post('/CafeteriaApp.Backend/Requests/Category.php',data)
-      .then(function(response){
+      .then(function(response) {
         window.history.back();
       });
+
     }
+
   };
+
 }]);

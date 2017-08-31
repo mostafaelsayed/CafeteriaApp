@@ -2,7 +2,8 @@
 
 // controller for getting menuitems of a category from database
 
-app.controller('getMenuItemsAndCustomerOrder', function ($scope,$http,$location,$rootScope,$timeout,Order_Info) {
+layoutApp.controller('getMenuItemsAndCustomerOrder',['$scope','$http','$location','$rootScope','$timeout','Order_Info'
+,function($scope,$http,$location,$rootScope,$timeout,Order_Info) {
 
   $scope.categoryId = $location.search().categoryId;
   $scope.cafeteriaId = $location.search().cafeteriaId;
@@ -482,7 +483,7 @@ $scope.getMenuItems();
 
 
 
-});
+}]);
 
 
 

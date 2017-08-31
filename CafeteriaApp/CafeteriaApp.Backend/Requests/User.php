@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST")
   
     if ($data->UserName != null)
     {
-      echo (addUser($conn,$data->UserName,$data->FirstName,$data->LastName,$data->Image,$data->Email,$data->PhoneNumber,$data->Password,$data->RoleId));
+      echo (addUser($conn,$data->UserName,$data->FirstName,$data->LastName,$data->Image,$data->Email,$data->PhoneNumber,$data->Password,$data->RoleId,1));
     }
     else
     {

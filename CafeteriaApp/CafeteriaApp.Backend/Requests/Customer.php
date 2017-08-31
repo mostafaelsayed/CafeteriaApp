@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET")
 {
   if (isset($_GET["userId"]) && $_GET["userId"] != null)
   {
-    checkResult(getCustomerByUserId($conn,$_SESSION["userId"]));
+    checkResult(getCustomerByUserId($conn,$_GET["userId"]));
   }
   elseif (isset($_SESSION["userId"]) && $_SESSION["userId"] != null)
   {
@@ -19,8 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] == "GET")
     checkResult(getCurrentCustomerinfoByUserId($conn));
   }
 }
-
-//checkResult($_SESSION["userId"]);
 
 if ($_SERVER['REQUEST_METHOD'] == "POST")
 {
@@ -32,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST")
 if ($_SERVER['REQUEST_METHOD'] == "PUT")
 {
   //decode the json data
-  //echo "1";
   $data = json_decode(file_get_contents("php://input"));
   if (isset($data->UserId))
   {

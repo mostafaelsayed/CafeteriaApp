@@ -59,9 +59,9 @@
    
           <div class="input-field col s12">
 
-            <label for="un" style="margin-left: 234px">User Name</label>
+            <label for="un">User Name</label>
 
-            <input id="un" type="text" name="userName" ng-model="userName" style="text-align: center" ng-maxlength="30" ng-required ="dddd"/>
+            <input id="un" type="text" name="userName" ng-model="userName" style="text-align: center;color: white" ng-maxlength="30" ng-required ="dddd"/>
 
             <span ng-show=" myform.$submitted && myform.userName.$invalid">User Name is required.</span>
 
@@ -71,9 +71,9 @@
 
           <div class="input-field col s12">
 
-            <label for="ps" style="margin-left: 234px">Password</label>
+            <label for="ps">Password</label>
 
-            <input id="ps" type="password" name="password" ng-model="password" style="text-align: center" required/>
+            <input id="ps" type="password" name="password" ng-model="password" style="text-align: center;color: white" required/>
 
             <span ng-show=" myform.$submitted && myform.password.$invalid">Password is required.</span>
 
@@ -81,9 +81,9 @@
 
           <div class="input-field col s12">
 
-            <label for="fn" style="margin-left: 234px">First Name</label>
+            <label for="fn">First Name</label>
 
-            <input id="fn" type="text" name="firstName" ng-model="firstName" style="text-align: center" required/>
+            <input id="fn" type="text" name="firstName" ng-model="firstName" style="text-align: center;color: white" required/>
 
             <span ng-show="myform.$submitted && myform.firstName.$invalid">First Name is required.</span>
 
@@ -91,17 +91,15 @@
 
           <div class="input-field col s12">
 
-            <label for="ln" style="margin-left: 234px">Last Name</label>
+            <label for="ln">Last Name</label>
 
-            <input id="ln" type="text" name="lastName" ng-model="lastName" style="text-align: center" required/>
+            <input id="ln" type="text" name="lastName" ng-model="lastName" style="text-align: center;color: white" required/>
 
             <span ng-show=" myform.$submitted && myform.lastName.$invalid" >Last Name is required.</span>
 
             <div><br><br></div>
 
           </div>
-
-          
 
           <label class="labels" style="font-size: 16px">Gender</label><br>
 
@@ -127,9 +125,9 @@
 
           <div class="input-field col s12">
 
-            <label for="em" style="margin-left: 244px">E-mail</label>
+            <label for="em">E-mail</label>
 
-            <input id="em" type="text" name="email" ng-model="email" style="text-align: center" required/>
+            <input id="em" type="text" name="email" ng-model="email" style="text-align: center;color: white" required/>
 
             <span id="emailConfirm" ng-show=" myform.$submitted && myform.email.$invalid" >Email is required.</span>
 
@@ -137,9 +135,9 @@
 
           <div class="input-field col s12">
 
-            <label for="pn" style="margin-left: 224px">Phone Number</label>
+            <label for="pn">Phone Number</label>
 
-            <input id="pn" type="text" name="phone" ng-model="phone" style="text-align: center" required />
+            <input id="pn" type="text" name="phone" ng-model="phone" style="text-align: center;color: white" required />
 
             <span ng-show=" myform.$submitted && myform.phone.$invalid" >Phone Number is required.</span>
 
@@ -147,13 +145,13 @@
 
           <div class="input-field col s12">
 
-            <i class="material-icons prefix">today</i>
+            <!-- <i class="material-icons prefix">today</i> -->
 
-            <input id="DOB" name="DOB" type="date" class="datepicker" ng-model="DOB" style="width:70%" required />
+            <input id="DOB" name="DOB" type="date" class="datepicker" style="color: white" ng-model="DOB" required />
 
             <span ng-show="myform.$submitted && myform.DOB.$invalid">Date of Birth is required.</span>
 
-            <label for="DOB">Select your Date of Birth</label>
+            <label for="DOB">Date of Birth</label>
 
           </div>
 
@@ -163,7 +161,7 @@
           
               <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile">
 
-              <img ng-src="{{uploadme.src}}" width="200" height="200">
+              <img ng-src="{{uploadme.src}}" width="200" height="200" id="profileImage">
 
               <div><br></div>
 
@@ -183,7 +181,7 @@
        
           <input id="save" type="submit" class="btn btn-primary" name="submit" value="Next" ng-click="registerfn()" />
 
-          <input type="submit" name="cancel" class="btn btn-primary" value="Cancel" ng-click="cancel()"/>
+          <input type="submit" name="cancel" class="btn btn-primary" value="Cancel" id="cancel" ng-click="cancel()"/>
           
         </form>
 

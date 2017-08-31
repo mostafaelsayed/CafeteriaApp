@@ -1,6 +1,5 @@
 
 // controller for reviewing customer order
-
 app.controller('reviewOrderAndChargeCustomer',['$scope','$http','$location',function ($scope,$http,$location) {
 
 	$scope.orderId = $location.search().orderId;
@@ -13,10 +12,8 @@ app.controller('reviewOrderAndChargeCustomer',['$scope','$http','$location',func
 
 	$http.get('/CafeteriaApp.Backend/Requests/Order.php?orderId='+$scope.orderId+'&flag='+1)
 	.then(function(response) {
-
 		$scope.orderDetails = response.data;
 	 	$scope.total = response.data[0][4];
-
 	});
 
 }]);

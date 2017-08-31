@@ -1,6 +1,6 @@
-//var feesApp = angular.module('myapp',[]);
+var show_and_delete_feesApp = angular.module('show_and_delete_fees',['modal','angularModalService','ui.bootstrap']);
 
-app.controller('showAndDeleteFees',['$scope','$http','ModalService',function($scope,$http,ModalService) {
+show_and_delete_feesApp.controller('showAndDeleteFees',['$scope','$http','ModalService',function($scope,$http,ModalService) {
 
 	$scope.show = function() {
 

@@ -1,4 +1,5 @@
-app.controller('addAdmin',['$scope','$http','userService',function($scope,$http,userService) {
+// controller for adding admin
+add_userApp.controller('addAdmin',['$scope','$http','addUserService',function($scope,$http,addUserService) {
 	
 	$scope.addAdminUser = function () {
 		$scope.$emit('getUserData'); // this is a child scope so we use $emit to send this message to the root scope
@@ -8,7 +9,7 @@ app.controller('addAdmin',['$scope','$http','userService',function($scope,$http,
 
 		// we now extract the data provided by the service and send it
 		// along with the customer data to the database to insert the cashier
-		$scope.userData = userService.userData;
+		$scope.userData = addUserService.userData;
 		$scope.userData.RoleId = 1; // admin role id
 
 		$http.post('/CafeteriaApp.Backend/Requests/User.php',$scope.userData)
@@ -29,7 +30,6 @@ app.controller('addAdmin',['$scope','$http','userService',function($scope,$http,
 
 				$http.post('/CafeteriaApp.Backend/Requests/Admin.php',adminData)
 				.then(function(response) {
-					console.log(response);
 					document.location = "/CafeteriaApp.Frontend/Areas/Admin/User/Views/show_and_delete_users.php";
 				});
 

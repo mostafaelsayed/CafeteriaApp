@@ -1,6 +1,7 @@
-// controller for editing a cafeteria
+var edit_cafeteria_and_show_and_delete_its_categoriesApp = angular.module('edit_cafeteria_and_show_and_delete_its_categories'
+,['location_provider','modal','angularModalService','ui.bootstrap','image']);
 
-app.controller('editCafeteria',['$scope','$http','$location',function($scope,$http,$location) {
+edit_cafeteria_and_show_and_delete_its_categoriesApp.controller('editCafeteria',['$scope','$http','$location',function($scope,$http,$location) {
 
   $scope.image = null;
   $scope.imageFileName = '';
@@ -13,10 +14,8 @@ app.controller('editCafeteria',['$scope','$http','$location',function($scope,$ht
 
     $http.get('/CafeteriaApp.Backend/Requests/Cafeteria.php?id='+$scope.cafeteriaId)
     .then(function(response) {
-
       $scope.name = response.data.Name;
       $scope.imageUrl = response.data.Image;
-
     });
 
   };
@@ -30,6 +29,7 @@ app.controller('editCafeteria',['$scope','$http','$location',function($scope,$ht
     if ($scope.uploadme.src != '') {
       x = $scope.uploadme.src.split(',')[1];
     }
+
     else {
       x = $scope.imageUrl;
     }
@@ -44,13 +44,11 @@ app.controller('editCafeteria',['$scope','$http','$location',function($scope,$ht
 
       $http.put('/CafeteriaApp.Backend/Requests/Cafeteria.php',data)
       .then(function(response) {
-
         console.log(response);
         window.history.back();
-
       });
 
-    };
+    }
 
   };
 
@@ -58,18 +56,16 @@ app.controller('editCafeteria',['$scope','$http','$location',function($scope,$ht
 
 // controller for showing and deleting categories
 
-app.controller('showAndDeleteCategories',['$scope','$http','$location','ModalService',function($scope,$http,$location,ModalService) {
+edit_cafeteria_and_show_and_delete_its_categoriesApp.controller('showAndDeleteCategories',['$scope','$http','$location','ModalService',function($scope,$http,$location,ModalService) {
 
   $scope.cafeteriaId = $location.search().id;
 
   $scope.getCategories = function() {
 
-    $http.get('/CafeteriaApp.Backend/Requests/Category.php?cafeteriaId='+$scope.cafeteriaId)
-      .then(function(response) {
-
-        $scope.categories = response.data;
-
-      });
+  $http.get('/CafeteriaApp.Backend/Requests/Category.php?cafeteriaId='+$scope.cafeteriaId)
+    .then(function(response) {
+      $scope.categories = response.data;
+    });
 
   };
 
@@ -83,9 +79,7 @@ app.controller('showAndDeleteCategories',['$scope','$http','$location','ModalSer
 
       $http.delete('/CafeteriaApp.Backend/Requests/Category.php?categoryId='+category.Id)
       .then(function(response) {
-
         $scope.categories.splice($scope.categories.indexOf(category),1);
-
       });
 
     };

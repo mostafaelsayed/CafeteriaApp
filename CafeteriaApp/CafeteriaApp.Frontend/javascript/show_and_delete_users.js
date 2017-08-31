@@ -1,6 +1,7 @@
-// controller for getting and deleting users
+var show_and_delete_usersApp = angular.module('show_and_delete_users',['modal','angularModalService','ui.bootstrap'])
 
-app.controller('showAndDeleteUsers',['$scope','$http','ModalService', function ($scope,$http,ModalService) {
+// controller for getting and deleting users
+show_and_delete_usersApp.controller('showAndDeleteUsers',['$scope','$http','ModalService', function ($scope,$http,ModalService) {
 
   $scope.show = function() {
 
@@ -55,7 +56,7 @@ app.controller('showAndDeleteUsers',['$scope','$http','ModalService', function (
       .then(function(response) {
       });
 
-     };
+     }
 
      else if (user.RoleId == 3) {
 
@@ -63,7 +64,7 @@ app.controller('showAndDeleteUsers',['$scope','$http','ModalService', function (
       .then(function(response) {
       });
 
-     };
+     }
 
      else if (user.RoleId == 2) {
 
@@ -71,7 +72,7 @@ app.controller('showAndDeleteUsers',['$scope','$http','ModalService', function (
       .then(function(response) {
       });
 
-     };
+     }
 
     };
 

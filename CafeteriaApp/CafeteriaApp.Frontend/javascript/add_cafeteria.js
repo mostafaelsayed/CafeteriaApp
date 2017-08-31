@@ -1,6 +1,7 @@
-// controller for adding cafeteria
+var add_cafeteriaApp = angular.module('add_cafeteria',['image']);
 
-app.controller('addCafeteria',['$scope','$http',function($scope,$http) {
+// controller for adding cafeteria
+add_cafeteriaApp.controller('addCafeteria',['$scope','$http',function($scope,$http) {
 
   $scope.image = null;
   $scope.imageFileName = '';
@@ -17,12 +18,10 @@ app.controller('addCafeteria',['$scope','$http',function($scope,$http) {
     };
 
     if ($scope.name != "") {
-
+      
       $http.post('/CafeteriaApp.Backend/Requests/Cafeteria.php',data)
       .then(function(response) {
-
         window.history.back();
-
       });
 
     };

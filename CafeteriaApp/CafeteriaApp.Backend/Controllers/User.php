@@ -42,7 +42,7 @@ function getUserById($conn,$id)
   }
 }
 
-function addUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password,$roleId,$localeId)
+function addUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password,$roleId,$localeId=1)
 {
   if (checkExistingEmail($conn ,$email ) || checkExistingUserName($conn ,$userName,true)) 
   {

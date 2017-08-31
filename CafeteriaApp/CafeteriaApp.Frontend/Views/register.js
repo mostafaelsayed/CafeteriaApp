@@ -29,19 +29,19 @@ app.controller('Register',['$scope','$http',function($scope,$http) {
 
   $scope.registerfn = function () {
 
-  	var data = {                   //date need to be updated also
+  	$scope.data = {                   //date need to be updated also
       userName: $scope.userName,
       firstName: $scope.firstName,
-      lastName:$scope.lastName,
-      phone:$scope.phone,
+      lastName: $scope.lastName,
+      phone: $scope.phone,
       email: $scope.email,
       image: $scope.uploadme.src.split(',')[1],
-      gender:$scope.gender,
-      dob:$scope.DOB,
+      gender: $scope.gender,
+      dob: $scope.DOB,
       password: $scope.password
     };
 
-    $http.put('/CafeteriaApp.Backend/Requests/Register.php',data) 
+    $http.put('/CafeteriaApp.Backend/Requests/Register.php',$scope.data) 
     .then(function(response) {
        document.location=response.data;
     });
@@ -49,7 +49,10 @@ app.controller('Register',['$scope','$http',function($scope,$http) {
   };
 
   $scope.cancel = function() {
-    
+
+    $scope.userName = $scope.firstName = $scope.lastName = $scope.phone = $scope.email
+    = $scope.uploadme.src.split(',')[1] = $scope.gender = $scope.DOB = $scope.password = null;
+
   };
 
 }]);

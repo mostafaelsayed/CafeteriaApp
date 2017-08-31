@@ -1,6 +1,7 @@
-// controller for adding fee
+var add_feeApp = angular.module('add_fee',[]);
 
-app.controller('addFee',['$scope','$http',function($scope,$http) {
+// controller for adding fee
+add_feeApp.controller('addFee',['$scope','$http',function($scope,$http) {
 
   $scope.name = "";
   $scope.price = "";

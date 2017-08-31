@@ -1,4 +1,6 @@
-app.controller('editFee',['$scope','$http','$location',function($scope,$http,$location) {
+var edit_feeApp = angular.module('edit_fee',['location_provider']);
+
+edit_feeApp.controller('editFee',['$scope','$http','$location',function($scope,$http,$location) {
 
   $scope.feeId = $location.search().id;
 
