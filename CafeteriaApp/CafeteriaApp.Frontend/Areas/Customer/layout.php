@@ -67,7 +67,6 @@
       <!-- Latest compiled and minified JavaScript -->
       <script src="/CafeteriaApp.Frontend/javascript/bootstrap-select.min.js"></script>
     </head>
-
     <body style="background-image:url('/CafeteriaApp.Frontend/images/customer background image4.jpg')" ng-app="myapp"
     ng-init="orderId=<?php echo $orderId ;?>;">
   
@@ -80,8 +79,9 @@
 
           <div class="container-fluid">
           <div class="row">
-            <div class="navbar-header">
+           
 
+            <div class="navbar-header">
               <button class="navbar-toggle" data-toggle="collapse" data-target="#optionsNavbar" id="mybutton" style="float: left">
 
                 <span class="icon-bar"></span>
@@ -94,7 +94,7 @@
 
             </div>
 
-            <div id="optionsNavbar" class="collapse navbar-collapse" >
+            <div id="optionsNavbar" class="navbar-collapse" >
 
               <ul id="left_ul" class="nav navbar-nav navbar-left">
 
@@ -143,32 +143,20 @@
 
                 <li class="inner">
 
-                  <a class="navbar-brand" style="margin-left: -50px" href="/CafeteriaApp.Frontend/Views/logout.php"><?php echo "{$Words['Log out'][$lang_id]}" ?></a>
+                  <a class="navbar-brand" href="/CafeteriaApp.Frontend/Views/logout.php"><?php echo "{$Words['Log out'][$lang_id]}" ?></a>
 
                 </li>
 
               </ul>
 
-              
-            <!-- </div> -->
-
-        </div>
+             </div>
 
 
-          <!-- <div > -->
+       
 
-            <ul id="right_ul">
+       <ul id="right_ul">
 
-            <li style="display: inline-block">
-
-                          <select id="languages" class="selectpicker show-tick" select-picker ng-model="selectedLang"  ng-options="l.Name for l in languages" ng-change="changeLanguage(selectedLang.Id)" data-width="fit">
-
-                          </select>
-
-
-                  </li>
-
-                  <li id="shoppingCart" title="Show Shopping Cart Items" style="display: inline-block;width:50px;height:50px;">
+           <li id="shoppingCart" title="Show Shopping Cart Items">
 
                     <div id="shoppingCart_Button">
 
@@ -244,7 +232,7 @@
 
                         <div>
 
-                          <a id="checkout" title="Check out this order" class="btn" type="button" ng-href="/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}" ng-show="orderItems.length>0"  target="_self">Checkout</a>
+                          <a id="checkout" title="Check out this order" class="btn"  ng-href="/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}" ng-show="orderItems.length>0"  target="_self">Checkout</a>
 
                         </div>
 
@@ -254,28 +242,37 @@
 
                   </li>
 
-                  <li id="myProfile" style="display: inline-block">
+
+
+            <li id="languagesDropdown" >
+              <select id="languages" class="selectpicker show-tick" select-picker ng-model="selectedLang"  ng-options="l.Name for l in languages" ng-change="changeLanguage(selectedLang.Id)" data-width="fit">
+
+              </select>
+                  </li>
+
+
+             <li id="myProfile" style="display: inline-block">
 
                     <div class="btn-group">
 
-                      <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                        MyProfile
+                      My Profile
 
-                      </button>
+                    </button>
 
-                      <div class="dropdown-menu">
-
+                      <div   class="dropdown-menu" style="left:-70px;">
+                              <div>
                         <a class="dropdown_item" href="/CafeteriaApp.Frontend/Areas/Customer/favorite items.php">My Favorites</a>
 
                         <a class="dropdown_item" href="#">Another action</a>
 
                         <a class="dropdown_item" href="#">Something else here</a>
-
-                        <div class="dropdown-divider"></div>
-
+                          </div>
+                            <hr>
+                          <div>
                         <a class="dropdown_item" href="#">Separated link</a>
-
+                      </div>
                       </div>
 
                     </div>
