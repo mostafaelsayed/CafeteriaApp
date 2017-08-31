@@ -1,0 +1,17 @@
+<?php
+
+class FeedbackAbouts {
+
+public $create = "
+CREATE TABLE `feedbackabouts` (
+  `Id` int(11) NOT NULL  AUTO_INCREMENT ,
+  `Name` varchar(200) NOT NULL,
+   PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+";
+
+public $drop = "drop table `mydb`.`FeedbackAbouts`";
+}
+
+?>

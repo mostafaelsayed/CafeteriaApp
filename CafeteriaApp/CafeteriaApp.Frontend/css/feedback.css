@@ -5,6 +5,7 @@ align-content: center;
 }
 
 #feedbackForm{
+	display: none;
 text-align:center;
 align-content: center;
 width: 500px;

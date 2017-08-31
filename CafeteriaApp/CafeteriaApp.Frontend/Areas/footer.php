@@ -1,80 +1,59 @@
-<style type="text/css">
-	
-	.footer{
-		font-weight: bold;
-		text-align: center;
-		color: white;
-		margin-top: 100px;
-		/*border:5px solid black;*/
-		/*height: 300px;*/
-	}
-
-	.footerLinks ul{
-		list-style: none;
-		float: left;
-		/*margin: 0 auto;*/
-		text-align: left;
-		margin-left: 100px; 
-		/*line-height: 20px;*/
-		/*width: 33.333333%;*/
-	}
-
-.footerLinks a{
-		text-decoration: none;
-	}
-
-.footerLinks img{
-		width: 45px;
-		height: 45px;
-		padding-right: 10px; 
-		padding-top: 10px; 
-		/*overflow: hidden;*/
-
-	}
+	<link rel="stylesheet" type="text/css" href="/CafeteriaApp.Frontend/css/footer.css">
 
 
-#followUs li:{
-	/*position: absolute;
-	top: 10px;*/
-	   /*display: block;*/
-		padding-top: 10px;
-		padding-bottom: 10px;
-		 height : 25px;
-}
 
-#followUs li:hover{
-/*margin: 0px 0px 0px 20px;*/
-transform: scale(1.4);
-transition: 0.3s;
-
-}
-
-#ads{
-    width: 100px;
-    height: 100px;
-    background: red;
-    position :absolute;
-    /*-webkit-animation: mymove 5s infinite; /* Safari 4.0 - 8.0 */
-    animation: mymove 1.5s ;
-    left: 30px;
-    top: 100px;
-}
-
-@keyframes mymove {
-
-    0%  {top: 600px;}
-   /* 25%  {top: 200px;}
-    75%  {top: 50px}*/
-    100% {top: 100px;}
-}
-</style>
-
-
+				<!-- Advertisments -->
 <div id="ads"  >
 	<img style="width:200px;height:200px;" src="/CafeteriaApp.Frontend/footerIcons/hotOffer.jpg">
 	<a href="">Go to offer</a>
 </div>
 
+				<!-- feedback form -->
+
+<div ng-controller="feedback" class="background" onclick="hideForm()">
+
+<div id="feedbackForm"> 
+<form method="post" action="feedback form.php">
+
+	<div class="entry">
+	<label for="name">Name:</label>
+	<input type="text" id="name" ng-model="name" required>
+	</div>
+
+	<div class="entry">
+	<label for="mail">Email:</label>
+	<input type="mail" id="mail" ng-model="mail" required>
+	</div>
+
+	<div class="entry">
+	<label for="phone">Phone:</label>
+	<input type="text" id="phone" ng-model="phone" required>
+	</div>
+
+	<div class="entry"> 
+	<label for="about">About:</label>
+	<select id="about" ng-model="selectedAbout" ng-options="a for a in abouts" ></select> 
+	</div>
+	
+	<div class="entry">
+	<h4 style="margin: 0px;padding-left: 50px;"> <?php $x = rand(0,20);echo $x ; ?>+<?php $y = rand(0,20); echo $y ;?> =</h4>
+	<label for="check" style="float:left;">	Answer:</label>
+	<input type="text" id="check" name="check" ng-model="answer" required>
+	</div>
+
+	<div class="entry">
+	<label for="message" style="float: left;" >Message:</label>
+	<textarea id="message" ng-model="message" required></textarea>
+	</div>
+
+	<input ng-click="addFeedback(name,mail,phone,selectedAbout,message)" type="submit" id="submitbtn" value="Submit" name="submit" style="height: 30px;width: 100px;color:white;background-color: #7FC27F;font-weight: bold;margin-left: 30px; ">
+</form>
+
+</div>
+
+</div>
+
+				<!-- Other Links -->
 
 <div class="footer"> 
 
@@ -99,7 +78,7 @@ transition: 0.3s;
 <ul>
 	<h4>Contact us</h4>
 	<!-- show a form for feedback like ads -->
-	<li><a href="#">Send Feedback</a></li>
+	<li ><a onclick="displayForm()" style="cursor: pointer;" > Send Feedback</a></li>
 	<li>Phone:</li>
 	<li>+201016415791</li>
 	<li>Email:</li>
@@ -125,12 +104,58 @@ transition: 0.3s;
 
 </html>
 
+
+
 <script type="text/javascript">
-	
-// $(".footerLinks a").mouseover(function() {
-//     $(".footerImage").css({ width: '50px', height: '50px' });
-// }).mouseout(function() {
-//    $(".footerImage").css({ width: '45px', height: '45px' });
-// });
+	function displayForm() {
+			//$("#feedbackForm").css({ display: 'block' });
+			$(".background").fadeToggle("slow");
+			 $(".container").css({ 'z-index': '-1'});
+	}
+
+	function hideForm(){
+		$(".background").css({'display':'none'})
+
+	}
+
+
+layoutApp.controller( 'feedback'  ,function ($scope,$http) {
+
+	$scope.getFeedbackAbouts=function () {
+	$http.get('/CafeteriaApp.Backend/Requests/FeedbackAbouts.php')
+	.then(function (response) {
+      $scope.abouts = response.data;
+    });
+
+	}
+
+$scope.addFeedback = function(name,mail,phone,selectedAbout,message) {
+	if(answer === <?php echo $y + $x; ?>){
+	var data={ Name: name,
+		Mail: mail,
+		 Phone:phone ,
+		SelectedAbout: selectedAbout,
+		Message: message
+		};
+
+      $http.post('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
+      .then(function(response) {
+        $scope.response = response.data;
+        //$scope.togglePopup('Favorite Item added successfully to the order removed !');
+        //$scope.getOrderItems();
+      });
+  	}
+      else{
+
+      	//alertifyerror() 
+      }
+    }
+  
+
+
+$scope.getFeedbackAbouts();
+
+
+});
 
 </script>

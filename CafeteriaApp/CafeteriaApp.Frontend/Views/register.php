@@ -31,7 +31,7 @@
 
   </head>
 
-  <body ng-app="myapp" style="background-image:url('/CafeteriaApp.Frontend/images/register5.jpg')">
+  <body ng-app="register" style="background-image:url('/CafeteriaApp.Frontend/images/register5.jpg');background-repeat:  no-repeat ; background-size:cover;">
 
     <div id="main">
 
