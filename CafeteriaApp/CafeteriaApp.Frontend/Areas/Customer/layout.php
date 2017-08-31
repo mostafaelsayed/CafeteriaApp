@@ -63,11 +63,12 @@
       <script src="/CafeteriaApp.Frontend/javascript/morris.min.js"></script>
       <!-- Custom Theme JavaScript -->
       <script src="/CafeteriaApp.Frontend/javascript/sb-admin-2.js"></script>
-      <script src="/CafeteriaApp.Frontend/javascript/myapp.js"></script>
+      <script src="/CafeteriaApp.Frontend/javascript/order_service.js"></script>
+      <script src="/CafeteriaApp.Frontend/javascript/location_provider.js"></script>
       <!-- Latest compiled and minified JavaScript -->
       <script src="/CafeteriaApp.Frontend/javascript/bootstrap-select.min.js"></script>
     </head>
-    <body style="background-image:url('/CafeteriaApp.Frontend/images/customer background image4.jpg')" ng-app="myapp"
+    <body style="background-image:url('/CafeteriaApp.Frontend/images/customer background image4.jpg')" ng-app="layout_app"
     ng-init="orderId=<?php echo $orderId ;?>;">
   
       <div ng-controller="Language_Order" ng-init=" languages=<?php echo htmlspecialchars($Languages);?>;selectedLang=languages[<?php echo ($lang_id-1);?>];orderId=<?php echo $orderId;?>" id="myctrl">

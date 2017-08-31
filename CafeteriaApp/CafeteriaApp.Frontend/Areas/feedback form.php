@@ -64,7 +64,7 @@ else
 	<textarea id="message" required></textarea>
 	</div>
 
-	<input type="submit" id="submitbtn" value="Submit" name="submit" style="height: 30px;width: 100px;color:white;background-color: #7FC27F; ">
+	<input type="submit" id="submitbtn" value="Submit" name="submit" style="height: 30px;width: 100px;color:white;background-color: #7FC27F;font-weight: bold;margin-left: 30px; ">
 </form>
 
 </div>
