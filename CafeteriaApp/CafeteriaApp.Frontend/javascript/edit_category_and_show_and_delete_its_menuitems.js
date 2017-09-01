@@ -87,8 +87,11 @@ edit_category_and_show_and_delete_its_menuitemsApp.controller('showAndDeleteMenu
 
   $scope.show = function() {
     ModalService.showModal({
-      templateUrl: 'modal.html',
-      controller: "ModalController"
+      templateUrl: '/CafeteriaApp.Frontend/Templates/Views/modal.html',
+      controller: "ModalController",
+      inputs: {
+        name: "menuitem"
+      }
     }).then(function(modal) {
       modal.element.modal();
       modal.close.then(function(result) {

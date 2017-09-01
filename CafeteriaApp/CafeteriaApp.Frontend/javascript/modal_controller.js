@@ -1,13 +1,15 @@
 var modalApp = angular.module('modal',[]);
 
-modalApp.controller('ModalController',['$scope','close', function($scope, close) {
+modalApp.controller('ModalController',['$scope','close','name',function($scope,close,name) {
 
-  $scope.close = function(result) {
-    close(result,190);
-  };
+	$scope.name = name;
 
-  $scope.closeModal = function() {
-  	close(null);
-  };
+ 	$scope.close = function(result) {
+		close(result,190);
+  	};
+
+	$scope.closeModal = function() {
+  		close(null);
+  	};
 
 }]);

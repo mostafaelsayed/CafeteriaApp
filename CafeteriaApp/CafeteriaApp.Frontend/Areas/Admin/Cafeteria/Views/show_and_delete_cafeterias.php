@@ -34,44 +34,6 @@
 
   <div ng-controller="showAndDeleteCafeterias">
 
-    <script type="text/ng-template" id="modal.html">
-
-      <div class="modal fade" id="mymodal">
-
-        <div class="modal-dialog">
-
-          <div class="modal-content">
-
-            <div class="modal-header">
-
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-
-              <h4 class="modal-title">Are You Sure You Want To Delete This Cafeteria?</h4>
-
-            </div>
-
-            <div class="modal-body">
-
-              <p>It's your call...</p>
-
-            </div>
-
-            <div class="modal-footer">
-
-              <button type="button" class="btn btn-default" ng-click="close('No')" data-dismiss="modal">No</button>
-
-              <button type="button" class="btn btn-primary" ng-click="close('Yes')" data-dismiss="modal">Yes</button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </script>
-
     <div class="col-lg-12">
 
       <div style="margin:auto">

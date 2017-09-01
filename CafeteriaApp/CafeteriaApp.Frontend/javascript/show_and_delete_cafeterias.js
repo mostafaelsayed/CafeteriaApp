@@ -5,8 +5,11 @@ show_and_delete_cafeteriasApp.controller('showAndDeleteCafeterias',['$scope','$h
   $scope.show = function() {
 
     ModalService.showModal({
-      templateUrl: 'modal.html',
-      controller: "ModalController"
+      templateUrl: '/CafeteriaApp.Frontend/Templates/Views/modal.html',
+      controller: "ModalController",
+      inputs: {
+        name: "cafeteria"
+      }
       
     }).then(function(modal) {
       modal.element.modal();
