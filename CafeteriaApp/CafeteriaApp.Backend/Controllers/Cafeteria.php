@@ -1,5 +1,7 @@
 <?php
 
+require_once('CafeteriaApp.Backend/ImageHandle.php');
+
 function getCafeterias($conn)
 {
   $sql = "select * from Cafeteria";
@@ -49,16 +51,12 @@ function addCafeteria($conn,$name,$imageData = null) // if image null ??????
   {
     if ($imageData != null)
     {
+      $imageFileName = addImageFile($imageData);
       $sql = "insert into cafeteria (Name,Image) values (?,?)";
-      chdir("../uploads"); // go to uploads directory
-      $newImageName = str_replace(':',' ',(string)date("Y-m-d H:i:s")).".jpg";
-      $ifp = fopen($newImageName,"x+");
-      fwrite($ifp,base64_decode($imageData));
-      fclose($ifp);
       $stmt = $conn->prepare($sql);
       $stmt->bind_param("ss",$Name,$Image);
       $Name = $name;
-      $Image = "/CafeteriaApp.Backend/uploads/".$newImageName;
+      $Image = $imageFileName;
     }
     else
     {
@@ -93,22 +91,13 @@ function editCafeteria($conn,$name,$id,$imageData = null)
     mysqli_free_result($result);
     if ($imageData != null && $imageData != $cafeteria['Image'])
     {
-      $cafeteriaImage = basename($cafeteria['Image']);    
+      $imageFileName = editImage($imageData,$cafeteria['Image']);
       $sql = "update cafeteria set Name = (?) , Image = (?) where Id = (?)";
-      chdir("../uploads"); // go to uploads directory
-      if ($cafeteriaImage != null && file_exists($cafeteriaImage))
-      {
-        unlink($cafeteriaImage);
-      }
-      $newImageName = str_replace(':',' ',(string)date("Y-m-d H:i:s")).".jpg";
-      $ifp = fopen($newImageName,"x+");
-      fwrite($ifp,base64_decode($imageData));
-      fclose($ifp);
       $stmt = $conn->prepare($sql);
       $stmt->bind_param("ssi",$Name,$Image,$Id);
       $Name = $name;
       $Id = $id;
-      $Image = "/CafeteriaApp.Backend/uploads/".$newImageName;
+      $Image = $imageFileName;
     }
     else
     {
@@ -141,13 +130,8 @@ function deleteCafeteria($conn,$id)
   {
     $sql = "select Image from cafeteria where Id = ".$id." LIMIT 1";
     $result = $conn->query($sql);
-    $resultImage = basename(mysqli_fetch_assoc($result)['Image']);
+    deleteImageFileIfExists(mysqli_fetch_assoc($result)['Image']);
     mysqli_free_result($result);
-    chdir("../uploads");
-    if (file_exists($resultImage))
-    {
-      unlink($resultImage);
-    }
     //$conn->query("set foreign_key_checks = 0"); // ????????/
     $sql = "delete from cafeteria where Id = ".$id." LIMIT 1";
     if ($conn->query($sql)===TRUE)

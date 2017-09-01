@@ -1,6 +1,8 @@
 <?php
 
-function getMenuItemByCategoryId($conn,$id,$customer=false)//????????????????
+require_once('CafeteriaApp.Backend/ImageHandle.php');
+
+function getMenuItemByCategoryId($conn,$id,$customer = false)//????????????????
 {
   if (!isset($id))
   {
@@ -10,7 +12,7 @@ function getMenuItemByCategoryId($conn,$id,$customer=false)//????????????????
   else
   {
     $sql = "select * from MenuItem where CategoryId = ".$id;
-    if($customer)
+    if ($customer)
     {
       $sql.=" and Visible = 1 ";
     }
@@ -41,7 +43,7 @@ function getMenuItemById($conn , $id)
     {
       $MenuItem = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-        return $MenuItem;
+      return $MenuItem;
     }
     else
     {
@@ -64,7 +66,7 @@ function getMenuItemsByIds($conn , $ids)
     {
       $MenuItem = mysqli_fetch_all($result,MYSQLI_ASSOC);
       mysqli_free_result($result);
-        return $MenuItem;
+      return $MenuItem;
     }
     else
     {
@@ -122,19 +124,15 @@ function addMenuItem($conn,$name,$price,$description,$categoryId,$imageData = nu
   {
     if ($imageData != null)
     {
+      $imageFileName = addImageFile($imageData);
       $sql = "insert into menuitem (Name,Price,Description,CategoryId,Image) values (?,?,?,?,?)";
-      chdir("../uploads"); // go to uploads directory
-      $newImageName = str_replace(':',' ',(string)date("Y-m-d H:i:s")).".jpg";
-      $ifp = fopen($newImageName,"x+");
-      fwrite($ifp,base64_decode($imageData));
-      fclose($ifp);
       $stmt = $conn->prepare($sql);
       $stmt->bind_param("sdsis",$Name,$Price,$Description,$CategoryId,$Image);
       $Name = $name;
       $Price = $price;
       $Description = $description;
       $CategoryId = $categoryId;
-      $Image = "/CafeteriaApp.Backend/uploads/".$newImageName;
+      $Image = $imageFileName;
     }
     else
     {
@@ -185,27 +183,17 @@ function editMenuItem($conn,$name,$price,$description,$id,$imageData,$visible)
     $result = $conn->query("select Image from menuitem where Id = ".$id);
     $menuItem = (mysqli_fetch_assoc($result));
     mysqli_free_result($result);
-    $menuItemImage = basename($menuItem['Image']);
-    global $newImageName;
     if ($imageData != null && $imageData != $menuItem['Image'])
     {
+      $imageFileName = editImage($imageData,$menuItem['Image']);
       $sql = "update MenuItem set Name = (?) , Price = (?) , Description = (?) , Image = (?) where Id = (?)";
-      chdir("../uploads"); // go to uploads directory
-      if ($menuItemImage != null)
-      {
-        unlink($menuItemImage);
-      }
-      $newImageName = str_replace(':',' ',(string)date("Y-m-d H:i:s")).".jpg";
-      $ifp = fopen($newImageName,"x+");
-      fwrite($ifp,base64_decode($imageData));
-      fclose($ifp);
       $stmt = $conn->prepare($sql);
       $stmt->bind_param("sdssi",$Name,$Price,$Description,$Image,$Id);
       $Name = $name;
       $Price = $price;
       $Description = $description;
       $Id = $id;
-      $Image = "/CafeteriaApp.Backend/uploads/".$newImageName;
+      $Image = $imageFileName;
     }
     else
     {
@@ -227,7 +215,6 @@ function editMenuItem($conn,$name,$price,$description,$id,$imageData,$visible)
     {
       echo "Error: ".$conn->error;
     }
-    mysqli_free_result($result);//???????????????????????????????????????????????
   }
 }
 
@@ -242,12 +229,8 @@ function deleteMenuItem($conn,$id)
   {
     $sql = "select Image from MenuItem where Id = ".$id." LIMIT 1";
     $result = $conn->query($sql);
-    $resultImage = basename(mysqli_fetch_assoc($result)['Image']);
+    deleteImageFileIfExists(mysqli_fetch_assoc($result)['Image']);
     mysqli_free_result($result);
-    chdir("../uploads");
-    if (file_exists($resultImage)) {
-      unlink($resultImage);
-    }
     //$conn->query("set foreign_key_checks = 0"); // ????????/
     $sql = "delete from MenuItem where Id = ".$id. " LIMIT 1";
     if ($conn->query($sql)===TRUE)

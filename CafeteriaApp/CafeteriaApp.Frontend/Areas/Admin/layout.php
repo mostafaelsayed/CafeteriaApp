@@ -35,12 +35,12 @@
         
     </head>
 
-    <body style="background-image: url('/CafeteriaApp.Frontend/images/admin background image.jpg')">
+    <body style="background-image:url('/CafeteriaApp.Frontend/images/admin background image.jpg')">
 
         <div>
 
             <!-- Navigation -->
-            <nav class="navbar navbar-default navbar-fixed-top" style="background-image: url('/CafeteriaApp.Frontend/images/admin background image.jpg')">
+            <nav class="navbar navbar-default navbar-fixed-top" style="background-image:url('/CafeteriaApp.Frontend/images/admin background image.jpg')">
 
                 <div class="container-fluid">
 

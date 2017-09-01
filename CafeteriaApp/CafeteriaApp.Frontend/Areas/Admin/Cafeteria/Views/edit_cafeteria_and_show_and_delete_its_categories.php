@@ -66,17 +66,17 @@
 
           <div ng-if="uploadme.src != ''">
 
-            <img ng-src="{{ uploadme.src }}" style="width: 300px;height: 300px" />
+            <img ng-src="{{ uploadme.src }}" style="width:300px;height:300px" />
 
           </div>
 
           <div ng-if="uploadme.src == ''">
 
-            <img ng-src="{{ imageUrl }}" style="text-align: center;width: 300px;height: 300px">&nbsp;
+            <img ng-src="{{ imageUrl }}" style="text-align:center;width:300px;height:300px">&nbsp;
 
             <span>
 
-              <button class="btn btn-primary" onclick="mylabel.click()" style="position: absolute;margin-top: 150px" id="mybutton">Choose image</button>
+              <button class="btn btn-primary" onclick="mylabel.click()" style="position:absolute;margin-top:150px" id="mybutton">Choose image</button>
 
               <label id="mylabel" for="file"></label>
 
@@ -110,7 +110,7 @@
 
     <script type="text/ng-template" id="modal.html">
 
-      <div class="modal fade" id="mymodal" style="background: rgba(0, 0, 0, 0.5)">
+      <div class="modal fade" id="mymodal" style="background:rgba(0,0,0,0.5)">
 
         <div class="modal-dialog">
 
@@ -178,7 +178,7 @@
 
             <a id="myButton" href="/CafeteriaApp.Frontend/Areas/Admin/Category/Views/edit_category_and_show_and_delete_its_menuitems.php?id={{c.Id}}" target="_self">Edit</a>&nbsp;
 
-            <a style="cursor: pointer" ng-click="deleteCategory(c)">Delete</a>
+            <a style="cursor:pointer" ng-click="deleteCategory(c)">Delete</a>
 
           </td>
 
@@ -190,7 +190,7 @@
 
         <tr ng-show="categories.length == 0">
 
-          <td colspan="5" style="text-align: center"> There are no Categories in this Cafeteria.</td>
+          <td colspan="5" style="text-align:center"> There are no Categories in this Cafeteria.</td>
 
         </tr>
 

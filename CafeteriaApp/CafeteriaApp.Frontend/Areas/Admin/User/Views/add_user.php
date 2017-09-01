@@ -156,11 +156,11 @@
          
           <div><label>Choose Role</label></div>
 
-          <a style="margin: auto" href="/CafeteriaApp.Frontend/Areas/Admin/User/Views/add_user.php/1">Admin&nbsp;</a>
+          <a style="margin:auto" href="/CafeteriaApp.Frontend/Areas/Admin/User/Views/add_user.php/1">Admin&nbsp;</a>
 
-          <a style="margin: auto" href="/CafeteriaApp.Frontend/Areas/Admin/User/Views/add_user.php/2">Cashier&nbsp;</a>
+          <a style="margin:auto" href="/CafeteriaApp.Frontend/Areas/Admin/User/Views/add_user.php/2">Cashier&nbsp;</a>
 
-          <a style="margin: auto" href="/CafeteriaApp.Frontend/Areas/Admin/User/Views/add_user.php/3">Customer&nbsp;</a>
+          <a style="margin:auto" href="/CafeteriaApp.Frontend/Areas/Admin/User/Views/add_user.php/3">Customer&nbsp;</a>
 
           <div ng-view></div>
 

@@ -74,7 +74,7 @@
 
     <div class="col-lg-12">
 
-      <div style="margin: auto">
+      <div style="margin:auto">
 
         <div><h3>Manage Your Cafeterias</h3>
 
@@ -111,7 +111,7 @@
 
                   <a type="button" href="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/edit_cafeteria_and_show_and_delete_its_categories.php?id={{c.Id}}">Edit</a>&nbsp;&nbsp;
 
-                  <a type="button" style="cursor: pointer" ng-click="deleteCafeteria(c)">Delete</a>
+                  <a type="button" style="cursor:pointer" ng-click="deleteCafeteria(c)">Delete</a>
 
                 </td>
 

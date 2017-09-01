@@ -58,17 +58,21 @@
 
         <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile">
 
-        <img ng-src="{{ uploadme.src }}" width="300" height="300">
+        <img ng-src="{{ uploadme.src }}" style="width:300px;height:300px">
 
-        <br><br>
+        <span>
 
-        <div><button class="btn btn-primary" onclick="mylabel.click()" id="mybutton">Choose image</button><label id="mylabel" for="file"></label></div>
+          <button class="btn btn-primary" onclick="mylabel.click()" style="position:absolute;margin-top:150px">Choose image</button>
+
+          <label id="mylabel" for="file"></label>
+
+        </span>
 
       </div>
 
       <div class="form-group">
 
-        <input type = "submit" value = "save" class="btn btn-primary" ng-click="addCategory()">
+        <input type="submit" value="save" class="btn btn-primary" ng-click="addCategory()">
 
       </div>
 

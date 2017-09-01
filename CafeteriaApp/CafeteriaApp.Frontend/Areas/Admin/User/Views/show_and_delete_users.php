@@ -76,7 +76,7 @@
 
     </script>
 
-    <div style="margin: auto">
+    <div style="margin:auto">
 
       <h3>Manage Your Users</h3>
 
@@ -114,7 +114,7 @@
 
               <a type="button" href="/CafeteriaApp.Frontend/Areas/Admin/User/Views/edit_user.php?id={{u.Id}}">Edit</a>&nbsp;&nbsp;
 
-              <a type="button" style="cursor: pointer" ng-click="deleteUser(u)">Delete</a>
+              <a type="button" style="cursor:pointer" ng-click="deleteUser(u)">Delete</a>
 
             </td>
 

@@ -122,7 +122,7 @@
 
           </div>
 
-          <span style="margin: auto">
+          <span style="margin:auto">
 
             <select ng-options="role.Name for role in roles" ng-model="selectedRole"></select>
 
@@ -132,7 +132,7 @@
 
             <div><label>Credit</label></div>
 
-            <span style="margin: auto">
+            <span style="margin:auto">
 
               <input type="text" ng-model="credit">
 
@@ -140,13 +140,13 @@
 
             <div><label>Gender</label></div>
 
-            <span style="margin: auto;margin-right: 20px">
+            <span style="margin:auto;margin-right:20px">
 
               <label>Female</label><input id="femaleInput" type="checkbox">
 
             </span>
 
-            <span style="margin: auto;margin-left: 20px">
+            <span style="margin:auto;margin-left:20px">
 
               <label>Male</label><input id="maleInput" type="checkbox">
 
@@ -154,7 +154,7 @@
 
             <div><br><label>Date of birth</label></div><br>
 
-            <div style="float: left;margin-left: 500px">
+            <div style="float:left;margin-left:500px">
 
               <label>Year</label>
 
@@ -162,7 +162,7 @@
 
             </div>
 
-            <span style="margin: auto">
+            <span style="margin:auto">
 
               <label>Month</label>
 
@@ -170,7 +170,7 @@
 
             </span>
 
-            <span style="float: right;margin-right: 500px">
+            <span style="float:right;margin-right:500px">
 
               <label>Day</label>
 

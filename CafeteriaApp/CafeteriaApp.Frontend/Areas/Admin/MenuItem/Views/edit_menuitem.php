@@ -96,17 +96,17 @@
 
       <div ng-if="uploadme.src != ''">
 
-        <img ng-src="{{ uploadme.src }}" style="width: 300px;height: 300px" />
+        <img ng-src="{{ uploadme.src }}" style="width:300px;height:300px" />
 
       </div>
 
       <div ng-if="uploadme.src == ''">
 
-        <img ng-src="{{ imageUrl }}" style="text-align: center;width: 300px;height: 300px">&nbsp;
+        <img ng-src="{{ imageUrl }}" style="text-align:center;width:300px;height:300px">&nbsp;
 
         <span>
 
-          <button class="btn btn-primary" onclick="mylabel.click()" style="position: absolute;margin-top: 150px" id="mybutton">Choose image</button>
+          <button class="btn btn-primary" onclick="mylabel.click()" style="position:absolute;margin-top:150px" id="mybutton">Choose image</button>
 
           <label id="mylabel" for="file"></label>
 
@@ -124,9 +124,9 @@
 
     <div class="form-group">
 
-      <button ng-click="updateOpenOrders()" class="btn btn-primary" style="text-align: center">Update Orders</button>
+      <button ng-click="updateOpenOrders()" class="btn btn-primary" style="text-align:center">Update Orders</button>
 
-      <span style="color: red;position: absolute;margin-top: 5px">&nbsp;&nbsp;IMPORTANT NOTE: SERVER MUST BE DOWN BEFORE PRESSING THIS BUTTON</span>
+      <span style="color:red;position:absolute;margin-top:5px">&nbsp;&nbsp;IMPORTANT NOTE: SERVER MUST BE DOWN BEFORE PRESSING THIS BUTTON</span>
 
     </div>
 

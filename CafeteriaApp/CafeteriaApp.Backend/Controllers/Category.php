@@ -1,5 +1,7 @@
 <?php
 
+require_once('CafeteriaApp.Backend/ImageHandle.php');
+
 function getByCafeteriaId($conn,$id)
 {
   if (!isset($id))
@@ -58,17 +60,13 @@ function addCategory($conn,$name,$cafeteriaId,$imageData = null)
   {
     if ($imageData != null)
     {
+      $imageFileName = addImageFile($imageData);
       $sql = "insert into category (Name,Image,CafeteriaId) values (?,?,?)";
-      chdir("../uploads"); // go to uploads directory
-      $newImageName = str_replace(':',' ',(string)date("Y-m-d H:i:s")).".jpg";
-      $ifp = fopen($newImageName,"x+");
-      fwrite($ifp,base64_decode($imageData));
-      fclose($ifp);
       $stmt = $conn->prepare($sql);
       $stmt->bind_param("ssi",$Name,$Image,$Id);
       $Name = $name;
       $Id = $cafeteriaId;
-      $Image = "/CafeteriaApp.Backend/uploads/".$newImageName;
+      $Image = $imageFileName;
     }
     else
     {
@@ -90,8 +88,6 @@ function addCategory($conn,$name,$cafeteriaId,$imageData = null)
   }
 }
 
-//addCategory($conn,'scscscc',2,null);
-
 function editCategory($conn,$name,$id,$imageData = null)
 {
   if (!isset($name) || !isset($id))
@@ -104,26 +100,15 @@ function editCategory($conn,$name,$id,$imageData = null)
     $result = $conn->query("select Image from category where Id = ".$id);
     $category = (mysqli_fetch_assoc($result));
     mysqli_free_result($result);
-    $categoryImage = basename($category['Image']);
-    echo $categoryImage;
-    global $newImageName;
     if ($imageData != null && $imageData != $category['Image'])
     {
+      $imageFileName = editImage($imageData,$category['Image']);
       $sql = "update category set Name = (?) , Image = (?) where Id = (?)";
-      chdir("../uploads"); // go to uploads directory
-      if ($categoryImage != null)
-      {
-        unlink($categoryImage);
-      }
-      $newImageName = str_replace(':',' ',(string)date("Y-m-d H:i:s")).".jpg";
-      $ifp = fopen($newImageName,"x+");
-      fwrite($ifp,base64_decode($imageData));
-      fclose($ifp);
       $stmt = $conn->prepare($sql);
       $stmt->bind_param("ssi",$Name,$Image,$Id);
       $Name = $name;
       $Id = $id;
-      $Image = "/CafeteriaApp.Backend/uploads/".$newImageName;
+      $Image = $imageFileName;
     }
     else
     {
@@ -157,13 +142,8 @@ function deleteCategory($conn,$id)
   {
     $sql = "select Image from category where Id = ".$id." LIMIT 1";
     $result = $conn->query($sql);
-    $resultImage = basename(mysqli_fetch_assoc($result)['Image']);
+    deleteImageFileIfExists(mysqli_fetch_assoc($result)['Image']);
     mysqli_free_result($result);
-    chdir("../uploads");
-    if (file_exists($resultImage))
-    {
-      unlink($resultImage);
-    }
     //$conn->query("set foreign_key_checks=0");
     $sql = "delete from category where Id = ".$id." LIMIT 1";
     if ($conn->query($sql)===TRUE)
