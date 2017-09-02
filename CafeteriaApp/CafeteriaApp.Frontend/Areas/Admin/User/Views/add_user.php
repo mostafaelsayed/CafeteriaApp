@@ -1,6 +1,6 @@
 <?php
 
-  require_once("CafeteriaApp.Backend/functions.php");
+  require_once('CafeteriaApp.Backend/functions.php');
 
   validatePageAccess($conn);
 
@@ -21,6 +21,10 @@
   <script src="/CafeteriaApp.Frontend/javascript/image_module.js"></script>
 
   <script src="/CafeteriaApp.Frontend/javascript/location_provider.js"></script>
+
+  <script src="/CafeteriaApp.Frontend/javascript/phone_number_module.js"></script>
+
+  <script src="/CafeteriaApp.Frontend/javascript/price_module.js"></script>
 
   <script src="/CafeteriaApp.Frontend/javascript/add_user.js"></script>
 
@@ -52,7 +56,7 @@
 
           <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="userName" name="userName" required/>
 
-          <span ng-show="myform.$submitted && myform.userName.$invalid" id="inputControl">
+          <span ng-show="myform.userName.$touched && myform.userName.$invalid" id="inputControl" ng-cloak>
 
             User Name is Required
 
@@ -66,7 +70,7 @@
 
           <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="firstName" name="firstName" required/>
 
-          <span ng-show="myform.$submitted && myform.firstName.$invalid" id="inputControl">
+          <span ng-show="myform.firstName.$touched && myform.firstName.$invalid" id="inputControl" ng-cloak>
 
             First Name is Required
 
@@ -80,7 +84,7 @@
 
           <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="lastName" name="lastName" required/>
 
-          <span ng-show="myform.$submitted && myform.lastName.$invalid" id="inputControl">
+          <span ng-show="myform.lastName.$touched && myform.lastName.$invalid" id="inputControl" ng-cloak>
 
             Last Name is Required
 
@@ -92,9 +96,9 @@
 
           <label>Email</label>
 
-          <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="email" name="email" required />
+          <input id="inputField" type="email" class="form-control" autofocus="autofocus" ng-model="email" name="email" required />
 
-          <span ng-show="myform.$submitted && myform.email.$invalid" id="inputControl">
+          <span ng-show="myform.email.$touched && myform.email.$invalid" id="inputControl" ng-cloak>
 
             Email is Required
 
@@ -108,7 +112,7 @@
 
           <input id="inputField" type="text" class="form-control" autofocus="autofocus" check-phone-number ng-model="phoneNumber" name="phoneNumber" required />
 
-          <span ng-show="myform.$submitted && myform.phoneNumber.$error.checkPhoneNumber" id="inputControl">
+          <span ng-show="myform.phoneNumber.$touched && myform.phoneNumber.$error.checkPhoneNumber" id="inputControl" ng-cloak>
 
             Phone Number is invalid.it must be a number of at most 11 digits
 
@@ -116,7 +120,7 @@
 
           </span>
 
-          <span ng-show="myform.$submitted && myform.phoneNumber.$error.numberEmpty" id="inputControl">
+          <span ng-show="myform.phoneNumber.$touched && myform.phoneNumber.$error.numberEmpty" id="inputControl" ng-cloak>
 
             Phone Number is Required
 
@@ -128,9 +132,9 @@
 
           <label>Password</label>
 
-          <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="password" name="password" required />
+          <input id="inputField" type="password" class="form-control" autofocus="autofocus" ng-model="password" name="password" required />
 
-          <span ng-show="myform.$submitted && myform.password.$invalid" id="inputControl">
+          <span ng-show="myform.password.$touched && myform.password.$invalid" id="inputControl" ng-cloak>
 
             Password is Required
 
@@ -142,9 +146,9 @@
 
           <label>Confirm Password</label>
 
-          <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="confirmPassword" name="confirmPassword" required />
+          <input id="inputField" type="password" class="form-control" autofocus="autofocus" ng-model="confirmPassword" name="confirmPassword" required />
 
-          <span ng-show="myform.$submitted && myform.password.$invalid" id="inputControl">
+          <span ng-show="myform.confirmPassword.$touched && myform.password.$invalid" id="inputControl" ng-cloak>
 
             Confirm Password is Required
 

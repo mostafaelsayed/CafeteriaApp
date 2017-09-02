@@ -24,28 +24,28 @@ edit_cafeteria_and_show_and_delete_its_categoriesApp.controller('editCafeteria',
 
   $scope.editCafeteria = function() {
 
-    var x = "";
+    if ($scope.myform.$valid) {
 
-    if ($scope.uploadme.src != '') {
-      x = $scope.uploadme.src.split(',')[1];
-    }
+      var x = "";
 
-    else {
-      x = $scope.imageUrl;
-    }
+      if ($scope.uploadme.src != '') {
+        x = $scope.uploadme.src.split(',')[1];
+      }
 
-    var data = {
-      Name: $scope.name,
-      Id: $scope.cafeteriaId,
-      Image: x
-    };
+      else {
+        x = $scope.imageUrl;
+      }
 
-    if ($scope.name != "") {
+      var data = {
+        Name: $scope.name,
+        Id: $scope.cafeteriaId,
+        Image: x
+      };   
 
       $http.put('/CafeteriaApp.Backend/Requests/Cafeteria.php',data)
       .then(function(response) {
         window.history.back();
-      });
+      });     
 
     }
 

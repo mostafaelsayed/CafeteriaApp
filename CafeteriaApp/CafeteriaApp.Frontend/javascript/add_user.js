@@ -1,4 +1,4 @@
-var add_userApp = angular.module('add_user',['image','ngRoute','location_provider']);
+var add_userApp = angular.module('add_user',['image','ngRoute','location_provider','phone_number','price']);
 
 add_userApp.config(['$routeProvider',function($routeProvider) {
 

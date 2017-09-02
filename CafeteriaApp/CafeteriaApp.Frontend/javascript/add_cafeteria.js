@@ -12,19 +12,19 @@ add_cafeteriaApp.controller('addCafeteria',['$scope','$http',function($scope,$ht
 
   $scope.addCafeteria = function () {
 
-    var data = {
-      Name: $scope.name,
-      Image: $scope.uploadme.src.split(',')[1]
-    };
+    if ($scope.myform.$valid) {
 
-    if ($scope.name != "") {
-      
+      var data = {
+        Name: $scope.name,
+        Image: $scope.uploadme.src.split(',')[1]
+      };
+        
       $http.post('/CafeteriaApp.Backend/Requests/Cafeteria.php',data)
       .then(function(response) {
         document.location = "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php";
       });
 
-    };
+    }
 
   };
 

@@ -38,26 +38,26 @@ edit_menuitemApp.controller('editMenuItem',['$scope','$http','$location',functio
 
   $scope.editMenuItem = function() {
 
-    var x = "";
+    if ($scope.myform.$valid) {
 
-    if ($scope.uploadme.src != '') {
-      x = $scope.uploadme.src.split(',')[1];
-    }
+      var x = "";
 
-    else {
-      x = $scope.imageUrl;
-    }
+      if ($scope.uploadme.src != '') {
+        x = $scope.uploadme.src.split(',')[1];
+      }
 
-    var data = {
-      Name: $scope.name,
-      Price: $scope.price,
-      Description: $scope.description,
-      Id: $scope.menuItemId,
-      Image: x,
-      Visible: $scope.selectedElement.id
-    };
+      else {
+        x = $scope.imageUrl;
+      }
 
-    if ($scope.name != "") {
+      var data = {
+        Name: $scope.name,
+        Price: $scope.price,
+        Description: $scope.description,
+        Id: $scope.menuItemId,
+        Image: x,
+        Visible: $scope.selectedElement.id
+      };
 
       $http.put('/CafeteriaApp.Backend/Requests/MenuItem.php',data)
       .then(function(response) {

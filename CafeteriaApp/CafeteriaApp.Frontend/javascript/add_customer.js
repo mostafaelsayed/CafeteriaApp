@@ -43,14 +43,8 @@ add_userApp.controller('addCustomer',['$scope','addUserService','$http',function
 
 		$http.post('/CafeteriaApp.Backend/Requests/User.php',$scope.userData)
 		.then(function(response) {
-
-			// validate user input first
-			var checkInput = $scope.userData.userName != "" && $scope.userData.firstName != ""
-			&& $scope.userData.lastName != "" && $scope.userData.email != "" && $scope.userData.phoneNumber != ""
-			&& $scope.userData.password != "" && $scope.userData.userName == $scope.userData.email
-			&& $scope.userData.confirmPassword == $scope.userData.password;
 			
-			if (checkInput) {
+			if ($scope.myform.$valid) {
 
 				var dateOfBirth = String($scope.selectedYear) + '-' + String($scope.selectedMonth) + '-'
 				+ String($scope.selectedDay);

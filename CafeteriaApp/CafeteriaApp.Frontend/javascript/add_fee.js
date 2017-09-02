@@ -1,4 +1,4 @@
-var add_feeApp = angular.module('add_fee',[]);
+var add_feeApp = angular.module('add_fee',['price']);
 
 // controller for adding fee
 add_feeApp.controller('addFee',['$scope','$http',function($scope,$http) {
@@ -8,22 +8,20 @@ add_feeApp.controller('addFee',['$scope','$http',function($scope,$http) {
 
   $scope.addFee = function () {
 
-    var data = {
-      Name: $scope.name,
-      Price: $scope.price
-    };
+    if ($scope.myform.$valid) {
 
-    if ($scope.name != "" && $scope.price != "") {
+      var data = {
+        Name: $scope.name,
+        Price: $scope.price
+      };
 
       $http.post('/CafeteriaApp.Backend/Requests/Fee.php',data)
       .then(function(response) {
-
       	console.log(response);
-        window.history.back();
-
+        document.location = "/CafeteriaApp.Frontend/Areas/Admin/AppSettings/Views/show_and_delete_fees.php";
       });
 
-    };
+    }
 
   };
 

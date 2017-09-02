@@ -18,6 +18,8 @@
 
   <script src="/CafeteriaApp.Frontend/javascript/location_provider.js"></script>
 
+  <script src="/CafeteriaApp.Frontend/javascript/phone_number_module.js"></script>
+
   <script src="/CafeteriaApp.Frontend/javascript/edit_user.js"></script>
 
 </head>
@@ -42,7 +44,7 @@
 
           <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="userData.userName" name="userName" required />
 
-          <span ng-show="myform.$submitted && myform.userName.$invalid" id="inputControl">
+          <span ng-show="myform.userName.$touched && myform.userName.$invalid" id="inputControl" ng-cloak>
 
             User Name is Required
 
@@ -56,7 +58,7 @@
 
           <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="userData.firstName" name="firstName" required />
 
-          <span ng-show="myform.$submitted && myform.firstName.$invalid" id="inputControl">
+          <span ng-show="myform.firstName.$touched && myform.firstName.$invalid" id="inputControl" ng-cloak>
 
             First Name is Required
 
@@ -70,7 +72,7 @@
 
           <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="userData.lastName" name="lastName" required />
 
-          <span ng-show="myform.$submitted && myform.lastName.$invalid" id="inputControl">
+          <span ng-show="myform.lastName.$touched && myform.lastName.$invalid" id="inputControl" ng-cloak>
 
             Last Name is Required
 
@@ -82,9 +84,9 @@
 
           <label>Email</label>
 
-          <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="userData.email" name="email" required />
+          <input id="inputField" type="email" class="form-control" autofocus="autofocus" ng-model="userData.email" name="email" required />
 
-          <span ng-show="myform.$submitted && myform.email.$invalid" id="inputControl">
+          <span ng-show="myform.email.$touched && myform.email.$invalid" id="inputControl" ng-cloak>
 
             Email is Required
 
@@ -98,7 +100,7 @@
 
           <input id="inputField" type="text" class="form-control" autofocus="autofocus" check-phone-number ng-model="userData.phoneNumber" name="phoneNumber" required />
 
-          <span ng-show="myform.$submitted && myform.phoneNumber.$error.checkPhoneNumber" id="inputControl">
+          <span ng-show="myform.phoneNumber.$touched && myform.phoneNumber.$error.checkPhoneNumber" id="inputControl" ng-cloak>
 
             Phone Number is invalid.it must be a number of at most 11 digits
 
@@ -106,7 +108,7 @@
 
           </span>
 
-          <span ng-show="myform.$submitted && myform.phoneNumber.$error.numberEmpty" id="inputControl">
+          <span ng-show="myform.phoneNumber.$touched && myform.phoneNumber.$error.numberEmpty" id="inputControl" ng-cloak>
 
             Phone Number is Required
 

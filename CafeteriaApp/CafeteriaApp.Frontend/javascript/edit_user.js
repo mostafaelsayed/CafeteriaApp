@@ -1,4 +1,4 @@
-var edit_userApp = angular.module('edit_user',['image','location_provider']);
+var edit_userApp = angular.module('edit_user',['image','location_provider','phone_number']);
 
 // controller for editing user
 edit_userApp.controller('editUser',['$scope','$http','$location',function($scope,$http,$location) {
@@ -108,11 +108,7 @@ edit_userApp.controller('editUser',['$scope','$http','$location',function($scope
 
   $scope.save = function () {
     
-    var checkInput =  $scope.userData.userName != "" && $scope.userData.firstName != ""
-    && $scope.userData.lastName != "" && $scope.userData.email != ""
-    && $scope.userData.phoneNumber != "";
-    
-    if (checkInput) {
+    if ($scope.myform.$valid) {
 
       var userData = {
         UserName: $scope.userData.userName,

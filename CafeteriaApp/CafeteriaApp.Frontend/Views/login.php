@@ -130,13 +130,15 @@ elseif (isset($_SESSION["userId"] ) && isset($_SESSION["userName"]) && isset($_S
 
     <link rel="stylesheet" href="css/materialize.css">
 
+    <link rel="stylesheet" type="text/css" href="/CafeteriaApp.Frontend/css/login.css">
+
     <script src="js/jquery-3.1.1.min.js"></script>
 
     <script src="js/materialize.min.js"></script>
 
   </head>
 
-  <body style="background-image:url('/CafeteriaApp.Frontend/images/login.jpg')">
+  <body id="loginbody">
 
     <div id="main">
 
@@ -152,13 +154,13 @@ elseif (isset($_SESSION["userId"] ) && isset($_SESSION["userName"]) && isset($_S
 
         <?php echo form_errors($errors); ?>
         
-        <h1 style="font-style: italic;color: white">Login</h1>
+        <h1 style="font-style:italic;color:white">Login</h1>
 
         <form action="login.php" method="post" class="login-box" style="width:30%;margin:auto;text-align:center">
 
           <div class="input-field col s12">
 
-            <label for="email" style="font-size: 25px;color: white">E-mail</label>
+            <label for="email" style="font-size:25px;color:white">E-mail</label>
 
             <input type="email" id="email" name="email" value="<?php echo isset($_SESSION["userName"]) ?  htmlentities($_SESSION["userName"]) :'' ; ?>" />
 
@@ -166,17 +168,17 @@ elseif (isset($_SESSION["userId"] ) && isset($_SESSION["userName"]) && isset($_S
 
           <div class="input-field col s12">
 
-            <label for="password" style="font-size: 25px;color: white">Password</label>
+            <label for="password" style="font-size:25px;color:white">Password</label>
 
-            <input type="password" name="password" style="color: white" />
+            <input type="password" name="password" style="color:white" />
 
           </div>
 
-          <div class="input-field col s12" style="margin-left: 55px">
+          <div class="input-field col s12" style="margin-left:55px">
 
             <input type="checkbox" id="rememberme" name="remember">
 
-            <label for="rememberme" style="color: white">Remeber me</label>
+            <label for="rememberme" style="color:white">Remeber me</label>
 
           </div>
 

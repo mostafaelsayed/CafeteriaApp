@@ -1,6 +1,6 @@
 <?php
 
-  require_once("CafeteriaApp.Backend/functions.php");
+  require_once('CafeteriaApp.Backend/functions.php');
 
   validatePageAccess($conn);
 
@@ -42,7 +42,7 @@
 
         <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="name" name="name" required />
 
-        <span ng-show="myform.$submitted && myform.name.$invalid" id="inputControl" ng-cloak>
+        <span ng-show="myform.name.$touched && myform.name.$invalid" id="inputControl" ng-cloak>
 
           MenuItem Name is Required
 
@@ -56,7 +56,7 @@
 
         <input id="inputField" type="text" class="form-control" ng-model="price" number-check name="price">
 
-        <span ng-show="myform.$submitted && myform.price.$error.numberCheck" id="inputControl" ng-cloak>
+        <span ng-show="myform.price.$touched && myform.price.$error.numberCheck" id="inputControl" ng-cloak>
 
           Price is invalid.it must be a number of at most 9 digits and optinally followed by at most 2 digit
 
@@ -64,7 +64,7 @@
 
         </span>
 
-        <span ng-show="myform.$submitted && myform.price.$error.numberEmpty" id="inputControl" ng-cloak>
+        <span ng-show="myform.price.$touched && myform.price.$error.numberEmpty" id="inputControl" ng-cloak>
 
           Price is Required
 
@@ -78,7 +78,7 @@
 
         <input id="inputField" type="text" class="form-control" ng-model="description" name="description" required />
 
-        <span ng-show="myform.$submitted && myform.description.$invalid" id="inputControl" ng-cloak>
+        <span ng-show="myform.description.$touched && myform.description.$invalid" id="inputControl" ng-cloak>
 
           Description is Required
 
@@ -110,7 +110,7 @@
 
       <div class="form-group">
 
-        <button ng-click="addMenuItem()" ng-disabled="myform.$invalid" class="btn btn-primary">Save</button>
+        <input ng-click="addMenuItem()" value="Save" type="submit" class="btn btn-primary">
 
       </div>
 

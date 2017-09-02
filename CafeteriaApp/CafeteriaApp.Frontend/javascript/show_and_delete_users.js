@@ -6,8 +6,12 @@ show_and_delete_usersApp.controller('showAndDeleteUsers',['$scope','$http','Moda
   $scope.show = function() {
 
     ModalService.showModal({
-      templateUrl: 'modal.html',
-      controller: "ModalController"
+      templateUrl: '/CafeteriaApp.Frontend/Templates/Views/modal.html',
+      controller: "ModalController",
+      inputs: {
+        name: "user"
+      }
+      
     }).then(function(modal) {
 
       modal.element.modal();

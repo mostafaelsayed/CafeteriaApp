@@ -13,13 +13,13 @@ add_categoryApp.controller('addCategory',['$scope','$http','$location',function(
 
   $scope.addCategory = function () {
 
-    var data = {
-      Name: $scope.name,
-      CafeteriaId: $scope.cafeteriaId,
-      Image: $scope.uploadme.src.split(',')[1]
-    };
+    if ($scope.myform.$valid) {
 
-    if ($scope.name != "" && $scope.cafeteriaId != "") {
+      var data = {
+        Name: $scope.name,
+        CafeteriaId: $scope.cafeteriaId,
+        Image: $scope.uploadme.src.split(',')[1]
+      };
 
       $http.post('/CafeteriaApp.Backend/Requests/Category.php',data)
       .then(function(response) {

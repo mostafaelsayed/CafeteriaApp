@@ -4,22 +4,26 @@ show_and_delete_feesApp.controller('showAndDeleteFees',['$scope','$http','ModalS
 
 	$scope.show = function() {
 
-    	ModalService.showModal({
-      		templateUrl: 'modal.html',
-      		controller: "ModalController"
-    	}).then(function(modal) {
+    ModalService.showModal({
+      templateUrl: '/CafeteriaApp.Frontend/Templates/Views/modal.html',
+      controller: "ModalController",
+      inputs: {
+        name: "fee"
+      }
 
-      		modal.element.modal();
+  	}).then(function(modal) {
 
-      		modal.close.then(function(result) {
-        		if (result == "Yes") {
-          		$scope.delete();
-        		}
-      		});
+    	modal.element.modal();
 
+    	modal.close.then(function(result) {
+      	if (result == "Yes") {
+        	$scope.delete();
+      	}
     	});
 
-  	};
+  	});
+
+  };
 
 	$scope.getFees = function() {
 

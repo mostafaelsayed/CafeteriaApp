@@ -25,30 +25,30 @@ edit_category_and_show_and_delete_its_menuitemsApp.controller('editCategory',['$
 
   $scope.editCategory = function() {
 
-    var x = "";
+    if ($scope.myform.$valid) {
 
-    if ($scope.uploadme.src != '') {
-      x = $scope.uploadme.src.split(',')[1];
-    }
+      var x = "";
 
-    else {
-      x = $scope.imageUrl;
-    }
+      if ($scope.uploadme.src != '') {
+        x = $scope.uploadme.src.split(',')[1];
+      }
 
-    var data = {
-      Name: $scope.name,
-      Id: $scope.categoryId,
-      Image: x
-    };
+      else {
+        x = $scope.imageUrl;
+      }
 
-    if ($scope.name != "") {
+      var data = {
+        Name: $scope.name,
+        Id: $scope.categoryId,
+        Image: x
+      };
 
       $http.put('/CafeteriaApp.Backend/Requests/Category.php',data)
       .then(function(response) {
         window.history.back();
       });
 
-    };
+    }
 
   };
 

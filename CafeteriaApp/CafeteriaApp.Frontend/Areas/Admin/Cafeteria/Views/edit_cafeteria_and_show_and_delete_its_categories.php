@@ -46,7 +46,7 @@
 
           <input id="inputField" type="text" class="form-control" ng-model="name" autofocus="autofocus" name="name" required />
 
-          <span ng-show="myform.$submitted && myform.name.$invalid && myform.name.$touched" id="inputControl" ng-cloak>
+          <span ng-show="myform.name.$touched && myform.name.$invalid" id="inputControl" ng-cloak>
 
             Cafeteria Name is Required
 
@@ -90,7 +90,7 @@
 
         <div class="form-group">
 
-          <input type = "submit" value = "save" class="btn btn-primary" ng-click="editCafeteria()">
+          <input type="submit" value="save" class="btn btn-primary" ng-click="editCafeteria()">
 
         </div>
 

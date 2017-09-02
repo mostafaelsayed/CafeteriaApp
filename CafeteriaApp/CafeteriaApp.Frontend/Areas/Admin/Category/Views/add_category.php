@@ -40,7 +40,7 @@
 
         <input id="inputField" type="text" class="form-control" ng-model="name" autofocus="autofocus" name="name" required />
 
-        <span ng-show="myform.$submitted && myform.name.$invalid" id="inputControl" ng-cloak>
+        <span ng-show="myform.name.$touched && myform.name.$invalid" id="inputControl" ng-cloak>
 
           Category Name is Required
 

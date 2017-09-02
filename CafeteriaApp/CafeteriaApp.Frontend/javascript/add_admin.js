@@ -15,14 +15,7 @@ add_userApp.controller('addAdmin',['$scope','$http','addUserService',function($s
 		$http.post('/CafeteriaApp.Backend/Requests/User.php',$scope.userData)
 		.then(function(response) {
 
-			// validate user input first
-			var checkInput = $scope.userData.userName != "" && $scope.userData.firstName != ""
-			&& $scope.userData.lastName != "" && $scope.userData.email != ""
-			&& $scope.userData.phoneNumber != "" && $scope.userData.password != ""
-			&& $scope.userData.userName == $scope.userData.email
-			&& $scope.userData.confirmPassword == $scope.userData.password;
-
-			if (checkInput) {
+			if ($scope.myform.$valid) {
 
 				var adminData = {
 					UserId: parseInt(response.data)
