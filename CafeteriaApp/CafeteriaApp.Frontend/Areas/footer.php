@@ -1,7 +1,6 @@
 	<link rel="stylesheet" type="text/css" href="/CafeteriaApp.Frontend/css/footer.css">
 
 
-
 				<!-- Advertisments -->
 <div id="ads"  >
 	<img style="width:200px;height:200px;" src="/CafeteriaApp.Frontend/footerIcons/hotOffer.jpg">
@@ -9,11 +8,11 @@
 </div>
 
 				<!-- feedback form -->
+<?php $x = rand(0,20);$y = rand(0,20);?>
+<div ng-controller="feedback" class="background" ng-init="result=<?php echo ($y+$x); ?>">
 
-<div ng-controller="feedback" class="background" onclick="hideForm()">
-
-<div id="feedbackForm"> 
-<form method="post" action="feedback form.php">
+	<div id="feedbackForm"> 
+	<form method="post" action="feedback form.php">
 
 	<div class="entry">
 	<label for="name">Name:</label>
@@ -32,11 +31,11 @@
 
 	<div class="entry"> 
 	<label for="about">About:</label>
-	<select id="about" ng-model="selectedAbout" ng-options="a for a in abouts" ></select> 
+	<select id="about" ng-model="selectedAbout" ng-options="a.Name for a in abouts" ></select> 
 	</div>
 	
 	<div class="entry">
-	<h4 style="margin: 0px;padding-left: 50px;"> <?php $x = rand(0,20);echo $x ; ?>+<?php $y = rand(0,20); echo $y ;?> =</h4>
+	<h4 style="margin: 0px;padding-left: 50px;color: red;"> <?php echo $x ; ?>+<?php  echo $y ;?> =</h4>
 	<label for="check" style="float:left;">	Answer:</label>
 	<input type="text" id="check" name="check" ng-model="answer" required>
 	</div>
@@ -46,7 +45,12 @@
 	<textarea id="message" ng-model="message" required></textarea>
 	</div>
 
-	<input ng-click="addFeedback(name,mail,phone,selectedAbout,message)" type="submit" id="submitbtn" value="Submit" name="submit" style="height: 30px;width: 100px;color:white;background-color: #7FC27F;font-weight: bold;margin-left: 30px; ">
+	<input ng-click="addFeedback(name,mail,phone,selectedAbout,message,answer)" type="submit" id="submitbtn" value="Submit" name="submit" style="height: 30px;width: 100px;color:white;background-color: #7FC27F;font-weight: bold;margin-left: 30px; ">
+	<h4 style="color: yellow;" ng-cloak ng-show="success">Thanks, your feedback has submitted !</h4>
+	<h4  style="color: red;"  ng-cloak ng-show="failure">Sorry, we couldn't get your feedback .try later.</h4>
+	<h4  style="color: red;"  ng-cloak ng-show="SummationWrong">Summation is wrong, try again.</h4>
+
+
 </form>
 
 </div>
@@ -104,58 +108,4 @@
 
 </html>
 
-
-
-<script type="text/javascript">
-	function displayForm() {
-			//$("#feedbackForm").css({ display: 'block' });
-			$(".background").fadeToggle("slow");
-			 $(".container").css({ 'z-index': '-1'});
-	}
-
-	function hideForm(){
-		$(".background").css({'display':'none'})
-
-	}
-
-
-layoutApp.controller( 'feedback'  ,function ($scope,$http) {
-
-	$scope.getFeedbackAbouts=function () {
-	$http.get('/CafeteriaApp.Backend/Requests/FeedbackAbouts.php')
-	.then(function (response) {
-      $scope.abouts = response.data;
-    });
-
-	}
-
-$scope.addFeedback = function(name,mail,phone,selectedAbout,message) {
-	if(answer === <?php echo $y + $x; ?>){
-	var data={ Name: name,
-		Mail: mail,
-		 Phone:phone ,
-		SelectedAbout: selectedAbout,
-		Message: message
-		};
-
-      $http.post('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
-      .then(function(response) {
-        $scope.response = response.data;
-        //$scope.togglePopup('Favorite Item added successfully to the order removed !');
-        //$scope.getOrderItems();
-      });
-  	}
-      else{
-
-      	//alertifyerror() 
-      }
-    }
-  
-
-
-$scope.getFeedbackAbouts();
-
-
-});
-
-</script>
+   <script src="/CafeteriaApp.Frontend/javascript/feedback.js" ></script>

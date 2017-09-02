@@ -28,7 +28,6 @@
     <script src="/CafeteriaApp.Frontend/javascript/myapp.js"></script>
     <script src= "/CafeteriaApp.Frontend/Views/register.js"></script>
     <script src="/CafeteriaApp.Frontend/javascript/alertify.min.js"></script>
-
   </head>
 
   <body ng-app="register" style="background-image:url('/CafeteriaApp.Frontend/images/register5.jpg');background-repeat:  no-repeat ; background-size:cover;">

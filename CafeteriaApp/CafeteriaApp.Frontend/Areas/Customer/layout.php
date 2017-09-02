@@ -67,6 +67,7 @@
       <script src="/CafeteriaApp.Frontend/javascript/location_provider.js"></script>
       <!-- Latest compiled and minified JavaScript -->
       <script src="/CafeteriaApp.Frontend/javascript/bootstrap-select.min.js"></script>
+      
     </head>
     <body style="background-image:url('/CafeteriaApp.Frontend/images/customer background image4.jpg')" ng-app="layout_app"
     ng-init="orderId=<?php echo $orderId ;?>;">
@@ -84,13 +85,9 @@
 
             <div class="navbar-header">
               <button class="navbar-toggle" data-toggle="collapse" data-target="#optionsNavbar" id="mybutton" style="float: left">
-
                 <span class="icon-bar"></span>
-
                 <span class="icon-bar"></span>
-
                 <span class="icon-bar"></span>
-
               </button>
 
             </div>

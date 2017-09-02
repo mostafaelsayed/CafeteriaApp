@@ -89,6 +89,8 @@ height: 500px;
 margin:auto;
 background-color: #233345;
 margin-top: 30px;
+border-radius: 10px;
+
 }
 
 #feedbackForm form{ 
@@ -101,7 +103,7 @@ width: 300px;
 text-align:center;
 border-radius: 8px;
 width: 200px;
-height: 17px;
+height: 20px;
 /*margin: 10px 0px 10px 70px ;*/
 }
 

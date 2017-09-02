@@ -121,6 +121,10 @@ layoutApp.controller('Language_Order',['$rootScope','$scope','$http','Order_Info
 
 $(document).ready(function () {
 
+      if($(window).width()<768)
+      {
+        $('#optionsNavbar').addClass("collapse");
+      }
     // ANIMATEDLY DISPLAY THE NOTIFICATION COUNTER.
     // $('#noti_Counter')
     //     .css({ opacity: 0 })

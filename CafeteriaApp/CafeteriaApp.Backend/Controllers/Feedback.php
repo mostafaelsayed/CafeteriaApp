@@ -28,11 +28,41 @@ require_once("CafeteriaApp.Backend/Controllers/Dates.php");
 }
 
 
+function checkTodaysFeedbackForMailOrPhone($conn,$phone,$mail){
+
+if (!isset($phone)||!isset($mail))
+  {    
+    return;
+  }
+  else
+  {
+    $DateId= getCurrentDateId($conn);
+    $sql = "select count(*) from VisitorFeedback where DateId ='".$DateId."' and Email='".$mail."' or DateId ='".$DateId."' and Phone='".$phone."' ";
+      $result = $conn->query($sql);
+    if ($result)
+    {
+      $feedbacks = mysqli_fetch_array($result, MYSQLI_NUM);
+      mysqli_free_result($result);
+        return $feedbacks[0]>0? true:false;
+    }
+    else
+    { //server
+      echo "Error retrieving Feedbacks: " . $conn->error;//developer
+    }
+
+  }
+
+}
+
+
 function addVisitorFeedback($conn,$name,$phone,$mail,$message,$aboutId)
 {
   if (!isset($name)||!isset($phone)||!isset($mail)||!isset($message)||!isset($aboutId))
   {    //echo "Error: Comment Details is not set";
     return;
+  }
+  elseif (checkTodaysFeedbackForMailOrPhone($conn,$phone,$mail)) {//for good user
+    return "Sorry,we take only one feedback per day !";
   }
   else
   {
