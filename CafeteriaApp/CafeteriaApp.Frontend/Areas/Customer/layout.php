@@ -118,7 +118,7 @@
 
                       <div    class="dropdown-menu" style="left:-70px;padding:5px;width:300px;background-color:#FFC806;">
                     
-                   <?php  echo $ul; ?>
+                   <?php  echo isset($ul)? $ul: "<h4>No Notifications</h4>"; ?>
                        
                       </div>
 
