@@ -34,7 +34,7 @@ registerApp.controller('Register',['$scope','$http',function($scope,$http) {
   };
 
   $scope.registerfn = function () {
-  console.log(122);
+ if ($scope.myform.$valid) {
   	$scope.data = { // date need to be updated also
       userName: $scope.userName,
       firstName: $scope.firstName,
@@ -51,7 +51,7 @@ registerApp.controller('Register',['$scope','$http',function($scope,$http) {
     .then(function(response) {
        document.location = response.data;
     });
-
+    }
   };
 
   $scope.mylabel = angular.element("#mylabel");
@@ -68,7 +68,7 @@ registerApp.controller('Register',['$scope','$http',function($scope,$http) {
   $scope.cancel = function() {
 
     $scope.userName = $scope.firstName = $scope.lastName = $scope.phone = $scope.email
-    = $scope.uploadme = $scope.gender = $scope.DOB = $scope.password = null;
+    = $scope.uploadme = $scope.gender = $scope.DOB = $scope.password = "";
 
   };
 

@@ -25,10 +25,20 @@
     <script src="/CafeteriaApp.Frontend/javascript/ui-bootstrap-2.5.0.js"></script>
     <script src="/CafeteriaApp.Frontend/javascript/ui-bootstrap-tpls-2.5.0.js"></script>
     <script src="/CafeteriaApp.Frontend/javascript/angular-modal-service.js"></script>
-    <script src="/CafeteriaApp.Frontend/javascript/myapp.js"></script>
+    <!-- <script src="/CafeteriaApp.Frontend/javascript/myapp.js"></script> -->
     <script src= "/CafeteriaApp.Frontend/Views/register.js"></script>
     <script src="/CafeteriaApp.Frontend/javascript/alertify.min.js"></script>
   </head>
+
+<style type="text/css">
+  *{
+    color: violet;
+  }
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+</style>
 
   <body ng-app="register" >
 
@@ -48,7 +58,7 @@
 
       </div>
       
-      <h2 style="text-align: center;color: white"> New User </h2>
+      <h2 style="text-align: center;"> New User </h2>
 
       <div class="row" ng-controller="Register">  
 
@@ -60,11 +70,11 @@
 
             <label for="un">User Name</label>
 
-            <input id="un" type="text" name="userName" ng-model="userName" style="text-align: center;color: white" ng-maxlength="30" ng-required ="dddd"/>
+            <input id="un" type="text" name="userName" ng-model="userName" style="text-align: center;" ng-maxlength="30" ng-required />
 
-            <span ng-show=" myform.$submitted && myform.userName.$invalid">User Name is required.</span>
+            <span ng-cloak ng-show=" myform.name.$touched  && myform.userName.$invalid">User Name is required.</span>
 
-            <span ng-show=" myform.userName.$invalid">User Name must be less than 30 character or numbers .</span>
+            <span ng-cloak ng-show=" myform.name.$touched &&myform.userName.$invalid">User Name must be less than 30 character or numbers .</span>
 
           </div>
 
@@ -72,9 +82,9 @@
 
             <label for="ps">Password</label>
 
-            <input id="ps" type="password" name="password" ng-model="password" style="text-align: center;color: white" required/>
+            <input id="ps" type="password" name="password" ng-model="password" style="text-align: center;" required/>
 
-            <span ng-show=" myform.$submitted && myform.password.$invalid">Password is required.</span>
+            <span ng-cloak ng-show=" myform.name.$touched  && myform.password.$invalid">Password is required.</span>
 
           </div>
 
@@ -82,9 +92,9 @@
 
             <label for="fn">First Name</label>
 
-            <input id="fn" type="text" name="firstName" ng-model="firstName" style="text-align: center;color: white" required/>
+            <input id="fn" type="text" name="firstName" ng-model="firstName" style="text-align: center;" required/>
 
-            <span ng-show="myform.$submitted && myform.firstName.$invalid">First Name is required.</span>
+            <span ng-cloak ng-show="myform.name.$touched  && myform.firstName.$invalid">First Name is required.</span>
 
           </div>
 
@@ -92,9 +102,9 @@
 
             <label for="ln">Last Name</label>
 
-            <input id="ln" type="text" name="lastName" ng-model="lastName" style="text-align: center;color: white" required/>
+            <input id="ln" type="text" name="lastName" ng-model="lastName" style="text-align: center;" required/>
 
-            <span ng-show=" myform.$submitted && myform.lastName.$invalid" >Last Name is required.</span>
+            <span ng-cloak ng-show=" myform.name.$touched  && myform.lastName.$invalid" >Last Name is required.</span>
 
             <div><br><br></div>
 
@@ -104,21 +114,22 @@
 
           <br>
 
-          <input class="with-gap" name="gender" ng-model="gender" type="radio" id="male" value="1" />
+          <input class="with-gap" name="gender" ng-model="gender" type="radio" id="male" value="1" required />
 
           <label for="male">Male</label>
 
           <br>
 
-          <input class="with-gap" name="gender" ng-model="gender" type="radio" id="female" value="2" />
+          <input class="with-gap" name="gender" ng-model="gender" type="radio" id="female" value="2" required/>
 
           <label for="female" style="margin-right: -16px">Female</label>
 
           <br>
 
-          <input class="with-gap" name="gender" ng-model="gender" type="radio" id="other" value="3" />
+          <input class="with-gap" name="gender" ng-model="gender" type="radio" id="other" value="3" required />
 
           <label for="other" style="margin-right: -5px">Other</label>
+            <h3 ng-cloak ng-show="  myform.gender.$touched  && myform.gender.$invalid" >Gender is required.</h3>
 
           <br><br>
 
@@ -126,9 +137,9 @@
 
             <label for="em">E-mail</label>
 
-            <input id="em" type="text" name="email" ng-model="email" style="text-align: center;color: white" required/>
+            <input id="em" type="text" name="email" ng-model="email" style="text-align: center;" required/>
 
-            <span id="emailConfirm" ng-show=" myform.$submitted && myform.email.$invalid" >Email is required.</span>
+            <span id="emailConfirm" ng-cloak ng-show=" myform.name.$touched  && myform.email.$invalid" >Email is required.</span>
 
           </div>
 
@@ -136,9 +147,9 @@
 
             <label for="pn">Phone Number</label>
 
-            <input id="pn" type="text" name="phone" ng-model="phone" style="text-align: center;color: white" required />
+            <input id="pn" type="text" name="phone" ng-model="phone" style="text-align: center;" required />
 
-            <span ng-show=" myform.$submitted && myform.phone.$invalid" >Phone Number is required.</span>
+            <span ng-cloak ng-show=" myform.name.$touched  && myform.phone.$invalid" >Phone Number is required.</span>
 
           </div>
 
@@ -146,9 +157,9 @@
 
             <!-- <i class="material-icons prefix">today</i> -->
 
-            <input id="DOB" name="DOB" type="date" class="datepicker" style="color: white" ng-model="DOB" required />
+            <input id="DOB" name="DOB" type="date" class="datepicker"  ng-model="DOB" required />
 
-            <span ng-show="myform.$submitted && myform.DOB.$invalid">Date of Birth is required.</span>
+            <span ng-cloak ng-show="myform.name.$touched  && myform.DOB.$invalid">Date of Birth is required.</span>
 
             <label for="DOB">Date of Birth</label>
 
@@ -180,7 +191,7 @@
        
           <input id="save" type="submit" class="btn btn-primary" name="submit" value="Next" ng-click="registerfn()" />
 
-          <input type="submit" name="cancel" class="btn btn-primary" value="Cancel" id="cancel" ng-click="cancel()"/>
+          <input type="submit" name="cancel" class="btn btn-primary" value="Reset" id="cancel" ng-click="cancel()"/>
           
         </form>
 

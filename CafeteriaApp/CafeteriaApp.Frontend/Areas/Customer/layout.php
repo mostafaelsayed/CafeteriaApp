@@ -86,24 +86,13 @@
 
                 </li>
 
-                <li id="notification" title="Show Notifications" onclick="showNotifications()">
-
+              <li id="notification" title="Show Notifications" onclick="showNotifications()">
+              <?php  $length = count($_SESSION["notifications"]); ?>
+                   
+                    <div class="btn-group">
+                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 90px; height:50px;padding:0px;background-color: transparent;border-color: transparent;">
                     <?php
-
-                      $length = 0;
-                      if(!empty($_SESSION["notifications"]) && is_array($_SESSION["notifications"]))
-                      { 
-                        $ul="<ul style='color:blue;'>";
-                        foreach ($_SESSION["notifications"] as  $value)
-                        {
-                          $length++;
-                          $ul.= "<li>".$value[0]."</li>";
-                        }
-
-                        $ul.="</ul>";
-                        $_SESSION["notifications"] =  $ul;
-                      }
-                      if ($length > 0)
+                       if ($length > 0)
                       {
                         echo " <img  src='/CafeteriaApp.Frontend/alarm-1.png' width='50' height='50' >";
                         echo "<label id='notifyLabel' style='color:blue;font-size:2em;'>{$length}</label>";
@@ -113,7 +102,28 @@
                         echo " <img  src='/CafeteriaApp.Frontend/alarm.png' width='55' height='55' >";
                       }
 
-                    ?>
+
+                       if(!empty($_SESSION["notifications"]) && is_array($_SESSION["notifications"]))
+                      { 
+                        $ul="<ul style='color:blue;'>";
+                        foreach ($_SESSION["notifications"] as  $value)
+                        {
+                          $ul.= "<li><h4>".$value[0]."</h4></li>";
+                        }
+                        $ul.="</ul>";
+                      }
+
+                        ?>
+                    </button>
+
+                      <div    class="dropdown-menu" style="left:-70px;padding:5px;width:300px;background-color:#FFC806;">
+                    
+                   <?php  echo $ul; ?>
+                       
+                      </div>
+
+                    </div>
+                   
 
                   </li>
 
@@ -257,32 +267,22 @@
 
       </ul>
 
-
         </div>
             </div>
-
-
-            
             </nav>
 
       
+<script type="text/javascript">
+  
+function showNotifications() {
 
+  $('#notifyLabel').html('');
 
-            <!-- <div id="right_ul" style="margin-top: 40px"> -->
+  $("#notifyme").slideToggle("slow");
 
-                  
-                <!-- </div> -->
-            <!-- <div> -->
-            <!-- <nav class="navbar navbar-default navbar-fixed-top "> -->
-              
+}
 
-              <!-- </nav> -->
-
-            
-
-         
-
-        
+</script>
 
 
     <script src="/CafeteriaApp.Frontend/javascript/layout.js"></script>

@@ -20,14 +20,6 @@
 
 <div class="container" style="position: static">
 
-  <div style="display:none;margin-bottom:50px;margin-top:50px" id="notifyme">
-
-    <h1 style="color: blue">Notifications :</h1> 
-
-    <?php echo !empty( $_SESSION["notifications"])? $_SESSION["notifications"] : "<h2 style='color: blue'>Nothing has been changed !</h2>" ;?>
-
-  </div>
-
   <h1 class="page-header" id="header">Our Cafeterias</h1>
 
   <div ng-controller="cafeterias">
