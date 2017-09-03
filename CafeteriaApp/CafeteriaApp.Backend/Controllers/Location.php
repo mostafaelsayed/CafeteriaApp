@@ -88,7 +88,7 @@ function getUserLocations($conn,$userId)
 	if ($result = $conn->query($sql))
 	{
 		$userLocation = mysqli_fetch_all($result);
-		var_dump($userLocation);
+		//var_dump($userLocation);
 		return $userLocation;
 	}
 	else

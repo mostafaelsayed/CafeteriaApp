@@ -11,10 +11,6 @@ if ($_SERVER['REQUEST_METHOD']=="GET")
   {
     checkResult(getUserLocations($conn,$_GET["userId"]));
   }
-  // else
-  // {
-  //   checkResult(getCafeterias($conn));
-  // }
 }
 
 if ($_SERVER['REQUEST_METHOD']=="POST")

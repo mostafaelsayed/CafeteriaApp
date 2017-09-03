@@ -2,6 +2,9 @@
 
 require_once('CafeteriaApp.Backend/session.php');
 require_once('CafeteriaApp.Backend/connection.php');
+require_once("CafeteriaApp.Backend/Controllers/Dates.php");
+
+require_once("CafeteriaApp.Backend/Controllers/Times.php");
 require_once('PayPal/start.php');
 
 use PayPal\Api\Amount;
@@ -329,7 +332,9 @@ function CheckOutOrder( $conn,$orderId, $deliveryTimeId,$deliveryPlace, $payment
     if ($stmt->execute()===TRUE)
     {
       //open a new order
-      $_SESSION["orderId"] = addOrder($conn,$deliveryDateId,$deliveryTimeId,'',1,1, $_SESSION["userId"], 0);
+      $deliveryTimeId = getCurrentTimeId($conn);
+      $deliveryDateId = getCurrentDateId($conn);
+      $_SESSION["orderId"] = addOrder($conn,$deliveryDateId,$deliveryTimeId,'',1,1, $_SESSION["userId"],0,0);
       return true;
 
       //return mysqli_insert_id($conn);

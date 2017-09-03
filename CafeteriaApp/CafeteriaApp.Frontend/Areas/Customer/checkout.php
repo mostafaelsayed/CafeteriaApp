@@ -4,7 +4,7 @@
 
   validatePageAccess($conn);
 
-  include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
+  require_once('CafeteriaApp.Frontend/Areas/Customer/layout.php');
 
 ?>
 
@@ -44,7 +44,7 @@
 
       <div>
 
-        <input type="text" name="recepientName" style="text-align: center" ng-model="recepientName" required />
+        <input type="text" name="recepientName" style="text-align:center" ng-model="recepientName" required />
 
         <span ng-show=" myForm.$submitted  && myForm.recepientName.$invalid" ng-cloak>The name is required.</span>
 
@@ -56,9 +56,9 @@
 
       <div>
 
-        <input type="text" name="phone" ng-model="phone" style="text-align: center" ng-disabled="phoneDisabled" required />
+        <input type="text" name="phone" ng-model="phone" style="text-align:center" ng-disabled="phoneDisabled" required />
 
-        <span style="position: absolute;margin-top: 3px">
+        <span style="position:absolute;margin-top:3px">
 
           <input type="checkbox" name="phonecheck" ng-model="phoneDisabled">
 
@@ -92,7 +92,7 @@
 
         <div>
 
-          <input type="text" name="deliveryFees" style="text-align: center" ng-model="deliveryFees" disabled />
+          <input type="text" name="deliveryFees" style="text-align:center" ng-model="deliveryFees" disabled />
 
           <br><br><br>
 
@@ -104,7 +104,7 @@
 
       <div>
 
-        <input type="text" name="orderStatus" style="text-align: center" value="Open" disabled />
+        <input type="text" name="orderStatus" style="text-align:center" value="Open" disabled />
 
         <br><br><br>
 
@@ -116,7 +116,7 @@
 
         <input type="text" name="discount" ng-model="discount" disabled />
 
-        <span style="position: absolute;margin-top: 3px">%</span>
+        <span style="position:absolute;margin-top:3px">%</span>
 
         <br><br><br>
 
@@ -161,7 +161,7 @@
 
         <br>
 
-        <a ng-click="currentLocation()" style="display: block;margin: auto;cursor: pointer">Find My Location</a>
+        <a ng-click="currentLocation()" style="display:block;margin:auto;cursor:pointer">Find My Location</a>
 
         <br>
 
@@ -169,13 +169,14 @@
       
     </div>
 
-    <input type="submit" name="next" value="Next" ng-disabled="myForm.$invalid" />
+    <input type="submit" class="btn btn-primary" name="next" value="Next" />
+    &nbsp;&nbsp;&nbsp;
+
+    <span><input type="submit" class="btn btn-primary" name="cancel" value="Discard Order" ng-click="discardOrder()" /></span>
 
     <br><br>
 
   </form>
-
-  <input type="submit" name="cancel" value="Discard Order" ng-click="discardOrder()" />
 
   <br>
 
