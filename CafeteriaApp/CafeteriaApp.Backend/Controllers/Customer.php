@@ -142,7 +142,8 @@ function addCustomer($conn,$cred,$dob,$userId,$genderId) {
   $GenderId=$genderId;
   //$conn->query($sql);
   if ($stmt->execute()===TRUE) {
-    return true;
+   $customer_id =  mysqli_insert_id($conn);
+      return $customer_id;
   }
   else {
     return false;

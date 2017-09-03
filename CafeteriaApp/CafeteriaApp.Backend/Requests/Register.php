@@ -5,6 +5,7 @@ require_once( 'CafeteriaApp.Backend/Controllers/Role.php');
 require_once( 'CafeteriaApp.Backend/Controllers/User.php');
 require_once( 'CafeteriaApp.Backend/Controllers/Customer.php');
 require_once("CafeteriaApp.Backend/connection.php");
+require 'CafeteriaApp.Frontend/Views/PHPMailer/PHPMailerAutoload.php';
 
 
 
@@ -55,7 +56,7 @@ if (!empty(test_inputs($conn,$required_fields)))
     $email=  $data->email;//$_POST["email"];
     $image= $data->image ;//$_POST["image"];
     $dob= $data->dob ;
-    $gender= $data->gender ;
+    $genderId= $data->gender ;
     $password= $data->password ;//$_POST["password"];
 
 
@@ -75,12 +76,42 @@ if ($image != null)
 
   }
       //get customer role id from db 
-          $roleId = getRoleIdByName($conn,'Customer');
+  $roleId = getRoleIdByName($conn,'Customer');
+
   $localeId=1;
+
   $user_id = addUser($conn,$userName,$firstName,$lastName,$Image,$email,$phoneNumber,$password ,$roleId, $localeId);
-  $result = addCustomer($conn,0.0,$dob,$user_id,$gender);
-    if($result){
-         echo "/CafeteriaApp.Frontend/Views/indexs.php";// confirm  mail by sending a message and check link
+
+  $customer_id = addCustomer($conn,0.0,$dob,$user_id,$genderId);
+
+    if($customer_id){
+
+      $acc=hash ("sha256",$user_id,false);
+      $hashKey=hash ("sha256",$customer_id.$dob.$user_id.$genderId,false);
+       //send confirm mail
+      $mail =new PHPMailer();
+      $mail->isSMTP();                                      // Set mailer to use SMTP
+      $mail->Host = "smtp.gmail.com";  // Specify main and backup SMTP servers
+      $mail->SMTPAuth = true;                               // Enable SMTP authentication
+      $mail->Username = 'mmhnabawy@gmail.com';                 // SMTP username
+      $mail->Password = 'mmhnabawy';                           // SMTP password
+      $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+      $mail->Port = 587;                                    // TCP port to connect to
+      $mail->setFrom ('mm_h434@yahoo.com', 'Cafetria App');
+      $mail->addAddress($email,"");
+      $mail->Subject = "Cafetria App Info Confirm";
+      $mail->Body = "thank you for joining us, click <a href='localhost/CafeteriaApp.Frontend/Views/infoConfirm?acc={$acc}&hashKey={$hashKey}'>here</a> to activate your account .";
+      
+      $result =$mail->Send();
+
+      if($result)
+      {
+         echo "/CafeteriaApp.Frontend/Views/confirm.php";// confirm  mail by sending a message and check link
+      }
+      else
+      {    echo "/CafeteriaApp.Frontend/Views/registerfailed.php";
+     
+      }
              //echo "Customer User Added successfully !";
               }
       else{

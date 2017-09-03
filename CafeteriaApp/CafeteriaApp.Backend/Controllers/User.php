@@ -165,6 +165,30 @@ function updateUserPasswordById($conn,$password ,$id)
   }
 }
 
+
+function activateUser($conn,$id)
+{
+   if ( !isset($id)) 
+  {
+    return;
+  }
+  else
+  {
+    $sql = "update User set Confirmed = True where Id = (?)"; 
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i",$Id);
+    $Id=$id;
+    if ($stmt->execute()===TRUE)
+    {
+      return true;
+    }
+    else
+    {
+      echo "Error: ".$conn->error;
+    }
+  }
+}
+
 function checkExistingUserName($conn,$userName ,$register_edit)
 {
   $UserName=mysqli_real_escape_string($conn,$userName);

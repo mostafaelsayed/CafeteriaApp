@@ -34,7 +34,7 @@ registerApp.controller('Register',['$scope','$http',function($scope,$http) {
   };
 
   $scope.registerfn = function () {
-
+  console.log(122);
   	$scope.data = { // date need to be updated also
       userName: $scope.userName,
       firstName: $scope.firstName,

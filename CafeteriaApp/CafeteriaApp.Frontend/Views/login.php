@@ -47,13 +47,13 @@ if (isset($_POST['submit']))
 			$_SESSION["userName"] = $found_user["UserName"];
       $_SESSION["roleId"] = $found_user["RoleId"];
       $_SESSION["langId"] = 1;// if not found
-
+      $_SESSION["Confirmed"] = $found_user["Confirmed"];
       //get customer id by user id from db 
       if(! $_SESSION["orderId"] = getOpenOrderByUserId($conn)["Id"])//if not found open order>>open a new one
       {
         $deliveryTimeId = getCurrentTimeId($conn);
         $deliveryDateId = getCurrentDateId($conn);
-        $_SESSION["orderId"] = addOrder($conn,$deliveryDateId,$deliveryTimeId,'',1,1, $_SESSION["userId"], 0);
+        $_SESSION["orderId"] = addOrder($conn,$deliveryDateId,$deliveryTimeId,'',1,1, $_SESSION["userId"],0,0);
       }
      
       //get notification messages

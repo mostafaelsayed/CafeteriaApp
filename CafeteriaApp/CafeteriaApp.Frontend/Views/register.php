@@ -30,7 +30,7 @@
     <script src="/CafeteriaApp.Frontend/javascript/alertify.min.js"></script>
   </head>
 
-  <body ng-app="register" style="background-image:url('/CafeteriaApp.Frontend/images/register5.jpg');background-repeat:  no-repeat ; background-size:cover;">
+  <body ng-app="register" >
 
     <div id="main">
 
@@ -54,7 +54,7 @@
 
         <!-- enctype="multipart/form-data" -->
 
-        <form novalidate role="form" name="myform" style="width:40%;margin:auto;text-align:center">
+      <form novalidate role="form" name="myform" style="width:40%;margin:auto;text-align:center">
    
           <div class="input-field col s12">
 
