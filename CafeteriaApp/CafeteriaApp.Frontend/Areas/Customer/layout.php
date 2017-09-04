@@ -251,7 +251,7 @@
                               <div>
                         <a class="dropdown_item" href="/CafeteriaApp.Frontend/Areas/Customer/favorite items.php">My Favorites</a>
 
-                        <a class="dropdown_item" href="#">Another action</a>
+                        <a class="dropdown_item" href="#">Change Password</a>
 
                         <a class="dropdown_item" href="#">Something else here</a>
                           </div>

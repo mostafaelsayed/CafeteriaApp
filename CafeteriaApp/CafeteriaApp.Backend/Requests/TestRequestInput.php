@@ -56,13 +56,6 @@ function test_date_of_birth($conn,$value)
 	return preg_match('/^\d{4}-[1-9]([0-9])?-\d{1,2}$/',$value);
 }
 
-function test_name($conn,&$value)
-{
-	$value = trim($value);
-	$value = mysqli_real_escape_string($conn,$value);
-	$value = htmlspecialchars($value);
-}
-
  function test_email($value)
 {		$value = trim($value);
 	return (filter_var($value, FILTER_VALIDATE_EMAIL));

@@ -7,12 +7,13 @@ require_once ('CheckResult.php');
 
 if ($_SERVER['REQUEST_METHOD']=="GET")
 {  
+  if(isset($_SESSION["userId"]) && is_int($_SESSION["userId"]))
   checkResult(getFavoriteItemsByUserId($conn,$_SESSION["userId"]));
 }
 
 if ($_SERVER['REQUEST_METHOD']=="DELETE")
 {
-  if (isset($_GET["MenuItemId"]))
+  if(isset($_SESSION["userId"]) && is_int($_SESSION["userId"]) && isset($_GET["MenuItemId"]) && is_int($_GET["MenuItemId"]) )
   {
     deleteFavoriteItemByMenuItemId($conn,$_SESSION["userId"],$_GET["MenuItemId"]);
   }
@@ -27,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST")
   //decode the json data
   $data = json_decode(file_get_contents("php://input"));
   
-    if ($data->menuItemId != null)
+  if(isset($_SESSION["userId"]) && is_int($_SESSION["userId"]) && isset($data->menuItemId) && is_int($data->menuItemId) )
     {
       addFavoriteItem($conn,$_SESSION["userId"],$data->menuItemId);
     }
