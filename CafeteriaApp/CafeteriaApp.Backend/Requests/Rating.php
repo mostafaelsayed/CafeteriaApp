@@ -6,7 +6,7 @@ require_once ('CheckResult.php');
 
 if ($_SERVER['REQUEST_METHOD']=="GET")
 {
-  if (isset($_SESSION["userId"]))
+  if (isset($_SESSION["userId"]) && is_int($_SESSION["userId"]))
   {
     checkResult(getMenuItemsIdsThatHaveRatingsByUserId($conn,$_SESSION["userId"]));
   }
@@ -21,15 +21,11 @@ if ($_SERVER['REQUEST_METHOD']=="POST")
 {
   //decode the json data
   $data = json_decode(file_get_contents("php://input"));
-  if (isset($data->MenuItemId) )
-  {
-    if ($data->MenuItemId != null)
-    {
-    	if(!checkOwnershipOfRatingForUserId($conn , $data->MenuItemId , $_SESSION["userId"]))
+if (isset($data->MenuItemId) && is_int($data->MenuItemId)&&isset($_SESSION["userId"]) &&is_int($_SESSION["userId"])&&$data->Value<=5)  {
+    	if(!checkOwnershipOfRatingForUserId($conn,$data->MenuItemId , $_SESSION["userId"]))
     	{
-    	 addRating($conn, $_SESSION["userId"] ,$data->MenuItemId , $data->Value );
+    	 addRating($conn, $_SESSION["userId"] ,$data->MenuItemId,$data->Value);
     	}
-    }
   }
 }
 
@@ -38,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD']=="PUT")
 {
   //decode the json data
   $data = json_decode(file_get_contents("php://input"));
-  if ($data->Value != null && $data->MenuItemId != null)
+  if (isset($data->MenuItemId) && is_int($data->MenuItemId)&&isset($_SESSION["userId"]) &&is_int($_SESSION["userId"])&&$data->Value<=5)
   {
     updateRating($conn,$_SESSION["userId"],$data->MenuItemId,$data->Value);
   }
@@ -47,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD']=="PUT")
     echo "name is required";
   }
 }
-
 
 require_once("CafeteriaApp.Backend/footer.php");
 

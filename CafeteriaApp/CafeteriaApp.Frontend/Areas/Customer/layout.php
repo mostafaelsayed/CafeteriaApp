@@ -104,14 +104,10 @@
 
 
                        if(!empty($_SESSION["notifications"]) && is_array($_SESSION["notifications"]))
-                      { 
+                      {
                         $ul="<ul style='color:blue;'>";
-                        foreach ($_SESSION["notifications"] as &$value)
+                        foreach ($_SESSION["notifications"] as  $value)
                         {
-                          if ((array)($value) === $value)
-                          {
-                            $value = $value[0];
-                          }
                           $ul.= "<li><h4>".$value."</h4></li>";
                         }
                         $ul.="</ul>";

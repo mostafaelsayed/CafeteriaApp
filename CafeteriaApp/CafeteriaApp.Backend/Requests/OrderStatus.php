@@ -3,33 +3,21 @@
 require_once( 'CafeteriaApp.Backend/Controllers/OrderStatus.php');
 require_once("CafeteriaApp.Backend/connection.php");
 require_once ('CheckResult.php');
+require_once ('TestRequestInput.php');
+
+
 
 if ($_SERVER['REQUEST_METHOD']=="GET")
 {
-  if (isset($_GET["action"]) && $_GET["action"]=="getOrderStatus")
-  {
     checkResult(getOrderStatus($conn));
-  }
-  else
-  {
-    echo "Error occured while returning OrderStatus";
-  }
 }
 
 if ($_SERVER['REQUEST_METHOD']=="POST")
 {
-  //decode the json data
   $data = json_decode(file_get_contents("php://input"));
-  if (isset($data->action) && $data->action == "addOrderStatus")
+  if (isset($data->Name) && normalize_string($data->Name))
   {
-    if ($data->Name != null)
-    {
       addOrderStatus($conn,$data->Name);
-    }
-    else
-    {
-      echo "name is required";
-    }
   }
 }
 

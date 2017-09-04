@@ -28,6 +28,21 @@ require_once("CafeteriaApp.Backend/Controllers/Dates.php");
 }
 
 
+ function getfeedbacks($conn){
+  $sql = "select * from VisitorFeedback ";
+    $result = $conn->query($sql);
+    if ($result)
+    {
+      $feedbacks = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      mysqli_free_result($result);
+        return $feedbacks;
+    }
+    else
+    { //server
+      echo "Error retrieving Feedbacks: " . $conn->error;//developer
+    }
+}
+
 function checkTodaysFeedbackForMailOrPhone($conn,$phone,$mail){
 
 if (!isset($phone)||!isset($mail))

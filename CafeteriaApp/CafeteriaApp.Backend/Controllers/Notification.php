@@ -1,6 +1,4 @@
-<?php
-
-require_once('CafeteriaApp.Backend/connection.php');
+<?php 
 
 function getNotificationByUserId( $conn,$userId)
 {	
@@ -18,6 +16,10 @@ $sql="select Message.Content from  Notification inner join Message on Notificati
 		{	
 			$notifictions = mysqli_fetch_all($result , MYSQLI_NUM);
 			mysqli_free_result($result);
+
+      foreach ($notifictions as $key => $value) {
+        $notifictions[$key]=$value[0];
+      }
 			return $notifictions;
 		}
 		else
@@ -27,6 +29,9 @@ $sql="select Message.Content from  Notification inner join Message on Notificati
 		}
 	}
 }
+
+
+
 
 
 function addNotification($conn,$Uid,$Mid)

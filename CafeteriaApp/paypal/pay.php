@@ -39,8 +39,7 @@ function chargeCustomer($paymentId,$payerId,$paypal,$orderId,$deliveryTimeId,$de
 				if ($result)
 				{
 					$returnUrl = "http://127.0.0.1/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php";
-					//$_SESSION['notifications'][] = 'Payment Succeeseded !';
-					array_push($_SESSION["notifications"],array("Payment Succeeded !"));
+					$_SESSION['notifications'][] = 'Payment Succeeseded !';
 					header("Location: " . $returnUrl);
 				}
 				else
