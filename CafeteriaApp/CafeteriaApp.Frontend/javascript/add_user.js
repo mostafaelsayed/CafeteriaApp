@@ -59,6 +59,7 @@ add_userApp.controller('addUser',['$scope','$http',function($scope,$http) {
 			Image: "image",
 			Email: $scope.email,
 			Password: $scope.password,
+      ConfirmPassword: $scope.confirmPassword,
 			PhoneNumber: $scope.phoneNumber
 		};
 

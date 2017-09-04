@@ -1,3 +1,4 @@
+
 // controller for adding admin
 add_userApp.controller('addAdmin',['$scope','$http','addUserService',function($scope,$http,addUserService) {
 	
@@ -14,6 +15,7 @@ add_userApp.controller('addAdmin',['$scope','$http','addUserService',function($s
 
 		$http.post('/CafeteriaApp.Backend/Requests/User.php',$scope.userData)
 		.then(function(response) {
+			console.log(response);
 
 			if ($scope.myform.$valid) {
 

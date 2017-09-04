@@ -3,7 +3,7 @@ var show_and_delete_usersApp = angular.module('show_and_delete_users',['modal','
 // controller for getting and deleting users
 show_and_delete_usersApp.controller('showAndDeleteUsers',['$scope','$http','ModalService', function ($scope,$http,ModalService) {
 
-  $scope.show = function() {
+  $scope.showModal = function(user) {
 
     ModalService.showModal({
       templateUrl: '/CafeteriaApp.Frontend/Templates/Views/modal.html',
@@ -18,7 +18,7 @@ show_and_delete_usersApp.controller('showAndDeleteUsers',['$scope','$http','Moda
 
       modal.close.then(function(result) {
         if (result == "Yes") {
-          $scope.delete();
+          $scope.delete(user);
         }
       });
 
@@ -38,41 +38,34 @@ show_and_delete_usersApp.controller('showAndDeleteUsers',['$scope','$http','Moda
   $scope.getUsers();
 
   $scope.deleteUser = function(user) {
+    $scope.showModal(user);
+  };
 
-    $scope.show();
+  $scope.delete = function(user) {
 
-    $scope.delete = function() {
+   $http.delete('/CafeteriaApp.Backend/Requests/User.php?userId='+parseInt(user.Id))
+   .then(function(response) {
+    console.log(response);
+     $scope.users.splice($scope.users.indexOf(user),1);
+   });
 
-     $http.delete('/CafeteriaApp.Backend/Requests/User.php?userId='+user.Id)
-     .then(function(response) {
-       $scope.users.splice($scope.users.indexOf(user),1);
-     });
+   if (user.RoleId == 1) {
+    $http.delete('/CafeteriaApp.Backend/Requests/Admin.php?userId='+parseInt(user.Id))
+    .then(function(response) {
+    });
+   }
 
-     if (user.RoleId == 1) {
+   else if (user.RoleId == 3) {
+    $http.delete('/CafeteriaApp.Backend/Requests/Cashier.php?userId='+parseInt(user.Id))
+    .then(function(response) {
+    });
+   }
 
-      $http.delete('/CafeteriaApp.Backend/Requests/Admin.php?userId='+user.Id)
-      .then(function(response) {
-      });
-
-     }
-
-     else if (user.RoleId == 3) {
-
-      $http.delete('/CafeteriaApp.Backend/Requests/Cashier.php?userId='+user.Id)
-      .then(function(response) {
-      });
-
-     }
-
-     else if (user.RoleId == 2) {
-
-      $http.delete('/CafeteriaApp.Backend/Requests/Customer.php?userId='+user.Id)
-      .then(function(response) {
-      });
-
-     }
-
-    };
+   else if (user.RoleId == 2) {
+    $http.delete('/CafeteriaApp.Backend/Requests/Customer.php?userId='+parseInt(user.Id))
+    .then(function(response) {
+    });
+   }
 
   };
 
