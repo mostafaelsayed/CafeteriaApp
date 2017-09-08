@@ -10,6 +10,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder',['$scope','$http','$location
   
     $http.get('/CafeteriaApp.Backend/Requests/MenuItem.php?categoryId='+$scope.categoryId)
     .then(function(response) {
+      console.log(response);
       $scope.menuItems = response.data;
       $scope.loadFavoriteItems();
       $scope.initializeMenuItemCommmentFlags();

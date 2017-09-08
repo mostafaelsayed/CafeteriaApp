@@ -12,7 +12,6 @@ function test_date_of_birth($value)
 	return preg_match('/^\d{4}-[1-9]([0-9])?-\d{1,2}$/',$value);
 }
 
-<<<<<<< HEAD
 function test_email(&$value)
 {
 	$value = trim($value);
@@ -54,11 +53,6 @@ function validate_max_lengths($fields_with_max_lengths)
 	   		return false;
 	 	}
 	}
-=======
- function test_email($value)
-{		$value = trim($value);
-	return (filter_var($value, FILTER_VALIDATE_EMAIL));
->>>>>>> origin/master
 }
 
 function test_phone(&$value)
