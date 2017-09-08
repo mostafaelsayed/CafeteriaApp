@@ -17,4 +17,32 @@ function getFeedbackAbouts($conn)
   }
 }
 
+
+
+function addFeedbackAbouts($conn,$name)
+{
+  if (!isset($name))
+  {
+    return;
+  }
+  else
+  {
+
+    $sql = "insert into FeedbackAbouts (Name ) values (?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s",$Name);
+    $Name = $name;
+    if ($stmt->execute()===TRUE)
+    {
+       return  mysqli_insert_id($conn);
+      //return "Comment Added successfully";
+    }
+    else
+    {
+      echo "Error: ".$conn->error;
+    }
+  }
+}
+
+
 ?>

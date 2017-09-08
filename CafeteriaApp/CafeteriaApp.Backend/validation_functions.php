@@ -53,20 +53,7 @@ function validate_presences($required_fields) {
 
 // * string length
 // max length
-function has_max_length($value, $max) {
-	return strlen($value) <= $max;
-}
 
-function validate_max_lengths($fields_with_max_lengths) {
-	global $errors;
-	// Expects an assoc. array
-	foreach($fields_with_max_lengths as $field => $max) {
-		$value = trim($_POST[$field]);
-	  if (!has_max_length($value, $max)) {
-	    $errors[$field] = fieldname_as_text($field) . " is too long";
-	  }
-	}
-}
 
 // * inclusion in a set
 function has_inclusion_in($value, $set) {

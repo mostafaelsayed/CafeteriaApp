@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST")
   $data = json_decode(file_get_contents("php://input"));
     if (isset($data->Name)&&isset($data->Phone)&&isset($data->Mail)&&isset($data->Message)&& isset($data->SelectedAboutId))
     {
-      if(normalize_string($data->Name)&&test_phone($data->Phone)&&test_email($data->Mail)&&normalize_string($data->Message)&&is_int($data->SelectedAboutId))
+      if(normalize_string($conn,$data->Name)&&test_phone($data->Phone)&&test_email($data->Mail)&&normalize_string($conn,$data->Message)&&is_int($data->SelectedAboutId))
         
      checkResult(addVisitorFeedback($conn,$data->Name,$data->Phone,$data->Mail,$data->Message,$data->SelectedAboutId));
     }

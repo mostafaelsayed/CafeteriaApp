@@ -1,18 +1,20 @@
 <?php 
  //require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies 
-require_once("CafeteriaApp.Backend/validation_functions.php"); 
+//require_once("CafeteriaApp.Backend/validation_functions.php"); 
 require_once( 'CafeteriaApp.Backend/Controllers/Role.php');
 require_once( 'CafeteriaApp.Backend/Controllers/User.php');
 require_once( 'CafeteriaApp.Backend/Controllers/Customer.php');
 require_once("CafeteriaApp.Backend/connection.php");
 require 'CafeteriaApp.Frontend/Views/PHPMailer/PHPMailerAutoload.php';
+require_once("TestRequestInput.php");
+
 
 
 
 if ($_SERVER['REQUEST_METHOD']=="POST"){
     //decode the json data
     $data = json_decode(file_get_contents("php://input"));
-    if (isset($data->userName) && isset($data->email))
+    if (isset($data->userName) && isset($data->email) &&normalize_string($conn,$data->userName) &&normalize_string($conn,$data->email))
     {
         $email = checkExistingEmail($conn,$data->email);
         $userName = checkExistingUserName($conn,$data->userName,true);
@@ -34,20 +36,17 @@ if ($_SERVER['REQUEST_METHOD']=="POST"){
 
 
 
-
-
-if ($_SERVER['REQUEST_METHOD']=="PUT"){
+if ($_SERVER['REQUEST_METHOD']=="PUT"){//isset >> normalizing >> length 
     //decode the json data
-
-
  $data = json_decode(file_get_contents("php://input"));
 
 $required_fields = array( $data->userName , $data->firstName, $data->lastName,  $data->phone, $data->email, $data->gender, $data->dob,$data->password );
   
-//$fields_with_max_lengths = array("userName" => 30);
-//validate_max_lengths($fields_with_max_lengths);
 
-if (!empty(test_inputs($conn,$required_fields))) 
+$fields_with_max_lengths = array($data->userName  => 100 , $data->firstName=>50 ,$data->lastName=>50,$data->phone=>13, $data->email=>100,$data->password=>100 );
+
+
+if (!empty(test_user_input($conn,$required_fields)) && validate_max_lengths($fields_with_max_lengths) &&test_date_of_birth($data->dob)) 
 {
     $userName = $data->userName  ;//$_POST["userName"];
     $firstName= $data->firstName; //$_POST["firstName"];
