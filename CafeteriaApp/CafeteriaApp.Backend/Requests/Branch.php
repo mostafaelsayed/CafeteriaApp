@@ -1,7 +1,7 @@
 <?php
 require_once( 'CafeteriaApp.Backend/Controllers/Branch.php');
 require_once("CafeteriaApp.Backend/connection.php");
-require_once ('CheckResult.php');
+require('TestRequestInput.php');
 
 if ($_SERVER['REQUEST_METHOD']=="GET")
 {

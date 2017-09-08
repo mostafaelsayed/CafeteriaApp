@@ -69,12 +69,26 @@ function test_int(&...$values)
 {
 	foreach ($values as &$value)
 	{
-		if (!ctype_digit($value) && !is_int($value))
+		if (!ctype_digit($value) && !test_int($value))
 		{
 			return false;
 		}
 	}
 	return true;
+}
+
+function checkResult($result)
+{
+	if (isset($result))
+	{	
+		echo json_encode($result);
+	}
+	else
+	{
+		//$returnUrl = "CafeteriaApp.Frontend/Areas/Public/showing cafeterias.php";
+		//header("Location: {$returnUrl}");
+		//exit;
+	}
 }
 
 ?>

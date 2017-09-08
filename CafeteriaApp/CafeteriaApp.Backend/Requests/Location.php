@@ -3,7 +3,6 @@
 require('CafeteriaApp.Backend/Controllers/Location.php');
 require('CafeteriaApp.Backend/connection.php');
 require('CafeteriaApp.Backend/session.php');
-require('CheckResult.php');
 require('TestRequestInput.php');
 
 if ($_SERVER['REQUEST_METHOD'] == "GET")

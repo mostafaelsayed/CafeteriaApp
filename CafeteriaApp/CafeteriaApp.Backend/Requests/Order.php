@@ -4,7 +4,6 @@ require('CafeteriaApp.Backend/connection.php');
 require('CafeteriaApp.Backend/session.php');
 require('CafeteriaApp.Backend/Controllers/Order.php');
 require('CafeteriaApp.Backend/Controllers/Times.php');
-require('CheckResult.php');
 require('TestRequestInput.php');
 require('PayPal/start.php');
 require('PayPal/pay.php');

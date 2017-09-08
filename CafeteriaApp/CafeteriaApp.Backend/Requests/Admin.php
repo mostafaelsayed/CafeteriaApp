@@ -2,7 +2,6 @@
 
 require('CafeteriaApp.Backend/connection.php');
 require('CafeteriaApp.Backend/Controllers/Admin.php');
-require('CheckResult.php');
 require('TestRequestInput.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")

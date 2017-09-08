@@ -1,9 +1,6 @@
 <?php
 
 require('CafeteriaApp.Backend/Controllers/User.php');
-//require('CafeteriaApp.Backend/session.php');
-//require('CafeteriaApp.Backend/connection.php');
-require('CheckResult.php');
 require('TestRequestInput.php');
 
 if ($_SERVER['REQUEST_METHOD'] == "GET")

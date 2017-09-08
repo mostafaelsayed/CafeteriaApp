@@ -1,7 +1,6 @@
 <?php
 require_once( 'CafeteriaApp.Backend/Controllers/OrderStatus.php');
 require_once("CafeteriaApp.Backend/connection.php");
-require_once ('CheckResult.php');
 require_once ('TestRequestInput.php');
 
 
@@ -23,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD']=="PUT")
 {
   //decode the json data
   $data = json_decode(file_get_contents("php://input"));
-  if (isset($data->Name) && normalize_string($conn,$data->Name) &&isset($data->Id)&& is_int($data->Id) )
+  if (isset($data->Name) && normalize_string($conn,$data->Name) &&isset($data->Id)&& test_int($data->Id) )
   {
     editOrderStatus($conn,$data->Name,$data->Id);
   }
