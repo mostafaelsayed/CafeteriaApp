@@ -83,7 +83,7 @@ function editUser($conn,$userName,$firstName,$lastName,$email,$image,$phoneNumbe
   else
   {
     $result = $conn->query("select Image from User where Id = ".$id);
-    $userImage = (mysqli_fetch_assoc($result))['Image'];
+    $userImage = mysqli_fetch_assoc($result)['Image'];
     mysqli_free_result($result);
     $sql = "update User set UserName = (?), FirstName = (?) , LastName = (?) , Email = (?) , Image = (?) , PhoneNumber = (?) , RoleId = (?) where Id = (?)"; 
     $stmt = $conn->prepare($sql);

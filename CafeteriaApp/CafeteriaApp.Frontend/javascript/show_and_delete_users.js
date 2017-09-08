@@ -30,6 +30,7 @@ show_and_delete_usersApp.controller('showAndDeleteUsers',['$scope','$http','Moda
 
     $http.get('/CafeteriaApp.Backend/Requests/User.php')
     .then(function(response) {
+      console.log(response);
       $scope.users = response.data;
     });
 
