@@ -106,7 +106,7 @@ function addMenuItem($conn,$name,$price,$description,$categoryId,$imageData)
 function editMenuItem($conn,$name,$price,$description,$id,$imageData,$visible)
 {
   $result = $conn->query("select Image from menuitem where Id = ".$id);
-  $menuItem = (mysqli_fetch_assoc($result));
+  $menuItem = mysqli_fetch_assoc($result);
   mysqli_free_result($result);
   $sql = "update MenuItem set Name = (?) , Price = (?) , Description = (?) , Image = (?) , Visible = (?) 
   where Id = (?)";
