@@ -24,7 +24,7 @@ phone_numberApp.directive('checkPhoneNumber',function() {
     restrict: 'A',
     require: 'ngModel',
     link: function(scope,elem,attr,ctrl) {
-      var regExp = /^\d{0,11}$/;
+      var regExp = /^\d{0,13}$/;
       ctrl.$parsers.unshift(function(val) {
         if (checkType(val,regExp)) {
           ctrl.$setValidity('checkPhoneNumber',true);

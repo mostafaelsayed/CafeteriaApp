@@ -2,9 +2,9 @@
 
 require_once('CafeteriaApp.Backend/session.php');
 require_once('CafeteriaApp.Backend/connection.php');
-require_once("CafeteriaApp.Backend/Controllers/Dates.php");
-
-require_once("CafeteriaApp.Backend/Controllers/Times.php");
+require_once('CafeteriaApp.Backend/Controllers/Dates.php');
+// require_once('TestRequestInput.php');
+require_once('CafeteriaApp.Backend/Controllers/Times.php');
 require_once('PayPal/start.php');
 
 use PayPal\Api\Amount;
@@ -17,55 +17,55 @@ use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
 use PayPal\Exception\PayPalConnectionException;
 
-function getClosedOrdersByUserId($conn,$id)
-{
-  if( !isset($id))
-  {
-    //echo "Error: Customer Id is not set";
-    return;
-  }
-  else
-  {
-    $sql = "select * from `order` where UserId = ".$id;
-    $result = $conn->query($sql);
-    if ($result)
-    {
-      $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
-      mysqli_free_result($result);
+// function getClosedOrdersByUserId($conn,$id)
+// {
+//   if (!isset($id))
+//   {
+//     //echo "Error: Customer Id is not set";
+//     return;
+//   }
+//   else
+//   {
+//     $sql = "select * from `order` where UserId = ".$id;
+//     $result = $conn->query($sql);
+//     if ($result)
+//     {
+//       $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
+//       mysqli_free_result($result);
       
-        return $orders;
-    }
-    else
-    {
-      echo "Error retrieving orders: " . $conn->error;
-    }
-  }
-}
+//         return $orders;
+//     }
+//     else
+//     {
+//       echo "Error retrieving orders: " . $conn->error;
+//     }
+//   }
+// }
 
-function getOrderById($conn,$id)
-{
-  if( !isset($id))
-  {
-    //echo "Error: Order Id is not set";
-    return;
-  }
-  else
-  {
-    $sql = "select * from `order` where Id = ".$id." LIMIT 1";
-    $result = $conn->query($sql);
-    if ($result)
-    {
-      $orders = mysqli_fetch_assoc($result);
-      mysqli_free_result($result);
-        return $orders;
+// function getOrderById($conn,$id)
+// {
+//   if( !isset($id))
+//   {
+//     //echo "Error: Order Id is not set";
+//     return;
+//   }
+//   else
+//   {
+//     $sql = "select * from `order` where Id = ".$id." LIMIT 1";
+//     $result = $conn->query($sql);
+//     if ($result)
+//     {
+//       $orders = mysqli_fetch_assoc($result);
+//       mysqli_free_result($result);
+//         return $orders;
       
-    }
-    else
-    {
-      echo "Error retrieving order: " . $conn->error;
-    }
-  }
-}
+//     }
+//     else
+//     {
+//       echo "Error retrieving order: " . $conn->error;
+//     }
+//   }
+// }
 
 function getOpenOrderByUserId($conn)
 {
@@ -87,78 +87,70 @@ function getOpenOrderByUserId($conn)
 
 function calcOpenOrderDeliveryTime($conn,$orderId)
 {
-  if (!isset($orderId))
+  $sql = "select sum(OrderItem.Quantity * MenuItem.ReadyInMins) from OrderItem inner join MenuItem on OrderItem.MenuItemId = MenuItem.Id  where OrderItem.OrderId = " . $orderId;
+  $result = $conn->query($sql);
+  if ($result)
   {
-   // echo "Error: Order Id is not set";
-    return;
+    $order = mysqli_fetch_array($result, MYSQLI_NUM);
+    mysqli_free_result($result);
+    // $order = json_encode($order);
+    return $order[0];
   }
   else
-  { 
-    $sql = "select sum(OrderItem.Quantity * MenuItem.ReadyInMins) from OrderItem inner join MenuItem on OrderItem.MenuItemId=MenuItem.Id  where OrderItem.OrderId = " . $orderId;
-    $result = $conn->query($sql);
-    if ($result)
-    {
-      $order = mysqli_fetch_array($result, MYSQLI_NUM);
-      mysqli_free_result($result);
-      // $order = json_encode($order);
-      return $order[0];
-    }
-    else
-    {
-      echo "Error retrieving Open Order : " . $conn->error;  
-    }
+  {
+    echo "Error retrieving Open Order : " . $conn->error;  
   }
 }
 
-function getOrdersByDeliveryDateId($conn,$id)
-{
-  if (!isset($id))
-  {
-    //echo "Error: DeliveryDate Id is not set";
-    return;
-  }
-  else
-  {
-    $sql = "select * from `order` where DeliveryDateId = ".$id;
-    $result = $conn->query($sql);
-    if ($result)
-    {
-      $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
-      mysqli_free_result($result);
-        return $orders;
+// function getOrdersByDeliveryDateId($conn,$id)
+// {
+//   if (!isset($id))
+//   {
+//     //echo "Error: DeliveryDate Id is not set";
+//     return;
+//   }
+//   else
+//   {
+//     $sql = "select * from `order` where DeliveryDateId = ".$id;
+//     $result = $conn->query($sql);
+//     if ($result)
+//     {
+//       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
+//       mysqli_free_result($result);
+//         return $orders;
       
-    }
-    else
-    {
-      echo "Error retrieving orders: " . $conn->error;
-    }
-  }
-}
+//     }
+//     else
+//     {
+//       echo "Error retrieving orders: " . $conn->error;
+//     }
+//   }
+// }
 
-function getOrdersByDeliveryTimeId($conn,$id)
-{
-  if (!isset($id))
-  {
-    //echo "Error: DeliveryTime Id is not set";
-    return;
-  }
-  else
-  {
-    $sql = "select * from `order` where DeliveryTimeId = ".$id;
-    $result = $conn->query($sql);
-    if ($result)
-    {
-      $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
-      mysqli_free_result($result);
-        return $orders;
+// function getOrdersByDeliveryTimeId($conn,$id)
+// {
+//   if (!isset($id))
+//   {
+//     //echo "Error: DeliveryTime Id is not set";
+//     return;
+//   }
+//   else
+//   {
+//     $sql = "select * from `order` where DeliveryTimeId = ".$id;
+//     $result = $conn->query($sql);
+//     if ($result)
+//     {
+//       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
+//       mysqli_free_result($result);
+//         return $orders;
      
-    }
-    else
-    {
-      echo "Error retrieving orders: " . $conn->error;
-    }
-  }
-}
+//     }
+//     else
+//     {
+//       echo "Error retrieving orders: " . $conn->error;
+//     }
+//   }
+// }
 
 function getOrders($conn)
 {
@@ -176,55 +168,55 @@ function getOrders($conn)
   }
 }
 
-function getOrdersByOrderStatusId($conn,$id)
-{
-  if (!isset($id))
-  {
-    //echo "Error: OrderStatus Id is not set";
-    return;
-  }
-  else
-  {
-    $sql = "select * from `order` where OrderStatusId = ".$id;
-    $result = $conn->query($sql);
-    if ($result)
-    {
-      $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
-      mysqli_free_result($result);
-        return $orders;
+// function getOrdersByOrderStatusId($conn,$id)
+// {
+//   if (!isset($id))
+//   {
+//     //echo "Error: OrderStatus Id is not set";
+//     return;
+//   }
+//   else
+//   {
+//     $sql = "select * from `order` where OrderStatusId = ".$id;
+//     $result = $conn->query($sql);
+//     if ($result)
+//     {
+//       $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
+//       mysqli_free_result($result);
+//         return $orders;
       
-    }
-    else
-    {
-      echo "Error retrieving orders: " . $conn->error;
-    }
-  }
-}
+//     }
+//     else
+//     {
+//       echo "Error retrieving orders: " . $conn->error;
+//     }
+//   }
+// }
 
-function getOrdersByPaymentMethodId($conn,$id)
-{
-  if (!isset($id))
-  {
-    //echo "Error: PaymentMethod Id is not set";
-    return;
-  }
-  else
-  {
-    $sql = "select * from `order` where PaymentMethodId = ".$id;
-    $result = $conn->query($sql);
-    if ($result)
-    {
-      $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
-      mysqli_free_result($result);
-        return $orders;
+// function getOrdersByPaymentMethodId($conn,$id)
+// {
+//   if (!isset($id))
+//   {
+//     //echo "Error: PaymentMethod Id is not set";
+//     return;
+//   }
+//   else
+//   {
+//     $sql = "select * from `order` where PaymentMethodId = ".$id;
+//     $result = $conn->query($sql);
+//     if ($result)
+//     {
+//       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
+//       mysqli_free_result($result);
+//         return $orders;
       
-    }
-    else
-    {
-      echo "Error retrieving orders: " . $conn->error;
-    }
-  }
-}
+//     }
+//     else
+//     {
+//       echo "Error retrieving orders: " . $conn->error;
+//     }
+//   }
+// }
 
 function addOrder( $conn,$deliveryDateId, $createdTimeId,$deliveryPlace, $paymentMethodId,$orderStatusId, $userId,$total=0,$paid=0)
 {
@@ -412,7 +404,7 @@ function deleteOpenOrderById($conn) // remove  order items with cascading
   $openStatusId=1;
   //$conn->query("set foreign_key_checks = 0"); // ????????/
   $sql = "delete from `Order` where UserId = ". $_SESSION["userId"] ." and `OrderStatusId`= {$openStatusId}  LIMIT 1";
-  if ($conn->query($sql)===TRUE)
+  if ($conn->query($sql) === TRUE)
   {
     return "Current Open Order deleted successfully";
   }

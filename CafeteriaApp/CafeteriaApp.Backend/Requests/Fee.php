@@ -1,61 +1,74 @@
 <?php
 
-require_once( 'CafeteriaApp.Backend/Controllers/Fee.php');
-require_once("CafeteriaApp.Backend/connection.php");
-require_once ('CheckResult.php');
+require('CafeteriaApp.Backend/Controllers/Fee.php');
+require('CafeteriaApp.Backend/connection.php');
+require('CafeteriaApp.Backend/session.php');
+require('CheckResult.php');
+require('TestRequestInput.php');
 
 if ($_SERVER['REQUEST_METHOD'] == "GET")
 {
-  if (isset($_GET["id"]))
+  if ($_SESSION["roleId"] == 1)
   {
-    checkResult(getFeeById($conn,$_GET["id"]));
-  }
-  else
-  {
-    checkResult(getFees($conn));
+    if (isset($_GET["id"]) && test_int($_GET["id"]))
+    {
+      checkResult(getFeeById($conn,$_GET["id"]));
+    }
+    else
+    {
+      checkResult(getFees($conn));
+    }
   }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST")
 {
-  $data = json_decode(file_get_contents("php://input"));
-  if (isset($data->Name))
+  if ($_SESSION["roleId"] == 1)
   {
-    addFee($conn,$data->Name,$data->Price);
-  }
-  else
-  {
-    echo "error";
+    $data = json_decode(file_get_contents("php://input"));
+    if (normalize_string($conn,$data->Name) && test_price($data->Price))
+    {
+      addFee($conn,$data->Name,$data->Price);
+    }
+    else
+    {
+      echo "error";
+    }
   }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "PUT")
 {
-  //decode the json data
-  $data = json_decode(file_get_contents("php://input"));
-  if (isset($data->Name) && isset($data->Id) && isset($data->Price) && $data->Price != null && $data->Name != null && $data->Id != null)
+  if ($_SESSION["roleId"] == 1)
   {
-    editFee($conn,$data->Id,$data->Name,$data->Price);
-  }
-  else
-  {
-    echo "error";
+    //decode the json data
+    $data = json_decode(file_get_contents("php://input"));
+    if (isset($data->Id,$data->Price) && test_int($data->Id) && normalize_string($conn,$data->Name) && test_price($data->Price))
+    {
+      editFee($conn,$data->Id,$data->Name,$data->Price);
+    }
+    else
+    {
+      echo "error";
+    }
   }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "DELETE")
 {
-  $feeIdToDelete = $_GET["feeId"];
-  if ($feeIdToDelete != null)
+  if ($_SESSION["roleId"] == 1)
   {
-    deleteFee($conn,$feeIdToDelete);
-  }
-  else
-  {
-    echo "No Id is provided";
+    if (isset($_GET["feeId"]) && test_int($_GET["feeId"]))
+    {
+      deleteFee($conn,$_GET["feeId"]);
+    }
+    else
+    {
+      echo "No Id is provided";
+    }
   }
 }
 
-require_once("CafeteriaApp.Backend/footer.php");
+require('CafeteriaApp.Backend/footer.php');
 
 ?>

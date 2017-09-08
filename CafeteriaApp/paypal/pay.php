@@ -1,8 +1,5 @@
 <?php
 
-require_once('CafeteriaApp.Backend/Controllers/Order.php');
-require_once('CafeteriaApp.Backend/session.php');
-
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
 use PayPal\Api\ExecutePayment;

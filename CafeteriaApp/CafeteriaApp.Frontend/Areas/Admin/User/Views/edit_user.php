@@ -1,10 +1,10 @@
 <?php
 
-  require_once("CafeteriaApp.Backend/functions.php");
+  require('CafeteriaApp.Backend/functions.php');
 
   validatePageAccess($conn);
 
-  include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
+  require('CafeteriaApp.Frontend/Areas/Admin/layout.php');
 
 ?>
 
@@ -117,6 +117,38 @@
           </span>
 
           <br><br>
+
+          <div><label>Image</label></div>
+
+          <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name=" imageFileName" data-max-file-size="3">
+
+          </div>
+
+          <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile">
+
+          <div ng-if="uploadme.src != ''">
+
+            <img ng-src="{{ uploadme.src }}" style="width:300px;height:300px" />
+
+          </div>
+
+          <div ng-if="uploadme.src == ''">
+
+            <img ng-src="{{ userData.imageUrl }}" style="text-align:center;width:300px;height:300px">&nbsp;
+
+            <span>
+
+              <button class="btn btn-primary" onclick="mylabel.click()" style="position:absolute;margin-top:150px" id="mybutton">Choose image</button>
+
+              <label id="mylabel" for="file"></label>
+
+            </span>
+
+            <br>
+
+          </div>
+
+          <br>
 
           <div>
 

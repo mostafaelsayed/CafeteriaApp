@@ -1,10 +1,10 @@
 <?php
 
-	require_once('CafeteriaApp.Backend/functions.php');
+	require('CafeteriaApp.Backend/functions.php');
 
   validatePageAccess($conn);
 
-	require_once('CafeteriaApp.Frontend/Areas/Admin/layout.php');
+	require('CafeteriaApp.Frontend/Areas/Admin/layout.php');
 
 ?>
 

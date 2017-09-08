@@ -6,7 +6,7 @@
 
         <meta charset="utf-8" />
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
         <!-- Bootstrap Core CSS -->
         <link href="/CafeteriaApp.Frontend/css/bootstrap.min.css" rel="stylesheet">
@@ -35,7 +35,7 @@
         
     </head>
 
-    <body style="background-image:url('/CafeteriaApp.Frontend/images/admin background image.jpg')">
+    <body style="background-image:url('/CafeteriaApp.Frontend/images/admin background image.jpg');background-repeat: no-repeat;background-size: 1430px 1300px">
 
         <div>
 

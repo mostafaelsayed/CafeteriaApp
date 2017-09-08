@@ -23,7 +23,8 @@ add_userApp.controller('addCashier',['$scope','$http','addUserService',function(
 
 				$http.post('/CafeteriaApp.Backend/Requests/Cashier.php',cashierData)
 				.then(function(response) {
-					document.location = "/CafeteriaApp.Frontend/Areas/Admin/User/Views/show_and_delete_users.php";
+					console.log(response);
+					//document.location = "/CafeteriaApp.Frontend/Areas/Admin/User/Views/show_and_delete_users.php";
 				});
 				
 			}

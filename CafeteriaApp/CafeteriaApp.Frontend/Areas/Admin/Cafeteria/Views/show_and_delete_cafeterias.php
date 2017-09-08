@@ -1,10 +1,10 @@
 <?php
 
-  require_once('CafeteriaApp.Backend/functions.php');
+  require('CafeteriaApp.Backend/functions.php');
 
   validatePageAccess($conn);
 
-  include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
+  require('CafeteriaApp.Frontend/Areas/Admin/layout.php');
 
 ?>
 
@@ -16,7 +16,7 @@
 
   <script src="/CafeteriaApp.Frontend/javascript/show_and_delete_cafeterias.js"></script>
 
-  <?php require_once('CafeteriaApp.Frontend/Areas/Admin/modal_includes.php'); ?>
+  <?php require('CafeteriaApp.Frontend/Areas/Admin/modal_includes.php'); ?>
 
 </head>
 

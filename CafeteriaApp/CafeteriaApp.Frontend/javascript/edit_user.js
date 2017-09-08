@@ -14,6 +14,9 @@ edit_userApp.controller('editUser',['$scope','$http','$location',function($scope
   $scope.selectedDay = 1;
   $scope.credit = 0;
 
+  $scope.uploadme = {};
+  $scope.uploadme.src = '';
+
   $scope.getRoles = function() {
 
     $http.get('/CafeteriaApp.Backend/Requests/Role.php')
@@ -34,7 +37,7 @@ edit_userApp.controller('editUser',['$scope','$http','$location',function($scope
       $scope.userData.lastName = response.data.LastName;
       $scope.userData.email = response.data.Email;
       $scope.userData.phoneNumber = response.data.PhoneNumber;
-      $scope.userData.image = response.data.Image;
+      $scope.userData.imageUrl = response.data.Image;
       $scope.userData.id = response.data.Id;
       $scope.userData.roleId = response.data.RoleId;
 
@@ -110,6 +113,16 @@ edit_userApp.controller('editUser',['$scope','$http','$location',function($scope
     
     if ($scope.myform.$valid) {
 
+      var x = "";
+
+      if ($scope.uploadme.src != '') {
+        x = $scope.uploadme.src.split(',')[1];
+      }
+
+      else {
+        x = $scope.userData.imageUrl;
+      }
+
       var userData = {
         UserName: $scope.userData.userName,
         FirstName: $scope.userData.firstName,
@@ -118,12 +131,14 @@ edit_userApp.controller('editUser',['$scope','$http','$location',function($scope
         PhoneNumber: $scope.userData.phoneNumber,
         Id: parseInt($scope.userData.id),
         RoleId: $scope.selectedRole.Id,
-        Image: $scope.userData.image
+        Image: x
       };
 
       $http.put('/CafeteriaApp.Backend/Requests/User.php',userData)
       .then(function(response) {
+        console.log(response);
       });
+
 
       if ($scope.selectedRole.Id == $scope.originalRole.Id) {
 

@@ -1,10 +1,10 @@
 <?php
 
-  require_once("CafeteriaApp.Backend/functions.php");
+  require('CafeteriaApp.Backend/functions.php');
 
   validatePageAccess($conn);
 
-  include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
+  require('CafeteriaApp.Frontend/Areas/Admin/layout.php');
 
 ?>
 
@@ -17,7 +17,7 @@
   <!-- location provider -->
   <script src="/CafeteriaApp.Frontend/javascript/location_provider.js"></script>
 
-  <?php require_once('CafeteriaApp.Frontend/Areas/Admin/modal_includes.php'); ?>
+  <?php require('CafeteriaApp.Frontend/Areas/Admin/modal_includes.php'); ?>
 
   <!-- image module -->
   <script src="/CafeteriaApp.Frontend/javascript/image_module.js"></script>
@@ -44,11 +44,19 @@
 
           <label>Name</label>
 
-          <input id="inputField" type="text" class="form-control" ng-model="name" autofocus="autofocus" name="name" required />
+          <input id="inputField" type="text" class="form-control" ng-model="name" ng-maxlength="20" name="name" required />
 
-          <span ng-show="myform.name.$touched && myform.name.$invalid" id="inputControl" ng-cloak>
+          <span ng-show="myform.name.$touched && myform.name.$invalid && (name == null || name.length == 0)" id="inputControl" ng-cloak>
 
             Cafeteria Name is Required
+
+            <br>
+
+          </span>
+
+          <span ng-show="myform.name.$error.maxlength" id="inputControl" ng-cloak>
+
+            Cafeteria Name must be less than or equal to 20 characters
 
             <br>
 
@@ -62,7 +70,15 @@
 
           </div>
 
-          <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile">
+          <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile" required>
+
+          <span ng-show="myform.file.$touched && myform.file.$invalid" id="inputControl" ng-cloak>
+
+            <br>
+
+            Image is Required
+
+          </span>
 
           <div ng-if="uploadme.src != ''">
 

@@ -1,10 +1,10 @@
 <?php
 
-  require_once('CafeteriaApp.Backend/functions.php');
+  require('CafeteriaApp.Backend/functions.php');
 
   validatePageAccess($conn);
 
-  require_once('CafeteriaApp.Frontend/Areas/Customer/layout.php');
+  require('CafeteriaApp.Frontend/Areas/Customer/layout.php');
 
   if (!isset($_GET["orderId"]) || !isset($_GET["deliveryTimeDuration"]))
   {
@@ -126,4 +126,4 @@
 
 <br>
 
-<?php require_once('CafeteriaApp.Frontend/Areas/footer.php'); ?>
+<?php require('CafeteriaApp.Frontend/Areas/footer.php'); ?>

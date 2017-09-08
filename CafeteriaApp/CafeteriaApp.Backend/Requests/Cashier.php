@@ -1,29 +1,27 @@
 <?php
 
-require_once('CafeteriaApp.Backend/connection.php');
-require_once('CafeteriaApp.Backend/Controllers/Cashier.php');
-//require_once('CafeteriaApp.Backend/Controllers/User.php');
-require_once ('CheckResult.php');
+require('CafeteriaApp.Backend/connection.php');
+require('CafeteriaApp.Backend/Controllers/Cashier.php');
+require('CheckResult.php');
+require('TestRequestInput.php');
 
-if ($_SERVER['REQUEST_METHOD'] == "POST")
+if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
 	$data = json_decode(file_get_contents("php://input"));
-	addCashier($conn,$data->UserId);
+	if (isset($data->UserId) && test_int($data->UserId))
+	{
+		addCashier($conn,$data->UserId);
+	}
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "DELETE")
 {
-	if (isset($_GET["userId"]) && $_GET["userId"] != null)
+	if (isset($_GET["userId"]) && test_int($_GET["userId"]))
 	{
 		deleteCashierByUserId($conn,$_GET["userId"]);
 	}
-	else if (isset($_GET["cashierId"]) && $_GET["cashierId"] != null)
-	{
-		deleteCashier($conn,$_GET["cashierId"]);
-	}
 }
 
-require_once("CafeteriaApp.Backend/footer.php");
-
+require('CafeteriaApp.Backend/footer.php');
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-function addImageFile($imageData,$dirChanged = 0)
+function addImageFile($imageData,$dirChanged=0)
 {
 	if ($dirChanged == 0)
 	{
@@ -15,12 +15,14 @@ function addImageFile($imageData,$dirChanged = 0)
 
 function editImage($imageData,$imageAttr)
 {
-	$imageFileName = basename($imageAttr);
-	$dirChanged = 0;
-	if (deleteImageFileIfExists($imageFileName) == 1)
-	{
-		$dirChanged = 1;
-	}
+    $dirChanged = 0;
+    if ($imageAttr != null)
+    {
+    	if (deleteImageFileIfExists($imageAttr) == 1)
+    	{
+    		$dirChanged = 1;
+    	}
+    }
 	return addImageFile($imageData,$dirChanged);
 }
 

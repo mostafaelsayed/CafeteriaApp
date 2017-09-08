@@ -1,89 +1,79 @@
 <?php
 
-function test_user_input($conn,$data)
+function test_price($value)
 {
-	if (isset($data->UserName,$data->FirstName,$data->LastName,$data->Email,$data->PhoneNumber,$data->Image))
-	{
-		foreach ($data as $key => $value)
-		{
-			if ($key != "ConfirmPassword")
-			{
-				if (in_array($key, array("UserName","FirstName","LastName","Image")))
-				{
-					test_name($conn,$value);
-				}
-				elseif ($key == "PhoneNumber")
-				{
-					if (!(preg_match('/^\d{0,9}$/',$value)))
-					{
-						echo "false PhoneNumber";
-						return false;
-					}
-				}
-				elseif ($key == "Email")
-				{
-					if (!(filter_var($value, FILTER_VALIDATE_EMAIL)))
-					{
-						echo "false email";
-						return false;
-					}
-				}
-				elseif ($key == "Password")
-				{
-					if (!(strlen($value) >= 8))
-					{
-						echo "false password";
-						return false;
-					}
-				}
-			}
-		}
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
-function test_price($conn,$value)
-{	$value = trim($value);
+	$value = trim($value);
 	return preg_match('/^\d{0,9}(\.\d{0,9})?$/',$value);
 }
 
-function test_date_of_birth($conn,$value)
-{	$value = trim($value);
+function test_date_of_birth($value)
+{
+	$value = trim($value);
 	return preg_match('/^\d{4}-[1-9]([0-9])?-\d{1,2}$/',$value);
 }
 
-function test_name($conn,&$value)
+function test_email(&$value)
 {
 	$value = trim($value);
-	$value = mysqli_real_escape_string($conn,$value);
-	$value = htmlspecialchars($value);
+	return (filter_var($value,FILTER_VALIDATE_EMAIL));
 }
 
- function test_email($value)
-{		$value = trim($value);
-	return (filter_var($value, FILTER_VALIDATE_EMAIL));
-}
-
-function normalize_string($conn,&$value)
-{	
-	$value = trim($value);
-	if($value!=="")
+function normalize_string($conn,&...$values)
+{
+	foreach ($values as &$value)
 	{
-	$value = mysqli_real_escape_string($conn,$value);
-	$value = htmlspecialchars($value);
-	return true;
+		$value = trim($value);
+		if ($value !== "")
+		{
+			$value = str_replace('&','and',$value);
+			$value = mysqli_real_escape_string($conn,$value);
+			$value = htmlspecialchars($value);
 		}
-		return false;
+		else
+		{
+			return false;
+		}
+	}
+	return true;
 }
 
- function test_phone($value)
-{		$value = trim($value);
-	if (!(preg_match('/^\d{0,9}$/',$value)))
+function has_max_length($value,$max)
+{
+	return strlen($value) <= $max;
+}
+
+function validate_max_lengths($fields_with_max_lengths)
+{
+	// Expects an assoc. array
+	foreach ($fields_with_max_lengths as $field => $max)
+	{
+		$value = trim($field);
+	  	if (!has_max_length($value,$max))
+	  	{
+	   		return false;
+	 	}
+	}
+}
+
+function test_phone(&$value)
+{
+	$value = trim($value);
+	if (!(preg_match('/^\d{0,13}$/',$value)))
+	{
+		return false;
+	}
+	return true;
+}
+
+function test_int(&...$values)
+{
+	foreach ($values as &$value)
+	{
+		if (!ctype_digit($value) && !is_int($value))
+		{
 			return false;
+		}
+	}
 	return true;
 }
 

@@ -1,10 +1,10 @@
 <?php
 
-  require_once("CafeteriaApp.Backend/functions.php");
+  require('CafeteriaApp.Backend/functions.php');
 
   validatePageAccess($conn);
 
-  include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
+  require('CafeteriaApp.Frontend/Areas/Admin/layout.php');
 
 ?>
 
@@ -38,11 +38,19 @@
 
         <label>Name</label>
 
-        <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="name" name="name" required />
+        <input id="inputField" type="text" class="form-control" ng-maxlength="20" ng-model="name" name="name" required />
 
-        <span ng-show="myform.name.$touched &&myform.name.$invalid" id="inputControl" ng-cloak>
+        <span ng-show="myform.name.$touched && myform.name.$invalid && name.length == 0" id="inputControl" ng-cloak>
 
           Cafeteria Name is Required
+
+          <br>
+
+        </span>
+
+        <span ng-show="myform.name.$error.maxlength" id="inputControl" ng-cloak>
+
+          Cafeteria Name must be less than or equal to 20 characters
 
           <br>
 
@@ -52,11 +60,19 @@
 
         <div><label>Image</label></div>
 
-        <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="3">
+        <div class="dropzone" file-dropzone="[image/png,image/jpeg,image/gif]" file="image" file-name="imageFileName" data-max-file-size="3">
 
         </div>
 
-        <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile">
+        <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile" required />
+
+        <span ng-show="myform.file.$touched && myform.file.$invalid" id="inputControl" ng-cloak>
+
+          Image is Required
+
+          <br>
+
+        </span>
 
         <img ng-src="{{ uploadme.src }}" style="width:300px;height:300px">
 

@@ -1,22 +1,23 @@
 <?php
 
-require_once('CafeteriaApp.Backend/Controllers/Location.php');
-require_once('CafeteriaApp.Backend/connection.php');
-require_once('CafeteriaApp.Backend/session.php');
-require_once ('CheckResult.php');
+require('CafeteriaApp.Backend/Controllers/Location.php');
+require('CafeteriaApp.Backend/connection.php');
+require('CafeteriaApp.Backend/session.php');
+require('CheckResult.php');
+require('TestRequestInput.php');
 
-if ($_SERVER['REQUEST_METHOD']=="GET")
+if ($_SERVER['REQUEST_METHOD'] == "GET")
 {
-  if (isset($_GET["userId"]))
+  if (isset($_GET["userId"]) && test_int($_GET["userId"]))
   {
     checkResult(getUserLocations($conn,$_GET["userId"]));
   }
 }
 
-if ($_SERVER['REQUEST_METHOD']=="POST")
+if ($_SERVER['REQUEST_METHOD'] == "POST")
 {
   $data = json_decode(file_get_contents("php://input"));
-  if (isset($data->PlaceId) && isset($data->PlaceName) && isset($data->PlaceAddress) && isset($data->UserId))
+  if (isset($data->UserId) && test_int($data->UserId) && normalize_string($conn,$data->PlaceName,$data->PlaceId,$data->PlaceAddress))
   {
     addLocation($conn,$data->PlaceId,$data->PlaceName,$data->PlaceAddress,$data->UserId);
   }
@@ -56,6 +57,6 @@ if ($_SERVER['REQUEST_METHOD']=="POST")
 //   }
 // }
 
-require_once("CafeteriaApp.Backend/footer.php");
+require('CafeteriaApp.Backend/footer.php');
 
 ?>

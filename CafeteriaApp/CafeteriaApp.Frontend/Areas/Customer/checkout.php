@@ -1,10 +1,10 @@
 <?php
 
-  require_once('CafeteriaApp.Backend/functions.php');
+  require('CafeteriaApp.Backend/functions.php');
 
   validatePageAccess($conn);
 
-  require_once('CafeteriaApp.Frontend/Areas/Customer/layout.php');
+  require('CafeteriaApp.Frontend/Areas/Customer/layout.php');
 
 ?>
 
@@ -14,10 +14,10 @@
 
   <link rel="stylesheet" type="text/css" href="/CafeteriaApp.Frontend/css/map.css">
 
-  <script src="/CafeteriaApp.Frontend/javascript/show_location.js"></script>
-
   <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 
+  <script src="/CafeteriaApp.Frontend/javascript/calculate_distance_given_longitude_and_latitude.js"></script>
+ 
   <script src="/CafeteriaApp.Frontend/javascript/checkout.js"></script>
 
 </head>
@@ -149,25 +149,23 @@
 
     <br>
 
-    <div ng-show="selectedType.id == 1">
+    <div class="wrapper">
+   
+      <div id="map">
 
-      <div class="wrapper">
-     
-        <div id="map">
+        <span class="helper">Click the button below to show your location on the map</span>
 
-          <span class="helper">Click the button below to show your location on the map</span>
+      </div>
 
-        </div>
+      <br>
 
-        <br>
+      <a ng-show="my == 0" ng-click="findPlaceLocation(closestPlace.geometry.location,1)" style="display:block;margin:auto;cursor:pointer">Find My Location</a>
 
-        <a ng-click="currentLocation()" style="display:block;margin:auto;cursor:pointer">Find My Location</a>
+      <a ng-show="my == 1" ng-click="findPlaceLocation(closestPlace.geometry.location)" style="display:block;margin:auto;cursor:pointer">Find Closest Location</a>
 
-        <br>
+      <br>
 
-      </div><!--End Wrapper-->
-      
-    </div>
+    </div><!--End Wrapper-->
 
     <input type="submit" class="btn btn-primary" name="next" value="Next" />
     &nbsp;&nbsp;&nbsp;
@@ -182,4 +180,4 @@
 
 </div>
 
-<?php require_once('CafeteriaApp.Frontend/Areas/footer.php'); ?>
+<?php require('CafeteriaApp.Frontend/Areas/footer.php'); ?>

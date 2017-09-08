@@ -1,12 +1,14 @@
 <?php
 
-require_once( 'CafeteriaApp.Backend/Controllers/Cafeteria.php');
-require_once("CafeteriaApp.Backend/connection.php");
-require_once ('CheckResult.php');
+require('CafeteriaApp.Backend/Controllers/Cafeteria.php');
+require('CafeteriaApp.Backend/connection.php');
+require('CafeteriaApp.Backend/session.php');
+require('CheckResult.php');
+require('TestRequestInput.php');
 
-if ($_SERVER['REQUEST_METHOD']=="GET")
+if ($_SERVER['REQUEST_METHOD'] == "GET")
 {
-  if (isset($_GET["id"]))
+  if (isset($_GET["id"]) && test_int($_GET["id"]) && $_SESSION["roleId"] == 1)
   {
     checkResult(getCafeteriaById($conn,$_GET["id"]));
   }
@@ -16,53 +18,46 @@ if ($_SERVER['REQUEST_METHOD']=="GET")
   }
 }
 
-if ($_SERVER['REQUEST_METHOD']=="POST")
+if ($_SERVER['REQUEST_METHOD'] == "POST")
 {
-  $data = json_decode(file_get_contents("php://input"));
-  if (!isset($data->Image))
+  if ($_SESSION["roleId"] == 1)
   {
-    addCafeteria($conn,$data->Name);
-  }
-  elseif (isset($data->Name) && $data->Name != null)
-  {
-    addCafeteria($conn,$data->Name,$data->Image);
+    $data = json_decode(file_get_contents("php://input"));
+    if (normalize_string($conn,$data->Name,$data->Image))
+    {
+      addCafeteria($conn,$data->Name,$data->Image);
+    }
   }
 }
 
-if ($_SERVER['REQUEST_METHOD']=="PUT")
+if ($_SERVER['REQUEST_METHOD'] == "PUT")
 {
-  //decode the json data
-  $data = json_decode(file_get_contents("php://input"));
-  if (isset($data->Name) && isset($data->Id) && $data->Name != null && $data->Id != null)
+  if ($_SESSION["roleId"] == 1)
   {
-    if (!isset($data->Image))
-    {
-      editCafeteria($conn,$data->Name,$data->Id);
-    }
-    else
+    //decode the json data
+    $data = json_decode(file_get_contents("php://input"));
+    if (isset($data->Id) && test_int($data->Id) && normalize_string($conn,$data->Name,$data->Image))
     {
       editCafeteria($conn,$data->Name,$data->Id,$data->Image);
     }
   }
-  else
-  {
-    echo "name is required";
-  }
 }
 
-if ($_SERVER['REQUEST_METHOD']=="DELETE")
+if ($_SERVER['REQUEST_METHOD'] == "DELETE")
 {
-  $cafeteriaIdToDelete = $_GET["cafeteriaId"];
-  if ($cafeteriaIdToDelete != null)
+  if ($_SESSION["roleId"] == 1)
   {
-    deleteCafeteria($conn,$cafeteriaIdToDelete);
-  }
-  else
-  {
-    echo "No Id is provided";
+    if (isset($_GET["cafeteriaId"]) && test_int($_GET["cafeteriaId"]))
+    {
+      deleteCafeteria($conn,$_GET["cafeteriaId"]);
+    }
+    else
+    {
+      //echo "No Id is provided";
+    }
   }
 }
 
-require_once("CafeteriaApp.Backend/footer.php");
+require('CafeteriaApp.Backend/footer.php');
 
 ?>

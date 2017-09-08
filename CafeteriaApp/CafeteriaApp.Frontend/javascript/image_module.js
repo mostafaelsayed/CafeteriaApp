@@ -28,6 +28,8 @@ imageApp.directive('fileDropzone', function() {
         var _ref;
         if (((_ref = attrs.maxFileSize) === (void 0) || _ref === '') || (size / 1024) / 1024 < attrs.maxFileSize) {
           return true;
+        } else if (attrs.maxFileSize == 0) {
+          alert("File must exists");
         } else {
           alert("File must be smaller than " + attrs.maxFileSize + " MB");
           return false;

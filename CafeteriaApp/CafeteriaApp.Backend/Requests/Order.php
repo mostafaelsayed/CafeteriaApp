@@ -1,28 +1,29 @@
 <?php
 
-require_once( 'CafeteriaApp.Backend/Controllers/Order.php');
-require_once( 'CafeteriaApp.Backend/Controllers/Times.php');
-require_once("CafeteriaApp.Backend/connection.php");
-require_once ('CheckResult.php');
-require_once('PayPal/start.php');
-require_once('PayPal/pay.php');
+require('CafeteriaApp.Backend/connection.php');
+require('CafeteriaApp.Backend/session.php');
+require('CafeteriaApp.Backend/Controllers/Order.php');
+require('CafeteriaApp.Backend/Controllers/Times.php');
+require('CheckResult.php');
+require('TestRequestInput.php');
+require('PayPal/start.php');
+require('PayPal/pay.php');
 
-if ($_SERVER['REQUEST_METHOD']=="GET")
+if ($_SERVER['REQUEST_METHOD'] == "GET")
 {
-  if (isset($_GET["orderId"]) && !isset($_GET["flag"]))
+  if (isset($_GET["orderId"]) && !isset($_GET["flag"]) && test_int($_GET["orderId"]))
   {
     $Duration = calcOpenOrderDeliveryTime($conn,$_GET["orderId"]);
-    $time = time("h:i:00")+($Duration*60);
-    $time =date("h:i:00",$time);
+    $time = time("h:i:00") + ($Duration * 60);
+    $time = date("h:i:00",$time);
     $Id = getTimeIdByTime($conn,$time);
-    //echo json_encode(array("Id"=>(string)$Id , "Duration"=>(string)$Duration));
-    checkResult(array("Id"=>(string)$Id , "Duration"=>(string)$Duration));
+    checkResult(array("Id" => (string)$Id , "Duration" => (string)$Duration));
   }
-  elseif (isset($_GET["orderId"]) && isset($_GET["flag"]))
+  elseif (isset($_GET["orderId"]) && isset($_GET["flag"]) && test_int($_GET["orderId"],$_GET["flag"]))
   {
     checkResult(getOrderDetails($conn,$_GET["orderId"]));
   }
-  elseif(isset($_GET['flag']))
+  elseif (isset($_GET['flag']) && test_int($_GET["flag"]))
   {
     checkResult(getOrders($conn));
   }
@@ -32,15 +33,19 @@ if ($_SERVER['REQUEST_METHOD']=="GET")
   }
 }
 
-if ($_SERVER['REQUEST_METHOD']=="POST")
+if ($_SERVER['REQUEST_METHOD'] == "POST")
 {
-  if (isset($_POST["orderId"]) && !isset($_POST["paymentId"]))
+  if (isset($_POST["orderId"],$_POST["deliveryTimeId"]) && normalize_string($conn,$_POST["deliveryPlace"]) && test_int($_POST["orderId"],$_POST["deliveryTimeId"]))
   {
-    processPayment($conn,$_POST["orderId"],$_POST["selectedMethodId"],$_POST["deliveryPlace"],$_POST["deliveryTimeId"],$paypal);
-  }
-  elseif (isset($_POST["paymentId"]))
-  {
-    chargeCustomer($_POST["paymentId"],$_POST["payerId"],$paypal,$_POST["orderId"],$_POST["deliveryTimeId"],$_POST["deliveryPlace"],$_POST["paymentMethodId"],$conn);
+    if (isset($_POST["selectedMethodId"]) && !isset($_POST["paymentId"]) && test_int($_POST["selectedMethodId"]))
+    {
+      processPayment($conn,$_POST["orderId"],$_POST["selectedMethodId"],$_POST["deliveryPlace"],$_POST["deliveryTimeId"],$paypal);
+    }
+  
+    elseif (isset($_POST["paymentMethodId"]) && normalize_string($conn,$_POST["paymentId"],$_POST["payerId"]) && test_int($_POST["paymentMethodId"]))
+    {
+      chargeCustomer($_POST["paymentId"],$_POST["payerId"],$paypal,$_POST["orderId"],$_POST["deliveryTimeId"],$_POST["deliveryPlace"],$_POST["paymentMethodId"],$conn);
+    }
   }
 }
 
@@ -53,14 +58,17 @@ if ($_SERVER['REQUEST_METHOD']=="POST")
   
 // }
 
-if ($_SERVER['REQUEST_METHOD']=="DELETE")
+if ($_SERVER['REQUEST_METHOD'] == "DELETE")
 {
-  if (isset($_GET["orderId"]) && $_GET["orderId"] != null)
+  if ($_SESSION["roleId"] == 1)
   {
-    deleteOpenOrderById($conn,$_GET["orderId"]);
+    if (isset($_GET["orderId"]) && test_int($_GET["orderId"]))
+    {
+      deleteOpenOrderById($conn,$_GET["orderId"]);
+    }
   }
 }
 
-require_once("CafeteriaApp.Backend/footer.php");
+require('CafeteriaApp.Backend/footer.php');
 
 ?>

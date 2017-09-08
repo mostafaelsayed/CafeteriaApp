@@ -2,29 +2,19 @@
 
 <?php
 
-  require_once("CafeteriaApp.Backend/functions.php");
+  require('CafeteriaApp.Backend/functions.php');
 
   validatePageAccess($conn);
 
-  include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
+  require('CafeteriaApp.Frontend/Areas/Admin/layout.php');
 
 ?>
 
 <head>
 
-  <!-- modal modules -->
-  <script src="/CafeteriaApp.Frontend/javascript/angular-modal-service.js"></script>
-
-  <script src="/CafeteriaApp.Frontend/javascript/ui-bootstrap-2.5.0.js"></script>
-
-  <script src="/CafeteriaApp.Frontend/javascript/ui-bootstrap-tpls-2.5.0.js"></script>
-
-  <script src="/CafeteriaApp.Frontend/javascript/modal_controller.js"></script>
-
-  <script src="/CafeteriaApp.Frontend/javascript/modal.js"></script>
-  <!-- end modal modules -->
-
   <script src="/CafeteriaApp.Frontend/javascript/show_and_delete_users.js"></script>
+
+  <?php require('CafeteriaApp.Frontend/Areas/Admin/modal_includes.php'); ?>
 
 </head>
 
@@ -37,44 +27,6 @@
 <div class="row" ng-app="show_and_delete_users">
 
   <div ng-controller="showAndDeleteUsers">
-  
-    <script type="text/ng-template" id="modal.html">
-
-      <div class="modal fade" id="mymodal">
-
-        <div class="modal-dialog">
-
-          <div class="modal-content">
-
-            <div class="modal-header">
-
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-
-              <h4 class="modal-title">Are You Sure You Want To Delete This User?</h4>
-
-            </div>
-
-            <div class="modal-body">
-
-              <p>It's your call...</p>
-
-            </div>
-
-            <div class="modal-footer">
-
-              <button type="button" class="btn btn-default" ng-click="close('No')" data-dismiss="modal">No</button>
-
-              <button type="button" class="btn btn-primary" ng-click="close('Yes')" data-dismiss="modal">Yes</button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </script>
 
     <div style="margin:auto">
 

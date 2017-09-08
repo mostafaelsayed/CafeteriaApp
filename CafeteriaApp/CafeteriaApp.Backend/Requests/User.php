@@ -1,23 +1,20 @@
 <?php
 
-require_once('CafeteriaApp.Backend/Controllers/User.php');
-require_once('CafeteriaApp.Backend/session.php');
-require_once('CafeteriaApp.Backend/Controllers/Customer.php');
-require_once('CafeteriaApp.Backend/Controllers//Admin.php');
-require_once('CafeteriaApp.Backend/Controllers/Cashier.php');
-require_once('CafeteriaApp.Backend/connection.php');
-require_once('CheckResult.php');
-require_once('TestRequestInput.php');
+require('CafeteriaApp.Backend/Controllers/User.php');
+//require('CafeteriaApp.Backend/session.php');
+//require('CafeteriaApp.Backend/connection.php');
+require('CheckResult.php');
+require('TestRequestInput.php');
 
 if ($_SERVER['REQUEST_METHOD'] == "GET")
 {
   if ($_SESSION["roleId"] == 1) // admin only can call these methods
   {
-    if (isset($_GET["userId"]) && $_GET["userId"] != null)
+    if (isset($_GET["userId"]) && test_int($_GET["userId"]))
     {
       checkResult(getUserById($conn,$_GET["userId"]));
     }
-    else 
+    else
     {
       checkResult(getUsers($conn));
     }
@@ -30,9 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST")
   {
     //decode the json data
     $data = json_decode(file_get_contents("php://input"));
-    $result = test_user_input($conn,$data);
-    if ($result)
+    $result = (normalize_string($conn,$data->UserName,$data->FirstName,$data->LastName,$data->Password) && test_phone($data->PhoneNumber) && test_email($data->Email));
+    if ($result && isset($data->RoleId) && test_int($data->RoleId))
     {
+      normalize_string($conn,$data->Image);
       echo addUser($conn,$data->UserName,$data->FirstName,$data->LastName,$data->Image,$data->Email,$data->PhoneNumber,$data->Password,$data->RoleId,1);
     }
   }
@@ -44,9 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] == "PUT")
   {
     //decode the json data
     $data = json_decode(file_get_contents("php://input"));
-    $result = test_user_input($conn,$data);
-    if ($result)
+    $result = (normalize_string($conn,$data->UserName,$data->FirstName,$data->LastName) && test_phone($data->PhoneNumber) && test_email($data->Email));
+    if ($result && isset($data->RoleId,$data->Id) && test_int($data->RoleId,$data->Id))
     {
+      echo 1;
+      normalize_string($conn,$data->Image);
       editUser($conn,$data->UserName,$data->FirstName,$data->LastName,$data->Email,$data->Image,$data->PhoneNumber,$data->RoleId,$data->Id);
     }
   }
@@ -57,13 +57,13 @@ if ($_SERVER['REQUEST_METHOD'] == "DELETE")
   if ($_SESSION["roleId"] == 1)
   {
     //decode the json data
-    if (isset($_GET["userId"]) && $_GET["userId"] != null)
+    if (isset($_GET["userId"]) && test_int($_GET["userId"]))
     {
       deleteUser($conn,$_GET["userId"]);
     }
   }
 }
 
-require_once("CafeteriaApp.Backend/footer.php");
+require('CafeteriaApp.Backend/footer.php');
 
 ?>

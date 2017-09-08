@@ -1,10 +1,10 @@
 <?php
 
-  require_once('CafeteriaApp.Backend/functions.php');
+  require('CafeteriaApp.Backend/functions.php');
 
   validatePageAccess($conn);
 
-  include('CafeteriaApp.Frontend/Areas/Admin/layout.php');
+  require('CafeteriaApp.Frontend/Areas/Admin/layout.php');
   
 ?>
 
@@ -125,6 +125,26 @@
             Phone Number is Required
 
             <br>
+
+          </span>
+
+          <br>
+
+          <div><label>Image</label></div>
+
+          <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="3">
+
+          </div>
+
+          <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile">
+
+          <img ng-src="{{ uploadme.src }}" style="width:300px;height:300px">
+
+          <span>
+
+            <button class="btn btn-primary" onclick="mylabel.click()" style="position:absolute;margin-top:150px">Choose image</button>
+
+            <label id="mylabel" for="file"></label>
 
           </span>
 

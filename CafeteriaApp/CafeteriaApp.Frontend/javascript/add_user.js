@@ -49,6 +49,8 @@ add_userApp.controller('addUser',['$scope','$http',function($scope,$http) {
 	$scope.phoneNumber = "";
 	$scope.password = "";
 	$scope.confirmPassword = "";
+  $scope.uploadme = {};
+  $scope.uploadme.src = '';
 
 	$scope.$on('getYourUserData',function() {
 
@@ -56,7 +58,7 @@ add_userApp.controller('addUser',['$scope','$http',function($scope,$http) {
 			UserName: $scope.userName,
 			FirstName: $scope.firstName,
 			LastName: $scope.lastName,
-			Image: "image",
+			Image: $scope.uploadme.src.split(',')[1],
 			Email: $scope.email,
 			Password: $scope.password,
       ConfirmPassword: $scope.confirmPassword,
