@@ -92,7 +92,7 @@
 <ul>
 	<h4>About us</h4>
 	<li><a href="#">Our History</a></li>
-	<li><a href="#">Our Story</a></li>
+	<li><a href="/CafeteriaApp.Frontend/Views/gallery.php">Our Gallery</a></li>
 	<li><a href="/CafeteriaApp.Frontend/Views/Branches.php">Our Branches</a></li>
 
 </ul>

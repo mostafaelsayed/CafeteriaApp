@@ -18,14 +18,14 @@ function test_email(&$value)
 	return (filter_var($value,FILTER_VALIDATE_EMAIL));
 }
 
-function normalize_string($conn,&...$values)
+function normalize_string($conn,&$values)
 {
 	foreach ($values as &$value)
 	{
 		$value = trim($value);
 		if ($value !== "")
 		{
-			$value = str_replace('&','and',$value);
+			$value = str_replace('&','and',$value);//??????????
 			$value = mysqli_real_escape_string($conn,$value);
 			$value = htmlspecialchars($value);
 		}

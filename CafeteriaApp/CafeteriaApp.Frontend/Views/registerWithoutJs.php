@@ -1,3 +1,110 @@
+
+<?php
+require_once("CafeteriaApp.Backend/validation_functions.php");
+require_once( 'CafeteriaApp.Backend/Controllers/User.php');
+require_once("CafeteriaApp.Backend/connection.php");
+require_once("TestRequestInput.php");
+
+
+$upload_errors = array(UPLOAD_ERR_OK => "no errors",
+				UPLOAD_ERR_INI_SIZE => "larger than upload_max_file_size",
+				UPLOAD_ERR_FORM_SIZE => "larger than form max_file_size",
+				UPLOAD_ERR_PARTIAL => "partial upload",
+				UPLOAD_ERR_NO_FILE => "no file",
+				UPLOAD_ERR_NO_TMP_DIR => "NO temporary directory",
+				UPLOAD_ERR_CANT_WRITE => "can't write to disk",
+				UPLOAD_ERR_EXTENSION => "file upload stopped by extension"
+				 );
+
+
+		$username=false;
+		$password=false;
+		$firstName=false;
+		$lastName=false;
+		$gender=false; // need a span
+		$email=false;
+		$phone=false;
+		$dob=false;
+
+
+if (isset($_POST['submit'])) {
+
+	if (!normalize_string($conn,($_POST['userName'])))  {
+		$username=true;
+	}
+	if (!normalize_string($conn,($_POST['password']))) {
+		$password=true;
+	}
+	if(!normalize_string($conn,($_POST['firstName'])))  {
+		$firstName=true;
+	}
+	if(!normalize_string($conn,($_POST['lastName'])))  {
+		$lastName=true;
+	}
+
+	if(!isset($_POST['gender']) || !is_int($_POST['gender'])) {
+			$gender=true; 
+	}
+
+	if(!normalize_string($conn,($_POST['email']))) {
+		$email=true;
+	}
+	if(!normalize_string($conn,($_POST['phone']))) {
+		$phone=true;
+	}
+	if (!normalize_string($conn,($_POST['dob']))) {
+		$dob=true;
+	}
+
+	if($_FILES['image']['error'] > 0 && $_FILES['image']['error']!==4) 
+	{
+		$uploadErrorMessage=$upload_errors[$_FILES['image']['error']];
+
+	}
+
+	if(!$username&&!$password&&!$firstName&&!$lastName&&!$gender&&!$email&&!$phone&&!$dob)//all constraints achieved
+	{	
+		$emailExists = checkExistingEmail($conn,$_POST['email']);
+        $usernameExists = checkExistingUserName($conn,$_POST['userName'],true);
+
+ 		 if (!$emailExists && !$usernameExists)//total success
+        {
+        	//$fields_with_max_lengths = array($data->userName  => 100 , $data->firstName=>50 ,$data->lastName=>50,$data->phone=>13, $data->email=>100,$data->password=>100 );
+        	//validate_max_lengths($fields_with_max_lengths);
+           //test_date_of_birth($data->dob)
+
+        	//handling image uploaded
+        	$temp_name=$_FILES['image']['tmp_name'];
+        	$target_file=basename($_FILES['image']['name']);
+        	$upload_direc="CafeteriaApp.Backend/uploads/";
+        	move_uploaded_file($temp_name, $upload_direc.$target_file);//return true on success
+
+ 		 $roleId = getRoleIdByName($conn,'Customer');
+
+		$localeId=1;
+
+		  $user_id = addUser($conn,$_POST['userName'],$_POST['firstName'],$_POST['lastName'],$Image,$_POST['email'],$_POST['phone'],$_POST['password'] ,$roleId, $localeId);
+
+		  $customer_id = addCustomer($conn,0.0,$dob,$user_id,$_POST['gender']);
+
+
+
+        }
+       
+
+	}
+
+	}
+	else{ // if at first time load not submitting the form
+
+		
+
+	}
+
+ ?>
+
+
+
 <!DOCTYPE html>
 
 <html>
@@ -26,7 +133,6 @@
     <script src="/CafeteriaApp.Frontend/javascript/ui-bootstrap-tpls-2.5.0.js"></script>
     <script src="/CafeteriaApp.Frontend/javascript/angular-modal-service.js"></script>
     <!-- <script src="/CafeteriaApp.Frontend/javascript/myapp.js"></script> -->
-    <script src= "/CafeteriaApp.Frontend/Views/register.js"></script>
     <script src="/CafeteriaApp.Frontend/javascript/alertify.min.js"></script>
   </head>
 
@@ -64,17 +170,18 @@
 
         <!-- enctype="multipart/form-data" -->
 
-      <form novalidate role="form" name="myform" style="width:40%;margin:auto;text-align:center">
+      <form novalidate method="post" action="registerWithoutJs.php" enctype="multipart/from-data" style="width:40%;margin:auto;text-align:center">
    
           <div class="input-field col s12">
 
             <label for="un">User Name</label>
 
-            <input id="un" type="text" name="userName" ng-model="userName" style="text-align: center;" ng-maxlength="30" ng-required />
+            <input id="un" type="text" name="userName"  style="text-align: center;" ng-maxlength="30" required />
 
-            <span ng-cloak ng-show="myform.name.$touched  && myform.userName.$invalid">User Name is required.</span>
+            <span ng-cloak ng-show="<?php echo $username; ?>">User Name is required !</span>
+            <span ng-cloak ng-show="<?php echo $usernameExists; ?>">User Name already exists !</span>
 
-            <span ng-cloak ng-show="myform.name.$touched &&myform.userName.$invalid">User Name must be less than 30 character or numbers .</span>
+            <span ng-cloak ng-show="<?php echo false; ?>">User Name must be less than 30 character or numbers .</span>
 
           </div>
 
@@ -82,9 +189,9 @@
 
             <label for="ps">Password</label>
 
-            <input id="ps" type="password" name="password" ng-model="password" style="text-align: center;" required/>
+            <input id="ps" type="password" name="password"  style="text-align: center;" required/>
 
-            <span ng-cloak ng-show=" myform.name.$touched  && myform.password.$invalid">Password is required.</span>
+            <span ng-cloak ng-show="<?php echo $password; ?>">Password is required.</span>
 
           </div>
 
@@ -92,9 +199,9 @@
 
             <label for="fn">First Name</label>
 
-            <input id="fn" type="text" name="firstName" ng-model="firstName" style="text-align: center;" required/>
+            <input id="fn" type="text" name="firstName"  style="text-align: center;" required/>
 
-            <span ng-cloak ng-show="myform.name.$touched  && myform.firstName.$invalid">First Name is required.</span>
+            <span ng-cloak ng-show="<?php echo $firstName; ?>">First Name is required.</span>
 
           </div>
 
@@ -102,44 +209,50 @@
 
             <label for="ln">Last Name</label>
 
-            <input id="ln" type="text" name="lastName" ng-model="lastName" style="text-align: center;" required/>
+            <input id="ln" type="text" name="lastName"  style="text-align: center;" required/>
 
-            <span ng-cloak ng-show=" myform.name.$touched  && myform.lastName.$invalid" >Last Name is required.</span>
+            <span ng-cloak ng-show="<?php echo $lastName; ?>" >Last Name is required.</span>
 
             <div><br><br></div>
 
           </div>
 
+
+		<div>
           <label class="labels" style="font-size: 16px">Gender</label><br>
 
           <br>
 
-          <input class="with-gap" name="gender" ng-model="gender" type="radio" id="male" value="1" required />
+          <input class="with-gap" name="gender"  type="radio" id="male" value="1" required />
 
           <label for="male">Male</label>
 
           <br>
 
-          <input class="with-gap" name="gender" ng-model="gender" type="radio" id="female" value="2" required/>
+          <input class="with-gap" name="gender"  type="radio" id="female" value="2" required/>
 
           <label for="female" style="margin-right: -16px">Female</label>
 
           <br>
 
-          <input class="with-gap" name="gender" ng-model="gender" type="radio" id="other" value="3" required />
+          <input class="with-gap" name="gender"  type="radio" id="other" value="3" required />
 
           <label for="other" style="margin-right: -5px">Other</label>
-            <h3 ng-cloak ng-show="  myform.gender.$touched  && myform.gender.$invalid" >Gender is required.</h3>
+            <h3 ng-cloak ng-show="<?php echo false; ?>" >Gender is required.</h3>
 
           <br><br>
+            <span ng-cloak ng-show="<?php echo $gender; ?>">Gender is required.</span>
+			</div>
+
 
           <div class="input-field col s12">
 
             <label for="em">E-mail</label>
 
-            <input id="em" type="text" name="email" ng-model="email" style="text-align: center;" required/>
+            <input id="em" type="text" name="email"  style="text-align: center;" required/>
 
-            <span id="emailConfirm" ng-cloak ng-show=" myform.name.$touched  && myform.email.$invalid" >Email is required.</span>
+            <span id="emailConfirm" ng-cloak ng-show="<?php echo $email; ?>" >Email is required!</span>
+            <span  ng-cloak ng-show="<?php echo $emailExists; ?>" >Email already exists !</span>
 
           </div>
 
@@ -147,9 +260,9 @@
 
             <label for="pn">Phone Number</label>
 
-            <input id="pn" type="text" name="phone" ng-model="phone" style="text-align: center;" required />
+            <input id="pn" type="text" name="phone"  style="text-align: center;" required />
 
-            <span ng-cloak ng-show=" myform.name.$touched  && myform.phone.$invalid" >Phone Number is required.</span>
+            <span ng-cloak ng-show="<?php echo $phone; ?>" >Phone Number is required.</span>
 
           </div>
 
@@ -157,19 +270,20 @@
 
             <!-- <i class="material-icons prefix">today</i> -->
 
-            <input id="DOB" name="DOB" type="date" class="datepicker"  ng-model="DOB" required />
+            <input id="DOB" name="dob" type="date" class="datepicker"   required />
 
-            <span ng-cloak ng-show="myform.name.$touched  && myform.DOB.$invalid">Date of Birth is required.</span>
+            <span ng-cloak ng-show="<?php echo $dob; ?>" >Date of Birth is required.</span>
 
             <label for="DOB">Date of Birth</label>
 
           </div>
 
+
           <div class="input-field col s12">
       
             <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="3">
           
-              <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile">
+              <input type="file" fileread="uploadme.src" name="image" id="file" class="inputfile">
 
               <img ng-src="{{uploadme.src}}" width="200" height="200" id="profileImage">
 
@@ -189,9 +303,9 @@
 
           </div>
        
-          <input id="save" type="submit" class="btn btn-primary" name="submit" value="Next" ng-click="registerfn()" />
+          <input id="save" type="submit" class="btn btn-primary" name="submit" value="Next" " />
 
-          <input type="submit" name="cancel" class="btn btn-primary" value="Reset" id="cancel" ng-click="cancel()"/>
+          <input type="submit" name="cancel" class="btn btn-primary" value="Reset" id="cancel" "/>
           
         </form>
 
@@ -243,3 +357,27 @@
         // });
 
  ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	
+var registerApp = angular.module('register',[]);
+
+registerApp.controller('Register',['$scope','$http',function($scope,$http) {
+	}]);
+</script>

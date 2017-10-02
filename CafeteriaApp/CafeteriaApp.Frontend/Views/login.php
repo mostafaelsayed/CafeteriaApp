@@ -102,12 +102,12 @@ if (isset($_POST['submit']))
         }
       } //3ala 7asab                               
     }
-
-   
     else
     {
       // Failure
+      //echo "<script type=\"text/javascript\">console.log(2);</script>";
       $_SESSION["message"] = "Username/password not found.";
+      
     }
   }
 }
@@ -183,7 +183,7 @@ elseif (isset($_SESSION["userId"] ) && isset($_SESSION["userName"]) && isset($_S
           </div>
 
           <br><br>
-
+ 
           <input type="submit" class="btn" name="submit" value="Next" />
 
         </form>

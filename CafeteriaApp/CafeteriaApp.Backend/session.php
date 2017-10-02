@@ -7,7 +7,7 @@
 	// to use session to send a message to another page
 	function message() {
 		if (isset($_SESSION["message"])) {
-			$output = "<div class=\"message\">";
+			$output = "<div class=\"error\">";
 			$output .= ($_SESSION["message"]);
 			$output .= "</div>";
 			

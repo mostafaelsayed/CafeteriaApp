@@ -167,7 +167,7 @@
 
         </table>
 
-        <div ng-show="menuItems.indexOf(m) < menuItems.length-1"><hr width="100%"></div>
+        <div ng-cloak ng-show="menuItems.indexOf(m) < menuItems.length-1"><hr width="100%"></div>
 
       </div>
 
@@ -177,7 +177,7 @@
 
     <div class="col-lg-5" style="margin:10px">
 
-      <table class="table table-bordered" ng-show="orderItems.length > 0">
+      <table class="table table-bordered" ng-cloak  ng-show="orderItems.length > 0">
 
         <thead>
 
@@ -205,7 +205,7 @@
 
             <td ng-bind="o.TotalPrice" id="thead"></td>
 
-            <td ng-show="orderItems.length>0">
+            <td ng-cloak ng-show="orderItems.length>0">
 
               <a title="Increase Quantity" ng-click="increaseQuantity(o)" class="btn"><i class="fa fa-plus"></i></a>
 
@@ -225,7 +225,7 @@
 
       <div style="align-content: center;text-align:center">
 
-        <a style="font-style:italic;color:white" class="btn btn-info btn-lg " ng-href="/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}" ng-show="orderItems.length > 0" target="_self">Checkout</a>
+        <a style="font-style:italic;color:white" class="btn btn-info btn-lg " ng-href="/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}"  ng-cloak ng-show="orderItems.length > 0" target="_self">Checkout</a>
 
       </div>
 
