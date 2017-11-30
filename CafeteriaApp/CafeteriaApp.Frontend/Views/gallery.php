@@ -1,9 +1,9 @@
     <?php
-  require_once('CafeteriaApp.Frontend/Areas/Customer/layout.php');
+  require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/layout.php');
 
    ?>
 
-      <link href="/CafeteriaApp.Frontend/css/magnific-popup.css" rel="stylesheet" type="text/css">
+      <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/magnific-popup.css" rel="stylesheet" type="text/css">
 
 <style type="text/css">
 	
@@ -104,7 +104,7 @@ html {
 
 <li>
 <div class="img__wrap">
- <a href="/CafeteriaApp.Frontend/images/bbig3.jpg"  data-group="1" class="galleryItem test"><img src="/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
+ <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test"><img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
   <div class="img__description_layer">
     <p class="img__description">This image looks super neat.</p>
   </div>
@@ -114,7 +114,7 @@ html {
 
 <li>
 <div class="img__wrap">
- <a  href="/CafeteriaApp.Frontend/images/bbig4.jpg" data-group="1" class="galleryItem test123"><img src="/CafeteriaApp.Frontend/images/bbig4.jpg" class="images">
+ <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig4.jpg" data-group="1" class="galleryItem test123"><img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig4.jpg" class="images">
   <div class="img__description_layer">
     <p class="img__description">This image looks super neat.</p>
   </div>
@@ -125,7 +125,7 @@ html {
 
 <li>
 <div class="img__wrap">
- <a href="/CafeteriaApp.Frontend/images/bbig3.jpg"  data-group="1" class="galleryItem test"><img src="/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
+ <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test"><img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
   <div class="img__description_layer">
     <p class="img__description">This image looks super neat.</p>
   </div>
@@ -135,7 +135,7 @@ html {
 
 <li>
 <div class="img__wrap">
- <a href="/CafeteriaApp.Frontend/images/bbig3.jpg"  data-group="1" class="galleryItem test"><img src="/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
+ <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test"><img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
   <div class="img__description_layer">
     <p class="img__description">This image looks super neat.</p>
   </div>
@@ -145,7 +145,7 @@ html {
 
 <li>
 <div class="img__wrap">
- <a href="/CafeteriaApp.Frontend/images/bbig3.jpg"  data-group="1" class="galleryItem test"><img src="/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
+ <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test"><img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
   <div class="img__description_layer">
     <p class="img__description">This image looks super neat.</p>
   </div>
@@ -155,7 +155,7 @@ html {
 
 <li>
 <div class="img__wrap">
- <a href="/CafeteriaApp.Frontend/images/bbig3.jpg"  data-group="1" class="galleryItem test"><img src="/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
+ <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test"><img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
   <div class="img__description_layer">
     <p class="img__description">This image looks super neat.</p>
   </div>
@@ -165,7 +165,7 @@ html {
 
 <li>
 <div class="img__wrap">
- <a href="/CafeteriaApp.Frontend/images/bbig3.jpg"  data-group="1" class="galleryItem test"><img src="/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
+ <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test"><img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
   <div class="img__description_layer">
     <p class="img__description">This image looks super neat.</p>
   </div>
@@ -175,7 +175,7 @@ html {
 
 <li>
 <div class="img__wrap">
- <a href="/CafeteriaApp.Frontend/images/bbig3.jpg"  data-group="1" class="galleryItem test"><img src="/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
+ <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test"><img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
   <div class="img__description_layer">
     <p class="img__description">This image looks super neat.</p>
   </div>
@@ -185,7 +185,7 @@ html {
 
 <li>
 <div class="img__wrap">
- <a href="/CafeteriaApp.Frontend/images/bbig3.jpg"  data-group="1" class="galleryItem test"><img src="/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
+ <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test"><img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
   <div class="img__description_layer">
     <p class="img__description">This image looks super neat.</p>
   </div>
@@ -195,7 +195,7 @@ html {
 
 <li>
 <div class="img__wrap">
- <a href="/CafeteriaApp.Frontend/images/bbig3.jpg"  data-group="1" class="galleryItem test"><img src="/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
+ <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test"><img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
   <div class="img__description_layer">
     <p class="img__description">This image looks super neat.</p>
   </div>
@@ -205,7 +205,7 @@ html {
 
 <li>
 <div class="img__wrap">
- <a href="/CafeteriaApp.Frontend/images/bbig3.jpg"  data-group="1" class="galleryItem test"><img src="/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
+ <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test"><img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
   <div class="img__description_layer">
     <p class="img__description">This image looks super neat.</p>
   </div>
@@ -215,7 +215,7 @@ html {
 
 <li>
 <div class="img__wrap">
- <a href="/CafeteriaApp.Frontend/images/bbig3.jpg"  data-group="1" class="galleryItem test"><img src="/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
+ <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test"><img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
   <div class="img__description_layer">
     <p class="img__description">This image looks super neat.</p>
   </div>
@@ -225,7 +225,7 @@ html {
 
 <li>
 <div class="img__wrap">
- <a href="/CafeteriaApp.Frontend/images/bbig3.jpg"  data-group="1" class="galleryItem test"><img src="/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
+ <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test"><img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
   <div class="img__description_layer">
     <p class="img__description">This image looks super neat.</p>
   </div>
@@ -235,7 +235,7 @@ html {
 
 <li>
 <div class="img__wrap">
- <a href="/CafeteriaApp.Frontend/images/bbig3.jpg"  data-group="1" class="galleryItem test"><img src="/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
+ <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test"><img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
   <div class="img__description_layer">
     <p class="img__description">This image looks super neat.</p>
   </div>
@@ -259,9 +259,9 @@ html {
  	<li></li>
 	<li></li>
  </ol> -->
-<?php require_once('CafeteriaApp.Frontend/Areas/footer.php'); ?>
-  <script src="/CafeteriaApp.Frontend/javascript/jquery-3.2.1.min.js"></script>
-  <script src="/CafeteriaApp.Frontend/javascript/jquery.magnific-popup.min.js"></script>
+<?php require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/footer.php'); ?>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/jquery-3.2.1.min.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/jquery.magnific-popup.min.js"></script>
 <script type="text/javascript">
 	
 	var groups = {};

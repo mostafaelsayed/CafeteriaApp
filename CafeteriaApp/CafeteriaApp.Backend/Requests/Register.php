@@ -1,12 +1,12 @@
 <?php 
  //require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies 
 //require_once("CafeteriaApp.Backend/validation_functions.php"); 
-require_once( 'CafeteriaApp.Backend/Controllers/Role.php');
-require_once( 'CafeteriaApp.Backend/Controllers/User.php');
-require_once( 'CafeteriaApp.Backend/Controllers/Customer.php');
-require_once("CafeteriaApp.Backend/connection.php");
-require 'CafeteriaApp.Frontend/Views/PHPMailer/PHPMailerAutoload.php';
-require_once("TestRequestInput.php");
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Role.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/User.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Customer.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/PHPMailer/PHPMailerAutoload.php');
+require_once('TestRequestInput.php');
 
 
 
@@ -66,7 +66,7 @@ if ($image != null)
       $ifp = fopen($newImageName,"x+");//w+
       fwrite($ifp,base64_decode($image));
       fclose($ifp);
-      $Image = "/CafeteriaApp.Backend/uploads/".$newImageName;
+      $Image = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/".$newImageName;
     }
   
   else{
@@ -105,22 +105,22 @@ if ($image != null)
 
       if($result)
       {
-         echo "/CafeteriaApp.Frontend/Views/confirm.php";// confirm  mail by sending a message and check link
+         echo "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/confirm.php";// confirm  mail by sending a message and check link
       }
       else
-      {    echo "/CafeteriaApp.Frontend/Views/registerfailed.php";
+      {    echo "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/registerfailed.php";
      
       }
              //echo "Customer User Added successfully !";
               }
       else{
 
-        echo "/CafeteriaApp.Frontend/Views/registerfailed.php";
+        echo "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/registerfailed.php";
        // echo "Error: failed to create a Customer user !";
       }
   }
   }
 
-require_once("CafeteriaApp.Backend/footer.php");
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/footer.php');
 
 ?>

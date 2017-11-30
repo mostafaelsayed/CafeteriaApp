@@ -1,6 +1,6 @@
 <?php
 
-require_once('CafeteriaApp.Backend/ImageHandle.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/ImageHandle.php');
 
 function getByCafeteriaId($conn,$id)
 {

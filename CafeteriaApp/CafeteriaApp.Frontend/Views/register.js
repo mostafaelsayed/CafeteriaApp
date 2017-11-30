@@ -17,7 +17,7 @@ registerApp.controller('Register',['$scope','$http',function($scope,$http) {
       email: $scope.email
     };
 
-    $http.post('/CafeteriaApp.Backend/Requests/Register.php',data) 
+    $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Register.php',data) 
     .then(function(response) {
 
       if (response.data === "") {
@@ -47,7 +47,7 @@ registerApp.controller('Register',['$scope','$http',function($scope,$http) {
       password: $scope.password
     };
 
-    $http.put('/CafeteriaApp.Backend/Requests/Register.php',$scope.data) 
+    $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Register.php',$scope.data) 
     .then(function(response) {
        document.location = response.data;
     });

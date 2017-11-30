@@ -1,13 +1,13 @@
-<?php require_once("CafeteriaApp.Backend/Controllers/Notification.php"); 
-require_once("CafeteriaApp.Backend/connection.php"); ?>
+<?php require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Notification.php'); 
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php'); ?>
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-  <link href="/CafeteriaApp.Frontend/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/bootstrap.min.css" rel="stylesheet">
 
-  <script src="/CafeteriaApp.Frontend/javascript/bootstrap.min.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/bootstrap.min.js"></script>
 
         <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
@@ -209,7 +209,7 @@ app.controller('Ctrl',function($scope,$http) {
 
   $scope.getLanguages=function () {
 //$scope.selectedOption ="";
-$http.get('/CafeteriaApp.Backend/Requests/Languages.php')
+$http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Languages.php')
 .then(function(response) {
  $scope.options = response.data;
  $scope.func();

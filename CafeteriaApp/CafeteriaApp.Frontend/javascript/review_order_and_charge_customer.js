@@ -10,7 +10,7 @@ layoutApp.controller('reviewOrderAndChargeCustomer',['$scope','$http','$location
 	$scope.deliveryTimeId = $location.search().deliveryTimeId;
 	$scope.paymentMethodId = $location.search().paymentMethodId;
 
-	$http.get('/CafeteriaApp.Backend/Requests/Order.php?orderId='+$scope.orderId+'&flag='+1)
+	$http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?orderId='+$scope.orderId+'&flag='+1)
 	.then(function(response) {
 		$scope.orderDetails = response.data;
 	 	$scope.total = response.data[0][4];

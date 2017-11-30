@@ -5,7 +5,7 @@ show_and_delete_cafeteriasApp.controller('showAndDeleteCafeterias',['$scope','$h
   $scope.show = function() {
 
     ModalService.showModal({
-      templateUrl: '/CafeteriaApp.Frontend/Templates/Views/modal.html',
+      templateUrl: '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Templates/Views/modal.html',
       controller: "ModalController",
       inputs: {
         name: "cafeteria"
@@ -25,7 +25,7 @@ show_and_delete_cafeteriasApp.controller('showAndDeleteCafeterias',['$scope','$h
 
   $scope.getCafeterias = function() {
 
-    $http.get('/CafeteriaApp.Backend/Requests/Cafeteria.php')
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Cafeteria.php')
     .then(function (response) {
       $scope.cafeterias = response.data;
     });
@@ -39,7 +39,7 @@ show_and_delete_cafeteriasApp.controller('showAndDeleteCafeterias',['$scope','$h
     $scope.show();
 
     $scope.delete = function() {
-     $http.delete('/CafeteriaApp.Backend/Requests/Cafeteria.php?cafeteriaId='+cafeteria.Id)
+     $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Cafeteria.php?cafeteriaId='+cafeteria.Id)
      .then(function(response) {
        $scope.cafeterias.splice($scope.cafeterias.indexOf(cafeteria),1);
      });

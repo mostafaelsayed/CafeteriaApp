@@ -1,7 +1,7 @@
 <?php
 
-require('CafeteriaApp.Backend/functions.php');
-require('CafeteriaApp.Backend/ImageHandle.php');
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/ImageHandle.php');
 
 function getUsers($conn)
 {  

@@ -1,10 +1,10 @@
 <?php
 
-	require('CafeteriaApp.Backend/functions.php');
+	require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
 
   validatePageAccess($conn);
 
-	require('CafeteriaApp.Frontend/Areas/Admin/layout.php');
+	require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/layout.php');
 
 ?>
 
@@ -12,9 +12,9 @@
 
 	<title>Fees</title>
 
-  <?php require('CafeteriaApp.Frontend/Areas/Admin/modal_includes.php'); ?>
+  <?php require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/modal_includes.php'); ?>
 
-	<script src="/CafeteriaApp.Frontend/javascript/show_and_delete_fees.js"></script>
+	<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/show_and_delete_fees.js"></script>
 
 </head>
 
@@ -70,7 +70,7 @@
 
     <div>
 
-      <a id="add" title="Add Fee" href="/CafeteriaApp.Frontend/Areas/Admin/AppSettings/Views/add_fee.php" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
+      <a id="add" title="Add Fee" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/AppSettings/Views/add_fee.php" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
 
     </div>
 
@@ -100,7 +100,7 @@
 
           <td id="alignText" class="center">
 
-          <a type="button" href="/CafeteriaApp.Frontend/Areas/Admin/AppSettings/Views/edit_fee.php?id={{f.Id}}">Edit</a>&nbsp;&nbsp;
+          <a type="button" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/AppSettings/Views/edit_fee.php?id={{f.Id}}">Edit</a>&nbsp;&nbsp;
 
           <a type="button" style="cursor: pointer" ng-click="deleteFee(f)">Delete</a>
 

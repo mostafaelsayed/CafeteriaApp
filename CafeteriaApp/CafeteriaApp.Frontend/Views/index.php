@@ -1,9 +1,9 @@
 <?php
 // Include FB config file && User class
-require_once("CafeteriaApp.Backend/Controllers/Notification.php"); 
-require_once 'fbConfig.php';
-require_once 'fbUser.php';
-//require_once("CafeteriaApp.Backend/functions.php");
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Notification.php'); 
+require_once('fbConfig.php');
+require_once('fbUser.php');
+//require_once("CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php");
 
 if(isset($accessToken)){
     
@@ -104,7 +104,7 @@ if(isset($accessToken)){
         // $output .= '<br/><a href="'.$userData['Link'].'" target="_blank">Click to Visit Facebook Page</a>';
 
         // $output .= '<br/>Logout from <a href="'.$logoutURL.'">Facebook</a>'; 
-        header("Location:/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php");
+        header("Location:/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php");
 
     }
     else

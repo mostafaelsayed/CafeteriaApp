@@ -1,9 +1,9 @@
-	<link rel="stylesheet" type="text/css" href="/CafeteriaApp.Frontend/css/footer.css">
+	<link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/footer.css">
 
 
 				<!-- Advertisments -->
 <div id="ads"  >
-	<img style="width:200px;height:200px;" src="/CafeteriaApp.Frontend/footerIcons/hotOffer.jpg">
+	<img style="width:200px;height:200px;" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/footerIcons/hotOffer.jpg">
 	<a href="">Go to offer</a>
 </div>
 
@@ -65,10 +65,10 @@
 
 <ul id="followUs">
 <h4>Follow Us</h4>
-	<li><a style="color: #475993;" href="#"><img class="footerImage" src="/CafeteriaApp.Frontend/footerIcons/facebook.png">Facebook</a></li>
-	<li><a style="color: #76A9EA;" href="#"><img  class="footerImage" src="/CafeteriaApp.Frontend/footerIcons/twitter.png">Twitter</a></li>
-	<li><a  style="color: #F34A38;" href="#"><img  class="footerImage" src="/CafeteriaApp.Frontend/footerIcons/google-plus.png">Google+</a></li>
-	<li><a  style="color: #F61C0D;" href="#"><img class="footerImage" src="/CafeteriaApp.Frontend/footerIcons/youtube.png">YouTube</a></li>
+	<li><a style="color: #475993;" href="#"><img class="footerImage" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/footerIcons/facebook.png">Facebook</a></li>
+	<li><a style="color: #76A9EA;" href="#"><img  class="footerImage" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/footerIcons/twitter.png">Twitter</a></li>
+	<li><a  style="color: #F34A38;" href="#"><img  class="footerImage" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/footerIcons/google-plus.png">Google+</a></li>
+	<li><a  style="color: #F61C0D;" href="#"><img class="footerImage" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/footerIcons/youtube.png">YouTube</a></li>
 
 </ul>
 
@@ -92,8 +92,8 @@
 <ul>
 	<h4>About us</h4>
 	<li><a href="#">Our History</a></li>
-	<li><a href="/CafeteriaApp.Frontend/Views/gallery.php">Our Gallery</a></li>
-	<li><a href="/CafeteriaApp.Frontend/Views/Branches.php">Our Branches</a></li>
+	<li><a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/gallery.php">Our Gallery</a></li>
+	<li><a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/Branches.php">Our Branches</a></li>
 
 </ul>
 </div>
@@ -109,4 +109,4 @@
 
 </html>
 
-   <script src="/CafeteriaApp.Frontend/javascript/feedback.js" ></script>
+   <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/feedback.js" ></script>

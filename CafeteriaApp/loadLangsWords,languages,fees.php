@@ -1,33 +1,33 @@
 <meta charset="utf-8" />
 
 <?php 
-require_once( 'CafeteriaApp.Backend/Controllers/Languages.php');
-require_once( 'CafeteriaApp.Backend/Controllers/Fee.php');
-require_once( 'CafeteriaApp.Backend/Controllers/Words.php');
-require_once("CafeteriaApp.Backend/connection.php");
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Languages.php');
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Fee.php');
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Words.php');
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
 
-$languages=getLanguages($conn); // MYSQLI_ASSOC
-$fees=getFees($conn); // MYSQLI_ASSOC
+$languages = getLanguages($conn); // MYSQLI_ASSOC
+$fees = getFees($conn); // MYSQLI_ASSOC
 $words = getWords($conn , MYSQLI_NUM); // MYSQLI_ASSOC
 $memcache = memcache_connect('localhost', 11211);
 //print_r($words);
  if ($memcache) {
 
-		$fees2= array();
+		$fees2 = array();
 		$words2 = array();
 
 
 
 	foreach ($fees as $key => $value) {
 			
-		$fees2[$value["Name"]]= $value["Price"];
+		$fees2[$value["Name"]] = $value["Price"];
 
 		}
 
 
 		foreach ($words as $key => $value) {
 			
-		$words2[$value[1]]= $value;// 0 is the index of id
+		$words2[$value[1]] = $value;// 0 is the index of id
 
 		}
 
@@ -57,5 +57,5 @@ else {
 }
 
 
-require_once("CafeteriaApp.Backend/footer.php");
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/footer.php');
  ?>

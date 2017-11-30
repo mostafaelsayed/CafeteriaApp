@@ -1,5 +1,5 @@
 <?php
-include('CafeteriaApp.Backend\connection.php');
+include('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend\connection.php');
 
 // cafeteria table
 // $sql1 = "insert into cafeteria (Name) values (?)";

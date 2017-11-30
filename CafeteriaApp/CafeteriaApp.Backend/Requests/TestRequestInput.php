@@ -3,30 +3,30 @@
 function test_price($value)
 {
 	$value = trim($value);
-	return preg_match('/^\d{0,9}(\.\d{0,9})?$/',$value);
+	return preg_match('/^\d{0,9}(\.\d{0,9})?$/', $value);
 }
 
 function test_date_of_birth($value)
 {
 	$value = trim($value);
-	return preg_match('/^\d{4}-[1-9]([0-9])?-\d{1,2}$/',$value);
+	return preg_match('/^\d{4}-[1-9]([0-9])?-\d{1,2}$/', $value);
 }
 
 function test_email(&$value)
 {
 	$value = trim($value);
-	return (filter_var($value,FILTER_VALIDATE_EMAIL));
+	return ( filter_var($value, FILTER_VALIDATE_EMAIL) );
 }
 
-function normalize_string($conn,&$values)
+function normalize_string($conn, &...$values)
 {
 	foreach ($values as &$value)
 	{
 		$value = trim($value);
 		if ($value !== "")
 		{
-			$value = str_replace('&','and',$value);//??????????
-			$value = mysqli_real_escape_string($conn,$value);
+			$value = str_replace('&', 'and', $value);//??????????
+			$value = mysqli_real_escape_string($conn, $value);
 			$value = htmlspecialchars($value);
 		}
 		else
@@ -37,7 +37,7 @@ function normalize_string($conn,&$values)
 	return true;
 }
 
-function has_max_length($value,$max)
+function has_max_length($value, $max)
 {
 	return strlen($value) <= $max;
 }
@@ -48,7 +48,7 @@ function validate_max_lengths($fields_with_max_lengths)
 	foreach ($fields_with_max_lengths as $field => $max)
 	{
 		$value = trim($field);
-	  	if (!has_max_length($value,$max))
+	  	if ( !has_max_length($value, $max) )
 	  	{
 	   		return false;
 	 	}
@@ -58,7 +58,7 @@ function validate_max_lengths($fields_with_max_lengths)
 function test_phone(&$value)
 {
 	$value = trim($value);
-	if (!(preg_match('/^\d{0,13}$/',$value)))
+	if ( preg_match('/^\d{0,13}$/', $value) )
 	{
 		return false;
 	}
@@ -67,19 +67,18 @@ function test_phone(&$value)
 
 function test_int(&...$values)
 {
-	foreach ($values as &$value)
-	{
-		if (!ctype_digit($value) && !test_int($value))
-		{
-			return false;
-		}
-	}
+	// foreach ($values as &$value) {
+	// 	if ( !ctype_digit($value) && !is_int($value) ) {
+	// 		echo "false integer";
+	// 		return false;
+	// 	}
+	// }
 	return true;
 }
 
 function checkResult($result)
 {
-	if (isset($result))
+	if ( isset($result) )
 	{	
 		echo json_encode($result);
 	}
@@ -90,5 +89,8 @@ function checkResult($result)
 		//exit;
 	}
 }
+
+//$x = "5";
+//test_int($x);
 
 ?>

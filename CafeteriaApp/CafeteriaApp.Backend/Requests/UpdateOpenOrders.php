@@ -1,9 +1,9 @@
 <?php 
-require_once( 'CafeteriaApp.Backend/Controllers/Order.php');
-require_once( 'CafeteriaApp.Backend/Controllers/OrderItem.php');
-require_once('CafeteriaApp.Backend/Controllers/MenuItem.php');
-require_once('CafeteriaApp.Backend/Controllers/Notification.php');
-require_once("CafeteriaApp.Backend/connection.php");
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Order.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/OrderItem.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/MenuItem.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Notification.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "GET")
 {

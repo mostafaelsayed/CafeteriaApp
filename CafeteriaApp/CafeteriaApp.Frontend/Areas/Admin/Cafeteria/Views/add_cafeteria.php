@@ -1,10 +1,10 @@
 <?php
 
-  require('CafeteriaApp.Backend/functions.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
 
   validatePageAccess($conn);
 
-  require('CafeteriaApp.Frontend/Areas/Admin/layout.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/layout.php');
 
 ?>
 
@@ -14,11 +14,11 @@
 
   <title>Adding Cafeteria</title>
 
-  <link href="/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
+  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
 
-  <script src="/CafeteriaApp.Frontend/javascript/image_module.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/image_module.js"></script>
 
-  <script src="/CafeteriaApp.Frontend/javascript/add_cafeteria.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/add_cafeteria.js"></script>
 
 </head>
 

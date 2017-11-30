@@ -13,7 +13,7 @@ edit_category_and_show_and_delete_its_menuitemsApp.controller('editCategory',['$
 
   $scope.getCategory = function() {
 
-    $http.get('/CafeteriaApp.Backend/Requests/Category.php?id='+$scope.categoryId)
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Category.php?id='+$scope.categoryId)
     .then(function(response) {
       $scope.name = response.data.Name;
       $scope.imageUrl = response.data.Image;
@@ -43,7 +43,7 @@ edit_category_and_show_and_delete_its_menuitemsApp.controller('editCategory',['$
         Image: x
       };
 
-      $http.put('/CafeteriaApp.Backend/Requests/Category.php',data)
+      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Category.php',data)
       .then(function(response) {
         window.history.back();
       });
@@ -61,7 +61,7 @@ edit_category_and_show_and_delete_its_menuitemsApp.controller('showAndDeleteMenu
 
   $scope.getMenuItems = function() {
 
-    $http.get('/CafeteriaApp.Backend/Requests/MenuItem.php?categoryId='+$scope.categoryId)
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/MenuItem.php?categoryId='+$scope.categoryId)
     .then(function (response) {
       $scope.menuItems = response.data;
     });
@@ -76,7 +76,7 @@ edit_category_and_show_and_delete_its_menuitemsApp.controller('showAndDeleteMenu
 
     $scope.delete = function() {
       
-      $http.delete('/CafeteriaApp.Backend/Requests/MenuItem.php?menuItemId='+menuItem.Id)
+      $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/MenuItem.php?menuItemId='+menuItem.Id)
       .then(function(response) {
         $scope.menuItems.splice($scope.menuItems.indexOf(menuItem),1);
       });
@@ -87,7 +87,7 @@ edit_category_and_show_and_delete_its_menuitemsApp.controller('showAndDeleteMenu
 
   $scope.show = function() {
     ModalService.showModal({
-      templateUrl: '/CafeteriaApp.Frontend/Templates/Views/modal.html',
+      templateUrl: '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Templates/Views/modal.html',
       controller: "ModalController",
       inputs: {
         name: "menuitem"

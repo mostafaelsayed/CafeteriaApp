@@ -9,44 +9,44 @@
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
         <!-- Bootstrap Core CSS -->
-        <link href="/CafeteriaApp.Frontend/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- form validations style -->
-        <link href="/CafeteriaApp.Frontend/css/form_validation.css" rel="stylesheet">
+        <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/form_validation.css" rel="stylesheet">
 
         <!-- sb-admin CSS -->
-        <link href="/CafeteriaApp.Frontend/css/sb-admin-2.css" rel="stylesheet">
+        <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/sb-admin-2.css" rel="stylesheet">
 
         <!-- font awesome -->
-        <link href="/CafeteriaApp.Frontend/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
         <!-- admin style -->
-        <link href="/CafeteriaApp.Frontend/css/admin style.css" rel="stylesheet">
+        <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/admin style.css" rel="stylesheet">
 
-        <script src="/CafeteriaApp.Frontend/javascript/jquery-3.2.1.min.js"></script>
+        <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/jquery-3.2.1.min.js"></script>
 
         <!-- angular module -->
-        <script src="/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
+        <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
 
-        <script src="/CafeteriaApp.Frontend/javascript/metisMenu.min.js"></script>
+        <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/metisMenu.min.js"></script>
 
         <!-- sb-admin JavaScript -->
-        <script src="/CafeteriaApp.Frontend/javascript/sb-admin-2.js"></script>
+        <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/sb-admin-2.js"></script>
         
     </head>
 
-    <body style="background-image:url('/CafeteriaApp.Frontend/images/admin background image.jpg');background-repeat: no-repeat;background-size: 1430px 1300px">
+    <body style="background-image:url('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/admin background image.jpg');background-repeat: no-repeat;background-size: 1430px 1300px">
 
         <div>
 
             <!-- Navigation -->
-            <nav class="navbar navbar-default navbar-fixed-top" style="background-image:url('/CafeteriaApp.Frontend/images/admin background image.jpg')">
+            <nav class="navbar navbar-default navbar-fixed-top" style="background-image:url('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/admin background image.jpg')">
 
                 <div class="container-fluid">
 
                     <div class="navbar-header">
 
-                        <a style="color:white" class="navbar-brand" href="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php">Manage Cafeterias</a>
+                        <a style="color:white" class="navbar-brand" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php">Manage Cafeterias</a>
 
                     </div>
 
@@ -54,19 +54,19 @@
 
                         <li>
 
-                            <a style="color:white" class="navbar-brand" href="/CafeteriaApp.Frontend/Areas/Admin/User/Views/show_and_delete_users.php">Manage Users</a>
+                            <a style="color:white" class="navbar-brand" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/User/Views/show_and_delete_users.php">Manage Users</a>
 
                         </li>
 
                         <li>
 
-                            <a style="color:white" class="navbar-brand" href="/CafeteriaApp.Frontend/Areas/Admin/AppSettings/Views/show_and_delete_fees.php">Manage Fees</a>
+                            <a style="color:white" class="navbar-brand" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/AppSettings/Views/show_and_delete_fees.php">Manage Fees</a>
 
                         </li>
 
                         <li>
 
-                            <a style="color:white" class="navbar-brand" href="/CafeteriaApp.Frontend/Views/logout.php">Log out</a>
+                            <a style="color:white" class="navbar-brand" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/logout.php">Log out</a>
 
                         </li>
 

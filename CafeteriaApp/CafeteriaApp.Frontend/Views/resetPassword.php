@@ -1,9 +1,9 @@
 <?php 
- require_once("CafeteriaApp.Backend/functions.php");
-require_once( 'CafeteriaApp.Backend/Controllers/User.php');
-require 'CafeteriaApp.Frontend/Views/PHPMailer/PHPMailerAutoload.php';
+ require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/User.php');
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/PHPMailer/PHPMailerAutoload.php');
 
-//require_once("CafeteriaApp.Frontend/Views/PHPMailer/Language/phpmailer.lang-en.php");
+//require_once("CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/PHPMailer/Language/phpmailer.lang-en.php");
 
 
 if(isset($_POST['submit']))
@@ -39,7 +39,7 @@ if(isset($_POST['mail']))
 
 		if($result)
 		{
-			redirect_to('CafeteriaApp.Frontend/Views/login.php'); 
+			redirect_to('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/login.php'); 
 		}
 		else
 		{echo "Error Occured while sending the new password !";

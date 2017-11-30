@@ -13,7 +13,7 @@ add_userApp.controller('addAdmin',['$scope','$http','addUserService',function($s
 		$scope.userData = addUserService.userData;
 		$scope.userData.RoleId = 1; // admin role id
 
-		$http.post('/CafeteriaApp.Backend/Requests/User.php',$scope.userData)
+		$http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php',$scope.userData)
 		.then(function(response) {
 			console.log(response);
 
@@ -23,9 +23,9 @@ add_userApp.controller('addAdmin',['$scope','$http','addUserService',function($s
 					UserId: parseInt(response.data)
 				}
 
-				$http.post('/CafeteriaApp.Backend/Requests/Admin.php',adminData)
+				$http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Admin.php',adminData)
 				.then(function(response) {
-					document.location = "/CafeteriaApp.Frontend/Areas/Admin/User/Views/show_and_delete_users.php";
+					document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/User/Views/show_and_delete_users.php";
 				});
 
 			}

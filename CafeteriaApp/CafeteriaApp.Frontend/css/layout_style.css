@@ -43,7 +43,7 @@ table tr:nth-child(even) {
 
 nav{
   height: 57px;
-  background-image:  url('/CafeteriaApp.Frontend/images/customer background image4.jpg')
+  background-image:  url('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/customer background image4.jpg')
 }
 
 #optionsNavbar.navbar-collapse:not(.collapse)+#right_ul {/*@start*/

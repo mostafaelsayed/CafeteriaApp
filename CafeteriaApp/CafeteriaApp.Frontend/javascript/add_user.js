@@ -4,18 +4,18 @@ add_userApp.config(['$routeProvider',function($routeProvider) {
 
   $routeProvider
   // add user
-  .when("/CafeteriaApp.Frontend/Areas/Admin/User/Views/add_user.php/1" , {
-    templateUrl: "/CafeteriaApp.Frontend/Templates/Views/add_admin.php",
+  .when("/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/User/Views/add_user.php/1" , {
+    templateUrl: "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Templates/Views/add_admin.php",
     controller: "addAdmin"
   })
 
-  .when("/CafeteriaApp.Frontend/Areas/Admin/User/Views/add_user.php/2", {
-    templateUrl: "/CafeteriaApp.Frontend/Templates/Views/add_cashier.php",
+  .when("/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/User/Views/add_user.php/2", {
+    templateUrl: "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Templates/Views/add_cashier.php",
     controller: "addCashier"
   })
   
-  .when("/CafeteriaApp.Frontend/Areas/Admin/User/Views/add_user.php/3", {
-    templateUrl: "/CafeteriaApp.Frontend/Templates/Views/add_customer.php",
+  .when("/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/User/Views/add_user.php/3", {
+    templateUrl: "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Templates/Views/add_customer.php",
     controller: "addCustomer"
   })
   

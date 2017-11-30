@@ -1,10 +1,10 @@
 <?php
 
-  require_once('CafeteriaApp.Backend/functions.php');
+  require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
 
   //validatePageAccess($conn);
 
-  require_once('CafeteriaApp.Frontend/Areas/Customer/layout.php');
+  require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/layout.php');
 
 ?>
 
@@ -12,9 +12,9 @@
 
   <title>Cafeterias</title>
 
-  <script src="/CafeteriaApp.Frontend/javascript/show_notifications.js"></script>
+  <!-- <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/show_notifications.js"></script> -->
 
-  <script src="/CafeteriaApp.Frontend/javascript/show_cafeterias.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/show_cafeterias.js"></script>
 
 </head>
 
@@ -38,7 +38,7 @@
 
         <div class="item active">
 
-          <a ng-href="/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing categories of a cafeteria.php?id={{cafeterias[0].Id}}">
+          <a ng-href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing categories of a cafeteria.php?id={{cafeterias[0].Id}}">
 
           <img style="display:block;margin:auto;width:300px ;height:300px" ng-src={{cafeterias[0].Image}} />
 
@@ -50,7 +50,7 @@
 
         <div ng-repeat="c in cafeterias.slice(1,cafeterias.length)" class="item">
 
-          <a ng-href="/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing categories of a cafeteria.php?id={{c.Id}}">
+          <a ng-href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing categories of a cafeteria.php?id={{c.Id}}">
 
             <img style="display:block;margin:auto;width:300px ;height:300px" ng-src={{c.Image}} />
 
@@ -84,4 +84,4 @@
 
 </div>
 
-<?php require_once('CafeteriaApp.Frontend/Areas/footer.php'); ?>
+<?php require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/footer.php'); ?>

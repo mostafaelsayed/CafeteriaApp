@@ -1,6 +1,6 @@
-<?php require_once("CafeteriaApp.Backend/session.php");
- require_once("CafeteriaApp.Backend/functions.php");
-require_once 'fbConfig.php';
+<?php
+	require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
+	require('fbConfig.php');
  
 
 	// v1: simple logout
@@ -12,10 +12,10 @@ require_once 'fbConfig.php';
 	//redirect_to("login.php");
 
 
-// Include FB config file
+	// Include FB config file
 
 
-// Remove access token from session
+	// Remove access token from session
 	unset($_SESSION['facebook_access_token']);
 	// v2: destroy session
 	// assumes nothing else in session to keep

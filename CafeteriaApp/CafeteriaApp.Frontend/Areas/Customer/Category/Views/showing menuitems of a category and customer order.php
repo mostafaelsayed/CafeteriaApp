@@ -1,10 +1,10 @@
 <?php
 
-  require_once('CafeteriaApp.Backend/functions.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
 
   validatePageAccess($conn);
 
-  require_once('CafeteriaApp.Frontend/Areas/Customer/layout.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/layout.php');
 
 ?>
 
@@ -12,15 +12,15 @@
 
   <title>MenuItems</title>
 
-  <link  href="/CafeteriaApp.Frontend/css/customer styles.css" rel="stylesheet">
+  <link  href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/customer styles.css" rel="stylesheet">
 
-  <link href="/CafeteriaApp.Frontend/css/popup.css" rel="stylesheet">
+  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/popup.css" rel="stylesheet">
 
-  <link href="/CafeteriaApp.Frontend/css/stars.css" rel="stylesheet">
+  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/stars.css" rel="stylesheet">
 
-  <script src="/CafeteriaApp.Frontend/javascript/about_slide_toggle.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/about_slide_toggle.js"></script>
 
-  <script src="/CafeteriaApp.Frontend/javascript/show_menuitems_of_a_category_and_customer_order.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/show_menuitems_of_a_category_and_customer_order.js"></script>
 
 </head>
 
@@ -225,7 +225,7 @@
 
       <div style="align-content: center;text-align:center">
 
-        <a style="font-style:italic;color:white" class="btn btn-info btn-lg " ng-href="/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}"  ng-cloak ng-show="orderItems.length > 0" target="_self">Checkout</a>
+        <a style="font-style:italic;color:white" class="btn btn-info btn-lg " ng-href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}"  ng-cloak ng-show="orderItems.length > 0" target="_self">Checkout</a>
 
       </div>
 
@@ -235,7 +235,7 @@
 
     <div class="bottom" style="margin:0 auto;text-align:center">
 
-      <a target="_self" href="/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing categories of a cafeteria.php?id={{cafeteriaId}}">Back</a>
+      <a target="_self" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing categories of a cafeteria.php?id={{cafeteriaId}}">Back</a>
 
       <br><br>
 
@@ -255,4 +255,4 @@
 
 </div>
 
-<?php require_once('CafeteriaApp.Frontend/Areas/footer.php'); ?>
+<?php require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/footer.php'); ?>

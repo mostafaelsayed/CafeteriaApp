@@ -61,30 +61,30 @@ layoutApp.controller('OrderCheckout',['$scope','$http','$location',function ($sc
   }
 
   $scope.discardOrder = function() {
-   $http.delete('/CafeteriaApp.Backend/Requests/Order.php?orderId='+$scope.orderId)
+   $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?orderId=' + $scope.orderId)
    .then(function(response) {
-      document.location =  "/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php";
+      document.location =  "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php";
    });
   };
 
   $scope.getUserInfo = function() {
-   $http.get('/CafeteriaApp.Backend/Requests/Customer.php')
+   $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Customer.php')
    .then(function(response) {
       $scope.customerInfo = response.data;
       $scope.userId = $scope.customerInfo.UserId;
-      $scope.recepientName= $scope.customerInfo.FirstName+' '+$scope.customerInfo.LastName;
-      $scope.phone= $scope.customerInfo.PhoneNumber;
-      $http.get('/CafeteriaApp.Backend/Requests/Location.php?userId='+$scope.userId)
-      .then(function(response) {
-        console.log(response);
-        $scope.userLocations = response.data;
-        $scope.selectedLocation = $scope.userLocations[0];
-      })
+      $scope.recepientName = $scope.customerInfo.FirstName + ' ' + $scope.customerInfo.LastName;
+      $scope.phone = $scope.customerInfo.PhoneNumber;
+      // $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Location.php?userId='+$scope.userId)
+      // .then(function(response) {
+      //   console.log(response);
+      //   $scope.userLocations = response.data;
+      //   $scope.selectedLocation = $scope.userLocations[0];
+      // })
    });
   };
 
   $scope.getOrderInfo = function() {
-   $http.get('/CafeteriaApp.Backend/Requests/Order.php')
+   $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php')
    .then(function(response) {
       $scope.orderInfo = response.data;
       $scope.orderType = response.data.Type;
@@ -100,7 +100,7 @@ layoutApp.controller('OrderCheckout',['$scope','$http','$location',function ($sc
   };
  
   $scope.getpaymentMethods = function() {
-   $http.get('/CafeteriaApp.Backend/Requests/PaymentMethod.php')
+   $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/PaymentMethod.php')
    .then(function(response) {
       $scope.paymentMethods = response.data;
    });
@@ -248,9 +248,8 @@ layoutApp.controller('OrderCheckout',['$scope','$http','$location',function ($sc
   };
 
   $scope.getOrderDeliveryTime = function() {
-   $http.get('/CafeteriaApp.Backend/Requests/Order.php?orderId='+$scope.orderId)
+   $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?orderId=' + $scope.orderId)
    .then(function(response) {
-      $scope.deliveryTimeId = response.data.Id;
       $scope.deliveryTimeDuration = response.data.Duration;
    });
   };

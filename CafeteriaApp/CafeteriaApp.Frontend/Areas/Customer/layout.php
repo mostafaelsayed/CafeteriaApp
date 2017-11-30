@@ -1,4 +1,4 @@
-<?php require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies
+<?php require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');// must be first as it uses cookies
   $memcache = memcache_connect('localhost', 11211); 
   $Words = $memcache->get('words');
   $Languages= $memcache->get('languages');
@@ -13,41 +13,41 @@
     <head>
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <!-- <link rel="stylesheet" href="/CafeteriaApp.Frontend/css/bootstrap2.min.css" rel="stylesheet" type="text/css" > -->
+      <!-- <link rel="stylesheet" href="/CafeteriaApp/CafeteriaApp.Frontend/css/bootstrap2.min.css" rel="stylesheet" type="text/css" > -->
       
       <!-- MetisMenu CSS -->
-      <link href="/CafeteriaApp.Frontend/css/metisMenu.min.css" rel="stylesheet">
+      <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/metisMenu.min.css" rel="stylesheet">
       
       <!-- Custom CSS -->
-      <link href="/CafeteriaApp.Frontend/css/sb-admin-2.css" rel="stylesheet">
+      <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/sb-admin-2.css" rel="stylesheet">
       
       <!-- Custom Fonts -->
-      <link href="/CafeteriaApp.Frontend/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+      <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/font-awesome.min.css" rel="stylesheet" type="text/css">
       <!-- Bootstrap Core CSS -->
       <!-- Latest compiled and minified CSS -->
-      <link href="/CafeteriaApp.Frontend/css/bootstrap.min.css" rel="stylesheet">
-      <link rel="stylesheet" href="/CafeteriaApp.Frontend/css/bootstrap-select.min.css">
-      <link href="/CafeteriaApp.Frontend/css/normalize.css" rel="stylesheet">
-      <link href="/CafeteriaApp.Frontend/css/layout_style.css" rel="stylesheet" type="text/css">
+      <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/bootstrap.min.css" rel="stylesheet">
+      <link rel="stylesheet" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/bootstrap-select.min.css">
+      <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/normalize.css" rel="stylesheet">
+      <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/layout_style.css" rel="stylesheet" type="text/css">
 
 
-      <script src="/CafeteriaApp.Frontend/javascript/jquery-3.2.1.min.js"></script>
-      <script src="/CafeteriaApp.Frontend/javascript/bootstrap.min.js"></script>
-      <script src="/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
-      <script src="/CafeteriaApp.Frontend/javascript//alertify.min.js"></script>
+      <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/jquery-3.2.1.min.js"></script>
+      <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/bootstrap.min.js"></script>
+      <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
+      <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript//alertify.min.js"></script>
       
-      <script src="/CafeteriaApp.Frontend/javascript/metisMenu.min.js"></script>
+      <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/metisMenu.min.js"></script>
       
       <!-- Custom Theme JavaScript -->
-      <script src="/CafeteriaApp.Frontend/javascript/sb-admin-2.js"></script>
+      <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/sb-admin-2.js"></script>
 
-      <script src="/CafeteriaApp.Frontend/javascript/location_provider.js"></script>
+      <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/location_provider.js"></script>
 
       <!-- Latest compiled and minified JavaScript -->
-      <script src="/CafeteriaApp.Frontend/javascript/bootstrap-select.min.js"></script>
+      <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/bootstrap-select.min.js"></script>
       
     </head>
-    <body style="background-image:url('/CafeteriaApp.Frontend/images/customer background image4.jpg')" ng-app="layout_app"
+    <body style="background-image:url('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/customer background image4.jpg')" ng-app="layout_app"
     ng-init="orderId=<?php echo $orderId ;?>;">
   
       <div ng-controller="Language_Order" ng-init=" languages=<?php echo htmlspecialchars($Languages);?>;selectedLang=languages[<?php echo ($lang_id-1);?>];orderId=<?php echo $orderId;?>" id="myctrl">
@@ -76,7 +76,7 @@
 
                 <li>
 
-                  <a class="navbar-brand" href="/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php"><?php echo "{$Words['Home'][$lang_id]}"?></a>
+                  <a class="navbar-brand" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php"><?php echo "{$Words['Home'][$lang_id]}"?></a>
 
                 </li>
 
@@ -94,12 +94,12 @@
                     <?php
                        if ($length > 0)
                       {
-                        echo " <img  src='/CafeteriaApp.Frontend/alarm-1.png' width='50' height='50' >";
+                        echo " <img  src='/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/alarm-1.png' width='50' height='50' >";
                         echo "<label id='notifyLabel' style='color:blue;font-size:2em;'>{$length}</label>";
                       }
                       else
                       {
-                        echo " <img  src='/CafeteriaApp.Frontend/alarm.png' width='55' height='55' >";
+                        echo " <img  src='/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/alarm.png' width='55' height='55' >";
                       }
 
 
@@ -129,7 +129,7 @@
 
                 <li class="inner">
 
-                  <a class="navbar-brand" href="/CafeteriaApp.Frontend/Views/logout.php"><?php echo "{$Words['Log out'][$lang_id]}" ?></a>
+                  <a class="navbar-brand" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/logout.php"><?php echo "{$Words['Log out'][$lang_id]}" ?></a>
 
                 </li>
 
@@ -146,7 +146,7 @@
 
                     <div id="shoppingCart_Button">
 
-                      <img src="/CafeteriaApp.Frontend/IconoCompraPaquetigos.png" style="width:100%;height:100%">
+                      <img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/IconoCompraPaquetigos.png" style="width:100%;height:100%">
 
                     </div>
 
@@ -218,7 +218,7 @@
 
                         <div>
 
-                          <a id="checkout" title="Check out this order" class="btn"  ng-href="/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}" ng-show="orderItems.length>0"  target="_self">Checkout</a>
+                          <a id="checkout" title="Check out this order" class="btn" ng-href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}" ng-show="orderItems.length>0"  target="_self">Checkout</a>
 
                         </div>
 
@@ -231,7 +231,7 @@
 
 
             <li id="languagesDropdown" >
-              <select id="languages" class="selectpicker show-tick" select-picker ng-model="selectedLang"  ng-options="l.Name for l in languages" ng-change="changeLanguage(selectedLang.Id)" data-width="fit">
+              <select id="languages" class="selectpicker show-tick" select-picker ng-model="selectedLang" ng-options="l.Name for l in languages" ng-change="changeLanguage(selectedLang.Id)" data-width="fit">
 
               </select>
                   </li>
@@ -249,7 +249,7 @@
 
                       <div   class="dropdown-menu" style="left:-70px;">
                               <div>
-                        <a class="dropdown_item" href="/CafeteriaApp.Frontend/Areas/Customer/favorite items.php">My Favorites</a>
+                        <a class="dropdown_item" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/favorite items.php">My Favorites</a>
 
                         <a class="dropdown_item" href="#">Change Password</a>
 
@@ -285,4 +285,4 @@ function showNotifications() {
 </script>
 
 
-    <script src="/CafeteriaApp.Frontend/javascript/layout.js"></script>
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/layout.js"></script>

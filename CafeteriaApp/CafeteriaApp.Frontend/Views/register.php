@@ -11,8 +11,8 @@
     <link rel="stylesheet" type="text/css" href="css/materialize.css"/>
     <!-- <link rel="stylesheet" type="text/css" href="css/style.css"/> -->
     <link rel="stylesheet" type="text/css" href="icons/icons.css"/>
-    <link href="/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
-    <link href="/CafeteriaApp.Frontend/css/errors.css" rel="stylesheet" type="text/css">
+    <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
+    <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/errors.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="css/register.css">
 
     <!-- <link href='https://fonts.google.com/?category=Serif,Sans+Serif,Monospace&selection.family=Roboto+Slab' rel='stylesheet'> -->
@@ -20,14 +20,14 @@
     <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/materialize.js"></script>
     <script src="js/newjavascript.js"></script>
-    <script src="/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
-    <script src="/CafeteriaApp.Frontend/javascript/angular-route.js"></script>
-    <script src="/CafeteriaApp.Frontend/javascript/ui-bootstrap-2.5.0.js"></script>
-    <script src="/CafeteriaApp.Frontend/javascript/ui-bootstrap-tpls-2.5.0.js"></script>
-    <script src="/CafeteriaApp.Frontend/javascript/angular-modal-service.js"></script>
-    <!-- <script src="/CafeteriaApp.Frontend/javascript/myapp.js"></script> -->
-    <script src= "/CafeteriaApp.Frontend/Views/register.js"></script>
-    <script src="/CafeteriaApp.Frontend/javascript/alertify.min.js"></script>
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/angular-route.js"></script>
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/ui-bootstrap-2.5.0.js"></script>
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/ui-bootstrap-tpls-2.5.0.js"></script>
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/angular-modal-service.js"></script>
+    <!-- <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/myapp.js"></script> -->
+    <script src= "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/register.js"></script>
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/alertify.min.js"></script>
   </head>
 
 <style type="text/css">
@@ -204,42 +204,3 @@
   </body>
 
 </html>
-
-
-
-<?php //ng-disabled="myform.userName.$invalid||myform.password.$invalid||myform.firstName.$invalid||myform.lastName.$invalid" 
-//include("../includes/layouts/footer.php");
-        // $(function(){
-        //     $("#save").click(function () {
-        //         // 1- check if it's empty
-        //         //if ($("#personalImg").val() == "") {
-        //         //    $("#error-div").fadeIn();
-        //         //    $("#view-err").append("Please, Choose an image for the job !");
-        //         //    return false;
-        //         //}
-
-        //         //2- check  image extension is valid
-        //         if ($("#personalImg").val() != "") {
-
-        //             var filename = document.getElementById("personalImg").value;
-        //             var extension = filename.substr(filename.lastIndexOf('.') + 1);
-        //             var validExtensions = ['jpeg', 'png', 'gif', 'bmp']; // like a list
-        //             if ($.inArray(extension, validExtensions) == -1) {
-        //                 $("#error-div").fadeIn();
-        //                 $("#view-err").append("Please, Choose a valid image for the job !");
-        //                 return false;//no save or no redirect
-        //             }
-
-        //             //3-check image size
-        //             var fileSize = document.getElementById("personalImg").files[0].size / 1024 / 1024;//to get the size in megabytes
-        //             if (fileSize > 2) {
-        //                 $("#error-div").fadeIn();
-        //                 $("#view-err").append("Please, Choose a smaler image for the job !");
-        //                 return false;
-        //             }
-        //         }
-
-        //     });
-        // });
-
- ?>

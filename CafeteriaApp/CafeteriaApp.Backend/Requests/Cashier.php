@@ -1,7 +1,7 @@
 <?php
 
-require('CafeteriaApp.Backend/connection.php');
-require('CafeteriaApp.Backend/Controllers/Cashier.php');
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Cashier.php');
 require('TestRequestInput.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
@@ -21,6 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] == "DELETE")
 	}
 }
 
-require('CafeteriaApp.Backend/footer.php');
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/footer.php');
 
 ?>

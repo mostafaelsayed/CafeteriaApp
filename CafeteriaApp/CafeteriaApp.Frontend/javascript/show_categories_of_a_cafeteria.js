@@ -6,7 +6,7 @@ layoutApp.controller('getCategories',['$scope','$http','$location',function ($sc
 
   $scope.getCategories = function() {
 
-   $http.get('/CafeteriaApp.Backend/Requests/Category.php?cafeteriaId='+$scope.cafeteriaId)
+   $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Category.php?cafeteriaId='+$scope.cafeteriaId)
    .then(function(response) {
        $scope.categories = response.data;
    });

@@ -1,10 +1,10 @@
 <?php
 
-  require('CafeteriaApp.Backend/functions.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
 
   validatePageAccess($conn);
 
-  require('CafeteriaApp.Frontend/Areas/Admin/layout.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/layout.php');
 
 ?>
 
@@ -12,17 +12,17 @@
 
   <title>Managing Category</title>
 
-  <link href="/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
+  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
 
   <!-- location provider -->
-  <script src="/CafeteriaApp.Frontend/javascript/location_provider.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/location_provider.js"></script>
 
-  <?php require('CafeteriaApp.Frontend/Areas/Admin/modal_includes.php'); ?>
+  <?php require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/modal_includes.php'); ?>
 
   <!-- image module -->
-  <script src="/CafeteriaApp.Frontend/javascript/image_module.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/image_module.js"></script>
 
-  <script src="/CafeteriaApp.Frontend/javascript/edit_category_and_show_and_delete_its_menuitems.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/edit_category_and_show_and_delete_its_menuitems.js"></script>
 
 </head>
 
@@ -123,7 +123,7 @@
 
     <div>
 
-      <a id="add" title="Add MenuItem" id="creatNewCategory" href="/CafeteriaApp.Frontend/Areas/Admin/MenuItem/Views/add_menuitem.php?id={{categoryId}}" target="_self" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
+      <a id="add" title="Add MenuItem" id="creatNewCategory" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/MenuItem/Views/add_menuitem.php?id={{categoryId}}" target="_self" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
 
     </div>
 
@@ -157,7 +157,7 @@
 
           <td id="alignText" class="center">
 
-            <a id="myButton" href="/CafeteriaApp.Frontend/Areas/Admin/MenuItem/Views/edit_menuitem.php?id={{m.Id}}" target="_self">Edit</a>&nbsp;
+            <a id="myButton" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/MenuItem/Views/edit_menuitem.php?id={{m.Id}}" target="_self">Edit</a>&nbsp;
 
             <a style="cursor:pointer" ng-click="deleteMenuItem(m)">Delete</a>
 

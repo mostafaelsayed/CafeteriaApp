@@ -1,10 +1,10 @@
 <?php
 
-require_once('CafeteriaApp.Backend/session.php');
-require_once('CafeteriaApp.Backend/Controllers/Order.php');
-require_once('CafeteriaApp.Backend/Controllers/Times.php');
-require_once('CafeteriaApp.Backend/Controllers/Dates.php');
-require_once('CafeteriaApp.Backend/Controllers/MenuItem.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Order.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Times.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Dates.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/MenuItem.php');
 
 function getOrderItemsByClosedOrderId($conn,$id)
 {

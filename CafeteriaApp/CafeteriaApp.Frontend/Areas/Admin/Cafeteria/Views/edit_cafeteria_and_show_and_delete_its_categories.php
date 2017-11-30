@@ -1,28 +1,28 @@
 <?php
 
-  require('CafeteriaApp.Backend/functions.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
 
   validatePageAccess($conn);
 
-  require('CafeteriaApp.Frontend/Areas/Admin/layout.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/layout.php');
 
 ?>
 
 <head>
 
-  <link href="/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
+  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
 
   <title>Managing Cafeteria</title>
 
   <!-- location provider -->
-  <script src="/CafeteriaApp.Frontend/javascript/location_provider.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/location_provider.js"></script>
 
-  <?php require('CafeteriaApp.Frontend/Areas/Admin/modal_includes.php'); ?>
+  <?php require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/modal_includes.php'); ?>
 
   <!-- image module -->
-  <script src="/CafeteriaApp.Frontend/javascript/image_module.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/image_module.js"></script>
 
-  <script src="/CafeteriaApp.Frontend/javascript/edit_cafeteria_and_show_and_delete_its_categories.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/edit_cafeteria_and_show_and_delete_its_categories.js"></script>
 
 </head>
 
@@ -128,7 +128,7 @@
 
     <div>
 
-      <a id="add" title="Add Category" href="/CafeteriaApp.Frontend/Areas/Admin/Category/Views/add_category.php?id={{cafeteriaId}}" target="_self" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
+      <a id="add" title="Add Category" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/Category/Views/add_category.php?id={{cafeteriaId}}" target="_self" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
 
     </div>
 
@@ -154,7 +154,7 @@
 
           <td id="alignText" class="center">
 
-            <a id="myButton" href="/CafeteriaApp.Frontend/Areas/Admin/Category/Views/edit_category_and_show_and_delete_its_menuitems.php?id={{c.Id}}" target="_self">Edit</a>&nbsp;
+            <a id="myButton" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/Category/Views/edit_category_and_show_and_delete_its_menuitems.php?id={{c.Id}}" target="_self">Edit</a>&nbsp;
 
             <a style="cursor:pointer" ng-click="deleteCategory(c)">Delete</a>
 

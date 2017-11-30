@@ -1,9 +1,8 @@
-<?php   require_once("CafeteriaApp.Backend/session.php");// must be first as it uses cookies 
- require_once("CafeteriaApp.Backend/functions.php");
-require_once( 'CafeteriaApp.Backend/Controllers/User.php');
- require_once("CafeteriaApp.Backend/validation_functions.php"); 
-
-
+<?php
+	require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php'); // must be first as it uses cookies 
+	require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
+	require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/User.php');
+	require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/validation_functions.php'); 
 
 if(isset( $_POST['submit']))
 {
@@ -25,7 +24,7 @@ if (empty($errors)) {}
 		else
 		{
 	$_SESSION['message']= "<h3 class=\"error\" >You must be logged in first !</h3>";
-			redirect_to('/CafeteriaApp.Frontend/Views/login.php');
+			redirect_to('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/login.php');
 	
 		}
 
@@ -39,7 +38,7 @@ if (empty($errors)) {}
 
 	
 ?>
-  <link href="/CafeteriaApp.Frontend/css/errors.css" rel="stylesheet" type="text/css">
+  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/errors.css" rel="stylesheet" type="text/css">
 
 <div> <p> <?php echo form_errors($errors); ?></p>
    

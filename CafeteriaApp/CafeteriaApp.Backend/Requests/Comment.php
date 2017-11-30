@@ -1,8 +1,8 @@
 <?php
-require_once("CafeteriaApp.Backend/session.php");
-require_once( 'CafeteriaApp.Backend/Controllers/Comment.php');
-require_once("CafeteriaApp.Backend/connection.php");
-require_once ('TestRequestInput.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Comment.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
+require_once('TestRequestInput.php');
 
 
 
@@ -67,6 +67,6 @@ if ($_SERVER['REQUEST_METHOD']=="DELETE")
 }
 
 
-require_once("CafeteriaApp.Backend/footer.php");
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/footer.php');
 
 ?>

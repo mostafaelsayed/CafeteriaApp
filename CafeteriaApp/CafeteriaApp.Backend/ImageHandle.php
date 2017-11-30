@@ -10,7 +10,7 @@ function addImageFile($imageData,$dirChanged=0)
     $ifp = fopen($imageFileName,"x+");
     fwrite($ifp,base64_decode($imageData));
     fclose($ifp);
-    return "/CafeteriaApp.Backend/uploads/" . $imageFileName;
+    return "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/" . $imageFileName;
 }
 
 function editImage($imageData,$imageAttr)

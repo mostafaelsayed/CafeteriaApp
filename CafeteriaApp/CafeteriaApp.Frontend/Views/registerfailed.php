@@ -28,7 +28,7 @@ width: 300px;
 <?php 
 
 
-echo "<div class='ccc' ><p>Bad Request !</p></div>";
+echo "<div class='ccc'><p>Bad Request !</p></div>";
 ?>
 	
 </body></html>

@@ -1,10 +1,10 @@
 <?php
 
-  require('CafeteriaApp.Backend/functions.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
 
   validatePageAccess($conn);
 
-  require('CafeteriaApp.Frontend/Areas/Admin/layout.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/layout.php');
 
 ?>
 
@@ -12,15 +12,15 @@
 
   <title>Edit User</title>
 
-  <link href="/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
+  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
 
-  <script src="/CafeteriaApp.Frontend/javascript/image_module.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/image_module.js"></script>
 
-  <script src="/CafeteriaApp.Frontend/javascript/location_provider.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/location_provider.js"></script>
 
-  <script src="/CafeteriaApp.Frontend/javascript/phone_number_module.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/phone_number_module.js"></script>
 
-  <script src="/CafeteriaApp.Frontend/javascript/edit_user.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/edit_user.js"></script>
 
 </head>
 

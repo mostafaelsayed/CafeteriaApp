@@ -8,7 +8,7 @@ function getTimes($conn)
   {
     $times = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-      return $times;
+    return $times;
    
   }
   else
@@ -50,6 +50,7 @@ function getTimeIdByTime($conn,$time)
   {
     $times = mysqli_fetch_assoc($result);
     mysqli_free_result($result);
+    // var_dump($times["Id"]);
     return $times["Id"];
   }
   else
@@ -67,6 +68,7 @@ function getCurrentTimeId($conn)
   {
     $times = mysqli_fetch_assoc($result);
     mysqli_free_result($result);
+    //var_dump($times["Id"]);
     return $times["Id"];
   }
   else
@@ -96,5 +98,10 @@ function deleteTime($conn,$id)
     }
   }
 }
+
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/TestRequestInput.php');
+
+var_dump( checkResult(getCurrentTimeId($conn) ) );
 
 ?>

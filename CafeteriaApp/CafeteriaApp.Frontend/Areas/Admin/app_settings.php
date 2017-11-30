@@ -1,10 +1,10 @@
 <?php
 
-	require('CafeteriaApp.Backend/functions.php');
+	require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
 
    	validatePageAccess($conn);
 
-	require('CafeteriaApp.Frontend/Areas/Admin/layout.php');
+	require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/layout.php');
 
 ?>
 
@@ -20,7 +20,7 @@
 
 	<div style="text-align:center;font-size:30px">
 
-		<a href="/CafeteriaApp.Frontend/Areas/Admin/AppSettings/Views/show_and_delete_fees.php">
+		<a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/AppSettings/Views/show_and_delete_fees.php">
 
 			Fees
 			

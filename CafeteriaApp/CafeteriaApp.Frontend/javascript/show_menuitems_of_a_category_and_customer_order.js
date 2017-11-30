@@ -8,7 +8,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder',['$scope','$http','$location
   
   $scope.getMenuItems = function() {
   
-    $http.get('/CafeteriaApp.Backend/Requests/MenuItem.php?categoryId='+$scope.categoryId)
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/MenuItem.php?categoryId='+$scope.categoryId)
     .then(function(response) {
       console.log(response);
       $scope.menuItems = response.data;
@@ -35,7 +35,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder',['$scope','$http','$location
         Quantity: parseInt(1)
       };
 
-      $http.post('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
+      $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderItem.php',data)
       .then(function(response) {
         $scope.orderId = response.data;
         $scope.togglePopup('Menu Item added successfully !');
@@ -69,7 +69,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder',['$scope','$http','$location
 
     if (document.getElementById('favorites'+menuItemId).style.color === "red") { // add favorite
 
-      $http.post('/CafeteriaApp.Backend/Requests/FavoriteItem.php',data)
+      $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/FavoriteItem.php',data)
       .then(function(response) {
 
         if (response.data !== "") {
@@ -86,7 +86,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder',['$scope','$http','$location
 
     else {
 
-      $http.delete('/CafeteriaApp.Backend/Requests/FavoriteItem.php?Id='+menuItemId)
+      $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/FavoriteItem.php?Id='+menuItemId)
       .then(function(response) {
 
         if (response.data !== "") {
@@ -105,7 +105,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder',['$scope','$http','$location
 
   $scope.loadFavoriteItems = function() {
 
-    $http.get('/CafeteriaApp.Backend/Requests/FavoriteItem.php')
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/FavoriteItem.php')
     .then(function(response) {
 
       $scope.favoItems = response.data;
@@ -153,7 +153,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder',['$scope','$http','$location
 
   $scope.loadCommentsforMenuItem = function(menuItemId,menuItemIndex) {
 
-    $http.get('/CafeteriaApp.Backend/Requests/Comment.php?MenuItemId='+menuItemId)
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Comment.php?MenuItemId='+menuItemId)
     .then(function(response) {
       $scope.comments[menuItemIndex] = response.data[0];
       $scope.customerCommentsIds[menuItemIndex] = response.data[1];
@@ -184,7 +184,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder',['$scope','$http','$location
           Date:date
         };
           
-        $http.post('/CafeteriaApp.Backend/Requests/Comment.php',data)
+        $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Comment.php',data)
         .then(function(response) { //response.data=id of new comment
 
           if (response.data !== "") {
@@ -218,7 +218,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder',['$scope','$http','$location
       Id:$scope.comments[menuItemIndex][$scope.commentIndex].Id,
     };
 
-    $http.put('/CafeteriaApp.Backend/Requests/Comment.php',data)
+    $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Comment.php',data)
     .then(function(response) { // response.data=id of new comment
 
       if (response.data !== "") {
@@ -256,7 +256,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder',['$scope','$http','$location
 
     if ($scope.add_edits[menuItemIndex]) { // only if not in edit mode
    
-      $http.delete('/CafeteriaApp.Backend/Requests/Comment.php?id='+commentId)
+      $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Comment.php?id='+commentId)
       .then(function(response) {
         if (response.data != "") {
           alertify.error(response.data);
@@ -277,7 +277,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder',['$scope','$http','$location
 
   $scope.loadRatedMenuItemsForUser = function() {
 
-    $http.get('/CafeteriaApp.Backend/Requests/Rating.php')
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Rating.php')
     .then(function(response) {
 
       $scope.ratedMenuItemsIds = response.data[1]; // for updating 
@@ -305,7 +305,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder',['$scope','$http','$location
         Value:value
       };
 
-      $http.put('/CafeteriaApp.Backend/Requests/Rating.php',data)
+      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Rating.php',data)
       .then(function(response) {
 
         if (response.data !== "") {
@@ -326,7 +326,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder',['$scope','$http','$location
         Value:value
       };
 
-      $http.post('/CafeteriaApp.Backend/Requests/Rating.php',data)
+      $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Rating.php',data)
       .then(function(response) {
 
         if (response.data !== "") {

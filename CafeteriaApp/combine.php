@@ -27,8 +27,8 @@
 
 	$cache 	  = true;
 	$cachedir = dirname(__FILE__) . '/Bundles/cache';
-	$cssdir   = dirname(__FILE__) . '/CafeteriaApp.Frontend/css';
-	$jsdir    = dirname(__FILE__) . '/CafeteriaApp.Frontend/javascript';
+	$cssdir   = dirname(__FILE__) . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css';
+	$jsdir    = dirname(__FILE__) . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript';
 
 	// Determine the directory and type we should use
 	switch ($_GET['type']) {

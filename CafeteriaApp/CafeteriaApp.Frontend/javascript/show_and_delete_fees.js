@@ -5,7 +5,7 @@ show_and_delete_feesApp.controller('showAndDeleteFees',['$scope','$http','ModalS
 	$scope.show = function() {
 
     ModalService.showModal({
-      templateUrl: '/CafeteriaApp.Frontend/Templates/Views/modal.html',
+      templateUrl: '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Templates/Views/modal.html',
       controller: "ModalController",
       inputs: {
         name: "fee"
@@ -27,7 +27,7 @@ show_and_delete_feesApp.controller('showAndDeleteFees',['$scope','$http','ModalS
 
 	$scope.getFees = function() {
 
-		$http.get('/CafeteriaApp.Backend/Requests/Fee.php')
+		$http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Fee.php')
 		.then(function(response) {
 			$scope.fees = response.data;
 		});
@@ -42,7 +42,7 @@ show_and_delete_feesApp.controller('showAndDeleteFees',['$scope','$http','ModalS
 
     	$scope.delete = function() {
 
-     		$http.delete('/CafeteriaApp.Backend/Requests/Fee.php?feeId='+fee.Id)
+     		$http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Fee.php?feeId='+fee.Id)
      		.then(function(response) {
        		$scope.fees.splice($scope.fees.indexOf(fee),1);
      		});

@@ -6,7 +6,7 @@ edit_feeApp.controller('editFee',['$scope','$http','$location',function($scope,$
 
   $scope.getFee = function() {
 
-    $http.get('/CafeteriaApp.Backend/Requests/Fee.php?id='+$scope.feeId)
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Fee.php?id='+$scope.feeId)
     .then(function(response) {
       $scope.name = response.data.Name;
       $scope.price = response.data.Price;
@@ -26,7 +26,7 @@ edit_feeApp.controller('editFee',['$scope','$http','$location',function($scope,$
         Id: $scope.feeId
       };
 
-      $http.put('/CafeteriaApp.Backend/Requests/Fee.php',data)
+      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Fee.php',data)
       .then(function(response) {
         console.log(response);
         window.history.back();

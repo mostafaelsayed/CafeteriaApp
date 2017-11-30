@@ -1,5 +1,5 @@
 <?php 
-require_once('CafeteriaApp.Backend/session.php');// must be first as it uses cookies
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');// must be first as it uses cookies
 
 // function getCustomers($conn)
 // {

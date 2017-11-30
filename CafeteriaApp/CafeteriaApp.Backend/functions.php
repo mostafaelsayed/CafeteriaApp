@@ -1,9 +1,9 @@
 <?php 	
 //require_once("CafeteriaApp.Backend/Controllers/User.php"); 
- require_once('CafeteriaApp.Backend/session.php');
- require_once("CafeteriaApp.Backend/connection.php"); 
+ require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');
+ require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php'); 
 
-
+ //var_dump($_SERVER);
 
 	function redirect_to($new_location) {
 	  header("Location: " . $new_location);
@@ -72,7 +72,7 @@
 	
 	function confirm_logged_in() {
 		if (!islogged_in()) {
-			redirect_to("/CafeteriaApp.Frontend/Views/login.php");
+			redirect_to("/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/login.php");
 		}
 	}
 

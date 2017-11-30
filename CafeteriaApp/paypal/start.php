@@ -1,7 +1,7 @@
 <?php
 
 // Autoload SDK package for composer based installations
-require_once('PayPal/vendor/autoload.php');
+require_once('CafeteriaApp/CafeteriaApp/PayPal/vendor/autoload.php');
 
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;

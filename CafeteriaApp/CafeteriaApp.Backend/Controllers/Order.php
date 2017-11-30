@@ -1,11 +1,11 @@
 <?php
 
-require_once('CafeteriaApp.Backend/session.php');
-require_once('CafeteriaApp.Backend/connection.php');
-require_once('CafeteriaApp.Backend/Controllers/Dates.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Dates.php');
 // require_once('TestRequestInput.php');
-require_once('CafeteriaApp.Backend/Controllers/Times.php');
-require_once('PayPal/start.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Times.php');
+require_once('CafeteriaApp/CafeteriaApp/PayPal/start.php');
 
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
@@ -16,6 +16,8 @@ use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
 use PayPal\Exception\PayPalConnectionException;
+
+//var_dump($_POST);
 
 // function getClosedOrdersByUserId($conn,$id)
 // {
@@ -438,28 +440,34 @@ function calcAndUpdateOrderTotalById($conn ,$orderId)
   }
 }
 
-function getOrderDetails($conn,$orderId)
+function getorderItems($conn,$orderId)
 {
-  $orderDetailsStatment = "select MenuItem.Name , MenuItem.Price , OrderItem.Quantity , OrderItem.TotalPrice , Order.Total from `OrderItem` inner join MenuItem on MenuItem.Id = OrderItem.MenuItemId inner join `Order` on Order.Id = OrderItem.OrderId where OrderItem.OrderId = " . $orderId;
-  $result = $conn->query($orderDetailsStatment);
-  $orderDetails = mysqli_fetch_all($result);
+  $orderItemsStatment = "select MenuItem.Name , MenuItem.Price , OrderItem.Quantity , OrderItem.TotalPrice , Order.Total from `OrderItem` inner join MenuItem on MenuItem.Id = OrderItem.MenuItemId inner join `Order` on Order.Id = OrderItem.OrderId where OrderItem.OrderId = " . $orderId;
+  $result = $conn->query($orderItemsStatment);
+  $orderItems = mysqli_fetch_all($result);
   mysqli_free_result($result);
-  return $orderDetails;
+  return $orderItems;
 }
 
 function processPayment($conn,$orderId,$selectedMethodId,$deliveryPlace,$deliveryTimeId,$apiContext)
 {
-  $orderDetails = getOrderDetails($conn,$orderId);
+  $orderItems = getorderItems($conn,$orderId);
 
-  //print_r($orderDetails);
-  if ($selectedMethodId == 2) // paypal payment
+  //var_dump($selectedMethodId);
+
+  //print_r($orderItems);
+  if ($selectedMethodId == 1) // paypal payment
+  //var_dump("13");
   {
     $itemList = new ItemList();
 
-    foreach ($orderDetails as $orderItem)
+    foreach ($orderItems as $orderItem)
     {
       $item = new Item();
-      $item->setName($orderItem[0])->setCurrency('GBP')->setQuantity($orderItem[2])->setPrice($orderItem[1]);
+      $item->setName($orderItem[0])
+        ->setCurrency('GBP')
+        ->setQuantity($orderItem[2])
+        ->setPrice($orderItem[1]);
       $itemList->addItem($item);
     }
 
@@ -476,24 +484,25 @@ function processPayment($conn,$orderId,$selectedMethodId,$deliveryPlace,$deliver
 
     $details = new Details();
     $details->setShipping($shipping)
-    ->setTax($tax)
-    ->setSubtotal($orderDetails[0][4]);
+      ->setTax($tax)
+      ->setSubtotal($orderItems[0][4]);
 
     // Set redirect urls
     $redirectUrls = new RedirectUrls();
-    $redirectUrls->setReturnUrl(SITE_URL . '/CafeteriaApp.Frontend/Areas/Customer/review_order_and_charge_customer.php?orderId=' . $orderId . '&deliveryPlace=' . $deliveryPlace . '&paymentMethodId=' . $selectedMethodId . '&deliveryTimeId=' . $deliveryTimeId)
-    ->setCancelUrl(SITE_URL . '/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId=' . $orderId . '&deliveryPlace=' . $deliveryPlace . '&paymentMethodId=' . $selectedMethodId . '&deliveryTimeId=' . $deliveryTimeId);
+    $redirectUrls->setReturnUrl(SITE_URL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/review_order_and_charge_customer.php?orderId=' . $orderId . '&deliveryPlace=' . $deliveryPlace . '&paymentMethodId=' . $selectedMethodId . '&deliveryTimeId=' . $deliveryTimeId)
+      ->setCancelUrl(SITE_URL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId=' . $orderId . '&deliveryPlace=' . $deliveryPlace . '&paymentMethodId=' . $selectedMethodId . '&deliveryTimeId=' . $deliveryTimeId);
 
     // Set payment amount
     $amount = new Amount();
-    $amount->setCurrency('GBP')->setTotal($orderDetails[0][4]
-      + $shipping + $tax)->setDetails($details);
+    $amount->setCurrency('GBP')
+      ->setTotal($orderItems[0][4] + $shipping + $tax)
+      ->setDetails($details);
 
     // Set transaction object
     $transaction = new Transaction();
     $transaction->setAmount($amount)
-    ->setDescription('Payment done')
-    ->setItemList($itemList);
+      ->setDescription('Payment done')
+      ->setItemList($itemList);
 
     // Set payer
     $payer = new Payer();
@@ -501,7 +510,10 @@ function processPayment($conn,$orderId,$selectedMethodId,$deliveryPlace,$deliver
 
     // Create the full payment object
     $payment = new Payment();
-    $payment->setIntent('sale')->setPayer($payer)->setRedirectUrls($redirectUrls)->setTransactions([$transaction]);
+    $payment->setIntent('sale')
+      ->setPayer($payer)
+      ->setRedirectUrls($redirectUrls)
+      ->setTransactions([$transaction]);
 
     try
     {

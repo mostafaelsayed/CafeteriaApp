@@ -27,7 +27,7 @@ function displayForm() {
 layoutApp.controller( 'feedback'  ,function ($scope,$http) {
 
 	$scope.getFeedbackAbouts=function () {
-	$http.get('/CafeteriaApp.Backend/Requests/FeedbackAbouts.php')
+	$http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/FeedbackAbouts.php')
 	.then(function (response) {
 		
       $scope.abouts = response.data;
@@ -46,7 +46,7 @@ $scope.addFeedback = function(name,mail,phone,selectedAbout,message,answer) {
 		SelectedAboutId:selectedAbout.Id
 		};
 
-      $http.post('/CafeteriaApp.Backend/Requests/VisitorFeedback.php',data)
+      $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/VisitorFeedback.php',data)
       .then(function(response) {
       	if (response.data==="") 
       	{

@@ -1,10 +1,10 @@
 <?php
 
-  require('CafeteriaApp.Backend/functions.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
 
   validatePageAccess($conn);
 
-  require('CafeteriaApp.Frontend/Areas/Admin/layout.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/layout.php');
 
 ?>
 
@@ -14,9 +14,9 @@
 
   <meta name="viewport" content="width=device-width" />
 
-  <script src="/CafeteriaApp.Frontend/javascript/price_module.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/price_module.js"></script>
 
-  <script src="/CafeteriaApp.Frontend/javascript/add_fee.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/add_fee.js"></script>
 
 </head>
 

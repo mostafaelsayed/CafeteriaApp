@@ -1,10 +1,10 @@
 <?php
 
-  require_once('CafeteriaApp.Backend/functions.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
 
  // validatePageAccess($conn);
 
-  include('CafeteriaApp.Frontend/Areas/Customer/layout.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/layout.php');
    
 ?>
 
@@ -56,7 +56,7 @@
 
 </div>
 
-<?php require_once('CafeteriaApp.Frontend/Areas/footer.php'); ?>
+<?php require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/footer.php'); ?>
 
 <script type="text/javascript">
   
@@ -66,7 +66,7 @@ layoutApp.controller('branch',['$scope','$http',function($scope,$http) {
 
   $scope.getBranches=function () {
   
-  $http.get('/CafeteriaApp.Backend/Requests/Branch.php')
+  $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Branch.php')
   .then(function(response) {
       $scope.branches = response.data;
     });

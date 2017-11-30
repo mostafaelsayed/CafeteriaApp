@@ -1,10 +1,10 @@
 <?php
 
-  require('CafeteriaApp.Backend/functions.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
 
   validatePageAccess($conn);
 
-  require('CafeteriaApp.Frontend/Areas/Admin/layout.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/layout.php');
 
 ?>
 
@@ -14,9 +14,9 @@
 
   <!-- order of include not matter in case of dependencies exist -->
 
-  <script src="/CafeteriaApp.Frontend/javascript/show_and_delete_cafeterias.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/show_and_delete_cafeterias.js"></script>
 
-  <?php require('CafeteriaApp.Frontend/Areas/Admin/modal_includes.php'); ?>
+  <?php require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/modal_includes.php'); ?>
 
 </head>
 
@@ -42,7 +42,7 @@
 
           <div>
 
-            <a id="add" title="Add Cafeteria" id="creatNewCafeteria" href="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/add_cafeteria.php" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
+            <a id="add" title="Add Cafeteria" id="creatNewCafeteria" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/add_cafeteria.php" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
 
           </div>
 
@@ -71,7 +71,7 @@
 
                 <td id="alignText" class="center">
 
-                  <a type="button" href="/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/edit_cafeteria_and_show_and_delete_its_categories.php?id={{c.Id}}">Edit</a>&nbsp;&nbsp;
+                  <a type="button" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/edit_cafeteria_and_show_and_delete_its_categories.php?id={{c.Id}}">Edit</a>&nbsp;&nbsp;
 
                   <a type="button" style="cursor:pointer" ng-click="deleteCafeteria(c)">Delete</a>
 

@@ -12,7 +12,7 @@ edit_cafeteria_and_show_and_delete_its_categoriesApp.controller('editCafeteria',
 
   $scope.getCafeteria = function() {
 
-    $http.get('/CafeteriaApp.Backend/Requests/Cafeteria.php?id='+$scope.cafeteriaId)
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Cafeteria.php?id=' + $scope.cafeteriaId)
     .then(function(response) {
       $scope.name = response.data.Name;
       $scope.imageUrl = response.data.Image;
@@ -42,7 +42,7 @@ edit_cafeteria_and_show_and_delete_its_categoriesApp.controller('editCafeteria',
         Image: x
       };   
 
-      $http.put('/CafeteriaApp.Backend/Requests/Cafeteria.php',data)
+      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Cafeteria.php',data)
       .then(function(response) {
         window.history.back();
       });     
@@ -61,7 +61,7 @@ edit_cafeteria_and_show_and_delete_its_categoriesApp.controller('showAndDeleteCa
 
   $scope.getCategories = function() {
 
-  $http.get('/CafeteriaApp.Backend/Requests/Category.php?cafeteriaId='+$scope.cafeteriaId)
+  $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Category.php?cafeteriaId='+$scope.cafeteriaId)
     .then(function(response) {
       $scope.categories = response.data;
     });
@@ -76,7 +76,7 @@ edit_cafeteria_and_show_and_delete_its_categoriesApp.controller('showAndDeleteCa
 
     $scope.delete = function() {
 
-      $http.delete('/CafeteriaApp.Backend/Requests/Category.php?categoryId='+category.Id)
+      $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Category.php?categoryId='+category.Id)
       .then(function(response) {
         $scope.categories.splice($scope.categories.indexOf(category),1);
       });
@@ -88,7 +88,7 @@ edit_cafeteria_and_show_and_delete_its_categoriesApp.controller('showAndDeleteCa
   $scope.show = function() {
 
     ModalService.showModal({
-      templateUrl: '/CafeteriaApp.Frontend/Templates/Views/modal.html',
+      templateUrl: '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Templates/Views/modal.html',
       controller: "ModalController",
       inputs: {
         name: "category"

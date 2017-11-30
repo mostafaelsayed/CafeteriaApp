@@ -1,10 +1,10 @@
 <?php
 
-	require_once('CafeteriaApp.Backend/functions.php');
+	require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
 
-	validatePageAccess($conn);
+	//validatePageAccess($conn);
 
-	require_once('CafeteriaApp.Frontend/Areas/Customer/layout.php');
+	require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/layout.php');
 
 ?>
 
@@ -12,7 +12,7 @@
 
 	<title>Categories</title>
 
-	<script src="/CafeteriaApp.Frontend/javascript/show_categories_of_a_cafeteria.js"></script>
+	<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/show_categories_of_a_cafeteria.js"></script>
 
 </head>
 
@@ -26,7 +26,7 @@
 
         <div style="text-align:center;font-size:20px">
 
-      		<a href="/CafeteriaApp.Frontend/Areas/Customer/Category/Views/showing menuitems of a category and customer order.php?categoryId={{c.Id}}" style="color: blue" target="_self">
+      		<a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/Category/Views/showing menuitems of a category and customer order.php?categoryId={{c.Id}}" style="color: blue" target="_self">
 
       			<span ng-bind="c.Name"></span>
 
@@ -42,4 +42,4 @@
 
 </div>
 
-<?php require_once('CafeteriaApp.Frontend/Areas/footer.php'); ?>
+<?php require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/footer.php'); ?>

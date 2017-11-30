@@ -1,17 +1,17 @@
 <title>Orders</title>
 
 <?php
- require_once("CafeteriaApp.Backend/functions.php"); 
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php'); 
   //validatePageAccess($conn);
-  include('CafeteriaApp.Frontend/Areas/Cashier/layout.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Cashier/layout.php');
 
 ?>
 
 <head>
 
-  <script src="/CafeteriaApp.Frontend/javascript/show_and_hide_orders.js"></script>
-  <script src="/CafeteriaApp.Frontend/javascript/modal_controller.js"></script>
-  <script src="/CafeteriaApp.Frontend/javascript/modal.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/show_and_hide_orders.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/modal_controller.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/modal.js"></script>
 
 </head>
 
@@ -49,7 +49,7 @@
         <div style="margin: auto">
           <div><h3 style="color: white">Manage Your Orders</h3>
             <div>
-              <a id="add" title="Add Order" href="/CafeteriaApp.Frontend/Areas/Customer/Cafeteria/Views/showing cafeterias.php" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
+              <a id="add" title="Add Order" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/Cafeteria/Views/showing cafeterias.php" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
             </div>
           </div>
           <div>
@@ -83,5 +83,5 @@
     </div>
   </div>
 </div>
-<?php require_once("CafeteriaApp.Frontend/Areas/footer.php");
+<?php require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/footer.php');
 ?>

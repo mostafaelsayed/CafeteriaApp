@@ -24,7 +24,7 @@ layoutApp.factory('Order_Info',['$http','$rootScope',function($http,$rootScope) 
 
   order_info.getOrderItems = function(orderId) { // this is asyhnchronous
   
-    $http.get('/CafeteriaApp.Backend/Requests/OrderItem.php?orderId='+orderId).success(function(data) {
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderItem.php?orderId='+orderId).success(function(data) {
       $rootScope.orderItems = data;
     }).error(function() {
       alert('something went wrong!!!');
@@ -42,7 +42,7 @@ layoutApp.factory('Order_Info',['$http','$rootScope',function($http,$rootScope) 
         Flag: true
       };
 
-      $http.put('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
+      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderItem.php',data)
       .then(function(response) {
         order_info.getOrderItems(orderItem.OrderId);
       });
@@ -61,7 +61,7 @@ layoutApp.factory('Order_Info',['$http','$rootScope',function($http,$rootScope) 
 
     if (orderItem.Quantity > 1) {
 
-      $http.put('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
+      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderItem.php',data)
       .then(function(response) {
         order_info.getOrderItems(orderItem.OrderId);
       });
@@ -76,7 +76,7 @@ layoutApp.factory('Order_Info',['$http','$rootScope',function($http,$rootScope) 
 
   order_info.deleteOrderItem = function(orderItem) {
 
-    $http.delete('/CafeteriaApp.Backend/Requests/OrderItem.php?id='+orderItem.Id)
+    $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderItem.php?id='+orderItem.Id)
     .then(function(response) {
       order_info.getOrderItems(orderItem.OrderId);
     });
@@ -94,7 +94,7 @@ layoutApp.controller('Language_Order',['$rootScope','$scope','$http','Order_Info
         //}, 1000);
         var data={langId:languageId};
 
-        $http.post('/CafeteriaApp.Backend/Requests/Languages.php',data)
+        $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Languages.php',data)
         .then(function(response) {
             location.reload();
             //document.location=<?php //echo "\"{$_SERVER['PHP_SELF']}\"" ;//current executing script , __FILE__ gets the current file?>

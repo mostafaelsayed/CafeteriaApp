@@ -3,9 +3,9 @@
 layoutApp.controller('favorites',['$scope','$http','$rootScope','$timeout',function($scope,$http,
 $rootScope,$timeout) {
 
-	$scope.getFavoriteItems=function () {
+	$scope.getFavoriteItems = function () {
 	
-	$http.get('/CafeteriaApp.Backend/Requests/FavoriteItem.php')
+	$http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/FavoriteItem.php')
 	.then(function(response) {
       $scope.favoriteItems = response.data;
     });
@@ -14,7 +14,7 @@ $rootScope,$timeout) {
 
 	$scope.deleteFavorItem = function(menuItemId,index) {
 	
-  	$http.delete('/CafeteriaApp.Backend/Requests/FavoriteItem.php?MenuItemId='+menuItemId)
+  	$http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/FavoriteItem.php?MenuItemId='+menuItemId)
   	.then(function(response) {
       $scope.favoriteItems.splice( index ,1) ;
       $scope.togglePopup('Favorite Item successfully removed !');
@@ -37,7 +37,7 @@ $rootScope,$timeout) {
         Quantity: parseInt(1)
       };
 
-      $http.post('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
+      $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderItem.php',data)
       .then(function(response) {
         $scope.orderId = response.data;
         $scope.togglePopup('Favorite Item added successfully to the order removed !');
@@ -57,7 +57,7 @@ $rootScope,$timeout) {
         Flag: true
       };
 
-      $http.put('/CafeteriaApp.Backend/Requests/OrderItem.php',data)
+      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderItem.php',data)
       .then(function(response) {
       });
 

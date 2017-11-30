@@ -6,7 +6,7 @@ show_and_delete_usersApp.controller('showAndDeleteUsers',['$scope','$http','Moda
   $scope.showModal = function(user) {
 
     ModalService.showModal({
-      templateUrl: '/CafeteriaApp.Frontend/Templates/Views/modal.html',
+      templateUrl: '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Templates/Views/modal.html',
       controller: "ModalController",
       inputs: {
         name: "user"
@@ -28,7 +28,7 @@ show_and_delete_usersApp.controller('showAndDeleteUsers',['$scope','$http','Moda
 
   $scope.getUsers = function() {
 
-    $http.get('/CafeteriaApp.Backend/Requests/User.php')
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php')
     .then(function(response) {
       console.log(response);
       $scope.users = response.data;
@@ -44,26 +44,26 @@ show_and_delete_usersApp.controller('showAndDeleteUsers',['$scope','$http','Moda
 
   $scope.delete = function(user) {
 
-   $http.delete('/CafeteriaApp.Backend/Requests/User.php?userId='+parseInt(user.Id))
+   $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php?userId='+parseInt(user.Id))
    .then(function(response) {
     console.log(response);
      $scope.users.splice($scope.users.indexOf(user),1);
    });
 
    if (user.RoleId == 1) {
-    $http.delete('/CafeteriaApp.Backend/Requests/Admin.php?userId='+parseInt(user.Id))
+    $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Admin.php?userId='+parseInt(user.Id))
     .then(function(response) {
     });
    }
 
    else if (user.RoleId == 3) {
-    $http.delete('/CafeteriaApp.Backend/Requests/Cashier.php?userId='+parseInt(user.Id))
+    $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Cashier.php?userId='+parseInt(user.Id))
     .then(function(response) {
     });
    }
 
    else if (user.RoleId == 2) {
-    $http.delete('/CafeteriaApp.Backend/Requests/Customer.php?userId='+parseInt(user.Id))
+    $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Customer.php?userId='+parseInt(user.Id))
     .then(function(response) {
     });
    }

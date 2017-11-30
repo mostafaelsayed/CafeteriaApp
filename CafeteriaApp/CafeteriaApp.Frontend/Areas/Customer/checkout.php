@@ -1,10 +1,10 @@
 <?php
 
-  require('CafeteriaApp.Backend/functions.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
 
   validatePageAccess($conn);
 
-  require('CafeteriaApp.Frontend/Areas/Customer/layout.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/layout.php');
 
 ?>
 
@@ -12,13 +12,13 @@
 
   <title>Order Checkout</title>
 
-  <link rel="stylesheet" type="text/css" href="/CafeteriaApp.Frontend/css/map.css">
+  <link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/map.css">
 
   <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 
-  <script src="/CafeteriaApp.Frontend/javascript/calculate_distance_given_longitude_and_latitude.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/calculate_distance_given_longitude_and_latitude.js"></script>
  
-  <script src="/CafeteriaApp.Frontend/javascript/checkout.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/checkout.js"></script>
 
 </head>
 
@@ -26,7 +26,7 @@
 
   <h1 class="page-header" style="text-align:center;margin-top:70px">Complete Order info.</h1>
 
-  <form novalidate name="myForm" action="/CafeteriaApp.Backend/Requests/Order.php" method="post" style="align-content:center;text-align:center">
+  <form novalidate name="myForm" action="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php" method="post" style="align-content:center;text-align:center">
 
     <input type="text" style="visibility:hidden" ng-model="orderId" name="orderId">
 
@@ -46,7 +46,7 @@
 
         <input type="text" name="recepientName" style="text-align:center" ng-model="recepientName" required />
 
-        <span ng-show=" myForm.$submitted  && myForm.recepientName.$invalid" ng-cloak>The name is required.</span>
+        <span ng-show="myForm.$submitted && myForm.recepientName.$invalid" ng-cloak>The name is required.</span>
 
         <br><br><br>
 
@@ -78,7 +78,7 @@
 
         <div>Delivery Place</div>
 
-        <div>
+        <!-- <div>
 
           <select name="place" ng-model="selectedLocation" ng-options=" place[1] for place in userLocations"></select>
 
@@ -86,7 +86,7 @@
 
           <br><br><br>
 
-        </div>
+        </div> -->
 
         <div>Delivery Fees</div>
 
@@ -180,4 +180,4 @@
 
 </div>
 
-<?php require('CafeteriaApp.Frontend/Areas/footer.php'); ?>
+<?php require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/footer.php'); ?>

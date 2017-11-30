@@ -19,9 +19,9 @@ add_cafeteriaApp.controller('addCafeteria',['$scope','$http',function($scope,$ht
         Image: $scope.uploadme.src.split(',')[1]
       };
         
-      $http.post('/CafeteriaApp.Backend/Requests/Cafeteria.php',data)
+      $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Cafeteria.php',data)
       .then(function(response) {
-        document.location = "/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php";
+        document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php";
       });
 
     }

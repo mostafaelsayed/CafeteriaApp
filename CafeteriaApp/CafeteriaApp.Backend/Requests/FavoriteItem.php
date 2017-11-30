@@ -1,7 +1,7 @@
 <?php
-require_once("CafeteriaApp.Backend/session.php");
-require_once( 'CafeteriaApp.Backend/Controllers/FavoriteItem.php');
-require_once("CafeteriaApp.Backend/connection.php");
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/FavoriteItem.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
 require('TestRequestInput.php');
 
 
@@ -41,6 +41,6 @@ if ($_SERVER['REQUEST_METHOD']=="POST")
 
 
 
-require_once("CafeteriaApp.Backend/footer.php");
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/footer.php');
 
 ?>

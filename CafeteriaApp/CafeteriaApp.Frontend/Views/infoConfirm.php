@@ -1,30 +1,28 @@
 <?php 
-require_once('CafeteriaApp.Backend/session.php');
-require_once('CafeteriaApp.Backend/connection.php');
-require_once( 'CafeteriaApp.Backend/Controllers/Customer.php');
-require_once( 'CafeteriaApp.Backend/Controllers/User.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Customer.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/User.php');
 
-if(isset($_SESSION['userId']))
-{
+if (isset($_SESSION['userId']) ) {
 	echo nl2br("Account\r\Activated\r\n!"); 
 	//from user
-	$acc=$_GET['acc'] ;
-	$hashKey=$_GET['hashKey']; 
+	$acc = $_GET['acc'];
+	$hashKey = $_GET['hashKey']; 
 
-//from db
-$userId=$_SESSION['userId'];
-$customer = getCustomerByUserId($conn,$userId);
- $acc2=hash("sha256",$user_id,false);
- $hashKey2=hash("sha256",$customer['Id'].$customer['DateOfBirth'].$userId.$customer['GenderId'],false);
+	//from db
+	$userId = $_SESSION['userId'];
+	$customer = getCustomerByUserId($conn,$userId);
+ 	$acc2 = hash("sha256",$user_id,false);
+ 	$hashKey2 = hash("sha256",$customer['Id'].$customer['DateOfBirth'].$userId.$customer['GenderId'],false);
 	
-	if($acc=== $acc2 &&	$hashKey===  $hashKey2)
-	{
-		if(activateUser($conn,$userId))
+	if ($acc === $acc2 && $hashKey === $hashKey2) {
+		if (activateUser($conn,$userId) )
 		{
-			header("Location:".rawurldecode("/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php"));	
+			header("Location:".rawurldecode("/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php"));	
 		}
 	}
-	else{
+	else {
 		echo "<h2>Activation Failed !. please, contact customer care.</h2>";
 	}
 

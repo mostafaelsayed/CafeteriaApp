@@ -1,15 +1,15 @@
 <?php
 
-  require('CafeteriaApp.Backend/functions.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
 
   validatePageAccess($conn);
 
-  require('CafeteriaApp.Frontend/Areas/Customer/layout.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/layout.php');
 
   if (!isset($_GET["orderId"]) || !isset($_GET["deliveryTimeDuration"]))
   {
-    $_GET["orderId"]=0;
-    $_GET["deliveryTimeDuration"]=0;
+    $_GET["orderId"] = 0;
+    $_GET["deliveryTimeDuration"] = 0;
   }
    
 ?>
@@ -18,7 +18,7 @@
 
   <title>Order info</title>
 
-  <script src="/CafeteriaApp.Frontend/javascript/review_order_and_charge_customer.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/review_order_and_charge_customer.js"></script>
 
 </head>
 
@@ -104,7 +104,7 @@
 
   <br>
 
-  <form novalidate name="myForm" action="/CafeteriaApp.Backend/Requests/Order.php" method="post" style="align-content:center;text-align:center">
+  <form novalidate name="myForm" action="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php" method="post" style="align-content:center;text-align:center">
 
     <input type="text" style="visibility:hidden" name="orderId" ng-model="orderId">
 
@@ -126,4 +126,4 @@
 
 <br>
 
-<?php require('CafeteriaApp.Frontend/Areas/footer.php'); ?>
+<?php require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/footer.php'); ?>

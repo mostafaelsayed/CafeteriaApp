@@ -1,7 +1,7 @@
 <?php
- require_once("CafeteriaApp.Backend/session.php");
-require_once( 'CafeteriaApp.Backend/Controllers/Languages.php');
-require_once("CafeteriaApp.Backend/connection.php");
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Languages.php');
+require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
 require_once ('TestRequestInput.php');
 
 if ($_SERVER['REQUEST_METHOD']=="GET")
@@ -50,6 +50,6 @@ if ($_SERVER['REQUEST_METHOD']=="PUT")
   }
 }
 
-require_once("CafeteriaApp.Backend/footer.php");
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/footer.php');
 
 ?>

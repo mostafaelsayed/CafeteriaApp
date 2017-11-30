@@ -1,6 +1,6 @@
 <?php
 
-require('CafeteriaApp.Backend/ImageHandle.php');
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/ImageHandle.php');
 
 function getMenuItemByCategoryId($conn,$id,$customer=false)//????????????????
 {

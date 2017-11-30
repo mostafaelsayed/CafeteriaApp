@@ -32,10 +32,10 @@ function chargeCustomer($paymentId,$payerId,$paypal,$orderId,$deliveryTimeId,$de
 			
 			if ($result)
 			{
-				$result=CheckOutOrder($conn,$orderId,$deliveryTimeId,$deliveryPlace,$selectedMethodId);
+				$result = CheckOutOrder($conn,$orderId,$deliveryTimeId,$deliveryPlace,$selectedMethodId);
 				if ($result)
 				{
-					$returnUrl = "http://127.0.0.1/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php";
+					$returnUrl = "http://127.0.0.1/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php";
 					$_SESSION['notifications'][] = 'Payment Succeeseded !';
 					header("Location: " . $returnUrl);
 				}
@@ -46,14 +46,14 @@ function chargeCustomer($paymentId,$payerId,$paypal,$orderId,$deliveryTimeId,$de
 			}
 			else
 			{
-				$returnUrl = "http://127.0.0.1/CafeteriaApp.Frontend/Areas/Customer/checkout.php";
+				$returnUrl = "http://127.0.0.1/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/checkout.php";
 				header("Location: " . $returnUrl);
 			}
 			
 		}
 		else
 		{
-			"error creating transaction : " . $conn->error;
+			echo "error creating transaction : ", $conn->error;
 		}
  
 	}

@@ -14,7 +14,7 @@ edit_menuitemApp.controller('editMenuItem',['$scope','$http','$location',functio
 
   $scope.getMenuItem = function() {
 
-    $http.get('/CafeteriaApp.Backend/Requests/MenuItem.php?id='+$scope.menuItemId)
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/MenuItem.php?id='+$scope.menuItemId)
     .then(function(response) {
 
       $scope.name = response.data.Name;
@@ -59,7 +59,7 @@ edit_menuitemApp.controller('editMenuItem',['$scope','$http','$location',functio
         Visible: $scope.selectedElement.id
       };
 
-      $http.put('/CafeteriaApp.Backend/Requests/MenuItem.php',data)
+      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/MenuItem.php',data)
       .then(function(response) {
         window.history.back();
       });
@@ -70,7 +70,7 @@ edit_menuitemApp.controller('editMenuItem',['$scope','$http','$location',functio
 
   $scope.updateOpenOrders = function() {
 
-    $http.get('/CafeteriaApp.Backend/Requests/UpdateOpenOrders.php')
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/UpdateOpenOrders.php')
     .then(function(response) {
       window.history.back();
     });
