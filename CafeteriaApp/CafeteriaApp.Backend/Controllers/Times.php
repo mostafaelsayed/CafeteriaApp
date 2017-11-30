@@ -99,9 +99,9 @@ function deleteTime($conn,$id)
   }
 }
 
-require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
-require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/TestRequestInput.php');
+// require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
+// require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/TestRequestInput.php');
 
-var_dump( checkResult(getCurrentTimeId($conn) ) );
+// var_dump( checkResult(getCurrentTimeId($conn) ) );
 
 ?>
