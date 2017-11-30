@@ -37,6 +37,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder',['$scope','$http','$location
 
       $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderItem.php',data)
       .then(function(response) {
+        console.log(response);
         $scope.orderId = response.data;
         $scope.togglePopup('Menu Item added successfully !');
         Order_Info.getOrderItems($scope.orderId);

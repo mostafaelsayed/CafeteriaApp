@@ -8,8 +8,12 @@ use PayPal\Api\PaymentExecution;
 use PayPal\Api\Transaction;
 use PayPal\Exception\PayPalConnectionException;
 
-function chargeCustomer($paymentId,$payerId,$paypal,$orderId,$deliveryTimeId,$deliveryPlace,$selectedMethodId,$conn)
+
+//var_dump(12);
+
+function chargeCustomer($paymentId, $payerId, $paypal, $orderId, $deliveryTimeId, $selectedMethodId, $conn)
 {
+	
 	// Get payment object by passing paymentId
 	$payment = Payment::get($paymentId, $paypal);
 
@@ -19,20 +23,23 @@ function chargeCustomer($paymentId,$payerId,$paypal,$orderId,$deliveryTimeId,$de
 
 	try
 	{
-		$sql = "insert into `transaction` (UserId,PaymentId,PayerId) values (?,?,?)";
+		//var_dump($_SERVER);
+		// var_dump(12);
+		$sql = "insert into `transaction` (UserId, PaymentId, PayerId) values (?,?,?)";
 		$transactionStatment = $conn->prepare($sql);
-		$transactionStatment->bind_param("iss",$UserId,$PaymentId,$PayerId);
+		$transactionStatment->bind_param("iss", $UserId, $PaymentId, $PayerId);
 		$UserId = $_SESSION["userId"];
 		$PaymentId = $paymentId;
 		$PayerId = $payerId;
 		
 		if ($transactionStatment->execute() === true)
 		{
+			//var_dump(12);
 			$result = $payment->execute($execution, $paypal); // Execute payment (charge customer here)
 			
 			if ($result)
 			{
-				$result = CheckOutOrder($conn,$orderId,$deliveryTimeId,$deliveryPlace,$selectedMethodId);
+				$result = CheckOutOrder($conn, $orderId, $deliveryTimeId, $selectedMethodId);
 				if ($result)
 				{
 					$returnUrl = "http://127.0.0.1/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php";
@@ -53,6 +60,7 @@ function chargeCustomer($paymentId,$payerId,$paypal,$orderId,$deliveryTimeId,$de
 		}
 		else
 		{
+			
 			echo "error creating transaction : ", $conn->error;
 		}
  

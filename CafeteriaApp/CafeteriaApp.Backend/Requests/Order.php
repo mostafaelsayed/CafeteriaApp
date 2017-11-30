@@ -8,9 +8,8 @@ require('TestRequestInput.php');
 require_once('CafeteriaApp/CafeteriaApp/PayPal/start.php');
 require_once('CafeteriaApp/CafeteriaApp/PayPal/pay.php');
 
-// var_dump($_SERVER);
+//var_dump($_SERVER);
 //var_dump($_POST);
-//var_dump($paypal);
 
 if ($_SERVER['REQUEST_METHOD'] == "GET")
 {
@@ -25,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET")
   }
   elseif ( isset($_GET["orderId"]) && isset($_GET["flag"]) && test_int($_GET["orderId"],$_GET["flag"]) )
   {
-    checkResult( getOrderDetails($conn,$_GET["orderId"]) );
+    checkResult( getOrderItems($conn,$_GET["orderId"]) );
   }
   elseif ( isset($_GET['flag']) && test_int($_GET["flag"]) )
   {
@@ -46,15 +45,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST")
 
       // checkout next
       //var_dump("expression");
-      processPayment($conn, $_POST["orderId"], $_POST["selectedMethodId"], $_POST["deliveryPlace"], $_POST["deliveryTimeId"], $paypal);
+      processPayment($conn, $_POST["orderId"], $_POST["selectedMethodId"], $_POST["deliveryTimeId"], $paypal);
     }
   
     elseif ( isset($_POST["paymentMethodId"]) && normalize_string($conn, $_POST["paymentId"], $_POST["payerId"]) && test_int($_POST["paymentMethodId"]) )
     {
-      chargeCustomer($_POST["paymentId"], $_POST["payerId"], $paypal, $_POST["orderId"], $_POST["deliveryTimeId"], $_POST["deliveryPlace"], $_POST["paymentMethodId"], $conn);
+      chargeCustomer($_POST["paymentId"], $_POST["payerId"], $paypal, $_POST["orderId"], $_POST["deliveryTimeId"], $_POST["paymentMethodId"], $conn);
     }
     else {
-      //echo "error";
+      echo "error";
     }
   }
 }

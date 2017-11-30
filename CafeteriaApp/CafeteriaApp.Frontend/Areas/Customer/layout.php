@@ -1,10 +1,10 @@
 <?php require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');// must be first as it uses cookies
   $memcache = memcache_connect('localhost', 11211); 
   $Words = $memcache->get('words');
-  $Languages= $memcache->get('languages');
+  $Languages = $memcache->get('languages');
   //$_SESSION["langId"]=2;
-  $lang_id=$_SESSION["langId"];
-  $orderId= $_SESSION['orderId'];
+  $lang_id = $_SESSION["langId"];
+  $orderId = $_SESSION['orderId'];
   //require_once("CafeteriaApp.Backend/functions.php");
 ?>
 

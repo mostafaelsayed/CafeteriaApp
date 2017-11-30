@@ -12,18 +12,20 @@ require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Notific
 
 require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Order.php');
 
-if (isset($_GET['redirect_to']) ) {
+// var_dump($_SERVER);
+
+if ( isset($_GET['redirect_to']) ) {
   $_POST['redirect_to'] = $_GET['redirect_to'];
 }
 
-if (isset($_POST['submit']) ) { // check if the button 's been pressed
+if ( isset($_POST['submit']) ) { // check if the button 's been pressed
   // Process the form
   
   // validations
   $required_fields = array("email", "password");
   validate_presences($required_fields);
   
-  if (empty($errors) ) {
+  if ( empty($errors) ) {
     // Attempt Login
 
 		$email = $_POST["email"];
@@ -41,10 +43,10 @@ if (isset($_POST['submit']) ) { // check if the button 's been pressed
       $_SESSION["langId"] = 1;// if not found
       $_SESSION["Confirmed"] = $found_user["Confirmed"];
       //get customer id by user id from db 
-      if(! $_SESSION["orderId"] = getOpenOrderByUserId($conn)["Id"]) { // if not found open order>>open a new one
+      if (!$_SESSION["orderId"] = getOpenOrderByUserId($conn)["Id"]) { // if not found open order>>open a new one
         $deliveryTimeId = getCurrentTimeId($conn);
         $deliveryDateId = getCurrentDateId($conn);
-        $_SESSION["orderId"] = addOrder($conn,$deliveryDateId,$deliveryTimeId,'',1,1, $_SESSION["userId"],0,0);
+        $_SESSION["orderId"] = addOrder($conn, $deliveryDateId, $deliveryTimeId, 1, 1, $_SESSION["userId"], 0, 0);
       }
      
       //get notification messages
@@ -53,33 +55,33 @@ if (isset($_POST['submit']) ) { // check if the button 's been pressed
       deleteNotificationsByUserId($conn, $_SESSION["userId"]) ;
 
       //record date
-      if (!getCurrentDateId($conn) ) { // make the server add it automatically
-        addTodayDate($conn,true);
+      if ( !getCurrentDateId($conn) ) { // make the server add it automatically
+        addTodayDate($conn, true);
       }
       
-      if (isset($_POST['remember']) ) { // set the cookie to a long date
-        setcookie(session_name(), session_id(),time()+42000000,'/');
+      if ( isset($_POST['remember']) ) { // set the cookie to a long date
+        setcookie(session_name(), session_id(), time() + 42000000, '/');
       }
 
-      if (isset($_POST['redirect_to']) ) { // make restrictions on pages that request this page ,otherwise redirect to the same page to cancel his header
+      if ( isset($_POST['redirect_to']) ) { // make restrictions on pages that request this page ,otherwise redirect to the same page to cancel his header
         if (basename($_POST['redirect_to']) === "showing menuitems of a category and customer order.php") { // restrictions on redirectionsfile_exists()
-          redirect_to(rawurldecode($_POST['redirect_to']) );
+          redirect_to( rawurldecode($_POST['redirect_to']) );
         }
         else {
           if ($_SESSION["roleId"] == 2) {
-            redirect_to(rawurldecode("/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php") );
+            redirect_to( rawurldecode("/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php") );
           }
           elseif ($_SESSION["roleId"] == 1) {
-            redirect_to(rawurldecode("/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php") );
+            redirect_to( rawurldecode("/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php") );
           }
         }
       }
       else {
         if ($_SESSION["roleId"] == 2) {
-          redirect_to(rawurldecode("/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php") );
+          redirect_to( rawurldecode("/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php") );
         }
         elseif ($_SESSION["roleId"] == 1)  {
-          redirect_to(rawurldecode("/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php") );
+          redirect_to( rawurldecode("/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php") );
         }
       } //3ala 7asab                               
     }
@@ -93,8 +95,8 @@ if (isset($_POST['submit']) ) { // check if the button 's been pressed
 }
 
 // if already logged in and called login page
-elseif (isset($_SESSION["userId"]) && isset($_SESSION["userName"]) && isset($_SESSION["roleId"]) ) {// This is probably a GET request
-  redirect_to(rawurldecode("/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php") ); //
+elseif ( isset($_SESSION["userId"]) && isset($_SESSION["userName"]) && isset($_SESSION["roleId"]) ) {// This is probably a GET request
+  redirect_to( rawurldecode("/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php") ); //
 } // end: if (isset($_POST['submit']))
 
 ?>

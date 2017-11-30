@@ -17,6 +17,9 @@ use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
 use PayPal\Exception\PayPalConnectionException;
 
+
+//var_dump($_SERVER);
+
 //var_dump($_POST);
 
 // function getClosedOrdersByUserId($conn,$id)
@@ -71,15 +74,13 @@ use PayPal\Exception\PayPalConnectionException;
 
 function getOpenOrderByUserId($conn)
 {
-  $openStatusId=1;
-  $sql = "select * from `Order` where UserId = ".$_SESSION["userId"]." and OrderStatusId = ".$openStatusId;
+  $openStatusId = 1;
+  $sql = "select * from `Order` where UserId = " . $_SESSION["userId"] . " and OrderStatusId = " . $openStatusId;
   $result = $conn->query($sql);
-  if ($result)
-  {
+  if ($result) {
     $order = mysqli_fetch_array($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-      return $order;
-    
+    return $order;
   }
   else
   {
@@ -87,19 +88,16 @@ function getOpenOrderByUserId($conn)
   }
 }
 
-function calcOpenOrderDeliveryTime($conn,$orderId)
-{
+function calcOpenOrderDeliveryTime($conn, $orderId) {
   $sql = "select sum(OrderItem.Quantity * MenuItem.ReadyInMins) from OrderItem inner join MenuItem on OrderItem.MenuItemId = MenuItem.Id  where OrderItem.OrderId = " . $orderId;
   $result = $conn->query($sql);
-  if ($result)
-  {
+  if ($result) {
     $order = mysqli_fetch_array($result, MYSQLI_NUM);
     mysqli_free_result($result);
     // $order = json_encode($order);
     return $order[0];
   }
-  else
-  {
+  else {
     echo "Error retrieving Open Order : " . $conn->error;  
   }
 }
@@ -154,12 +152,10 @@ function calcOpenOrderDeliveryTime($conn,$orderId)
 //   }
 // }
 
-function getOrders($conn)
-{
+function getOrders($conn) {
   $sql = "select * from `order`";
   $result = $conn->query($sql);
-  if ($result)
-  {
+  if ($result) {
     $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
     return $orders;
@@ -220,249 +216,204 @@ function getOrders($conn)
 //   }
 // }
 
-function addOrder( $conn,$deliveryDateId, $createdTimeId,$deliveryPlace, $paymentMethodId,$orderStatusId, $userId,$total=0,$paid=0)
-{
-  if (!isset($deliveryDateId))
-  {
+function addOrder($conn, $deliveryDateId, $createdTimeId, $paymentMethodId, $orderStatusId, $userId, $total = 0,$paid = 0) {
+  if ( !isset($deliveryDateId) ) {
     //echo "Error: Order deliveryDateId is not set";
     return;
   }
-  elseif (!isset($createdTimeId))
-  {
+  elseif ( !isset($createdTimeId) ) {
     //echo "Error: Order deliveryTimeId is not set";
     return;
   }
-  elseif (!isset($deliveryPlace))
-  {
-    //echo "Error: Order deliveryPlace is not set";
-    return;
-  }
-  elseif (!isset($paid))
-  {
+  elseif ( !isset($paid) ) {
     //echo "Error: Order paid is not set";
     return;
   }
-  elseif (!isset($total))
-  {
+  elseif ( !isset($total) ) {
     //echo "Error: Order total is not set";
     return;
   }
-  elseif (!isset($paymentMethodId))
-  {
+  elseif ( !isset($paymentMethodId) ) {
     //echo "Error: Order paymentMethodId is not set";
     return;
   }
-  elseif (!isset($orderStatusId))
-  {
+  elseif ( !isset($orderStatusId) ) {
     //echo "Error: Order orderStatusId is not set";
     return;
   }
-  elseif (!isset($userId))
-  {
+  elseif ( !isset($userId) ) {
    // echo "Error: Order customerId is not set";
     return;
   }
-  else
-  {
-    $sql = "insert into `Order` (DeliveryDateId,DeliveryTimeId,DeliveryPlace,Paid,Total,PaymentMethodId,OrderStatusId,UserId) values (?,?,?,?,?,?,?,?)";
+  else {
+    $sql = "insert into `Order` (DeliveryDateId, DeliveryTimeId, Paid, Total, PaymentMethodId, OrderStatusId, UserId) values (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-
-    $stmt->bind_param("iisddiii",$DeliveryDateId, $DeliveryTimeId,$DeliveryPlace, $Paid, $Total, $PaymentMethodId,$OrderStatusId, $UserId );
-    $DeliveryDateId=$deliveryDateId;
-    $DeliveryTimeId=$createdTimeId;
-    $DeliveryPlace=$deliveryPlace;
-    $Paid=$paid;
-    $Total=$total;
-    $PaymentMethodId=$paymentMethodId;
-    $OrderStatusId=$orderStatusId;
-    $UserId=$userId;
-    if ($stmt->execute()===TRUE)
-    {
+    //var_dump( $conn->prepare($sql));
+    $stmt->bind_param("iiddiii", $DeliveryDateId, $DeliveryTimeId, $Paid, $Total, $PaymentMethodId, $OrderStatusId, $UserId);
+    $DeliveryDateId = $deliveryDateId;
+    $DeliveryTimeId = $createdTimeId;
+    //$DeliveryPlace = $deliveryPlace; // ??
+    $Paid = $paid;
+    $Total = $total;
+    $PaymentMethodId = $paymentMethodId;
+    $OrderStatusId = $orderStatusId;
+    $UserId = $userId;
+    if ($stmt->execute() === TRUE) {
       //echo "Order Added successfully";
       return mysqli_insert_id($conn);
     }
-    else
-    {
+    else {
       echo "Error adding order: " . $conn->error;
       //echo $error;
     }
   }
 }
 
-function CheckOutOrder( $conn,$orderId, $deliveryTimeId,$deliveryPlace, $paymentMethodId,$paid=0)
-{   
-  $closedStatusId=2;
-  if (!isset($orderId))
-  {
+function CheckOutOrder($conn, $orderId, $deliveryTimeId, $paymentMethodId, $paid = 0) {
+
+//var_dump($deliveryTimeId);
+  $closedStatusId = 2;
+
+  if ( !isset($orderId) ) {
     //echo "Error: Order deliveryDateId is not set";
     return;
   }
-  elseif (!isset($deliveryTimeId))
-  {
-   // echo "Error: Order deliveryTimeId is not set";
-    return;
-  }
-  elseif (!isset($deliveryPlace))
-  {
-    //echo "Error: Order deliveryPlace is not set";
-    return;
-  }
-  elseif (!isset($paymentMethodId))
-  {
+  elseif ( !isset($paymentMethodId) ) {
     //echo "Error: Order paymentMethodId is not set";
     return;
   }
-  else
-  {
-    $sql = "update `Order` set `DeliveryTimeId`=(?) , `DeliveryPlace`=(?) , `Paid`=(?) , `PaymentMethodId`=(?) , `OrderStatusId`=(?) where `Id` =(?) ";
+  else {
+    $deliveryTimeId = getCurrentTimeId($conn);
+    $sql = "update `Order` set `DeliveryTimeId` = (?), `Paid` = (?), `PaymentMethodId` = (?), `OrderStatusId` = (?) where `Id` = (?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("isdiii", $DeliveryTimeId,$DeliveryPlace, $Paid, $PaymentMethodId,$OrderStatusId,$OrderId);
-    $OrderId=$orderId;
-    $DeliveryTimeId=$deliveryTimeId;
-    $DeliveryPlace=$deliveryPlace;
-    $Paid=$paid;
-    $PaymentMethodId=$paymentMethodId;
-    $OrderStatusId=$closedStatusId;
-    if ($stmt->execute()===TRUE)
-    {
+    $stmt->bind_param("idiii", $DeliveryTimeId, $Paid, $PaymentMethodId, $OrderStatusId, $OrderId);
+    $OrderId = $orderId;
+    $DeliveryTimeId = $deliveryTimeId;
+    $Paid = $paid;
+    $PaymentMethodId = $paymentMethodId;
+    $OrderStatusId = $closedStatusId;
+    if ($stmt->execute() === TRUE) {
       //open a new order
-      $deliveryTimeId = getCurrentTimeId($conn);
+      //$deliveryTimeId = getCurrentTimeId($conn);
+      
+
       $deliveryDateId = getCurrentDateId($conn);
-      $_SESSION["orderId"] = addOrder($conn,$deliveryDateId,$deliveryTimeId,'',1,1, $_SESSION["userId"],0,0);
+      //var_dump($deliveryDateId);
+      $_SESSION["orderId"] = addOrder($conn, $deliveryDateId, $deliveryTimeId, 1, 1, $_SESSION["userId"], 0, 0);
       return true;
 
       //return mysqli_insert_id($conn);
     }
-    else
-    {
-      echo "Error checkout order: " . $conn->error;
+    else {
+      echo "Error checkout order: ", $conn->error;
       //echo $error;
     }
   }
 }
 
-function updateOrderTotalById($conn ,$orderId ,$plusValue)
-{
-  if (!isset($plusValue))
-  {
+function updateOrderTotalById($conn, $orderId, $plusValue) {
+  if ( !isset($plusValue) ) {
     //echo "Error: Order plusValue is not set";
     return;
   }
-  elseif (!isset($orderId))
-  {
+  elseif ( !isset($orderId) ) {
     //echo "Error: order Id  is not set";
     return;
   }
-  else
-  {
-    $sql = "update `Order` set `Total` = `Total`+(?)  where Id = (?)";
+  else {
+    $sql = "update `Order` set `Total` = `Total` + (?) where Id = (?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("di",$PlusValue,$OrderId);
-    $PlusValue = $plusValue ;
+    $stmt->bind_param("di", $PlusValue, $OrderId);
+    $PlusValue = $plusValue;
     $OrderId = $orderId;
-    if ($stmt->execute()===TRUE)
-    {
+    if ($stmt->execute() === TRUE) {
       return "Order Total updated successfully";
     }
-    else
-    {
-      echo "Error: ".$conn->error;
+    else {
+      echo "Error: ", $conn->error;
     }
   }
 }
 
-function updateOrderPaidById($conn ,$orderId ,$plusValue)
-{
-  if (!isset($plusValue))
-  {
+function updateOrderPaidById($conn, $orderId, $plusValue) {
+  if ( !isset($plusValue) ) {
     //echo "Error: Order plusValue is not set";
     return;
   }
-  elseif (!isset($orderId))
-  {
+  elseif ( !isset($orderId) ) {
     //echo "Error: order Id  is not set";
     return;
   }
-  else
-  {
-    $sql = "update `Order` set `Paid` = `Paid`+(?)  where Id = (?)";
+  else {
+    $sql = "update `Order` set `Paid` = `Paid` + (?) where Id = (?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("di",$PlusValue,$OrderId);
-    $PlusValue = $plusValue ;
+    $stmt->bind_param("di", $PlusValue, $OrderId);
+    $PlusValue = $plusValue;
     $OrderId = $orderId;
-    if ($stmt->execute()===TRUE)
-    {
+    if ($stmt->execute() === TRUE) {
       return "Order Paid updated successfully";
     }
-    else
-    {
-      echo "Error: ".$conn->error;
+    else {
+      echo "Error: ", $conn->error;
     }
   }
 }
 
-function deleteOpenOrderById($conn) // remove  order items with cascading
-{
-  $openStatusId=1;
+function deleteOpenOrderById($conn) { // remove  order items with cascading
+  $openStatusId = 1;
   //$conn->query("set foreign_key_checks = 0"); // ????????/
-  $sql = "delete from `Order` where UserId = ". $_SESSION["userId"] ." and `OrderStatusId`= {$openStatusId}  LIMIT 1";
-  if ($conn->query($sql) === TRUE)
-  {
+  $sql = "delete from `Order` where UserId = ". $_SESSION["userId"] . " and `OrderStatusId` = {$openStatusId} LIMIT 1";
+  if ($conn->query($sql) === TRUE) {
     return "Current Open Order deleted successfully";
   }
-  else
-  {
-    echo "Error: ".$conn->error;
+  else {
+    echo "Error: ", $conn->error;
   }
 }
 
-
-
-function calcAndUpdateOrderTotalById($conn ,$orderId)
-{
-  if (!isset($orderId))
-  {
+function calcAndUpdateOrderTotalById($conn, $orderId) {
+  
+  if ( !isset($orderId) ) {
     //echo "Error: order Id  is not set";
     return;
   }
-  else
-  {
-    $sql = "update `Order` set `Total`= IFNULL((select sum(TotalPrice) from `OrderItem` where OrderId ={$orderId}), 0) where Id={$orderId}";
+  else {
+    $sql = "update `Order` set `Total` = IFNULL( (select sum(TotalPrice) from `OrderItem` where OrderId = {$orderId}), 0) where Id = {$orderId}";
     $result = $conn->query($sql);
-    if ($result===TRUE)
-    {
+    if ($result === TRUE) {
       return "Order Total updated successfully";
     }
-    else
-    {
-      echo "Error: ".$conn->error;
+    else {
+      echo "Error: ", $conn->error;
     }
   }
 }
 
-function getorderItems($conn,$orderId)
-{
-  $orderItemsStatment = "select MenuItem.Name , MenuItem.Price , OrderItem.Quantity , OrderItem.TotalPrice , Order.Total from `OrderItem` inner join MenuItem on MenuItem.Id = OrderItem.MenuItemId inner join `Order` on Order.Id = OrderItem.OrderId where OrderItem.OrderId = " . $orderId;
+function getorderItems($conn, $orderId) {
+  $orderItemsStatment = "select MenuItem.Name, MenuItem.Price, OrderItem.Quantity, OrderItem.TotalPrice, Order.Total from `OrderItem` inner join MenuItem on MenuItem.Id = OrderItem.MenuItemId inner join `Order` on Order.Id = OrderItem.OrderId where OrderItem.OrderId = " . $orderId;
   $result = $conn->query($orderItemsStatment);
-  $orderItems = mysqli_fetch_all($result);
-  mysqli_free_result($result);
-  return $orderItems;
+  if ($result) {
+    $orderItems = mysqli_fetch_all($result);
+    mysqli_free_result($result);
+    return $orderItems;
+  }
+  else {
+    echo "error : ", $conn->error;
+  }
+  
 }
 
-function processPayment($conn,$orderId,$selectedMethodId,$deliveryPlace,$deliveryTimeId,$apiContext)
-{
-  $orderItems = getorderItems($conn,$orderId);
+function processPayment($conn, $orderId, $selectedMethodId, $deliveryTimeId, $apiContext) {
+  $orderItems = getorderItems($conn, $orderId);
 
   //var_dump($selectedMethodId);
 
   //print_r($orderItems);
-  if ($selectedMethodId == 1) // paypal payment
+  if ($selectedMethodId == 1) { // paypal payment
   //var_dump("13");
-  {
     $itemList = new ItemList();
 
-    foreach ($orderItems as $orderItem)
-    {
+    foreach ($orderItems as $orderItem) {
       $item = new Item();
       $item->setName($orderItem[0])
         ->setCurrency('GBP')
@@ -489,8 +440,8 @@ function processPayment($conn,$orderId,$selectedMethodId,$deliveryPlace,$deliver
 
     // Set redirect urls
     $redirectUrls = new RedirectUrls();
-    $redirectUrls->setReturnUrl(SITE_URL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/review_order_and_charge_customer.php?orderId=' . $orderId . '&deliveryPlace=' . $deliveryPlace . '&paymentMethodId=' . $selectedMethodId . '&deliveryTimeId=' . $deliveryTimeId)
-      ->setCancelUrl(SITE_URL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId=' . $orderId . '&deliveryPlace=' . $deliveryPlace . '&paymentMethodId=' . $selectedMethodId . '&deliveryTimeId=' . $deliveryTimeId);
+    $redirectUrls->setReturnUrl(SITE_URL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/review_order_and_charge_customer.php?orderId=' . $orderId . '&paymentMethodId=' . $selectedMethodId . '&deliveryTimeId=' . $deliveryTimeId)
+      ->setCancelUrl(SITE_URL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId=' . $orderId . '&deliveryPlace=' . '&paymentMethodId=' . $selectedMethodId . '&deliveryTimeId=' . $deliveryTimeId);
 
     // Set payment amount
     $amount = new Amount();
@@ -515,14 +466,12 @@ function processPayment($conn,$orderId,$selectedMethodId,$deliveryPlace,$deliver
       ->setRedirectUrls($redirectUrls)
       ->setTransactions([$transaction]);
 
-    try
-    {
+    try {
       $payment->create($apiContext);
       // CheckOutOrder($conn,$data->orderId,$data->deliveryTimeId ,$data->deliveryPlace,$data->paymentMethodId , $data->paid );
     }
 
-    catch (PayPalConnectionException $ex)
-    {
+    catch (PayPalConnectionException $ex) {
       echo $ex->getData();
       die($ex);
     }

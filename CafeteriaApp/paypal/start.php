@@ -14,6 +14,9 @@ $paypal = new ApiContext(
     //'EDzF2C7HP0W3CS63fB10QLIP96smQ8VYb1UQMgTeCeUMUJRRzf_mCjx9IMyEMkkZrI7tQOFOqwTB7hFH'
     'AZGPDIWL1MdLuKBv5ZVzGDR88znU4MuHKYn2aFsWvkf9qgqAcEUn9naOEY3j5ZRmPKasJ51xQm09dgLh',
     'EMmWv7NS4w3Z9hq-Piffsb5H1NWE_d4GA2TnmfYnG2UdKouUlpHRDidQImgNhcU8VOaeCTRZhHlnTjxf'
+    //'AaqK9FmuMGv1QG5LkOV3feVs9rrJHh-Aq61u9U50pAxmRvJ6p0zEUKgcLHJaE_BwWPJqemP6CNeGbdmm',
+    //'ENiYI0eZcHx2bXoYTj0392coGpSXNUAB6_NeLfjYqX57dT5BCfz1rjHMvyr-UdgYY5zAxUbpSetQnTW7s'
+
   )
 );
 $paypal->setConfig([
