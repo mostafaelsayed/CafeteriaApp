@@ -250,6 +250,9 @@ layoutApp.controller('OrderCheckout',['$scope','$http','$location',function ($sc
   $scope.getOrderDeliveryTime = function() {
    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?orderId=' + $scope.orderId)
    .then(function(response) {
+    console.log(response.data);
+      $scope.deliveryTimeId = response.data;
+      //console.log($scope.deliveryTimeId);
       $scope.deliveryTimeDuration = response.data.Duration;
    });
   };
