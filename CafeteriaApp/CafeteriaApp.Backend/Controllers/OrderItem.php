@@ -1,18 +1,14 @@
 <?php
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Order.php');
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/MenuItem.php');
 
-require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');
-require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Order.php');
-require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Times.php');
-require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Dates.php');
-require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/MenuItem.php');
-
-function getOrderItemsByClosedOrderId($conn,$id) {
+function getOrderItemsByOrderId($conn, $id) {
   if ( !isset($id) ) {
     //echo "Error: Order Id is not set";
     return;
   }
   else {
-    $sql = "select MenuItem.Name, OrderItem.Quantity, OrderItem.TotalPrice from OrderItem INNER JOIN MenuItem ON  OrderItem.MenuItemId = MenuItem.Id where OrderItem.OrderId = " . $id ;
+    $sql = "select MenuItem.Name, OrderItem.Quantity, OrderItem.TotalPrice from OrderItem INNER JOIN MenuItem ON  OrderItem.MenuItemId = MenuItem.Id where OrderItem.OrderId = " . $id;
     $result = $conn->query($sql);
     if ($result) {
       $orderItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -25,24 +21,24 @@ function getOrderItemsByClosedOrderId($conn,$id) {
   }
 }
 
-function getOrderItemsByOpenOrderId($conn, $id) {
-  if ( !isset($id) ) {
-    //echo "Error: Order Id is not set";
-    return;
-  }
-  else {
-    $sql = "select  MenuItem.Name, MenuItem.Id as MenuItemId, OrderItem.Id, OrderItem.OrderId, OrderItem.TotalPrice, OrderItem.Quantity from OrderItem INNER JOIN MenuItem ON OrderItem.MenuItemId = MenuItem.Id where OrderItem.OrderId = " . $id ;
-    $result = $conn->query($sql);
-    if ($result) {
-      $orderItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
-      mysqli_free_result($result);
-      return $orderItems;
-    }
-    else {
-      echo "Error retrieving OrderItems : ", $conn->error;
-    }
-  }
-}
+// function getOrderItemsByOpenOrderId($conn, $id) {
+//   if ( !isset($id) ) {
+//     //echo "Error: Order Id is not set";
+//     return;
+//   }
+//   else {
+//     $sql = "select  MenuItem.Name, MenuItem.Id as MenuItemId, OrderItem.Id, OrderItem.OrderId, OrderItem.TotalPrice, OrderItem.Quantity from OrderItem INNER JOIN MenuItem ON OrderItem.MenuItemId = MenuItem.Id where OrderItem.OrderId = " . $id;
+//     $result = $conn->query($sql);
+//     if ($result) {
+//       $orderItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
+//       mysqli_free_result($result);
+//       return $orderItems;
+//     }
+//     else {
+//       echo "Error retrieving OrderItems : ", $conn->error;
+//     }
+//   }
+// }
 
 function getOrderItemById($conn, $id) {
   if ( !isset($id) ) {
@@ -82,8 +78,6 @@ function getOrderItemTotalPriceById($conn, $id) {
   }
 }
 
-//print_r(getOrderItemTotalPriceById($conn,25));
-
 function editOrderItemQuantity($conn, $quantity, $id, $increaseDecrease) {
   if ( !isset($quantity) ) {
     //echo "Error: OrderItem quantity is not set";
@@ -103,7 +97,7 @@ function editOrderItemQuantity($conn, $quantity, $id, $increaseDecrease) {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("idi", $Quantity, $TotalPrice, $Id);
     $Quantity = $quantity;
-    $TotalPrice = $totalPrice ;
+    $TotalPrice = $totalPrice;
     $Id = $id;
 
     if ($stmt->execute() === TRUE) {
@@ -210,7 +204,7 @@ function deleteOrderItemsByMenuItemId($conn, $id) {// remove TotalPrice to total
    // $orderId =json_decode(getOpenOrderByCustomerId($conn), true)["Id"];
     //$totalPrice=getOrderItemTotalPriceById($conn,$id);
     //updateOrderTotalById($conn,$orderId,-$totalPrice);
-    $sql = "delete from OrderItem where MenuItemId = ".$id ;
+    $sql = "delete from OrderItem where MenuItemId = " . $id;
     if ($conn->query($sql) === TRUE) {
       return "Order Item deleted successfully";
     }
@@ -244,5 +238,4 @@ function editOrderItemTotalPrice($conn, $totalPrice, $id) {
     }
   }
 }
-
 ?>

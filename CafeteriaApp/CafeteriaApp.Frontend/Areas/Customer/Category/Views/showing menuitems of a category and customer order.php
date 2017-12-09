@@ -177,7 +177,7 @@
 
     <div class="col-lg-5" style="margin:10px">
 
-      <table class="table table-bordered" ng-cloak  ng-show="orderItems.length > 0">
+      <table class="table table-bordered" ng-cloak ng-show="orderItems.length > 0">
 
         <thead>
 

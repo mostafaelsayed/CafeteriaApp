@@ -1,11 +1,7 @@
 <?php
-
   require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
-
   validatePageAccess($conn);
-
   require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/layout.php');
-
 ?>
 
 <head>
@@ -14,7 +10,7 @@
 
   <link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/map.css">
 
-  <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+  <!-- <script src="https://maps.googleapis.com/maps/api/js"></script> -->
 
   <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/calculate_distance_given_longitude_and_latitude.js"></script>
  
@@ -36,11 +32,13 @@
 
     <input type="text" style="visibility:hidden" ng-model="selectedMethod.Id" name="selectedMethodId">
 
+    <input type="text" style="visibility:hidden" ng-model="selectedType.id" name="orderType">
+
     <input type="text" style="visibility:hidden" ng-model="total" name="total">
 
     <div class="well" style="width:550px;height:720px;margin:auto;background-color:white">
 
-      <div>Recepient Name</div>
+      <!-- <div>Recepient Name</div>
 
       <div>
 
@@ -50,9 +48,9 @@
 
         <br><br><br>
 
-      </div>
+      </div> -->
 
-      <div>Phone</div>
+      <!-- <div>Phone</div>
 
       <div>
 
@@ -68,49 +66,13 @@
 
         <br><br><br>
 
-      </div>
+      </div> -->
 
-      <select ng-options="type.name for type in orderTypes" ng-model="selectedType"></select>
+      <select ng-options="type.name for type in orderTypes" ng-click="changeType()" ng-model="selectedType"></select>
 
       <br><br><br>
 
-      <div ng-show="selectedType.id == 1">
-
-        <div>Delivery Place</div>
-
-        <!-- <div>
-
-          <select name="place" ng-model="selectedLocation" ng-options=" place[1] for place in userLocations"></select>
-
-          <span ng-show="myForm.$submitted && myForm.deliveryPlace.$invalid" ng-cloak>The Delivery Place is required.</span>
-
-          <br><br><br>
-
-        </div> -->
-
-        <div>Delivery Fees</div>
-
-        <div>
-
-          <input type="text" name="deliveryFees" style="text-align:center" ng-model="deliveryFees" disabled />
-
-          <br><br><br>
-
-        </div>
-
-      </div>
-
-      <div>Order Status</div>
-
-      <div>
-
-        <input type="text" name="orderStatus" style="text-align:center" value="Open" disabled />
-
-        <br><br><br>
-
-      </div>
-
-      <div>Discount</div>
+      <!-- <div>Discount</div>
 
       <div>
 
@@ -120,7 +82,7 @@
 
         <br><br><br>
 
-      </div>
+      </div> -->
 
       <div>Total: &nbsp;
 
@@ -147,30 +109,41 @@
 
     </div>
 
-    <br>
+    <br />
 
-    <div class="wrapper">
+    <div ng-show="selectedType.id == 0">
+
+      <input type="submit" class="btn btn-primary" name="next" value="Next" />
+      &nbsp;&nbsp;&nbsp;
+
+      <span><input type="submit" class="btn btn-primary" name="cancel" value="Discard Order" ng-click="discardOrder()" /></span>
+
+    </div>
+
+    <div style="visibility: hidden" class="wrapper">
    
-      <div id="map">
+      <div id="map"></div>
 
-        <span class="helper">Click the button below to show your location on the map</span>
+      <br />
 
-      </div>
+      <div style="color: white">Click on the map above to Change Your Delivery Location</div>
 
-      <br>
+      <br />
 
-      <a ng-show="my == 0" ng-click="findPlaceLocation(closestPlace.geometry.location,1)" style="display:block;margin:auto;cursor:pointer">Find My Location</a>
+      <a class="btn btn-primary" ng-click="confirmLocation()">Confirm Location</a>
 
-      <a ng-show="my == 1" ng-click="findPlaceLocation(closestPlace.geometry.location)" style="display:block;margin:auto;cursor:pointer">Find Closest Location</a>
-
-      <br>
+      <br /> <br />
 
     </div><!--End Wrapper-->
 
-    <input type="submit" class="btn btn-primary" name="next" value="Next" />
-    &nbsp;&nbsp;&nbsp;
+    <div ng-show="selectedType.id == 1">
 
-    <span><input type="submit" class="btn btn-primary" name="cancel" value="Discard Order" ng-click="discardOrder()" /></span>
+      <input type="submit" class="btn btn-primary" name="next" value="Next" />
+      &nbsp;&nbsp;&nbsp;
+
+      <span><input type="submit" class="btn btn-primary" name="cancel" value="Discard Order" ng-click="discardOrder()" /></span>
+
+    </div>
 
     <br><br>
 

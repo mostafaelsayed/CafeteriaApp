@@ -118,6 +118,8 @@
 
     <input type="text" style="visibility:hidden" ng-model="paymentMethodId" name="paymentMethodId">
 
+    <input type="text" style="visibility:hidden" ng-model="orderType" name="orderType">
+
     <input type="submit" class="btn btn-primary" value="Pay Now" style="margin:auto;display:block">
 
   </form>

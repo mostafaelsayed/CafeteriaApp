@@ -34,7 +34,8 @@
       <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/jquery-3.2.1.min.js"></script>
       <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/bootstrap.min.js"></script>
       <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
-      <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript//alertify.min.js"></script>
+      <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/alertify.min.js"></script>
+      <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/customer_and_cashier_order.js"></script>
       
       <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/metisMenu.min.js"></script>
       
@@ -129,7 +130,7 @@
 
                 <li class="inner">
 
-                  <a class="navbar-brand" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/logout.php"><?php echo "{$Words['Log out'][$lang_id]}" ?></a>
+                  <a class="navbar-brand" target="_self" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/logout.php"><?php echo "{$Words['Log out'][$lang_id]}" ?></a>
 
                 </li>
 

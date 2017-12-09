@@ -5,44 +5,30 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/jquery-3.2.1.min.js"></script>
-<!--         <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Scripts/libs/bootstrap.min.js"></script>
- -->
         <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
         <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/angular-route.js"></script>
-
-        <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/myapp.js"></script>
 
         <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/ui-bootstrap-2.5.0.js"></script>
 
         <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/ui-bootstrap-tpls-2.5.0.js"></script>
         <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/angular-modal-service.js"></script>
+        <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/location_provider.js"></script>
+        
+        <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/customer_and_cashier_order.js"></script>
         <!-- Bootstrap Core CSS -->
         <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/bootstrap.min.css" rel="stylesheet">
         <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/form_validation.css" rel="stylesheet">
 
-        <!-- MetisMenu CSS -->
-        <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/metisMenu.min.css" rel="stylesheet">
         <!-- DataTables CSS -->
         <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/dataTables.bootstrap.css" rel="stylesheet">
         <!-- DataTables Responsive CSS -->
         <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/dataTables.responsive.css" rel="stylesheet">
         <!-- Custom CSS -->
         <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/sb-admin-2.css" rel="stylesheet">
-        <!-- Morris Charts CSS -->
-        <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/morris.css" rel="stylesheet">
         <!-- Custom Fonts -->
         <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <!-- <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/fonts/fontawesome-webfont.woff" rel="font-woff">
-        <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/fonts/fontawesome-webfont.woff2" rel="octet-stream">
-        <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/fonts/fontawesome-webfont.ttf" rel="x-font-ttf"> -->
         <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/metisMenu.min.js"></script>
-        <!-- DataTables JavaScript -->
-        <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/jquery.dataTables.min.js"></script>
-        <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/dataTables.bootstrap.min.js"></script>
-        <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/dataTables.responsive.js"></script>
-        <!-- Morris Charts JavaScript -->
-        <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/raphael.min.js"></script>
-        <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/morris.min.js"></script>
+        
         <!-- Custom Theme JavaScript -->
         <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/sb-admin-2.js"></script>
         <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/admin style.css" rel="stylesheet">

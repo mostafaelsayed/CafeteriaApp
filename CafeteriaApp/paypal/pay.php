@@ -8,11 +8,7 @@ use PayPal\Api\PaymentExecution;
 use PayPal\Api\Transaction;
 use PayPal\Exception\PayPalConnectionException;
 
-
-//var_dump(12);
-
-function chargeCustomer($paymentId, $payerId, $paypal, $orderId, $deliveryTimeId, $selectedMethodId, $conn)
-{
+function chargeCustomer($paymentId, $payerId, $paypal, $orderId, $deliveryTimeId, $selectedMethodId, $orderType, $conn) {
 	
 	// Get payment object by passing paymentId
 	$payment = Payment::get($paymentId, $paypal);
@@ -21,10 +17,7 @@ function chargeCustomer($paymentId, $payerId, $paypal, $orderId, $deliveryTimeId
 	$execution = new PaymentExecution();
 	$execution->setPayerId($payerId);
 
-	try
-	{
-		//var_dump($_SERVER);
-		// var_dump(12);
+	try {
 		$sql = "insert into `transaction` (UserId, PaymentId, PayerId) values (?,?,?)";
 		$transactionStatment = $conn->prepare($sql);
 		$transactionStatment->bind_param("iss", $UserId, $PaymentId, $PayerId);
@@ -32,42 +25,33 @@ function chargeCustomer($paymentId, $payerId, $paypal, $orderId, $deliveryTimeId
 		$PaymentId = $paymentId;
 		$PayerId = $payerId;
 		
-		if ($transactionStatment->execute() === true)
-		{
-			//var_dump(12);
+		if ($transactionStatment->execute() === true) {
 			$result = $payment->execute($execution, $paypal); // Execute payment (charge customer here)
 			
-			if ($result)
-			{
-				$result = CheckOutOrder($conn, $orderId, $deliveryTimeId, $selectedMethodId);
-				if ($result)
-				{
+			if ($result) {
+				$result = CheckOutOrder($conn, $orderId, $deliveryTimeId, $selectedMethodId, $orderType);
+				if ($result) {
 					$returnUrl = "http://127.0.0.1/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php";
 					$_SESSION['notifications'][] = 'Payment Succeeseded !';
 					header("Location: " . $returnUrl);
 				}
-				else
-				{
+				else {
 					echo "Error :payment succeeded but order still open !";
 				}
 			}
-			else
-			{
+			else {
 				$returnUrl = "http://127.0.0.1/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/checkout.php";
 				header("Location: " . $returnUrl);
 			}
 			
 		}
-		else
-		{
-			
+		else {	
 			echo "error creating transaction : ", $conn->error;
 		}
  
 	}
 
-	catch (PayPalConnectionException $ex)
-	{
+	catch (PayPalConnectionException $ex) {
 	  echo $ex->getCode();
 	  echo $ex->getData();
 	  die($ex);

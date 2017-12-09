@@ -21,8 +21,8 @@
 	// assumes nothing else in session to keep
 	$_SESSION = array();
 	if (isset($_COOKIE[session_name()])) {
-	  setcookie(session_name(), null, time()-42000, '/');
+	  setcookie(session_name(), null, time() - 42000, '/');
 	}
 	session_destroy(); 
-	redirect_to("login.php");
+	redirect_to('login.php');
 ?>

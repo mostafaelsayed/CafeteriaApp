@@ -2,30 +2,26 @@
 
 <?php
   require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php'); 
-  //validatePageAccess($conn);
+  validatePageAccess($conn);
   require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Cashier/layout.php');
-
 ?>
 
 <head>
-
   <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/show_and_hide_orders.js"></script>
   <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/modal_controller.js"></script>
   <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/modal.js"></script>
-
 </head>
-
 
 <div>
 
   <div class="row">
     <div class="col-lg-12">
-      <h1 class="page-header" style="color: white">Orders</h1>
+      <h1 class="page-header">Orders</h1>
     </div>
   </div>
 
-  <div class="row" ng-app="myapp">
-    <div ng-controller="showAndHideOrders">
+  <div class="row">
+    <div ng-app="cashierApp" ng-controller="showAndHideOrders" ng-cloak>
      <script type="text/ng-template" id="modal.html">
        <div class="modal fade" id="mymodal">
         <div class="modal-dialog">
@@ -47,32 +43,32 @@
      </script>
       <div class="col-lg-12">
         <div style="margin: auto">
-          <div><h3 style="color: white">Manage Your Orders</h3>
+          <div><h3>Manage Your Orders</h3>
             <div>
               <a id="add" title="Add Order" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/Cafeteria/Views/showing cafeterias.php" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
             </div>
           </div>
           <div>
-            <table width="50%" class="table" style="border-collapse:collapse" border="0" cellspacing="0" cellpadding="0">
+            <table width="50%" class="table" style="border-collapse: collapse" border="0" cellspacing="0" cellpadding="0">
               <thead>
                 <tr>
-                  <th id="alignText" style="color: white">Id</th>
-                  <th id="alignText" style="color: white">Type</th>
-                  <th id="alignText" style="color: white">Status</th>
-                  <th id="alignText" style="color: white">Actions</th>
+                  <th id="alignText">Id</th>
+                  <th id="alignText">Type</th>
+                  <th id="alignText">Status</th>
+                  <th id="alignText">Actions</th>
                 </tr>
               </thead>
               <tbody ng-repeat="o in orders">
                 <tr>
-                  <td id="alignText" style="color: white" ng-bind="o.Id"></td>
-                  <td id="alignText" style="color: white" ng-show="o.Type == 1">Delivery</td>
-                  <td id="alignText" style="color: white" ng-show="o.Type == 0">Take Away</td>
-                  <td id="alignText" style="color: white" ng-show="o.OrderStatusId == 1">Open</td>
-                  <td id="alignText" style="color: white" ng-show="o.OrderStatusId == 2">Closed</td>
-                  <td id="alignText" style="color: white" class="center">
-                    <a type="button" style="cursor: pointer" ng-click="editOrder(o)">Edit</a>&nbsp;&nbsp;
+                  <td id="alignText" ng-bind="o.Id"></td>
+                  <td id="alignText" ng-show="o.Type == 1">Delivery</td>
+                  <td id="alignText" ng-show="o.Type == 0">Take Away</td>
+                  <td id="alignText" ng-show="o.OrderStatusId == 1">Open</td>
+                  <td id="alignText" ng-show="o.OrderStatusId == 2">Closed</td>
+                  <td id="alignText" class="center">
+                    <a type="button" style="cursor: pointer" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Cashier/Order/Views/edit_order.php?id={{o.Id}}">Edit</a>&nbsp;&nbsp;
                     <a type="button" style="cursor: pointer" ng-click="hideOrder(o)">Hide</a>&nbsp;&nbsp;
-                    <button class="btn btn-info" style="cursor: pointer" ng-click="showPlace(o)">Show Delivery Place in Map</button>
+                    <a class="btn btn-info" style="cursor: pointer" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Cashier/Order/Views/show_order_details.php?id={{o.Id}}">Show Details</a>
                   </td>
                 </tr>
               </tbody>
@@ -83,5 +79,4 @@
     </div>
   </div>
 </div>
-<?php require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/footer.php');
 ?>

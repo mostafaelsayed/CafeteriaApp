@@ -1,107 +1,79 @@
 <?php
-
-function getTimes($conn)
-{
+function getTimes($conn) {
   $sql = "select * from Times";
   $result = $conn->query($sql);
-  if ($result)
-  {
+  if ($result) {
     $times = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
     return $times;
-   
   }
-  else
-  {
-    echo "Error retrieving Times: " . $conn->error;
+  else {
+    echo "Error retrieving Times: ", $conn->error;
   }
 }
 
-function getTimeById($conn,$id)
-{
-  if (!isset($id))
-  {
+function getTimeById($conn, $id) {
+  if ( !isset($id) ) {
     echo "Error: Time Id is not set";
     return;
   }
-  else
-  {
-    $sql = "select * from Times where Id=".$id." LIMIT 1";
+  else {
+    $sql = "select * from Times where Id = " . $id . " LIMIT 1";
     $result = $conn->query($sql);
-    if ($result)
-    {
+    if ($result) {
       $times = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-        return $times;
-      
+      return $times;
     }
-    else
-    {
-      echo "Error retrieving Time: " . $conn->error;
+    else {
+      echo "Error retrieving Time: ", $conn->error;
     }
   }
 }
 
-function getTimeIdByTime($conn,$time)
-{
-  $sql = "select Id from Times where Time='{$time}' LIMIT 1";
+function getTimeIdByTime($conn, $time) {
+  $sql = "select Id from Times where Time = '{$time}' LIMIT 1";
   $result = $conn->query($sql);
-  if ($result)
-  {
+  if ($result) {
     $times = mysqli_fetch_assoc($result);
     mysqli_free_result($result);
     // var_dump($times["Id"]);
     return $times["Id"];
   }
-  else
-  {
+  else {
     echo "Error: ", $conn->error;
   }
 }
 
-function getCurrentTimeId($conn)
-{
+function getCurrentTimeId($conn) {
   $time = date("h:i:00");
   $sql = "select Id from Times where Time = '{$time}' LIMIT 1";
   $result = $conn->query($sql);
-  if ($result)
-  {
+  if ($result) {
     $times = mysqli_fetch_assoc($result);
     mysqli_free_result($result);
     //var_dump($times["Id"]);
     return $times["Id"];
   }
-  else
-  {
+  else {
     echo "Error: ", $conn->error;
   }
 }
 
-function deleteTime($conn,$id)
-{
-  if (!isset($id))
-  {
+function deleteTime($conn, $id) {
+  if ( !isset($id) ) {
     echo "Error: Id is not set";
     return;
   }
-  else
-  {
+  else {
     //$conn->query("set foreign_key_checks=0");
-    $sql = "delete from Times where Id = ".$id. " LIMIT 1";
-    if ($conn->query($sql)===TRUE)
-    {
+    $sql = "delete from Times where Id = " . $id . " LIMIT 1";
+    if ($conn->query($sql) === TRUE) {
       return "Time deleted successfully";
     }
-    else
-    {
-      echo "Error: ".$conn->error;
+    else {
+      echo "Error: ", $conn->error;
     }
   }
 }
-
-// require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
-// require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/TestRequestInput.php');
-
-// var_dump( checkResult(getCurrentTimeId($conn) ) );
-
 ?>

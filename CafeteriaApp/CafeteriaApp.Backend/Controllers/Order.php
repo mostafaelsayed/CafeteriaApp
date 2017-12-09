@@ -1,10 +1,9 @@
 <?php
-
 require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');
 require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
-require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Dates.php');
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Dates.php');
 // require_once('TestRequestInput.php');
-require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Times.php');
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Times.php');
 require_once('CafeteriaApp/CafeteriaApp/PayPal/start.php');
 
 use PayPal\Api\Amount;
@@ -47,58 +46,49 @@ use PayPal\Exception\PayPalConnectionException;
 //   }
 // }
 
-// function getOrderById($conn,$id)
-// {
-//   if( !isset($id))
-//   {
-//     //echo "Error: Order Id is not set";
-//     return;
-//   }
-//   else
-//   {
-//     $sql = "select * from `order` where Id = ".$id." LIMIT 1";
-//     $result = $conn->query($sql);
-//     if ($result)
-//     {
-//       $orders = mysqli_fetch_assoc($result);
-//       mysqli_free_result($result);
-//         return $orders;
-      
-//     }
-//     else
-//     {
-//       echo "Error retrieving order: " . $conn->error;
-//     }
-//   }
-// }
+function getOrderById($conn, $id) {
+  if ( !isset($id) ) {
+    //echo "Error`: Order Id is not set";
+    return;
+  }
+  else {
+    $sql = "select `Id`, `UserId`, `Total`, `Type` from `order` where Id = " . $id . " LIMIT 1";
+    $result = $conn->query($sql);
+    if ($result) {
+      $order = mysqli_fetch_assoc($result);
+      mysqli_free_result($result);
+      return $order;
+    }
+    else {
+      echo "Error retrieving order: ", $conn->error;
+    }
+  }
+}
 
-function getOpenOrderByUserId($conn)
-{
+function getOpenOrderByUserId($conn) {
   $openStatusId = 1;
-  $sql = "select * from `Order` where UserId = " . $_SESSION["userId"] . " and OrderStatusId = " . $openStatusId;
+  $sql = "select * from `Order` where UserId = " . $_SESSION['userId'] . " and OrderStatusId = " . $openStatusId;
   $result = $conn->query($sql);
   if ($result) {
     $order = mysqli_fetch_array($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
     return $order;
   }
-  else
-  {
-    echo "Error retrieving Open Order : " . $conn->error;  
+  else {
+    echo "Error retrieving Open Order : ", $conn->error;  
   }
 }
 
 function calcOpenOrderDeliveryTime($conn, $orderId) {
-  $sql = "select sum(OrderItem.Quantity * MenuItem.ReadyInMins) from OrderItem inner join MenuItem on OrderItem.MenuItemId = MenuItem.Id  where OrderItem.OrderId = " . $orderId;
+  $sql = "select sum(OrderItem.Quantity * MenuItem.ReadyInMins) from OrderItem inner join MenuItem on OrderItem.MenuItemId = MenuItem.Id where OrderItem.OrderId = " . $orderId;
   $result = $conn->query($sql);
   if ($result) {
     $order = mysqli_fetch_array($result, MYSQLI_NUM);
     mysqli_free_result($result);
-    // $order = json_encode($order);
     return $order[0];
   }
   else {
-    echo "Error retrieving Open Order : " . $conn->error;  
+    echo "Error retrieving Open Order : ", $conn->error;  
   }
 }
 
@@ -160,9 +150,8 @@ function getOrders($conn) {
     mysqli_free_result($result);
     return $orders;
   }
-  else
-  {
-    echo "Error retrieving orders: " . $conn->error;
+  else {
+    echo "Error retrieving orders: ", $conn->error;
   }
 }
 
@@ -216,7 +205,42 @@ function getOrders($conn) {
 //   }
 // }
 
-function addOrder($conn, $deliveryDateId, $createdTimeId, $paymentMethodId, $orderStatusId, $userId, $total = 0,$paid = 0) {
+function updateOrderLocation($conn, $locationId) {
+  $sql = "select `OrderId` from `orderlocation`";
+  $res = $conn->query($sql);
+  //echo mysql_num_rows($res);
+  if ($res === false) {
+    echo "error: ", $conn->error;
+  }
+  else if ( mysqli_num_rows($res) !== 0 ) {
+    $stmt = "update `orderlocation` set `LocationId` = (?)";
+    $stmt = $conn->prepare($stmt);
+    $stmt->bind_param("i", $LocationId);
+    $LocationId = $locationId;
+    if ($stmt->execute() === true) {
+      echo "Location updated";
+    }
+    else {
+      echo "error: ", $conn->error;
+    }
+  }
+  else {
+    $stmt = "insert into `orderlocation` (OrderId, LocationId) values (?, ?)";
+    $stmt = $conn->prepare($stmt);
+    $stmt->bind_param("ii", $OrderId, $LocationId);
+    $LocationId = $locationId;
+    $OrderId = $_SESSION['orderId'];
+
+    if ($stmt->execute() === true) {
+      echo "Location updated";
+    }
+    else {
+      echo "error: ", $conn->error;
+    }
+  }
+}
+
+function addOrder($conn, $deliveryDateId, $createdTimeId, $paymentMethodId, $orderStatusId, $userId, $total = 0, $paid = 0) {
   if ( !isset($deliveryDateId) ) {
     //echo "Error: Order deliveryDateId is not set";
     return;
@@ -248,11 +272,9 @@ function addOrder($conn, $deliveryDateId, $createdTimeId, $paymentMethodId, $ord
   else {
     $sql = "insert into `Order` (DeliveryDateId, DeliveryTimeId, Paid, Total, PaymentMethodId, OrderStatusId, UserId) values (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    //var_dump( $conn->prepare($sql));
     $stmt->bind_param("iiddiii", $DeliveryDateId, $DeliveryTimeId, $Paid, $Total, $PaymentMethodId, $OrderStatusId, $UserId);
     $DeliveryDateId = $deliveryDateId;
     $DeliveryTimeId = $createdTimeId;
-    //$DeliveryPlace = $deliveryPlace; // ??
     $Paid = $paid;
     $Total = $total;
     $PaymentMethodId = $paymentMethodId;
@@ -263,15 +285,12 @@ function addOrder($conn, $deliveryDateId, $createdTimeId, $paymentMethodId, $ord
       return mysqli_insert_id($conn);
     }
     else {
-      echo "Error adding order: " . $conn->error;
-      //echo $error;
+      echo "Error adding order: ", $conn->error;
     }
   }
 }
 
-function CheckOutOrder($conn, $orderId, $deliveryTimeId, $paymentMethodId, $paid = 0) {
-
-//var_dump($deliveryTimeId);
+function CheckOutOrder($conn, $orderId, $deliveryTimeId, $paymentMethodId, $orderType, $paid = 0) {
   $closedStatusId = 2;
 
   if ( !isset($orderId) ) {
@@ -284,29 +303,25 @@ function CheckOutOrder($conn, $orderId, $deliveryTimeId, $paymentMethodId, $paid
   }
   else {
     $deliveryTimeId = getCurrentTimeId($conn);
-    $sql = "update `Order` set `DeliveryTimeId` = (?), `Paid` = (?), `PaymentMethodId` = (?), `OrderStatusId` = (?) where `Id` = (?)";
+    $sql = "update `Order` set `DeliveryTimeId` = (?), `Paid` = (?), `PaymentMethodId` = (?), `OrderStatusId` = (?), `Type` = (?) where `Id` = (?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("idiii", $DeliveryTimeId, $Paid, $PaymentMethodId, $OrderStatusId, $OrderId);
+    $stmt->bind_param("idiiii", $DeliveryTimeId, $Paid, $PaymentMethodId, $OrderStatusId, $OrderType, $OrderId);
     $OrderId = $orderId;
     $DeliveryTimeId = $deliveryTimeId;
     $Paid = $paid;
     $PaymentMethodId = $paymentMethodId;
     $OrderStatusId = $closedStatusId;
+    $OrderType = $orderType;
+
     if ($stmt->execute() === TRUE) {
       //open a new order
-      //$deliveryTimeId = getCurrentTimeId($conn);
-      
-
+      $deliveryTimeId = getCurrentTimeId($conn);
       $deliveryDateId = getCurrentDateId($conn);
-      //var_dump($deliveryDateId);
-      $_SESSION["orderId"] = addOrder($conn, $deliveryDateId, $deliveryTimeId, 1, 1, $_SESSION["userId"], 0, 0);
+      $_SESSION['orderId'] = addOrder($conn, $deliveryDateId, $deliveryTimeId, 1, 1, $_SESSION['userId'], 0, 0);
       return true;
-
-      //return mysqli_insert_id($conn);
     }
     else {
       echo "Error checkout order: ", $conn->error;
-      //echo $error;
     }
   }
 }
@@ -326,6 +341,7 @@ function updateOrderTotalById($conn, $orderId, $plusValue) {
     $stmt->bind_param("di", $PlusValue, $OrderId);
     $PlusValue = $plusValue;
     $OrderId = $orderId;
+
     if ($stmt->execute() === TRUE) {
       return "Order Total updated successfully";
     }
@@ -362,7 +378,8 @@ function updateOrderPaidById($conn, $orderId, $plusValue) {
 function deleteOpenOrderById($conn) { // remove  order items with cascading
   $openStatusId = 1;
   //$conn->query("set foreign_key_checks = 0"); // ????????/
-  $sql = "delete from `Order` where UserId = ". $_SESSION["userId"] . " and `OrderStatusId` = {$openStatusId} LIMIT 1";
+  $sql = "delete from `Order` where UserId = ". $_SESSION['userId'] . " and `OrderStatusId` = {$openStatusId} LIMIT 1";
+
   if ($conn->query($sql) === TRUE) {
     return "Current Open Order deleted successfully";
   }
@@ -380,6 +397,7 @@ function calcAndUpdateOrderTotalById($conn, $orderId) {
   else {
     $sql = "update `Order` set `Total` = IFNULL( (select sum(TotalPrice) from `OrderItem` where OrderId = {$orderId}), 0) where Id = {$orderId}";
     $result = $conn->query($sql);
+
     if ($result === TRUE) {
       return "Order Total updated successfully";
     }
@@ -392,6 +410,7 @@ function calcAndUpdateOrderTotalById($conn, $orderId) {
 function getorderItems($conn, $orderId) {
   $orderItemsStatment = "select MenuItem.Name, MenuItem.Price, OrderItem.Quantity, OrderItem.TotalPrice, Order.Total from `OrderItem` inner join MenuItem on MenuItem.Id = OrderItem.MenuItemId inner join `Order` on Order.Id = OrderItem.OrderId where OrderItem.OrderId = " . $orderId;
   $result = $conn->query($orderItemsStatment);
+
   if ($result) {
     $orderItems = mysqli_fetch_all($result);
     mysqli_free_result($result);
@@ -403,87 +422,79 @@ function getorderItems($conn, $orderId) {
   
 }
 
-function processPayment($conn, $orderId, $selectedMethodId, $deliveryTimeId, $apiContext) {
+function processPayment($conn, $orderId, $selectedMethodId, $deliveryTimeId, $apiContext, $orderType) {
   $orderItems = getorderItems($conn, $orderId);
+  $itemList = new ItemList();
 
-  //var_dump($selectedMethodId);
-
-  //print_r($orderItems);
-  if ($selectedMethodId == 1) { // paypal payment
-  //var_dump("13");
-    $itemList = new ItemList();
-
-    foreach ($orderItems as $orderItem) {
-      $item = new Item();
-      $item->setName($orderItem[0])
-        ->setCurrency('GBP')
-        ->setQuantity($orderItem[2])
-        ->setPrice($orderItem[1]);
-      $itemList->addItem($item);
-    }
-
-    // determine shipping and tax later from frontend
-    $shippingResult = $conn->query("select Price from fees where Id = " . 2); // id of shipping fee
-    $shipping = mysqli_fetch_assoc($shippingResult)['Price'];
-    mysqli_free_result($shippingResult);
-
-    $taxResult = $conn->query("select Price from fees where Id = " . 3); // id of tax fee
-    $tax = mysqli_fetch_assoc($taxResult)['Price'];
-    mysqli_free_result($taxResult);
-
-    // other fees goes here .. 
-
-    $details = new Details();
-    $details->setShipping($shipping)
-      ->setTax($tax)
-      ->setSubtotal($orderItems[0][4]);
-
-    // Set redirect urls
-    $redirectUrls = new RedirectUrls();
-    $redirectUrls->setReturnUrl(SITE_URL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/review_order_and_charge_customer.php?orderId=' . $orderId . '&paymentMethodId=' . $selectedMethodId . '&deliveryTimeId=' . $deliveryTimeId)
-      ->setCancelUrl(SITE_URL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId=' . $orderId . '&deliveryPlace=' . '&paymentMethodId=' . $selectedMethodId . '&deliveryTimeId=' . $deliveryTimeId);
-
-    // Set payment amount
-    $amount = new Amount();
-    $amount->setCurrency('GBP')
-      ->setTotal($orderItems[0][4] + $shipping + $tax)
-      ->setDetails($details);
-
-    // Set transaction object
-    $transaction = new Transaction();
-    $transaction->setAmount($amount)
-      ->setDescription('Payment done')
-      ->setItemList($itemList);
-
-    // Set payer
-    $payer = new Payer();
-    $payer->setPaymentMethod('paypal'); // maybe determine this from frontend too
-
-    // Create the full payment object
-    $payment = new Payment();
-    $payment->setIntent('sale')
-      ->setPayer($payer)
-      ->setRedirectUrls($redirectUrls)
-      ->setTransactions([$transaction]);
-
-    try {
-      $payment->create($apiContext);
-      // CheckOutOrder($conn,$data->orderId,$data->deliveryTimeId ,$data->deliveryPlace,$data->paymentMethodId , $data->paid );
-    }
-
-    catch (PayPalConnectionException $ex) {
-      echo $ex->getData();
-      die($ex);
-    }
-
-    $approvalUrl = $payment->getApprovalLink();
-
-    header("Location: " . $approvalUrl);
-
+  foreach ($orderItems as $orderItem) {
+    $item = new Item();
+    $item->setName($orderItem[0])
+      ->setCurrency('GBP')
+      ->setQuantity($orderItem[2])
+      ->setPrice($orderItem[1]);
+    $itemList->addItem($item);
   }
 
+  // determine shipping and tax later from frontend
+  $shippingResult = $conn->query("select Price from fees where Id = " . 2); // id of shipping fee
+  $shipping = mysqli_fetch_assoc($shippingResult)['Price'];
+  mysqli_free_result($shippingResult);
+
+  $taxResult = $conn->query("select Price from fees where Id = " . 3); // id of tax fee
+  $tax = mysqli_fetch_assoc($taxResult)['Price'];
+  mysqli_free_result($taxResult);
+
+  // other fees goes here .. 
+
+  $details = new Details();
+  $details->setShipping($shipping)
+    ->setTax($tax)
+    ->setSubtotal($orderItems[0][4]);
+
+  // Set redirect urls
+  $redirectUrls = new RedirectUrls();
+  $redirectUrls->setReturnUrl(SITE_URL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/review_order_and_charge_customer.php?orderId=' . $orderId . '&paymentMethodId=' . $selectedMethodId . '&deliveryTimeId=' . (int)$deliveryTimeId . '&orderType=' . $orderType)
+    ->setCancelUrl(SITE_URL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId=' . $orderId . '&paymentMethodId=' . $selectedMethodId . '&deliveryTimeId=' . (int)$deliveryTimeId);
+
+  // Set payment amount
+  $amount = new Amount();
+  $amount->setCurrency('GBP')
+    ->setTotal($orderItems[0][4] + $shipping + $tax)
+    ->setDetails($details);
+
+  // Set transaction object
+  $transaction = new Transaction();
+  $transaction->setAmount($amount)
+    ->setDescription('Payment done')
+    ->setItemList($itemList);
+
+  // Set payer
+  $payer = new Payer();
+
+  if ($selectedMethodId == 1) { // paypal payment
+    $payer->setPaymentMethod('paypal'); // maybe determine this from frontend too
+  }
+  else {
+    $payer->setPaymentMethod('credit_card');
+  }
+
+  // Create the full payment object
+  $payment = new Payment();
+  $payment->setIntent('sale')
+    ->setPayer($payer)
+    ->setRedirectUrls($redirectUrls)
+    ->setTransactions([$transaction]);
+
+  try {
+    $payment->create($apiContext);
+  }
+
+  catch (PayPalConnectionException $ex) {
+    echo $ex->getData();
+    die($ex);
+  }
+
+  $approvalUrl = $payment->getApprovalLink();
+  header("Location: " . $approvalUrl);
 }
-
-//processPayment($conn,10,2,"ay7atta",5,1,$paypal);
-
 ?>

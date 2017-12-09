@@ -1,12 +1,12 @@
 
 // controller for reviewing customer order
-layoutApp.controller('reviewOrderAndChargeCustomer', ['$scope', '$http', '$location',function ($scope, $http, $location) {
+layoutApp.controller('reviewOrderAndChargeCustomer', ['$scope', '$http', '$location', function ($scope, $http, $location) {
 
 	$scope.orderId = $location.search().orderId;
+	$scope.orderType = $location.search().orderType;
 	$scope.paymentId = $location.search().paymentId;
 	$scope.payerId = $location.search().PayerID;
 	$scope.categoryId = $location.search().categoryId;
-	// $scope.deliveryPlace = $location.search().deliveryPlace;
 	$scope.deliveryTimeId = $location.search().deliveryTimeId;
 	$scope.paymentMethodId = $location.search().paymentMethodId;
 
@@ -14,6 +14,6 @@ layoutApp.controller('reviewOrderAndChargeCustomer', ['$scope', '$http', '$locat
 	.then(function(response) {
 		$scope.orderDetails = response.data;
 	 	$scope.total = response.data[0][4];
-	});
+	} );
 
-}]);
+} ] );
