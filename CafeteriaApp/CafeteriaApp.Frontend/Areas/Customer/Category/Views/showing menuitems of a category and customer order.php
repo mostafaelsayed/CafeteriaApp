@@ -26,9 +26,9 @@
 
 <div class="container">
 
-  <div style="text-align:center">
+  <div style="text-align: center">
 
-    <h1 style="margin-bottom:20px;border-bottom:3px solid orange">Menu</h1>
+    <h1 style="margin-bottom: 20px;border-bottom: 3px solid orange">Menu</h1>
 
       <div class="popup">
 
@@ -42,11 +42,11 @@
 
     <div class="col-lg-5">
 
-      <div ng-repeat="m in menuItems" style="width:90%;margin-left:40px">
+      <div ng-repeat="m in menuItems" style="width: 90%;margin-left: 40px">
 
-        <h1 style="color: #4CAF50;font-family:FontAwesome" ng-bind="m.Name" class="menu-name"></h1>
+        <h1 style="color: #4CAF50;font-family: FontAwesome" ng-bind="m.Name" class="menu-name"></h1>
                 
-        <a id="{{'favorites'+m.Id}}" title="add to favorites" style="color:red;float:right" ng-click="toggleFavoriteItem(m.Id)" class="btn btn-info btn-lg">
+        <a id="{{'favorites'+m.Id}}" title="add to favorites" style="color: red;float: right" ng-click="toggleFavoriteItem(m.Id)" class="btn btn-info btn-lg">
 
           <span class="glyphicon glyphicon-heart"></span>
 
@@ -87,39 +87,39 @@
 
         </div>
 
-        <a title="Show/Hide Comments" style="color:blue;float:right" ng-click="toggleMenuItemComments($index,m.Id)" class="btn btn-lg comments">
+        <a title="Show/Hide Comments" style="color: blue;float: right" ng-click="toggleMenuItemComments($index,m.Id)" class="btn btn-lg comments">
 
           <span>{{ ShowHides[$index] ?'Hide Comments':'Show Comments'}}</span>
 
         </a>
 
-        <div style="color:white;font-style:italic">Name :  
+        <div style="color: white;font-style: italic">Name :  
 
-          <span ng-bind="m.Name" style="color:white"></span>
-
-        </div>
-
-        <div style="color:white;font-style:italic">Price :  
-
-          <span ng-bind="m.Price" style="color:white"></span>
+          <span ng-bind="m.Name" style="color: white"></span>
 
         </div>
 
-        <div style="color:white;font-style:italic">Rating :  
+        <div style="color: white;font-style: italic">Price :  
 
-          <span ng-bind="m.Rating" style="color:white"></span>
+          <span ng-bind="m.Price" style="color: white"></span>
+
+        </div>
+
+        <div style="color: white;font-style: italic">Rating :  
+
+          <span ng-bind="m.Rating" style="color: white"></span>
 
           <span> from </span>
 
-          <span ng-bind="m. RatingUsersNo" style="color:white"></span>
+          <span ng-bind="m. RatingUsersNo" style="color: white"></span>
 
           <span>  user(s)</span>
 
         </div>
 
-        <div style="color:white;font-style:italic">Description :  
+        <div style="color: white;font-style: italic">Description :  
 
-          <span ng-bind="m.Description" style="color:white"></span>
+          <span ng-bind="m.Description" style="color: white"></span>
 
         </div>
           
@@ -127,7 +127,7 @@
 
         <table class="blueTable" id="{{'comments'+m.Id}}" ng-if="ShowHides[$index]">
 
-          <caption style="color:blue;font-weight:bold">{{m.Name}} Comments</caption>
+          <caption style="color: blue;font-weight: bold">{{m.Name}} Comments</caption>
          
           <tbody>
 
@@ -151,7 +151,7 @@
 
               <td>
 
-                <textarea id="{{'textarea'+ $index}}" type="textarea" placeholder="add your comment ........" ng-model="commentDetails[$index]" style="width: auto; display: block;width:100%"></textarea>
+                <textarea id="{{'textarea'+ $index}}" type="textarea" placeholder="add your comment ........" ng-model="commentDetails[$index]" style="width: auto; display: block;width: 100%"></textarea>
 
               </td>
 
@@ -175,7 +175,7 @@
 
     </div>
 
-    <div class="col-lg-5" style="margin:10px">
+    <div class="col-lg-5" style="margin: 10px">
 
       <table class="table table-bordered" ng-cloak ng-show="orderItems.length > 0">
 
@@ -211,7 +211,7 @@
 
               <a title="Decrease Quantity" ng-click="decreaseQuantity(o)" class="btn"><i class="fa fa-minus"></i></a>
 
-              <a title="Remove From Order" ng-click="deleteOrderItem(o)" style="color:white;font-style:italic" class="btn">Remove This Item</a>
+              <a title="Remove From Order" ng-click="deleteOrderItem(o)" style="color: white;font-style: italic" class="btn">Remove This Item</a>
 
             </td>
 
@@ -223,9 +223,11 @@
 
       <!-- <div id="thead">Total: <span ng-bind="currentOrder.Total"></span></div> -->
 
-      <div style="align-content: center;text-align:center">
+      <div style="align-content: center;text-align: center">
 
-        <a style="font-style:italic;color:white" class="btn btn-info btn-lg " ng-href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}"  ng-cloak ng-show="orderItems.length > 0" target="_self">Checkout</a>
+        <a style="font-style: italic;color: white" class="btn btn-info btn-lg " ng-href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}" ng-cloak ng-show="orderItems.length > 0 && roleid == false" target="_self">Checkout</a>
+
+        <a style="font-style: italic;color: white" class="btn btn-info btn-lg" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Cashier/Order/Views/show_and_hide_orders.php" ng-cloak ng-show="roleid == true" target="_self">Return To Orders</a>
 
       </div>
 
@@ -233,7 +235,7 @@
 
     <hr width="90%">
 
-    <div class="bottom" style="margin:0 auto;text-align:center">
+    <div class="bottom" style="margin:0 auto;text-align: center">
 
       <a target="_self" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing categories of a cafeteria.php?id={{cafeteriaId}}">Back</a>
 
@@ -243,7 +245,7 @@
 
     </div>
 
-    <div class="about" style="margin:0 auto;text-align:center;color:white">
+    <div class="about" style="margin:0 auto;text-align: center;color: white">
 
       <h1>About This Category</h1>
 

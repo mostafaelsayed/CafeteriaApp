@@ -45,6 +45,7 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$http',
   order_info.deleteOrderItem = function(orderItem) {
     $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderItem.php?id=' + orderItem.Id)
     .then(function(response) {
+      console.log(response);
       order_info.getOrderItems(orderItem.OrderId);
     });
   };

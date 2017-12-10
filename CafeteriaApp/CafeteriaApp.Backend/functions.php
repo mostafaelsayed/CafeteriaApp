@@ -126,7 +126,7 @@
 
   function validatePageAccess($conn) { // using hash
     confirm_logged_in();
-    $query  = "SELECT `Dir` FROM `Dir` WHERE Id IN (SELECT DirId FROM Dir_Role WHERE RoleId = {$_SESSION["roleId"]} ) ";  // add RoleId
+    $query  = "SELECT `Dir` FROM `Dir` WHERE Id IN (SELECT DirId FROM Dir_Role WHERE RoleId = {$_SESSION['roleId']} ) ";  // add RoleId
     $result_set = mysqli_query($conn, $query);
     confirmQuery($result_set);
 
@@ -134,7 +134,7 @@
       $dirs = mysqli_fetch_all($result_set, MYSQLI_ASSOC); // ??
 
       foreach ($dirs as $key => $value) {
-        if (strpos( getcwd(), $value["Dir"] ) !== false) {
+        if (strpos( getcwd(), $value['Dir'] ) !== false) {
           return;
         }
       }

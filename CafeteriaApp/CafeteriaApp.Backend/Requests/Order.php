@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  if ( isset( $_POST['orderId'], $_POST['deliveryTimeId'], $_POST['orderType'] ) && test_int( $_POST['orderId'], $_POST['deliveryTimeId'], $_POST['orderType'] ) ) {
+  if ( isset( $_POST['orderId'], $_POST['deliveryTimeId'], $_POST['orderType'] ) && test_int( $_POST['orderId'], $_POST['deliveryTimeId'], $_POST['orderType'] ) && $_POST['selectedMethodId'] != 4) { // cash not included
     if ( isset( $_POST['selectedMethodId'] ) && !isset( $_POST['paymentId'] ) && test_int( $_POST['selectedMethodId'] ) ) {
         processPayment($conn, $_POST['orderId'], $_POST['selectedMethodId'], $_POST['deliveryTimeId'], $paypal, $_POST['orderType']);
     }
@@ -34,13 +34,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       echo "error";
     }
   }
+  else {
+    if ($_SESSION['roleId'] == 3) {
+      $deliveryTimeId = getCurrentTimeId($conn);
+      $deliveryDateId = getCurrentDateId($conn);
+      $_SESSION['orderId'] = addOrder($conn, $deliveryDateId, $deliveryTimeId, 4, 1, $_SESSION['userId']); // consider it cash but when user will use paypal (either using paypal or credit), customer should use the app himself to login to paypal
+      header("Location: " . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php");
+    }
+  }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
   $data = json_decode( file_get_contents("php://input") );
 
-  if ( isset($data->locationId) ) {
+  if ( isset($data->locationId) && test_int($data->locationId) ) {
     checkResult( updateOrderLocation($conn, $data->locationId) );
+  }
+  elseif ( isset($data->orderId) && test_int($data->orderId) ) {
+    updateOrderIdInSession($conn, $data->orderId);
+    // header("Location: " . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php");
+  }
+  else if (isset($_GET['flag']) && test_int($_GET['flag']) && $_GET['flag'] == 2) {
+    hideOrder($conn);
   }
   else {
     echo "error";

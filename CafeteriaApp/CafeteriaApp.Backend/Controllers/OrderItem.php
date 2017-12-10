@@ -8,7 +8,7 @@ function getOrderItemsByOrderId($conn, $id) {
     return;
   }
   else {
-    $sql = "select MenuItem.Name, OrderItem.Quantity, OrderItem.TotalPrice from OrderItem INNER JOIN MenuItem ON  OrderItem.MenuItemId = MenuItem.Id where OrderItem.OrderId = " . $id;
+    $sql = "select MenuItem.Name, OrderItem.Quantity, OrderItem.TotalPrice, OrderItem.MenuItemId, OrderItem.Id, OrderItem.OrderId from OrderItem INNER JOIN MenuItem ON  OrderItem.MenuItemId = MenuItem.Id where OrderItem.OrderId = " . $id;
     $result = $conn->query($sql);
     if ($result) {
       $orderItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -46,7 +46,7 @@ function getOrderItemById($conn, $id) {
     return;
   }
   else {
-    $sql = "select * from OrderItem where Id = " . $id . " LIMIT 1";
+    $sql = "select * from `OrderItem` where `Id` = " . $id . " LIMIT 1";
     $result = $conn->query($sql);
     if ($result) {
       $orderItem = mysqli_fetch_assoc($result);
@@ -65,12 +65,12 @@ function getOrderItemTotalPriceById($conn, $id) {
     return;
   }
   else {
-    $sql = "select TotalPrice from OrderItem where Id = " . $id . " LIMIT 1";
+    $sql = "select `TotalPrice` from `OrderItem` where `Id` = " . $id . " LIMIT 1";
 
     if ( $result = $conn->query($sql) ) {
-      $MenuItem = mysqli_fetch_assoc($result);
+      $OrderItem = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      return $MenuItem["TotalPrice"];
+      return $OrderItem['TotalPrice'];
     }
     else {
       echo "Error retrieving Order Item: ", $conn->error;
@@ -88,17 +88,17 @@ function editOrderItemQuantity($conn, $quantity, $id, $increaseDecrease) {
     return;
   }
   else {
-    $MenuItemId = getOrderItemById($conn, $id)["MenuItemId"];
+    $MenuItemId = getOrderItemById($conn, $id)['MenuItemId'];
     $unitPrice = getMenuItemPriceById($conn, $MenuItemId);
-    $orderId = getOpenOrderByUserId($conn)["Id"];
-   // updateOrderTotalById($conn,$orderId,$increaseDecrease ?+$unitPrice : -$unitPrice);
-    $totalPrice = $quantity * $unitPrice;
-    $sql = "update OrderItem set Quantity = (?) , TotalPrice=(?)  where Id = (?)";
+    //$orderId = getOpenOrderByUserId($conn)['Id'];
+    //$totalPrice = $unitPrice;
+    $sql = "update `OrderItem` set `Quantity` = (?), `TotalPrice` = `TotalPrice` + (?) where `Id` = (?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("idi", $Quantity, $TotalPrice, $Id);
-    $Quantity = $quantity;
-    $TotalPrice = $totalPrice;
-    $Id = $id;
+    $stmt->bind_param("idi", $quantity, $unitPrice, $id);
+
+    if ($increaseDecrease === false) {
+      $unitPrice = -$unitPrice;
+    }
 
     if ($stmt->execute() === TRUE) {
       return "OrderItem updated successfully";
@@ -123,12 +123,11 @@ function addOrderItem($conn, $orderId, $menuItemId, $quantity) {
   $totalPrice  =  $quantity * $unitPrice;
 
   if ($orderId == null) {
-    echo "dsfsdfsdfsdf";
     $deliveryTimeId = getCurrentTimeId($conn);
     $deliveryDateId = getCurrentDateId($conn);
 
      // create order by default values
-    $orderId = addOrder($conn, $deliveryDateId, $deliveryTimeId, '', 1, 1, $_SESSION["userId"], 0);//paid default to zero
+    $orderId = addOrder($conn, $deliveryDateId, $deliveryTimeId, 4, 1, $_SESSION['userId']);
   }
 
   // if ($orderId == null)
@@ -158,13 +157,13 @@ function addOrderItem($conn, $orderId, $menuItemId, $quantity) {
   //else
   //{
 //  updateOrderTotalById($conn,$orderId,$totalPrice);
-  $sql = "insert into OrderItem (OrderId, MenuItemId, Quantity, TotalPrice) values (?, ?, ?, ?)"; // add TotalPrice to total of the order
+  $sql = "insert into `OrderItem` (OrderId, MenuItemId, Quantity, TotalPrice) values (?, ?, ?, ?)"; // add TotalPrice to total of the order
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("iiid", $OrderId, $MenuItemId, $Quantity, $Price);
-  $OrderId = $orderId;
-  $MenuItemId = $menuItemId;
-  $Quantity = $quantity;
-  $Price = $totalPrice;
+  $stmt->bind_param("iiid", $orderId, $menuItemId, $quantity, $totalPrice);
+  //$OrderId = $orderId;
+  //$MenuItemId = $menuItemId;
+  //$Quantity = $quantity;
+  //$Price = $totalPrice;
   if ($stmt->execute() === TRUE) {
     //echo "OrderItem Added successfully";
     return $orderId;
@@ -175,19 +174,19 @@ function addOrderItem($conn, $orderId, $menuItemId, $quantity) {
   //}
 }
 
-function deleteOrderItem($conn, $id) {// remove TotalPrice to total of the order
- if ( !isset($id) ) {
+function deleteOrderItem($conn, $id) { // remove TotalPrice to total of the order
+  if ( !isset($id) ) {
     // echo "Error: Id is not set";
     return;
   }
   else {
-    $orderId = getOpenOrderByUserId($conn)["Id"];
+    //$orderId = getOpenOrderByUserId($conn)['Id'];
     $totalPrice = getOrderItemTotalPriceById($conn, $id);
-   //updateOrderTotalById($conn,$orderId,-$totalPrice);
-    $sql = "delete from OrderItem where Id = " . $id . " LIMIT 1";
+    updateOrderTotalById($conn, $_SESSION['orderId'], -$totalPrice);
+    $sql = "delete from `OrderItem` where `Id` = " . $id . " LIMIT 1";
     if ($conn->query($sql) === TRUE) {
-      //return "Order Item deleted successfully";
-      return $orderId;
+      echo "Order Item deleted successfully";
+      //return $orderId;
     }
     else {
       echo "Error: ", $conn->error;
@@ -204,7 +203,7 @@ function deleteOrderItemsByMenuItemId($conn, $id) {// remove TotalPrice to total
    // $orderId =json_decode(getOpenOrderByCustomerId($conn), true)["Id"];
     //$totalPrice=getOrderItemTotalPriceById($conn,$id);
     //updateOrderTotalById($conn,$orderId,-$totalPrice);
-    $sql = "delete from OrderItem where MenuItemId = " . $id;
+    $sql = "delete from `OrderItem` where `MenuItemId` = " . $id;
     if ($conn->query($sql) === TRUE) {
       return "Order Item deleted successfully";
     }
@@ -224,11 +223,11 @@ function editOrderItemTotalPrice($conn, $totalPrice, $id) {
     return;
   }
   else {
-    $sql = "update OrderItem set TotalPrice = (?) where Id = (?)";
+    $sql = "update `OrderItem` set `TotalPrice` = (?) where `Id` = (?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("di", $TotalPrice, $Id);
-    $TotalPrice = $totalPrice;
-    $Id = $id;
+    $stmt->bind_param("di", $totalPrice, $id);
+    //$TotalPrice = $totalPrice;
+    //$Id = $id;
 
     if ($stmt->execute() === TRUE) {
       return "OrderItem updated successfully";

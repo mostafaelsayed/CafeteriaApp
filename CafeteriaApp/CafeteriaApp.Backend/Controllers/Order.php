@@ -204,6 +204,9 @@ function getOrders($conn) {
 //     }
 //   }
 // }
+function updateOrderIdInSession($conn, $orderId) {
+  $_SESSION['orderId'] = $orderId;
+}
 
 function updateOrderLocation($conn, $locationId) {
   $sql = "select `OrderId` from `orderlocation`";
@@ -290,6 +293,18 @@ function addOrder($conn, $deliveryDateId, $createdTimeId, $paymentMethodId, $ord
   }
 }
 
+function hideOrder($conn) {
+  $sql = "update `order` set `Visible` = 0, `OrderStatusId` = 2 where `Id` = " . $_SESSION['orderId'];
+  $sql = $conn->query($sql);
+
+  if ($sql) {
+    echo "order hided";
+  }
+  else {
+    echo "error: ", $conn->error;
+  }
+}
+
 function CheckOutOrder($conn, $orderId, $deliveryTimeId, $paymentMethodId, $orderType, $paid = 0) {
   $closedStatusId = 2;
 
@@ -336,11 +351,9 @@ function updateOrderTotalById($conn, $orderId, $plusValue) {
     return;
   }
   else {
-    $sql = "update `Order` set `Total` = `Total` + (?) where Id = (?)";
+    $sql = "update `Order` set `Total` = `Total` + (?) where `Id` = (?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("di", $PlusValue, $OrderId);
-    $PlusValue = $plusValue;
-    $OrderId = $orderId;
+    $stmt->bind_param("di", $plusValue, $orderId);
 
     if ($stmt->execute() === TRUE) {
       return "Order Total updated successfully";

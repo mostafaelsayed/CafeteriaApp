@@ -1,14 +1,31 @@
 
 // controller for getting menuitems of a category from database
-layoutApp.controller('getMenuItemsAndCustomerOrder',['$scope','$http','$location','$rootScope','$timeout','Order_Info'
-,function($scope,$http,$location,$rootScope,$timeout,Order_Info) {
+layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$location','$rootScope','$timeout','Order_Info'
+, function($scope, $http, $location, $rootScope, $timeout, Order_Info) {
+  //console.log($rootScope.orderItems);
 
   $scope.categoryId = $location.search().categoryId;
   $scope.cafeteriaId = $location.search().cafeteriaId;
+
+  $scope.checkUser = function() {
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php?flag=1')
+    .then(function(response) {
+      if (response.data == 3) { // cahsier then return to his page of orders
+        $scope.roleid = true;
+      }
+      else {
+        $scope.roleid = false;
+      }
+      console.log(response);
+    });
+    
+  };
+
+  $scope.checkUser();
   
   $scope.getMenuItems = function() {
   
-    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/MenuItem.php?categoryId='+$scope.categoryId)
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/MenuItem.php?categoryId=' + $scope.categoryId)
     .then(function(response) {
       console.log(response);
       $scope.menuItems = response.data;
@@ -32,10 +49,10 @@ layoutApp.controller('getMenuItemsAndCustomerOrder',['$scope','$http','$location
       var data = {
         OrderId: $scope.orderId,
         MenuItemId: menuItem.Id,
-        Quantity: parseInt(1)
+        Quantity: 1
       };
 
-      $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderItem.php',data)
+      $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderItem.php', data)
       .then(function(response) {
         console.log(response);
         $scope.orderId = response.data;

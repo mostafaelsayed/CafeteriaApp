@@ -59,25 +59,20 @@ function getMenuItemById($conn,$id)
 //   }
 // }
 
-function getMenuItemPriceById($conn , $id)
-{
-  if (!isset($id))
-  {
+function getMenuItemPriceById($conn, $id) {
+  if ( !isset($id) ) {
     //echo "Error:MenuItem Id is not set";
     return;
   }
-  else
-  {
-    $sql = "select Price from MenuItem where Id = ".$id." LIMIT 1";
-    if ($result = $conn->query($sql))
-    {
+  else {
+    $sql = "select `Price` from `MenuItem` where `Id` = " . $id . " LIMIT 1";
+    if ( $result = $conn->query($sql) ) {
       $MenuItem = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      return $MenuItem["Price"];
+      return $MenuItem['Price'];
     }
-    else
-    {
-      echo "Error retrieving MenuItem: " . $conn->error;
+    else {
+      echo "Error retrieving MenuItem: ", $conn->error;
     }
   }
 }

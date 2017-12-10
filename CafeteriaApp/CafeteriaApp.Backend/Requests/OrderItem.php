@@ -3,7 +3,7 @@ require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/OrderItem.ph
 require('TestRequestInput.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-  if ( isset($_GET['orderId']) && test_int($_GET['orderId']) && $_SESSION['roleId'] == 3) // cashier only
+  if ( isset($_GET['orderId']) && test_int($_GET['orderId']) ) // cashier only
     checkResult( getOrderItemsByOrderId($conn, $_GET['orderId']) );
 }
 
@@ -30,8 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
-  if ( isset($_GET['id']) && test_int($_GET['id']) )
+  if ( isset($_GET['id']) && test_int($_GET['id']) ) {
     deleteOrderItem($conn, $_GET['id']);
+  }
 }
 
 require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/footer.php');
