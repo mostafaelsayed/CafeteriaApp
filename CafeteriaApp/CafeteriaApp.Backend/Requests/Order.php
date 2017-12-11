@@ -1,35 +1,43 @@
 <?php
 require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Order.php');
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Fee.php');
 require('TestRequestInput.php');
-require_once('CafeteriaApp/CafeteriaApp/PayPal/pay.php');
+require('CafeteriaApp/CafeteriaApp/PayPal/pay.php');
 
 //var_dump($_SERVER);
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-  if ( isset( $_GET['orderId'] ) && !isset( $_GET['flag'] ) && test_int( $_GET['orderId'] ) ) {
+  if ( isset( $_GET['orderId'] ) && !isset( $_GET['flag'] ) && test_int( $_GET['orderId'], $_GET['flag'] ) ) {
     //$Duration = calcOpenOrderDeliveryTime($conn, $_GET['orderId']);
     //$Id = getCurrentTimeId($conn);
     checkResult( getOrderById( $conn, $_GET['orderId'] ) );
   }
-  elseif ( isset( $_GET['orderId'] ) && isset( $_GET['flag'] ) && test_int( $_GET['orderId'], $_GET['flag'] ) ) {
+  elseif ( isset( $_GET['orderId'] ) && isset( $_GET['flag'] ) && test_int( $_GET['orderId'], $_GET['flag'] ) && $_GET['flag'] == 1) {
     checkResult( getOrderItems( $conn, $_GET['orderId'] ) );
   }
-  elseif ( isset( $_GET['flag'] ) && test_int( $_GET['flag'] ) ) {
+  elseif ( isset( $_GET['flag'] ) && test_int( $_GET['flag'] ) && $_GET['flag'] == 1) {
     checkResult( getOrders($conn) );
-  }
+  }  
   else {
     checkResult( getOpenOrderByUserId($conn) );
   }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  if ( isset( $_POST['orderId'], $_POST['deliveryTimeId'], $_POST['orderType'] ) && test_int( $_POST['orderId'], $_POST['deliveryTimeId'], $_POST['orderType'] ) && $_POST['selectedMethodId'] != 4) { // cash not included
-    if ( isset( $_POST['selectedMethodId'] ) && !isset( $_POST['paymentId'] ) && test_int( $_POST['selectedMethodId'] ) ) {
-        processPayment($conn, $_POST['orderId'], $_POST['selectedMethodId'], $_POST['deliveryTimeId'], $paypal, $_POST['orderType']);
+  //var_dump($_POST);
+  if ( isset( $_POST['orderType'] ) && test_int( $_POST['orderType'] ) && $_SESSION['roleId'] == 2) { // customer paypal
+    if ( isset( $_POST['selectedMethodId'] ) && !isset( $_POST['paymentId'] ) && test_int( $_POST['selectedMethodId'] ) && $_POST['selectedMethodId'] != 4) {
+      processPayment($conn, $_SESSION['orderId'], $_POST['selectedMethodId'], $paypal, $_POST['orderType']);
     }
-    elseif ( isset( $_POST['paymentMethodId'] ) && normalize_string( $conn, $_POST['paymentId'], $_POST['payerId'] ) && test_int( $_POST['paymentMethodId'] ) ) {
-      chargeCustomer($_POST['paymentId'], $_POST['payerId'], $paypal, $_POST['orderId'], $_POST['deliveryTimeId'], $_POST['paymentMethodId'], $_POST['orderType'], $conn);
+    elseif (isset( $_POST['selectedMethodId'] ) && test_int($_POST['selectedMethodId']) && $_POST['selectedMethodId'] == 4) { // charge customer here
+      updateWithFee($conn, $_POST['orderType'], $_POST['selectedMethodId']);
+      CheckOutOrder($conn, $_SESSION['orderId'], $_POST['selectedMethodId'], $_POST['orderType']);
+      header("Location: " . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php");
+      //echo "<script type='text/javascript'>localStorage.setItem('submit', 1);</script>";
     }
+    elseif ( isset( $_POST['paymentMethodId'], $_POST['paymentId'], $_POST['payerId'] ) && normalize_string( $conn, $_POST['paymentId'], $_POST['payerId'] ) && test_int( $_POST['paymentMethodId'] ) ) { // charge customer here {
+      chargeCustomer($_POST['paymentId'], $_POST['payerId'], $paypal, $_SESSION['orderId'], $_POST['paymentMethodId'], $_POST['orderType'], $conn);
+    }    
     else {
       echo "error";
     }
@@ -52,7 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
   }
   elseif ( isset($data->orderId) && test_int($data->orderId) ) {
     updateOrderIdInSession($conn, $data->orderId);
-    // header("Location: " . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php");
   }
   else if (isset($_GET['flag']) && test_int($_GET['flag']) && $_GET['flag'] == 2) {
     hideOrder($conn);

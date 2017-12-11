@@ -1,17 +1,12 @@
 <?php
-
   require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
-
   validatePageAccess($conn);
-
   require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/layout.php');
 
-  if (!isset($_GET["orderId"]) || !isset($_GET["deliveryTimeDuration"]))
-  {
-    $_GET["orderId"] = 0;
-    $_GET["deliveryTimeDuration"] = 0;
+  if ( !isset($_GET['orderId']) || !isset($_GET['deliveryTimeDuration']) ) {
+    $_GET['orderId'] = 0;
+    $_GET['deliveryTimeDuration'] = 0;
   }
-   
 ?>
 
 <head>
@@ -56,13 +51,13 @@
 
       <tr ng-repeat="o in orderDetails">
 
-        <td style="color:white" ng-bind="o[0]"></td>
+        <td style="color: white" ng-bind="o[0]"></td>
       
-        <td style="color:white" ng-bind="o[1]"></td>
+        <td style="color: white" ng-bind="o[1]"></td>
       
-        <td style="color:white" ng-bind="o[2]"></td>
+        <td style="color: white" ng-bind="o[2]"></td>
       
-        <td style="color:white" ng-bind="o[3]"></td>
+        <td style="color: white" ng-bind="o[3]"></td>
 
       </tr>
 
@@ -70,57 +65,23 @@
 
   </table>
 
-  <label style="color:white">Total : </label>
+  <label style="color: white">Total : </label>
 
-  <span style="color:white" ng-bind="total"></span>
+  <span style="color: white" ng-bind="total"></span>
 
   <div><br></div>
 
-  <div>
+  <form novalidate name="myForm" action="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php" method="post" style="align-content: center;text-align: center">
 
-    <label style="color:white">DeliveryPlace :&nbsp;</label>
+    <input type="text" style="visibility: hidden" ng-model="paymentId" name="paymentId">
 
-    <span style="color:white" ng-bind="deliveryPlace"></span>
+    <input type="text" style="visibility: hidden" ng-model="payerId" name="payerId">
 
-  </div>
+    <input type="text" style="visibility: hidden" ng-model="paymentMethodId" name="paymentMethodId">
 
-  <br>
+    <input type="text" style="visibility: hidden" ng-model="orderType" name="orderType">
 
-  <div style="color:white">
-
-    <label>Preparation Time within :&nbsp;</label>
-
-    <?php echo "{$_GET["deliveryTimeDuration"]}"; ?>
-
-  </div>
-
-  <br>
-
-  <div style="color: white">
-
-    <label>Delivered Time within :&nbsp;</label>
-
-  </div>
-
-  <br>
-
-  <form novalidate name="myForm" action="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php" method="post" style="align-content:center;text-align:center">
-
-    <input type="text" style="visibility:hidden" name="orderId" ng-model="orderId">
-
-    <input type="text" style="visibility:hidden" ng-model="paymentId" name="paymentId">
-
-    <input type="text" style="visibility:hidden" ng-model="payerId" name="payerId">
-
-    <input type="text" style="visibility:hidden" ng-model="deliveryTimeId" name="deliveryTimeId">
-
-    <input type="text" style="visibility:hidden" ng-model="deliveryPlace" name="deliveryPlace">
-
-    <input type="text" style="visibility:hidden" ng-model="paymentMethodId" name="paymentMethodId">
-
-    <input type="text" style="visibility:hidden" ng-model="orderType" name="orderType">
-
-    <input type="submit" class="btn btn-primary" value="Pay Now" style="margin:auto;display:block">
+    <input type="submit" class="btn btn-primary" value="Pay Now" style="margin: auto;display: block">
 
   </form>
 

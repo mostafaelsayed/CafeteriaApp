@@ -4,6 +4,11 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$locatio
 , function($scope, $http, $location, $rootScope, $timeout, Order_Info) {
   //console.log($rootScope.orderItems);
 
+  if (localStorage.getItem("discard") == 1) {
+    localStorage.setItem("discard", 0);
+    alertify.success('Order Discarded');
+  }
+
   $scope.categoryId = $location.search().categoryId;
   $scope.cafeteriaId = $location.search().cafeteriaId;
 
@@ -56,7 +61,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$locatio
       .then(function(response) {
         console.log(response);
         $scope.orderId = response.data;
-        $scope.togglePopup('Menu Item added successfully !');
+        Order_Info.togglePopup('OrderItem added successfully !');
         Order_Info.getOrderItems($scope.orderId);
       });
 
@@ -66,17 +71,17 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$locatio
 
   $scope.increaseQuantity = function(OrderItem) {
     Order_Info.increaseQuantity(OrderItem);
-    $scope.togglePopup('Menu Item added successfully  !');
+    Order_Info.togglePopup('OrderItem added successfully  !');
   };
 
   $scope.decreaseQuantity = function(OrderItem) {
     Order_Info.decreaseQuantity(OrderItem);
-    $scope.togglePopup('Menu Item removed successfully !');
+    Order_Info.togglePopup('OrderItem removed successfully !');
   };
 
   $scope.deleteOrderItem = function(OrderItem) {
     Order_Info.deleteOrderItem(OrderItem);
-    $scope.togglePopup('Menu Item removed successfully !');
+    Order_Info.togglePopup('OrderItem removed successfully !');
   };
 
   $scope.toggleFavoriteItem = function(menuItemId) {
@@ -95,7 +100,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$locatio
         }
         else {
           document.getElementById('favorites'+menuItemId).style.color="yellow";
-          $scope.togglePopup('favorite Item added successfully !');
+          Order_Info.togglePopup('favorite Item added successfully !');
         }
 
       });
@@ -111,8 +116,8 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$locatio
           alertify.error(response.data);
         }
         else {
-          document.getElementById("favorites"+menuItemId).style.color="red";
-          $scope.togglePopup('favorite Item removed successfully !');
+          document.getElementById("favorites" + menuItemId).style.color = "red";
+          Order_Info.togglePopup('favorite Item removed successfully !');
         }
 
       });
@@ -194,7 +199,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$locatio
 
       if (add_update) {
 
-        var date=$scope.getCurrentDate();
+        var date = $scope.getCurrentDate();
 
         var data = {
           Details:commentDetails ,
@@ -327,7 +332,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$locatio
       .then(function(response) {
 
         if (response.data !== "") {
-          $scope.togglePopup('Item rateing updated successfully !');
+          Order_Info.togglePopup('Item rateing updated successfully !');
         }
 
         else {
@@ -357,7 +362,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$locatio
             }
           }
 
-          $scope.togglePopup('Item rateing added successfully !');
+          Order_Info.togglePopup('Item rateing added successfully !');
 
         }
 
@@ -370,14 +375,14 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$locatio
  
   };
 
-  $scope.togglePopup=function (message) {
-    var popup = document.getElementById("myPopup");
-    popup.innerHTML = message;
-    popup.classList.toggle("show");
-    $timeout(function() {
-      popup.classList.toggle("show");
-    }, 2000);
-  };
+  // $scope.togglePopup=function (message) {
+  //   var popup = document.getElementById("myPopup");
+  //   popup.innerHTML = message;
+  //   popup.classList.toggle("show");
+  //   $timeout(function() {
+  //     popup.classList.toggle("show");
+  //   }, 2000);
+  // };
 
   var self = this;
 

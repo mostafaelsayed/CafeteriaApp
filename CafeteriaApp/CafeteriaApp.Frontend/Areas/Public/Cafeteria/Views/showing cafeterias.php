@@ -2,8 +2,6 @@
 
   require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
 
-  //validatePageAccess($conn);
-
   require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/layout.php');
 
 ?>
@@ -12,13 +10,29 @@
 
   <title>Cafeterias</title>
 
-  <!-- <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/show_notifications.js"></script> -->
+  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.bootstrap.css" rel="stylesheet">
+
+  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.core.css" rel="stylesheet">
+  
+  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.default.css" rel="stylesheet">
+
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/alertify.js"></script>
 
   <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/show_cafeterias.js"></script>
 
 </head>
 
 <div class="container" style="position: static">
+
+  <!-- <div ng-controller="toggle" style="text-align: center;margin-top: 20px"> -->
+
+    <div class="popup" style="text-align: center;margin-top: 20px">
+
+      <span class="popuptext" id="myPopup">A Simple Popup!</span>
+
+    </div>
+
+  <!-- </div> -->
 
   <h1 class="page-header" id="header">Our Cafeterias</h1>
 
@@ -30,7 +44,7 @@
 
         <li data-target="#myCarousel" data-slide-to=0 class="active"></li>
 
-        <li ng-repeat="c in cafeterias.slice(1,cafeterias.length)" data-target="#myCarousel" data-slide-to={{cafeterias.indexOf(c)}}></li>
+        <li ng-repeat="c in cafeterias.slice(1, cafeterias.length)" data-target="#myCarousel" data-slide-to={{cafeterias.indexOf(c)}}></li>
 
       </ol>
 
@@ -48,7 +62,7 @@
 
         </div>
 
-        <div ng-repeat="c in cafeterias.slice(1,cafeterias.length)" class="item">
+        <div ng-repeat="c in cafeterias.slice(1, cafeterias.length)" class="item">
 
           <a ng-href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing categories of a cafeteria.php?id={{c.Id}}">
 

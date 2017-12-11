@@ -1,10 +1,10 @@
 <?php
 
-require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Times.php');
-require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Times.php');
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
 require('TestRequestInput.php');
 
-checkResult(getCurrentTimeId($conn));
+checkResult( getCurrentTimeId($conn) );
 
 
 //
@@ -48,5 +48,4 @@ checkResult(getCurrentTimeId($conn));
 
  
 require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/footer.php');
-
 ?>

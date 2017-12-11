@@ -1,10 +1,51 @@
 
 // controller for order checkout
-layoutApp.controller('OrderCheckout', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$http', '$location', 'Order_Info',
+  function($rootScope, $scope, $interval, $http, $location, Order_Info) {
   $scope.orderId = $location.search().orderId;
-  $scope.selectedMethod = "";
-  $scope.categoryId = $location.search().categoryId;
-  $scope.orderTypes = [ {id: 0,name: "Take Away"}, {id: 1,name: "Delivery"} ];
+  $scope.orderTypes = [ {id: 0, name: "Take Away"}, {id: 1, name: "Delivery"} ];
+  $scope.paymentMethods = [ {id: 1, name: "Paypal"}, {id: 4, name: "Cash"}, {id: 5, name: "Credit Card"} ];
+
+  localStorage.setItem("submit", 1);
+
+  $scope.discardOrder = function() {
+    // orderItems = Order_Info.getOrderItems($scope.orderId);
+    // console.log(orderItems);
+    orderItems = $rootScope.orderItems;
+    console.log(orderItems);
+
+    alertify.confirm("Are Your sure you Want to Discard Order?", function(e) {
+      if (e) {
+        for (var i = 0; i < orderItems.length; i++) {
+          Order_Info.deleteOrderItem(orderItems[i]);
+        }
+        localStorage.setItem("discard", 1);
+        document.location = document.referrer;
+      }
+    })
+
+   
+
+    
+    //Order_Info.togglePopup('order discarded');
+    //Order_Info.togglePopup('order discarded');
+    
+    
+
+    
+
+    // alertify.confirm('Order Will be Discarded...Are you sure?', function(e) {
+    //   if (e) {
+    //     $interval(function() {
+    //       document.location = document.referrer;
+    //     }, 500);
+        
+    //   }
+    // });
+
+
+    //console.log(23445435);
+  };
 
   // $scope.map = new google.maps.Map(document.getElementById('map'), {
   //   zoom: 10
@@ -54,12 +95,12 @@ layoutApp.controller('OrderCheckout', ['$scope', '$http', '$location', function 
   //   }
   // }
 
-  $scope.discardOrder = function() {
-    $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?orderId=' + $scope.orderId)
-    .then(function(response) {
-      document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php";
-    });
-  };
+  // $scope.discardOrder = function() {
+  //   $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?orderId=' + $scope.orderId)
+  //   .then(function(response) {
+  //     document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php";
+  //   });
+  // };
 
   $scope.getUserInfo = function() {
     $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Customer.php')
@@ -104,16 +145,29 @@ layoutApp.controller('OrderCheckout', ['$scope', '$http', '$location', function 
         $scope.selectedType = $scope.orderTypes[0];
       }
 
-      $scope.total = $scope.orderInfo.Total;
+      $scope.total = parseFloat($scope.orderInfo.Total);
+
+      $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Fee.php')
+      .then(function(response) {
+        console.log(response);
+        $scope.fees = response.data;
+        $scope.tax = parseFloat($scope.fees[2].Price);
+        $scope.delivery = parseFloat($scope.fees[0].Price);
+        $scope.shipping = parseFloat($scope.fees[1].Price);
+        $scope.totalWithTax = $scope.total + $scope.tax;
+        $scope.totalWithTaxAndShipping = $scope.totalWithTax + $scope.shipping;
+        $scope.totalWithShippingTaxAndDelivery =
+          $scope.totalWithTaxAndShipping + $scope.delivery;
+      })
     });
   };
  
-  $scope.getpaymentMethods = function() {
-    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/PaymentMethod.php')
-    .then(function(response) {
-      $scope.paymentMethods = response.data;
-    });
-  };
+  // $scope.getpaymentMethods = function() {
+  //   $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/PaymentMethod.php')
+  //   .then(function(response) {
+  //     $scope.paymentMethods = response.data;
+  //   });
+  // };
 
   $scope.addMarker = function(position) {
     var marker = new google.maps.Marker({
@@ -211,17 +265,19 @@ layoutApp.controller('OrderCheckout', ['$scope', '$http', '$location', function 
     infoWindow.open(map);
   };
 
-  $scope.getOrderDeliveryTime = function() {
-    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?orderId=' + $scope.orderId)
-    .then(function(response) {
-      console.log(response.data);
-      $scope.deliveryTimeId = response.data;
-      $scope.deliveryTimeDuration = response.data.Duration;
-    });
-  };
+  // $scope.getOrderDeliveryTime = function() {
+  //   $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Times.php')
+  //   .then(function(response) {
+  //     console.log(response);
+  //     $scope.deliveryTimeId = parseInt(response.data);
+  //     console.log($scope.deliveryTimeId);
+  //     //$scope.deliveryTimeDuration = response.data.Duration;
+  //   });
+  // };
 
   $scope.getUserInfo();
   $scope.getOrderInfo();
-  $scope.getpaymentMethods();
-  $scope.getOrderDeliveryTime();
+  $scope.selectedMethod = $scope.paymentMethods[1];
+  //$scope.getpaymentMethods();
+  //$scope.getOrderDeliveryTime();
 }]);

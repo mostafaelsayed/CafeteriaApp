@@ -2,9 +2,8 @@
 require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');
 require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
 require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Dates.php');
-// require_once('TestRequestInput.php');
 require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Times.php');
-require_once('CafeteriaApp/CafeteriaApp/PayPal/start.php');
+require('CafeteriaApp/CafeteriaApp/PayPal/start.php');
 
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
@@ -305,9 +304,7 @@ function hideOrder($conn) {
   }
 }
 
-function CheckOutOrder($conn, $orderId, $deliveryTimeId, $paymentMethodId, $orderType, $paid = 0) {
-  $closedStatusId = 2;
-
+function CheckOutOrder($conn, $orderId, $paymentMethodId, $orderType, $paid = 0) {
   if ( !isset($orderId) ) {
     //echo "Error: Order deliveryDateId is not set";
     return;
@@ -318,26 +315,44 @@ function CheckOutOrder($conn, $orderId, $deliveryTimeId, $paymentMethodId, $orde
   }
   else {
     $deliveryTimeId = getCurrentTimeId($conn);
-    $sql = "update `Order` set `DeliveryTimeId` = (?), `Paid` = (?), `PaymentMethodId` = (?), `OrderStatusId` = (?), `Type` = (?) where `Id` = (?)";
+    $sql = "update `Order` set `DeliveryTimeId` = (?), `Paid` = (?), `PaymentMethodId` = (?), `OrderStatusId` = 2, `Type` = (?) where `Id` = (?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("idiiii", $DeliveryTimeId, $Paid, $PaymentMethodId, $OrderStatusId, $OrderType, $OrderId);
+    $stmt->bind_param("idiii", $DeliveryTimeId, $Paid, $PaymentMethodId, $OrderType, $OrderId);
     $OrderId = $orderId;
     $DeliveryTimeId = $deliveryTimeId;
     $Paid = $paid;
     $PaymentMethodId = $paymentMethodId;
-    $OrderStatusId = $closedStatusId;
     $OrderType = $orderType;
 
     if ($stmt->execute() === TRUE) {
       //open a new order
-      $deliveryTimeId = getCurrentTimeId($conn);
       $deliveryDateId = getCurrentDateId($conn);
-      $_SESSION['orderId'] = addOrder($conn, $deliveryDateId, $deliveryTimeId, 1, 1, $_SESSION['userId'], 0, 0);
+      $_SESSION['orderId'] = addOrder($conn, $deliveryDateId, $deliveryTimeId, 1, 1, $_SESSION['userId']);
       return true;
     }
     else {
       echo "Error checkout order: ", $conn->error;
     }
+  }
+}
+
+function updateWithFee($conn, $orderType, $selectedMethodId) {
+  $fees = getFees($conn);
+
+  if ( $orderType == 1) { // paypal or credit and delivery
+    updateOrderTotalById($conn, $_SESSION['orderId'], $fees[0]['Price'] + $fees[1]['Price'] + $fees[2]['Price']);
+  }
+  elseif ( ($selectedMethodId == 1 || $selectedMethodId == 5) && $orderType == 0) { // paypal or credit and delivery
+    //echo "dfkjglkdfjglkdfjg";
+    updateOrderTotalById($conn, $_SESSION['orderId'], $fees[1]['Price'] + $fees[2]['Price']);
+  }
+  // elseif ( $_POST['paymentMethodId'] == 4 && $_POST['orderType'] == 1) { // tax and shipping paypal
+  //   updateOrderTotalById($conn, $_SESSION['orderId'], $fees[1]['Price'] + $fees[2]['Price']);
+  // }
+  elseif ( $selectedMethodId == 4 && $orderType == 0) { // tax
+    //echo "dfkjglkdfjglkdfjg";
+    updateOrderTotalById($conn, $_SESSION['orderId'], $fees[2]['Price']);
+
   }
 }
 
@@ -435,7 +450,7 @@ function getorderItems($conn, $orderId) {
   
 }
 
-function processPayment($conn, $orderId, $selectedMethodId, $deliveryTimeId, $apiContext, $orderType) {
+function processPayment($conn, $orderId, $selectedMethodId, $apiContext, $orderType) {
   $orderItems = getorderItems($conn, $orderId);
   $itemList = new ItemList();
 
@@ -466,8 +481,8 @@ function processPayment($conn, $orderId, $selectedMethodId, $deliveryTimeId, $ap
 
   // Set redirect urls
   $redirectUrls = new RedirectUrls();
-  $redirectUrls->setReturnUrl(SITE_URL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/review_order_and_charge_customer.php?orderId=' . $orderId . '&paymentMethodId=' . $selectedMethodId . '&deliveryTimeId=' . (int)$deliveryTimeId . '&orderType=' . $orderType)
-    ->setCancelUrl(SITE_URL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId=' . $orderId . '&paymentMethodId=' . $selectedMethodId . '&deliveryTimeId=' . (int)$deliveryTimeId);
+  $redirectUrls->setReturnUrl(SITE_URL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/review_order_and_charge_customer.php?orderId=' . $orderId . '&paymentMethodId=' . $selectedMethodId . '&orderType=' . $orderType)
+    ->setCancelUrl(SITE_URL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId=' . $orderId . '&paymentMethodId=' . $selectedMethodId);
 
   // Set payment amount
   $amount = new Amount();

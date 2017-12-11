@@ -1,12 +1,30 @@
-angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$http', '$rootScope', function ($http, $rootScope) {
+angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interval', '$http', '$rootScope', '$timeout', function ($interval, $http, $rootScope, $timeout) {
   var order_info = {};
 
   order_info.getOrderItems = function(orderId) { // this is asyhnchronous
     $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderItem.php?orderId=' + orderId).success(function(data) {
       $rootScope.orderItems = data;
-    }).error(function() {
-      alert('something went wrong!!!');
+      //console.log($rootScope.)
+    // }).error(function() {
+    //   alert('something went wrong!!!');
+    // });
     });
+  };
+
+  order_info.togglePopup = function(message) {
+    var popup = document.getElementById("myPopup");
+    popup.innerHTML = message;
+    popup.classList.toggle("show");
+    $timeout(function() {
+      popup.classList.toggle("show");
+    }, 2000);
+    console.log(window.location.href);
+    if (window.location.href.substr( 0, window.location.href.indexOf('?') ) == "http://127.0.0.1/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/checkout.php") {
+      $interval(function() {
+        document.location = document.referrer;
+      }, 1000)
+      
+    }
   };
 
   order_info.increaseQuantity = function(orderItem) {

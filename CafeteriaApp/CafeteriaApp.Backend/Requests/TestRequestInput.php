@@ -58,12 +58,12 @@ function test_phone(&$value) {
 }
 
 function test_int(&...$values) {
-	// foreach ($values as &$value) {
-	// 	if ( !ctype_digit($value) && !is_int($value) ) {
-	// 		echo "false integer";
-	// 		return false;
-	// 	}
-	// }
+	foreach ($values as &$value) {
+		if ( !ctype_digit($value) && !is_int($value) ) {
+			echo "false integer";
+			return false;
+		}
+	}
 	return true;
 }
 

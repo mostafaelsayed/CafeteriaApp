@@ -12,11 +12,19 @@
 
   <title>MenuItems</title>
 
+  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.bootstrap.css" rel="stylesheet">
+
+  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.core.css" rel="stylesheet">
+  
+  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.default.css" rel="stylesheet">
+
   <link  href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/customer styles.css" rel="stylesheet">
 
   <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/popup.css" rel="stylesheet">
 
   <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/stars.css" rel="stylesheet">
+
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/alertify.js"></script>
 
   <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/about_slide_toggle.js"></script>
 

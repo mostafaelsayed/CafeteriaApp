@@ -1,4 +1,4 @@
-<?php require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');// must be first as it uses cookies
+<?php require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php'); // must be first as it uses cookies
   $memcache = memcache_connect('localhost', 11211); 
   $Words = $memcache->get('words');
   $Languages = $memcache->get('languages');
@@ -34,7 +34,7 @@
       <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/jquery-3.2.1.min.js"></script>
       <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/bootstrap.min.js"></script>
       <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
-      <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/alertify.min.js"></script>
+      <!-- <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/alertify.js"></script> -->
       <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/customer_and_cashier_order.js"></script>
       
       <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/metisMenu.min.js"></script>

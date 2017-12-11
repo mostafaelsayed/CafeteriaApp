@@ -8,7 +8,7 @@ use PayPal\Api\PaymentExecution;
 use PayPal\Api\Transaction;
 use PayPal\Exception\PayPalConnectionException;
 
-function chargeCustomer($paymentId, $payerId, $paypal, $orderId, $deliveryTimeId, $selectedMethodId, $orderType, $conn) {
+function chargeCustomer($paymentId, $payerId, $paypal, $orderId, $selectedMethodId, $orderType, $conn) {
 	
 	// Get payment object by passing paymentId
 	$payment = Payment::get($paymentId, $paypal);
@@ -29,7 +29,9 @@ function chargeCustomer($paymentId, $payerId, $paypal, $orderId, $deliveryTimeId
 			$result = $payment->execute($execution, $paypal); // Execute payment (charge customer here)
 			
 			if ($result) {
-				$result = CheckOutOrder($conn, $orderId, $deliveryTimeId, $selectedMethodId, $orderType);
+				updateWithFee($conn, $orderType, $selectedMethodId);
+				$result = CheckOutOrder($conn, $orderId, $selectedMethodId, $orderType);
+
 				if ($result) {
 					$returnUrl = "http://127.0.0.1/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php";
 					$_SESSION['notifications'][] = 'Payment Succeeseded !';
