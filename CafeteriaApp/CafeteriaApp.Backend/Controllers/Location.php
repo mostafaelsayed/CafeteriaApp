@@ -5,19 +5,15 @@ function addUserLocation($conn, $lat, $lng) {
 	if ($res === false) {
 		echo "error: ", $conn->error;
 	}
-	else if ( mysqli_num_rows($res) !== 0 ) {
+	else if (mysqli_num_rows($res) !== 0) {
 		echo "location already exists";
 	}
 	else {
 		$stmt = "insert into `location` (UserId, Lat, Lng) values (?, ?, ?)";
 		$stmt = $conn->prepare($stmt);
-		$stmt->bind_param("idd", $UserId, $Lat, $Lng);
-		$UserId = $_SESSION['userId'];
-		$Lat = $lat;
-		$Lng = $lng;
-		$res = $stmt->execute();
-
-		if ($res) {
+		$stmt->bind_param("idd", $_SESSION['userId'], $lat, $lng);
+		
+		if ($stmt->execute() === TRUE) {
 			return mysqli_insert_id($conn);
 		}
 		else {

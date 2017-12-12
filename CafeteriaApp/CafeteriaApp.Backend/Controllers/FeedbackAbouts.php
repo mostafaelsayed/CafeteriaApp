@@ -1,48 +1,29 @@
 <?php
-
-function getFeedbackAbouts($conn)
-{  
+function getFeedbackAbouts($conn) {
   $sql = "select * from FeedbackAbouts";
   $result = $conn->query($sql);
-  if ($result)
-  {
+
+  if ($result) {
     $feedbackAbouts = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result); 
-      return $feedbackAbouts;   
-   
+    return $feedbackAbouts;
   }
-  else
-  {
-    echo "Error retrieving Feedback Abouts: " . $conn->error;
+  else {
+    echo "Error retrieving Feedback Abouts: ", $conn->error;
   }
 }
 
+function addFeedbackAbouts($conn, $name) {
+  $sql = "insert into FeedbackAbouts (Name) values (?)";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("s", $name);
 
-
-function addFeedbackAbouts($conn,$name)
-{
-  if (!isset($name))
-  {
-    return;
+  if ($stmt->execute() === TRUE) {
+    return  mysqli_insert_id($conn);
+    //return "Comment Added successfully";
   }
-  else
-  {
-
-    $sql = "insert into FeedbackAbouts (Name ) values (?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s",$Name);
-    $Name = $name;
-    if ($stmt->execute()===TRUE)
-    {
-       return  mysqli_insert_id($conn);
-      //return "Comment Added successfully";
-    }
-    else
-    {
-      echo "Error: ".$conn->error;
-    }
+  else {
+    echo "Error: ", $conn->error;
   }
 }
-
-
 ?>

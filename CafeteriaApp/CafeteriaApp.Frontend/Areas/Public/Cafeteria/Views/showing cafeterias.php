@@ -24,16 +24,6 @@
 
 <div class="container" style="position: static">
 
-  <!-- <div ng-controller="toggle" style="text-align: center;margin-top: 20px"> -->
-
-    <div class="popup" style="text-align: center;margin-top: 20px">
-
-      <span class="popuptext" id="myPopup">A Simple Popup!</span>
-
-    </div>
-
-  <!-- </div> -->
-
   <h1 class="page-header" id="header">Our Cafeterias</h1>
 
   <div ng-controller="cafeterias">

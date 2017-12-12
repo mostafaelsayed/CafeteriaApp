@@ -1,35 +1,29 @@
 <?php
-
-function getRoles($conn)
-{
+function getRoles($conn) {
   $sql = "select * from Role";
   $result = $conn->query($sql);
-  if ($result)
-  {
+
+  if ($result) {
     $roles = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
-      return $roles;   
+    return $roles;   
   }
-  else
-  {
-    echo "Error retrieving Roles: " . $conn->error;
+  else {
+    echo "Error retrieving Roles: ", $conn->error;
   }
 }
 
-function getRoleById($conn,$id)
-{
-  $sql = "select * from Role where Id=".$id." LIMIT 1";
+function getRoleById($conn, $id) {
+  $sql = "select * from Role where Id = " . $id . " LIMIT 1";
   $result = $conn->query($sql);
-  if ($result)
-  {
+
+  if ($result) {
     $roles = mysqli_fetch_assoc($result);
     mysqli_free_result($result);
-      return $roles;   
-    
+    return $roles;
   }
-  else
-  {
-    echo "Error retrieving Role: " . $conn->error;
+  else {
+    echo "Error retrieving Role: ", $conn->error;
   }
 }
 
@@ -109,19 +103,16 @@ function getRoleById($conn,$id)
 //   }
 // }
 
-function addRole($conn,$name)
-{
+function addRole($conn, $name) {
   $sql = "insert into Role (Name) values (?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("s",$Name);
-  $Name = $name;
-  if ($stmt->execute()===TRUE)
-  {
+  $stmt->bind_param("s", $name);
+  
+  if ($stmt->execute() === TRUE) {
     return "Role Added successfully";
   }
-  else
-  {
-    echo "Error: ".$conn->error;
+  else {
+    echo "Error: ", $conn->error;
   }
 }
 
@@ -185,35 +176,29 @@ function addRole($conn,$name)
 //   }
 // }
 
-function editRole($conn,$name,$id)
+function editRole($conn, $name, $id)
 {
   $sql = "update Role set Name = (?) where Id = (?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("si",$Name,$Id);
-  $Name = $name;
-  $Id = $id;
-  if ($stmt->execute() === TRUE)
-  {
+  $stmt->bind_param("si", $name, $id);
+  
+  if ($stmt->execute() === TRUE) {
     return "Role updated successfully";
   }
-  else
-  {
-    echo "Error: ".$conn->error;
+  else {
+    echo "Error: ", $conn->error;
   }
 }
 
-function deleteRole($conn,$id) // cascaded delete ??
-{ 
+function deleteRole($conn, $id) { // cascaded delete ??
   //$conn->query("set foreign_key_checks = 0"); // ????????/
-  $sql = "delete from Role where Id = ".$id . " LIMIT 1";
-  if ($conn->query($sql) === TRUE)
-  {
+  $sql = "delete from Role where Id = " . $id . " LIMIT 1";
+
+  if ($conn->query($sql) === TRUE) {
     return "Role deleted successfully";
   }
-  else
-  {
-    echo "Error: ".$conn->error;
+  else {
+    echo "Error: ", $conn->error;
   }
 }
-
 ?>

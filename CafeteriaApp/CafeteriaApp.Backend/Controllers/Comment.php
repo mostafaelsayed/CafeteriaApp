@@ -1,5 +1,5 @@
 <?php
-require_once("CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Dates.php"); 
+require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Dates.php'); 
 
 //result=getCommentsByMenuItemId();
 //if(result)
@@ -8,201 +8,107 @@ require_once("CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Dates.p
 //else
 // redirect to fear the hacker
 
- function getCommentsByMenuItemId($conn,$id)
-{
-  if (!isset($id)) 
-  {
-    //echo "Error: MenuItem Id is not set";//hacker
-    return;
-  }
-  else
-  {
-    $sql = "select User.UserName , Comment.Id ,Comment.Details ,Dates.Date  from Comment inner join User on Comment.UserId=User.Id  inner join Dates on Dates.Id=Comment.DateId  where MenuItemId =".$id;
-    $result = $conn->query($sql);
-    if ($result)
-    {
-      $comments = mysqli_fetch_all($result, MYSQLI_ASSOC);
-      mysqli_free_result($result);
-        return $comments;
-    }
-    else
-    { //server
-      echo "Error retrieving Comments: " . $conn->error;//developer
-    }
+function getCommentsByMenuItemId($conn, $id) {
+  $sql = "select User.UserName , Comment.Id ,Comment.Details ,Dates.Date from Comment inner join User on Comment.UserId=User.Id inner join Dates on Dates.Id=Comment.DateId where MenuItemId =" . $id;
+  $result = $conn->query($sql);
 
-  } 
+  if ($result) {
+    $comments = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    mysqli_free_result($result);
+    return $comments;
+  }
+  else { // server
+    echo "Error retrieving Comments: ", $conn->error; // developer
+  }
 }
 
-function getCommentsByUserId($conn,$id) // used for editing or deleting comments of a user
-{  
-  if (!isset($id)) 
-  {
-    //echo "Error: Id is not set";
-    return;
+function getCommentsByUserId($conn, $id) { // used for editing or deleting comments of a user  
+  $sql = "select * from Comment where UserId = " . $id;
+  $result = $conn->query($sql);
+
+  if ($result) {
+    $comments = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    mysqli_free_result($result);
+    return $comments;
   }
-  else
-  {
-    $sql = "select * from Comment where UserId =".$id;
-    $result = $conn->query($sql);
-    if ($result)
-    {
- $comments = mysqli_fetch_all($result, MYSQLI_ASSOC);
-       mysqli_free_result($result);
-        return $comments;   
-    
-    }
-    else
-    {
-      echo "Error retrieving Comments: " . $conn->error;
-    }
-  } 
+  else {
+    echo "Error retrieving Comments: ", $conn->error;
+  }
 }
 
-function getCommentsIdsByUserIdAndMenuItemId($conn,$cid,$mid) // used for editing or deleting comments of a user
-{  
-  if ( !isset($cid) || !isset($mid)) 
-  {
-    //echo "Error: Id is not set";
-    return ;
-  }
-  else
-  {
-    $sql = "select Id from Comment where UserId ='".$cid."' and MenuItemId=".$mid ;
-    $result = $conn->query($sql);
-    if ($result)
-    {
+function getCommentsIdsByUserIdAndMenuItemId($conn, $cid, $mid) { // used for editing or deleting comments of a user 
+  $sql = "select Id from Comment where UserId = '" . $cid . "' and MenuItemId = " . $mid;
+  $result = $conn->query($sql);
+
+  if ($result) {
     $comments = mysqli_fetch_all($result, MYSQLI_NUM);
-       mysqli_free_result($result);
-       foreach ($comments as $key => $value) {
-         $comments[$key]= ($value[0]) ;
-       }
-        return $comments;   
-    
-    }
-    else
-    {
-      echo "Error retrieving Comments: " . $conn->error;
-    }
-  } 
-}
+    mysqli_free_result($result);
 
-function addComment($conn,$details ,$Cid,$Mid)
-{
-  if (!isset($details))
-  {
-    //echo "Error: Comment Details is not set";
-    return;
-  }
-  elseif (!isset($Cid))
-  {
-   // echo "Error: Customer Id is not set";
-    return;
-  }
-  elseif (!isset($Mid))
-  {
-    //echo "Error: MenuItem Id is not set";
-    return;
-  }
-  else
-  {
-
-    $DateId =getDateIdByDate($conn,date("Y-m-d"));
-
-    $sql = "insert into Comment (Details , UserId , MenuItemId , DateId ) values (?,?,?,?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("siii",$Details, $UserId ,$MenuItemId,$DateId);
-    $Details = $details;
-    $UserId = $Cid;
-    $MenuItemId=$Mid;
-    if ($stmt->execute()===TRUE)
-    {
-       return  mysqli_insert_id($conn);
-      //return "Comment Added successfully";
+    foreach ($comments as $key => $value) {
+      $comments[$key] = $value[0];
     }
-    else
-    {
-      echo "Error: ".$conn->error;
-    }
+
+    return $comments;
+  }
+  else {
+    echo "Error retrieving Comments: ", $conn->error;
   }
 }
 
-function editComment($conn,$details,$id)// check the customer if he owns the comment
-{
-  if (!isset($details)) 
-  {
-    //echo "Error: Comment Details is not set";
-    return;
+function addComment($conn, $details, $Cid, $Mid) {
+  $DateId = getDateIdByDate( $conn, date("Y-m-d") );
+  $sql = "insert into Comment (Details, UserId, MenuItemId, DateId) values (?, ?, ?, ?)";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("siii", $details, $Cid, $Mid, $DateId);
+
+  if ($stmt->execute() === TRUE) {
+    return  mysqli_insert_id($conn);
+    //return "Comment Added successfully";
   }
-  elseif (!isset($id))
-  {
-    //echo "Error: Id is not set";
-    return;
+  else {
+    echo "Error: ", $conn->error;
   }
-  else
-  {
-    $DateId =getDateIdByDate($conn,date("Y-m-d"));
-    $sql = "update Comment set Details = (?) , DateId= (?) where Id = (?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sii",$Details,$DateId,$Id);
-    $Details = $details;
-    $Id = $id;
-    if ($stmt->execute()===TRUE)
-    {
-      return "Comment updated successfully";
-    }
-    else
-    {
-      echo "Error: ".$conn->error;
-    }
-  } 
 }
 
-function checkOwnershipOfComment($conn,$id,$cid)//check if its for the customer before deleting
-{
-  if (!isset($id))
-  {
-    //echo "Error: Id is not set";
-    return;
+function editComment($conn, $details, $id) { // check the customer if he owns the comment
+  $DateId = getDateIdByDate( $conn,date("Y-m-d") );
+  $sql = "update Comment set Details = (?) , DateId= (?) where Id = (?)";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("sii", $details, $DateId, $id);
+  
+  if ($stmt->execute() === TRUE) {
+    return "Comment updated successfully";
   }
-  else
-  {
-    $sql = "select count(*) from Comment where Id = ".$id. " and UserId=".$cid;
-    $result = $conn->query($sql);
-    if ($result) {
-      $count= mysqli_fetch_array($result , MYSQLI_NUM);
-      $count=(int)$count[0];
-      if ($count===1)
-    {
+  else {
+    echo "Error: ", $conn->error;
+  }
+}
+
+function checkOwnershipOfComment($conn, $id, $cid) { // check if its for the customer before deleting
+  $sql = "select count(*) from Comment where Id = " . $id . " and UserId = " . $cid;
+  $result = $conn->query($sql);
+
+  if ($result) {
+    $count = mysqli_fetch_array($result , MYSQLI_NUM);
+    $count = (int)$count[0];
+
+    if ($count === 1) {
       return true;
     }
-    else
-    {
-      return false ;
+    else {
+      return false;
     }
-    }
-   
-  } 
-}
-
-function deleteComment($conn,$id)//check if its for the customer before deleting
-{
-  if (!isset($id))
-  {
-    //echo "Error: Id is not set";
-    return;
   }
-  else
-  {
-    $sql = "delete from Comment where Id = ".$id. " LIMIT 1";
-    if ($conn->query($sql)===TRUE)
-    {
-      return "Comment deleted successfully";
-    }
-    else
-    {
-      echo "Error: ".$conn->error;
-    }
-  } 
 }
 
+function deleteComment($conn, $id) { // check if its for the customer before deleting
+  $sql = "delete from Comment where Id = " . $id . " LIMIT 1";
+  
+  if ($conn->query($sql) === TRUE) {
+    return "Comment deleted successfully";
+  }
+  else {
+    echo "Error: ", $conn->error;
+  }
+}
 ?>

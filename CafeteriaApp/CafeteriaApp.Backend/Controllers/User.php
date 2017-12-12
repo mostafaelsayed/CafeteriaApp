@@ -1,119 +1,80 @@
 <?php
-
 require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
 require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/ImageHandle.php');
 
-function getUsers($conn)
-{  
+function getUsers($conn) {
   $sql = "select * from User";
   $result = $conn->query($sql);
-  if ($result)
-  {
-    $users = mysqli_fetch_all($result,MYSQLI_ASSOC);
+  if ($result) {
+    $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);
     return $users;
   }
-  else
-  {
-    echo "Error retrieving Users: " . $conn->error;
+  else {
+    echo "Error retrieving Users: ", $conn->error;
   }
 }
 
-function getUserById($conn,$id)
-{
-  if (!isset($id)) 
-  {
-    //echo "Error: User Id is not set";
-    return;
+function getUserById($conn, $id) {
+  $sql = "select * from User where Id = " . $id . " LIMIT 1";
+  $result = $conn->query($sql);
+
+  if ($result) {
+    $user = mysqli_fetch_assoc($result);
+    mysqli_free_result($result);
+    return $user;
   }
-  else
-  {
-    $sql = "select * from User where Id = ".$id." LIMIT 1";
-    $result = $conn->query($sql);
-    if ($result)
-    {
-      $user = mysqli_fetch_assoc($result);
-      mysqli_free_result($result);
-      return $user;
-    }
-    else
-    {
-      echo "Error retrieving User: " . $conn->error;
-    }
+  else {
+    echo "Error retrieving User: ", $conn->error;
   }
 }
 
-function addUser($conn,$userName,$firstName,$lastName,$image,$email,$phoneNumber,$password,$roleId,$localeId=1)
-{
-  $sql = "insert into User (UserName , FirstName , LastName , Image , Email , PhoneNumber , PasswordHash, RoleId, LocaleId) values (?,?,?,?,?,?,?,?,?)";
+function addUser($conn, $userName, $firstName, $lastName, $image, $email, $phoneNumber, $password, $roleId, $localeId = 1) {
+  $sql = "insert into User (UserName, FirstName, LastName, Image, Email, PhoneNumber, PasswordHash, RoleId, LocaleId) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("sssssssii",$UserName,$FirstName,$LastName,$Image,$Email,$PhoneNumber,$PasswordHash,$RoleId,$LocaleId);
-  $UserName = $userName;
-  $FirstName = $firstName;
-  $LastName = $lastName;
-  if (isset($image))
-  {
+  $stmt->bind_param("sssssssii", $userName, $firstName, $lastName, $Image, $email, $phoneNumber, password_encrypt($password), $roleId, $localeId);
+
+  if ( isset($image) ) {
     $Image = addImageFile($image);
   }
-  $Email = $email;
-  $PhoneNumber = $phoneNumber;
-  $PasswordHash = password_encrypt($password);
-  $RoleId = $roleId;
-  $LocaleId = $localeId;
-  if ($stmt->execute() === TRUE)
-  {    
+  
+  if ($stmt->execute() === TRUE) {    
     $user_id = mysqli_insert_id($conn);
     return $user_id;
   }
-  else
-  {
-    echo "Error: ".$conn->error;
+  else {
+    echo "Error: ", $conn->error;
     return false;
   }
 }
 
-function editUser($conn,$userName,$firstName,$lastName,$email,$image,$phoneNumber,$roleId,$id)
-{
-  echo 1;
-  $userUserName = mysqli_fetch_assoc($conn->query("select UserName from User where Id = ".$id))['UserName'];
-  if (!($userUserName == $userName) && checkExistingUserName($conn,$userName,true)) 
-  {
+function editUser($conn, $userName, $firstName, $lastName, $email, $image, $phoneNumber, $roleId, $id) {
+  $userUserName = mysqli_fetch_assoc( $conn->query("select UserName from User where Id = " . $id) )['UserName'];
+
+  if ( !($userUserName == $userName) && checkExistingUserName($conn, $userName, true) ) {
     return;
   }
-  else
-  {
-    $result = $conn->query("select Image from User where Id = ".$id);
+  else {
+    $result = $conn->query("select Image from User where Id = " . $id);
     $userImage = mysqli_fetch_assoc($result)['Image'];
     mysqli_free_result($result);
-    $sql = "update User set UserName = (?), FirstName = (?) , LastName = (?) , Email = (?) , Image = (?) , PhoneNumber = (?) , RoleId = (?) where Id = (?)"; 
+    $sql = "update User set UserName = (?), FirstName = (?), LastName = (?), Email = (?), Image = (?), PhoneNumber = (?), RoleId = (?) where Id = (?)"; 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssii",$UserName,$FirstName,$LastName,$Email,$Image,$PhoneNumber,$RoleId,$Id);
-    $UserName = $userName;
-    $FirstName = $firstName;
-    $LastName = $lastName;
-    $Email = $email;
-    if (isset($image) && $image != $userImage)
-    {
-      $Image = editImage($image,$userImage);
-      echo 1;
+    $stmt->bind_param("ssssssii", $userName, $firstName, $lastName, $email, $Image, $phoneNumber, $roleId, $id);
+    
+    if (isset($image) && $image != $userImage) {
+      $Image = editImage($image, $userImage);
     }
-    else
-    {
+    else {
       $Image = $image;
     }
-    $PhoneNumber = $phoneNumber;
-    $RoleId = $roleId;
-    $Id = $id;
 
-    if ($stmt->execute() === TRUE)
-    {
+    if ($stmt->execute() === TRUE) {
       echo "User updated successfully";
     }
-    else
-    {
-      echo "Error: ".$conn->error;
+    else {
+      echo "Error: ", $conn->error;
     }
-    
   }
 }
 
@@ -167,93 +128,75 @@ function editUser($conn,$userName,$firstName,$lastName,$email,$image,$phoneNumbe
 //   }
 // }
 
-function activateUser($conn,$id)
-{
-   if (!isset($id)) 
-  {
-    return;
+function activateUser($conn, $id) {
+  $sql = "update User set Confirmed = True where Id = (?)"; 
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("i", $id);
+
+  if ($stmt->execute() === TRUE) {
+    return true;
   }
-  else
-  {
-    $sql = "update User set Confirmed = True where Id = (?)"; 
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i",$Id);
-    $Id = $id;
-    if ($stmt->execute() === TRUE)
-    {
-      return true;
-    }
-    else
-    {
-      echo "Error: ".$conn->error;
-    }
+  else {
+    echo "Error: ", $conn->error;
   }
 }
 
-function checkExistingUserName($conn,$userName,$register_edit)
-{
-  $UserName = mysqli_real_escape_string($conn,$userName);
+function checkExistingUserName($conn, $userName, $register_edit) {
+  $UserName = mysqli_real_escape_string($conn, $userName);
   $sql = "select count(*) from User where UserName = '{$UserName}'";
   $result = $conn->query($sql);
-  if ($result)
-  {
-    $result = mysqli_fetch_array($result,MYSQLI_NUM); 
+
+  if ($result) {
+    $result = mysqli_fetch_array($result, MYSQLI_NUM); 
     //mysqli_free_result($result);
     $result = (int)$result[0];
-    if ($result > 0) // if he wnats to change the mail and not keeping the old
-    { 
+
+    if ($result > 0) { // if he wnats to change the mail and not keeping the old
       return true; // exist
     }
-    else
-    {
+    else {
       return false;//not exist
     }
   }
-  else
-  {
-    echo "Error: ".$conn->error;
+  else {
+    echo "Error: ", $conn->error;
   }
 }
   
 // need to know if he's entering the same email or not as the condition will differ
-function checkExistingEmail($conn,$email) // problem if he wants to edit his info cause' of his email
-{ 
+function checkExistingEmail($conn, $email) { // problem if he wants to edit his info cause' of his email
   $email = trim($email);
-  $Email = mysqli_real_escape_string($conn,$email);
+  $Email = mysqli_real_escape_string($conn, $email);
   $sql = "select count(*) from User where Email = '{$Email}'";
   $result = $conn->query($sql);
-  if ($result)
-  {
-    $result = mysqli_fetch_array($result,MYSQLI_NUM);
+
+  if ($result) {
+    $result = mysqli_fetch_array($result, MYSQLI_NUM);
     $result = (int)$result[0];
-    if ($result > 0) // if he wants to change the mail and not keeping the old
-    { 
+
+    if ($result > 0) { // if he wants to change the mail and not keeping the old 
       return true; // exist
     }
-    else
-    {
+    else {
       return false;//not exist
     }
+
     mysqli_free_result($result);
   }
-  else
-  {
-    echo "Error: ".$conn->error;
+  else {
+    echo "Error: ", $conn->error;
   }
 }
 
-function deleteUser($conn,$id) // cascaded delete ??
-{ 
+function deleteUser($conn, $id) { // cascaded delete ??
   //$conn->query("set foreign_key_checks = 0"); // ????????/
-  $sql = "delete from User where Id = ".$id . " LIMIT 1";
-  if ($conn->query($sql) === TRUE)
-  {
+  $sql = "delete from User where Id = " . $id . " LIMIT 1";
+
+  if ($conn->query($sql) === TRUE) {
     return "User deleted successfully";
   }
-  else
-  {
-    echo "Error: ".$conn->error;
+  else {
+    echo "Error: ", $conn->error;
   }
 }
-
 ?>

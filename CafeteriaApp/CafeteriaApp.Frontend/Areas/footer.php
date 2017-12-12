@@ -1,15 +1,14 @@
-	<link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/footer.css">
+<link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/footer.css">
 
-
-				<!-- Advertisments -->
-<div id="ads"  >
-	<img style="width:200px;height:200px;" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/footerIcons/hotOffer.jpg">
+<!-- Advertisments -->
+<div id="ads">
+	<img style="width: 200px;height: 200px" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/footerIcons/hotOffer.jpg">
 	<a href="">Go to offer</a>
 </div>
 
-				<!-- feedback form -->
-<?php $x = rand(0,20);$y = rand(0,20);?>
-<div ng-controller="feedback" class="background" ng-init="result=<?php echo ($y+$x); ?>">
+<!-- feedback form -->
+<?php $x = rand(0, 20);$y = rand(0, 20);?>
+<div ng-controller="feedback" class="background" ng-init="result = <?php echo ($y + $x); ?>">
 
 	<div id="feedbackForm"> 
 	<form method="post" action="feedback form.php">

@@ -14,22 +14,16 @@ function getTimes($conn) {
 }
 
 function getTimeById($conn, $id) {
-  if ( !isset($id) ) {
-    echo "Error: Time Id is not set";
-    return;
+  $sql = "select * from `Times` where `Id` = " . $id . " LIMIT 1";
+  $result = $conn->query($sql);
+
+  if ($result) {
+    $times = mysqli_fetch_assoc($result);
+    mysqli_free_result($result);
+    return $times;
   }
   else {
-    $sql = "select * from `Times` where `Id` = " . $id . " LIMIT 1";
-    $result = $conn->query($sql);
-
-    if ($result) {
-      $times = mysqli_fetch_assoc($result);
-      mysqli_free_result($result);
-      return $times;
-    }
-    else {
-      echo "Error retrieving Time: ", $conn->error;
-    }
+    echo "Error retrieving Time: ", $conn->error;
   }
 }
 
@@ -63,20 +57,14 @@ function getCurrentTimeId($conn) {
 }
 
 function deleteTime($conn, $id) {
-  if ( !isset($id) ) {
-    echo "Error: Id is not set";
-    return;
+  //$conn->query("set foreign_key_checks=0");
+  $sql = "delete from `Times` where `Id` = " . $id . " LIMIT 1";
+
+  if ($conn->query($sql) === TRUE) {
+    return "Time deleted successfully";
   }
   else {
-    //$conn->query("set foreign_key_checks=0");
-    $sql = "delete from `Times` where `Id` = " . $id . " LIMIT 1";
-
-    if ($conn->query($sql) === TRUE) {
-      return "Time deleted successfully";
-    }
-    else {
-      echo "Error: ", $conn->error;
-    }
+    echo "Error: ", $conn->error;
   }
 }
 ?>
