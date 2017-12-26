@@ -7,7 +7,7 @@ require('CafeteriaApp/CafeteriaApp/PayPal/pay.php');
 //var_dump($_SERVER);
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-  if ( isset( $_GET['orderId'] ) && !isset( $_GET['flag'] ) && test_int( $_GET['orderId'], $_GET['flag'] ) ) {
+  if ( isset( $_GET['orderId'] ) && !isset( $_GET['flag'] ) && test_int( $_GET['orderId'] ) ) {
     //$Duration = calcOpenOrderDeliveryTime($conn, $_GET['orderId']);
     //$Id = getCurrentTimeId($conn);
     checkResult( getOrderById( $conn, $_GET['orderId'] ) );
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     elseif (isset( $_POST['selectedMethodId'] ) && test_int($_POST['selectedMethodId']) && $_POST['selectedMethodId'] == 4) { // charge customer here
       updateWithFee($conn, $_POST['orderType'], $_POST['selectedMethodId']);
-      CheckOutOrder($conn, $_SESSION['orderId'], $_POST['selectedMethodId'], $_POST['orderType']);
+      CheckOutOrder($conn, $_SESSION['orderId'], $_POST['selectedMethodId']);
       header("Location: " . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php");
       //echo "<script type='text/javascript'>localStorage.setItem('submit', 1);</script>";
     }
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
-  $data = json_decode( file_get_contents("php://input") );
+  $data = json_decode( file_get_contents('php://input') );
 
   if ( isset($data->locationId) && test_int($data->locationId) ) {
     checkResult( updateOrderLocation($conn, $data->locationId) );
@@ -61,8 +61,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
   elseif ( isset($data->orderId) && test_int($data->orderId) ) {
     updateOrderIdInSession($conn, $data->orderId);
   }
-  else if (isset($_GET['flag']) && test_int($_GET['flag']) && $_GET['flag'] == 2) {
+  else if ($_GET['flag'] == 1) {
+    $conn->query("update `order` set `Type` = 0 where `Id` = {$_SESSION['orderId']}");
+  }
+  else if ($_GET['flag'] == 2) {
     hideOrder($conn);
+  }
+  else if ($_GET['flag'] == 3) {
+    $conn->query("update `order` set `Type` = 1 where `Id` = {$_SESSION['orderId']}");
   }
   else {
     echo "error";

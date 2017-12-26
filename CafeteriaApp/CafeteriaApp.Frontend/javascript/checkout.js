@@ -5,15 +5,10 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   $scope.orderId = $location.search().orderId;
   $scope.orderTypes = [ {id: 0, name: "Take Away"}, {id: 1, name: "Delivery"} ];
   $scope.paymentMethods = [ {id: 1, name: "Paypal"}, {id: 4, name: "Cash"}, {id: 5, name: "Credit Card"} ];
-
   localStorage.setItem("submit", 1);
 
   $scope.discardOrder = function() {
-    // orderItems = Order_Info.getOrderItems($scope.orderId);
-    // console.log(orderItems);
     orderItems = $rootScope.orderItems;
-    console.log(orderItems);
-
     alertify.confirm("Are Your sure you Want to Discard Order?", function(e) {
       if (e) {
         for (var i = 0; i < orderItems.length; i++) {
@@ -23,77 +18,58 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
         document.location = document.referrer;
       }
     })
-
-   
-
-    
-    //Order_Info.togglePopup('order discarded');
-    //Order_Info.togglePopup('order discarded');
-    
-    
-
-    
-
-    // alertify.confirm('Order Will be Discarded...Are you sure?', function(e) {
-    //   if (e) {
-    //     $interval(function() {
-    //       document.location = document.referrer;
-    //     }, 500);
-        
-    //   }
-    // });
-
-
-    //console.log(23445435);
   };
 
-  // $scope.map = new google.maps.Map(document.getElementById('map'), {
-  //   zoom: 10
-  // });
+  $scope.map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 10
+  });
 
-  // $scope.myPos = {
-  //   lat: 0,
-  //   lng: 0
-  // }
+  $scope.myPos = {
+    lat: 0,
+    lng: 0
+  }
 
-  // $scope.infoWindow = new google.maps.InfoWindow();
+  $scope.infoWindow = new google.maps.InfoWindow();
 
-  // $scope.changeType = function() {
-  //   if ($scope.selectedType.id == 1) { // delivery
-  //     document.getElementsByClassName('wrapper')[0].style.visibility = "visible";
-  //     $scope.locInit();
-  //   }
-  // }
+  $scope.changeType = function() {
+    if ($scope.selectedType.id == 1) { // delivery
+      document.getElementsByClassName('wrapper')[0].style.visibility = "visible";
+      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?flag=3')
+      .then(function(response) {
+        console.log(response);
+      });
+      $scope.locInit();
+      $scope.confirmLocation();
+    }
+    else if ($scope.selectedType.id == 0) { // delivery
+      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?flag=1');
+    }
+  }
 
-  // $scope.locInit = function() {
-  //   if (navigator.geolocation) { // browser supports geolocation to find your current location
+  $scope.locInit = function() {
+    if (navigator.geolocation) { // browser supports geolocation to find your current location
+      navigator.geolocation.getCurrentPosition(function(position) {
+        $scope.myPos.lat = Math.round(10000 * position.coords.latitude) / 10000, // latitude
+        $scope.myPos.lng = Math.round(10000 * position.coords.longitude) / 10000 // longitude
 
-  //     navigator.geolocation.getCurrentPosition(function(position) {
+        $scope.myMarker = new google.maps.Marker({ // add marker on your current location on the map
+          map: $scope.map,
+          position: $scope.myPos
+        });
 
-  //       $scope.myPos.lat = Math.round(10000 * position.coords.latitude) / 10000, // latitude
-  //       $scope.myPos.lng = Math.round(10000 * position.coords.longitude) / 10000 // longitude
-
-  //       $scope.myMarker = new google.maps.Marker({ // add marker on your current location on the map
-  //         map: $scope.map,
-  //         position: $scope.myPos
-  //       });
-
-  //       //$http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Location.php', $scope.myPos);
-  //       //$http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/order.php', $scope.myPos);
-
-  //       // add info window to display text at the user location to help him identify the location better
-  //       $scope.infoWindow.setPosition($scope.myPos);
-  //       $scope.map.setCenter($scope.myPos); // center of map is the current location
-  //       $scope.infoWindow.setContent('Your Location'); // text is 'Your Location'
-  //       $scope.infoWindow.open($scope.map, $scope.myMarker); // position the info window in the map in the marker
-  //     }, function() {
-  //       $scope.handleLocationError( true, $scope.infoWindow, $scope.map.getCenter() );
-  //     });
-  //   } else {
-  //     // Browser doesn't support Geolocation
-  //     $scope.handleLocationError( false, $scope.infoWindow, $scope.map.getCenter() );
-  //   }
-  // }
+        // add info window to display text at the user location to help him identify the location better
+        $scope.infoWindow.setPosition($scope.myPos);
+        $scope.map.setCenter($scope.myPos); // center of map is the current location
+        $scope.infoWindow.setContent('Your Location'); // text is 'Your Location'
+        $scope.infoWindow.open($scope.map, $scope.myMarker); // position the info window in the map in the marker
+      }, function() {
+        $scope.handleLocationError( true, $scope.infoWindow, $scope.map.getCenter() );
+      });
+    } else {
+      // Browser doesn't support Geolocation
+      $scope.handleLocationError( false, $scope.infoWindow, $scope.map.getCenter() );
+    }
+  }
 
   // $scope.discardOrder = function() {
   //   $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?orderId=' + $scope.orderId)
@@ -104,28 +80,28 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
   $scope.getUserInfo = function() {
     $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Customer.php')
-    .then( function(response) {
+    .then(function(response) {
       $scope.customerInfo = response.data;
       $scope.userId = $scope.customerInfo.UserId;
       $scope.recepientName = $scope.customerInfo.FirstName + ' ' + $scope.customerInfo.LastName;
       $scope.phone = $scope.customerInfo.PhoneNumber;
-   } );
+   });
   };
 
   $scope.confirmLocation = function() {
-    console.log($scope.myPos);
-    $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Location.php', $scope.myPos)
-    .then(function(response) {
-      console.log(response);
-      $scope.lastLoc = response.data;
-      var data = {
-        locationId: $scope.lastLoc
-      }
-      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php', data)
+    if ($scope.myPos.lat !== 0 && $scope.myPos.lng !== 0) {
+      $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Location.php', $scope.myPos)
       .then(function(response) {
-        console.log(response);
-      })
-    });
+        var data = {
+          locationId: response.data
+        };
+
+        $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php', data)
+        .then(function(response) {
+          console.log(response);
+        });
+      });
+    }
   };
 
   $scope.getOrderInfo = function() {
@@ -135,7 +111,24 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       $scope.orderType = response.data.Type;
 
       if ($scope.orderType == 1) {
-        $scope.locInit();
+        document.getElementsByClassName('wrapper')[0].style.visibility = "visible";
+        $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderLocation.php?orderId=' + $scope.orderId)
+        .then(function(response) {
+          console.log(response);
+          $scope.myPos.lat = parseFloat(response.data.Lat);
+          $scope.myPos.lng = parseFloat(response.data.Lng);
+
+          $scope.myMarker = new google.maps.Marker({ // add marker on your current location on the map
+            map: $scope.map,
+            position: $scope.myPos
+          });
+
+          $scope.infoWindow.setPosition($scope.myPos);
+          $scope.map.setCenter($scope.myPos); // center of map is the current location
+          $scope.infoWindow.open($scope.map, $scope.myMarker); // position the info window in the map in the marker
+          $scope.infoWindow.setContent('Your Location'); // text is 'Your Location'
+
+        });
       }
 
       if ($scope.orderType == 1) { // delivery
@@ -149,7 +142,6 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
       $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Fee.php')
       .then(function(response) {
-        console.log(response);
         $scope.fees = response.data;
         $scope.tax = parseFloat($scope.fees[2].Price);
         $scope.delivery = parseFloat($scope.fees[0].Price);
@@ -161,13 +153,6 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       })
     });
   };
- 
-  // $scope.getpaymentMethods = function() {
-  //   $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/PaymentMethod.php')
-  //   .then(function(response) {
-  //     $scope.paymentMethods = response.data;
-  //   });
-  // };
 
   $scope.addMarker = function(position) {
     var marker = new google.maps.Marker({
@@ -181,17 +166,15 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
     });
   };
 
-  // google.maps.event.addListener($scope.map, 'click', function(event) { // listener to click event on the map
-  //   $scope.myMarker.setPosition({
-  //     lat: event.latLng.lat(),
-  //     lng: event.latLng.lng()
-  //   });
+  google.maps.event.addListener($scope.map, 'click', function(event) { // listener to click event on the map
+    $scope.myMarker.setPosition({
+      lat: event.latLng.lat(),
+      lng: event.latLng.lng()
+    });
 
-  //   $scope.myPos.lat = Math.round(10000 * $scope.myMarker.getPosition().lat() ) / 10000;
-  //   $scope.myPos.lng = Math.round(10000 * $scope.myMarker.getPosition().lng() ) / 10000;
-
-  //   console.log($scope.myPos.lat);
-  // });
+    $scope.myPos.lat = Math.round(10000 * $scope.myMarker.getPosition().lat() ) / 10000;
+    $scope.myPos.lng = Math.round(10000 * $scope.myMarker.getPosition().lng() ) / 10000;
+  });
 
   $scope.findPlaceLocation = function(location, pos) {
     $scope.nearbyFlag = 0;
@@ -224,8 +207,6 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
           $scope.infoWindow.open($scope.map, placeMarker);
         });
       });
-
-      console.log($scope.minDistance);
     }
 
     else {
@@ -235,7 +216,6 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       $scope.map.setCenter($scope.myPos);
       $scope.infoWindow.open($scope.map, $scope.myMarker);
     }
-
   }
 
   $scope.callback = function(results, status) { // returned from the request to places service
@@ -265,19 +245,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
     infoWindow.open(map);
   };
 
-  // $scope.getOrderDeliveryTime = function() {
-  //   $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Times.php')
-  //   .then(function(response) {
-  //     console.log(response);
-  //     $scope.deliveryTimeId = parseInt(response.data);
-  //     console.log($scope.deliveryTimeId);
-  //     //$scope.deliveryTimeDuration = response.data.Duration;
-  //   });
-  // };
-
   $scope.getUserInfo();
   $scope.getOrderInfo();
   $scope.selectedMethod = $scope.paymentMethods[1];
-  //$scope.getpaymentMethods();
-  //$scope.getOrderDeliveryTime();
 }]);

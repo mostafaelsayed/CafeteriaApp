@@ -2,7 +2,7 @@
 
   require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
 
-  require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/layout.php');
+  require_once('../../../Customer/layout.php');
 
 ?>
 
@@ -10,15 +10,15 @@
 
   <title>Cafeterias</title>
 
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.bootstrap.css" rel="stylesheet">
+  <link href="../../../../css/alertify.bootstrap.css" rel="stylesheet">
 
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.core.css" rel="stylesheet">
+  <link href="../../../../css/alertify.core.css" rel="stylesheet">
   
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.default.css" rel="stylesheet">
+  <link href="../../../../css/alertify.default.css" rel="stylesheet">
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/alertify.js"></script>
+  <script src="../../../../javascript/alertify.js"></script>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/show_cafeterias.js"></script>
+  <script src="../../../../javascript/show_cafeterias.js"></script>
 
 </head>
 
@@ -42,9 +42,9 @@
 
         <div class="item active">
 
-          <a ng-href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing categories of a cafeteria.php?id={{cafeterias[0].Id}}">
+          <a ng-href="showing categories of a cafeteria.php?id={{cafeterias[0].Id}}">
 
-          <img style="display:block;margin:auto;width:300px ;height:300px" ng-src={{cafeterias[0].Image}} />
+          <img style="display: block;margin: auto;width: 300px;height: 300px" ng-src={{cafeterias[0].Image}} />
 
         </a>
 
@@ -54,9 +54,9 @@
 
         <div ng-repeat="c in cafeterias.slice(1, cafeterias.length)" class="item">
 
-          <a ng-href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing categories of a cafeteria.php?id={{c.Id}}">
+          <a ng-href="showing categories of a cafeteria.php?id={{c.Id}}">
 
-            <img style="display:block;margin:auto;width:300px ;height:300px" ng-src={{c.Image}} />
+            <img style="display: block;margin: auto;width: 300px;height: 300px" ng-src={{c.Image}} />
 
           </a>
 
@@ -88,4 +88,4 @@
 
 </div>
 
-<?php require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/footer.php'); ?>
+<?php require('../../../footer.php'); ?>

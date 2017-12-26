@@ -5,6 +5,7 @@ require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/ImageHandle.php');
 function getUsers($conn) {
   $sql = "select * from User";
   $result = $conn->query($sql);
+  
   if ($result) {
     $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_free_result($result);

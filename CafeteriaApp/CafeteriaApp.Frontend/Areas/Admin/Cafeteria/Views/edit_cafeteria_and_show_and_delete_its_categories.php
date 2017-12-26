@@ -4,25 +4,25 @@
 
   validatePageAccess($conn);
 
-  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/layout.php');
+  require('../../layout.php');
+
+  require('../../modal_includes.php');
 
 ?>
 
 <head>
 
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
+  <link href="../../../../css/input_file.css" rel="stylesheet">
 
   <title>Managing Cafeteria</title>
 
   <!-- location provider -->
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/location_provider.js"></script>
-
-  <?php require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/modal_includes.php'); ?>
+  <script src="../../../../javascript/location_provider.js"></script>
 
   <!-- image module -->
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/image_module.js"></script>
+  <script src="../../../../javascript/image_module.js"></script>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/edit_cafeteria_and_show_and_delete_its_categories.js"></script>
+  <script src="../../../../javascript/edit_cafeteria_and_show_and_delete_its_categories.js"></script>
 
 </head>
 
@@ -66,7 +66,7 @@
 
           <div><label>Image</label></div>
 
-          <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name=" imageFileName" data-max-file-size="3">
+          <div class="dropzone" file-dropzone="[image/png, image/jpeg]" file="image" file-name=" imageFileName" data-max-file-size="3">
 
           </div>
 
@@ -82,17 +82,17 @@
 
           <div ng-if="uploadme.src != ''">
 
-            <img ng-src="{{ uploadme.src }}" style="width:300px;height:300px" />
+            <img ng-src="{{ uploadme.src }}" style="width: 300px;height: 300px" />
 
           </div>
 
           <div ng-if="uploadme.src == ''">
 
-            <img ng-src="{{ imageUrl }}" style="text-align:center;width:300px;height:300px">&nbsp;
+            <img ng-src="{{ imageUrl }}" style="text-align: center;width: 300px;height: 300px">&nbsp;
 
             <span>
 
-              <button class="btn btn-primary" onclick="mylabel.click()" style="position:absolute;margin-top:150px" id="mybutton">Choose image</button>
+              <button class="btn btn-primary" onclick="mylabel.click()" style="position: absolute;margin-top: 150px" id="mybutton">Choose image</button>
 
               <label id="mylabel" for="file"></label>
 
@@ -128,7 +128,7 @@
 
     <div>
 
-      <a id="add" title="Add Category" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/Category/Views/add_category.php?id={{cafeteriaId}}" target="_self" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
+      <a id="add" title="Add Category" href="../../Category/Views/add_category.php?id={{cafeteriaId}}" target="_self" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
 
     </div>
 
@@ -154,9 +154,9 @@
 
           <td id="alignText" class="center">
 
-            <a id="myButton" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/Category/Views/edit_category_and_show_and_delete_its_menuitems.php?id={{c.Id}}" target="_self">Edit</a>&nbsp;
+            <a id="myButton" href="../../Category/Views/edit_category_and_show_and_delete_its_menuitems.php?id={{c.Id}}" target="_self">Edit</a>&nbsp;
 
-            <a style="cursor:pointer" ng-click="deleteCategory(c)">Delete</a>
+            <a style="cursor: pointer" ng-click="deleteCategory(c)">Delete</a>
 
           </td>
 
@@ -168,7 +168,7 @@
 
         <tr ng-show="categories.length == 0">
 
-          <td colspan="5" style="text-align:center"> There are no Categories in this Cafeteria.</td>
+          <td colspan="5" style="text-align: center"> There are no Categories in this Cafeteria.</td>
 
         </tr>
 

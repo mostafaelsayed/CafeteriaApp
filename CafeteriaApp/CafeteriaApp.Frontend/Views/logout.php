@@ -1,5 +1,5 @@
 <?php
-	require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
+	require('../../CafeteriaApp.Backend/functions.php');
 	require('fbConfig.php');
  
 
@@ -19,10 +19,12 @@
 	unset($_SESSION['facebook_access_token']);
 	// v2: destroy session
 	// assumes nothing else in session to keep
-	$_SESSION = array();
+	$_SESSION = [];
+
 	if ( isset( $_COOKIE[session_name()] ) ) {
 	  setcookie(session_name(), null, time() - 42000, '/');
 	}
+	
 	session_destroy(); 
 	redirect_to('login.php');
 ?>

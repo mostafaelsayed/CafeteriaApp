@@ -4,7 +4,7 @@
 
    	validatePageAccess($conn);
 
-	require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/layout.php');
+	require('layout.php');
 
 ?>
 
@@ -18,9 +18,9 @@
 
 	<h1 class="page-header">Manage Your App Settings</h1>
 
-	<div style="text-align:center;font-size:30px">
+	<div style="text-align: center;font-size: 30px">
 
-		<a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/AppSettings/Views/show_and_delete_fees.php">
+		<a href="AppSettings/Views/show_and_delete_fees.php">
 
 			Fees
 			

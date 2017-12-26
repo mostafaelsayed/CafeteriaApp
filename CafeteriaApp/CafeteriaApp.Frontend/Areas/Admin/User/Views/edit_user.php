@@ -4,7 +4,7 @@
 
   validatePageAccess($conn);
 
-  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/layout.php');
+  require('../../layout.php');
 
 ?>
 
@@ -12,15 +12,15 @@
 
   <title>Edit User</title>
 
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
+  <link href="../../../../css/input_file.css" rel="stylesheet">
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/image_module.js"></script>
+  <script src="../../../../javascript/image_module.js"></script>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/location_provider.js"></script>
+  <script src="../../../../javascript/location_provider.js"></script>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/phone_number_module.js"></script>
+  <script src="../../../../javascript/phone_number_module.js"></script>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/edit_user.js"></script>
+  <script src="../../../../javascript/edit_user.js"></script>
 
 </head>
 
@@ -42,7 +42,7 @@
 
           <label>User Name</label>
 
-          <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="userData.userName" name="userName" required />
+          <input class="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="userData.userName" name="userName" required />
 
           <span ng-show="myform.userName.$touched && myform.userName.$invalid" id="inputControl" ng-cloak>
 
@@ -52,11 +52,11 @@
 
           </span>
 
-          <br>
+          <br><br>
 
           <label>First Name</label>
 
-          <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="userData.firstName" name="firstName" required />
+          <input class="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="userData.firstName" name="firstName" required />
 
           <span ng-show="myform.firstName.$touched && myform.firstName.$invalid" id="inputControl" ng-cloak>
 
@@ -66,11 +66,11 @@
 
           </span>
 
-          <br>
+          <br><br>
 
           <label>Last Name</label>
 
-          <input id="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="userData.lastName" name="lastName" required />
+          <input class="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="userData.lastName" name="lastName" required />
 
           <span ng-show="myform.lastName.$touched && myform.lastName.$invalid" id="inputControl" ng-cloak>
 
@@ -80,11 +80,11 @@
 
           </span>
 
-          <br>
+          <br><br>
 
           <label>Email</label>
 
-          <input id="inputField" type="email" class="form-control" autofocus="autofocus" ng-model="userData.email" name="email" required />
+          <input class="inputField" type="email" class="form-control" autofocus="autofocus" ng-model="userData.email" name="email" required />
 
           <span ng-show="myform.email.$touched && myform.email.$invalid" id="inputControl" ng-cloak>
 
@@ -94,11 +94,11 @@
 
           </span>
 
-          <br>
+          <br><br>
 
           <label>Phone Number</label>
 
-          <input id="inputField" type="text" class="form-control" autofocus="autofocus" check-phone-number ng-model="userData.phoneNumber" name="phoneNumber" required />
+          <input class="inputField" type="text" class="form-control" autofocus="autofocus" check-phone-number ng-model="userData.phoneNumber" name="phoneNumber" required />
 
           <span ng-show="myform.phoneNumber.$touched && myform.phoneNumber.$error.checkPhoneNumber" id="inputControl" ng-cloak>
 

@@ -1,6 +1,6 @@
 
 // controller for adding admin
-add_userApp.controller('addAdmin',['$scope','$http','addUserService',function($scope,$http,addUserService) {
+add_userApp.controller('addAdmin', ['$scope', '$http', 'addUserService', function($scope, $http, addUserService) {
 	
 	$scope.addAdminUser = function () {
 		$scope.$emit('getUserData'); // this is a child scope so we use $emit to send this message to the root scope
@@ -13,7 +13,7 @@ add_userApp.controller('addAdmin',['$scope','$http','addUserService',function($s
 		$scope.userData = addUserService.userData;
 		$scope.userData.RoleId = 1; // admin role id
 
-		$http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php',$scope.userData)
+		$http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php', $scope.userData)
 		.then(function(response) {
 			console.log(response);
 
@@ -21,9 +21,9 @@ add_userApp.controller('addAdmin',['$scope','$http','addUserService',function($s
 
 				var adminData = {
 					UserId: parseInt(response.data)
-				}
+				};
 
-				$http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Admin.php',adminData)
+				$http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Admin.php', adminData)
 				.then(function(response) {
 					document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/User/Views/show_and_delete_users.php";
 				});

@@ -1,37 +1,49 @@
 <?php
-session_start();
-include("capatchas/simple-php-captcha.php");
-$_SESSION['captcha'] = simple_php_captcha();
+    session_start();
+
+    include("capatchas/simple-php-captcha.php");
+
+    $_SESSION['captcha'] = simple_php_captcha();
 ?>
 
 <!DOCTYPE html>
+
 <html>
-<head>
-    <title>Example &raquo; A simple PHP CAPTCHA script</title>
-    <style type="text/css">
-        pre {
-            border: solid 1px #bbb;
-            padding: 10px;
-            margin: 2em;
-        }
 
-        img {
-            border: solid 1px #ccc;
-            margin: 0 2em;
-        }
-    </style>
-</head>
-<body>
-    <p>
-        <?php
-        echo '<img src="' . $_SESSION['captcha']['image_src'] . '" alt="CAPTCHA code">';
+    <head>
 
-        ?>
-    </p>
-    <input type="text" name="" value="<?php echo $_SESSION['captcha']['code']  ; ?>">
+        <title>Example &raquo; A simple PHP CAPTCHA script</title>
+
+        <style type="text/css">
+
+            pre {
+                border: solid 1px #bbb;
+                padding: 10px;
+                margin: 2em
+            }
+
+            img {
+                border: solid 1px #ccc;
+                margin: 0 2em
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <p>
+            <?php
+                echo '<img src="' . $_SESSION['captcha']['image_src'] . '" alt="CAPTCHA code">';
+            ?>
+        </p>
+
+        <input type="text" name="" value="<?php echo $_SESSION['captcha']['code']  ; ?>" />
+
     </body>
-</html>
 
+</html>
 
 <?php
 

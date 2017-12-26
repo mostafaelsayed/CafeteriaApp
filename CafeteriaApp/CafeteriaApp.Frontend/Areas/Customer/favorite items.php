@@ -4,7 +4,7 @@
 
   validatePageAccess($conn);
 
-  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/layout.php');
+  require('layout.php');
    
 ?>
 
@@ -12,21 +12,21 @@
 
   <title>Favorite Items</title>
 
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/favorite items.css" rel="stylesheet">
+  <link href="../../css/favorite items.css" rel="stylesheet">
 
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/popup.css" rel="stylesheet">
+  <link href="../../css/popup.css" rel="stylesheet">
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/favorite items.js"></script>
+  <script src="../../javascript/favorite items.js"></script>
 
 </head>
 
-<div class="container" ng-controller="favorites" style="text-align:center;position:relative">
+<div class="container" ng-controller="favorites" style="text-align: center;position: relative">
 
   <div>
 
-    <h2 style="color:orange">My Favorites</h2>
+    <h2 style="color: orange">My Favorites</h2>
 
-    <div class="popup" style="float:right">
+    <div class="popup" style="float: right">
 
       <span class="popuptext" id="myPopup">A Simple Popup!</span>
 
@@ -34,7 +34,7 @@
 
   </div>
 
-  <table class="table" style="margin:auto" ng-show="favoriteItems.length > 0" ng-cloak>
+  <table class="table" style="margin: auto" ng-show="favoriteItems.length > 0" ng-cloak>
 
     <thead>
 
@@ -46,7 +46,7 @@
 
         <th id="thead">Price</th>
 
-        <th id="thead" style="text-align:center">Image</th>
+        <th id="thead" style="text-align: center">Image</th>
 
       </tr>
 
@@ -64,11 +64,11 @@
 
         <td><img src="{{fi.Image}}"></td>
 
-        <td style="vertical-align:middle"> 
+        <td style="vertical-align: middle"> 
        
-          <a class="btn btn-primary btn-circle" title="Remove Favorite Item" ng-click="deleteFavorItem(fi.MenuItemId,$index);" style="color:white"><i class="fa fa-minus"></i></a>
+          <a class="btn btn-primary btn-circle" title="Remove Favorite Item" ng-click="deleteFavorItem(fi.MenuItemId,$index);" style="color: white"><i class="fa fa-minus"></i></a>
 
-          <a class="btn btn-primary btn-circle" title="Add to Cart" ng-click="addToOrder(fi.MenuItemId)" style="color:white;" ><i class="fa fa-plus"></i></a>
+          <a class="btn btn-primary btn-circle" title="Add to Cart" ng-click="addToOrder(fi.MenuItemId)" style="color:white"><i class="fa fa-plus"></i></a>
 
         </td>
 
@@ -82,4 +82,4 @@
 
 </div>
 
-<?php require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/footer.php'); ?>
+<?php require('../footer.php'); ?>

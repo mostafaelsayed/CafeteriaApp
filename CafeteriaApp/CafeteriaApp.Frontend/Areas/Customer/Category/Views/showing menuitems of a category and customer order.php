@@ -4,7 +4,7 @@
 
   validatePageAccess($conn);
 
-  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/layout.php');
+  require('../../layout.php');
 
 ?>
 
@@ -12,23 +12,23 @@
 
   <title>MenuItems</title>
 
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.bootstrap.css" rel="stylesheet">
+  <link href="../../../../css/alertify.bootstrap.css" rel="stylesheet">
 
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.core.css" rel="stylesheet">
+  <link href="../../../../css/alertify.core.css" rel="stylesheet">
   
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.default.css" rel="stylesheet">
+  <link href="../../../../css/alertify.default.css" rel="stylesheet">
 
-  <link  href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/customer styles.css" rel="stylesheet">
+  <link  href="../../../../css/customer styles.css" rel="stylesheet">
 
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/popup.css" rel="stylesheet">
+  <link href="../../../../css/popup.css" rel="stylesheet">
 
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/stars.css" rel="stylesheet">
+  <link href="../../../../css/stars.css" rel="stylesheet">
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/alertify.js"></script>
+  <script src="../../../../javascript/alertify.js"></script>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/about_slide_toggle.js"></script>
+  <script src="../../../../javascript/about_slide_toggle.js"></script>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/show_menuitems_of_a_category_and_customer_order.js"></script>
+  <script src="../../../../javascript/show_menuitems_of_a_category_and_customer_order.js"></script>
 
 </head>
 
@@ -71,23 +71,23 @@
 
           <form>
 
-            <input ng-change='addRatingOrUpdate(m.Id,ItemRating[$index])' class="star star-5" id="star-5-{{m.Id}}" type="radio" name="star" value="5"  ng-model="ItemRating[$index]" />
+            <input ng-change='addRatingOrUpdate(m.Id, ItemRating[$index])' class="star star-5" id="star-5-{{m.Id}}" type="radio" name="star" value="5"  ng-model="ItemRating[$index]" />
 
             <label  class="star star-5" for="star-5-{{m.Id}}"></label>
 
-            <input ng-change='addRatingOrUpdate(m.Id,ItemRating[$index])' class="star star-4" id="star-4-{{m.Id}}" type="radio" name="star"  value="4" ng-model="ItemRating[$index]" />
+            <input ng-change='addRatingOrUpdate(m.Id, ItemRating[$index])' class="star star-4" id="star-4-{{m.Id}}" type="radio" name="star"  value="4" ng-model="ItemRating[$index]" />
 
             <label class="star star-4" for="star-4-{{m.Id}}"></label>
 
-            <input ng-change='addRatingOrUpdate(m.Id,ItemRating[$index])' class="star star-3" id="star-3-{{m.Id}}" type="radio" name="star"  value="3" ng-model="ItemRating[$index]" />
+            <input ng-change='addRatingOrUpdate(m.Id, ItemRating[$index])' class="star star-3" id="star-3-{{m.Id}}" type="radio" name="star"  value="3" ng-model="ItemRating[$index]" />
 
             <label class="star star-3" for="star-3-{{m.Id}}"></label>
 
-            <input ng-change='addRatingOrUpdate(m.Id,ItemRating[$index])' class="star star-2" id="star-2-{{m.Id}}" type="radio" name="star"  value="2" ng-model="ItemRating[$index]" />
+            <input ng-change='addRatingOrUpdate(m.Id, ItemRating[$index])' class="star star-2" id="star-2-{{m.Id}}" type="radio" name="star"  value="2" ng-model="ItemRating[$index]" />
 
             <label class="star star-2" for="star-2-{{m.Id}}"></label>
 
-            <input ng-change='addRatingOrUpdate(m.Id,ItemRating[$index])' class="star star-1" id="star-1-{{m.Id}}" type="radio" name="star"  value="1" ng-model="ItemRating[$index]" />
+            <input ng-change='addRatingOrUpdate(m.Id, ItemRating[$index])' class="star star-1" id="star-1-{{m.Id}}" type="radio" name="star"  value="1" ng-model="ItemRating[$index]" />
 
             <label class="star star-1" for="star-1-{{m.Id}}"></label>
 
@@ -142,14 +142,21 @@
             <tr ng-repeat="comm in comments[$index]">
 
               <td>{{comm.UserName}}</td>
+
               <td>{{comm.Date}}</td>
          
               <td><p>{{comm.Details}} </p> </td>
 
-              <td ng-if="checkEditAndRemove(comm.Id, menuItems.indexOf(m))">
-                <a style="cursor: pointer;" ng-click="editComment( $index , menuItems.indexOf(m))">edit</a> &nbsp; <a ng-click="deleteComment( comm.Id, $index , menuItems.indexOf(m) )"  style="cursor: pointer;" >remove</a>
+              <td ng-if="checkEditAndRemove( comm.Id, menuItems.indexOf(m) )">
+
+                <a style="cursor: pointer" ng-click="editComment( $index, menuItems.indexOf(m) )">edit</a> &nbsp;
+
+                <a ng-click="deleteComment( comm.Id, $index, menuItems.indexOf(m) )"  style="cursor: pointer">remove</a>
+
               </td>
+
             </tr>
+
           </tbody>
 
           <tbody>
@@ -159,13 +166,13 @@
 
               <td>
 
-                <textarea id="{{'textarea'+ $index}}" type="textarea" placeholder="add your comment ........" ng-model="commentDetails[$index]" style="width: auto; display: block;width: 100%"></textarea>
+                <textarea id="{{'textarea'+ $index}}" type="textarea" placeholder="add your comment ........" ng-model="commentDetails[$index]" style="width: auto;display: block;width: 100%"></textarea>
 
               </td>
 
               <td>
 
-                <input id="{{'addUpdateBtn'+ $index}}" class="btn btn-info btn-lg" type="submit" name="addComment" value="Add" ng-click="addCommentBackAndFront($index , m.Id , commentDetails[$index] , customer , add_edits[$index])">
+                <input id="{{'addUpdateBtn'+ $index}}" class="btn btn-info btn-lg" type="submit" name="addComment" value="Add" ng-click="addCommentBackAndFront($index, m.Id, commentDetails[$index], customer, add_edits[$index])">
 
               </td>
 
@@ -233,9 +240,9 @@
 
       <div style="align-content: center;text-align: center">
 
-        <a style="font-style: italic;color: white" class="btn btn-info btn-lg " ng-href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}" ng-cloak ng-show="orderItems.length > 0 && roleid == false" target="_self">Checkout</a>
+        <a style="font-style: italic;color: white" class="btn btn-info btn-lg " ng-href="../../checkout.php?orderId={{orderId}}&categoryId={{categoryId}}" ng-cloak ng-show="orderItems.length > 0 && roleid == false" target="_self">Checkout</a>
 
-        <a style="font-style: italic;color: white" class="btn btn-info btn-lg" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Cashier/Order/Views/show_and_hide_orders.php" ng-cloak ng-show="roleid == true" target="_self">Return To Orders</a>
+        <a style="font-style: italic;color: white" class="btn btn-info btn-lg" href="../../../Cashier/Order/Views/show_and_hide_orders.php" ng-cloak ng-show="roleid == true" target="_self">Return To Orders</a>
 
       </div>
 
@@ -245,7 +252,7 @@
 
     <div class="bottom" style="margin:0 auto;text-align: center">
 
-      <a target="_self" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing categories of a cafeteria.php?id={{cafeteriaId}}">Back</a>
+      <a target="_self" href="../../../Public/Cafeteria/Views/showing categories of a cafeteria.php?id={{cafeteriaId}}">Back</a>
 
       <br><br>
 
@@ -265,4 +272,4 @@
 
 </div>
 
-<?php require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/footer.php'); ?>
+<?php require('../../../footer.php'); ?>

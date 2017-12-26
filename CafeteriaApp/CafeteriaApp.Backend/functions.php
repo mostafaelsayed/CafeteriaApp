@@ -15,6 +15,7 @@
 
 	function form_errors( $errors = array() ) {
 		$output = "";
+    
 		if ( !empty($errors) ) {
 		  $output .= "<div class=\"error\"> ";
 		  $output .= "Please fix the following errors:";

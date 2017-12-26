@@ -15,6 +15,7 @@ orderDetails.controller('order_details', ['$scope', '$http', '$location', functi
 
 	$http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderLocation.php?orderId=' + $scope.orderId)
 	.then(function(response) {
+		console.log(response);
 		$scope.myPos = {
     		lat: parseFloat(response.data.Lat),
    			lng: parseFloat(response.data.Lng)
@@ -28,6 +29,8 @@ orderDetails.controller('order_details', ['$scope', '$http', '$location', functi
           map: $scope.map,
           position: $scope.myPos
         });
+
+        console.log($scope.myPos);
 
 	  	$scope.infoWindow = new google.maps.InfoWindow();
 

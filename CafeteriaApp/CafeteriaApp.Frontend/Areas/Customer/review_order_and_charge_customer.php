@@ -1,27 +1,31 @@
 <?php
+
   require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
+
   validatePageAccess($conn);
-  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/layout.php');
+
+  require('layout.php');
 
   if ( !isset($_GET['orderId']) || !isset($_GET['deliveryTimeDuration']) ) {
     $_GET['orderId'] = 0;
     $_GET['deliveryTimeDuration'] = 0;
   }
+
 ?>
 
 <head>
 
   <title>Order info</title>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/review_order_and_charge_customer.js"></script>
+  <script src="../../javascript/review_order_and_charge_customer.js"></script>
 
 </head>
 
 <br>
 
-<div ng-controller="reviewOrderAndChargeCustomer" class="container" style="align-content:center;text-align:center">
+<div ng-controller="reviewOrderAndChargeCustomer" class="container" style="align-content: center;text-align: center">
 
-  <div style="color:white" class="page-header">
+  <div style="color: white" class="page-header">
 
     <h1>Order #<span ng-bind="orderId"></span></h1>
 
@@ -29,19 +33,19 @@
 
   <br>
 
-  <table align="center" class="table table-bordered" style="width:600px;height:120px">
+  <table align="center" class="table table-bordered" style="width: 600px;height: 120px">
 
     <thead>
 
       <tr>
 
-        <th style="color:white">OrderItem Name</th>
+        <th style="color: white">OrderItem Name</th>
 
-        <th style="color:white">OrderItem Unit Price</th>
+        <th style="color: white">OrderItem Unit Price</th>
 
-        <th style="color:white">OrderItem Quantity</th>
+        <th style="color: white">OrderItem Quantity</th>
 
-        <th style="color:white">OrderItem Total Price</th>
+        <th style="color: white">OrderItem Total Price</th>
 
       </tr>
 
@@ -89,4 +93,4 @@
 
 <br>
 
-<?php require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/footer.php'); ?>
+<?php require('../footer.php'); ?>

@@ -2,76 +2,78 @@
   $memcache = memcache_connect('localhost', 11211); 
   $Words = $memcache->get('words');
   $Languages = $memcache->get('languages');
-  //$_SESSION["langId"]=2;
-  $lang_id = $_SESSION["langId"];
+  $lang_id = $_SESSION['langId'];
   $orderId = $_SESSION['orderId'];
-  //require_once("CafeteriaApp.Backend/functions.php");
 ?>
 
 <!DOCTYPE html>
-  <html>
-    <head>
-      <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <!-- <link rel="stylesheet" href="/CafeteriaApp/CafeteriaApp.Frontend/css/bootstrap2.min.css" rel="stylesheet" type="text/css" > -->
-      
-      <!-- MetisMenu CSS -->
-      <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/metisMenu.min.css" rel="stylesheet">
-      
-      <!-- Custom CSS -->
-      <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/sb-admin-2.css" rel="stylesheet">
-      
-      <!-- Custom Fonts -->
-      <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-      <!-- Bootstrap Core CSS -->
-      <!-- Latest compiled and minified CSS -->
-      <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/bootstrap.min.css" rel="stylesheet">
-      <link rel="stylesheet" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/bootstrap-select.min.css">
-      <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/normalize.css" rel="stylesheet">
-      <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/layout_style.css" rel="stylesheet" type="text/css">
 
+<html>
+  <head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
 
-      <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/jquery-3.2.1.min.js"></script>
-      <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/bootstrap.min.js"></script>
-      <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
-      <!-- <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/alertify.js"></script> -->
-      <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/customer_and_cashier_order.js"></script>
-      
-      <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/metisMenu.min.js"></script>
-      
-      <!-- Custom Theme JavaScript -->
-      <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/sb-admin-2.js"></script>
+    <link rel="icon" type="text/css" href="/CafeteriaApp/CafeteriaApp/favicon.ico">
+    
+    <!-- MetisMenu CSS -->
+    <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/metisMenu.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/sb-admin-2.css" rel="stylesheet">
+    
+    <!-- Custom Fonts -->
+    <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Bootstrap Core CSS -->
+    <!-- Latest compiled and minified CSS -->
+    <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/bootstrap-select.min.css">
+    <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/normalize.css" rel="stylesheet">
+    <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/layout_style.css" rel="stylesheet" type="text/css">
 
-      <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/location_provider.js"></script>
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/jquery-3.2.1.min.js"></script>
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/bootstrap.min.js"></script>
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/angular.min.js"></script>
+    <!-- <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/alertify.js"></script> -->
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/customer_and_cashier_order.js"></script>
+    
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/metisMenu.min.js"></script>
+    
+    <!-- Custom Theme JavaScript -->
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/sb-admin-2.js"></script>
 
-      <!-- Latest compiled and minified JavaScript -->
-      <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/bootstrap-select.min.js"></script>
-      
-    </head>
-    <body style="background-image:url('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/customer background image4.jpg')" ng-app="layout_app"
-    ng-init="orderId=<?php echo $orderId ;?>;">
-  
-      <div ng-controller="Language_Order" ng-init=" languages=<?php echo htmlspecialchars($Languages);?>;selectedLang=languages[<?php echo ($lang_id-1);?>];orderId=<?php echo $orderId;?>" id="myctrl">
-      
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/location_provider.js"></script>
 
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/bootstrap-select.min.js"></script>
+    
+  </head>
 
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-fixed-top">
+  <body style="background-image: url('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/customer background image4.jpg')" ng-app="layout_app"
+  ng-init="orderId=<?php echo $orderId ;?>;">
 
-          <div class="container-fluid">
+    <div ng-controller="Language_Order" ng-init=" languages = <?php echo htmlspecialchars($Languages);?>;selectedLang = languages[<?php echo ($lang_id - 1);?>];orderId = <?php echo $orderId;?>" id="myctrl">
+
+      <!-- Navigation -->
+      <nav class="navbar navbar-default navbar-fixed-top">
+
+        <div class="container-fluid">
+
           <div class="row">
-           
 
             <div class="navbar-header">
+
               <button class="navbar-toggle" data-toggle="collapse" data-target="#optionsNavbar" id="mybutton" style="float: left">
+
                 <span class="icon-bar"></span>
+
                 <span class="icon-bar"></span>
+
                 <span class="icon-bar"></span>
+
               </button>
 
             </div>
 
-            <div id="optionsNavbar" class="navbar-collapse" >
+            <div id="optionsNavbar" class="navbar-collapse">
 
               <ul id="left_ul" class="nav navbar-nav navbar-left">
 
@@ -87,203 +89,199 @@
 
                 </li>
 
-              <li id="notification" title="Show Notifications" onclick="showNotifications()">
-              <?php  $length = count($_SESSION["notifications"]); ?>
-                   
-                    <div class="btn-group">
-                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 90px; height:50px;padding:0px;background-color: transparent;border-color: transparent;">
+                <li id="notification" title="Show Notifications" onclick="showNotifications()">
+
+                  <?php $length = count($_SESSION['notifications']); ?>
+                 
+                  <div class="btn-group">
+
+                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 90px; height: 50px;padding: 0px;background-color: transparent;border-color: transparent">
+
                     <?php
-                       if ($length > 0)
-                      {
-                        echo " <img  src='/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/alarm-1.png' width='50' height='50' >";
-                        echo "<label id='notifyLabel' style='color:blue;font-size:2em;'>{$length}</label>";
+                      if ($length > 0) {
+                        echo "<img src='/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/alarm-1.png' width='50' height='50'>";
+                        echo "<label id='notifyLabel' style='color: blue;font-size: 2em'>{$length}</label>";
                       }
-                      else
-                      {
-                        echo " <img  src='/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/alarm.png' width='55' height='55' >";
+                      else {
+                        echo "<img src='/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/alarm.png' width='55' height='55'>";
                       }
 
+                      if ( !empty($_SESSION['notifications']) && is_array($_SESSION['notifications']) ) {
+                        $ul = "<ul style='color: blue;'>";
 
-                       if(!empty($_SESSION["notifications"]) && is_array($_SESSION["notifications"]))
-                      {
-                        $ul="<ul style='color:blue;'>";
-                        foreach ($_SESSION["notifications"] as  $value)
-                        {
-                          $ul.= "<li><h4>".$value."</h4></li>";
+                        foreach ($_SESSION["notifications"] as $value) {
+                          $ul .= "<li><h4>" . $value . "</h4></li>";
                         }
-                        $ul.="</ul>";
+
+                        $ul .= "</ul>";
                       }
+                    ?>
 
-                        ?>
-                    </button>
+                  </button>
 
-                      <div    class="dropdown-menu" style="left:-70px;padding:5px;width:300px;background-color:#FFC806;">
-                    
-                   <?php  echo isset($ul)? $ul: "<h4>No Notifications</h4>"; ?>
-                       
-                      </div>
-
-                    </div>
+                  <div class="dropdown-menu" style="left: -70px;padding: 5px;width: 300px;background-color: #FFC806">
+                
+                    <?php echo isset($ul)? $ul : "<h4>No Notifications</h4>"; ?>
                    
+                  </div>
 
-                  </li>
+                </div>
 
-                <li class="inner">
+              </li>
 
-                  <a class="navbar-brand" target="_self" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/logout.php"><?php echo "{$Words['Log out'][$lang_id]}" ?></a>
+              <li class="inner">
 
-                </li>
+                <a class="navbar-brand" target="_self" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/logout.php"><?php echo "{$Words['Log out'][$lang_id]}" ?></a>
 
-              </ul>
+              </li>
 
-             </div>
+            </ul>
 
+          </div>
 
-       
+          <ul id="right_ul">
 
-       <ul id="right_ul">
+            <li id="shoppingCart" title="Show Shopping Cart Items">
 
-           <li id="shoppingCart" title="Show Shopping Cart Items">
+              <div id="shoppingCart_Button">
 
-                    <div id="shoppingCart_Button">
+                <img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/IconoCompraPaquetigos.png" style="width: 100%;height: 100%">
 
-                      <img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/IconoCompraPaquetigos.png" style="width:100%;height:100%">
+              </div>
 
-                    </div>
+              <div id="shoppingCartDetails">
 
-                    <div id="shoppingCartDetails">
+                <h3 id="OrderItemsHeader">Order Items</h3>
 
-                      <h3 id="OrderItemsHeader">Order Items</h3>
+                  <div id="OrderContents">
+         
+                    <table id="orderTable" class="table table-bordered" ng-show="orderItems.length > 0">
 
-                      <div id="OrderContents">
-           
-                        <table id="orderTable" class="table table-bordered" ng-show="orderItems.length > 0">
+                      <thead>
 
-                          <thead>
+                        <tr>
 
-                            <tr>
+                          <th id="thead">OrderItem</th>
 
-                              <th id="thead">OrderItem</th>
+                          <th id="thead">Quantity</th>
 
-                              <th id="thead">Quantity</th>
+                          <th id="thead">Total Price</th>
 
-                              <th id="thead">Total Price</th>
+                          <th id="thead">Actions</th>
 
-                              <th id="thead">Actions</th>
+                        </tr>
 
-                            </tr>
+                      </thead>
 
-                          </thead>
+                      <tbody ng-repeat="o in orderItems">
 
-                          <tbody ng-repeat="o in orderItems">
+                        <tr>
 
-                            <tr>
+                          <td ng-bind="o.Name" id="thead"></td>
 
-                              <td ng-bind="o.Name" id="thead"></td>
+                          <td ng-bind="o.Quantity" id="thead"></td>
 
-                              <td ng-bind="o.Quantity" id="thead"></td>
+                          <td ng-bind="o.TotalPrice" id="thead"></td>
 
-                              <td ng-bind="o.TotalPrice" id="thead"></td>
+                          <td style="display: block;width: 100%; padding: 0px">
 
-                              <td style="display:block;width:100%; padding: 0px;">
+                            <ul style="list-style: none; margin: 0px;padding: 0px">
 
-                                <ul  style="list-style: none; margin: 0px;padding: 0px">
+                              <li>
 
-                                  <li>
+                                <a title="Increase Quantity" ng-click="increaseQuantity(o)" class="btn"><i class="fa fa-plus"></i></a>
 
-                                    <a title="Increase Quantity" ng-click="increaseQuantity(o)" class="btn"><i class="fa fa-plus"></i></a>
+                              </li>
 
-                                  </li>
+                              <li>
 
-                                  <li>
+                                <a title="Decrease Quantity" ng-click="decreaseQuantity(o)" class="btn"><i class="fa fa-minus"></i></a>
 
-                                    <a  title="Decrease Quantity"  ng-click="decreaseQuantity(o)" class="btn"><i class="fa fa-minus"></i></a>
+                              </li>
 
-                                  </li>
+                              <li>
 
-                                  <li>
+                                <a title="Remove From Order" ng-click="deleteOrderItem(o)" style="font-weight: bold" class="btn">X</a>
 
-                                    <a title="Remove From Order" ng-click="deleteOrderItem(o)" style="font-weight:bold;" class="btn">X</a>
+                              </li>
 
-                                  </li>
+                            </ul>
 
-                                </ul>
+                          </td>
 
-                              </td>
+                        </tr>
 
-                            </tr>
+                      </tbody>
 
-                          </tbody>
+                    </table> 
 
-                        </table> 
+                    <div>
 
-                        <div>
-
-                          <a id="checkout" title="Check out this order" class="btn" ng-href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}" ng-show="orderItems.length>0"  target="_self">Checkout</a>
-
-                        </div>
-
-                      </div>
-                  
-                    </div>
-
-                  </li>
-
-
-
-            <li id="languagesDropdown" >
-              <select id="languages" class="selectpicker show-tick" select-picker ng-model="selectedLang" ng-options="l.Name for l in languages" ng-change="changeLanguage(selectedLang.Id)" data-width="fit">
-
-              </select>
-                  </li>
-
-
-             <li id="myProfile" style="display: inline-block">
-
-                    <div class="btn-group">
-
-                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-                      My Profile
-
-                    </button>
-
-                      <div   class="dropdown-menu" style="left:-70px;">
-                              <div>
-                        <a class="dropdown_item" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/favorite items.php">My Favorites</a>
-
-                        <a class="dropdown_item" href="#">Change Password</a>
-
-                        <a class="dropdown_item" href="#">Something else here</a>
-                          </div>
-                            <hr>
-                          <div>
-                        <a class="dropdown_item" href="#">Separated link</a>
-                      </div>
-                      </div>
+                      <a id="checkout" title="Check out this order" class="btn" ng-href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}" ng-show="orderItems.length > 0"  target="_self">Checkout</a>
 
                     </div>
 
-                  </li>
+                  </div>
+                
+                </div>
 
-      </ul>
+              </li>
+
+              <li id="languagesDropdown">
+
+                <select id="languages" class="selectpicker show-tick" select-picker ng-model="selectedLang" ng-options="l.Name for l in languages" ng-change="changeLanguage(selectedLang.Id)" data-width="fit"></select>
+
+              </li>
+
+              <li id="myProfile" style="display: inline-block">
+
+                <div class="btn-group">
+
+                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                    My Profile
+
+                  </button>
+
+                  <div class="dropdown-menu" style="left: -70px">
+
+                    <div>
+
+                      <a class="dropdown_item" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/favorite items.php" target="_self">My Favorites</a>
+
+                      <a class="dropdown_item" href="#">Change Password</a>
+
+                      <a class="dropdown_item" href="#">Something else here</a>
+
+                    </div>
+
+                    <hr>
+
+                    <div>
+
+                      <a class="dropdown_item" href="#">Separated link</a>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </li>
+
+            </ul>
+
+          </div>
 
         </div>
-            </div>
-            </nav>
 
-      
-<script type="text/javascript">
-  
-function showNotifications() {
+      </nav>
 
-  $('#notifyLabel').html('');
+      <script type="text/javascript">
+        function showNotifications() {
+          $('#notifyLabel').html('');
+          $("#notifyme").slideToggle("slow");
+        }
+      </script>
 
-  $("#notifyme").slideToggle("slow");
-
-}
-
-</script>
-
-
-    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/layout.js"></script>
+      <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/layout.js"></script>

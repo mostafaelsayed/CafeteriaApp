@@ -4,7 +4,7 @@
 
 	//validatePageAccess($conn);
 
-	require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/layout.php');
+	require('../../../Customer/layout.php');
 
 ?>
 
@@ -12,7 +12,7 @@
 
 	<title>Categories</title>
 
-	<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/show_categories_of_a_cafeteria.js"></script>
+	<script src="../../../../javascript/show_categories_of_a_cafeteria.js"></script>
 
 </head>
 
@@ -24,9 +24,9 @@
 
     	<div ng-repeat="c in categories">
 
-        <div style="text-align:center;font-size:20px">
+        <div style="text-align: center;font-size: 20px">
 
-      		<a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/Category/Views/showing menuitems of a category and customer order.php?categoryId={{c.Id}}" style="color: blue" target="_self">
+      		<a href="../../../Customer/Category/Views/showing menuitems of a category and customer order.php?categoryId={{c.Id}}" style="color: blue" target="_self">
 
       			<span ng-bind="c.Name"></span>
 
@@ -42,4 +42,4 @@
 
 </div>
 
-<?php require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/footer.php'); ?>
+<?php require('../../../footer.php'); ?>

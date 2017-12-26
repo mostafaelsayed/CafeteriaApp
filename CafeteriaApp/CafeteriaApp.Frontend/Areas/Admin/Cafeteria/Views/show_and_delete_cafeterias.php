@@ -4,7 +4,9 @@
 
   validatePageAccess($conn);
 
-  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/layout.php');
+  require('../../layout.php');
+
+  require('../../modal_includes.php');
 
 ?>
 
@@ -14,9 +16,7 @@
 
   <!-- order of include not matter in case of dependencies exist -->
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/show_and_delete_cafeterias.js"></script>
-
-  <?php require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/modal_includes.php'); ?>
+  <script src="../../../../javascript/show_and_delete_cafeterias.js"></script>
 
 </head>
 
@@ -36,13 +36,13 @@
 
     <div class="col-lg-12">
 
-      <div style="margin:auto">
+      <div style="margin: auto">
 
         <div><h3>Manage Your Cafeterias</h3>
 
           <div>
 
-            <a id="add" title="Add Cafeteria" id="creatNewCafeteria" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/add_cafeteria.php" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
+            <a id="add" title="Add Cafeteria" id="creatNewCafeteria" href="add_cafeteria.php" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
 
           </div>
 
@@ -50,7 +50,7 @@
 
         <div>
 
-          <table width="50%" class="table" style="border-collapse:collapse" border="0" cellspacing="0" cellpadding="0">
+          <table width="50%" class="table" style="border-collapse: collapse" border="0" cellspacing="0" cellpadding="0">
             <thead>
 
               <tr>
@@ -71,9 +71,9 @@
 
                 <td id="alignText" class="center">
 
-                  <a type="button" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/edit_cafeteria_and_show_and_delete_its_categories.php?id={{c.Id}}">Edit</a>&nbsp;&nbsp;
+                  <a type="button" href="edit_cafeteria_and_show_and_delete_its_categories.php?id={{c.Id}}">Edit</a>&nbsp;&nbsp;
 
-                  <a type="button" style="cursor:pointer" ng-click="deleteCafeteria(c)">Delete</a>
+                  <a type="button" style="cursor: pointer" ng-click="deleteCafeteria(c)">Delete</a>
 
                 </td>
 

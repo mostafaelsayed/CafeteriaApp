@@ -6,7 +6,8 @@ function addUserLocation($conn, $lat, $lng) {
 		echo "error: ", $conn->error;
 	}
 	else if (mysqli_num_rows($res) !== 0) {
-		echo "location already exists";
+		//echo "location already exists";
+		return (int) mysqli_fetch_assoc($res)['Id'];
 	}
 	else {
 		$stmt = "insert into `location` (UserId, Lat, Lng) values (?, ?, ?)";

@@ -204,14 +204,14 @@ function updateOrderIdInSession($conn, $orderId) {
 }
 
 function updateOrderLocation($conn, $locationId) {
-  $sql = "select `OrderId` from `orderlocation`";
+  $sql = "select `OrderId` from `orderlocation` where `OrderId` = {$_SESSION['orderId']}";
   $res = $conn->query($sql);
 
   if ($res === false) {
     echo "error: ", $conn->error;
   }
   else if (mysqli_num_rows($res) !== 0) {
-    $stmt = "update `orderlocation` set `LocationId` = (?)";
+    $stmt = "update `orderlocation` set `LocationId` = (?) where `OrderId` = {$_SESSION['orderId']}";
     $stmt = $conn->prepare($stmt);
     $stmt->bind_param("i", $locationId);
 
@@ -262,11 +262,11 @@ function hideOrder($conn) {
   }
 }
 
-function CheckOutOrder($conn, $orderId, $paymentMethodId, $orderType, $paid = 0) {
+function CheckOutOrder($conn, $orderId, $paymentMethodId, $paid = 0) {
   $deliveryTimeId = getCurrentTimeId($conn);
-  $sql = "update `Order` set `DeliveryTimeId` = (?), `Paid` = (?), `PaymentMethodId` = (?), `OrderStatusId` = 2, `Type` = (?) where `Id` = (?)";
+  $sql = "update `Order` set `DeliveryTimeId` = (?), `Paid` = (?), `PaymentMethodId` = (?), `OrderStatusId` = 2 where `Id` = (?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("idiii", $deliveryTimeId, $paid, $paymentMethodId, $orderType, $orderId);
+  $stmt->bind_param("idii", $deliveryTimeId, $paid, $paymentMethodId, $orderId);
 
   if ($stmt->execute() === TRUE) {
     //open a new order

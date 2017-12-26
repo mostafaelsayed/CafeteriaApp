@@ -1,8 +1,8 @@
 <?php
-require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
-require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/validation_functions.php');
-require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Notification.php');
-require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Order.php');
+require('../../CafeteriaApp.Backend/functions.php');
+require('../../CafeteriaApp.Backend/validation_functions.php');
+require('../../CafeteriaApp.Backend/Controllers/Notification.php');
+require('../../CafeteriaApp.Backend/Controllers/Order.php');
 
 if ( isset( $_GET['redirect_to'] ) ) {
   $_POST['redirect_to'] = $_GET['redirect_to'];
@@ -55,25 +55,25 @@ if ( isset( $_POST['submit'] ) ) { // check if the button is been pressed
         }
         else {
           if ($_SESSION['roleId'] == 2) { // customer
-            redirect_to( rawurldecode('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php') );
+            redirect_to( rawurldecode('../Areas/Public/Cafeteria/Views/showing cafeterias.php') );
           }
           elseif ($_SESSION['roleId'] == 1) { // admin
-            redirect_to( rawurldecode('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php') );
+            redirect_to( rawurldecode('../Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php') );
           }
           else { // cashier
-            redirect_to( rawurldecode('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Cashier/Order/Views/show_and_hide_orders.php') );
+            redirect_to( rawurldecode('../Areas/Cashier/Order/Views/show_and_hide_orders.php') );
           }
         }
       }
       else {
         if ($_SESSION['roleId'] == 2) { // customer
-          redirect_to( rawurldecode('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php') );
+          redirect_to( rawurldecode('../Areas/Public/Cafeteria/Views/showing cafeterias.php') );
         }
         elseif ($_SESSION['roleId'] == 1)  { // admin
-          redirect_to( rawurldecode('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php') );
+          redirect_to( rawurldecode('../Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php') );
         }
         else { // cashier
-          redirect_to( rawurldecode('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Cashier/Order/Views/show_and_hide_orders.php') );
+          redirect_to( rawurldecode('../Areas/Cashier/Order/Views/show_and_hide_orders.php') );
         }
       } //3ala 7asab                               
     }
@@ -88,13 +88,13 @@ if ( isset( $_POST['submit'] ) ) { // check if the button is been pressed
 // if already logged in and called login page
 elseif ( isset( $_SESSION['userId'] ) && isset( $_SESSION['userName'] ) && isset( $_SESSION['roleId'] ) ) { // This is probably a GET request
   if ($_SESSION['roleId'] == 1) { // admin
-    redirect_to( rawurldecode('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php') ); //
+    redirect_to( rawurldecode('../Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php') ); //
   }
   else if ($_SESSION['roleId'] == 2) { // customer
-    redirect_to( rawurldecode('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php') ); //
+    redirect_to( rawurldecode('../Areas/Public/Cafeteria/Views/showing cafeterias.php') ); //
   }
   else { // cashier
-    redirect_to( rawurldecode('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Cashier/Order/Views/show_and_hide_orders.php') ); //
+    redirect_to( rawurldecode('../Areas/Cashier/Order/Views/show_and_hide_orders.php') ); //
   }
 } // end: if ( isset( $_POST['submit'] ) )
 ?>
@@ -105,11 +105,13 @@ elseif ( isset( $_SESSION['userId'] ) && isset( $_SESSION['userName'] ) && isset
 
   <head>
   
-    <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/errors.css" rel="stylesheet" type="text/css">
+    <link href="../css/errors.css" rel="stylesheet" type="text/css">
+
+    <link rel="icon" type="text/css" href="../../favicon.ico">
 
     <link rel="stylesheet" href="css/materialize.css">
 
-    <link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/login.css">
+    <link rel="stylesheet" type="text/css" href="../css/login.css">
 
     <script src="js/jquery-3.1.1.min.js"></script>
 
@@ -127,37 +129,37 @@ elseif ( isset( $_SESSION['userId'] ) && isset( $_SESSION['userName'] ) && isset
 
       </div>  
 
-      <div id="page" style="align-content:center;text-align:center">
+      <div id="page" style="align-content: center;text-align: center">
 
         <?php echo message(); ?>
 
         <?php echo form_errors($errors); ?>
         
-        <h1 style="font-style:italic;color:white">Login</h1>
+        <h1 style="font-style: italic;color: white">Login</h1>
 
-        <form action="login.php" method="post" class="login-box" style="width:30%;margin:auto;text-align:center">
+        <form action="login.php" method="post" class="login-box" style="width: 30%;margin: auto;text-align: center">
 
           <div class="input-field col s12">
 
-            <label for="email" style="font-size:25px;color:white">E-mail</label>
+            <label for="email" style="font-size: 25px;color: white">E-mail</label>
 
-            <input type="email" id="email" name="email" value="<?php echo isset($_SESSION["userName"]) ?  htmlentities($_SESSION["userName"]) :'' ; ?>" />
+            <input type="email" id="email" name="email" value="<?php echo isset($_SESSION['userName']) ? htmlentities($_SESSION['userName']) : '' ; ?>" />
 
           </div>
 
           <div class="input-field col s12">
 
-            <label for="password" style="font-size:25px;color:white">Password</label>
+            <label for="password" style="font-size: 25px;color: white">Password</label>
 
-            <input type="password" name="password" style="color:white" />
+            <input type="password" name="password" style="color: white" />
 
           </div>
 
-          <div class="input-field col s12" style="margin-left:55px">
+          <div class="input-field col s12" style="margin-left: 55px">
 
             <input type="checkbox" id="rememberme" name="remember">
 
-            <label for="rememberme" style="color:white">Remeber me</label>
+            <label for="rememberme" style="color: white">Remeber me</label>
 
           </div>
 
@@ -203,4 +205,4 @@ elseif ( isset( $_SESSION['userId'] ) && isset( $_SESSION['userName'] ) && isset
 
 </html>
 
-<div style="align-content:center;text-align:center;font-style:italic;color:white">&copy; 2010-<?php echo date("Y");?></div>
+<div style="align-content: center;text-align: center;font-style: italic;color: white">&copy; 2010-<?php echo date("Y");?></div>

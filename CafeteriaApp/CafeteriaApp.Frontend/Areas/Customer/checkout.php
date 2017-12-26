@@ -1,28 +1,31 @@
 <?php
   require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
+
   validatePageAccess($conn);
-  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/layout.php');
+
+  require('layout.php');
+
 ?>
 
 <head>
 
   <title>Order Checkout</title>
 
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.bootstrap.css" rel="stylesheet">
+  <link href="../../css/alertify.bootstrap.css" rel="stylesheet">
 
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.core.css" rel="stylesheet">
+  <link href="../../css/alertify.core.css" rel="stylesheet">
   
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.default.css" rel="stylesheet">
+  <link href="../../css/alertify.default.css" rel="stylesheet">
 
-  <link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/map.css">
+  <link rel="stylesheet" type="text/css" href="../../css/map.css">
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/alertify.js"></script>
+  <script src="../../javascript/alertify.js"></script>
 
-  <!-- <script src="https://maps.googleapis.com/maps/api/js"></script> -->
+  <script src="https://maps.googleapis.com/maps/api/js"></script>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/calculate_distance_given_longitude_and_latitude.js"></script>
+  <script src="../../javascript/calculate_distance_given_longitude_and_latitude.js"></script>
  
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/checkout.js"></script>
+  <script src="../../javascript/checkout.js"></script>
 
 </head>
 
@@ -146,7 +149,7 @@
 
       <div>
 
-        <select name="method" ng-model="selectedMethod" ng-options=" method.name for method in paymentMethods" required />
+        <select name="method" ng-model="selectedMethod" ng-options="method.name for method in paymentMethods" required />
        	</select>
 
         <span ng-show="myForm.$submitted && myForm.method.$invalid" ng-cloak>The Payment Method is required.</span>
@@ -187,21 +190,19 @@
 
     </div><!--End Wrapper-->
 
-    <div ng-show="selectedType.id == 1">
+    <!-- <div ng-show="selectedType.id == 1">
 
       <input type="submit" class="btn btn-primary" name="next" value="Next" />
       &nbsp;&nbsp;&nbsp;
 
-    </div>
+    </div> -->
 
     <br><br>
 
   </form>
 
-
-
   <br>
 
 </div>
 
-<?php require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/footer.php'); ?>
+<?php require('../footer.php'); ?>

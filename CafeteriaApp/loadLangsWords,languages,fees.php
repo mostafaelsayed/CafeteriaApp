@@ -45,6 +45,4 @@ if ($memcache) {
 else {
 	echo "Connection to memcached failed";
 }
-
-require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/footer.php');
 ?>

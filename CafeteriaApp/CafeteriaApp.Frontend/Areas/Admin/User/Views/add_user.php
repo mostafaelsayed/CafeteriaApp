@@ -54,7 +54,7 @@
 
           <label>User Name</label>
 
-          <input id="inputField" type="text" class="form-control" ng-model="userName" name="userName" required/>
+          <input class="inputField" type="text" class="form-control" ng-model="userName" name="userName" required/>
 
           <span ng-show="(myform.userName.$touched || myform.$submitted) && myform.userName.$invalid" id="inputControl" ng-cloak>
 
@@ -64,11 +64,11 @@
 
           </span>
 
-          <br>
+          <br><br>
 
           <label>First Name</label>
 
-          <input id="inputField" type="text" class="form-control" ng-model="firstName" name="firstName" required/>
+          <input class="inputField" type="text" class="form-control" ng-model="firstName" name="firstName" required/>
 
           <span ng-show="(myform.firstName.$touched || myform.$submitted) && myform.firstName.$invalid" id="inputControl" ng-cloak>
 
@@ -78,11 +78,11 @@
 
           </span>
 
-          <br>
+          <br><br>
 
           <label>Last Name</label>
 
-          <input id="inputField" type="text" class="form-control" ng-model="lastName" name="lastName" required/>
+          <input class="inputField" type="text" class="form-control" ng-model="lastName" name="lastName" required/>
 
           <span ng-show="(myform.lastName.$touched || myform.$submitted) && myform.lastName.$invalid" id="inputControl" ng-cloak>
 
@@ -92,11 +92,11 @@
 
           </span>
 
-          <br>
+          <br><br>
 
           <label>Email</label>
 
-          <input id="inputField" type="email" class="form-control" ng-model="email" name="email" required />
+          <input class="inputField" type="email" class="form-control" ng-model="email" name="email" required />
 
           <span ng-show="(myform.email.$touched || myform.$submitted) && myform.email.$invalid" id="inputControl" ng-cloak>
 
@@ -106,11 +106,11 @@
 
           </span>
 
-          <br>
+          <br><br>
 
           <label>Phone Number</label>
 
-          <input id="inputField" type="text" class="form-control" check-phone-number ng-model="phoneNumber" name="phoneNumber" required />
+          <input class="inputField" type="text" class="form-control" check-phone-number ng-model="phoneNumber" name="phoneNumber" required />
 
           <span ng-show="(myform.phoneNumber.$touched || myform.$submitted) && myform.phoneNumber.$error.checkPhoneNumber" id="inputControl" ng-cloak>
 
@@ -128,7 +128,7 @@
 
           </span>
 
-          <br>
+          <br><br>
 
           <div><label>Image</label></div>
 
@@ -148,11 +148,11 @@
 
           </span>
 
-          <br>
+          <br><br>
 
           <label>Password</label>
 
-          <input id="inputField" type="password" class="form-control" ng-model="password" name="password" required />
+          <input class="inputField" type="password" class="form-control" ng-model="password" name="password" required />
 
           <span ng-show="(myform.password.$touched || myform.$submitted) && myform.password.$invalid" id="inputControl" ng-cloak>
 
@@ -162,11 +162,11 @@
 
           </span>
 
-          <br>
+          <br><br>
 
           <label>Confirm Password</label>
 
-          <input id="inputField" type="password" class="form-control" ng-model="confirmPassword" name="confirmPassword" required />
+          <input class="inputField" type="password" class="form-control" ng-model="confirmPassword" name="confirmPassword" required />
 
           <span ng-show="(myform.confirmPassword.$touched || myform.$submitted) && myform.confirmPassword.$invalid" id="inputControl" ng-cloak>
 
@@ -176,7 +176,7 @@
 
           </span>
 
-          <br>
+          <br><br>
          
           <div><label>Choose Role</label></div>
 

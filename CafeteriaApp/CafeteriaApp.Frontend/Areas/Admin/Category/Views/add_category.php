@@ -4,7 +4,7 @@
 
   validatePageAccess($conn);
 
-  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/layout.php');
+  require('../../layout.php');
 
 ?>
 
@@ -12,13 +12,13 @@
 
   <title>Adding Category</title>
 
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
+  <link href="../../../../css/input_file.css" rel="stylesheet">
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/image_module.js"></script>
+  <script src="../../../../javascript/image_module.js"></script>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/location_provider.js"></script>
+  <script src="../../../../javascript/location_provider.js"></script>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/add_category.js"></script>
+  <script src="../../../../javascript/add_category.js"></script>
 
 </head>
 
@@ -60,7 +60,7 @@
 
         <div><label>Image</label></div>
 
-        <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name=" imageFileName" data-max-file-size="3">
+        <div class="dropzone" file-dropzone="[image/png, image/jpeg]" file="image" file-name="imageFileName" data-max-file-size="3">
 
         </div>
 
@@ -74,11 +74,11 @@
 
         </span>
 
-        <img ng-src="{{ uploadme.src }}" style="width:300px;height:300px">
+        <img ng-src="{{ uploadme.src }}" style="width: 300px;height: 300px">
 
         <span>
 
-          <button class="btn btn-primary" onclick="mylabel.click()" style="position:absolute;margin-top:150px">Choose image</button>
+          <button class="btn btn-primary" onclick="mylabel.click()" style="position: absolute;margin-top: 150px">Choose image</button>
 
           <label id="mylabel" for="file"></label>
 
