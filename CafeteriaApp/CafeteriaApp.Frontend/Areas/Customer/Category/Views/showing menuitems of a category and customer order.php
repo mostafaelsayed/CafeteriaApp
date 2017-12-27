@@ -250,7 +250,7 @@
 
     <hr width="90%">
 
-    <div class="bottom" style="margin:0 auto;text-align: center">
+    <div class="bottom" style="margin: 0 auto;text-align: center">
 
       <a target="_self" href="../../../Public/Cafeteria/Views/showing categories of a cafeteria.php?id={{cafeteriaId}}">Back</a>
 
@@ -260,7 +260,7 @@
 
     </div>
 
-    <div class="about" style="margin:0 auto;text-align: center;color: white">
+    <div class="about" style="margin: 0 auto;text-align: center;color: white">
 
       <h1>About This Category</h1>
 

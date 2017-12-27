@@ -7,6 +7,17 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   $scope.paymentMethods = [ {id: 1, name: "Paypal"}, {id: 4, name: "Cash"}, {id: 5, name: "Credit Card"} ];
   localStorage.setItem("submit", 1);
 
+  $scope.confirmOrder = function() {
+    alertify.confirm("Are Your sure you Want to Submit Order?", function(e) {
+      if (e) {
+         document.getElementsByClassName('inbut')[0].click();
+      }
+      else {
+        return false;
+      }
+    })
+  }
+
   $scope.discardOrder = function() {
     orderItems = $rootScope.orderItems;
     alertify.confirm("Are Your sure you Want to Discard Order?", function(e) {
@@ -33,7 +44,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
   $scope.changeType = function() {
     if ($scope.selectedType.id == 1) { // delivery
-      document.getElementsByClassName('wrapper')[0].style.visibility = "visible";
+      document.getElementsByClassName('wrapper')[0].style.visibility = 'visible';
       $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?flag=3')
       .then(function(response) {
         console.log(response);
@@ -43,6 +54,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
     }
     else if ($scope.selectedType.id == 0) { // delivery
       $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?flag=1');
+      document.getElementsByClassName('wrapper')[0].style.visibility = 'hidden';
     }
   }
 

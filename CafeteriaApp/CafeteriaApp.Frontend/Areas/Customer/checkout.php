@@ -117,7 +117,7 @@
 
         <br />
 
-        <div>Tax : <span ng-bind="tax"></span> </div>
+        <div>Tax : <span ng-bind="tax"></span></div>
 
         <div ng-show="selectedType.id == 1">
 
@@ -165,16 +165,19 @@
       <input ng-show="selectedMethod.id != 4" type="submit" class="btn btn-primary" name="next" value="Next" />
       &nbsp;&nbsp;&nbsp;
 
-      <input ng-show="selectedMethod.id == 4" type="submit" class="btn btn-primary" name="next" value="Submit" />
+      <input style="position: absolute; display: none" ng-show="selectedMethod.id == 4" type="submit" class="btn btn-primary inbut" name="next" />
       &nbsp;&nbsp;&nbsp;
 
+      <a class="btn btn-primary" ng-click="confirmOrder()">Submit</a>&nbsp;
+
       <a class="btn btn-primary" ng-click="discardOrder()">Discard Order</a>
+
 
       <!-- <span><input type="submit" class="btn btn-primary" name="cancel" value="Discard Order" ng-click="discardOrder()" /></span> -->
 
     <!-- </div> -->
 
-    <div style="visibility: hidden" class="wrapper">
+    <div style="visibility: none" class="wrapper">
    
       <div id="map"></div>
 
