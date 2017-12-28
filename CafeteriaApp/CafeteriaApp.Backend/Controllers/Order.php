@@ -15,39 +15,10 @@ use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
 use PayPal\Exception\PayPalConnectionException;
 
-
-//var_dump($_SERVER);
-
-//var_dump($_POST);
-
-// function getClosedOrdersByUserId($conn,$id)
-// {
-//   if (!isset($id))
-//   {
-//     //echo "Error: Customer Id is not set";
-//     return;
-//   }
-//   else
-//   {
-//     $sql = "select * from `order` where UserId = ".$id;
-//     $result = $conn->query($sql);
-//     if ($result)
-//     {
-//       $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
-//       mysqli_free_result($result);
-      
-//         return $orders;
-//     }
-//     else
-//     {
-//       echo "Error retrieving orders: " . $conn->error;
-//     }
-//   }
-// }
-
 function getOrderById($conn, $id) {
   $sql = "select `Id`, `UserId`, `Total`, `Type` from `order` where Id = " . $id . " LIMIT 1";
   $result = $conn->query($sql);
+  
   if ($result) {
     $order = mysqli_fetch_assoc($result);
     mysqli_free_result($result);
@@ -86,56 +57,6 @@ function calcOpenOrderDeliveryTime($conn, $orderId) {
   }
 }
 
-// function getOrdersByDeliveryDateId($conn,$id)
-// {
-//   if (!isset($id))
-//   {
-//     //echo "Error: DeliveryDate Id is not set";
-//     return;
-//   }
-//   else
-//   {
-//     $sql = "select * from `order` where DeliveryDateId = ".$id;
-//     $result = $conn->query($sql);
-//     if ($result)
-//     {
-//       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
-//       mysqli_free_result($result);
-//         return $orders;
-      
-//     }
-//     else
-//     {
-//       echo "Error retrieving orders: " . $conn->error;
-//     }
-//   }
-// }
-
-// function getOrdersByDeliveryTimeId($conn,$id)
-// {
-//   if (!isset($id))
-//   {
-//     //echo "Error: DeliveryTime Id is not set";
-//     return;
-//   }
-//   else
-//   {
-//     $sql = "select * from `order` where DeliveryTimeId = ".$id;
-//     $result = $conn->query($sql);
-//     if ($result)
-//     {
-//       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
-//       mysqli_free_result($result);
-//         return $orders;
-     
-//     }
-//     else
-//     {
-//       echo "Error retrieving orders: " . $conn->error;
-//     }
-//   }
-// }
-
 function getOrders($conn) {
   $sql = "select * from `order`";
   $result = $conn->query($sql);
@@ -150,55 +71,6 @@ function getOrders($conn) {
   }
 }
 
-// function getOrdersByOrderStatusId($conn,$id)
-// {
-//   if (!isset($id))
-//   {
-//     //echo "Error: OrderStatus Id is not set";
-//     return;
-//   }
-//   else
-//   {
-//     $sql = "select * from `order` where OrderStatusId = ".$id;
-//     $result = $conn->query($sql);
-//     if ($result)
-//     {
-//       $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
-//       mysqli_free_result($result);
-//         return $orders;
-      
-//     }
-//     else
-//     {
-//       echo "Error retrieving orders: " . $conn->error;
-//     }
-//   }
-// }
-
-// function getOrdersByPaymentMethodId($conn,$id)
-// {
-//   if (!isset($id))
-//   {
-//     //echo "Error: PaymentMethod Id is not set";
-//     return;
-//   }
-//   else
-//   {
-//     $sql = "select * from `order` where PaymentMethodId = ".$id;
-//     $result = $conn->query($sql);
-//     if ($result)
-//     {
-//       $orders = mysqli_fetch_array($result, MYSQLI_ASSOC);
-//       mysqli_free_result($result);
-//         return $orders;
-      
-//     }
-//     else
-//     {
-//       echo "Error retrieving orders: " . $conn->error;
-//     }
-//   }
-// }
 function updateOrderIdInSession($conn, $orderId) {
   $_SESSION['orderId'] = $orderId;
 }
@@ -343,7 +215,7 @@ function calcAndUpdateOrderTotalById($conn, $orderId) {
   }
 }
 
-function getorderItems($conn, $orderId) {
+function getOrderItems($conn, $orderId) {
   $orderItemsStatment = "select MenuItem.Name, MenuItem.Price, OrderItem.Quantity, OrderItem.TotalPrice, Order.Total from `OrderItem` inner join MenuItem on MenuItem.Id = OrderItem.MenuItemId inner join `Order` on Order.Id = OrderItem.OrderId where OrderItem.OrderId = " . $orderId;
   $result = $conn->query($orderItemsStatment);
 
@@ -359,7 +231,7 @@ function getorderItems($conn, $orderId) {
 }
 
 function processPayment($conn, $orderId, $selectedMethodId, $apiContext, $orderType) {
-  $orderItems = getorderItems($conn, $orderId);
+  $orderItems = getOrderItems($conn, $orderId);
   $itemList = new ItemList();
 
   foreach ($orderItems as $orderItem) {

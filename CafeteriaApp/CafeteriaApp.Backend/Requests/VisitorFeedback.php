@@ -1,40 +1,30 @@
 <?php
-require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Feedback.php');
-require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
-require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/validation_functions.php');
-require_once('TestRequestInput.php');
+  require('../Controllers/Feedback.php');
+  require('../connection.php');
+  require('../validation_functions.php');
+  require('TestRequestInput.php');
 
-
-if ($_SERVER['REQUEST_METHOD']=="GET")
-  { 
- if(isset($_GET["MenuItemId"])&& test_int($_GET["MenuItemId"]))
-  {
-    $feedbacks =(getfeedbacks($conn));
-  }
-  else
-  {
-    echo "Error occured while returning Comments";
-  }
-}
-
-
-if ($_SERVER['REQUEST_METHOD']=="POST")
-{
-  //decode the json data
-  $data = json_decode(file_get_contents("php://input"));
-    if (isset($data->Name)&&isset($data->Phone)&&isset($data->Mail)&&isset($data->Message)&& isset($data->SelectedAboutId))
-    {
-      if(normalize_string($conn,$data->Name)&&test_phone($data->Phone)&&test_email($data->Mail)&&normalize_string($conn,$data->Message)&&test_int($data->SelectedAboutId))
-        
-     checkResult(addVisitorFeedback($conn,$data->Name,$data->Phone,$data->Mail,$data->Message,$data->SelectedAboutId));
+  if ($_SERVER['REQUEST_METHOD'] == 'GET') { 
+    if ( isset($_GET['MenuItemId']) && test_int($_GET['MenuItemId']) ) {
+      $feedbacks = getfeedbacks($conn);
     }
-    else
-    {
-    echo "";
+    else {
+      echo "Error occured while returning Comments";
     }
   }
 
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    //decode the json data
+    $data = json_decode( file_get_contents('php://input') );
 
-require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/footer.php');
+    if ( isset($data->Name, $data->Phone, $data->Mail, $data->Message, $data->SelectedAboutId) ) {
+      if ( normalize_string($conn, $data->Name, $data->Message) && test_phone($data->Phone) && test_email($data->Mail)  && test_int($data->SelectedAboutId) )
+        checkResult( addVisitorFeedback($conn, $data->Name, $data->Phone, $data->Mail, $data->Message, $data->SelectedAboutId) );
+    }
+    else {
+      echo "error";
+    }
+  }
 
+  require('../footer.php');
 ?>

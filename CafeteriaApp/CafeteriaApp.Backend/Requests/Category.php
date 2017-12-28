@@ -1,85 +1,67 @@
 <?php
+  require('../Controllers/Category.php');
+  require('../connection.php');
+  require('TestRequestInput.php');
 
-require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Category.php');
-require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
-require('TestRequestInput.php');
-
-if ($_SERVER['REQUEST_METHOD']=="GET")
-{
-  if (isset($_GET["cafeteriaId"]) && $_GET["cafeteriaId"] != null && !isset($_GET["id"]))
-  {
-    checkResult(getByCafeteriaId($conn,$_GET["cafeteriaId"]));
-  }
-  elseif (isset($_GET["id"]) && $_GET["id"] != null && !isset($_GET["cafeteriaId"]))
-  {
-    checkResult(getCategoryById($conn,$_GET["id"]));
-  }
-  else
-  {
-    echo "Error occured while returning categories";
-  }
-}
-
-if ($_SERVER['REQUEST_METHOD']=="POST")
-{
-  $data = json_decode(file_get_contents("php://input"));
-  if (isset($data->Name) && $data->Name != null && isset($data->CafeteriaId) && $data->CafeteriaId != null)
-  {
-    if (!isset($data->Image))
-    {
-      addCategory($conn,$data->Name,$data->CafeteriaId);
+  if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    if ( isset($_GET['cafeteriaId']) && !isset($_GET['id']) && test_int($_GET['cafeteriaId']) ) {
+      checkResult( getByCafeteriaId($conn, $_GET['cafeteriaId']) );
     }
-    elseif (isset($data->Image))
-    {
-      addCategory($conn,$data->Name,$data->CafeteriaId,$data->Image);
+    elseif ( isset($_GET['id']) && !isset($_GET['cafeteriaId']) && test_int($_GET['cafeteriaId']) ) {
+      checkResult( getCategoryById($conn, $_GET['id']) );
+    }
+    else {
+      echo "Error occured while returning categories";
     }
   }
-  else
-  {
-    if (!isset($data->Name) || $data->Name == null)
-    {
-      echo "Error: Name is Required";
-    }
-    elseif (!isset($data->CafeteriaId) || $data->CafeteriaId == null)
-    {
-      echo "Error: No Cafeteria Id is Provided";
-    }
-  }
-}
 
-if ($_SERVER['REQUEST_METHOD']=="PUT")
-{
-  //decode the json data
-  $data = json_decode(file_get_contents("php://input"));
-  if ($data->Name != null && $data->Id != null)
-  {
-    if (!isset($data->Image))
-    {
-      editCategory($conn,$data->Name,$data->Id);
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $data = json_decode( file_get_contents('php://input') );
+
+    if ( isset($data->Name, $data->CafeteriaId) && normalize_string($conn, $data->Name) && test_int($data->CafeteriaId) ) {
+      if ( !isset($data->Image) ) {
+        addCategory($conn, $data->Name, $data->CafeteriaId);
+      }
+      elseif ( isset($data->Image) && normalize_string($conn, $data->Image) ) {
+        addCategory($conn, $data->Name, $data->CafeteriaId, $data->Image);
+      }
     }
-    else
-    {
-      editCategory($conn,$data->Name,$data->Id,$data->Image);
+    else {
+      if ( !isset($data->Name) ) {
+        echo "Error: Name is Required";
+      }
+      elseif ( !isset($data->CafeteriaId) ) {
+        echo "Error: No Cafeteria Id is Provided";
+      }
     }
   }
-  else
-  {
-    echo "name is required";
-  }
-}
 
-if ($_SERVER['REQUEST_METHOD']=="DELETE")
-{
-  if (!isset($_GET["categoryId"]) || $_GET["categoryId"] != null)
-  {
-    deleteCategory($conn,$_GET["categoryId"]);
-  }
-  else
-  {
-    echo "No Id is provided";
-  }
-}
+  if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+    //decode the json data
+    $data = json_decode( file_get_contents('php://input') );
 
-require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/footer.php');
+    if ( isset($data->Id, $data->Name) && normalize_string($conn, $data->Name) && test_int($data->Id) ) {
+      if ( !isset($data->Image) ) {
+        editCategory($conn, $data->Name, $data->Id);
+      }
+      else {
+        if ( normalizeString($conn, $data->Image) )
+          editCategory($conn, $data->Name, $data->Id, $data->Image);
+      }
+    }
+    else {
+      echo "name is required";
+    }
+  }
 
+  if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+    if ( !isset($_GET['categoryId']) && test_int($_GET['categoryId']) ) {
+      deleteCategory($conn, $_GET['categoryId']);
+    }
+    else {
+      echo "No Id is provided";
+    }
+  }
+
+  require('../footer.php');
 ?>
