@@ -4,7 +4,6 @@
   validatePageAccess($conn);
 
   require('layout.php');
-
 ?>
 
 <head>
@@ -43,51 +42,9 @@
 
     <div class="well" style="width: 550px;height: 280px;margin: auto;background-color: white">
 
-      <!-- <div>Recepient Name</div>
-
-      <div>
-
-        <input type="text" name="recepientName" style="text-align:center" ng-model="recepientName" required />
-
-        <span ng-show="myForm.$submitted && myForm.recepientName.$invalid" ng-cloak>The name is required.</span>
-
-        <br><br><br>
-
-      </div> -->
-
-      <!-- <div>Phone</div>
-
-      <div>
-
-        <input type="text" name="phone" ng-model="phone" style="text-align:center" ng-disabled="phoneDisabled" required />
-
-        <span style="position:absolute;margin-top:3px">
-
-          <input type="checkbox" name="phonecheck" ng-model="phoneDisabled">
-
-          Keep Old
-
-        </span>
-
-        <br><br><br>
-
-      </div> -->
-
       <select ng-model="selectedType" ng-options="type.name for type in orderTypes" ng-click="changeType()"></select>
 
       <br><br><br>
-
-      <!-- <div>Discount</div>
-
-      <div>
-
-        <input type="text" name="discount" ng-model="discount" disabled />
-
-        <span style="position:absolute;margin-top:3px">%</span>
-
-        <br><br><br>
-
-      </div> -->
 
       <div>Total: &nbsp;
 
@@ -102,12 +59,6 @@
           {{ totalWithTax | currency : "$" : 2 }}
 
         </span>
-
-        <!-- <span ng-show="selectedMethod.id == 4 && selectedType.id == 1">
-
-          {{ totalWithTaxAndShipping | currency : "$" : 2 }}
-
-        </span> -->
 
         <span ng-show="selectedType.id == 1">
 
@@ -133,12 +84,6 @@
 
         </div>
 
-        <!-- <div ng-show="selectedType.id == 1">
-
-          <div>Delivery : <span ng-bind="delivery"></span></div>
-
-        </span> -->
-
       </div>
 
       <div>Subtotal : <span ng-bind="total"></span></div>
@@ -160,24 +105,17 @@
 
     <br />
 
-<!--     <div ng-show="selectedType.id == 0"> -->
+    <input ng-show="selectedMethod.id != 4" type="submit" class="btn btn-primary" name="next" value="Next" />
+    &nbsp;&nbsp;&nbsp;
 
-      <input ng-show="selectedMethod.id != 4" type="submit" class="btn btn-primary" name="next" value="Next" />
-      &nbsp;&nbsp;&nbsp;
+    <input style="position: absolute; display: none" ng-show="selectedMethod.id == 4" type="submit" class="btn btn-primary inbut" name="next" />
+    &nbsp;&nbsp;&nbsp;
 
-      <input style="position: absolute; display: none" ng-show="selectedMethod.id == 4" type="submit" class="btn btn-primary inbut" name="next" />
-      &nbsp;&nbsp;&nbsp;
+    <a class="btn btn-primary" ng-show="selectedMethod.id == 4" ng-click="confirmOrder()">Submit</a>&nbsp;
 
-      <a class="btn btn-primary" ng-click="confirmOrder()">Submit</a>&nbsp;
+    <a class="btn btn-primary" ng-click="discardOrder()">Discard Order</a>
 
-      <a class="btn btn-primary" ng-click="discardOrder()">Discard Order</a>
-
-
-      <!-- <span><input type="submit" class="btn btn-primary" name="cancel" value="Discard Order" ng-click="discardOrder()" /></span> -->
-
-    <!-- </div> -->
-
-    <div style="visibility: none" class="wrapper">
+    <div style="visibility: hidden" class="wrapper">
    
       <div id="map"></div>
 
@@ -187,18 +125,13 @@
 
       <br />
 
-      <a class="btn btn-primary" ng-click="confirmLocation()">Confirm Location</a>
+      <a class="btn btn-primary" ng-click="confirmLocation()">Confirm Location</a>&nbsp;
+
+      <a class="btn btn-primary" ng-click="returnToMyCurrentLocation()">Return To My Current Location</a>
 
       <br /> <br />
 
     </div><!--End Wrapper-->
-
-    <!-- <div ng-show="selectedType.id == 1">
-
-      <input type="submit" class="btn btn-primary" name="next" value="Next" />
-      &nbsp;&nbsp;&nbsp;
-
-    </div> -->
 
     <br><br>
 

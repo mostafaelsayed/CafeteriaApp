@@ -127,7 +127,7 @@
 
   function validatePageAccess($conn) { // using hash
     confirm_logged_in();
-    $query  = "SELECT `Dir` FROM `Dir` WHERE Id IN (SELECT DirId FROM Dir_Role WHERE RoleId = {$_SESSION['roleId']} ) ";  // add RoleId
+    $query  = "SELECT `Dir` FROM `Dir` WHERE `Id` IN (SELECT `DirId` FROM `Dir_Role` WHERE `RoleId` = {$_SESSION['roleId']} ) ";  // add RoleId
     $result_set = mysqli_query($conn, $query);
     confirmQuery($result_set);
 

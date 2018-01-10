@@ -1,5 +1,5 @@
 <?php 
-  require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');// must be first as it uses cookies
+  require_once('../session.php'); // must be first as it uses cookies
 
   function getCurrentCustomerinfoByUserId($conn) {
     $sql = "select * from Customer inner join User on Customer.UserId = User.Id where Customer.UserId = " . $_SESSION['userId'] . " LIMIT 1";

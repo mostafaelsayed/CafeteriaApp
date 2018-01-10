@@ -1,5 +1,5 @@
 <?php
-  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/ImageHandle.php');
+  require('../ImageHandle.php');
 
   function getCafeterias($conn) {
     $sql = "select * from `Cafeteria`";
@@ -28,7 +28,7 @@
   }
 
   function addCafeteria($conn, $name, $imageData) { // if image null ??????
-    $sql = "insert into `cafeteria` (Name, Image) values (?, ?)";
+    $sql = "insert into `cafeteria` (`Name`, `Image`) values (?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param( "ss", $name, addImageFile($imageData) );
 

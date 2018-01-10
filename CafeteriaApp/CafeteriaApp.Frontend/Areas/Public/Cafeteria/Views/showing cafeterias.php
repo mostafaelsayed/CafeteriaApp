@@ -1,9 +1,7 @@
 <?php
-
-  require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
-
-  require_once('../../../Customer/layout.php');
-
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
+  validatePageAccess($conn);
+  require('../../../Customer/layout.php');
 ?>
 
 <head>

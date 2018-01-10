@@ -1,6 +1,6 @@
 <?php
   require('../Controllers/Fee.php');
-  require('./connection.php');
+  require('../connection.php');
   require('../session.php');
   require('TestRequestInput.php');
 

@@ -1,8 +1,8 @@
 <?php
-  require('../Controllers/Order.php');
-  require('../Controllers/Fee.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Order.php');
+  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Fee.php');
   require('TestRequestInput.php');
-  require('../../PayPal/pay.php');
+  require('CafeteriaApp/CafeteriaApp/PayPal/pay.php');
 
   //var_dump($_SERVER);
 
@@ -12,7 +12,7 @@
       //$Id = getCurrentTimeId($conn);
       checkResult( getOrderById($conn, $_GET['orderId']) );
     }
-    elseif ( isset($_GET['orderId']) && isset($_GET['flag']) && test_int($_GET['orderId'], $_GET['flag']) && $_GET['flag'] == 1) {
+    elseif ( isset($_GET['orderId']) && isset($_GET['flag']) && test_int($_GET['orderId']) && $_GET['flag'] == 1) {
       checkResult( getOrderItems($conn, $_GET['orderId']) );
     }
     elseif ( isset($_GET['flag']) && $_GET['flag'] == 1) {
@@ -36,7 +36,7 @@
         //echo "<script type='text/javascript'>localStorage.setItem('submit', 1);</script>";
       }
       elseif ( isset($_POST['paymentMethodId'], $_POST['paymentId'], $_POST['payerId']) && normalize_string($conn, $_POST['paymentId'], $_POST['payerId']) && test_int($_POST['paymentMethodId']) ) { // charge customer here {
-        chargeCustomer($_POST['paymentId'], $_POST['payerId'], $paypal, $_SESSION['orderId'], $_POST['paymentMethodId'], $_POST['orderType'], $conn);
+        chargeCustomer($_POST['paymentId'], $_POST['payerId'], $paypal, $_SESSION['orderId'], $_POST['paymentMethodId'], $conn);
       }    
       else {
         echo "error";

@@ -42,38 +42,56 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
   $scope.infoWindow = new google.maps.InfoWindow();
 
+  $scope.changeLoc = function() {
+    $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Location.php', $scope.myPos)
+    .then(function(response) {
+      var data = {
+        locationId: response.data
+      };
+
+      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php', data);
+    });
+  };
+
   $scope.changeType = function() {
     if ($scope.selectedType.id == 1) { // delivery
       document.getElementsByClassName('wrapper')[0].style.visibility = 'visible';
-      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?flag=3')
-      .then(function(response) {
-        console.log(response);
-      });
+      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?flag=3');
+
       $scope.locInit();
-      $scope.confirmLocation();
+      $scope.confirmLocation(1);
     }
-    else if ($scope.selectedType.id == 0) { // delivery
+    else if ($scope.selectedType.id == 0) { // take away
       $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?flag=1');
       document.getElementsByClassName('wrapper')[0].style.visibility = 'hidden';
     }
   }
 
+  $scope.returnToMyCurrentLocation = function() {
+    $scope.myPos.lat = 0;
+    $scope.myPos.lng = 0;
+    $scope.myMarker.setMap(null);
+    $scope.locInit();
+  }
+
   $scope.locInit = function() {
     if (navigator.geolocation) { // browser supports geolocation to find your current location
       navigator.geolocation.getCurrentPosition(function(position) {
-        $scope.myPos.lat = Math.round(10000 * position.coords.latitude) / 10000, // latitude
-        $scope.myPos.lng = Math.round(10000 * position.coords.longitude) / 10000 // longitude
+        if ($scope.myPos.lat == 0 && $scope.myPos.lng == 0) {
+          $scope.myPos.lat = Math.round(10000 * position.coords.latitude) / 10000, // latitude
+          $scope.myPos.lng = Math.round(10000 * position.coords.longitude) / 10000 // longitude
 
-        $scope.myMarker = new google.maps.Marker({ // add marker on your current location on the map
-          map: $scope.map,
-          position: $scope.myPos
-        });
+          $scope.myMarker = new google.maps.Marker({ // add marker on your current location on the map
+            map: $scope.map,
+            position: $scope.myPos
+          });
 
-        // add info window to display text at the user location to help him identify the location better
-        $scope.infoWindow.setPosition($scope.myPos);
-        $scope.map.setCenter($scope.myPos); // center of map is the current location
-        $scope.infoWindow.setContent('Your Location'); // text is 'Your Location'
-        $scope.infoWindow.open($scope.map, $scope.myMarker); // position the info window in the map in the marker
+          // add info window to display text at the user location to help him identify the location better
+          $scope.infoWindow.setPosition($scope.myPos);
+          $scope.map.setCenter($scope.myPos); // center of map is the current location
+          $scope.infoWindow.setContent('Your Location'); // text is 'Your Location'
+          $scope.infoWindow.open($scope.map, $scope.myMarker); // position the info window in the map in the marker
+        }
       }, function() {
         $scope.handleLocationError( true, $scope.infoWindow, $scope.map.getCenter() );
       });
@@ -100,19 +118,12 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
    });
   };
 
-  $scope.confirmLocation = function() {
+  $scope.confirmLocation = function(a = 0) {
     if ($scope.myPos.lat !== 0 && $scope.myPos.lng !== 0) {
-      $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Location.php', $scope.myPos)
-      .then(function(response) {
-        var data = {
-          locationId: response.data
-        };
-
-        $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php', data)
-        .then(function(response) {
-          console.log(response);
-        });
-      });
+     $scope.changeLoc();
+    }
+    if (a == 0) {
+      alertify.success('Location Changed');
     }
   };
 
@@ -123,12 +134,17 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       $scope.orderType = response.data.Type;
 
       if ($scope.orderType == 1) {
-        document.getElementsByClassName('wrapper')[0].style.visibility = "visible";
+        document.getElementsByClassName('wrapper')[0].style.visibility = 'visible';
         $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderLocation.php?orderId=' + $scope.orderId)
         .then(function(response) {
-          console.log(response);
-          $scope.myPos.lat = parseFloat(response.data.Lat);
-          $scope.myPos.lng = parseFloat(response.data.Lng);
+          if ( !isNaN(response.data.Lat) ) {
+            $scope.myPos.lat = parseFloat(response.data.Lat);
+            $scope.myPos.lng = parseFloat(response.data.Lng);
+          }
+
+          if (response.data == "") {
+            $scope.locInit();
+          }
 
           $scope.myMarker = new google.maps.Marker({ // add marker on your current location on the map
             map: $scope.map,
@@ -139,7 +155,6 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
           $scope.map.setCenter($scope.myPos); // center of map is the current location
           $scope.infoWindow.open($scope.map, $scope.myMarker); // position the info window in the map in the marker
           $scope.infoWindow.setContent('Your Location'); // text is 'Your Location'
-
         });
       }
 
@@ -187,67 +202,6 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
     $scope.myPos.lat = Math.round(10000 * $scope.myMarker.getPosition().lat() ) / 10000;
     $scope.myPos.lng = Math.round(10000 * $scope.myMarker.getPosition().lng() ) / 10000;
   });
-
-  $scope.findPlaceLocation = function(location, pos) {
-    $scope.nearbyFlag = 0;
-
-    if (pos === undefined) {
-      var position = {
-        lat: location.lat(),
-        lng: location.lng()
-      }
-
-      var placeMarker = new google.maps.Marker({
-        map: $scope.map,
-        position: position
-      });
-
-      $scope.infoWindow.setPosition(position);
-      $scope.infoWindow.setContent('Closest One');
-      $scope.map.setCenter(position);
-      $scope.infoWindow.open($scope.map, placeMarker);
-      $scope.my = 0;
-
-      google.maps.event.addListener(placeMarker, 'click', function() {
-        service.getDetails($scope.closestPlace, function(result, status) {
-          if (status !== google.maps.places.PlacesServiceStatus.OK) {
-            console.error(status);
-            return;
-          }
-          
-          $scope.infoWindow.setContent(result.name);
-          $scope.infoWindow.open($scope.map, placeMarker);
-        });
-      });
-    }
-
-    else {
-      $scope.my = 1;
-      $scope.infoWindow.setPosition($scope.myPos);
-      $scope.infoWindow.setContent('Your Location');
-      $scope.map.setCenter($scope.myPos);
-      $scope.infoWindow.open($scope.map, $scope.myMarker);
-    }
-  }
-
-  $scope.callback = function(results, status) { // returned from the request to places service
-    console.log(results);
-    $scope.minDistance = 100000000000;
-    $scope.closestPlace = "";
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-      for (var i = 0; i < results.length; i++) {
-        var dis = calculateDistance( $scope.myPos.lat, $scope.myPos.lng, results[i].geometry.location.lat(), results[i].geometry.location.lng() );
-        
-        if ($scope.minDistance > dis) {
-          $scope.minDistance = dis;
-          $scope.closestPlace = results[i];
-        }
-      }
-
-      var place = $scope.closestPlace;
-      $scope.addMarker($scope.map, $scope.infoWindow, $scope.closestPlace);
-    }
-  };
 
   $scope.handleLocationError = function(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);
