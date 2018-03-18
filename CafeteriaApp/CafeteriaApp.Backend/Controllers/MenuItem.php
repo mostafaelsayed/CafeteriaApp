@@ -2,7 +2,7 @@
   require_once('../ImageHandle.php');
 
   function getMenuItemByCategoryId($conn, $id, $customer = false) { // ????????????????
-    $sql = "select * from MenuItem where CategoryId = " . $id;
+    $sql = "select * from menuitem where CategoryId = " . $id;
 
     if ($customer) {
       $sql .= " and Visible = 1";
@@ -19,7 +19,7 @@
   }
 
   function getMenuItemById($conn, $id) {
-    $sql = "select * from MenuItem where Id = " . $id . " LIMIT 1";
+    $sql = "select * from menuitem where Id = " . $id . " LIMIT 1";
     if ( $result = $conn->query($sql) ) {
       $MenuItem = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
@@ -31,7 +31,7 @@
   }
 
   function getMenuItemPriceById($conn, $id) {
-    $sql = "select `Price` from `MenuItem` where `Id` = " . $id . " LIMIT 1";
+    $sql = "select `Price` from `menuitem` where `Id` = " . $id . " LIMIT 1";
 
     if ( $result = $conn->query($sql) ) {
       $MenuItem = mysqli_fetch_assoc($result);
@@ -61,7 +61,7 @@
     $result = $conn->query("select Image from menuitem where Id = " . $id);
     $menuItem = mysqli_fetch_assoc($result);
     mysqli_free_result($result);
-    $sql = "update MenuItem set Name = (?), Price = (?), Description = (?), Image = (?), Visible = (?) 
+    $sql = "update menuitem set Name = (?), Price = (?), Description = (?), Image = (?), Visible = (?) 
     where Id = (?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sdssii", $name, $price, $description, $Image, $visible, $id);
@@ -82,12 +82,12 @@
   }
 
   function deleteMenuItem($conn, $id) {
-    $sql = "select Image from MenuItem where Id = " . $id . " LIMIT 1";
+    $sql = "select Image from menuitem where Id = " . $id . " LIMIT 1";
     $result = $conn->query($sql);
     deleteImageFileIfExists( mysqli_fetch_assoc($result)['Image'] );
     mysqli_free_result($result);
     //$conn->query("set foreign_key_checks = 0"); // ????????/
-    $sql = "delete from MenuItem where Id = " . $id . " LIMIT 1";
+    $sql = "delete from menuitem where Id = " . $id . " LIMIT 1";
 
     if ($conn->query($sql) === TRUE) {
       return "MenuItem deleted successfully";

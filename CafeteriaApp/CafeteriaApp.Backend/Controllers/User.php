@@ -3,7 +3,7 @@
   require('../ImageHandle.php');
 
   function getUsers($conn) {
-    $sql = "select * from User";
+    $sql = "select * from user";
     $result = $conn->query($sql);
     
     if ($result) {
@@ -17,7 +17,7 @@
   }
 
   function getUserById($conn, $id) {
-    $sql = "select * from User where Id = " . $id . " LIMIT 1";
+    $sql = "select * from user where Id = " . $id . " LIMIT 1";
     $result = $conn->query($sql);
 
     if ($result) {
@@ -31,10 +31,9 @@
   }
 
   function addUser($conn, $userName, $firstName, $lastName, $image, $email, $phoneNumber, $password, $roleId, $localeId = 1) {
-    $sql = "insert into User (UserName, FirstName, LastName, Image, Email, PhoneNumber, PasswordHash, RoleId, LocaleId) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "insert into user (UserName, FirstName, LastName, Image, Email, PhoneNumber, PasswordHash, RoleId, LocaleId) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $enc = password_encrypt($password);
-    $stmt->bind_param("sssssssii", $userName, $firstName, $lastName, $Image, $email, $phoneNumber, $enc, $roleId, $localeId);
+    $stmt->bind_param("sssssssii", $userName, $firstName, $lastName, $Image, $email, $phoneNumber, password_encrypt($password), $roleId, $localeId);
 
     if ( isset($image) ) {
       $Image = addImageFile($image);
@@ -46,21 +45,21 @@
     }
     else {
       echo "Error: ", $conn->error;
-      //return false;
+      return false;
     }
   }
 
   function editUser($conn, $userName, $firstName, $lastName, $email, $image, $phoneNumber, $roleId, $id) {
-    $userUserName = mysqli_fetch_assoc( $conn->query("select UserName from User where Id = " . $id) )['UserName'];
+    $userUserName = mysqli_fetch_assoc( $conn->query("select UserName from user where Id = " . $id) )['UserName'];
 
     if ( !($userUserName == $userName) && checkExistingUserName($conn, $userName, true) ) {
       return;
     }
     else {
-      $result = $conn->query("select Image from User where Id = " . $id);
+      $result = $conn->query("select Image from user where Id = " . $id);
       $userImage = mysqli_fetch_assoc($result)['Image'];
       mysqli_free_result($result);
-      $sql = "update User set UserName = (?), FirstName = (?), LastName = (?), Email = (?), Image = (?), PhoneNumber = (?), RoleId = (?) where Id = (?)"; 
+      $sql = "update user set UserName = (?), FirstName = (?), LastName = (?), Email = (?), Image = (?), PhoneNumber = (?), RoleId = (?) where Id = (?)"; 
       $stmt = $conn->prepare($sql);
       $stmt->bind_param("ssssssii", $userName, $firstName, $lastName, $email, $Image, $phoneNumber, $roleId, $id);
       
@@ -131,7 +130,7 @@
   // }
 
   function activateUser($conn, $id) {
-    $sql = "update User set Confirmed = True where Id = (?)"; 
+    $sql = "update user set Confirmed = True where Id = (?)"; 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
 
@@ -145,7 +144,7 @@
 
   function checkExistingUserName($conn, $userName, $register_edit) {
     $UserName = mysqli_real_escape_string($conn, $userName);
-    $sql = "select count(*) from User where UserName = '{$UserName}'";
+    $sql = "select count(*) from user where UserName = '{$UserName}'";
     $result = $conn->query($sql);
 
     if ($result) {
@@ -169,7 +168,7 @@
   function checkExistingEmail($conn, $email) { // problem if he wants to edit his info cause' of his email
     $email = trim($email);
     $Email = mysqli_real_escape_string($conn, $email);
-    $sql = "select count(*) from User where Email = '{$Email}'";
+    $sql = "select count(*) from user where Email = '{$Email}'";
     $result = $conn->query($sql);
 
     if ($result) {
@@ -192,7 +191,7 @@
 
   function deleteUser($conn, $id) { // cascaded delete ??
     //$conn->query("set foreign_key_checks = 0"); // ????????/
-    $sql = "delete from User where Id = " . $id . " LIMIT 1";
+    $sql = "delete from user where Id = " . $id . " LIMIT 1";
 
     if ($conn->query($sql) === TRUE) {
       return "User deleted successfully";

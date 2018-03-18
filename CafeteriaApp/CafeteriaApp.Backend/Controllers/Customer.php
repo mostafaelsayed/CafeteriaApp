@@ -2,7 +2,7 @@
   require_once('../session.php'); // must be first as it uses cookies
 
   function getCurrentCustomerinfoByUserId($conn) {
-    $sql = "select * from Customer inner join User on Customer.UserId = User.Id where Customer.UserId = " . $_SESSION['userId'] . " LIMIT 1";
+    $sql = "select * from customer inner join user on customer.UserId = user.Id where customer.UserId = " . $_SESSION['userId'] . " LIMIT 1";
     $result = $conn->query($sql);
 
     if ($result) {
@@ -16,7 +16,7 @@
   }
 
   function getCustomerByUserId($conn, $userId) {
-    $sql = "select * from Customer where UserId = '{$userId}' LIMIT 1";
+    $sql = "select * from customer where UserId = '{$userId}' LIMIT 1";
     $result = $conn->query($sql);
     
     if ($result) {
@@ -30,7 +30,7 @@
   }
 
   function addCustomer($conn, $cred, $dob, $userId, $genderId) {
-    $sql = "insert into Customer (Credit, DateOfBirth, UserId, GenderId) values (?, ?, ?, ?)";
+    $sql = "insert into customer (Credit, DateOfBirth, UserId, GenderId) values (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("dsii", $cred, $dob, $userId, $genderId);
 
@@ -39,13 +39,12 @@
       return $customer_id;
     }
     else {
-      echo "error : ", $conn->error;
-      //return false;
+      return false;
     }
   }
 
   function editCustomer($conn, $cred, $genderId, $dob, $userId) {
-    $sql = "update `Customer` set `Credit` = (?) , GenderId = (?) , DateOfBirth = (?) where UserId = (?)";
+    $sql = "update `customer` set `Credit` = (?) , GenderId = (?) , DateOfBirth = (?) where UserId = (?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("disi", $cred, $genderId, $dob, $userId);
     
@@ -59,7 +58,7 @@
 
   function deleteCustomerByUserId($conn, $userId) { // cascaded delete ??
     //$conn->query("set foreign_key_checks = 0"); // ????????/
-    $sql = "delete from Customer where UserId = " . $userId . " LIMIT 1";
+    $sql = "delete from customer where UserId = " . $userId . " LIMIT 1";
 
     if ($conn->query($sql) === TRUE) {
       return "Customer deleted successfully";
@@ -71,7 +70,7 @@
 
   function deleteCustomer($conn, $id) {
     //$conn->query("set foreign_key_checks = 0"); // ????????/
-    $sql = "delete from Customer where Id = " . $id . " LIMIT 1";
+    $sql = "delete from customer where Id = " . $id . " LIMIT 1";
 
     if ($conn->query($sql) === TRUE) {
       return "Customer deleted successfully";

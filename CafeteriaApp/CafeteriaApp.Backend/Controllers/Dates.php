@@ -1,6 +1,6 @@
 <?php
   function getDates($conn) {
-    $sql = "select * from `Dates`";
+    $sql = "select * from `dates`";
     $result = $conn->query($sql);
 
     if ($result) {
@@ -14,7 +14,7 @@
   }
 
   function getDateById($conn, $id) {
-    $sql = "select `Date` from `Dates` where `Id` = " . $id . " LIMIT 1";
+    $sql = "select `Date` from `dates` where `Id` = " . $id . " LIMIT 1";
     $result = $conn->query($sql);
 
     if ($result) {
@@ -28,7 +28,7 @@
   }
 
   function getDateIdByDate($conn, $value) {
-    $sql = "select `Id` from `Dates` where `Date` = '{$value}'";
+    $sql = "select `Id` from `dates` where `Date` = '{$value}'";
     $result = $conn->query($sql);
 
     if ($result) {
@@ -43,7 +43,7 @@
 
   function getCurrentDateId($conn) { // CURDATE() mysql
     $today = date("Y-m-d");
-    $sql = "select `Id` from `Dates` where `Date` = STR_TO_DATE('{$today}', '%Y-%m-%d')";
+    $sql = "select `Id` from `dates` where `Date` = STR_TO_DATE('{$today}', '%Y-%m-%d')";
     $result = $conn->query($sql);
 
     if ($result) {

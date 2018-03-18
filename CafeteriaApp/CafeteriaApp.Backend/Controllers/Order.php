@@ -1,11 +1,20 @@
 <?php
-  if (basename($_SERVER["REQUEST_URI"], '.php') != 'login') {
-    require_once('../session.php');
-    require_once('../connection.php');
-  }
-  else { // login
+//echo basename($_SERVER["REQUEST_URI"], '.php');
+  
+  if (basename($_SERVER["REQUEST_URI"], '.php') == 'login') { // login
+  
     require_once('../../CafeteriaApp.Backend/session.php');
     require_once('../../CafeteriaApp.Backend/connection.php');
+  }
+  else {
+      
+      require_once('../session.php');
+    require_once('../connection.php');
+      
+      
+    //require_once('/storage/ssd4/737/5099737/public_html/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');
+     //require_once('/storage/ssd4/737/5099737/public_html/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
+    
   }
   
   require('Dates.php');
@@ -37,7 +46,7 @@
   }
 
   function getOpenOrderByUserId($conn) {
-    $sql = "select * from `Order` where `UserId` = " . $_SESSION['userId'] . " and `OrderStatusId` = 1";
+    $sql = "select * from `order` where `UserId` = " . $_SESSION['userId'] . " and `OrderStatusId` = 1";
     $result = $conn->query($sql);
 
     if ($result) {
@@ -51,7 +60,7 @@
   }
 
   function calcOpenOrderDeliveryTime($conn, $orderId) {
-    $sql = "select sum(OrderItem.Quantity * MenuItem.ReadyInMins) from `OrderItem` inner join `MenuItem` on OrderItem.MenuItemId = MenuItem.Id where OrderItem.OrderId = " . $orderId;
+    $sql = "select sum(orderitem.Quantity * menuitem.ReadyInMins) from `orderitem` inner join `menuitem` on orderitem.MenuItemId = menuitem.Id where orderitem.OrderId = " . $orderId;
     $result = $conn->query($sql);
 
     if ($result) {
@@ -116,7 +125,7 @@
   }
 
   function addOrder($conn, $deliveryDateId, $createdTimeId, $paymentMethodId, $orderStatusId, $userId, $total = 0, $paid = 0) {
-    $sql = "insert into `Order` (DeliveryDateId, DeliveryTimeId, Paid, Total, PaymentMethodId, OrderStatusId, UserId) values (?, ?, ?, ?, ?, ?, ?)";
+    $sql = "insert into `order` (DeliveryDateId, DeliveryTimeId, Paid, Total, PaymentMethodId, OrderStatusId, UserId) values (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("iiddiii", $deliveryDateId, $createdTimeId, $paid, $total, $paymentMethodId, $orderStatusId, $userId);
 
@@ -143,7 +152,7 @@
 
   function CheckOutOrder($conn, $orderId, $paymentMethodId, $paid = 0) {
     $deliveryTimeId = getCurrentTimeId($conn);
-    $sql = "update `Order` set `DeliveryTimeId` = (?), `Paid` = (?), `PaymentMethodId` = (?), `OrderStatusId` = 2 where `Id` = (?)";
+    $sql = "update `order` set `DeliveryTimeId` = (?), `Paid` = (?), `PaymentMethodId` = (?), `OrderStatusId` = 2 where `Id` = (?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("idii", $deliveryTimeId, $paid, $paymentMethodId, $orderId);
 
@@ -173,7 +182,7 @@
   }
 
   function updateOrderTotalById($conn, $orderId, $plusValue) {
-    $sql = "update `Order` set `Total` = `Total` + (?) where `Id` = (?)";
+    $sql = "update `order` set `Total` = `Total` + (?) where `Id` = (?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("di", $plusValue, $orderId);
 
@@ -186,7 +195,7 @@
   }
 
   function updateOrderPaidById($conn, $orderId, $plusValue) {
-    $sql = "update `Order` set `Paid` = `Paid` + (?) where Id = (?)";
+    $sql = "update `order` set `Paid` = `Paid` + (?) where Id = (?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("di", $plusValue, $orderId);
     
@@ -200,7 +209,7 @@
 
   function deleteOpenOrderById($conn) { // remove order items with cascading
     //$conn->query("set foreign_key_checks = 0"); // ????????/
-    $sql = "delete from `Order` where `UserId` = ". $_SESSION['userId'] . " and `OrderStatusId` = 1 LIMIT 1";
+    $sql = "delete from `order` where `UserId` = ". $_SESSION['userId'] . " and `OrderStatusId` = 1 LIMIT 1";
 
     if ($conn->query($sql) === TRUE) {
       return "Current Open Order deleted successfully";
@@ -211,7 +220,7 @@
   }
 
   function calcAndUpdateOrderTotalById($conn, $orderId) {
-    $sql = "update `Order` set `Total` = IFNULL( (select sum(TotalPrice) from `OrderItem` where `OrderId` = {$orderId}), 0) where `Id` = {$orderId}";
+    $sql = "update `order` set `Total` = IFNULL( (select sum(TotalPrice) from `orderitem` where `OrderId` = {$orderId}), 0) where `Id` = {$orderId}";
     $result = $conn->query($sql);
 
     if ($result === TRUE) {
@@ -223,7 +232,7 @@
   }
 
   function getOrderItems($conn, $orderId) {
-    $orderItemsStatment = "select MenuItem.Name, MenuItem.Price, OrderItem.Quantity, OrderItem.TotalPrice, Order.Total from `OrderItem` inner join `MenuItem` on MenuItem.Id = OrderItem.MenuItemId inner join `Order` on Order.Id = OrderItem.OrderId where OrderItem.OrderId = " . $orderId;
+    $orderItemsStatment = "select menuitem.Name, menuitem.Price, orderitem.Quantity, orderitem.TotalPrice, order.Total from `orderitem` inner join `menuitem` on menuitem.Id = orderitem.MenuItemId inner join `order` on order.Id = orderitem.OrderId where orderitem.OrderId = " . $orderId;
     $result = $conn->query($orderItemsStatment);
 
     if ($result) {

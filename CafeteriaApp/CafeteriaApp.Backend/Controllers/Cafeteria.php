@@ -2,7 +2,7 @@
   require_once('../ImageHandle.php');
 
   function getCafeterias($conn) {
-    $sql = "select * from `Cafeteria`";
+    $sql = "select * from `cafeteria`";
 
     if ( $result = $conn->query($sql) ) {
       $cafeterias = mysqli_fetch_all($result, MYSQLI_ASSOC); // ??
@@ -15,7 +15,7 @@
   }
 
   function getCafeteriaById($conn, $id) {
-    $sql = "select * from `Cafeteria` where `Id` =" . $id . " LIMIT 1";
+    $sql = "select * from `cafeteria` where `Id` =" . $id . " LIMIT 1";
 
     if ( $result = $conn->query($sql) ) {
       $cafeteria = mysqli_fetch_assoc($result); // fetch only the first row of the result

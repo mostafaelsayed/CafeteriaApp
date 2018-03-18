@@ -9,7 +9,7 @@
   // redirect to fear the hacker
 
   function getCommentsByMenuItemId($conn, $id) {
-    $sql = "select User.UserName , Comment.Id ,Comment.Details ,Dates.Date from Comment inner join User on Comment.UserId=User.Id inner join Dates on Dates.Id=Comment.DateId where MenuItemId =" . $id;
+    $sql = "select user.UserName , comment.Id ,comment.Details ,dates.Date from comment inner join user on comment.UserId=user.Id inner join dates on dates.Id=comment.DateId where MenuItemId =" . $id;
     $result = $conn->query($sql);
 
     if ($result) {
@@ -23,7 +23,7 @@
   }
 
   function getCommentsByUserId($conn, $id) { // used for editing or deleting comments of a user  
-    $sql = "select * from Comment where UserId = " . $id;
+    $sql = "select * from comment where UserId = " . $id;
     $result = $conn->query($sql);
 
     if ($result) {
@@ -37,7 +37,7 @@
   }
 
   function getCommentsIdsByUserIdAndMenuItemId($conn, $cid, $mid) { // used for editing or deleting comments of a user 
-    $sql = "select Id from Comment where UserId = '" . $cid . "' and MenuItemId = " . $mid;
+    $sql = "select Id from comment where UserId = '" . $cid . "' and MenuItemId = " . $mid;
     $result = $conn->query($sql);
 
     if ($result) {
@@ -57,7 +57,7 @@
 
   function addComment($conn, $details, $Cid, $Mid) {
     $DateId = getDateIdByDate( $conn, date("Y-m-d") );
-    $sql = "insert into Comment (Details, UserId, MenuItemId, DateId) values (?, ?, ?, ?)";
+    $sql = "insert into comment (Details, UserId, MenuItemId, DateId) values (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("siii", $details, $Cid, $Mid, $DateId);
 
@@ -72,7 +72,7 @@
 
   function editComment($conn, $details, $id) { // check the customer if he owns the comment
     $DateId = getDateIdByDate( $conn, date("Y-m-d") );
-    $sql = "update Comment set Details = (?) , DateId= (?) where Id = (?)";
+    $sql = "update comment set Details = (?) , DateId= (?) where Id = (?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sii", $details, $DateId, $id);
     
@@ -85,7 +85,7 @@
   }
 
   function checkOwnershipOfComment($conn, $id, $cid) { // check if its for the customer before deleting
-    $sql = "select count(*) from Comment where Id = " . $id . " and UserId = " . $cid;
+    $sql = "select count(*) from comment where Id = " . $id . " and UserId = " . $cid;
     $result = $conn->query($sql);
 
     if ($result) {
@@ -102,7 +102,7 @@
   }
 
   function deleteComment($conn, $id) { // check if its for the customer before deleting
-    $sql = "delete from Comment where Id = " . $id . " LIMIT 1";
+    $sql = "delete from comment where Id = " . $id . " LIMIT 1";
     
     if ($conn->query($sql) === TRUE) {
       return "Comment deleted successfully";

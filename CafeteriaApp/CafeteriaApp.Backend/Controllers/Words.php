@@ -1,6 +1,6 @@
 <?php
   function getWords($conn, $AssocOrNum) {
-    $sql = "select * from Words";
+    $sql = "select * from words";
     $result = $conn->query($sql);
 
     if ($result) {
@@ -14,7 +14,7 @@
   }
 
   function addWord($conn, $name) {
-    $sql = "insert into Words (Name) values (?)";
+    $sql = "insert into words (Name) values (?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $name);
     
@@ -27,7 +27,7 @@
   }
 
   function editWord($conn, $name, $id) {
-    $sql = "update Words set Name = (?), where Id = (?)";
+    $sql = "update words set Name = (?), where Id = (?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("si", $name, $id);
     
@@ -41,7 +41,7 @@
 
   function deleteWord($conn, $id) { // drop the column also ???????
     //$conn->query("set foreign_key_checks = 0"); // ????????/
-    $sql = "delete from Words where Id = " . $id . " LIMIT 1";
+    $sql = "delete from words where Id = " . $id . " LIMIT 1";
     if ($conn->query($sql) === TRUE) {
       return "Word deleted successfully";
     }

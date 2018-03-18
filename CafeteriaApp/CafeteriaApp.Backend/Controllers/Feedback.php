@@ -3,7 +3,7 @@
 
   function getVisitorFeedbackByDate($conn, $id) {
     $DateId = getCurrentDateId($conn);
-    $sql = "select * from VisitorFeedback where DateId = " . $DateId;
+    $sql = "select * from visitorfeedback where DateId = " . $DateId;
     $result = $conn->query($sql);
 
     if ($result) {
@@ -17,7 +17,7 @@
   }
 
   function getfeedbacks($conn) {
-    $sql = "select * from VisitorFeedback";
+    $sql = "select * from visitorfeedback";
     $result = $conn->query($sql);
 
     if ($result) {
@@ -32,7 +32,7 @@
 
   function checkTodaysFeedbackForMailOrPhone($conn, $phone, $mail) {
     $DateId = getCurrentDateId($conn);
-    $sql = "select count(*) from VisitorFeedback where DateId = '" . $DateId . "' and Email = '" . $mail . "' or DateId = '" . $DateId . "' and Phone = '" . $phone . "' ";
+    $sql = "select count(*) from visitorfeedback where DateId = '" . $DateId . "' and Email = '" . $mail . "' or DateId = '" . $DateId . "' and Phone = '" . $phone . "' ";
     $result = $conn->query($sql);
 
     if ($result) {
@@ -47,7 +47,7 @@
 
   function addVisitorFeedback($conn, $name, $phone, $mail, $message, $aboutId) {
     $DateId = getDateIdByDate( $conn, date("Y-m-d") );
-    $sql = "insert into VisitorFeedback (Name, Phone, Email, Message, DateId, AboutId) values (?, ?, ?, ?, ?, ?)";
+    $sql = "insert into visitorfeedback (Name, Phone, Email, Message, DateId, AboutId) values (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssii", $name, $phone, $mail, $message, $DateId, $aboutId);
 
@@ -61,7 +61,7 @@
   }
 
   function deleteVisitorFeedback($conn, $id) { // check if its for the customer before deleting
-    $sql = "delete from VisitorFeedback where Id = " . $id . " LIMIT 1";
+    $sql = "delete from visitorfeedback where Id = " . $id . " LIMIT 1";
     
     if ($conn->query($sql) === TRUE) {
       return "Visitor Feedback deleted successfully";

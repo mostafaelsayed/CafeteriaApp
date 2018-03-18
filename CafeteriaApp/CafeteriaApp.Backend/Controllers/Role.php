@@ -1,6 +1,6 @@
 <?php
   function getRoles($conn) {
-    $sql = "select * from Role";
+    $sql = "select * from role";
     $result = $conn->query($sql);
 
     if ($result) {
@@ -14,7 +14,7 @@
   }
 
   function getRoleById($conn, $id) {
-    $sql = "select * from Role where Id = " . $id . " LIMIT 1";
+    $sql = "select * from role where Id = " . $id . " LIMIT 1";
     $result = $conn->query($sql);
 
     if ($result) {
@@ -28,7 +28,7 @@
   }
 
   function addRole($conn, $name) {
-    $sql = "insert into Role (Name) values (?)";
+    $sql = "insert into role (Name) values (?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $name);
     
@@ -42,7 +42,7 @@
   
   function editRole($conn, $name, $id)
   {
-    $sql = "update Role set Name = (?) where Id = (?)";
+    $sql = "update role set Name = (?) where Id = (?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("si", $name, $id);
     
@@ -56,7 +56,7 @@
 
   function deleteRole($conn, $id) { // cascaded delete ??
     //$conn->query("set foreign_key_checks = 0"); // ????????/
-    $sql = "delete from Role where Id = " . $id . " LIMIT 1";
+    $sql = "delete from role where Id = " . $id . " LIMIT 1";
 
     if ($conn->query($sql) === TRUE) {
       return "Role deleted successfully";

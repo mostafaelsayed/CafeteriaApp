@@ -70,8 +70,9 @@
 	}
 
   function attempt_login($conn, $email, $password) {
+     
     $user = getUserByEmail($conn, $email);
-
+    // echo  $user ;
     if ($user) {
       // found user, now check password
       if ( passwordCheck( $password, $user["PasswordHash"] ) ) {
@@ -95,13 +96,14 @@
     else {
       $safe_email = mysqli_real_escape_string($conn, $email);
       $query  = "SELECT * ";
-      $query .= "FROM User ";
+      $query .= "FROM user ";
       $query .= "WHERE Email = '{$safe_email}' ";
       $query .= "LIMIT 1";
-      $user_set = mysqli_query($conn, $query);
-      confirmQuery($user_set);
-
-      if ( $user = mysqli_fetch_assoc($user_set) ) {
+      $user_set = $conn->query($query);
+      //confirmQuery($user_set);
+     // var_dump( $user_set);
+      $user = mysqli_fetch_assoc($user_set);
+      if ( $user) {
         return $user;
       } else {
         return null;
@@ -127,7 +129,7 @@
 
   function validatePageAccess($conn) { // using hash
     confirm_logged_in();
-    $query  = "SELECT `Dir` FROM `Dir` WHERE `Id` IN (SELECT `DirId` FROM `Dir_Role` WHERE `RoleId` = {$_SESSION['roleId']} ) ";  // add RoleId
+    $query  = "SELECT `Dir` FROM `dir` WHERE `Id` IN (SELECT `DirId` FROM `dir_role` WHERE `RoleId` = {$_SESSION['roleId']} ) ";  // add RoleId
     $result_set = mysqli_query($conn, $query);
     confirmQuery($result_set);
 

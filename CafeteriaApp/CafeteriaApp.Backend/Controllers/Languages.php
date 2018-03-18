@@ -1,6 +1,6 @@
 <?php
   function getLanguages($conn) {
-    $sql = "select * from Languages";
+    $sql = "select * from languages";
     $result = $conn->query($sql);
 
     if ($result) {
@@ -14,7 +14,7 @@
   }
 
   function addLanguage($conn, $name) {
-    $sql = "insert into Languages (Name) values (?)";
+    $sql = "insert into languages (Name) values (?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $name);
 
@@ -27,7 +27,7 @@
   }
 
   function editLanguage($conn, $name, $id) {
-    $sql = "update Languages set Name = (?) where Id = (?)";
+    $sql = "update languages set Name = (?) where Id = (?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("si", $name, $id);
 
@@ -41,7 +41,7 @@
 
   function deleteLanguage($conn, $id) { // drop the colun also ???????
     //$conn->query("set foreign_key_checks = 0"); // ????????/
-    $sql = "delete from Languages where Id = " . $id . " LIMIT 1";
+    $sql = "delete from languages where Id = " . $id . " LIMIT 1";
     if ($conn->query($sql) === TRUE) {
       return "Language deleted successfully";
     }

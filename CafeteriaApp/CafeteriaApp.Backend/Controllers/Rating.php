@@ -1,6 +1,6 @@
 <?php
   function getMenuItemsIdsThatHaveRatingsByUserId($conn, $cid) { // used for editing or deleting comments of a user  
-    $sql = "select MenuItemId, Value from Rating where UserId = " . $cid;
+    $sql = "select MenuItemId, Value from rating where UserId = " . $cid;
     $result = $conn->query($sql);
 
     if ($result) {
@@ -20,7 +20,7 @@
   }
 
   function addRating($conn, $Cid, $Mid, $value) {
-    $sql = "insert into `Rating` (UserId, MenuItemId, Value) values (?, ?, ?)";
+    $sql = "insert into `rating` (UserId, MenuItemId, Value) values (?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("iid", $Cid, $Mid, $value);
 
@@ -34,7 +34,7 @@
   }
 
   function updateRating($conn, $Cid, $Mid, $value) {
-    $sql = "update `Rating` set Value = (?) where UserId = (?) and  MenuItemId = (?) ";
+    $sql = "update `rating` set Value = (?) where UserId = (?) and  MenuItemId = (?) ";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("dii", $value, $Cid, $Mid);
 
@@ -48,7 +48,7 @@
   }
 
   function checkOwnershipOfRatingForUserId($conn, $Mid, $Cid) { // check if its for the customer before deleting
-    $sql = "select count(*) from Rating where MenuItemId = " . $Mid . " and UserId = " . $Cid;
+    $sql = "select count(*) from rating where MenuItemId = " . $Mid . " and UserId = " . $Cid;
     $result = $conn->query($sql);
 
     if ($result) {
@@ -65,7 +65,7 @@
   }
 
   function calcAvgRatingByMenuItemId($conn, $id) {
-    $sql = "select avg(value) from Rating where MenuItemId = " . $id;
+    $sql = "select avg(value) from rating where MenuItemId = " . $id;
     $result = $conn->query($sql);
 
     if ($result) {

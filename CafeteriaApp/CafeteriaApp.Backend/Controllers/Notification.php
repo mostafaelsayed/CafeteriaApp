@@ -1,6 +1,6 @@
 <?php 
   function getNotificationByUserId($conn, $userId) {	
-    $sql = "select Message.Content from Notification inner join Message on Notification.MessageId = Message.Id where UserId = " . $userId;
+    $sql = "select message.Content from notification inner join message on notification.MessageId = message.Id where UserId = " . $userId;
   	$result = $conn->query($sql);
   	if ($result) {
   		$notifictions = mysqli_fetch_all($result, MYSQLI_NUM);
@@ -18,7 +18,7 @@
   }
 
   function addNotification($conn, $Uid, $Mid) {
-    $sql = "insert into Notification (UserId, MessageId) values (?, ?)";
+    $sql = "insert into notification (UserId, MessageId) values (?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $Uid, $Mid);
     
@@ -32,7 +32,7 @@
 
   function deleteNotificationsByUserId($conn, $id) { // cascaded delete ??
     //$conn->query("set foreign_key_checks = 0"); // ????????/
-    $sql = "delete from Notification where UserId = " . $id;
+    $sql = "delete from notification where UserId = " . $id;
     if ($conn->query($sql) === TRUE) {
       return "Notifications deleted successfully";
     }

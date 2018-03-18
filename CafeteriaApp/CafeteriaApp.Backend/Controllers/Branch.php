@@ -1,6 +1,6 @@
 <?php
 	function getBranches($conn) {
-		$sql = "select * from `Branch`";
+		$sql = "select * from `branch`";
 
 	  	if ( $result = $conn->query($sql) ) {
 	    	$branch = mysqli_fetch_all($result, MYSQLI_ASSOC); // ??

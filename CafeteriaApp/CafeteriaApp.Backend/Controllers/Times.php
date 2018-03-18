@@ -1,6 +1,6 @@
 <?php
   function getTimes($conn) {
-    $sql = "select * from `Times`";
+    $sql = "select * from `times`";
     $result = $conn->query($sql);
     
     if ($result) {
@@ -14,7 +14,7 @@
   }
 
   function getTimeById($conn, $id) {
-    $sql = "select * from `Times` where `Id` = " . $id . " LIMIT 1";
+    $sql = "select * from `times` where `Id` = " . $id . " LIMIT 1";
     $result = $conn->query($sql);
 
     if ($result) {
@@ -28,7 +28,7 @@
   }
 
   function getTimeIdByTime($conn, $time) {
-    $sql = "select `Id` from `Times` where `Time` = '{$time}' LIMIT 1";
+    $sql = "select `Id` from `times` where `Time` = '{$time}' LIMIT 1";
     $result = $conn->query($sql);
 
     if ($result) {
@@ -43,7 +43,7 @@
 
   function getCurrentTimeId($conn) {
     $time = date("h:i:00");
-    $sql = "select `Id` from `Times` where `Time` = '{$time}' LIMIT 1";
+    $sql = "select `Id` from `times` where `Time` = '{$time}' LIMIT 1";
     $result = $conn->query($sql);
 
     if ($result) {
@@ -58,7 +58,7 @@
 
   function deleteTime($conn, $id) {
     //$conn->query("set foreign_key_checks=0");
-    $sql = "delete from `Times` where `Id` = " . $id . " LIMIT 1";
+    $sql = "delete from `times` where `Id` = " . $id . " LIMIT 1";
 
     if ($conn->query($sql) === TRUE) {
       return "Time deleted successfully";

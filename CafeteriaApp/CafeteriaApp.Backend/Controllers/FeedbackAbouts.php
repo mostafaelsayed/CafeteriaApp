@@ -1,6 +1,6 @@
 <?php
   function getFeedbackAbouts($conn) {
-    $sql = "select * from FeedbackAbouts";
+    $sql = "select * from feedbackabouts";
     $result = $conn->query($sql);
 
     if ($result) {
@@ -14,7 +14,7 @@
   }
 
   function addFeedbackAbouts($conn, $name) {
-    $sql = "insert into FeedbackAbouts (Name) values (?)";
+    $sql = "insert into feedbackabouts (Name) values (?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $name);
 
