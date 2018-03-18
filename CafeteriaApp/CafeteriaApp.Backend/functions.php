@@ -1,6 +1,6 @@
 <?php 	
-  require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');
-  require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php'); 
+  require_once('session.php');
+  require_once('connection.php'); 
 
 	function redirect_to($new_location) {
 	  header("Location: " . $new_location);

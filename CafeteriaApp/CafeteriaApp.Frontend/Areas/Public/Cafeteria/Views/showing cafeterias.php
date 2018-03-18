@@ -1,5 +1,5 @@
 <?php
-  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
+  require('../../../../../CafeteriaApp.Backend/functions.php');
   validatePageAccess($conn);
   require('../../../Customer/layout.php');
 ?>

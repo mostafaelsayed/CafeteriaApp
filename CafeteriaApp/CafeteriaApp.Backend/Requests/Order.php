@@ -4,12 +4,8 @@
   require('TestRequestInput.php');
   require('CafeteriaApp/CafeteriaApp/PayPal/pay.php');
 
-  //var_dump($_SERVER);
-
   if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ( isset($_GET['orderId']) && !isset($_GET['flag']) && test_int($_GET['orderId']) ) {
-      //$Duration = calcOpenOrderDeliveryTime($conn, $_GET['orderId']);
-      //$Id = getCurrentTimeId($conn);
       checkResult( getOrderById($conn, $_GET['orderId']) );
     }
     elseif ( isset($_GET['orderId']) && isset($_GET['flag']) && test_int($_GET['orderId']) && $_GET['flag'] == 1) {
@@ -24,7 +20,6 @@
   }
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    //var_dump($_POST);
     if ( isset($_POST['orderType']) && test_int($_POST['orderType']) && $_SESSION['roleId'] == 2) { // customer paypal
       if ( isset($_POST['selectedMethodId']) && !isset($_POST['paymentId']) && test_int($_POST['selectedMethodId']) && $_POST['selectedMethodId'] != 4) {
         processPayment($conn, $_SESSION['orderId'], $_POST['selectedMethodId'], $paypal, $_POST['orderType']);
@@ -33,7 +28,6 @@
         updateWithFee($conn, $_POST['orderType'], $_POST['selectedMethodId']);
         CheckOutOrder($conn, $_SESSION['orderId'], $_POST['selectedMethodId']);
         header("Location: " . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php");
-        //echo "<script type='text/javascript'>localStorage.setItem('submit', 1);</script>";
       }
       elseif ( isset($_POST['paymentMethodId'], $_POST['paymentId'], $_POST['payerId']) && normalize_string($conn, $_POST['paymentId'], $_POST['payerId']) && test_int($_POST['paymentMethodId']) ) { // charge customer here {
         chargeCustomer($_POST['paymentId'], $_POST['payerId'], $paypal, $_SESSION['orderId'], $_POST['paymentMethodId'], $conn);
@@ -64,8 +58,8 @@
     else if ($_GET['flag'] == 1) {
       $conn->query("update `order` set `Type` = 0 where `Id` = {$_SESSION['orderId']}");
     }
-    else if ($_GET['flag'] == 2) {
-      hideOrder($conn);
+    else if ($_GET['flag'] == 2 && isset($_GET['orderId']) && test_int($_GET['orderId']) ) {
+      hideOrder($conn, $_GET['orderId']);
     }
     else if ($_GET['flag'] == 3) {
       $conn->query("update `order` set `Type` = 1 where `Id` = {$_SESSION['orderId']}");

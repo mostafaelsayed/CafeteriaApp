@@ -13,7 +13,7 @@ edit_category_and_show_and_delete_its_menuitemsApp.controller('editCategory',['$
 
   $scope.getCategory = function() {
 
-    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Category.php?id='+$scope.categoryId)
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Category.php?id=' + $scope.categoryId)
     .then(function(response) {
       $scope.name = response.data.Name;
       $scope.imageUrl = response.data.Image;

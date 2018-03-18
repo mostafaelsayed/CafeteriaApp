@@ -1,6 +1,13 @@
 <?php
-  require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');
-  require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
+  if (basename($_SERVER["REQUEST_URI"], '.php') != 'login') {
+    require_once('../session.php');
+    require_once('../connection.php');
+  }
+  else { // login
+    require_once('../../CafeteriaApp.Backend/session.php');
+    require_once('../../CafeteriaApp.Backend/connection.php');
+  }
+  
   require('Dates.php');
   require('Times.php');
   require('../../PayPal/start.php');
@@ -122,8 +129,8 @@
     }
   }
 
-  function hideOrder($conn) {
-    $sql = "update `order` set `Visible` = 0, `OrderStatusId` = 2 where `Id` = " . $_SESSION['orderId'];
+  function hideOrder($conn, $orderId) {
+    $sql = "update `order` set `Visible` = 0, `OrderStatusId` = 2 where `Id` = " . $orderId;
     $sql = $conn->query($sql);
 
     if ($sql) {

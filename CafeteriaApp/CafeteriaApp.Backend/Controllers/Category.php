@@ -1,5 +1,5 @@
 <?php
-  require('../ImageHandle.php');
+  require_once('../ImageHandle.php');
 
   function getByCafeteriaId($conn, $id) {
     if ( !isset($id) ) {
@@ -41,12 +41,14 @@
 
   function addCategory($conn, $name, $cafeteriaId, $imageData = null) {
     if ($imageData != null) {
+      echo "456";
       $imageFileName = addImageFile($imageData);
       $sql = "insert into category (Name, Image, CafeteriaId) values (?, ?, ?)";
       $stmt = $conn->prepare($sql);
       $stmt->bind_param("ssi", $name, $imageFileName, $cafeteriaId);
     }
     else {
+
       $sql = "insert into category (Name, CafeteriaId) values (?, ?)";
       $stmt = $conn->prepare($sql);
       $stmt->bind_param("si", $name, $cafeteriaId);

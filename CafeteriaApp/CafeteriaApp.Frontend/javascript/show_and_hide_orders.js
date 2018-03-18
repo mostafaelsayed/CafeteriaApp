@@ -38,7 +38,7 @@ angular.module('cashierApp', ['ui.bootstrap', 'modal', 'angularModalService']).c
   };
 
   $scope.delete = function(order) { // this will close order not delete it
-     $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?flag=2')
+     $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?flag=2&orderId=' + order.Id)
      .then(function(response) {
        $scope.orders.splice($scope.orders.indexOf(order), 1);
      });

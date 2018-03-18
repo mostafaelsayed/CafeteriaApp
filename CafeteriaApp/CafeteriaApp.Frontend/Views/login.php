@@ -29,8 +29,7 @@
         $_SESSION['langId'] = 1;// if not found
         $_SESSION['Confirmed'] = $found_user['Confirmed'];
         
-        if ( (!$_SESSION['orderId'] = getOpenOrderByUserId($conn)['Id']) && $_SESSION['roleId'] == 2) { // if not found open order>>open a new one
-          //echo "ffsdfsdfsdfsdfsdf";
+        if ( (!$_SESSION['orderId'] = getOpenOrderByUserId($conn)['Id']) && $_SESSION['roleId'] == 2 ) { // if not found open order>>open a new one
           $deliveryTimeId = getCurrentTimeId($conn);
           $deliveryDateId = getCurrentDateId($conn);
           $_SESSION['orderId'] = addOrder($conn, $deliveryDateId, $deliveryTimeId, 1, 1, $_SESSION['userId']);
@@ -40,10 +39,6 @@
         $_SESSION['notifications'] = getNotificationByUserId( $conn, $_SESSION['userId'] );// if not found
         deleteNotificationsByUserId( $conn, $_SESSION['userId'] ) ;
         //record date
-
-        if ( !getCurrentDateId($conn) ) { // make the server add it automatically
-          addTodayDate($conn, true);
-        }
         
         if ( isset( $_POST['remember'] ) ) { // set the cookie to a long date
           setcookie(session_name(), session_id(), time() + 42000000, '/');

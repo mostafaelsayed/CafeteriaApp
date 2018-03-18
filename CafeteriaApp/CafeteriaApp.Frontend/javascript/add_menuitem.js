@@ -27,8 +27,7 @@ add_menuitemApp.controller('addMenuItem',['$scope','$http','$location',function(
 
       $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/MenuItem.php',data)
       .then(function(response) {
-        console.log(response);
-        //window.history.back();
+        window.history.back();
       });
     
     }

@@ -7,7 +7,7 @@
     if ( isset($_GET['cafeteriaId']) && !isset($_GET['id']) && test_int($_GET['cafeteriaId']) ) {
       checkResult( getByCafeteriaId($conn, $_GET['cafeteriaId']) );
     }
-    elseif ( isset($_GET['id']) && !isset($_GET['cafeteriaId']) && test_int($_GET['cafeteriaId']) ) {
+    elseif ( isset($_GET['id']) && !isset($_GET['cafeteriaId']) && test_int($_GET['id']) ) {
       checkResult( getCategoryById($conn, $_GET['id']) );
     }
     else {
@@ -55,7 +55,7 @@
   }
 
   if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
-    if ( !isset($_GET['categoryId']) && test_int($_GET['categoryId']) ) {
+    if ( isset($_GET['categoryId']) && test_int($_GET['categoryId']) ) {
       deleteCategory($conn, $_GET['categoryId']);
     }
     else {

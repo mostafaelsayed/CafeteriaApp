@@ -48,9 +48,9 @@
   </head>
 
   <body style="background-image: url('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/customer background image4.jpg')" ng-app="layout_app"
-  ng-init="orderId=<?php echo $orderId ;?>;">
+  ng-init="orderId = <?php echo $orderId;?>;" ng-cloak>
 
-    <div ng-controller="Language_Order" ng-init=" languages = <?php echo htmlspecialchars($Languages);?>;selectedLang = languages[<?php echo ($lang_id - 1);?>];orderId = <?php echo $orderId;?>" id="myctrl">
+    <div ng-controller="Language_Order" ng-init="languages = <?php echo htmlspecialchars($Languages);?>;selectedLang = languages[<?php echo ($lang_id - 1);?>];orderId = <?php echo $orderId;?>" id="myctrl">
 
       <!-- Navigation -->
       <nav class="navbar navbar-default navbar-fixed-top">
@@ -79,7 +79,7 @@
 
                 <li>
 
-                  <a class="navbar-brand" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php"><?php echo "{$Words['Home'][$lang_id]}"?></a>
+                  <a class="navbar-brand" href="../Public/Cafeteria/Views/showing cafeterias.php"><?php echo "{$Words['Home'][$lang_id]}"?></a>
 
                 </li>
 
@@ -134,6 +134,22 @@
                 <a class="navbar-brand" target="_self" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/logout.php"><?php echo "{$Words['Log out'][$lang_id]}" ?></a>
 
               </li>
+
+              <form method="post" style="display: inline-block;" action="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/search.php">
+
+                <li class="inner" style="margin-top: 11px">
+
+                  <button type="submit"><i class="fa fa-search" style="font-size: 20px"></i></button>
+
+                </li>
+
+                <li class="inner" style="margin-top: -27px;margin-left: 50px">
+
+                  <input type="text" name="searchInput" />
+
+                </li>
+
+              </form>
 
             </ul>
 

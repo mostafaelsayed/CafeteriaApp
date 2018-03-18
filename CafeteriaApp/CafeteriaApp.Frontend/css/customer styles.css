@@ -3,8 +3,8 @@ h1,h3 {
   color: white;
   text-align: center;
 }
-.menu-name {
 
+.menu-name {
   font-style: italic;
   color: white;
   text-align: left;
@@ -15,77 +15,64 @@ h1,h3 {
   font-style: italic;
 }
 
-.row .col-lg-5 table:first-of-type{
-
-border : 2px solid orange;
- width : 100%;
+.row .col-lg-5 table:first-of-type {
+  border: 2px solid orange;
+  width: 100%;
 }
 
-
-.row .col-lg-5 .blueTable>tr{/*first tr child in table */
-margin: 10px;
-/*color: white;*/
+.row .col-lg-5 .blueTable>tr {/*first tr child in table */
+  margin: 10px;
+  /*color: white;*/
 }
 
-.row .col-lg-5 .blueTable td{
-text-align:center;
-margin: 10px;
-color: white;
- display:block;
-
+.row .col-lg-5 .blueTable td {
+  text-align:center;
+  margin: 10px;
+  color: white;
+  display:block;
 }
 
-.row .col-lg-5 .blueTable td>a{
-
-text-decoration: none;
+.row .col-lg-5 .blueTable td>a {
+  text-decoration: none;
 }
 
-
-.row .col-lg-5 .addToOrder  a {
-color:white;
-float:right;
-margin-top:-40px
+.row .col-lg-5 .addToOrder a {
+  color: white;
+  float: right;
+  margin-top: -40px
 }
 
-.row .col-lg-5 .addToOrder a:hover{
-
- background-color: #444441;
- transition: all .2s;
-
+.row .col-lg-5 .addToOrder a:hover {
+  background-color: #444441;
+  transition: all .2s;
 }
 
-
-.about{
+.about {
   display: none;
 }
 
 .btn-circle {
- border-radius: 50%;
- text-align: center;
- margin-bottom: 50px;
-
+  border-radius: 50%;
+  text-align: center;
+  margin-bottom: 50px;
 }
 
-
-.row .col-lg-5 .blueTable tr:hover
- {
+.row .col-lg-5 .blueTable tr:hover {
   background-color: #444441;
-text-shadow: 0 0 20px #952;
- transition: all .3s;
- }
-
-.row .col-lg-5 .blueTable>tr{/*first tr child in table */
-margin: 10px;
-/*color: white;*/
+  text-shadow: 0 0 20px #952;
+  transition: all .3s;
 }
 
-
-.bottom a{
-color: white;
-cursor: pointer;
-text-decoration: none;
+.row .col-lg-5 .blueTable>tr {/*first tr child in table */
+  margin: 10px;
+  /*color: white;*/
 }
 
+.bottom a {
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+}
 
 hr {
   margin: 20px;
@@ -94,9 +81,31 @@ hr {
 }
 
 
-.btn.btn-lg.comments:hover{
+.btn.btn-lg.comments:hover {
   background-color: #278376;
-    font-size: 20px;
- transition: all .2s;
+  font-size: 20px;
+  transition: all .2s;
+}
 
+@-moz-document url-prefix() {
+  /*.stars {
+    margin-left: -10px;
+  }*/
+
+  .star-1 {
+    margin-top: 0px;
+    margin-left: -90px
+  }
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      /* IE10+ CSS styles go here */
+  /*.stars {
+    margin-left: -70px;
+  }*/
+
+  .star-1 {
+    margin-top: 0px;
+    margin-left: -90px
+  }
 }

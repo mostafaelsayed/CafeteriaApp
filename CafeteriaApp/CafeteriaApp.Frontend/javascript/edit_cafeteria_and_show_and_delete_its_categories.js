@@ -76,7 +76,7 @@ edit_cafeteria_and_show_and_delete_its_categoriesApp.controller('showAndDeleteCa
 
     $scope.delete = function() {
 
-      $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Category.php?categoryId='+category.Id)
+      $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Category.php?categoryId=' + category.Id)
       .then(function(response) {
         $scope.categories.splice($scope.categories.indexOf(category),1);
       });

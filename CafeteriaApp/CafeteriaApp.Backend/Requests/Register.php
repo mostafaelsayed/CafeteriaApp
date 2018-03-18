@@ -1,10 +1,11 @@
 <?php 
+  //require('../functions.php');
   require('../Controllers/Role.php');
   require('../Controllers/User.php');
   require('../Controllers/Customer.php');
-  require('../connection.php');
   require('../../CafeteriaApp.Frontend/Views/PHPMailer/PHPMailerAutoload.php');
   require('TestRequestInput.php');
+  require('../Controllers/Order.php');
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     //decode the json data
@@ -30,11 +31,13 @@
     //decode the json data
     $data = json_decode( file_get_contents('php://input') );
 
-    $required_fields = array($data->userName, $data->firstName, $data->lastName, $data->phone, $data->email, $data->gender, $data->dob, $data->password);
+    // $required_fields = array($data->userName, $data->firstName, $data->lastName, $data->phone, $data->email, $data->gender, $data->dob, $data->password);
+    //$arr = [$data->userName, $data->firstName, $data->lastName, $data->password];
+    //var_dump($data);
 
     $fields_with_max_lengths = array($data->userName => 100, $data->firstName => 50, $data->lastName => 50, $data->phone => 13, $data->email => 100, $data->password => 100);
-
-    if ( !empty( test_user_input($conn, $required_fields) ) && validate_max_lengths($fields_with_max_lengths) &&test_date_of_birth($data->dob) ) {
+    //var_dump($arr);
+    if ( normalize_string($conn, $data->userName, $data->firstName, $data->lastName, $data->password) && validate_max_lengths($fields_with_max_lengths) && test_date_of_birth($data->dob) && test_email($data->email) && test_int($data->gender, $data->phone) ) {
       $userName = $data->userName; // $_POST["userName"];
       $firstName = $data->firstName; // $_POST["firstName"];
       $lastName = $data->lastName; // $_POST["lastName"];  
@@ -44,6 +47,8 @@
       $dob = $data->dob;
       $genderId = $data->gender;
       $password = $data->password; // $_POST["password"];
+
+      echo "123";
 
       if ($image != null) {
         chdir("../uploads"); // go to uploads directory
@@ -58,13 +63,32 @@
       }
 
       //get customer role id from db 
-      $roleId = getRoleIdByName($conn, 'Customer');
-
+      //$roleId = getRoleIdByName($conn, 'Customer');
+      $roleId = 2;
       $localeId = 1;
 
       $user_id = addUser($conn, $userName, $firstName, $lastName, $Image, $email, $phoneNumber, $password, $roleId, $localeId);
 
+      //echo $userId;
+
       $customer_id = addCustomer($conn, 0.0, $dob, $user_id, $genderId);
+
+      $theuser = attempt_login($conn, $data->email, $data->password);
+
+      $_SESSION['userId'] = $theuser['Id'];
+      //echo $_SESSION['userId'];
+      $_SESSION['userName'] = $theuser['UserName'];
+      $_SESSION['roleId'] = $theuser['RoleId'];
+      $_SESSION['langId'] = 1;// if not found
+      $_SESSION['Confirmed'] = $theuser['Confirmed'];
+
+      if ($_SESSION['roleId'] != 1) {
+        $deliveryTimeId = getCurrentTimeId($conn);
+        $deliveryDateId = getCurrentDateId($conn);
+        $_SESSION['orderId'] = addOrder($conn, $deliveryDateId, $deliveryTimeId, 1, 1, $_SESSION['userId']);
+      }
+
+      $_SESSION['notifications'] = [];
 
       if ($customer_id) {
 
@@ -87,7 +111,9 @@
         $result = $mail->Send();
 
         if ($result) {
-          echo "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/confirm.php"; // confirm mail by sending a message and check link
+          echo $user_id;
+          //echo "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/confirm.php"; // confirm mail by sending a message and check link
+          //header("Location: ../../CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php");
         }
         else {
           echo "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/registerfailed.php";

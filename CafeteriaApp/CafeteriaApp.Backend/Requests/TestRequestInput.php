@@ -4,9 +4,20 @@
 		return preg_match('/^\d{0,9}(\.\d{0,9})?$/', $value);
 	}
 
-	function test_date_of_birth($value) {
+	// function test_date_of_birth($value) {
+	// 	$value = trim($value);
+	// 	return preg_match('/^\d{4}-[1-9]([0-9])?-\d{1,2}$/', $value);
+	// }
+	function test_date_of_birth(&$value) {
 		$value = trim($value);
-		return preg_match('/^\d{4}-[1-9]([0-9])?-\d{1,2}$/', $value);
+		$x = preg_match('/^\d{4}-[0-9]([0-9])?-\d{1,2}$/', $value);
+
+		if (!$x) {
+			echo "false date of birth";
+			return false;
+		}
+
+		return true;
 	}
 
 	function test_email(&$value) {
@@ -15,6 +26,7 @@
 	}
 
 	function normalize_string($conn, &...$values) {
+		//var_dump($values);
 		foreach ($values as &$value) {
 			$value = trim($value);
 
@@ -44,7 +56,11 @@
 		   		return false;
 		 	}
 		}
+
+		return true;
 	}
+	// $x = "2018-03-12";
+	// var_dump(test_date_of_birth($x));
 
 	function test_phone(&$value) {
 		$value = trim($value);

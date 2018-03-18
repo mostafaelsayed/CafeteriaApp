@@ -1,5 +1,5 @@
 <?php
-  require('../ImageHandle.php');
+  require_once('../ImageHandle.php');
 
   function getCafeterias($conn) {
     $sql = "select * from `Cafeteria`";

@@ -33,7 +33,8 @@
   function addUser($conn, $userName, $firstName, $lastName, $image, $email, $phoneNumber, $password, $roleId, $localeId = 1) {
     $sql = "insert into User (UserName, FirstName, LastName, Image, Email, PhoneNumber, PasswordHash, RoleId, LocaleId) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssssii", $userName, $firstName, $lastName, $Image, $email, $phoneNumber, password_encrypt($password), $roleId, $localeId);
+    $enc = password_encrypt($password);
+    $stmt->bind_param("sssssssii", $userName, $firstName, $lastName, $Image, $email, $phoneNumber, $enc, $roleId, $localeId);
 
     if ( isset($image) ) {
       $Image = addImageFile($image);
@@ -45,7 +46,7 @@
     }
     else {
       echo "Error: ", $conn->error;
-      return false;
+      //return false;
     }
   }
 

@@ -39,7 +39,8 @@
       return $customer_id;
     }
     else {
-      return false;
+      echo "error : ", $conn->error;
+      //return false;
     }
   }
 

@@ -10,7 +10,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   $scope.confirmOrder = function() {
     alertify.confirm("Are Your sure you Want to Submit Order?", function(e) {
       if (e) {
-         document.getElementsByClassName('inbut')[0].click();
+        document.getElementsByClassName('inbut')[0].click();
       }
       else {
         return false;
@@ -25,6 +25,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
         for (var i = 0; i < orderItems.length; i++) {
           Order_Info.deleteOrderItem(orderItems[i]);
         }
+
         localStorage.setItem("discard", 1);
         document.location = document.referrer;
       }
@@ -65,21 +66,24 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?flag=1');
       document.getElementsByClassName('wrapper')[0].style.visibility = 'hidden';
     }
-  }
+  };
 
   $scope.returnToMyCurrentLocation = function() {
+    alertify.success('Location Changed');
     $scope.myPos.lat = 0;
     $scope.myPos.lng = 0;
     $scope.myMarker.setMap(null);
-    $scope.locInit();
-  }
+    $scope.locInit(1);
+  };
 
-  $scope.locInit = function() {
+  $scope.locInit = function(b) {
     if (navigator.geolocation) { // browser supports geolocation to find your current location
       navigator.geolocation.getCurrentPosition(function(position) {
         if ($scope.myPos.lat == 0 && $scope.myPos.lng == 0) {
-          $scope.myPos.lat = Math.round(10000 * position.coords.latitude) / 10000, // latitude
-          $scope.myPos.lng = Math.round(10000 * position.coords.longitude) / 10000 // longitude
+          $scope.myPos = {
+            lat: Math.round(10000 * position.coords.latitude) / 10000,
+            lng: Math.round(10000 * position.coords.longitude) / 10000
+          };
 
           $scope.myMarker = new google.maps.Marker({ // add marker on your current location on the map
             map: $scope.map,
@@ -91,6 +95,10 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
           $scope.map.setCenter($scope.myPos); // center of map is the current location
           $scope.infoWindow.setContent('Your Location'); // text is 'Your Location'
           $scope.infoWindow.open($scope.map, $scope.myMarker); // position the info window in the map in the marker
+
+          if (b == 1) {
+            $scope.changeLoc();
+          }
         }
       }, function() {
         $scope.handleLocationError( true, $scope.infoWindow, $scope.map.getCenter() );
@@ -99,7 +107,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       // Browser doesn't support Geolocation
       $scope.handleLocationError( false, $scope.infoWindow, $scope.map.getCenter() );
     }
-  }
+  };
 
   // $scope.discardOrder = function() {
   //   $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?orderId=' + $scope.orderId)
@@ -118,11 +126,12 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
    });
   };
 
-  $scope.confirmLocation = function(a = 0) {
+  $scope.confirmLocation = function(a) {
     if ($scope.myPos.lat !== 0 && $scope.myPos.lng !== 0) {
-     $scope.changeLoc();
+      $scope.changeLoc();
     }
-    if (a == 0) {
+
+    if (a == undefined) {
       alertify.success('Location Changed');
     }
   };
