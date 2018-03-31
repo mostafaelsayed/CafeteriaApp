@@ -1,7 +1,7 @@
 <?php
-	require('../connection.php');
-	require('../Controllers/Cashier.php');
-	require('TestRequestInput.php');
+	require(__DIR__.'/../connection.php');
+	require(__DIR__.'/../Controllers/Cashier.php');
+	require(__DIR__.'/TestRequestInput.php');
 
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$data = json_decode( file_get_contents('php://input') );

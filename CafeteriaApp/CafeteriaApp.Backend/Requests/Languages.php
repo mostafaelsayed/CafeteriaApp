@@ -1,8 +1,8 @@
 <?php
-  require('../session.php');
-  require('../Controllers/Languages.php');
-  require('../connection.php');
-  require('TestRequestInput.php');
+  require(__DIR__.'/../session.php');
+  require(__DIR__.'/../Controllers/Languages.php');
+  require(__DIR__.'/../connection.php');
+  require(__DIR__.'/TestRequestInput.php');
 
   if ($_SERVER['REQUEST_METHOD'] == 'GET') { 
     checkResult( getLanguages($conn) );

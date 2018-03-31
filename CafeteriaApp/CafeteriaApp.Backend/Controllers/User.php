@@ -1,6 +1,6 @@
 <?php
-  require('../functions.php');
-  require('../ImageHandle.php');
+  require(__DIR__.'/../functions.php');
+  require(__DIR__.'/../ImageHandle.php');
 
   function getUsers($conn) {
     $sql = "select * from user";

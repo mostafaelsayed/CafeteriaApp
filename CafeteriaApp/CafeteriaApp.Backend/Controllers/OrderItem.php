@@ -1,6 +1,6 @@
 <?php
-  require('Order.php');
-  require('MenuItem.php');
+  require(__DIR__ . '/Order.php');
+  require(__DIR__ . '/MenuItem.php');
 
   function getOrderItemsByOrderId($conn, $id) {
     $sql = "select menuitem.Name, orderitem.Quantity, orderitem.TotalPrice, orderitem.MenuItemId, orderitem.Id, orderitem.OrderId from orderitem INNER JOIN menuitem ON orderitem.MenuItemId = menuitem.Id where orderitem.OrderId = " . $id;

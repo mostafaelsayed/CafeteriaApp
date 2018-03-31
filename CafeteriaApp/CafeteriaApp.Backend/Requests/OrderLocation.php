@@ -1,7 +1,7 @@
 <?php
-	require('TestRequestInput.php');
-	require('../Controllers/OrderLocation.php');
-	require('../connection.php');
+	require(__DIR__.'/TestRequestInput.php');
+	require(__DIR__.'/../Controllers/OrderLocation.php');
+	require(__DIR__.'/../connection.php');
 
 	//var_dump($_SERVER);
 

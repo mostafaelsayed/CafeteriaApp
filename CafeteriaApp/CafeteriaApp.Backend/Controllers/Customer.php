@@ -1,5 +1,5 @@
 <?php 
-  require_once('../session.php'); // must be first as it uses cookies
+  require_once(__DIR__.'/../session.php'); // must be first as it uses cookies
 
   function getCurrentCustomerinfoByUserId($conn) {
     $sql = "select * from customer inner join user on customer.UserId = user.Id where customer.UserId = " . $_SESSION['userId'] . " LIMIT 1";

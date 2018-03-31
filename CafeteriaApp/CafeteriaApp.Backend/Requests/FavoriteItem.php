@@ -1,8 +1,8 @@
 <?php
-  require('../session.php');
-  require('../Controllers/FavoriteItem.php');
-  require('../connection.php');
-  require('TestRequestInput.php');
+  require(__DIR__.'/../session.php');
+  require(__DIR__.'/../Controllers/FavoriteItem.php');
+  require(__DIR__.'/../connection.php');
+  require(__DIR__.'/TestRequestInput.php');
 
   if ($_SERVER['REQUEST_METHOD'] == 'GET') {  
     if ( isset($_SESSION['userId']) )

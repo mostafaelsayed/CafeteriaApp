@@ -1,8 +1,8 @@
 <?php
-  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Order.php');
-  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Fee.php');
-  require('TestRequestInput.php');
-  require('CafeteriaApp/CafeteriaApp/PayPal/pay.php');
+  require(__DIR__.'/../Controllers/Order.php');
+  require(__DIR__.'/../Controllers/Fee.php');
+  require(__DIR__.'/TestRequestInput.php');
+  require(__DIR__.'/../../PayPal/pay.php');
 
   if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ( isset($_GET['orderId']) && !isset($_GET['flag']) && test_int($_GET['orderId']) ) {

@@ -1,7 +1,7 @@
 <?php
-  require('../Controllers/Customer.php');
-  require('../connection.php');
-  require('TestRequestInput.php');
+  require(__DIR__.'/../Controllers/Customer.php');
+  require(__DIR__.'/../connection.php');
+  require(__DIR__.'/TestRequestInput.php');
 
   if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ( isset($_GET['userId']) && test_int($_GET['userId']) ) {

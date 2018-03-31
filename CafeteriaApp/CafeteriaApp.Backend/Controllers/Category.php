@@ -1,5 +1,5 @@
 <?php
-  require_once('../ImageHandle.php');
+  require_once(__DIR__.'/../ImageHandle.php');
 
   function getByCafeteriaId($conn, $id) {
     if ( !isset($id) ) {

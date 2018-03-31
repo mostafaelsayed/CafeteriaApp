@@ -1,11 +1,11 @@
 <?php 
   //require('../functions.php');
-  require('../Controllers/Role.php');
-  require('../Controllers/User.php');
-  require('../Controllers/Customer.php');
-  require('../../CafeteriaApp.Frontend/Views/PHPMailer/PHPMailerAutoload.php');
-  require('TestRequestInput.php');
-  require('../Controllers/Order.php');
+  require(__DIR__.'/../Controllers/Role.php');
+  require(__DIR__.'/../Controllers/User.php');
+  require(__DIR__.'/../Controllers/Customer.php');
+  require(__DIR__.'/../vendor/PHPMailer/PHPMailerAutoload.php');
+  require(__DIR__.'/TestRequestInput.php');
+  require(__DIR__.'/../Controllers/Order.php');
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     //decode the json data

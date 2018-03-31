@@ -1,8 +1,8 @@
 <?php
-  require('../Controllers/MenuItem.php');
-  require('../connection.php');
-  require('../session.php');
-  require('TestRequestInput.php');
+  require(__DIR__.'/../Controllers/MenuItem.php');
+  require(__DIR__.'/../connection.php');
+  require(__DIR__.'/../session.php');
+  require(__DIR__.'/TestRequestInput.php');
 
   if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ( isset($_GET['categoryId']) && test_int($_GET['categoryId']) ) {

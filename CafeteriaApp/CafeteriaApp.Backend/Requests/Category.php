@@ -1,7 +1,7 @@
 <?php
-  require('../Controllers/Category.php');
-  require('../connection.php');
-  require('TestRequestInput.php');
+  require(__DIR__.'/../Controllers/Category.php');
+  require(__DIR__.'/../connection.php');
+  require(__DIR__.'/TestRequestInput.php');
 
   if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ( isset($_GET['cafeteriaId']) && !isset($_GET['id']) && test_int($_GET['cafeteriaId']) ) {

@@ -1,10 +1,10 @@
 <?php
-  require_once('../functions.php');
-  require_once('../connection.php');
-  require('../Controllers/Cafeteria.php');
-  require('../Controllers/Category.php');
-  require('../Controllers/MenuItem.php');
-  require('TestRequestInput.php');
+  require_once(__DIR__.'/../functions.php');
+  require_once(__DIR__.'/../connection.php');
+  require(__DIR__.'/../Controllers/Cafeteria.php');
+  require(__DIR__.'/../Controllers/Category.php');
+  require(__DIR__.'/../Controllers/MenuItem.php');
+  require(__DIR__.'/TestRequestInput.php');
 
   function filterData($conn, $searchInput) {
     $sql1 = "select * from Cafeteria where `Name` like '%{$searchInput}%'";

@@ -1,8 +1,8 @@
 <?php
-  require('../Controllers/Feedback.php');
-  require('../connection.php');
-  require('../validation_functions.php');
-  require('TestRequestInput.php');
+  require(__DIR__.'/../Controllers/Feedback.php');
+  require(__DIR__.'/../connection.php');
+  require(__DIR__.'/../validation_functions.php');
+  require(__DIR__.'/TestRequestInput.php');
 
   if ($_SERVER['REQUEST_METHOD'] == 'GET') { 
     if ( isset($_GET['MenuItemId']) && test_int($_GET['MenuItemId']) ) {

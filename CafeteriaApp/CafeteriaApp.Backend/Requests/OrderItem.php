@@ -1,6 +1,6 @@
 <?php
-  require('../Controllers/OrderItem.php');
-  require('TestRequestInput.php');
+  require(__DIR__.'/../Controllers/OrderItem.php');
+  require(__DIR__.'/TestRequestInput.php');
 
   if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ( isset($_GET['orderId']) && test_int($_GET['orderId']) ) // cashier only

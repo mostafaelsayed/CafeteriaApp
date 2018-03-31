@@ -1,6 +1,6 @@
 <?php
-  require('../Controllers/User.php');
-  require('TestRequestInput.php');
+  require(__DIR__.'/../Controllers/User.php');
+  require(__DIR__.'/TestRequestInput.php');
 
   if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ($_SESSION['roleId'] == 1) { // admin only can call these methods

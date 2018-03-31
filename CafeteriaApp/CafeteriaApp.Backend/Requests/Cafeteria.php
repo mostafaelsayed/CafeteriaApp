@@ -1,8 +1,8 @@
 <?php
-  require('../Controllers/Cafeteria.php');
-  require('../connection.php');
-  require('../session.php');
-  require('TestRequestInput.php');
+  require(__DIR__.'/../Controllers/Cafeteria.php');
+  require(__DIR__.'/../connection.php');
+  require(__DIR__.'/../session.php');
+  require(__DIR__.'/TestRequestInput.php');
 
   if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (isset($_GET['id']) && test_int($_GET['id']) && $_SESSION['roleId'] == 1) {

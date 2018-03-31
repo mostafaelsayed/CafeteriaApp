@@ -1,15 +1,15 @@
 <?php
 //echo basename($_SERVER["REQUEST_URI"], '.php');
-  
+
   if (basename($_SERVER["REQUEST_URI"], '.php') == 'login') { // login
   
-    require_once('../../CafeteriaApp.Backend/session.php');
-    require_once('../../CafeteriaApp.Backend/connection.php');
+    require_once(__DIR__.'/../../CafeteriaApp.Backend/session.php');
+    require_once(__DIR__.'/../../CafeteriaApp.Backend/connection.php');
   }
   else {
       
-      require_once('../session.php');
-    require_once('../connection.php');
+    require_once(__DIR__.'/../session.php');
+    require_once(__DIR__.'/../connection.php');
       
       
     //require_once('/storage/ssd4/737/5099737/public_html/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');
@@ -17,9 +17,9 @@
     
   }
   
-  require('Dates.php');
-  require('Times.php');
-  require('../../PayPal/start.php');
+  require(__DIR__.'/Dates.php');
+  require(__DIR__.'/Times.php');
+  require(__DIR__.'/../../PayPal/start.php');
 
   use PayPal\Api\Amount;
   use PayPal\Api\Details;

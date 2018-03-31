@@ -1,8 +1,8 @@
 <?php
-  require('../session.php');// must be first as it uses cookies 
-  require('../Controllers/Rating.php');
-  require('../connection.php');
-  require('TestRequestInput.php');
+  require(__DIR__.'/../session.php');// must be first as it uses cookies 
+  require(__DIR__.'/../Controllers/Rating.php');
+  require(__DIR__.'/../connection.php');
+  require(__DIR__.'/TestRequestInput.php');
 
   if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ( isset($_SESSION['userId']) ) {

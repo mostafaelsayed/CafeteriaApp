@@ -1,5 +1,5 @@
 <?php
-  require('Dates.php'); 
+  require(__DIR__.'/Dates.php'); 
 
   //result=getCommentsByMenuItemId();
   //if(result)

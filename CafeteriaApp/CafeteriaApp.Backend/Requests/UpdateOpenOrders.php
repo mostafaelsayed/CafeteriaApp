@@ -1,6 +1,6 @@
 <?php 
-	require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/OrderItem.php');
-	require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Notification.php');
+	require(__DIR__.'/../Controllers/OrderItem.php');
+	require(__DIR__.'/../Controllers/Notification.php');
 
 	if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		$ids = [];

@@ -1,6 +1,6 @@
 <?php
     function addImageFile($imageData, $dirChanged = 0) {
-        echo "jkkkkkkkkkkkkkkkkk";
+        //echo "jkkkkkkkkkkkkkkkkk";
     	if ($dirChanged == 0) {
     		chdir("../uploads");
     	}
