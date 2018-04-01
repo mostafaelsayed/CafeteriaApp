@@ -41,7 +41,7 @@ add_userApp.controller('addCustomer',['$scope','addUserService','$http',function
 		$scope.userData = addUserService.userData;
 		$scope.userData.RoleId = 2; // customer role id
 
-		$http.post('../../CafeteriaApp.Backend/Requests/User.php',$scope.userData)
+		$http.post('../../../CafeteriaApp.Backend/Requests/User.php',$scope.userData)
 		.then(function(response) {
 			
 			if ($scope.myform.$valid) {
@@ -56,9 +56,9 @@ add_userApp.controller('addCustomer',['$scope','addUserService','$http',function
 					DateOfBirth: dateOfBirth
 				}
 				
-				$http.post('../../CafeteriaApp.Backend/Requests/Customer.php',customerData)
+				$http.post('../../../CafeteriaApp.Backend/Requests/Customer.php',customerData)
 				.then(function(response) {
-					document.location = "../../CafeteriaApp.Frontend/Areas/Admin/User/Views/show_and_delete_users.php";
+					document.location = "../../../CafeteriaApp.Frontend/Areas/Admin/User/Views/show_and_delete_users.php";
 				});
 			}
 		});

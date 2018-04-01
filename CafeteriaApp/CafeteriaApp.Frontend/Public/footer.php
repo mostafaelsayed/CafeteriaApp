@@ -2,11 +2,10 @@
 
 		<!-- Advertisments -->
 		<div id="ads">
-
+			<a href="">
 			<img style="width: 200px;height: 200px" src="../footerIcons/hotOffer.jpg" />
-
-			<a href="">Go to offer</a>
-
+			Get offer
+		</a>
 		</div>
 
 		<!-- feedback form -->

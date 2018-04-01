@@ -4,7 +4,7 @@
 
   validatePageAccess($conn);
 
-  require(__DIR__.'/../../../CafeteriaApp.Frontend/Areas/Admin/layout.php');
+  require(__DIR__.'/../layout.php');
 
 ?>
 
@@ -12,15 +12,15 @@
 
   <title>Edit MenuItem</title>
 
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
+  <link href="../../css/input_file.css" rel="stylesheet">
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/image_module.js"></script>
+  <script src="../../js/image_module.js"></script>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/location_provider.js"></script>
+  <script src="../../js/location_provider.js"></script>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/price_module.js"></script>
+  <script src="../../js/price_module.js"></script>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/edit_menuitem.js"></script>
+  <script src="../../js/edit_menuitem.js"></script>
 
 </head>
 

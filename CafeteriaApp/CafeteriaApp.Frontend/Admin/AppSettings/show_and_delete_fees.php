@@ -14,7 +14,7 @@
 
 	<title>Fees</title>
 
-	<script src="../../../js/show_and_delete_fees.js"></script>
+	<script src="../../js/show_and_delete_fees.js"></script>
 
 </head>
 

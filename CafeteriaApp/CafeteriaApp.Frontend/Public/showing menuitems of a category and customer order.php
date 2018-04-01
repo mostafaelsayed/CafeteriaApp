@@ -32,11 +32,11 @@
 
     <?php require(__DIR__.'/customer-order-and-menuitems.php'); ?>
 
-    <a onclick="slideAbout()">About This category</a>
+    <a onclick="$('.about').slideToggle('slow');" style="cursor:pointer;">About This category</a>
 
     <!-- </div> -->
 
-    <div class="about" style="margin: 0 auto;text-align: center;color: white">
+    <div  class="about" style="margin: 0 auto;text-align: center;color: white">
 
       <h1>About This Category</h1>
 

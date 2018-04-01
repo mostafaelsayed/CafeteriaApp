@@ -2,27 +2,26 @@
 
   require(__DIR__.'/../../../CafeteriaApp.Backend/functions.php');
 
-  validatePageAccess($conn);
+  //validatePageAccess($conn);
 
   require(__DIR__.'/../layout.php');
 
   require(__DIR__.'/../modal_includes.php');
-
 ?>
 
 <head>
 
-  <link href="../../../../css/input_file.css" rel="stylesheet">
+  <link href="../../css/input_file.css" rel="stylesheet">
 
   <title>Managing Cafeteria</title>
 
   <!-- location provider -->
-  <script src="../../../../javascript/location_provider.js"></script>
+  <script src="../../js/location_provider.js"></script>
 
   <!-- image module -->
-  <script src="../../../../javascript/image_module.js"></script>
+  <script src="../../js/image_module.js"></script>
 
-  <script src="../../../../javascript/edit_cafeteria_and_show_and_delete_its_categories.js"></script>
+  <script src="../../js/edit_cafeteria_and_show_and_delete_its_categories.js"></script>
 
 </head>
 

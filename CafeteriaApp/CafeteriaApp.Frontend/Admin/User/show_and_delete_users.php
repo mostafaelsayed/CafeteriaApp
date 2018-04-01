@@ -4,7 +4,7 @@
 
   require(__DIR__.'/../../../CafeteriaApp.Backend/functions.php');
 
-  validatePageAccess($conn);
+  //validatePageAccess($conn);
 
   require(__DIR__.'/../layout.php');
 
@@ -14,7 +14,7 @@
 
 <head>
 
-  <script src="../../../../javascript/show_and_delete_users.js"></script>
+  <script src="../../js/show_and_delete_users.js"></script>
 
 </head>
 

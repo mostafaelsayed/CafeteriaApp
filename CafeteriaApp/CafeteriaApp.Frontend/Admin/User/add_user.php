@@ -1,10 +1,10 @@
 <?php
 
-  require(__DIR__.'/../../../CafeteriaApp.Backend/functions.php');
+require(__DIR__.'/../../../CafeteriaApp.Backend/functions.php');
 
-  validatePageAccess($conn);
+validatePageAccess($conn);
 
-  require(__DIR__.'/../../../CafeteriaApp.Frontend/Admin/layout.php');
+require(__DIR__.'/../layout.php');
   
 ?>
 
@@ -14,25 +14,25 @@
 
   <meta name="viewport" content="width=device-width" />
 
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
+  <link href="../../css/input_file.css" rel="stylesheet">
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/angular-route.js"></script>
+  <script src="../../js/angular-route.js"></script>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/image_module.js"></script>
+  <script src="../../js/image_module.js"></script>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/location_provider.js"></script>
+  <script src="../../js/location_provider.js"></script>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/phone_number_module.js"></script>
+  <script src="../../js/phone_number_module.js"></script>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/price_module.js"></script>
+  <script src="../../js/price_module.js"></script>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/add_user.js"></script>
+  <script src="../../js/add_user.js"></script>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/add_customer.js"></script>
+  <script src="../../js/add_customer.js"></script>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/add_admin.js"></script>
+  <script src="../../js/add_admin.js"></script>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/add_cashier.js"></script>
+  <script src="../../js/add_cashier.js"></script>
 
 </head>
 
@@ -180,11 +180,11 @@
          
           <div><label>Choose Role</label></div>
 
-          <a style="margin:auto" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/User/Views/add_user.php/1">Admin&nbsp;</a>
+          <a style="margin:auto" href="../../Areas/Admin/User/Views/add_user.php/1">Admin&nbsp;</a>
 
-          <a style="margin:auto" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/User/Views/add_user.php/2">Cashier&nbsp;</a>
+          <a style="margin:auto" href="../../Areas/Admin/User/Views/add_user.php/2">Cashier&nbsp;</a>
 
-          <a style="margin:auto" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/User/Views/add_user.php/3">Customer&nbsp;</a>
+          <a style="margin:auto" href="../../Areas/Admin/User/Views/add_user.php/3">Customer&nbsp;</a>
 
           <div ng-view></div>
 

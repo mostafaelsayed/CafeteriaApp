@@ -12,7 +12,7 @@ add_userApp.controller('addCashier',['$scope','$http','addUserService',function(
 		$scope.userData = addUserService.userData;
 		$scope.userData.RoleId = 3; // cashier role id
 
-		$http.post('../../CafeteriaApp.Backend/Requests/User.php',$scope.userData)
+		$http.post('../../../CafeteriaApp.Backend/Requests/User.php',$scope.userData)
 		.then(function(response) {
 
 			if ($scope.myform.$valid) {
@@ -21,7 +21,7 @@ add_userApp.controller('addCashier',['$scope','$http','addUserService',function(
 					UserId: parseInt(response.data)
 				}
 
-				$http.post('../../CafeteriaApp.Backend/Requests/Cashier.php',cashierData)
+				$http.post('../../../CafeteriaApp.Backend/Requests/Cashier.php',cashierData)
 				.then(function(response) {
 					console.log(response);
 					//document.location = "../../CafeteriaApp.Frontend/Areas/Admin/User/Views/show_and_delete_users.php";

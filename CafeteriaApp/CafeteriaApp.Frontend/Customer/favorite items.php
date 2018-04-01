@@ -1,7 +1,7 @@
 <?php
 
   require(__DIR__.'/../../CafeteriaApp.Backend/functions.php');
-  validatePageAccess($conn);
+  //validatePageAccess($conn);
   require(__DIR__.'/../layout.php');
    
 ?>
@@ -79,5 +79,3 @@
   </table>
 
 </div>
-
-<?php require('../footer.php'); ?>

@@ -14,15 +14,15 @@
 
   <title>Managing Category</title>
 
-  <link href="../../../../css/input_file.css" rel="stylesheet">
+  <link href="../../css/input_file.css" rel="stylesheet">
 
   <!-- location provider -->
-  <script src="../../../../javascript/location_provider.js"></script>
+  <script src="../../js/location_provider.js"></script>
 
   <!-- image module -->
-  <script src="../../../../javascript/image_module.js"></script>
+  <script src="../../js/image_module.js"></script>
 
-  <script src="../../../../javascript/edit_category_and_show_and_delete_its_menuitems.js"></script>
+  <script src="../../js/edit_category_and_show_and_delete_its_menuitems.js"></script>
 
 </head>
 

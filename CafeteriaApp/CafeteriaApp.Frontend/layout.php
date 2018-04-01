@@ -58,22 +58,15 @@
 
         <div class="container-fluid">
 
-          <div class="row">
-
             <div class="navbar-header">
 
               <button class="navbar-toggle" data-toggle="collapse" data-target="#optionsNavbar" id="mybutton" style="float: left">
-
                 <span class="icon-bar"></span>
-
                 <span class="icon-bar"></span>
-
                 <span class="icon-bar"></span>
-
               </button>
 
             </div>
-
             <div id="optionsNavbar" class="navbar-collapse">
 
               <ul id="left_ul" class="nav navbar-nav navbar-left">
@@ -92,15 +85,15 @@
                  
                   <div class="btn-group">
 
-                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 90px; height: 50px;padding: 0px;background-color: transparent;border-color: transparent">
+                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 90px; height: 50px;padding: 0px;background-color:transparent;border-color: transparent">
 
                     <?php
                       if ($length > 0) {
-                        echo "<img src='../alarm-1.png' width='50' height='50'>";
-                        echo "<label id='notifyLabel' style='color: blue;font-size: 2em'>{$length}</label>";
+                        echo "<img src='../images/alarm-1.png' style='width:40px; height:40px;'>
+                        <label id='notifyLabel' style='color: blue;font-size: 2em'>{$length}</label>";
                       }
                       else {
-                        echo "<img src='../alarm.png' width='55' height='55'>";
+                        echo "<img src='../images/alarm.png' style='width:40px; height:40px;'>";
                       }
 
                       if ( !empty($_SESSION['notifications']) && is_array($_SESSION['notifications']) ) {
@@ -115,10 +108,9 @@
                     ?>
 
                   </button>
-
                   <div class="dropdown-menu" style="left: -70px;padding: 5px;width: 300px;background-color: #FFC806">
                 
-                    <?= isset($ul)? $ul : "<h4>No Notifications</h4>"; ?>
+                    <?= isset($ul)? $ul : "<h5>No Notifications</h5>"; ?>
                    
                   </div>
 
@@ -127,39 +119,18 @@
               </li>
 
               <li class="inner">
-
-                <a class="navbar-brand" target="_self" href="../Views/logout.php"><?= "{$Words['Log out'][$lang_id]}" ?></a>
-
+                <a class="navbar-brand"  href="../logout.php"><?= "{$Words['Log out'][$lang_id]}" ?>
+                </a>
               </li>
-
-              <form method="post" style="display: inline-block;" action="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/search.php">
-
-                <li class="inner" style="margin-top: 11px">
-
-                  <button type="submit"><i class="fa fa-search" style="font-size: 20px"></i></button>
-
-                </li>
-
-                <li class="inner" style="margin-top: -27px;margin-left: 50px">
-
-                  <input type="text" name="searchInput" />
-
-                </li>
-
-              </form>
 
             </ul>
 
           </div>
 
           <ul id="right_ul">
-
             <li id="shoppingCart" title="Show Shopping Cart Items">
-
               <div id="shoppingCart_Button">
-
                 <img src="../IconoCompraPaquetigos.png" style="width: 100%;height: 100%">
-
               </div>
 
               <div id="shoppingCartDetails">
@@ -229,38 +200,30 @@
                     </table> 
 
                     <div>
-
-                      <a id="checkout" title="Check out this order" class="btn" ng-href="../Areas/Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}" ng-show="orderItems.length > 0"  target="_self">Checkout</a>
-
+                      <a id="checkout" title="Check out this order" class="btn" ng-href="../Areas/Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}" ng-show="orderItems.length > 0"  >
+                      Checkout
+                      </a>
                     </div>
-
                   </div>
-                
                 </div>
-
               </li>
 
               <li id="languagesDropdown">
-
-                <select id="languages" class="selectpicker show-tick" select-picker ng-model="selectedLang" ng-options="l.Name for l in languages" ng-change="changeLanguage(selectedLang.Id)" data-width="fit"></select>
-
+                <select id="languages" class="selectpicker show-tick" select-picker ng-model="selectedLang" ng-options="l.Name for l in languages" ng-change="changeLanguage(selectedLang.Id)" data-width="fit">
+                </select>
               </li>
 
               <li id="myProfile" style="display: inline-block">
-
                 <div class="btn-group">
-
                   <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-                    My Profile
-
+                    My Profile <span class="glyphicon glyphicon-user"></span>
                   </button>
 
                   <div class="dropdown-menu" style="left: -70px">
 
                     <div>
 
-                      <a class="dropdown_item" href="../Areas/Customer/favorite items.php" target="_self">My Favorites</a>
+                      <a class="dropdown_item" href="../Customer/favorite items.php" >My Favorites</a>
 
                       <a class="dropdown_item" href="#">Change Password</a>
 
@@ -283,8 +246,6 @@
               </li>
 
             </ul>
-
-          </div>
 
         </div>
 

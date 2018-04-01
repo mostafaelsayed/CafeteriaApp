@@ -2,7 +2,7 @@
 
   require(__DIR__.'/../../../CafeteriaApp.Backend/functions.php');
 
-  validatePageAccess($conn);
+  //validatePageAccess($conn);
 
   require(__DIR__.'/../layout.php');
 
@@ -12,15 +12,15 @@
 
   <title>Edit User</title>
 
-  <link href="../../../../css/input_file.css" rel="stylesheet">
+  <link href="../../css/input_file.css" rel="stylesheet">
 
-  <script src="../../../../javascript/image_module.js"></script>
+  <script src="../../js/image_module.js"></script>
 
-  <script src="../../../../javascript/location_provider.js"></script>
+  <script src="../../js/location_provider.js"></script>
 
-  <script src="../../../../javascript/phone_number_module.js"></script>
+  <script src="../../js/phone_number_module.js"></script>
 
-  <script src="../../../../javascript/edit_user.js"></script>
+  <script src="../../js/edit_user.js"></script>
 
 </head>
 

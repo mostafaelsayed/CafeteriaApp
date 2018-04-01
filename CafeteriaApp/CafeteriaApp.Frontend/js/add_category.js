@@ -21,7 +21,7 @@ add_categoryApp.controller('addCategory',['$scope','$http','$location',function(
         Image: $scope.uploadme.src.split(',')[1]
       };
 
-      $http.post('../../CafeteriaApp.Backend/Requests/Category.php',data)
+      $http.post('../../../CafeteriaApp.Backend/Requests/Category.php',data)
       .then(function(response) {
         window.history.back();
       });

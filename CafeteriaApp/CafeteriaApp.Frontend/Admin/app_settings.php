@@ -1,10 +1,10 @@
 <?php
 
-	require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
+require(__DIR__.'/../../CafeteriaApp.Backend/functions.php');
 
-   	validatePageAccess($conn);
+//validatePageAccess($conn);
 
-	require('layout.php');
+require(__DIR__.'/layout.php');
 
 ?>
 

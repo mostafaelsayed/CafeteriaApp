@@ -12,15 +12,15 @@
 
   <title>Adding MenuItem</title>
 
-  <link href="../../../../css/input_file.css" rel="stylesheet">
+  <link href="../../css/input_file.css" rel="stylesheet">
 
-  <script src="../../../../javascript/location_provider.js"></script>
+  <script src="../../js/location_provider.js"></script>
 
-  <script src="../../../../javascript/image_module.js"></script>
+  <script src="../../js/image_module.js"></script>
 
-  <script src="../../../../javascript/price_module.js"></script>
+  <script src="../../js/price_module.js"></script>
 
-  <script src="../../../../javascript/add_menuitem.js"></script>
+  <script src="../../js/add_menuitem.js"></script>
 
 </head>
 

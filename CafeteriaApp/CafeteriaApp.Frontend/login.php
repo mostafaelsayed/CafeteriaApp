@@ -1,8 +1,8 @@
 <?php
-  require('../../CafeteriaApp.Backend/functions.php');
-  require('../../CafeteriaApp.Backend/validation_functions.php');
-  require('../../CafeteriaApp.Backend/Controllers/Notification.php');
-  require('../../CafeteriaApp.Backend/Controllers/Order.php');
+  require(__DIR__.'/../CafeteriaApp.Backend/functions.php');
+  require(__DIR__.'/../CafeteriaApp.Backend/validation_functions.php');
+  require(__DIR__.'/../CafeteriaApp.Backend/Controllers/Notification.php');
+  require(__DIR__.'/../CafeteriaApp.Backend/Controllers/Order.php');
 
   if ( isset( $_GET['redirect_to'] ) ) {
     $_POST['redirect_to'] = $_GET['redirect_to'];
@@ -50,25 +50,25 @@
           }
           else {
             if ($_SESSION['roleId'] == 2) { // customer
-              redirect_to( rawurldecode('../Areas/Public/Cafeteria/Views/showing cafeterias.php') );
+              redirect_to( rawurldecode('Public/showing cafeterias.php') );
             }
             elseif ($_SESSION['roleId'] == 1) { // admin
-              redirect_to( rawurldecode('../Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php') );
+              redirect_to( rawurldecode('Admin/Cafeteria/show_and_delete_cafeterias.php') );
             }
             else { // cashier
-              redirect_to( rawurldecode('../Areas/Cashier/Order/Views/show_and_hide_orders.php') );
+              redirect_to( rawurldecode('Cashier/show_and_hide_orders.php') );
             }
           }
         }
         else {
           if ($_SESSION['roleId'] == 2) { // customer
-            redirect_to( rawurldecode('../Areas/Public/Cafeteria/Views/showing cafeterias.php') );
+            redirect_to( rawurldecode('Public/showing cafeterias.php') );
           }
           elseif ($_SESSION['roleId'] == 1)  { // admin
-            redirect_to( rawurldecode('../Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php') );
+            redirect_to( rawurldecode('Admin/Cafeteria/show_and_delete_cafeterias.php') );
           }
           else { // cashier
-            redirect_to( rawurldecode('../Areas/Cashier/Order/Views/show_and_hide_orders.php') );
+            redirect_to( rawurldecode('Cashier/show_and_hide_orders.php') );
           }
         } //3ala 7asab                               
       }
@@ -83,13 +83,13 @@
   // if already logged in and called login page
   elseif ( isset( $_SESSION['userId'] ) && isset( $_SESSION['userName'] ) && isset( $_SESSION['roleId'] ) ) { // This is probably a GET request
     if ($_SESSION['roleId'] == 1) { // admin
-      redirect_to( rawurldecode('../Areas/Admin/Cafeteria/Views/show_and_delete_cafeterias.php') ); //
+      redirect_to( rawurldecode('Admin/Cafeteria/show_and_delete_cafeterias.php') ); //
     }
     else if ($_SESSION['roleId'] == 2) { // customer
-      redirect_to( rawurldecode('../Areas/Public/Cafeteria/Views/showing cafeterias.php') ); //
+      redirect_to( rawurldecode('Public/showing cafeterias.php') ); //
     }
     else { // cashier
-      redirect_to( rawurldecode('../Areas/Cashier/Order/Views/show_and_hide_orders.php') ); //
+      redirect_to( rawurldecode('Cashier/show_and_hide_orders.php') ); //
     }
   } // end: if ( isset( $_POST['submit'] ) )
 ?>
@@ -100,13 +100,13 @@
 
   <head>
   
-    <link href="../css/errors.css" rel="stylesheet" type="text/css">
+    <link href="css/errors.css" rel="stylesheet" type="text/css">
 
     <link rel="icon" type="text/css" href="../../favicon.ico">
 
     <link rel="stylesheet" href="css/materialize.css">
 
-    <link rel="stylesheet" type="text/css" href="../css/login.css">
+    <link rel="stylesheet" type="text/css" href="css/login.css">
 
     <script src="js/jquery-3.1.1.min.js"></script>
 
