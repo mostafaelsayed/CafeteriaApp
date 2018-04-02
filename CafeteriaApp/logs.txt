@@ -24,4 +24,10 @@ login page has redirect implemented incorrectly using post gv but the write one 
 
 -categories structure
 
--bill as fixedon the bottom right
+-change password
+
+-capatcha in register & feedback
+
+-table of bill as fixed on the bottom right (suggest)
+
+- update rating to make users up and logged in user down and hidden but show when press a button
