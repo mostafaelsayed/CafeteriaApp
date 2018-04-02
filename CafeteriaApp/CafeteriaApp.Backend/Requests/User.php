@@ -34,7 +34,6 @@
         //var_dump($result);
     
       if ($result) {
-        require_once(__DIR__ . '/../../loadLangsWords,languages,fees.php');
         normalizeString($conn, $_FILES['image']['name']);
         $userId = addUser($conn, $_POST['firstName'], $_POST['lastName'], $_FILES['image'], $_POST['email'], $_POST['phone'], $_POST['password'], $_POST['DOB'], $_POST['gender'], 2);
         $deliveryTimeId = getCurrentTimeId($conn);
@@ -42,7 +41,7 @@
         $_SESSION['userId'] = $userId;
         $_SESSION['orderId'] = addOrder($conn, $deliveryDateId, $deliveryTimeId, 1, 1, $userId);
         $_SESSION['notifications'] = [];
-        $_SESSION['lang_id'] = 1;
+        $_SESSION['langId'] = 1;
         header("Location: " . "../../CafeteriaApp.Frontend/Public/showing cafeterias.php");
       }
       else {

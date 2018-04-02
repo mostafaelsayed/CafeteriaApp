@@ -1,29 +1,27 @@
--absolute paths to relative
-done {requests, controllers, cashier, admin, customer}
-remaining { js files}
-
-
 -json language : ar, en
 
 -delete and put requests are unsupported on the host(unless premium)
 
 -test_request_intput
 
--angular push notifications
-
 -check login and permissions in each page except for public dir
 
 -delete unnecessary tables
 
--layouts paths in css & js are calculated as if they accessed from the caller not the layout itself
-
-
 -layout in frontend is for public and customers
-
--any file(php, js, css) that is required inside a php file, its relative path is relative with the path of that php that included it
-to solve this issue for php , we call __DIR__ to get the original parent dir but for js & css files we make the paths relative to the php
 
 login page has redirect implemented incorrectly using post gv but the write one i think is to use session to save that info(my fault), check the url if it's internal , use access tokens
 
-put search in home page
+-put search in home page(not cafetrias)
 
+- isolate notification icon from left_ul
+
+-remove favorites doesn't work
+
+-rating is wrong
+
+-paypal
+
+-categories structure
+
+-bill as fixedon the bottom right
