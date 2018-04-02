@@ -49,6 +49,7 @@
     if ($result) {
       $times = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
+      //die(var_dump($times));
       return (int)$times['Id'];
     }
     else {

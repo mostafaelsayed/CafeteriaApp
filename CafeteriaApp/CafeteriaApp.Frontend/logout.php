@@ -1,6 +1,6 @@
 <?php
-	require(__DIR__.'/../CafeteriaApp.Backend/functions.php');
-	require(__DIR__.'/fbConfig.php');
+	require(__DIR__ . '/../CafeteriaApp.Backend/functions.php');
+	require(__DIR__ . '/fbConfig.php');
 
 	// v1: simple logout
 	// session_start();

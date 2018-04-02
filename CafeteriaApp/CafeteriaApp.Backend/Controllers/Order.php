@@ -1,25 +1,12 @@
-<?php
-//echo basename($_SERVER["REQUEST_URI"], '.php');
-
-  if (basename($_SERVER["REQUEST_URI"], '.php') == 'login') { // login
+<?php    
+  require_once(__DIR__ . '/../session.php');
+  require_once(__DIR__ . '/../connection.php');
+  //require_once('/storage/ssd4/737/5099737/public_html/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');
+  //require_once('/storage/ssd4/737/5099737/public_html/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
   
-    require_once(__DIR__.'/../../CafeteriaApp.Backend/session.php');
-    require_once(__DIR__.'/../../CafeteriaApp.Backend/connection.php');
-  }
-  else {
-      
-    require_once(__DIR__.'/../session.php');
-    require_once(__DIR__.'/../connection.php');
-      
-      
-    //require_once('/storage/ssd4/737/5099737/public_html/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');
-     //require_once('/storage/ssd4/737/5099737/public_html/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
-    
-  }
-  
-  require(__DIR__.'/Dates.php');
-  require(__DIR__.'/Times.php');
-  require(__DIR__.'/../../PayPal/start.php');
+  require(__DIR__ . '/Dates.php');
+  require(__DIR__ . '/Times.php');
+  require(__DIR__ . '/../paypal/start.php');
 
   use PayPal\Api\Amount;
   use PayPal\Api\Details;
@@ -253,6 +240,7 @@
     $item->setCurrency('GBP'); // or USD or any other currency
 
     foreach ($orderItems as $orderItem) {
+      //var_dump($orderItem);
       $item->setName($orderItem[0])
         ->setQuantity($orderItem[2])
         ->setPrice($orderItem[1]);
@@ -275,16 +263,23 @@
       ->setTax($tax)
       ->setSubtotal($orderItems[0][4]);
 
+      //var_dump($orderItems[0][4]);
+      //var_dump($shipping);
+      var_dump($details);
+
     // Set redirect urls
     $redirectUrls = new RedirectUrls();
-    $redirectUrls->setReturnUrl(SITE_URL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/review_order_and_charge_customer.php?orderId=' . $orderId . '&paymentMethodId=' . $selectedMethodId . '&orderType=' . $orderType)
-      ->setCancelUrl(SITE_URL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/checkout.php?orderId=' . $orderId . '&paymentMethodId=' . $selectedMethodId);
+    $redirectUrls->setReturnUrl(SITE_URL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/review_order_and_charge_customer.php?orderId=' . $orderId . '&paymentMethodId=' . $selectedMethodId . '&orderType=' . $orderType)
+      ->setCancelUrl(SITE_URL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/checkout.php?orderId=' . $orderId . '&paymentMethodId=' . $selectedMethodId);
 
     // Set payment amount
     $amount = new Amount();
     $amount->setCurrency('GBP')
       ->setTotal($orderItems[0][4] + $shipping + $tax)
       ->setDetails($details);
+
+      //var_dump($amount);
+      //var_dump($itemList);
 
     // Set transaction object
     $transaction = new Transaction();

@@ -139,4 +139,4 @@
 
 </div>
 
-<?php require('../footer.php'); ?>
+<?php require( __DIR__ . '/../Public/footer.php'); ?>

@@ -1,11 +1,11 @@
 		<link rel="stylesheet" type="text/css" href="../css/footer.css">
 
 		<!-- Advertisments -->
-		<div id="ads">
+		<!-- <div id="ads">
 			<a href="">
 			<img style="width: 200px;height: 200px" src="../footerIcons/hotOffer.jpg" />
 			Get offer
-		</a>
+		</a> -->
 		</div>
 
 		<!-- feedback form -->

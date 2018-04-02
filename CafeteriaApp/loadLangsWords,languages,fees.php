@@ -1,10 +1,10 @@
 <meta charset="utf-8" />
 
 <?php 
-require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Languages.php');
-require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Fee.php');
-require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Words.php');
-require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
+require('CafeteriaApp.Backend/Controllers/Languages.php');
+require_once('CafeteriaApp.Backend/Controllers/Fee.php');
+require('CafeteriaApp.Backend/Controllers/Words.php');
+require_once('CafeteriaApp.Backend/connection.php');
 
 $languages = getLanguages($conn); // MYSQLI_ASSOC
 $fees = getFees($conn); // MYSQLI_ASSOC
@@ -36,7 +36,7 @@ if ($memcache) {
 
 	//var_dump( $memcache->get('str_key') );
 	//var_dump( $memcache->get('num_key') );
-	var_dump( $memcache->get('languages') );
+	//var_dump( $memcache->get('languages') );
 
 	unset($languages);
  	unset($fees);

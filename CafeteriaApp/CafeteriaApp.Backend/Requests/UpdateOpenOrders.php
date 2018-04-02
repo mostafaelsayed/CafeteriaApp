@@ -37,7 +37,7 @@
 			array_map("explodeArray1", $orderItems);
 
 			//3-Menu Items distinct Ids in array 
-			$ids = array_unique($ids,SORT_NUMERIC);
+			$ids = array_unique($ids, SORT_NUMERIC);
 
 			//3-Menu Items in array 
 			$menuItems = getMenuItemsByIds($conn, $ids);

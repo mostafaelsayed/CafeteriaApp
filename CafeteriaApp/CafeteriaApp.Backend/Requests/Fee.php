@@ -1,12 +1,12 @@
 <?php
-  require(__DIR__.'/../Controllers/Fee.php');
-  require(__DIR__.'/../connection.php');
-  require(__DIR__.'/../session.php');
-  require(__DIR__.'/TestRequestInput.php');
+  require(__DIR__ . '/../Controllers/Fee.php');
+  require(__DIR__ . '/../connection.php');
+  require(__DIR__ . '/../session.php');
+  require(__DIR__ . '/TestRequestInput.php');
 
   if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     //if ($_SESSION['roleId'] == 1) {
-      if ( isset($_GET['id']) && test_int($_GET['id']) ) {
+      if ( isset($_GET['id']) && testInt($_GET['id']) ) {
         checkResult( getFeeById($conn, $_GET['id']) );
       }
       else {
@@ -19,7 +19,7 @@
     if ($_SESSION['roleId'] == 1) {
       $data = json_decode( file_get_contents('php://input') );
 
-      if ( normalize_string($conn, $data->Name) && test_price($data->Price) ) {
+      if ( normalizeString($conn, $data->Name) && testPrice($data->Price) ) {
         addFee($conn, $data->Name, $data->Price);
       }
       else {
@@ -33,7 +33,7 @@
       //decode the json data
       $data = json_decode( file_get_contents('php://input') );
       
-      if ( isset($data->Id, $data->Price) && test_int($data->Id) && normalize_string($conn, $data->Name) && test_price($data->Price) ) {
+      if ( isset($data->Id, $data->Price) && testInt($data->Id) && normalizeString($conn, $data->Name) && testPrice($data->Price) ) {
         editFee($conn, $data->Id, $data->Name, $data->Price);
       }
       else {
@@ -44,7 +44,7 @@
 
   if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     if ($_SESSION['roleId'] == 1) {
-      if ( isset($_GET['feeId']) && test_int($_GET['feeId']) ) {
+      if ( isset($_GET['feeId']) && testInt($_GET['feeId']) ) {
         deleteFee($conn, $_GET['feeId']);
       }
       else {

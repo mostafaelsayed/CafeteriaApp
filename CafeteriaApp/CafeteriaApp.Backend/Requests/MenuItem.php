@@ -1,14 +1,14 @@
 <?php
-  require(__DIR__.'/../Controllers/MenuItem.php');
-  require(__DIR__.'/../connection.php');
-  require(__DIR__.'/../session.php');
-  require(__DIR__.'/TestRequestInput.php');
+  require(__DIR__ . '/../Controllers/MenuItem.php');
+  require(__DIR__ . '/../connection.php');
+  require(__DIR__ . '/../session.php');
+  require(__DIR__ . '/TestRequestInput.php');
 
   if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if ( isset($_GET['categoryId']) && test_int($_GET['categoryId']) ) {
+    if ( isset($_GET['categoryId']) && testInt($_GET['categoryId']) ) {
       checkResult( getMenuItemByCategoryId($conn, $_GET['categoryId'], false, true) );
     }
-    elseif (isset($_GET['id']) && test_int($_GET['id']) && $_SESSION['roleId'] == 1) {
+    elseif (isset($_GET['id']) && testInt($_GET['id']) && $_SESSION['roleId'] == 1) {
       checkResult( getMenuItemById($conn, $_GET['id']) );
     }
     else {
@@ -22,7 +22,7 @@
       //decode the json data
       $data = json_decode( file_get_contents('php://input') ); // ????????????
 
-      if ( isset($data->CategoryId, $data->Price, $data->Name, $data->Description, $data->Image) && test_int($data->CategoryId) && normalize_string($conn, $data->Name, $data->Description, $data->Image) && test_price($data->Price) ) {
+      if ( isset($data->CategoryId, $data->Price, $data->Name, $data->Description, $data->Image) && testInt($data->CategoryId) && normalizeString($conn, $data->Name, $data->Description, $data->Image) && testPrice($data->Price) ) {
         addMenuItem($conn, $data->Name, $data->Price, $data->Description, $data->CategoryId, $data->Image);
       }
       else {
@@ -36,7 +36,7 @@
       //decode the json data
       $data = json_decode( file_get_contents('php://input') );
 
-      if ( isset($data->Id, $data->Price, $data->Visible, $data->Name, $data->Description, $data->Image) && test_int($data->Id, $data->Visible) && normalize_string($conn, $data->Name, $data->Description, $data->Image) && test_price($data->Price) ) {
+      if ( isset($data->Id, $data->Price, $data->Visible, $data->Name, $data->Description, $data->Image) && testInt($data->Id, $data->Visible) && normalizeString($conn, $data->Name, $data->Description, $data->Image) && testPrice($data->Price) ) {
         editMenuItem($conn, $data->Name, $data->Price, $data->Description, $data->Id, $data->Image, $data->Visible);
       }
       else {
@@ -47,7 +47,7 @@
 
   if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     if ($_SESSION['roleId'] == 1) {
-      if (isset($_GET['menuItemId']) && test_int($_GET['menuItemId']) ) {
+      if (isset($_GET['menuItemId']) && testInt($_GET['menuItemId']) ) {
         deleteMenuItem($conn, $_GET['menuItemId']);
       }
       else {

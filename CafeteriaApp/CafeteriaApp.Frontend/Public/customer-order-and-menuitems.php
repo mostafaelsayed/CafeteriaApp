@@ -206,7 +206,7 @@
 
       <div style="align-content: center;text-align: center">
 
-        <a style="font-style: italic;color: white" class="btn btn-info btn-lg " ng-href="../../checkout.php?orderId={{orderId}}&categoryId={{categoryId}}" ng-cloak ng-show="orderItems.length > 0 && roleid == false" target="_self">Checkout</a>
+        <a style="font-style: italic;color: white" class="btn btn-info btn-lg " ng-href="../Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}" ng-cloak ng-show="orderItems.length > 0 && roleid == false" target="_self">Checkout</a>
 
         <a style="font-style: italic;color: white" class="btn btn-info btn-lg" href="../../../Cashier/Order/Views/show_and_hide_orders.php" ng-cloak ng-show="roleid == true" target="_self">Return To Orders</a>
 

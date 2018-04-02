@@ -1,10 +1,10 @@
 <?php
-  require(__DIR__.'/../Controllers/Customer.php');
-  require(__DIR__.'/../connection.php');
-  require(__DIR__.'/TestRequestInput.php');
+  require(__DIR__ . '/../Controllers/Customer.php');
+  require(__DIR__ . '/../connection.php');
+  require(__DIR__ . '/TestRequestInput.php');
 
   if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if ( isset($_GET['userId']) && test_int($_GET['userId']) ) {
+    if ( isset($_GET['userId']) && testInt($_GET['userId']) ) {
       checkResult( getCustomerByUserId($conn, $_GET['userId']) );
     }
     elseif ( isset($_SESSION['userId']) ) {
@@ -17,7 +17,7 @@
       //decode the json data
       $data = json_decode( file_get_contents('php://input') );
 
-      if ( isset($data->Credit, $data->DateOfBirth, $data->UserId, $data->GenderId) && test_int($data->GenderId, $data->UserId) && test_price($data->Credit) && test_date_of_birth($data->DateOfBirth) ) {
+      if ( isset($data->Credit, $data->DateOfBirth, $data->UserId, $data->GenderId) && testInt($data->GenderId, $data->UserId) && testPrice($data->Credit) && testDateOfBirth($data->DateOfBirth) ) {
         addCustomer($conn, $data->Credit, $data->DateOfBirth, $data->UserId, $data->GenderId);
       }
     }
@@ -27,7 +27,7 @@
     //decode the json data
     $data = json_decode( file_get_contents('php://input') );
 
-    if (isset($data->UserId) && test_int($data->UserId, $data->GenderId) && test_price($data->Credit) && test_date_of_birth($data->DateOfBirth) && ($_SESSION['roleId'] == 1 || $data->UserId == $_SESSION['userId']) ) {
+    if (isset($data->UserId) && testInt($data->UserId, $data->GenderId) && testPrice($data->Credit) && testDateOfBirth($data->DateOfBirth) && ($_SESSION['roleId'] == 1 || $data->UserId == $_SESSION['userId']) ) {
       echo editCustomer($conn, $data->Credit, $data->GenderId, $data->DateOfBirth, $data->UserId);
     }
     else {
@@ -37,10 +37,10 @@
 
   if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     if ($_SESSION['roleId'] == 1) {
-      if ( isset($_GET['userId']) && test_int($_GET['userId']) ) {
+      if ( isset($_GET['userId']) && testInt($_GET['userId']) ) {
         deleteCustomerByUserId($conn, $_GET['userId']);
       }
-      elseif ( isset($_GET['customerId']) && test_int($_GET['customerId']) ) {
+      elseif ( isset($_GET['customerId']) && testInt($_GET['customerId']) ) {
         deleteCustomer($conn, $_GET['customerId']);
       }
     }

@@ -17,7 +17,7 @@
 
   <title>Order info</title>
 
-  <script src="../../javascript/review_order_and_charge_customer.js"></script>
+  <script src="../js/review_order_and_charge_customer.js"></script>
 
 </head>
 
@@ -93,4 +93,4 @@
 
 <br>
 
-<?php require('../footer.php'); ?>
+<?php require(__DIR__ . '/../Public/footer.php'); ?>

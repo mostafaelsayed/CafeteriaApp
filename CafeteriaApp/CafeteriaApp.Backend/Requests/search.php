@@ -1,10 +1,10 @@
 <?php
-  require_once(__DIR__.'/../functions.php');
-  require_once(__DIR__.'/../connection.php');
-  require(__DIR__.'/../Controllers/Cafeteria.php');
-  require(__DIR__.'/../Controllers/Category.php');
-  require(__DIR__.'/../Controllers/MenuItem.php');
-  require(__DIR__.'/TestRequestInput.php');
+  require_once(__DIR__ . '/../functions.php');
+  require_once(__DIR__ . '/../connection.php');
+  require(__DIR__ . '/../Controllers/Cafeteria.php');
+  require(__DIR__ . '/../Controllers/Category.php');
+  require(__DIR__ . '/../Controllers/MenuItem.php');
+  require(__DIR__ . '/TestRequestInput.php');
 
   function filterData($conn, $searchInput) {
     $sql1 = "select * from Cafeteria where `Name` like '%{$searchInput}%'";
@@ -38,7 +38,7 @@
   }
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if ( isset($_POST['searchInput']) && normalize_string($_POST['searchInput']) ) {
+    if ( isset($_POST['searchInput']) && normalizeString($_POST['searchInput']) ) {
       filterData($conn, $_POST['searchInput']);
     }
   }

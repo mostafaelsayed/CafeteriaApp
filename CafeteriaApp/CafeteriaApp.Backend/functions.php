@@ -133,14 +133,19 @@
     $result_set = mysqli_query($conn, $query);
     confirmQuery($result_set);
 
+    var_dump($result_set);
+
     if ($result_set) {
       $dirs = mysqli_fetch_all($result_set, MYSQLI_ASSOC); // ??
 
       foreach ($dirs as $key => $value) {
+        var_dump($value['Dir']);
         if (strpos( getcwd(), $value['Dir'] ) !== false) {
           return;
         }
       }
+      var_dump(getcwd());
+
 
       echo "<h1 style ='color:red;' > Access denied . </h2>";
       exit(); 

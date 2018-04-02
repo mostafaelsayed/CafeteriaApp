@@ -1,10 +1,11 @@
-<?php require_once(__DIR__.'/../CafeteriaApp.Backend/session.php'); // must be first as it uses cookies
+<?php 
+  require_once(__DIR__ . '/../CafeteriaApp.Backend/session.php'); // must be first as it uses cookies
+
   $memcache = memcache_connect('localhost', 11211); 
   $Words = $memcache->get('words');
   $Languages = $memcache->get('languages');
-  $lang_id = $_SESSION['langId'];
   $orderId = $_SESSION['orderId'];
-
+  $lang_id = $_SESSION['langId'];
 ?>
 
 <!DOCTYPE html>
@@ -72,7 +73,7 @@
               <ul id="left_ul" class="nav navbar-nav navbar-left">
 
                 <li>
-                  <a class="navbar-brand" href='<?=__DIR__.'/Public/showing cafeterias.php';?>''><?= "{$Words['Home'][$lang_id]}"?></a>
+                  <a class="navbar-brand" href='<?=__DIR__.'/Public/showing cafeterias.php';?>'><?= "{$Words['Home'][$lang_id]}"?></a>
                 </li>
 
                 <li>
@@ -119,7 +120,7 @@
               </li>
 
               <li class="inner">
-                <a class="navbar-brand"  href="../logout.php"><?= "{$Words['Log out'][$lang_id]}" ?>
+                <a class="navbar-brand" href="../logout.php"><?= "{$Words['Log out'][$lang_id]}" ?>
                 </a>
               </li>
 
