@@ -10,7 +10,7 @@ public $create = "CREATE TABLE `Admin` (
   CONSTRAINT `user_id` FOREIGN KEY (`UserId`) REFERENCES `user` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8; ";
 
-public $drop = "drop table `mydb`.`Admin`";
+public $drop = "drop table `cafetria`.`Admin`";
 }
 
 ?>

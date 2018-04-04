@@ -26,7 +26,7 @@ ALTER TABLE `thirdpartyuser`
 
 ";
 
-public $drop = "drop table `mydb`.`ThirdPartyUser`";
+public $drop = "drop table `cafetria`.`ThirdPartyUser`";
 
 
 }

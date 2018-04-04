@@ -3,7 +3,7 @@
 class OrderItem 
 {
 	
-	 public $create =   "CREATE TABLE `mydb`.`OrderItem` ( 
+	 public $create =   "CREATE TABLE `cafetria`.`OrderItem` ( 
 	 `Id` INT NOT NULL AUTO_INCREMENT ,
 	 `Quantity` INT UNSIGNED NOT NULL ,
 	 `OrderId` INT NOT NULL ,
@@ -29,7 +29,7 @@ CREATE TRIGGER `OrderTotalAfterUpdate` AFTER UPDATE ON `orderitem`
 
   ";
 
-public $drop = "drop table `mydb`.`OrderItem`";
+public $drop = "drop table `cafetria`.`OrderItem`";
 
 
 }

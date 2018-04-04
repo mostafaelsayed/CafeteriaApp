@@ -24,7 +24,7 @@ ALTER TABLE `Words`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
 ";
 
-public $drop = "drop table `mydb`.`Words`";
+public $drop = "drop table `cafetria`.`Words`";
 
 
 }

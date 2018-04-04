@@ -18,7 +18,7 @@ ALTER TABLE `pages`
 ALTER TABLE `pages`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;SET FOREIGN_KEY_CHECKS=1;";
 
-public $drop = "drop table `mydb`.`Pages`";
+public $drop = "drop table `cafetria`.`Pages`";
 
 
 }

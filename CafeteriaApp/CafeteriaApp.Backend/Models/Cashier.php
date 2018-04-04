@@ -11,7 +11,7 @@ public $create = "CREATE TABLE `Cashier` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
  ";
 
-public $drop = "drop table `mydb`.`Cashier`";
+public $drop = "drop table `cafetria`.`Cashier`";
 }
 
 ?>

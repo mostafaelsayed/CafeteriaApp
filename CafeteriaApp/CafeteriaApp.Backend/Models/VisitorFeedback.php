@@ -18,7 +18,7 @@ CREATE TABLE `VisitorFeedback` (
 
 ";
 
-public $drop = "drop table `mydb`.`VisitorFeedback`";
+public $drop = "drop table `cafetria`.`VisitorFeedback`";
 }
 
 ?>

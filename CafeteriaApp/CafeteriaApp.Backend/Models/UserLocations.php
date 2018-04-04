@@ -10,7 +10,7 @@ public $create = "CREATE TABLE `UserLocations` (
   CONSTRAINT `UserId` FOREIGN KEY (`UserId`) REFERENCES `user` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
- public $drop = "drop table `mydb`.`UserLocations`";
+ public $drop = "drop table `cafetria`.`UserLocations`";
 
 //public $alterCafeteriaTable = "alter table cafeteria modify column Id int(10)";
 //public $alterCategoryTable = "alter table category modify column CafeteriaId int(10)";

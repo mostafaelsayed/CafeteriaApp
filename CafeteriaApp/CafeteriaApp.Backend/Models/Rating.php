@@ -4,7 +4,7 @@
 class Rating
 {
 
-	public $create= "CREATE TABLE `mydb`.`Rating` (
+	public $create= "CREATE TABLE `cafetria`.`Rating` (
 	 `Id` INT NOT NULL AUTO_INCREMENT ,
 	  `UserId` INT NOT NULL ,
 	   `MenuItemId` INT NOT NULL ,
@@ -57,7 +57,7 @@ ALTER TABLE `rating`
 
 	    ";
 
-	public $drop="drop table `mydb`.`Rating` ";
+	public $drop="drop table `cafetria`.`Rating` ";
 
 
 }

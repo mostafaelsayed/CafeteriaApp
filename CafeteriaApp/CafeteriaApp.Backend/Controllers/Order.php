@@ -1,9 +1,6 @@
 <?php    
   require_once(__DIR__ . '/../session.php');
   require_once(__DIR__ . '/../connection.php');
-  //require_once('/storage/ssd4/737/5099737/public_html/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');
-  //require_once('/storage/ssd4/737/5099737/public_html/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
-  
   require(__DIR__ . '/Dates.php');
   require(__DIR__ . '/Times.php');
   require(__DIR__ . '/../paypal/start.php');
@@ -121,7 +118,7 @@
       return mysqli_insert_id($conn);
     }
     else {
-      echo "Error adding order: ", $conn->error;
+      die($conn->error);
     }
   }
 
@@ -146,6 +143,7 @@
     if ($stmt->execute() === TRUE) {
       //open a new order
       $deliveryDateId = getCurrentDateId($conn);
+      $deliveryTimeId = getCurrentTimeId($conn);
       $_SESSION['orderId'] = addOrder($conn, $deliveryDateId, $deliveryTimeId, 1, 1, $_SESSION['userId']);
       return true;
     }
@@ -236,15 +234,16 @@
   function processPayment($conn, $orderId, $selectedMethodId, $apiContext, $orderType) {
     $orderItems = getOrderItems($conn, $orderId);
     $itemList = new ItemList();
-    $item = new Item();
-    $item->setCurrency('GBP'); // or USD or any other currency
+    $totalOrder = 0.00;
 
     foreach ($orderItems as $orderItem) {
-      //var_dump($orderItem);
+      $item = new Item();
+      $item->setCurrency('GBP');
       $item->setName($orderItem[0])
         ->setQuantity($orderItem[2])
         ->setPrice($orderItem[1]);
       $itemList->addItem($item);
+      $totalOrder += $orderItem[1] * $orderItem[2];
     }
 
     // determine shipping and tax later from frontend
@@ -261,11 +260,7 @@
     $details = new Details();
     $details->setShipping($shipping)
       ->setTax($tax)
-      ->setSubtotal($orderItems[0][4]);
-
-      //var_dump($orderItems[0][4]);
-      //var_dump($shipping);
-      var_dump($details);
+      ->setSubtotal($totalOrder);
 
     // Set redirect urls
     $redirectUrls = new RedirectUrls();
@@ -275,11 +270,8 @@
     // Set payment amount
     $amount = new Amount();
     $amount->setCurrency('GBP')
-      ->setTotal($orderItems[0][4] + $shipping + $tax)
+      ->setTotal($totalOrder + $shipping + $tax)
       ->setDetails($details);
-
-      //var_dump($amount);
-      //var_dump($itemList);
 
     // Set transaction object
     $transaction = new Transaction();

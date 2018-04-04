@@ -10,7 +10,7 @@ public $create = "CREATE TABLE `Location` (
   UNIQUE KEY `Id_UNIQUE` (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;";
 
-public $drop = "drop table `mydb`.`Location`";
+public $drop = "drop table `cafetria`.`Location`";
 }
 
 ?>

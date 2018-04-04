@@ -11,7 +11,7 @@ CREATE TABLE `feedbackabouts` (
 
 ";
 
-public $drop = "drop table `mydb`.`FeedbackAbouts`";
+public $drop = "drop table `cafetria`.`FeedbackAbouts`";
 }
 
 ?>

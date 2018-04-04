@@ -3,7 +3,7 @@
 class Comment {
 
 public $create = "
-CREATE TABLE `mydb`.`Comment` (
+CREATE TABLE `cafetria`.`Comment` (
  `Id` INT NOT NULL AUTO_INCREMENT ,
   `Details` TEXT NOT NULL ,
    `UserId` INT NOT NULL ,
@@ -17,7 +17,7 @@ CREATE TABLE `mydb`.`Comment` (
      ENGINE = InnoDB;
 ";
 
-public $drop = "drop table `mydb`.`Comment`";
+public $drop = "drop table `cafetria`.`Comment`";
 }
 
 ?>

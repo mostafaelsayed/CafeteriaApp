@@ -4,7 +4,7 @@
 class Gender
 {
 
-	public $create= "CREATE TABLE `mydb`.`Gender` (
+	public $create= "CREATE TABLE `cafetria`.`Gender` (
 	 `Id` INT NOT NULL AUTO_INCREMENT ,
  	`Name` VARCHAR(50) NOT NULL ,
 	    PRIMARY KEY (`Id`)
@@ -12,9 +12,9 @@ class Gender
  ENGINE = InnoDB;
 	";
 
-	public $drop="drop table `mydb`.`Gender` ";
+	public $drop="drop table `cafetria`.`Gender` ";
 
-	public $insert ="INSERT INTO  `mydb`.`Gender` (`Id`, `Name`) VALUES
+	public $insert ="INSERT INTO  `cafetria`.`Gender` (`Id`, `Name`) VALUES
 	(1, 'Male'),
 	(2, 'Female'),
 	(3, 'Other')";

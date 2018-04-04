@@ -31,7 +31,7 @@ ALTER TABLE `user`
 
  ";
 
-public $drop = "drop table `mydb`.`User`";
+public $drop = "drop table `cafetria`.`User`";
 
 
 }

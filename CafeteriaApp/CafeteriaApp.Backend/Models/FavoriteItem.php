@@ -3,7 +3,7 @@
 class FavoriteItem 
 {
 	
-public $create="CREATE TABLE `mydb`.`FavoriteItem` (
+public $create="CREATE TABLE `cafetria`.`FavoriteItem` (
  `Id` INT NOT NULL AUTO_INCREMENT ,
  `UserId` INT NOT NULL ,
  `MenuItemId` INT NOT NULL ,
@@ -13,7 +13,7 @@ public $create="CREATE TABLE `mydb`.`FavoriteItem` (
 
  ) ENGINE = InnoDB; ";
 
-public $drop = "drop table `mydb`.`FavoriteItem`";
+public $drop = "drop table `cafetria`.`FavoriteItem`";
 
 
 }

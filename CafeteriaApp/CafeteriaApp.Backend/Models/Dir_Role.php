@@ -4,7 +4,7 @@
 class Dir_Role
 {
 	
-public $create="CREATE TABLE `mydb`.`Dir_Role` ( 
+public $create="CREATE TABLE `cafetria`.`Dir_Role` ( 
 `Id` INT NOT NULL AUTO_INCREMENT ,
  `DirId` INT NOT NULL ,
  `RoleId` INT NOT NULL , 
@@ -14,9 +14,9 @@ foreign key (DirId) references `Dir`(Id) ,
 
 ) ENGINE = InnoDB; ";
 
-public $drop = "drop table `mydb`.`Dir_Role`";
+public $drop = "drop table `cafetria`.`Dir_Role`";
 
-public $insert ="INSERT INTO  `mydb`.`Dir_Role` (`Id`, `DirId`, `RoleId`) VALUES
+public $insert ="INSERT INTO  `cafetria`.`Dir_Role` (`Id`, `DirId`, `RoleId`) VALUES
 (1,1,1 ),
 (2,2,2),
 (3,3,1),

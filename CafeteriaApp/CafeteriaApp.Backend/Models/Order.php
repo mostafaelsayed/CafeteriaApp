@@ -4,7 +4,7 @@
 class Order
 {
 
-	public $create= "CREATE TABLE `mydb`.`Order` (
+	public $create= "CREATE TABLE `cafetria`.`Order` (
 	`Id` INT NOT NULL AUTO_INCREMENT ,
 	 `UserId` INT NOT NULL ,
 	 `DeliveryPlace` VARCHAR(200) NOT NULL ,
@@ -24,7 +24,7 @@ class Order
 
 	) ENGINE = InnoDB;";
 
-	public $drop="drop table `mydb`.`Order` ";
+	public $drop="drop table `cafetria`.`Order` ";
 
 
 }
