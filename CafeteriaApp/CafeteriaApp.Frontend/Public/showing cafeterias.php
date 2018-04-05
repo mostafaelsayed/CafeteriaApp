@@ -6,7 +6,7 @@
 
 <head>
 
-  <title>Cafeterias</title>
+  <title>Food Categories</title>
 
   <link href="../css/alertify.bootstrap.css" rel="stylesheet">
 
@@ -22,7 +22,7 @@
 
 <div class="container" style="position: static">
 
-  <h1 class="page-header" id="header">Our Cafeterias</h1>
+  <h1 class="page-header" id="header">Food Categories</h1>
 
   <div ng-controller="cafeterias">
 
@@ -44,9 +44,10 @@
 
           <img style="display: block;margin: auto;width: 300px;height: 300px" ng-src={{cafeterias[0].Image}} />
 
-        </a>
+        
 
-        <h3 ng-bind="cafeterias[0].Name" class="carousel-caption"></h3>
+          <h3 style="color:orange;transform:rotate(-15deg);" ng-bind="cafeterias[0].Name" class="carousel-caption" title="see menus"></h3>
+        </a>
 
         </div>
 
@@ -58,7 +59,7 @@
 
           </a>
 
-          <h3 ng-bind="c.Name" class="carousel-caption"></h3>
+          <h3 g-bind="c.Name" class="carousel-caption"></h3>
 
         </div>
 

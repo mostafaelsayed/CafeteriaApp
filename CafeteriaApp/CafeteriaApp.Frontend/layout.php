@@ -52,7 +52,7 @@
   <body style="background-image: url('../images/customer background image4.jpg')" ng-app="layout_app"
   ng-init="orderId = <?= $orderId;?>;" ng-cloak>
 
-    <div ng-controller="Language_Order" ng-init="languages = <?= htmlspecialchars($Languages);?>;selectedLang = languages[<?= ($lang_id - 1);?>];orderId = <?= $orderId;?>" id="myctrl">
+    <div ng-controller="Language_Order" ng-init="languages=['English', 'Arabic'];selectedLang = 1;orderId = <?= $orderId;?>" id="myctrl">
 
       <!-- Navigation -->
       <nav class="navbar navbar-default navbar-fixed-top">
@@ -73,11 +73,11 @@
               <ul id="left_ul" class="nav navbar-nav navbar-left">
 
                 <li>
-                  <a class="navbar-brand" href='<?=__DIR__.'/Public/showing cafeterias.php';?>'><?= "{$Words['Home'][$lang_id]}"?></a>
+                  <a class="navbar-brand" href='showing cafeterias.php'><?= "{$Words['Home'][$lang_id]}"?></a>
                 </li>
 
                 <li>
-                  <a class="navbar-brand" href="#"><?= "{$Words['Help'][$lang_id]}"?></a>
+                  <a class="navbar-brand" href="ssss.php"><?= "{$Words['Help'][$lang_id]}"?></a>
                 </li>
 
                 <li id="notification" title="Show Notifications" onclick="showNotifications()">
@@ -90,11 +90,11 @@
 
                     <?php
                       if ($length > 0) {
-                        echo "<img src='../images/alarm-1.png' style='width:40px; height:40px;'>
+                        echo "<img src='../images/alarm-1.png' style='width:40px; height:40px;'/>
                         <label id='notifyLabel' style='color: blue;font-size: 2em'>{$length}</label>";
                       }
                       else {
-                        echo "<img src='../images/alarm.png' style='width:40px; height:40px;'>";
+                        echo "<img src='../images/alarm.png' style='width:40px; height:40px;'/>";
                       }
 
                       if ( !empty($_SESSION['notifications']) && is_array($_SESSION['notifications']) ) {
@@ -131,7 +131,7 @@
           <ul id="right_ul">
             <li id="shoppingCart" title="Show Shopping Cart Items">
               <div id="shoppingCart_Button">
-                <img src="../IconoCompraPaquetigos.png" style="width: 100%;height: 100%">
+                <img src="../IconoCompraPaquetigos.png" style="width: 100%;height: 100%"/>
               </div>
 
               <div id="shoppingCartDetails">
@@ -210,7 +210,7 @@
               </li>
 
               <li id="languagesDropdown">
-                <select id="languages" class="selectpicker show-tick" select-picker ng-model="selectedLang" ng-options="l.Name for l in languages" ng-change="changeLanguage(selectedLang.Id)" data-width="fit">
+                <select id="languages" class="selectpicker show-tick" select-picker ng-model="selectedLang" ng-options="l for l in languages" ng-change="changeLanguage(selectedLang)" data-width="fit">
                 </select>
               </li>
 

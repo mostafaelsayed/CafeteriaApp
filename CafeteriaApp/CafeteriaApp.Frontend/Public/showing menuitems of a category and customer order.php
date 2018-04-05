@@ -1,14 +1,14 @@
 <?php
 
   require(__DIR__.'/../../CafeteriaApp.Backend/functions.php');
-  //validatePageAccess($conn);
+  //validatePageAccess([1,2]);
   require(__DIR__.'/../layout.php');
 
 ?>
 
 <head>
 
-  <title>MenuItems</title>
+  <title>Menu Items</title>
 
   <link href="../css/alertify.bootstrap.css" rel="stylesheet">
 
@@ -38,7 +38,7 @@
 
     <div  class="about" style="margin: 0 auto;text-align: center;color: white">
 
-      <h1>About This Category</h1>
+      <h1>About This Menu</h1>
 
       <p>we have special menuitems here with affordable price.Take a look at our dishes and have fun!</p>
 

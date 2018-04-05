@@ -31,6 +31,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$locatio
     $http.get('../../CafeteriaApp.Backend/Requests/MenuItem.php?categoryId=' + $scope.categoryId)
     .then(function(response) {
       $scope.menuItems = response.data;
+      console.log($scope.menuItems);
       $scope.loadFavoriteItems();
       $scope.initializeMenuItemCommmentFlags();
       $scope.loadRatedMenuItemsForUser();

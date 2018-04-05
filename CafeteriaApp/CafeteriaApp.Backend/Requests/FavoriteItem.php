@@ -10,12 +10,13 @@
   }
 
   if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
-    if ( isset($_SESSION['userId']) && isset($_GET['MenuItemId']) && testInt($_GET['MenuItemId']) ) {
+
+    $data = json_decode( file_get_contents('php://input') );
+    echo $data;
+    if ( isset($_SESSION['userId']) && isset($data->MenuItemId) && testInt($data->MenuItemId) ) {
       deleteFavoriteItemByMenuItemId($conn, $_SESSION['userId'], $_GET['MenuItemId']);
     }
-    else {
-      echo "Error occured while deleting Favorite Item";
-    }
+    
   }
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {

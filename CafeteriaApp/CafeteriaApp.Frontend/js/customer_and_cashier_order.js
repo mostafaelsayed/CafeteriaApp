@@ -37,10 +37,10 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
       });
     }
     else {
-      $http.delete('../../CafeteriaApp.Backend/Requests/FavoriteItem.php?Id=' + menuItemId)
+      $http.delete('../../CafeteriaApp.Backend/Requests/FavoriteItem.php', data)
       .then(function(response) {
         if (response.data !== "") {
-          alertify.error('Favorite Item already exists');
+          alertify.error('Error occured !');
         }
         else {
           document.getElementById("favorites" + menuItemId).style.color = "red";

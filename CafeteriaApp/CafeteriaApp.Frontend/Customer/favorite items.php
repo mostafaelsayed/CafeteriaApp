@@ -1,20 +1,20 @@
 <?php
 
   require(__DIR__.'/../../CafeteriaApp.Backend/functions.php');
-  //validatePageAccess($conn);
+  validatePageAccess([2]);
   require(__DIR__.'/../layout.php');
    
 ?>
-
+<!-- here you can know to which category your user belongs and can recommend him new items in that category -->
 <head>
 
   <title>Favorite Items</title>
 
-  <link href="../../css/favorite items.css" rel="stylesheet">
+  <link href="../css/favorite items.css" rel="stylesheet">
 
-  <link href="../../css/popup.css" rel="stylesheet">
+  <link href="../css/popup.css" rel="stylesheet">
 
-  <script src="../../javascript/favorite items.js"></script>
+  <script src="../js/favorite items.js"></script>
 
 </head>
 
@@ -42,9 +42,7 @@
 
         <th id="thead">Description</th>
 
-        <th id="thead">Price</th>
-
-        <th id="thead" style="text-align: center">Image</th>
+        <th id="thead" style="text-align:center">Image</th>
 
       </tr>
 
@@ -57,8 +55,6 @@
         <td ng-bind="fi.Name" id="thead"></td>
 
         <td ng-bind="fi.Description" id="thead"></td>
-
-        <td ng-bind="fi.Price" id="thead"></td>
 
         <td><img src="{{fi.Image}}"></td>
 

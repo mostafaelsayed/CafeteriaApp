@@ -94,7 +94,7 @@
 	function testInt(&...$values) {
 		foreach ($values as &$value) {
 			if ( !ctype_digit($value) && !( is_int($value) || is_double($value) ) ) {
-				echo "false integer";
+				//echo "false integer";
 				return false;
 			}
 		}

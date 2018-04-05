@@ -1,0 +1,68 @@
+{
+	"categories":{
+
+	},
+
+	"menus":{
+
+	},
+
+	"menuitems":{
+		"Show Comments":"Show Comments",
+		"Checkout":"Checkout",
+		"Items":"Items",
+		"About This Menu":"About This Menu",
+		"Price":"Price"
+	},
+
+	"favorites":{
+		"My Favorites":"My Favorites",
+		"Name":"Name",
+		"Description":"Description",
+
+	},
+
+	"header":{
+		"Home":"Home",
+		"Help":"Help",
+		"About":"About",
+		"Log in":"Log in",
+		"Log out":"Log out",
+		"Checkout":"Checkout",
+		"Notifications":"Notifications",
+		"My Profile":"My Profile",
+		"My Favorites":"My Favorites",
+		"Change Password":"Change Password"
+	},
+
+	"footer":{
+		"Follow Us":"Follow Us",
+		"News":"News",
+		"Contact us":"Contact us",
+		"Send Feedback":"Send Feedback",
+		"About us":"About us",
+		"Phone:":"Phone:",
+		"Email":"Email",
+		"Facebook":"Facebook",
+		"Tweeter":"Tweeter",
+		"Google+":"Google+",
+		"Youtube":"Youtube",
+		"Intagram":"Intagram"
+	},
+
+	"checkout":{
+
+	},
+
+	"gallery":{
+
+	},
+
+	"login":{
+
+	},
+
+	"register":{
+
+	}
+}

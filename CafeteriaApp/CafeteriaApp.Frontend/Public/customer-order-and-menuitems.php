@@ -2,7 +2,7 @@
 
   <div style="text-align: center">
 
-    <h1 style="margin-bottom: 20px;border-bottom: 3px solid orange">Menu</h1>
+    <h1 style="margin-bottom: 20px;border-bottom: 3px solid orange"><?=$_GET['categoryName']?> Items</h1>
 
       <div class="popup">
 
@@ -12,7 +12,7 @@
 
   </div>
 
-  <div class="row" ng-controller="getMenuItemsAndCustomerOrder" ng-init="customer='<?php echo $_SESSION['userName']; ?>'" >
+  <div class="row" ng-controller="getMenuItemsAndCustomerOrder" ng-init="customer='<?= $_SESSION['userName']; ?>'" >
 
     <div class="col-lg-5">
 
@@ -67,13 +67,7 @@
 
         </a>
 
-        <div style="color: white;font-style: italic">Name :  
-
-          <span ng-bind="m.Name" style="color: white"></span>
-
-        </div>
-
-        <div style="color: white;font-style: italic">Price :  
+        <div style="color: white;font-style: italic">Price : $  
 
           <span ng-bind="m.Price" style="color: white"></span>
 

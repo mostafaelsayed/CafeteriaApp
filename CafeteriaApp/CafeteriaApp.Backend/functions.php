@@ -127,29 +127,41 @@
     }
   }
 
-  function validatePageAccess($conn) { // using hash
+  function validatePageAccess($permittedLevels) { // want to permit for admin to see menus in its customer view
     confirm_logged_in();
-    $query  = "SELECT `Dir` FROM `dir` WHERE `Id` IN (SELECT `DirId` FROM `dir_role` WHERE `RoleId` = {$_SESSION['roleId']} ) ";  // add RoleId
-    $result_set = mysqli_query($conn, $query);
-    confirmQuery($result_set);
-
-    var_dump($result_set);
-
-    if ($result_set) {
-      $dirs = mysqli_fetch_all($result_set, MYSQLI_ASSOC); // ??
-
-      foreach ($dirs as $key => $value) {
-        var_dump($value['Dir']);
-        if (strpos( getcwd(), $value['Dir'] ) !== false) {
-          return;
-        }
+    $permitted = false ;
+    foreach ($permittedLevels as $key => $value) {
+       if($value == $_SESSION['roleId']) {
+          $permitted = true ;
       }
-      var_dump(getcwd());
-
-
-      echo "<h1 style ='color:red;' > Access denied . </h2>";
-      exit(); 
     }
+    
+    if(!$permitted) {
+        echo "<h1 style ='color:red;' > Access denied . </h2>";
+        exit();
+     }
+    
+    // $query  = "SELECT `Dir` FROM `dir` WHERE `Id` IN (SELECT `DirId` FROM `dir_role` WHERE `RoleId` = {$_SESSION['roleId']} ) ";  // add RoleId
+    // $result_set = mysqli_query($conn, $query);
+    // confirmQuery($result_set);
+
+    // var_dump($result_set);
+
+    // if ($result_set) {
+    //   $dirs = mysqli_fetch_all($result_set, MYSQLI_ASSOC); // ??
+
+    //   foreach ($dirs as $key => $value) {
+    //     var_dump($value['Dir']);
+    //     if (strpos( getcwd(), $value['Dir'] ) !== false) {
+    //       return;
+    //     }
+    //   }
+    //   var_dump(getcwd());
+
+
+    //   echo "<h1 style ='color:red;' > Access denied . </h2>";
+    //   exit(); 
+    // }
   }
 
   function randomPassword() {

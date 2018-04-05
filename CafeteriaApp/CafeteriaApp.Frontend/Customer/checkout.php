@@ -1,6 +1,6 @@
 <?php
   require(__DIR__.'/../../CafeteriaApp.Backend/functions.php');
-  validatePageAccess($conn);
+  validatePageAccess([2]);
   require(__DIR__.'/../layout.php');
 ?>
 

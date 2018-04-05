@@ -9,9 +9,9 @@
 		</div>
 
 		<!-- feedback form -->
-		<?php $x = rand(0, 20);$y = rand(0, 20);?>
+		<?php $x = rand(0, 20); $y = rand(0, 20);?>
 
-		<div ng-controller="feedback" class="background" ng-init="result = <?php echo ($y + $x); ?>">
+		<div ng-controller="feedback" class="background" ng-init="result=<?= ($y + $x); ?>">
 
 			<div id="feedbackForm">
 
@@ -19,7 +19,7 @@
 
 					<div class="entry">
 
-						<label for="name">Name:</label>
+						<label for="name">Name</label>
 
 						<input type="text" id="name" ng-model="name" required />
 
@@ -27,7 +27,7 @@
 
 					<div class="entry">
 
-						<label for="mail">Email:</label>
+						<label for="mail">Email</label>
 
 						<input type="mail" id="mail" ng-model="mail" required />
 
@@ -35,7 +35,7 @@
 
 					<div class="entry">
 
-						<label for="phone">Phone:</label>
+						<label for="phone">Phone</label>
 
 						<input type="text" id="phone" ng-model="phone" required />
 
@@ -43,7 +43,7 @@
 
 					<div class="entry">
 
-						<label for="about">About:</label>
+						<label for="about">About</label>
 
 						<select id="about" ng-model="selectedAbout" ng-options="a.Name for a in abouts" ></select>
 
@@ -53,7 +53,7 @@
 
 						<h4 style="margin: 0px;padding-left: 50px;color: red"> <?php echo $x ; ?>+<?php echo $y;?> =</h4>
 
-						<label for="check" style="float: left">Answer:</label>
+						<label for="check" style="float: left">Answer</label>
 
 						<input type="text" id="check" name="check" ng-model="answer" required />
 
@@ -61,7 +61,7 @@
 
 					<div class="entry">
 
-						<label for="message" style="float: left">Message:</label>
+						<label for="message" style="float: left">Message</label>
 
 						<textarea id="message" ng-model="message" required></textarea>
 
