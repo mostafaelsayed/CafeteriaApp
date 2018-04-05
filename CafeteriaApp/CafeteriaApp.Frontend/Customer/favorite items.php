@@ -11,10 +11,7 @@
   <title>Favorite Items</title>
 
   <link href="../css/favorite items.css" rel="stylesheet">
-
   <link href="../css/popup.css" rel="stylesheet">
-
-  <script src="../js/favorite items.js"></script>
 
 </head>
 
@@ -75,3 +72,4 @@
   </table>
 
 </div>
+<script src="../js/favorite items.js"></script>

@@ -5,8 +5,8 @@
 			<a href="">
 			<img style="width: 200px;height: 200px" src="../footerIcons/hotOffer.jpg" />
 			Get offer
-		</a> -->
-		</div>
+		</a> 
+		</div>-->
 
 		<!-- feedback form -->
 		<?php $x = rand(0, 20); $y = rand(0, 20);?>

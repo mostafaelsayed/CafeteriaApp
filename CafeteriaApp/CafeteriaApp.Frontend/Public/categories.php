@@ -40,7 +40,7 @@
 
         <div class="item active">
 
-          <a ng-href="showing categories of a cafeteria.php?id={{cafeterias[0].Id}}">
+          <a ng-href="menus.php?id={{cafeterias[0].Id}}">
 
           <img style="display: block;margin: auto;width: 300px;height: 300px" ng-src={{cafeterias[0].Image}} />
 
@@ -53,7 +53,7 @@
 
         <div ng-repeat="c in cafeterias.slice(1, cafeterias.length)" class="item">
 
-          <a ng-href="showing categories of a cafeteria.php?id={{c.Id}}">
+          <a ng-href="menus.php?id={{c.Id}}">
 
             <img style="display: block;margin: auto;width: 300px;height: 300px" ng-src={{c.Image}} />
 

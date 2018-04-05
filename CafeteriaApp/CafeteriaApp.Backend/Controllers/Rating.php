@@ -1,5 +1,5 @@
 <?php
-  function getMenuItemsIdsThatHaveRatingsByUserId($conn, $cid) { // used for editing or deleting comments of a user  
+  function getMenuItemsIdsThatHaveRatingsByUserId($conn, $cid) {   
     $sql = "select MenuItemId, Value from rating where UserId = " . $cid;
     $result = $conn->query($sql);
 

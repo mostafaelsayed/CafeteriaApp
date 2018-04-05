@@ -1,19 +1,11 @@
 <?php
-
 	require(__DIR__.'/../../CafeteriaApp.Backend/functions.php');
-
-	//validatePageAccess($conn);
-
+	validatePageAccess([1,2]);
 	require(__DIR__.'/../layout.php');
-
 ?>
 
 <head>
-
 	<title>Menus</title>
-
-	<script src="../js/show_categories_of_a_cafeteria.js"></script>
-
 </head>
 
 <div class="container">
@@ -26,7 +18,7 @@
 
         <div style="text-align: center;font-size: 20px">
 
-      		<a href="showing menuitems of a category and customer order.php?categoryId={{c.Id}}&categoryName={{c.Name}}" style="color: orange">
+      		<a href="menuitems.php?categoryId={{c.Id}}&categoryName={{c.Name}}" style="color: orange">
             <img style="display: block;margin: auto;width: 300px;height: 300px" ng-src={{c.Image}} />
       			<span ng-bind="c.Name"></span>
 
@@ -43,3 +35,5 @@
 </div>
 
 <?php require(__DIR__.'/footer.php'); ?>
+
+<script src="../js/show_categories_of_a_cafeteria.js"></script>

@@ -73,7 +73,7 @@
               <ul id="left_ul" class="nav navbar-nav navbar-left">
 
                 <li>
-                  <a class="navbar-brand" href='showing cafeterias.php'><?= "{$Words['Home'][$lang_id]}"?></a>
+                  <a class="navbar-brand" href='categories.php'><?= "{$Words['Home'][$lang_id]}"?></a>
                 </li>
 
                 <li>

@@ -23,7 +23,7 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
     var data = {
       menuItemId: menuItemId
     };
-
+    //data = JSON.stringify(data);
     if (document.getElementById('favorites' + menuItemId).style.color === "red") { // add favorite
       $http.post('../../CafeteriaApp.Backend/Requests/FavoriteItem.php', data)
       .then(function(response) {
@@ -37,8 +37,16 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
       });
     }
     else {
-      $http.delete('../../CafeteriaApp.Backend/Requests/FavoriteItem.php', data)
+      $http({
+      method: 'DELETE',
+      url: '../../CafeteriaApp.Backend/Requests/FavoriteItem.php',
+      data: data,
+      headers: {
+          'Content-type': 'application/json;charset=utf-8'
+      }
+    })
       .then(function(response) {
+        console.log(response.data);
         if (response.data !== "") {
           alertify.error('Error occured !');
         }
