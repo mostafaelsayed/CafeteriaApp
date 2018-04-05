@@ -3,17 +3,11 @@
   require_once(__DIR__ . '/../connection.php');
   require(__DIR__ . '/Dates.php');
   require(__DIR__ . '/Times.php');
-  require(__DIR__ . '/../paypal/start.php');
+  require(__DIR__ . '/payment-methods.php');
 
-  use PayPal\Api\Amount;
-  use PayPal\Api\Details;
-  use PayPal\Api\Item;
-  use PayPal\Api\ItemList;
-  use PayPal\Api\Payer;
-  use PayPal\Api\Payment;
-  use PayPal\Api\RedirectUrls;
-  use PayPal\Api\Transaction;
-  use PayPal\Exception\PayPalConnectionException;
+  function generateBrainTreeToken() {
+    echo mybraintree::brainTreeConfig()->clientToken()->generate();
+  }
 
   function getOrderById($conn, $id) {
     $sql = "select `Id`, `UserId`, `Total`, `Type` from `order` where `Id` = " . $id . " LIMIT 1";
@@ -231,82 +225,22 @@
     
   }
 
-  function processPayment($conn, $orderId, $selectedMethodId, $apiContext, $orderType) {
-    $orderItems = getOrderItems($conn, $orderId);
-    $itemList = new ItemList();
-    $totalOrder = 0.00;
-
-    foreach ($orderItems as $orderItem) {
-      $item = new Item();
-      $item->setCurrency('GBP');
-      $item->setName($orderItem[0])
-        ->setQuantity($orderItem[2])
-        ->setPrice($orderItem[1]);
-      $itemList->addItem($item);
-      $totalOrder += $orderItem[1] * $orderItem[2];
-    }
-
-    // determine shipping and tax later from frontend
-    $shippingResult = $conn->query("select `Price` from `fees` where `Id` = 2"); // id of shipping fee
-    $shipping = mysqli_fetch_assoc($shippingResult)['Price'];
-    mysqli_free_result($shippingResult);
-
-    $taxResult = $conn->query("select `Price` from `fees` where `Id` = 3"); // id of tax fee
-    $tax = mysqli_fetch_assoc($taxResult)['Price'];
-    mysqli_free_result($taxResult);
-
-    // other fees go here .. 
-
-    $details = new Details();
-    $details->setShipping($shipping)
-      ->setTax($tax)
-      ->setSubtotal($totalOrder);
-
-    // Set redirect urls
-    $redirectUrls = new RedirectUrls();
-    $redirectUrls->setReturnUrl(SITE_URL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/review_order_and_charge_customer.php?orderId=' . $orderId . '&paymentMethodId=' . $selectedMethodId . '&orderType=' . $orderType)
-      ->setCancelUrl(SITE_URL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/checkout.php?orderId=' . $orderId . '&paymentMethodId=' . $selectedMethodId);
-
-    // Set payment amount
-    $amount = new Amount();
-    $amount->setCurrency('GBP')
-      ->setTotal($totalOrder + $shipping + $tax)
-      ->setDetails($details);
-
-    // Set transaction object
-    $transaction = new Transaction();
-    $transaction->setAmount($amount)
-      ->setDescription('Payment done')
-      ->setItemList($itemList);
-
-    // Set payer
-    $payer = new Payer();
-
+  function processPayment($conn, $orderId, $selectedMethodId, $orderType) {
     if ($selectedMethodId == 1) { // paypal payment
-      $payer->setPaymentMethod('paypal'); // maybe determine this from frontend too
+      //$paypal = new mypaypal();
+      mypaypal::handlePaypal($conn, $orderId, $orderType, $selectedMethodId);
+      //$payer->setPaymentMethod('paypal'); // maybe determine this from frontend too
+    }
+    elseif ($selectedMethodId == 2) { // braintree
+      mybraintree::handleBrainTree($conn, $orderId, $orderType, $selectedMethodId);
     }
     else {
-      $payer->setPaymentMethod('credit_card');
+      //$payer->setPaymentMethod('credit_card');
     }
-
-    // Create the full payment object
-    $payment = new Payment();
-    $payment->setIntent('sale')
-      ->setPayer($payer)
-      ->setRedirectUrls($redirectUrls)
-      ->setTransactions([$transaction]);
-
-    //var_dump($payment);
-
-    try {
-      $payment->create($apiContext);
-    }
-    catch (PayPalConnectionException $ex) {
-      echo $ex->getData();
-      die($ex);
-    }
-
-    $approvalUrl = $payment->getApprovalLink();
-    header("Location: " . $approvalUrl);
   }
-?>
+
+  function chargeCustomer($paymentId, $payerId, $orderId, $selectedMethodId, $conn) {
+    if ($selectedMethodId == 1) {// paypal
+      mypaypal::chargeCustomer($paymentId, $payerId, $orderId, $selectedMethodId, $conn);
+    }
+  }

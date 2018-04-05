@@ -4,6 +4,8 @@
         "phpmailer/phpmailer": "^6.0",
         "abeautifulsite/simple-php-captcha": "^1.0",
         "facebook/graph-sdk": "^5.6",
-        "paypal/rest-api-sdk-php": "^1.13"
+        "paypal/rest-api-sdk-php": "^1.13",
+        "stripe/stripe-php": "^6.4",
+        "braintree/braintree_php": "^3.30"
     }
 }
