@@ -150,30 +150,30 @@
   //   }
   // }
 
-  // function updateUserPasswordById($conn,$password,$id)
-  // {
-  //    if (!isset($password) || !isset($id)) 
-  //   {
-  //     //echo "User password is empty !";
-  //     return;
-  //   }
-  //   else
-  //   {
-  //     $sql = "update User set PasswordHash = (?) where Id = (?)"; 
-  //     $stmt = $conn->prepare($sql);
-  //     $stmt->bind_param("si",$Password,$Id);
-  //     $Id = $id;
-  //     $Password = $password;
-  //     if ($stmt->execute() === TRUE)
-  //     {
-  //       return "User updated successfully";
-  //     }
-  //     else
-  //     {
-  //       echo "Error: ".$conn->error;
-  //     }
-  //   }
-  // }
+  function updateUserPasswordById($conn,$password,$id)
+  {
+     if (!isset($password) || !isset($id)) 
+    {
+      //echo "User password is empty !";
+      return;
+    }
+    else
+    {
+      $sql = "update User set PasswordHash = (?) where Id = (?)"; 
+      $stmt = $conn->prepare($sql);
+      $stmt->bind_param("si",$Password,$Id);
+      $Id = $id;
+      $Password = $password;
+      if ($stmt->execute() === TRUE)
+      {
+        return true;
+      }
+      else
+      {
+        echo "Error: ".$conn->error;
+      }
+    }
+  }
 
   function activateUser($conn, $id) {
     $sql = "update user set Confirmed = True where Id = (?)"; 

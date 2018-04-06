@@ -1,3 +1,4 @@
+//***try use arguments instead of mentioning all items
 
 // controller for getting menuitems of a category from database
 layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$location','$rootScope','$timeout','Order_Info'
@@ -31,7 +32,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$locatio
     $http.get('../../CafeteriaApp.Backend/Requests/MenuItem.php?categoryId=' + $scope.categoryId)
     .then(function(response) {
       $scope.menuItems = response.data;
-      console.log($scope.menuItems);
+      //console.log($scope.menuItems);
       $scope.loadFavoriteItems();
       $scope.initializeMenuItemCommmentFlags();
       $scope.loadRatedMenuItemsForUser();
@@ -89,8 +90,8 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$locatio
     Order_Info.toggleMenuItemComments(menuItemIndex, menuItemId);
   };
 
-  $scope.addCommentBackAndFront = function(menuItemIndex, menuItemId, commentDetails, CustomerName, add_update) {
-    Order_Info.addCommentBackAndFront(menuItemIndex, menuItemId, commentDetails, CustomerName, add_update);
+  $scope.addCommentBackAndFront = function(menuItemIndex, menuItemId, commentDetails, CustomerName, add_update,userImage) {
+    Order_Info.addCommentBackAndFront(menuItemIndex, menuItemId, commentDetails, CustomerName, add_update, userImage);
   };
 
   $scope.updateCommentBackAndFront = function(menuItemIndex, menuItemId, commentDetails) {

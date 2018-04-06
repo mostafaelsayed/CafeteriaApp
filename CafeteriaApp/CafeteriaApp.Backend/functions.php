@@ -18,8 +18,8 @@
     
 		if ( !empty($errors) ) {
 		  $output .= "<div class=\"error\"> ";
-		  $output .= "Please fix the following errors:";
-		  $output .= "<ul class=\"error\">";
+		  $output .= "<h5 style='color:white;'>Please fix the following errors:<h5>";
+		  $output .= "<ul class=\"list-error\">";
 
 		  foreach ($errors as $key => $error) {
 		    $output .= "<li>";

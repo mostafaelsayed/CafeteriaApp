@@ -4,9 +4,10 @@ require __DIR__ . '/../Controllers/Comment.php';
 require __DIR__ . '/../connection.php';
 require __DIR__ . '/TestRequestInput.php';
 
+
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (isset($_GET['MenuItemId']) && testInt($_GET['MenuItemId']) && isset($_SESSION['userId'])) {
-        $comments               = getCommentsByMenuItemId($conn, $_GET['MenuItemId']);
+        $comments = getCommentsByMenuItemId($conn, $_GET['MenuItemId']);
         $commentsIdsForCustomer = getCommentsIdsByUserIdAndMenuItemId($conn, $_SESSION['userId'], $_GET['MenuItemId']);
         checkResult(array($comments, $commentsIdsForCustomer));
     } else {

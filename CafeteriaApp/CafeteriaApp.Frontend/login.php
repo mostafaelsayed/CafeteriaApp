@@ -27,7 +27,9 @@ if (isset($_POST['submit'])) {
             $_SESSION['userId']    = $found_user['Id'];
             $_SESSION['userName']  = $found_user['UserName'];
             $_SESSION['roleId']    = $found_user['RoleId'];
-            $_SESSION['langId']    = $found_user['LocaleId'];;
+            $_SESSION['langId']    = $found_user['LocaleId'];
+            $_SESSION['image']     = $found_user['Image'];
+
             $_SESSION['Confirmed'] = $found_user['Confirmed'];
 
             if ((!$_SESSION['orderId'] = getOpenOrderByUserId($conn)['Id']) && $_SESSION['roleId'] == 2) {

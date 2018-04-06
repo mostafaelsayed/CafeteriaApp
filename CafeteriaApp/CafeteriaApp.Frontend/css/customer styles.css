@@ -27,18 +27,40 @@ h1, h3 {
 }
 .row .col-md-6 .comments {
     border: 2px solid #31B0D5;
-    border-collapse: inherit;
     border-radius: 15px;
     width: 100%;
     color: orange;
+    padding:10px;
+    margin-top:10px;
+    border-collapse:separate; 
+}
+.row .col-md-6 .comments tbody::before
+{
+  content: '';
+  display: block;
+  height: 15px;
+
 }
 .row .col-md-6 .comments td {
     text-align: center;
     margin: 10px;
-    display: block;
 }
 .row .col-md-6 .comments td>a {
     text-decoration: none;
+}
+.row .col-md-6 .comments tbody tr {
+    /*first tr child in table */
+    line-height:60px;
+}
+.row .col-md-6 .comments tr:hover {
+    text-shadow: 0 0 20px #952;
+    transition: all .3s;
+}
+
+.btn.btn-lg.btn-comments:hover {
+    background-color: #278376;
+    font-size: 20px;
+    transition: all .2s;
 }
 .row .col-md-6 .addToOrder a {
     float: right;
@@ -56,14 +78,7 @@ h1, h3 {
     text-align: center;
     margin-bottom: 50px;
 }
-.row .col-md-6 .comments tr:hover {
-    text-shadow: 0 0 20px #952;
-    transition: all .3s;
-}
-.row .col-md-6 .comments>tr {
-    /*first tr child in table */
-    margin: 10px;
-}
+
 .bottom a {
     cursor: pointer;
     text-decoration: none;
@@ -72,11 +87,6 @@ hr {
     margin: 20px;
     border: none;
     border-bottom: thin solid rgba(255, 255, 255, .1);
-}
-.btn.btn-lg.btn-comments:hover {
-    background-color: #278376;
-    font-size: 20px;
-    transition: all .2s;
 }
 @-moz-document url-prefix() {
     /*.stars {
@@ -104,8 +114,8 @@ table tbody tr td a.removeItem:hover {
 a.btn.btn-info.btn-favorite{
   color: red;
   float:right;
-  box-shadow:2px 2px grey;
+  box-shadow:3px 3px orange;
 }
 a.btn.btn-info.btn-favorite:hover{
-  box-shadow:4px 2px 22px grey;
+  box-shadow:4px 2px 22px gray;
 }

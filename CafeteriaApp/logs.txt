@@ -2,13 +2,11 @@
 
 login page has redirect implemented incorrectly using post gv but the write one i think is to use session to save that info(my fault), check the url if it's internal , use access tokens
 
+-language
+
 -put search in home page(not cafetrias)
 
 -avg rating is wrong
-
--paypal
-
--change password
 
 -capatcha in register & feedback
 
@@ -20,4 +18,4 @@ login page has redirect implemented incorrectly using post gv but the write one 
 
 *layout in frontend is for public and customers
 
--facebook
+-try facebook

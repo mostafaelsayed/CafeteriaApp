@@ -1,11 +1,20 @@
 <?php 
   require_once(__DIR__ . '/../CafeteriaApp.Backend/session.php'); // must be first as it uses cookies
 
-  $memcache = memcache_connect('localhost', 11211); 
-  $Words = $memcache->get('words');
-  $Languages = $memcache->get('languages');
-  $orderId = $_SESSION['orderId'];
-  $lang_id = $_SESSION['langId'];
+
+// $selected_lang = isset($_GET['lang']) ? $_GET['lang'] : 'en';
+// $direction     = $selected_lang == 'ar' ? 'rtl' : 'ltr';
+
+// if ($selected_lang == 'ar') {
+//     $Words = json_decode(file_get_contents(__DIR__ . '/langs/Public/ar.json'), true);
+// } else {
+//     $Words = json_decode(file_get_contents(__DIR__ . '/langs/Public/en.json'), true);
+// }
+// $requeted_file = str_replace('.php', '', basename($_SERVER['PHP_SELF']));
+
+// $Words = array_merge($Words['header'], $Words['footer'], $Words[$requeted_file]);
+
+$orderId = $_SESSION['orderId'];
 ?>
 
 <!DOCTYPE html>
@@ -56,10 +65,10 @@
 
               <ul id="left_ul" class="nav navbar-nav navbar-left">
                 <li>
-                  <a class="navbar-brand" href='categories.php'><?= "{$Words['Home'][$lang_id]}"?></a>
+                  <a class="navbar-brand" href='categories.php'>Home</a>
                 </li>
                 <li>
-                  <a class="navbar-brand" href="ssss.php"><?= "{$Words['Help'][$lang_id]}"?></a>
+                  <a class="navbar-brand" href="ssss.php">Help</a>
                 </li>
                 <li>
                   <a class="navbar-brand" href="ssss.php">Contact us</a>
@@ -124,7 +133,7 @@
                     </table> 
 
                     <div>
-                      <a class="btn checkout" title="Check out this order" ng-href="../Areas/Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}" ng-show="orderItems.length > 0" >
+                      <a class="btn checkout" title="Check out this order" ng-href="../Areas/Customer/checkout.php?orderId={{orderId}}" ng-show="orderItems.length > 0" >
                       Checkout
                       </a>
                     </div>
@@ -150,7 +159,7 @@
                       <a class="dropdown_item" href="../Customer/favorite items.php" > My Favorites</a>
                       <a class="dropdown_item" href="#">Change Info</a>
 
-                      <a class="dropdown_item" href="#">Change Password</a>
+                      <a class="dropdown_item" href="../Customer/change_password.php">Change Password</a>
                       <hr>
                       <a class="dropdown_item" href="../logout.php">Log out
                       </a>

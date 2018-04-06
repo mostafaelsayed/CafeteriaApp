@@ -14,7 +14,7 @@
 
   </div>
 
-  <div class="row" ng-controller="getMenuItemsAndCustomerOrder" ng-init="customer='<?= $_SESSION['userName']; ?>'" >
+  <div class="row" ng-controller="getMenuItemsAndCustomerOrder" ng-init="customer='<?= $_SESSION['userName']; ?>';userImage='<?=$_SESSION['image'];?>';" >
 
     <div class="col-md-6">
       <div ng-repeat="m in menuItems" style="width: 90%;margin-left: 40px">
@@ -70,9 +70,14 @@
         <!-- Comments -->
 
         <table class="comments" id="{{'comments' + m.Id}}" ng-if="data.ShowHides[$index]">
+          
           <tbody>
             <tr ng-repeat="comm in data.comments[$index]">
-              <td>{{comm.UserName}}</td>
+              <td>
+                <img src="{{comm.Image}}" style="width:50px;height:50px;border-radius:50%;box-sizing:border-box;">
+                &nbsp;
+                {{comm.UserName}}
+              </td>
               <td>{{comm.Date}}</td>
               <td><p>{{comm.Details}} </p></td>
               <td ng-if="checkEditAndRemove( comm.Id, menuItems.indexOf(m) )">
@@ -80,18 +85,18 @@
                 <a ng-click="deleteComment( comm.Id, $index, menuItems.indexOf(m) )"  style="cursor: pointer">remove</a>
               </td>
             </tr>
-
           </tbody>
-
           <tbody>
-
-            <tr>   
+            <tr>
             <!-- <textarea ng-KeyPress="$event.keyCode ==13 ? addCommentBackAndFront(m.Id,commentDetails,customer) :null" ></textarea> -->
 
-              <td>
-                <textarea id="{{'textarea' + $index}}" type="textarea" placeholder="add your comment ........" ng-model="data.commentDetails[$index]" style="display:inline;width: 80%;border-radius:10px; "></textarea>
-                <input id="{{'addUpdateBtn' + $index}}" style="display:inline;margin:0 0 25px 20px;" class="btn btn-info" type="submit" name="addComment" value="Add" ng-click="addCommentBackAndFront($index, m.Id, data.commentDetails[$index], customer, data.add_edits[$index])">
+              <td colspan="2">
+                <textarea id="{{'textarea' + $index}}" type="textarea" placeholder="add your comment ........" ng-model="data.commentDetails[$index]" style="display:block;width: 100%;border-radius:10px;">
+                </textarea>
 
+              </td>
+              <td> 
+                <input id="{{'addUpdateBtn' + $index}}" style="display:block;margin-left:10px;" class="btn btn-info" type="submit" name="addComment" value="Add" ng-click="addCommentBackAndFront($index, m.Id, data.commentDetails[$index], customer, data.add_edits[$index], userImage)"/>
               </td>
 
             </tr>
@@ -111,10 +116,10 @@
     <div id="openOrder" class="col-md-4" style="position:fixed;right:0;bottom:0;">
 
       <div>
-      <label style="color:white;margin-left:10px;font-size:1.5rem">Order #
+      <label style="color:white;margin-left:10px;font-size:1.5rem">Order {{orderId}}
       </label>
       
-        <a  class="btn checkout pull-right" style="margin-bottom:5px;" ng-href="../Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}" ng-cloak ng-show="orderItems.length > 0 && roleid == false" target="_self">
+        <a  class="btn checkout pull-right" style="margin-bottom:5px;" ng-href="../Customer/checkout.php?orderId={{orderId}}" ng-cloak ng-show="orderItems.length > 0 && roleid == false" target="_self">
           Checkout 
           <span class="glyphicon glyphicon-usd"></span>
         </a>

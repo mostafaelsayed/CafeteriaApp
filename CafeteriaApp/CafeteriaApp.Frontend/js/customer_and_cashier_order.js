@@ -160,6 +160,7 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
   order_info.loadCommentsforMenuItem = function(menuItemId, menuItemIndex) {
     $http.get('../../CafeteriaApp.Backend/Requests/Comment.php?MenuItemId=' + menuItemId)
     .then(function(response) {
+      console.log(response);
       order_info.comments[menuItemIndex] = response.data[0];
       order_info.customerCommentsIds[menuItemIndex] = response.data[1];
     });
@@ -172,8 +173,8 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
     }
   };
 
-  order_info.addCommentBackAndFront = function(menuItemIndex, menuItemId, commentDetails, CustomerName, add_update, scope) {
-    
+  order_info.addCommentBackAndFront = function(menuItemIndex, menuItemId, commentDetails, CustomerName, add_update, userImage) {
+
     if (order_info.commentDetails[menuItemIndex] !== "") { // check empty box doesn't work
       if (add_update) {
         var date = order_info.getCurrentDate();
@@ -183,12 +184,12 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
           MenuItemId:menuItemId,
           Date:date
         };
-          
+        
         $http.post('../../CafeteriaApp.Backend/Requests/Comment.php', data)
         .then(function(response) { //response.data=id of new comment
           if (response.data !== "") {
             order_info.customerCommentsIds[menuItemIndex].push(response.data);
-            order_info.comments[menuItemIndex].push( {UserName: CustomerName, Date: date, Details: commentDetails, Id: response.data} );
+            order_info.comments[menuItemIndex].push( {UserName: CustomerName, Date: date, Details: commentDetails, Id: response.data, Image:userImage} );
           }
           else {
             alertify.error(response.data);
@@ -196,14 +197,14 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
         });
       }
       else { //update
-        order_info.updateCommentBackAndFront(menuItemIndex, menuItemId, commentDetails, scope);
+        order_info.updateCommentBackAndFront(menuItemIndex, menuItemId, commentDetails);
       }
 
       order_info.commentDetails[menuItemIndex] = "";
     }
   };
 
-  order_info.updateCommentBackAndFront = function(menuItemIndex, menuItemId, commentDetails, scope) {
+  order_info.updateCommentBackAndFront = function(menuItemIndex, menuItemId, commentDetails) {
     var date = order_info.getCurrentDate();
 
     var data = {
@@ -225,12 +226,12 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
     });
   };
 
-  order_info.editComment = function(commentIndex, menuItemIndex, scope) {
+  order_info.editComment = function(commentIndex, menuItemIndex) {
     order_info.commentIndex = commentIndex;
     order_info.toggleUpdateAddButton(menuItemIndex, order_info.comments[menuItemIndex][commentIndex].Details);
   };
 
-  order_info.toggleUpdateAddButton = function(menuItemIndex, commentDetails, scope) {
+  order_info.toggleUpdateAddButton = function(menuItemIndex, commentDetails) {
     order_info.commentDetails[menuItemIndex] = commentDetails;
 
     if (order_info.add_edits[menuItemIndex]) {
@@ -239,7 +240,7 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
     }
   };
 
-  order_info.deleteComment = function(commentId, commentIndex, menuItemIndex, scope) {
+  order_info.deleteComment = function(commentId, commentIndex, menuItemIndex) {
     if (order_info.add_edits[menuItemIndex]) { // only if not in edit mode
       $http.delete('../../CafeteriaApp.Backend/Requests/Comment.php?id=' + commentId)
       .then(function(response) {
@@ -254,7 +255,7 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
     }
   };
 
-  order_info.checkEditAndRemove = function(commentId, index, scope) {    
+  order_info.checkEditAndRemove = function(commentId, index) {    
     return $.inArray(commentId, order_info.customerCommentsIds[index]) === -1 ? false : true;
   }
 
@@ -273,11 +274,11 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
     });
   };
 
-  order_info.checkaddUpdateRating = function(MenuItemId, scope) {
+  order_info.checkaddUpdateRating = function(MenuItemId) {
     return $.inArray(MenuItemId, order_info.ratedMenuItemsIds) === -1 ? false : true;
   };
 
-  order_info.addRatingOrUpdate = function(MenuItemId, value, scope) {
+  order_info.addRatingOrUpdate = function(MenuItemId, value) {
     if ( order_info.checkaddUpdateRating(MenuItemId) ) { // update
       var data = {
         MenuItemId: MenuItemId,

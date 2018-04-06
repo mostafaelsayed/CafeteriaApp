@@ -1,8 +1,13 @@
-.error{
-
-color:red;
+.error {
+	margin: 0 auto;
+color:white;
 font-weight:bold;
-align-content:center;
 text-align:center;
+border-radius:10px;
+border:2px solid red;
+width:50%;
 }
 
+.list-error{
+	list-style:none;
+}

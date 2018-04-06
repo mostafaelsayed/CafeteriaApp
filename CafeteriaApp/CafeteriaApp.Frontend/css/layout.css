@@ -49,9 +49,7 @@ nav {
 #optionsNavbar.navbar-collapse.collapse.in+#right_ul, #optionsNavbar.navbar-collapse.collapsing+#right_ul {
     width: 87%;
 }
-#left_ul li {
-    height: 50px;
-}
+
 .container-fluid, .navbar-header {
     padding-left: 10px;
 }
@@ -95,6 +93,9 @@ nav {
     padding-bottom: 0px;
     width: 28%;
 }
+#left_ul li {
+    height: 50px;
+}
 #left_ul>li>a {
     color: blue;
     transition: 0.1s all;
@@ -102,8 +103,8 @@ nav {
 #left_ul>li>a:hover {
     border-radius: 5px;
     background-color: #6A8500;
-    color: black;
-    transform: rotate(-10deg) scale(1.2);
+    color: white;
+    /*transform: rotate(-10deg) scale(1.2);*/
 }
 .navbar-default.navbar-nav>li>a:active {
     color: yellow;
