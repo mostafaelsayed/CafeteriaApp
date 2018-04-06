@@ -2,7 +2,6 @@
   function getFeedbackAbouts($conn) {
     $sql = "select * from feedbackabouts";
     $result = $conn->query($sql);
-
     if ($result) {
       $feedbackAbouts = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result); 

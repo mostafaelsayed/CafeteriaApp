@@ -1,9 +1,8 @@
 <?php
-  require(__DIR__.'/Dates.php'); 
 
   function getVisitorFeedbackByDate($conn, $id) {
-    $DateId = getCurrentDateId($conn);
-    $sql = "select * from visitorfeedback where DateId = " . $DateId;
+    $Date = date("Y-m-d");
+    $sql = "select * from visitorfeedback where Date = " . $Date;
     $result = $conn->query($sql);
 
     if ($result) {
@@ -31,8 +30,8 @@
   }
 
   function checkTodaysFeedbackForMailOrPhone($conn, $phone, $mail) {
-    $DateId = getCurrentDateId($conn);
-    $sql = "select count(*) from visitorfeedback where DateId = '" . $DateId . "' and Email = '" . $mail . "' or DateId = '" . $DateId . "' and Phone = '" . $phone . "' ";
+    $Date = date("Y-m-d");
+    $sql = "select count(*) from visitorfeedback where Date = '" . $Date . "' and Email = '" . $mail . "' or Date = '" . $Date . "' and Phone = '" . $phone . "' ";
     $result = $conn->query($sql);
 
     if ($result) {
@@ -46,10 +45,10 @@
   }
 
   function addVisitorFeedback($conn, $name, $phone, $mail, $message, $aboutId) {
-    $DateId = getDateIdByDate( $conn, date("Y-m-d") );
-    $sql = "insert into visitorfeedback (Name, Phone, Email, Message, DateId, AboutId) values (?, ?, ?, ?, ?, ?)";
+    $Date = date("Y-m-d");
+    $sql = "insert into visitorfeedback (Name, Phone, Email, Message, Date, AboutId) values (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssii", $name, $phone, $mail, $message, $DateId, $aboutId);
+    $stmt->bind_param("sssssi", $name, $phone, $mail, $message, $Date, $aboutId);
 
     if ($stmt->execute() === TRUE) {
       return  mysqli_insert_id($conn);

@@ -65,7 +65,7 @@
   }
 
   function calcAvgRatingByMenuItemId($conn, $id) {
-    $sql = "select avg(value) from rating where MenuItemId = " . $id;
+    $sql = "select avg(value), count(UserId) from rating where MenuItemId = " . $id;
     $result = $conn->query($sql);
 
     if ($result) {

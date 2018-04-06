@@ -2,7 +2,6 @@
   function getLanguages($conn) {
     $sql = "select * from languages";
     $result = $conn->query($sql);
-
     if ($result) {
       $languages = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);

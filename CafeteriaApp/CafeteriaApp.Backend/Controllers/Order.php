@@ -1,8 +1,6 @@
 <?php    
   require_once(__DIR__ . '/../session.php');
   require_once(__DIR__ . '/../connection.php');
-  require(__DIR__ . '/Dates.php');
-  require(__DIR__ . '/Times.php');
   require(__DIR__ . '/payment-methods.php');
 
   function generateBrainTreeToken() {
@@ -102,10 +100,10 @@
     }
   }
 
-  function addOrder($conn, $deliveryDateId, $createdTimeId, $paymentMethodId, $orderStatusId, $userId, $total = 0, $paid = 0) {
-    $sql = "insert into `order` (DeliveryDateId, DeliveryTimeId, Paid, Total, PaymentMethodId, OrderStatusId, UserId) values (?, ?, ?, ?, ?, ?, ?)";
+  function addOrder($conn, $deliveryTime, $paymentMethodId, $orderStatusId, $userId, $total = 0, $paid = 0) {
+    $sql = "insert into `order` (DeliveryTime, Paid, Total, PaymentMethodId, OrderStatusId, UserId) values (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iiddiii", $deliveryDateId, $createdTimeId, $paid, $total, $paymentMethodId, $orderStatusId, $userId);
+    $stmt->bind_param("sddiii", $deliveryTime, $paid, $total, $paymentMethodId, $orderStatusId, $userId);
 
     if ($stmt->execute() === TRUE) {
       //echo "Order Added successfully";
@@ -129,16 +127,15 @@
   }
 
   function CheckOutOrder($conn, $orderId, $paymentMethodId, $paid = 0) {
-    $deliveryTimeId = getCurrentTimeId($conn);
-    $sql = "update `order` set `DeliveryTimeId` = (?), `Paid` = (?), `PaymentMethodId` = (?), `OrderStatusId` = 2 where `Id` = (?)";
+    $deliveryTimeId = date("Y-m-d h:m");
+    $sql = "update `order` set `DeliveryTime` = (?), `Paid` = (?), `PaymentMethodId` = (?), `OrderStatusId` = 2 where `Id` = (?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("idii", $deliveryTimeId, $paid, $paymentMethodId, $orderId);
+    $stmt->bind_param("sdii", $deliveryTimeId, $paid, $paymentMethodId, $orderId);
 
     if ($stmt->execute() === TRUE) {
       //open a new order
-      $deliveryDateId = getCurrentDateId($conn);
-      $deliveryTimeId = getCurrentTimeId($conn);
-      $_SESSION['orderId'] = addOrder($conn, $deliveryDateId, $deliveryTimeId, 1, 1, $_SESSION['userId']);
+      $deliveryTimeId = date("Y-m-d h:m");
+      $_SESSION['orderId'] = addOrder($conn, $deliveryTimeId, 1, 1, $_SESSION['userId']);
       return true;
     }
     else {

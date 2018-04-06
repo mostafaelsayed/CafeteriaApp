@@ -31,15 +31,12 @@
 </head>
 
     <?php require(__DIR__.'/customer-order-and-menuitems.php'); ?>
-
-    <a onclick="$('.about').slideToggle('slow');" style="cursor:pointer;">About This category</a>
-
+  <div style="text-align: center;">
+      <a onclick="$('.about').slideToggle('slow');" style="cursor:pointer;">About this menu</a>
+  </div>
     <!-- </div> -->
 
-    <div  class="about" style="margin: 0 auto;text-align: center;color: white">
-
-      <h1>About This Menu</h1>
-
+    <div  class="about" style="margin: 0 auto;text-align: center;color: white;padding:20px;">
       <p>we have special menuitems here with affordable price.Take a look at our dishes and have fun!</p>
 
     </div>

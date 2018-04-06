@@ -29,24 +29,7 @@
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/bootstrap-select.min.css">
     <link href="../css/normalize.css" rel="stylesheet">
-    <link href="../css/layout_style.css" rel="stylesheet" type="text/css">
-
-    <script src="../js/jquery-3.2.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/angular.min.js"></script>
-    <!-- <script src="../javascript/alertify.js"></script> -->
-    <script src="../js/customer_and_cashier_order.js"></script>
-    
-    <script src="../js/metisMenu.min.js"></script>
-    
-    <!-- Custom Theme JavaScript -->
-    <script src="../js/sb-admin-2.js"></script>
-
-    <script src="../js/location_provider.js"></script>
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="../js/bootstrap-select.min.js"></script>
-    
+    <link href="../css/layout.css" rel="stylesheet" type="text/css">
   </head>
 
   <body style="background-image: url('../images/customer background image4.jpg')" ng-app="layout_app"
@@ -68,24 +51,120 @@
               </button>
 
             </div>
+            <!-- left navigation -->
             <div id="optionsNavbar" class="navbar-collapse">
 
               <ul id="left_ul" class="nav navbar-nav navbar-left">
-
                 <li>
                   <a class="navbar-brand" href='categories.php'><?= "{$Words['Home'][$lang_id]}"?></a>
                 </li>
-
                 <li>
                   <a class="navbar-brand" href="ssss.php"><?= "{$Words['Help'][$lang_id]}"?></a>
                 </li>
+                <li>
+                  <a class="navbar-brand" href="ssss.php">Contact us</a>
+                </li>
+            </ul>
 
-                <li id="notification" title="Show Notifications" onclick="showNotifications()">
+          </div>
+
+          <ul id="right_ul" >
+            <li id="shoppingCart" title="Show Shopping Cart Items">
+              <div id="shoppingCart_Button">
+                <img src="../IconoCompraPaquetigos.png" style="width: 100%;height: 100%"/>
+              </div>
+
+              <div id="shoppingCartDetails">
+
+                <h3 id="OrderItemsHeader">Order Items</h3>
+
+                  <div id="OrderContents">
+                    <table id="orderTable" class="table table-bordered" ng-show="orderItems.length > 0">
+
+                      <thead>
+                        <tr>
+                          <th>Item</th>
+                          <th>Quantity</th>
+                          <th>Total Price</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+
+                      <tbody ng-if="orderItems.length>0" ng-repeat="o in orderItems">
+                        <tr>
+                          <td ng-bind="o.Name" ></td>
+                          <td ng-bind="o.Quantity"></td>
+                          <td ng-bind="o.TotalPrice"></td>
+                          <td style="display: block;width: 100%; padding: 0px">
+                            <ul style="list-style: none; margin: 0px;padding: 0px">
+                              <li>
+                                <a title="Increase Quantity" ng-click="increaseQuantity(o)" class="btn">
+                                  <i class="fa fa-plus"></i>
+                                </a>
+                              </li>
+
+                              <li>
+                                <a title="Decrease Quantity" ng-click="decreaseQuantity(o)" class="btn">
+                                  <i class="fa fa-minus"></i>
+                                </a>
+                              </li>
+
+                              <li>
+                                <a title="Remove From Order" ng-click="deleteOrderItem(o)" style="font-weight: bold" class="btn">X</a>
+                              </li>
+
+                            </ul>
+
+                          </td>
+
+                        </tr>
+
+                      </tbody>
+
+                    </table> 
+
+                    <div>
+                      <a class="btn checkout" title="Check out this order" ng-href="../Areas/Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}" ng-show="orderItems.length > 0" >
+                      Checkout
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              <li id="languagesDropdown">
+                <select id="languages" class="selectpicker show-tick" select-picker ng-model="selectedLang" ng-options="l for l in languages" ng-change="changeLanguage(selectedLang)" data-width="fit">
+                </select>
+              </li>
+
+              <li id="myProfile" style="display: inline-block">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    My Profile <span class="glyphicon glyphicon-user"></span>
+                  </button>
+
+                  <div class="dropdown-menu" style="left: -70px">
+
+                    <div>
+
+                      <a class="dropdown_item" href="../Customer/favorite items.php" > My Favorites</a>
+                      <a class="dropdown_item" href="#">Change Info</a>
+
+                      <a class="dropdown_item" href="#">Change Password</a>
+                      <hr>
+                      <a class="dropdown_item" href="../logout.php">Log out
+                      </a>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </li>
+
+              <li id="notification" class="pull-right" title="Show Notifications" onclick="toggleNotifications()">
 
                   <?php $length = count($_SESSION['notifications']); ?>
-                 
-                  <div class="btn-group">
-
                   <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 90px; height: 50px;padding: 0px;background-color:transparent;border-color: transparent">
 
                     <?php
@@ -109,140 +188,11 @@
                     ?>
 
                   </button>
-                  <div class="dropdown-menu" style="left: -70px;padding: 5px;width: 300px;background-color: #FFC806">
+                  <div class="dropdown-menu" style="right:0px;padding: 5px;width: 300px;background-color: #FFC806">
                 
                     <?= isset($ul)? $ul : "<h5>No Notifications</h5>"; ?>
                    
                   </div>
-
-                </div>
-
-              </li>
-
-              <li class="inner">
-                <a class="navbar-brand" href="../logout.php"><?= "{$Words['Log out'][$lang_id]}" ?>
-                </a>
-              </li>
-
-            </ul>
-
-          </div>
-
-          <ul id="right_ul">
-            <li id="shoppingCart" title="Show Shopping Cart Items">
-              <div id="shoppingCart_Button">
-                <img src="../IconoCompraPaquetigos.png" style="width: 100%;height: 100%"/>
-              </div>
-
-              <div id="shoppingCartDetails">
-
-                <h3 id="OrderItemsHeader">Order Items</h3>
-
-                  <div id="OrderContents">
-         
-                    <table id="orderTable" class="table table-bordered" ng-show="orderItems.length > 0">
-
-                      <thead>
-
-                        <tr>
-
-                          <th id="thead">OrderItem</th>
-
-                          <th id="thead">Quantity</th>
-
-                          <th id="thead">Total Price</th>
-
-                          <th id="thead">Actions</th>
-
-                        </tr>
-
-                      </thead>
-
-                      <tbody ng-if="orderItems.length>0" ng-repeat="o in orderItems">
-
-                        <tr>
-
-                          <td ng-bind="o.Name" id="thead"></td>
-
-                          <td ng-bind="o.Quantity" id="thead"></td>
-
-                          <td ng-bind="o.TotalPrice" id="thead"></td>
-
-                          <td style="display: block;width: 100%; padding: 0px">
-
-                            <ul style="list-style: none; margin: 0px;padding: 0px">
-
-                              <li>
-
-                                <a title="Increase Quantity" ng-click="increaseQuantity(o)" class="btn"><i class="fa fa-plus"></i></a>
-
-                              </li>
-
-                              <li>
-
-                                <a title="Decrease Quantity" ng-click="decreaseQuantity(o)" class="btn"><i class="fa fa-minus"></i></a>
-
-                              </li>
-
-                              <li>
-
-                                <a title="Remove From Order" ng-click="deleteOrderItem(o)" style="font-weight: bold" class="btn">X</a>
-
-                              </li>
-
-                            </ul>
-
-                          </td>
-
-                        </tr>
-
-                      </tbody>
-
-                    </table> 
-
-                    <div>
-                      <a id="checkout" title="Check out this order" class="btn" ng-href="../Areas/Customer/checkout.php?orderId={{orderId}}&categoryId={{categoryId}}" ng-show="orderItems.length > 0"  >
-                      Checkout
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </li>
-
-              <li id="languagesDropdown">
-                <select id="languages" class="selectpicker show-tick" select-picker ng-model="selectedLang" ng-options="l for l in languages" ng-change="changeLanguage(selectedLang)" data-width="fit">
-                </select>
-              </li>
-
-              <li id="myProfile" style="display: inline-block">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    My Profile <span class="glyphicon glyphicon-user"></span>
-                  </button>
-
-                  <div class="dropdown-menu" style="left: -70px">
-
-                    <div>
-
-                      <a class="dropdown_item" href="../Customer/favorite items.php" >My Favorites</a>
-
-                      <a class="dropdown_item" href="#">Change Password</a>
-
-                      <a class="dropdown_item" href="#">Something else here</a>
-
-                    </div>
-
-                    <hr>
-
-                    <div>
-
-                      <a class="dropdown_item" href="#">Separated link</a>
-
-                    </div>
-
-                  </div>
-
-                </div>
 
               </li>
 
@@ -252,8 +202,19 @@
 
       </nav>
 
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/angular.min.js"></script>
+    <!-- <script src="../javascript/alertify.js"></script> -->
+    <script src="../js/customer_and_cashier_order.js"></script>
+    <script src="../js/metisMenu.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="../js/sb-admin-2.js"></script>
+    <script src="../js/location_provider.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="../js/bootstrap-select.min.js"></script>
       <script type="text/javascript">
-        function showNotifications() {
+        function toggleNotifications() {
           $('#notifyLabel').html('');
           $("#notifyme").slideToggle("slow");
         }

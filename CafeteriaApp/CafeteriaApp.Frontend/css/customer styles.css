@@ -1,111 +1,111 @@
-h1,h3 {
-  font-style: italic;
-  color: white;
-  text-align: center;
+h1, h3 {
+    font-style: italic;
+    color: white;
+    text-align: center;
 }
-
-.menu-name {
-  font-style: italic;
-  color: white;
-  text-align: left;
+.col-md-6 .menu-name {
+    font-style: italic;
+   color:#4CAF50;
+   font-family: "FontAwesome";
+    text-align: left;
 }
-
-#thead {
-  color: white;
-  font-style: italic;
+.col-md-6:hover .menu-name{
+  text-shadow: 5px 5px 22px;
 }
-
-.row .col-lg-5 table:first-of-type {
-  border: 2px solid orange;
-  width: 100%;
+.row .col-md-4 .order {
+    border: 2px solid #a2037b;
+    border-collapse: inherit;
+    border-radius: 15px;
+    width: 100%;
+    color: orange;
+    /*background-color: rgba(233,234,153,0.8);*/
+    background:linear-gradient( to bottom left,rgb(155, 224, 21), rgba(255, 25, 2, 0.8)  );
+    font-weight:bold;
 }
-
-.row .col-lg-5 .blueTable>tr {/*first tr child in table */
-  margin: 10px;
-  /*color: white;*/
+.row .col-md-4 .order th {
+    color: #891C86;
 }
-
-.row .col-lg-5 .blueTable td {
-  text-align:center;
-  margin: 10px;
-  color: white;
-  display:block;
+.row .col-md-6 .comments {
+    border: 2px solid #31B0D5;
+    border-collapse: inherit;
+    border-radius: 15px;
+    width: 100%;
+    color: orange;
 }
-
-.row .col-lg-5 .blueTable td>a {
-  text-decoration: none;
+.row .col-md-6 .comments td {
+    text-align: center;
+    margin: 10px;
+    display: block;
 }
-
-.row .col-lg-5 .addToOrder a {
-  color: white;
-  float: right;
-  margin-top: -40px
+.row .col-md-6 .comments td>a {
+    text-decoration: none;
 }
-
-.row .col-lg-5 .addToOrder a:hover {
-  background-color: #444441;
-  transition: all .2s;
+.row .col-md-6 .addToOrder a {
+    float: right;
+    margin-top: -40px
 }
-
+.row .col-md-6 .addToOrder a:hover {
+    background-color: orange;
+    transition: all .2s;
+}
 .about {
-  display: none;
+    display: none;
 }
-
 .btn-circle {
-  border-radius: 50%;
-  text-align: center;
-  margin-bottom: 50px;
+    border-radius: 50%;
+    text-align: center;
+    margin-bottom: 50px;
 }
-
-.row .col-lg-5 .blueTable tr:hover {
-  background-color: #444441;
-  text-shadow: 0 0 20px #952;
-  transition: all .3s;
+.row .col-md-6 .comments tr:hover {
+    text-shadow: 0 0 20px #952;
+    transition: all .3s;
 }
-
-.row .col-lg-5 .blueTable>tr {/*first tr child in table */
-  margin: 10px;
-  /*color: white;*/
+.row .col-md-6 .comments>tr {
+    /*first tr child in table */
+    margin: 10px;
 }
-
 .bottom a {
-  color: white;
-  cursor: pointer;
-  text-decoration: none;
+    cursor: pointer;
+    text-decoration: none;
 }
-
 hr {
-  margin: 20px;
-  border: none;
-  border-bottom: thin solid rgba(255,255,255,.1);
+    margin: 20px;
+    border: none;
+    border-bottom: thin solid rgba(255, 255, 255, .1);
 }
-
-
-.btn.btn-lg.comments:hover {
-  background-color: #278376;
-  font-size: 20px;
-  transition: all .2s;
+.btn.btn-lg.btn-comments:hover {
+    background-color: #278376;
+    font-size: 20px;
+    transition: all .2s;
 }
-
 @-moz-document url-prefix() {
-  /*.stars {
+    /*.stars {
     margin-left: -10px;
   }*/
-
-  .star-1 {
-    margin-top: 0px;
-    margin-left: -90px
-  }
+    .star-1 {
+        margin-top: 0px;
+        margin-left: -90px
+    }
 }
-
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      /* IE10+ CSS styles go here */
-  /*.stars {
+    /* IE10+ CSS styles go here */
+    /*.stars {
     margin-left: -70px;
   }*/
+    .star-1 {
+        margin-top: 0px;
+        margin-left: -90px
+    }
+}
+table tbody tr td a.removeItem:hover {
+    color: red;
+}
 
-  .star-1 {
-    margin-top: 0px;
-    margin-left: -90px
-  }
+a.btn.btn-info.btn-favorite{
+  color: red;
+  float:right;
+  box-shadow:2px 2px grey;
+}
+a.btn.btn-info.btn-favorite:hover{
+  box-shadow:4px 2px 22px grey;
 }
