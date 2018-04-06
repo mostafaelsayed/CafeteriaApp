@@ -4,8 +4,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   function($rootScope, $scope, $interval, $http, $location, Order_Info) {
   $scope.orderId = $location.search().orderId;
   $scope.orderTypes = [ {id: 0, name: "Take Away"}, {id: 1, name: "Delivery"} ];
-  $scope.paymentMethods = [ {id: 1, name: "PayPal"}, {id: 2, name: "Braintree"}, {id: 3, name: "Stripe"}, 
-    {id: 4, name: "Credit Card"}, {id: 5, name: "Cash"} ];
+  $scope.paymentMethods = [ {id: 1, name: "PayPal"}, {id: 2, name: "Credit Card"}, {id: 3, name: "Cash"} ];
   localStorage.setItem("submit", 1);
 
   $scope.confirmOrder = function() {

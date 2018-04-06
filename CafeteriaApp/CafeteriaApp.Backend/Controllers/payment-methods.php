@@ -187,12 +187,11 @@ class mybraintree {
 		$result = $braintree->transaction()->sale([
 		    'amount' => '100',
 		    'paymentMethodNonce' => $nonce,
-		    'options' => [ 'submitForSettlement' => true ]
+		    'options' => ['submitForSettlement' => true]
 		]);
 
 		if ($result->success) {
 			echo "../Public/showing cafeterias.php";
-		    //print_r("success!: " . $result->transaction->id);
 		} else if ($result->transaction) {
 		    print_r("Error processing transaction:");
 		    print_r("\n  code: " . $result->transaction->processorResponseCode);

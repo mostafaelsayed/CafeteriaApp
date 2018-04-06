@@ -22,6 +22,7 @@
   }
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    //die(var_dump($_POST['payload']));
     $data = json_decode( file_get_contents('php://input') );
 
     if (isset($data->payload->nonce) ) {
