@@ -3,7 +3,7 @@
   require(__DIR__ . '/MenuItem.php');
 
   function getOrderItemsByOrderId($conn, $id) {
-    $sql = "select menuitem.Name, orderitem.Quantity, orderitem.TotalPrice, orderitem.MenuItemId, orderitem.Id, orderitem.OrderId from orderitem INNER JOIN menuitem ON orderitem.MenuItemId = menuitem.Id where orderitem.OrderId = " . $id;
+    $sql = "select menuitem.Name, orderitem.Quantity, orderitem.MenuItemId, orderitem.Id, orderitem.OrderId from orderitem INNER JOIN menuitem ON orderitem.MenuItemId = menuitem.Id where orderitem.OrderId = " . $id;
     $result = $conn->query($sql);
 
     if ($result) {
@@ -19,6 +19,7 @@
   function getOrderItemById($conn, $id) {
     $sql = "select * from `orderitem` where `Id` = " . $id . " LIMIT 1";
     $result = $conn->query($sql);
+
     if ($result) {
       $orderItem = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
@@ -29,29 +30,10 @@
     }
   }
 
-  function getOrderItemTotalPriceById($conn, $id) {
-    $sql = "select `TotalPrice` from `orderitem` where `Id` = " . $id . " LIMIT 1";
-
-    if ( $result = $conn->query($sql) ) {
-      $OrderItem = mysqli_fetch_assoc($result);
-      mysqli_free_result($result);
-      return $OrderItem['TotalPrice'];
-    }
-    else {
-      echo "Error retrieving Order Item: ", $conn->error;
-    }
-  }
-
-  function editOrderItemQuantity($conn, $quantity, $id, $increaseDecrease) {
-    $MenuItemId = getOrderItemById($conn, $id)['MenuItemId'];
-    $unitPrice = getMenuItemPriceById($conn, $MenuItemId);
-    $sql = "update `orderitem` set `Quantity` = (?), `TotalPrice` = `TotalPrice` + (?) where `Id` = (?)";
+  function editOrderItemQuantity($conn, $quantity, $id) {
+    $sql = "update `orderitem` set `Quantity` = (?) where `Id` = (?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("idi", $quantity, $unitPrice, $id);
-
-    if ($increaseDecrease === false) {
-      $unitPrice = -$unitPrice;
-    }
+    $stmt->bind_param("ii", $quantity, $id);
 
     if ($stmt->execute() === TRUE) {
       return "OrderItem updated successfully";
@@ -62,19 +44,13 @@
   }
 
   function addOrderItem($conn, $orderId, $menuItemId, $quantity) {
-    $unitPrice = getMenuItemPriceById($conn, $menuItemId);
-    $totalPrice  =  $quantity * $unitPrice;
-
     if ($orderId == null) {
-      $deliveryTimeId = getCurrentTimeId($conn);
-      $deliveryDateId = getCurrentDateId($conn);
-      // create order by default values
-      $orderId = addOrder($conn, $deliveryDateId, $deliveryTimeId, 4, 1, $_SESSION['userId']);
+      $orderId = addOrder($conn, date('Y-m-d h:m'), 4, 1, $_SESSION['userId']);
     }
 
-    $sql = "insert into `orderitem` (OrderId, MenuItemId, Quantity, TotalPrice) values (?, ?, ?, ?)"; // add TotalPrice to total of the order
+    $sql = "insert into `orderitem` (OrderId, MenuItemId, Quantity) values (?, ?, ?)"; // add TotalPrice to total of the order
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iiid", $orderId, $menuItemId, $quantity, $totalPrice);
+    $stmt->bind_param("iii", $orderId, $menuItemId, $quantity);
     
     if ($stmt->execute() === TRUE) {
       //echo "OrderItem Added successfully";
@@ -85,9 +61,7 @@
     }
   }
 
-  function deleteOrderItem($conn, $id) { // remove TotalPrice to total of the order
-    $totalPrice = getOrderItemTotalPriceById($conn, $id);
-    updateOrderTotalById($conn, $_SESSION['orderId'], -$totalPrice);
+  function deleteOrderItem($conn, $id) {
     $sql = "delete from `orderitem` where `Id` = " . $id . " LIMIT 1";
 
     if ($conn->query($sql) === TRUE) {
@@ -98,7 +72,7 @@
     }
   }
 
-  function deleteOrderItemsByMenuItemId($conn, $id) { // remove TotalPrice to total of the order
+  function deleteOrderItemsByMenuItemId($conn, $id) {
       $sql = "delete from `orderitem` where `MenuItemId` = " . $id;
 
       if ($conn->query($sql) === TRUE) {
@@ -107,18 +81,5 @@
       else {
         echo "Error: ", $conn->error;
       }
-  }
-
-  function editOrderItemTotalPrice($conn, $totalPrice, $id) {
-    $sql = "update `orderitem` set `TotalPrice` = (?) where `Id` = (?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("di", $totalPrice, $id);
-
-    if ($stmt->execute() === TRUE) {
-      return "OrderItem updated successfully";
-    }
-    else {
-      echo "Error: ", $conn->error;
-    }
   }
 ?>

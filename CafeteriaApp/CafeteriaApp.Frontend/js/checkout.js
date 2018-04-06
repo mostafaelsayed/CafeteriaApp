@@ -57,13 +57,13 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   $scope.changeType = function() {
     if ($scope.selectedType.id == 1) { // delivery
       document.getElementsByClassName('wrapper')[0].style.visibility = 'visible';
-      $http.put('../../CafeteriaApp.Backend/Requests/Order.php?flag=3');
+      $http.put('../../CafeteriaApp.Backend/Requests/Order.php?type=1');
 
       $scope.locInit();
       $scope.confirmLocation(1);
     }
     else if ($scope.selectedType.id == 0) { // take away
-      $http.put('../../CafeteriaApp.Backend/Requests/Order.php?flag=1');
+      $http.put('../../CafeteriaApp.Backend/Requests/Order.php?type=0');
       document.getElementsByClassName('wrapper')[0].style.visibility = 'hidden';
     }
   };

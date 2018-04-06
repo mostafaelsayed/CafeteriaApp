@@ -73,6 +73,7 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
 
       $http.post('../../CafeteriaApp.Backend/Requests/OrderItem.php', data)
       .then(function(response) {
+        console.log(response);
         order_info.orderId = response.data;
         order_info.togglePopup('OrderItem added successfully !');
         order_info.getOrderItems(order_info.orderId);
@@ -93,8 +94,7 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
     if (orderItem.OrderId != null) {
       var data = {
         Id: orderItem.Id,
-        Quantity: parseInt(orderItem.Quantity) + 1,
-        Flag: true
+        Quantity: parseInt(orderItem.Quantity) + 1
       };
 
       $http.put('../../CafeteriaApp.Backend/Requests/OrderItem.php', data)
@@ -108,8 +108,7 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
   order_info.decreaseQuantity = function(orderItem) {
     var data = {
       Id: orderItem.Id,
-      Quantity: parseInt(orderItem.Quantity) - 1,
-      Flag: false
+      Quantity: parseInt(orderItem.Quantity) - 1
     };
 
     if (orderItem.Quantity > 1) {
@@ -278,7 +277,7 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
     return $.inArray(MenuItemId, order_info.ratedMenuItemsIds) === -1 ? false : true;
   };
 
-  order_info.addRatingOrUpdate = function(MenuItemId, value) {
+  order_info.addRatingOrUpdate = function(MenuItemId, value, scope) {
     if ( order_info.checkaddUpdateRating(MenuItemId) ) { // update
       var data = {
         MenuItemId: MenuItemId,

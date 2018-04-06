@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     $data = json_decode(file_get_contents('php://input'));
 
     if (isset($data->Id, $data->Quantity) && testMutipleInts($data->Id, $data->Quantity)) {
-        editOrderItemQuantity($conn, $data->Quantity, $data->Id, $data->Flag);
+        editOrderItemQuantity($conn, $data->Quantity, $data->Id);
     }
 
 }

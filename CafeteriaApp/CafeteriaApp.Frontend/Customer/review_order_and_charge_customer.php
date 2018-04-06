@@ -1,8 +1,8 @@
 <?php
 
-  require(__DIR__.'/../../CafeteriaApp.Backend/functions.php');
+  require(__DIR__ . '/../../CafeteriaApp.Backend/functions.php');
   validatePageAccess([2]);
-  require(__DIR__.'/../layout.php');
+  require(__DIR__ . '/../layout.php');
 
   if ( !isset($_GET['orderId']) || !isset($_GET['deliveryTimeDuration']) ) {
     $_GET['orderId'] = 0;
@@ -43,7 +43,7 @@
 
         <th style="color: white">OrderItem Quantity</th>
 
-        <th style="color: white">OrderItem Total Price</th>
+        <!-- <th style="color: white">OrderItem Total Price</th> -->
 
       </tr>
 
@@ -59,7 +59,7 @@
       
         <td style="color: white" ng-bind="o[2]"></td>
       
-        <td style="color: white" ng-bind="o[3]"></td>
+        <!-- <td style="color: white" ng-bind="o[3]"></td> -->
 
       </tr>
 

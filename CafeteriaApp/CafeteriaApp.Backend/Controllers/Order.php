@@ -2,6 +2,7 @@
   require_once(__DIR__ . '/../session.php');
   require_once(__DIR__ . '/../connection.php');
   require(__DIR__ . '/payment-methods.php');
+  //var_dump($_SERVER);
 
   function generateBrainTreeToken() {
     echo mybraintree::brainTreeConfig()->clientToken()->generate();
@@ -36,7 +37,7 @@
   }
 
   function calcOpenOrderDeliveryTime($conn, $orderId) {
-    $sql = "select sum(orderitem.Quantity * menuitem.ReadyInMins) from `orderitem` inner join `menuitem` on orderitem.MenuItemId = menuitem.Id where orderitem.OrderId = " . $orderId;
+    $sql = "select sum(`orderitem`.`Quantity` * `menuitem`.`ReadyInMins`) from `orderitem` inner join `menuitem` on `orderitem`.`MenuItemId` = `menuitem`.`Id` where `orderitem`.`OrderId` = " . $orderId;
     $result = $conn->query($sql);
 
     if ($result) {
@@ -127,15 +128,15 @@
   }
 
   function CheckOutOrder($conn, $orderId, $paymentMethodId, $paid = 0) {
-    $deliveryTimeId = date("Y-m-d h:m");
+    $deliveryTime = date("Y-m-d h:m");
     $sql = "update `order` set `DeliveryTime` = (?), `Paid` = (?), `PaymentMethodId` = (?), `OrderStatusId` = 2 where `Id` = (?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sdii", $deliveryTimeId, $paid, $paymentMethodId, $orderId);
+    $stmt->bind_param("sdii", $deliveryTime, $paid, $paymentMethodId, $orderId);
 
     if ($stmt->execute() === TRUE) {
       //open a new order
-      $deliveryTimeId = date("Y-m-d h:m");
-      $_SESSION['orderId'] = addOrder($conn, $deliveryTimeId, 1, 1, $_SESSION['userId']);
+      $deliveryTime = date("Y-m-d h:m");
+      $_SESSION['orderId'] = addOrder($conn, $deliveryTime, 1, 1, $_SESSION['userId']);
       return true;
     }
     else {
@@ -143,49 +144,31 @@
     }
   }
 
-  function updateWithFee($conn, $orderType, $selectedMethodId) {
-    $fees = getFees($conn);
+  // function updateOrderTypeAndTotal($conn, $orderType) {
+  //   $fee = 0;
 
-    if ( $orderType == 1) { // paypal or credit and delivery
-      updateOrderTotalById($conn, $_SESSION['orderId'], $fees[0]['Price'] + $fees[1]['Price'] + $fees[2]['Price']);
-    }
-    elseif ( ($selectedMethodId == 1 || $selectedMethodId == 5) && $orderType == 0) { // paypal or credit and delivery
-      updateOrderTotalById($conn, $_SESSION['orderId'], $fees[1]['Price'] + $fees[2]['Price']);
-    }
-    elseif ( $selectedMethodId == 4 && $orderType == 0) { // tax
-      updateOrderTotalById($conn, $_SESSION['orderId'], $fees[2]['Price']);
-    }
-  }
+  //   if ($orderType == 1) {
+  //     $fees = getFees($conn);
+  //   }
+  // }
 
-  function updateOrderTotalById($conn, $orderId, $plusValue) {
-    $sql = "update `order` set `Total` = `Total` + (?) where `Id` = (?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("di", $plusValue, $orderId);
+  // function updateWithFee($conn, $orderType, $selectedMethodId) {
+  //   $fees = getFees($conn);
 
-    if ($stmt->execute() === TRUE) {
-      return "Order Total updated successfully";
-    }
-    else {
-      echo "Error: ", $conn->error;
-    }
-  }
-
-  function updateOrderPaidById($conn, $orderId, $plusValue) {
-    $sql = "update `order` set `Paid` = `Paid` + (?) where Id = (?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("di", $plusValue, $orderId);
-    
-    if ($stmt->execute() === TRUE) {
-      return "Order Paid updated successfully";
-    }
-    else {
-      echo "Error: ", $conn->error;
-    }
-  }
+  //   if ( $orderType == 1) { // paypal or credit and delivery
+  //     updateOrderTotalById($conn, $_SESSION['orderId'], $fees[0]['Price'] + $fees[1]['Price'] + $fees[2]['Price']);
+  //   }
+  //   elseif ( ($selectedMethodId == 1 || $selectedMethodId == 5) && $orderType == 0) { // paypal or credit and delivery
+  //     updateOrderTotalById($conn, $_SESSION['orderId'], $fees[1]['Price'] + $fees[2]['Price']);
+  //   }
+  //   elseif ( $selectedMethodId == 4 && $orderType == 0) { // tax
+  //     updateOrderTotalById($conn, $_SESSION['orderId'], $fees[2]['Price']);
+  //   }
+  // }
 
   function deleteOpenOrderById($conn) { // remove order items with cascading
     //$conn->query("set foreign_key_checks = 0"); // ????????/
-    $sql = "delete from `order` where `UserId` = ". $_SESSION['userId'] . " and `OrderStatusId` = 1 LIMIT 1";
+    $sql = "delete from `order` where `UserId` = " . $_SESSION['userId'] . " and `OrderStatusId` = 1 LIMIT 1";
 
     if ($conn->query($sql) === TRUE) {
       return "Current Open Order deleted successfully";
@@ -195,20 +178,8 @@
     }
   }
 
-  function calcAndUpdateOrderTotalById($conn, $orderId) {
-    $sql = "update `order` set `Total` = IFNULL( (select sum(TotalPrice) from `orderitem` where `OrderId` = {$orderId}), 0) where `Id` = {$orderId}";
-    $result = $conn->query($sql);
-
-    if ($result === TRUE) {
-      return "Order Total updated successfully";
-    }
-    else {
-      echo "Error: ", $conn->error;
-    }
-  }
-
   function getOrderItems($conn, $orderId) {
-    $orderItemsStatment = "select menuitem.Name, menuitem.Price, orderitem.Quantity, orderitem.TotalPrice, order.Total from `orderitem` inner join `menuitem` on menuitem.Id = orderitem.MenuItemId inner join `order` on order.Id = orderitem.OrderId where orderitem.OrderId = " . $orderId;
+    $orderItemsStatment = "select `menuitem`.`Name`, `menuitem`.`Price`, `orderitem`.`Quantity`, `order`.`Total` from `orderitem` inner join `menuitem` on `menuitem`.`Id` = `orderitem`.`MenuItemId` inner join `order` on `order`.`Id` = `orderitem`.`OrderId` where `orderitem`.`OrderId` = " . $orderId;
     $result = $conn->query($orderItemsStatment);
 
     if ($result) {
@@ -236,8 +207,8 @@
     }
   }
 
-  function chargeCustomer($paymentId, $payerId, $orderId, $selectedMethodId, $conn) {
-    if ($selectedMethodId == 1) {// paypal
-      mypaypal::chargeCustomer($paymentId, $payerId, $orderId, $selectedMethodId, $conn);
+  function chargeCustomer($paymentId, $payerId, $orderId, $orderType, $selectedMethodId, $conn) {
+    if ($selectedMethodId == 1) { // paypal
+      mypaypal::chargeCustomer($paymentId, $payerId, $orderId, $orderType, $selectedMethodId, $conn);
     }
   }

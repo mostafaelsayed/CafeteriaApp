@@ -120,7 +120,7 @@ class mypaypal {
 	    header("Location: " . $approvalUrl);
 	}
 
-	public static function chargeCustomer($paymentId, $payerId, $orderId, $selectedMethodId, $conn) {
+	public static function chargeCustomer($paymentId, $payerId, $orderId, $orderType, $selectedMethodId, $conn) {
 		$paypal = self::configPaypal();
 		// Get payment object by passing paymentId
 		$payment = Payment::get($paymentId, $paypal);

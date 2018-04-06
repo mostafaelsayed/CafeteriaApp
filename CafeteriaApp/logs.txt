@@ -6,11 +6,7 @@ login page has redirect implemented incorrectly using post gv but the write one 
 
 -put search in home page(not cafetrias)
 
--avg rating is wrong
-
 -capatcha in register & feedback
-
--table of bill as fixed on the bottom right (suggest)
 
 - update rating to make users up and logged in user down and hidden but show when press a button
 
@@ -19,3 +15,11 @@ login page has redirect implemented incorrectly using post gv but the write one 
 *layout in frontend is for public and customers
 
 -try facebook
+
+- total order price
+- test double values (lng, lat in location)
+- stripe
+- google map first time when change from take away to delivery
+- handle error when credit card info not valid
+- trigger order total after order type (fee and stuff)
+- return order details in review order page

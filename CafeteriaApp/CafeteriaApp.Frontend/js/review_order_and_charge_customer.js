@@ -9,8 +9,9 @@ layoutApp.controller('reviewOrderAndChargeCustomer', ['$scope', '$http', '$locat
 
 	$http.get('../../CafeteriaApp.Backend/Requests/Order.php?orderId=' + $scope.orderId + '&flag=' + 1)
 	.then(function(response) {
+		console.log(response);
 		$scope.orderDetails = response.data;
-	 	$scope.total = response.data[0][4];
+	 	$scope.total = response.data[0][3];
 	} );
 
 } ] );

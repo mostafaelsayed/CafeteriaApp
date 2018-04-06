@@ -46,13 +46,13 @@
 
       <div>Total: &nbsp;
 
-        <span ng-show="(selectedMethod.id == 1 || selectedMethod.id == 5) && selectedType.id == 0">
+        <!-- <span ng-show="selectedType.id == 1">
 
           {{ totalWithTaxAndShipping | currency : "$" : 2 }}
 
-        </span>
+        </span> -->
 
-        <span ng-show="selectedMethod.id == 4 && selectedType.id == 0">
+        <span ng-show="selectedType.id == 0">
 
           {{ totalWithTax | currency : "$" : 2 }}
 
@@ -76,11 +76,11 @@
 
         </div>
 
-        <div ng-show="(selectedMethod.id == 1 || selectedMethod.id == 5) && selectedType.id == 0">
+        <!-- <div ng-show="selectedType.id == 1">
 
           <div>shipping : <span ng-bind="shipping"></span></div>
 
-        </div>
+        </div> -->
 
       </div>
 

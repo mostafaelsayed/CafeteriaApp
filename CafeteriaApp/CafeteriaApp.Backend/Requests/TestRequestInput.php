@@ -91,8 +91,12 @@ function testPhone(&$value)
 
 function testInt($value)
 {
-    return filter_var($value, FILTER_VALIDATE_INT);
+    if (filter_var($value, FILTER_VALIDATE_INT) !== null) {
+        return true;
+    }
 }
+
+//var_dump(testInt());
 
 function testMutipleInts(&...$values)
 {
