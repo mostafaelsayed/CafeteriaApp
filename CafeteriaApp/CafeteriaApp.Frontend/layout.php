@@ -1,7 +1,8 @@
 <?php 
-  require_once(__DIR__ . '/../CafeteriaApp.Backend/session.php'); // must be first as it uses cookies
-  require(__DIR__.'/../CafeteriaApp.Backend/functions.php');
+require_once(__DIR__ . '/../CafeteriaApp.Backend/session.php'); // must be first as it uses cookies
+require(__DIR__.'/../CafeteriaApp.Backend/functions.php');
 
+checkGetParams();
 
 // $selected_lang = isset($_GET['lang']) ? $_GET['lang'] : 'en';
 // $direction     = $selected_lang == 'ar' ? 'rtl' : 'ltr';

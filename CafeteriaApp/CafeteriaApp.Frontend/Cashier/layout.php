@@ -1,3 +1,7 @@
+<?php require(__DIR__.'/../CafeteriaApp.Backend/functions.php');
+
+checkGetParams();
+?>
 <!DOCTYPE html>
 
 <html>
@@ -8,21 +12,6 @@
 
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-      <script src="../js/jquery-3.2.1.min.js"></script>
-
-      <script src="../js/angular.min.js"></script>
-
-      <script src="../js/angular-route.js"></script>
-
-      <script src="../js/ui-bootstrap-2.5.0.js"></script>
-
-      <script src="../js/ui-bootstrap-tpls-2.5.0.js"></script>
-
-      <script src="../js/angular-modal-service.js"></script>
-
-      <script src="../js/location_provider.js"></script>
-      
-      <script src="../js/customer_and_cashier_order.js"></script>
       <!-- Bootstrap Core CSS -->
       <link href="../css/bootstrap.min.css" rel="stylesheet">
 
@@ -36,11 +25,6 @@
       <link href="../css/sb-admin-2.css" rel="stylesheet">
       <!-- Custom Fonts -->
       <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-      <script src="../js/metisMenu.min.js"></script>
-      
-      <!-- Custom Theme JavaScript -->
-      <script src="../js/sb-admin-2.js"></script>
 
       <link href="../css/admin style.css" rel="stylesheet">
 
@@ -82,3 +66,15 @@
   </body>
 
 </html>
+
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/angular.min.js"></script>
+<script src="../js/angular-route.js"></script>
+<script src="../js/ui-bootstrap-2.5.0.js"></script>
+<script src="../js/ui-bootstrap-tpls-2.5.0.js"></script>
+<script src="../js/angular-modal-service.js"></script>
+<script src="../js/location_provider.js"></script>
+<script src="../js/customer_and_cashier_order.js"></script>
+<script src="../js/metisMenu.min.js"></script>
+<!-- Custom Theme JavaScript -->
+<script src="../js/sb-admin-2.js"></script>

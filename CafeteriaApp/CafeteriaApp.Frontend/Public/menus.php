@@ -1,10 +1,11 @@
+ 
 <?php
 	require(__DIR__.'/../layout.php');
-    validatePageAccess([1,2]);
+    //validatePageAccess([1,2], false);
 ?>
 
 <head>
-	<title>Menus</title>
+ <title>Menus</title>
   <style type="text/css">
 .w3-animate-zoom {
     animation: animatezoom 0.6s

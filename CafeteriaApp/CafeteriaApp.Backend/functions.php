@@ -72,7 +72,7 @@ function islogged_in()
 function confirm_logged_in()
 {
     if (!islogged_in()) {
-        redirect_to('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/login.php');
+        redirect_to(__DIR__ . '/../CafeteriaApp.Frontend/login.php');
     }
 }
 
@@ -152,7 +152,7 @@ function validatePageAccess($permittedLevels, $checklogging = true)
     }
 
     if (!$permitted) {
-        echo "<h1 style ='color:red;' > Access denied . </h2>";
+        echo "<h1 style ='color:red;' > Access denied ^_^ ! </h2>";
         exit();
     }
 
@@ -176,6 +176,16 @@ function validatePageAccess($permittedLevels, $checklogging = true)
     //   echo "<h1 style ='color:red;' > Access denied . </h2>";
     //   exit();
     // }
+}
+
+function checkGetParams()
+{
+    foreach ($_GET as $key => $value) {
+        if (!isset($_GET[$key]) || empty($_GET[$key])) {
+            echo "<h1 style ='color:red;' > Access denied ^_^  </h2>";
+            exit();
+        }
+    }
 }
 
 function randomPassword()
