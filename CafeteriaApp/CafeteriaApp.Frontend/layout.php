@@ -224,7 +224,7 @@ $selected_lang ='en';
               </li>
                <?php }else{ ?>
                <li style="margin-left: 70px;">
-                <a href="../login.php" class="btn btn-info" style="font-size:2rem;" > 
+                <a href="../login.php" class="btn btn-info" style="font-size:2rem;padding-top:5px;" > 
                   Login
                   <span class="glyphicon glyphicon-log-in"></span>
                   </a>
@@ -236,6 +236,13 @@ $selected_lang ='en';
         </div>
 
       </nav>
+
+       <?php 
+
+       if(!isset($_SESSION['userId'])) {
+        echo "<h1>login <a href='../login.php'>here</a> so you can order food, rate items, add comments and more ... </h1>";
+       }
+        ?> 
 
     <script src="../js/jquery-3.2.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>

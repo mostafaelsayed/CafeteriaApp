@@ -18,7 +18,7 @@
       <div ng-repeat="m in menuItems" style="width: 90%;margin-left: 40px">
 
         <h1 ng-bind="m.Name" class="menu-name"></h1>
-                
+         <?php if(isset($_SESSION['userId'])) { ?>     
         <a id="{{'favorites' + m.Id}}" class="btn btn-info btn-favorite" title="add to favorites" ng-click="toggleFavoriteItem(m.Id)" >
           <span class="glyphicon glyphicon-heart"></span>
         </a>
@@ -43,7 +43,7 @@
             <label class="star star-1" for="star-1-{{m.Id}}"></label>
           </form>
         </div>
-
+        <?php } ?>
         <a title="Show/Hide Comments" style="color:orange;float:right" ng-click="toggleMenuItemComments($index, m.Id)" class="btn btn-lg btn-comments">
           <span style="color:orange;" class="glyphicon glyphicon-comment"></span>
         </a>
@@ -110,7 +110,7 @@
       <br>
 
     </div>
-
+    <?php if(isset($_SESSION['userId'])) { ?>
     <div id="openOrder" class="col-md-4 w3-animate-zoom" style="position:fixed;right:0;bottom:0;">
 
       <div>
@@ -158,3 +158,5 @@
       <!-- <div id="thead">Total: <span ng-bind="currentOrder.Total"></span></div> -->
 
     </div>
+
+    <?php } ?>

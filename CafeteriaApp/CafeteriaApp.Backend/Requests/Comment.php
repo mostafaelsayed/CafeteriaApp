@@ -6,13 +6,16 @@ require __DIR__ . '/TestRequestInput.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if (isset($_GET['MenuItemId']) && testInt($_GET['MenuItemId']) && isset($_SESSION['userId'])) {
+    if (isset($_GET['MenuItemId']) && testInt($_GET['MenuItemId'])) {
         $comments = getCommentsByMenuItemId($conn, $_GET['MenuItemId']);
+        
+        if(isset($_SESSION['userId'])){
         $commentsIdsForCustomer = getCommentsIdsByUserIdAndMenuItemId($conn, $_SESSION['userId'], $_GET['MenuItemId']);
-        checkResult(array($comments, $commentsIdsForCustomer));
-    } else {
-        echo "Error occured while returning Comments";
+        } else {
+        $commentsIdsForCustomer =[];
     }
+        checkResult(array($comments, $commentsIdsForCustomer));
+    } 
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -21,9 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($data->Details) && normalizeString($conn, $data->Details) && isset($_SESSION['userId']) && isset($data->MenuItemId) && testInt($data->MenuItemId)) {
         checkResult(addComment($conn, $data->Details, $_SESSION['userId'], $data->MenuItemId));
-    } else {
-        echo "error";
-    }
+    } 
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
@@ -33,9 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     if (isset($data->Details) && normalizeString($conn, $data->Details) && isset($_SESSION['userId']) && isset($data->Id) && testInt($data->Id)) {
         if (checkOwnershipOfComment($conn, $data->Id, $_SESSION['userId'])) {
             editComment($conn, $data->Details, $data->Id);
-        } else {
-            echo "Error occured while returning Comments";
-        }
+        } 
     }
 }
 
@@ -44,9 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
         if (checkOwnershipOfComment($conn, $_GET['id'], $_SESSION['userId'])) {
             deleteComment($conn, $_GET['id']);
         }
-    } else {
-        echo "Error occured while returning Comments";
-    }
+    } 
 }
 
 require '../footer.php';
