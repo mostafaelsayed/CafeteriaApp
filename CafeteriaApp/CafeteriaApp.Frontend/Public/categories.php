@@ -1,7 +1,7 @@
 <?php
-  require(__DIR__ . '/../../CafeteriaApp.Backend/functions.php');
-  //validatePageAccess($conn);
+  
   require(__DIR__ . '/../layout.php');
+  //validatePageAccess([1,2,3], false);
 ?>
 
 <head>
@@ -9,22 +9,29 @@
   <title>Food Categories</title>
 
   <link href="../css/alertify.bootstrap.css" rel="stylesheet">
-
   <link href="../css/alertify.core.css" rel="stylesheet">
-  
   <link href="../css/alertify.default.css" rel="stylesheet">
 
-  <script src="../js/alertify.js"></script>
-
-  <script src="../js/show_cafeterias.js"></script>
-
+  <style type="text/css">
+.w3-animate-zoom {
+    animation: animatezoom 0.6s
+}
+@keyframes animatezoom {
+    from {
+        transform: scale(0)
+    }
+    to {
+        transform: scale(1)
+    }
+}
+  </style>
 </head>
 
 <div class="container" style="position: static">
 
   <h1 class="page-header" id="header">Food Categories</h1>
 
-  <div ng-controller="cafeterias">
+  <div class="w3-animate-zoom" ng-controller="cafeterias">
 
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
 
@@ -88,3 +95,6 @@
 </div>
 
 <?php require(__DIR__.'/footer.php'); ?>
+
+<script src="../js/alertify.js"></script>
+<script src="../js/show_cafeterias.js"></script>

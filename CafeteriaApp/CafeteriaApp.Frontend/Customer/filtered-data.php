@@ -1,7 +1,7 @@
 <?php
-  require(__DIR__.'/../../CafeteriaApp.Backend/functions.php');
-  validatePageAccess([2]);
+  
   require(__DIR__.'/../layout.php');
+  validatePageAccess([2]);
 ?>
 
 <head>

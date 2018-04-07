@@ -1,21 +1,11 @@
 <?php
-
-	require(__DIR__.'/../../../CafeteriaApp.Backend/functions.php');
-
-  //validatePageAccess($conn);
-
 	require(__DIR__.'/../layout.php');
-
   require(__DIR__.'/../modal_includes.php'); // why not relative ???
 
 ?>
 
 <head>
-
 	<title>Fees</title>
-
-	<script src="../../js/show_and_delete_fees.js"></script>
-
 </head>
 
 <div class="row">
@@ -71,3 +61,5 @@
   </div>
 
 </div>
+
+<script src="../../js/show_and_delete_fees.js"></script>

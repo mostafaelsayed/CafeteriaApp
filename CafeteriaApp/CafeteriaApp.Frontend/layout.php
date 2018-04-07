@@ -1,5 +1,6 @@
 <?php 
   require_once(__DIR__ . '/../CafeteriaApp.Backend/session.php'); // must be first as it uses cookies
+  require(__DIR__.'/../CafeteriaApp.Backend/functions.php');
 
 
 // $selected_lang = isset($_GET['lang']) ? $_GET['lang'] : 'en';
@@ -14,7 +15,10 @@
 
 // $Words = array_merge($Words['header'], $Words['footer'], $Words[$requeted_file]);
 
-$orderId = $_SESSION['orderId'];
+$orderId = isset($_SESSION['orderId']) ? $_SESSION['orderId'] : 0 ;
+$userImage = isset($_SESSION['image']) ? $_SESSION['image'] : 'no Image' ;
+$userName = isset($_SESSION['userName']) ? $_SESSION['userName'] : 'anonymous' ;
+
 $selected_lang ='en';
 ?>
 
@@ -48,7 +52,7 @@ $selected_lang ='en';
     <div ng-controller="Language_Order" ng-init="languages=['English', 'Arabic'];selectedLang = 1;orderId = <?= $orderId;?>" id="myctrl">
 
       <!-- Navigation -->
-      <nav class="navbar navbar-default navbar-fixed-top left-to-right">
+      <nav class="navbar navbar-default navbar-fixed-top left-to-right w3-animate-top">
 
         <div class="container-fluid">
 
@@ -79,6 +83,7 @@ $selected_lang ='en';
           </div>
 
           <ul id="right_ul" >
+         <?php   if(isset($_SESSION['orderId'])){ ?>
             <li id="shoppingCart" title="Show Shopping Cart Items">
               <div id="shoppingCart_Button">
                 <img src="../IconoCompraPaquetigos.png" style="width: 100%;height: 100%"/>
@@ -141,7 +146,7 @@ $selected_lang ='en';
                   </div>
                 </div>
               </li>
-
+              <?php } ?>
               <li id="languagesDropdown">
                 <div id="languages" class="dropdown pull-right">
                   <button class="btn language" type="button" data-toggle="dropdown">
@@ -157,11 +162,12 @@ $selected_lang ='en';
               </ul>
             </div>
               </li>
-
+           <?php   if(isset($_SESSION['userId'])){ ?>
               <li id="myProfile" style="display: inline-block">
                 <div class="btn-group">
                   <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    My Profile <span class="glyphicon glyphicon-user"></span>
+                    My Profile 
+                    <span class="glyphicon glyphicon-user"></span>
                   </button>
 
                   <div class="dropdown-menu" style="left: -70px">
@@ -182,7 +188,7 @@ $selected_lang ='en';
                 </div>
 
               </li>
-
+             
               <li id="notification" class="pull-right" title="Show Notifications" onclick="toggleNotifications()">
 
                   <?php $length = count($_SESSION['notifications']); ?>
@@ -216,7 +222,15 @@ $selected_lang ='en';
                   </div>
 
               </li>
+               <?php }else{ ?>
+               <li style="margin-left: 70px;">
+                <a href="../login.php" class="btn btn-info" style="font-size:2rem;" > 
+                  Login
+                  <span class="glyphicon glyphicon-log-in"></span>
+                  </a>
+                </li>
 
+                <?php } ?>
             </ul>
 
         </div>

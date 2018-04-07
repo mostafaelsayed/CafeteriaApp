@@ -1,9 +1,4 @@
 <?php
-
-  require(__DIR__.'/../../../CafeteriaApp.Backend/functions.php');
-
-  //validatePageAccess($conn);
-
   require(__DIR__.'/../layout.php');
 
 ?>
@@ -15,10 +10,6 @@
   <title>Adding Cafeteria</title>
 
   <link href="../../css/input_file.css" rel="stylesheet">
-
-  <script src="../../js/image_module.js"></script>
-
-  <script src="../../js/add_cafeteria.js"></script>
 
 </head>
 
@@ -97,3 +88,6 @@
   </div>
 
 </div>
+
+<script src="../../js/image_module.js"></script>
+<script src="../../js/add_cafeteria.js"></script>

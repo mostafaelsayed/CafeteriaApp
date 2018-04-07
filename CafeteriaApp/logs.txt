@@ -2,7 +2,7 @@
 
 login page has redirect implemented incorrectly using post gv but the write one i think is to use session to save that info(my fault), check the url if it's internal , use access tokens
 
--language
+-language & fees
 
 -put search in home page(not cafetrias)
 
@@ -21,3 +21,13 @@ login page has redirect implemented incorrectly using post gv but the write one 
 -try facebook
 
 -naviagtion links don't work from customer directory
+
+-csrf
+
+- total order price
+- test double values (lng, lat in location)
+- stripe
+- google map first time when change from take away to delivery
+- handle error when credit card info not valid
+- trigger order total after order type (fee and stuff)
+- return order details in review order page

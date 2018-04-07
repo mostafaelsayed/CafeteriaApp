@@ -1,11 +1,6 @@
 <?php
 
-  require(__DIR__.'/../../../CafeteriaApp.Backend/functions.php');
-
-  //validatePageAccess($conn);
-
   require(__DIR__.'/../layout.php');
-
   require(__DIR__.'/../modal_includes.php');
 
 ?>
@@ -14,9 +9,7 @@
 
   <title>Cafeterias</title>
 
-  <!-- order of include not matter in case of dependencies exist -->
-
-  <script src="../../js/show_and_delete_cafeterias.js"></script>
+  
 
 </head>
 
@@ -92,3 +85,7 @@
   </div>
 
 </div>
+
+<!-- order of include not matter in case of dependencies exist -->
+
+<script src="../../js/show_and_delete_cafeterias.js"></script>

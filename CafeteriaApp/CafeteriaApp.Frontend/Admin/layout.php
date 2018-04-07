@@ -1,3 +1,9 @@
+<?php   
+
+require(__DIR__.'/../../CafeteriaApp.Backend/functions.php');
+validatePageAccess([1]);
+
+ ?>
 <!DOCTYPE html>
 
 <html>
@@ -23,15 +29,6 @@
         <!-- admin style -->
         <link href="../../css/admin style.css" rel="stylesheet">
 
-        <script src="../../js/jquery-3.2.1.min.js"></script>
-
-        <!-- angular module -->
-        <script src="../../js/angular.min.js"></script>
-
-        <script src="../../js/metisMenu.min.js"></script>
-
-        <!-- sb-admin JavaScript -->
-        <script src="../../js/sb-admin-2.js"></script>
         
     </head>
 
@@ -84,3 +81,10 @@
     </body>
 
 </html>
+
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<!-- angular module -->
+<script src="../../js/angular.min.js"></script>
+<script src="../../js/metisMenu.min.js"></script>
+<!-- sb-admin JavaScript -->
+<script src="../../js/sb-admin-2.js"></script>

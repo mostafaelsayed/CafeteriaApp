@@ -1,8 +1,8 @@
 <?php
 
-  require(__DIR__ . '/../../CafeteriaApp.Backend/functions.php');
-  validatePageAccess([2]);
+ 
   require(__DIR__ . '/../layout.php');
+  validatePageAccess([2]);
 
   if ( !isset($_GET['orderId']) || !isset($_GET['deliveryTimeDuration']) ) {
     $_GET['orderId'] = 0;

@@ -1,22 +1,10 @@
 <?php
-
-	require(__DIR__.'/../../../CafeteriaApp.Backend/functions.php');
-
-  //validatePageAccess($conn);
-
 	require(__DIR__.'/../layout.php');
-
 ?>
 
 <head>
 
 	<title>Managing Fee</title>
-
-	<script src="../../js/edit_fee.js"></script>
-
-  <script src="../../js/price_module.js"></script>
-
-  <script src="../../js/location_provider.js"></script>
 
 </head>
 
@@ -79,3 +67,7 @@
 	</div>
 
 </div>
+
+<script src="../../js/edit_fee.js"></script>
+<script src="../../js/price_module.js"></script>
+<script src="../../js/location_provider.js"></script>

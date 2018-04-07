@@ -1,21 +1,11 @@
-<title>Users</title>
-
 <?php
-
-  require(__DIR__.'/../../../CafeteriaApp.Backend/functions.php');
-
-  //validatePageAccess($conn);
-
   require(__DIR__.'/../layout.php');
-
   require(__DIR__.'/../modal_includes.php');
 
 ?>
 
 <head>
-
-  <script src="../../js/show_and_delete_users.js"></script>
-
+<title>Users</title>
 </head>
 
 <div class="row">
@@ -81,3 +71,5 @@
   </div>
 
 </div>
+
+<script src="../../js/show_and_delete_users.js"></script>

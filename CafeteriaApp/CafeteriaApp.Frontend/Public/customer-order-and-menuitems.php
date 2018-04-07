@@ -2,21 +2,19 @@
 
   <div style="text-align: center">
 
-    <h1 style="padding-bottom:20px;margin-bottom:20px;border-bottom: 3px solid #31B0D5">
+    <h1 style="padding-bottom:20px;margin-bottom:20px;border-bottom: 3px solid #31B0D5;font-family: fontAwsome;font-size:4rem;">
       <?=$_GET['categoryName']?>
       </h1>
 
       <div class="popup">
-
         <span class="popuptext" id="myPopup">A Simple Popup!</span>
-
       </div>
 
   </div>
 
-  <div class="row" ng-controller="getMenuItemsAndCustomerOrder" ng-init="customer='<?= $_SESSION['userName']; ?>';userImage='<?=$_SESSION['image'];?>';" >
+  <div class="row" ng-controller="getMenuItemsAndCustomerOrder" ng-init="customer='<?= $userName; ?>';userImage='<?=$userImage;?>';" >
 
-    <div class="col-md-6">
+    <div class="col-md-6 w3-animate-bottom">
       <div ng-repeat="m in menuItems" style="width: 90%;margin-left: 40px">
 
         <h1 ng-bind="m.Name" class="menu-name"></h1>
@@ -84,6 +82,7 @@
               </td>
             </tr>
           </tbody>
+          <?php if(isset($_SESSION['userId'])) {?>
           <tbody>
             <tr>
             <!-- <textarea ng-KeyPress="$event.keyCode ==13 ? addCommentBackAndFront(m.Id,commentDetails,customer) :null" ></textarea> -->
@@ -100,6 +99,7 @@
             </tr>
 
           </tbody>
+          <?php }?>
 
         </table>
 
@@ -111,7 +111,7 @@
 
     </div>
 
-    <div id="openOrder" class="col-md-4" style="position:fixed;right:0;bottom:0;">
+    <div id="openOrder" class="col-md-4 w3-animate-zoom" style="position:fixed;right:0;bottom:0;">
 
       <div>
       <label style="color:white;margin-left:10px;font-size:1.5rem">Order {{orderId}}

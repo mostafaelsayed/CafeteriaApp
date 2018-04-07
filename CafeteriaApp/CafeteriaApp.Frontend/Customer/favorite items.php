@@ -1,9 +1,7 @@
 <?php
 
-  require(__DIR__.'/../../CafeteriaApp.Backend/functions.php');
-  validatePageAccess([2]);
   require(__DIR__.'/../layout.php');
-   
+  validatePageAccess([2]);
 ?>
 <!-- here you can know to which category your user belongs and can recommend him new items in that category -->
 <head>

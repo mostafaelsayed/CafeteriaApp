@@ -1,9 +1,4 @@
 <?php
-
-  require(__DIR__.'/../../../CafeteriaApp.Backend/functions.php');
-
-  //validatePageAccess($conn);
-
   require(__DIR__.'/../layout.php');
 
 ?>
@@ -13,14 +8,6 @@
   <title>Edit User</title>
 
   <link href="../../css/input_file.css" rel="stylesheet">
-
-  <script src="../../js/image_module.js"></script>
-
-  <script src="../../js/location_provider.js"></script>
-
-  <script src="../../js/phone_number_module.js"></script>
-
-  <script src="../../js/edit_user.js"></script>
 
 </head>
 
@@ -231,3 +218,8 @@
   </div>
 
 </div>
+
+<script src="../../js/image_module.js"></script>
+<script src="../../js/location_provider.js"></script>
+<script src="../../js/phone_number_module.js"></script>
+<script src="../../js/edit_user.js"></script>

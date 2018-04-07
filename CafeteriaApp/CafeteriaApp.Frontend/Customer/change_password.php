@@ -1,6 +1,8 @@
 <?php
+
 ob_start();
 require __DIR__ . '/../layout.php'; // must be first as it uses cookies
+validatePageAccess([2]);
 require __DIR__ . '/../../CafeteriaApp.Backend/Controllers/User.php';
 require __DIR__ . '/../../CafeteriaApp.Backend/validation_functions.php';
 

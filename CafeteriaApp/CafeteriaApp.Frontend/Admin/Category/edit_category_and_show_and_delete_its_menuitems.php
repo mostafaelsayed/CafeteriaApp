@@ -1,11 +1,6 @@
 <?php
 
-  require(__DIR__.'/../../../CafeteriaApp.Backend/functions.php');
-
-  validatePageAccess($conn);
-
   require(__DIR__.'/../layout.php');
-
   require(__DIR__.'/../modal_includes.php');
 
 ?>
@@ -15,14 +10,6 @@
   <title>Managing Category</title>
 
   <link href="../../css/input_file.css" rel="stylesheet">
-
-  <!-- location provider -->
-  <script src="../../js/location_provider.js"></script>
-
-  <!-- image module -->
-  <script src="../../js/image_module.js"></script>
-
-  <script src="../../js/edit_category_and_show_and_delete_its_menuitems.js"></script>
 
 </head>
 
@@ -182,3 +169,9 @@
   </div>
 
 </div>
+
+<!-- location provider -->
+<script src="../../js/location_provider.js"></script>
+<!-- image module -->
+<script src="../../js/image_module.js"></script>
+<script src="../../js/edit_category_and_show_and_delete_its_menuitems.js"></script>

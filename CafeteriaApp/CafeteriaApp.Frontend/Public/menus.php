@@ -1,18 +1,30 @@
 <?php
-	require(__DIR__.'/../../CafeteriaApp.Backend/functions.php');
-	validatePageAccess([1,2]);
 	require(__DIR__.'/../layout.php');
+    validatePageAccess([1,2]);
 ?>
 
 <head>
 	<title>Menus</title>
+  <style type="text/css">
+.w3-animate-zoom {
+    animation: animatezoom 0.6s
+}
+@keyframes animatezoom {
+    from {
+        transform: scale(0)
+    }
+    to {
+        transform: scale(1)
+    }
+}
+  </style>
 </head>
 
 <div class="container">
 
   <h1 class="page-header" id="header">Menus</h1>
 
-  <div ng-controller="getCategories">
+  <div class="w3-animate-zoom" ng-controller="getCategories">
 
     	<div class="col-md-6" ng-repeat="c in categories">
 

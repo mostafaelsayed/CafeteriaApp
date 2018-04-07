@@ -1,9 +1,4 @@
 <?php
-
-  require(__DIR__.'/../../../CafeteriaApp.Backend/functions.php');
-
-  validatePageAccess($conn);
-
   require(__DIR__.'/../layout.php');
 
 ?>
@@ -13,14 +8,6 @@
   <title>Edit MenuItem</title>
 
   <link href="../../css/input_file.css" rel="stylesheet">
-
-  <script src="../../js/image_module.js"></script>
-
-  <script src="../../js/location_provider.js"></script>
-
-  <script src="../../js/price_module.js"></script>
-
-  <script src="../../js/edit_menuitem.js"></script>
 
 </head>
 
@@ -165,3 +152,8 @@
   </form>
 
 </div>
+
+<script src="../../js/image_module.js"></script>
+<script src="../../js/location_provider.js"></script>
+<script src="../../js/price_module.js"></script>
+<script src="../../js/edit_menuitem.js"></script>
