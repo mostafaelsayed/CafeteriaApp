@@ -1,141 +1,120 @@
-	.footer{
-		font-weight: bold;
-		text-align: center;
-		color: white;
-		margin-top: 100px;
-		/*border:5px solid black;*/
-		/*height: 300px;*/
+	.footer {
+	    font-weight: bold;
+	    text-align: center;
+	    color: white;
+	    margin-top: 100px;
+	    /*border:5px solid black;*/
+	    /*height: 300px;*/
 	}
-
-	.footerLinks ul{
-		list-style: none;
-		float: left;
-		/*margin: 0 auto;*/
-		text-align: left;
-		margin-left: 100px; 
-		/*line-height: 20px;*/
-		/*width: 33.333333%;*/
+	.footerLinks ul {
+	    list-style: none;
+	    float: left;
+	    /*margin: 0 auto;*/
+	    text-align: left;
+	    margin-left: 100px;
+	    /*line-height: 20px;*/
+	    /*width: 33.333333%;*/
 	}
-
-.footerLinks a{
-		text-decoration: none;
+	.footerLinks a {
+	    text-decoration: none;
 	}
-
-.footerLinks img{
-		width: 45px;
-		height: 45px;
-		padding-right: 10px; 
-		padding-top: 10px; 
-		/*overflow: hidden;*/
-
+	.footerLinks img {
+	    width: 45px;
+	    height: 45px;
+	    padding-right: 10px;
+	    padding-top: 10px;
+	    /*overflow: hidden;*/
 	}
-
-
-#followUs li:{
-	/*position: absolute;
+	#followUs li: {
+	    /*position: absolute;
 	top: 10px;*/
-	   /*display: block;*/
-		padding-top: 10px;
-		padding-bottom: 10px;
-		 height : 25px;
-}
-
-#followUs li:hover{
-/*margin: 0px 0px 0px 20px;*/
-transform: scale(1.4);
-transition: 0.3s;
-
-}
-
-#ads{
-    width: 100px;
-    height: 100px;
-    background: red;
-    position :absolute;
-    /*-webkit-animation: mymove 5s infinite; /* Safari 4.0 - 8.0 */
-    animation: mymove 1.5s ;
-    left: 30px;
-    top: 100px;
-}
-
-@keyframes mymove {
-
-    0%  {top: 600px;}
-   /* 25%  {top: 200px;}
+	    /*display: block;*/
+	    padding-top: 10px;
+	    padding-bottom: 10px;
+	    height: 25px;
+	}
+	#followUs li:hover {
+	    /*margin: 0px 0px 0px 20px;*/
+	    transform: scale(1.4);
+	    transition: 0.3s;
+	}
+	#ads {
+	    width: 100px;
+	    height: 100px;
+	    background: red;
+	    position: absolute;
+	    /*-webkit-animation: mymove 5s infinite; /* Safari 4.0 - 8.0 */
+	    animation: mymove 1.5s;
+	    left: 30px;
+	    top: 100px;
+	}
+	@keyframes mymove {
+	    0% {
+	        top: 600px;
+	    }
+	    /* 25%  {top: 200px;}
     75%  {top: 50px}*/
-    100% {top: 100px;}
-}
+	    100% {
+	        top: 100px;
+	    }
+	}
+	.background {
+	    display: none;
+	    width: 100%;
+	    height: 100%;
+	    background-color: rgba(0, 0, 0, 0.83);
+	    position: fixed;
+	    z-index: 9999;
+	    top: 0px;
+	    bottom: 0px;
+	    right: 0px;
+	    left: 0px;
+	}
+	#feedbackForm {
+	    text-align: center;
+	    align-content: center;
+	    width: 500px;
+	    height: 500px;
+	    margin: auto;
+	    background-color: transparent;
+	    margin-top: 30px;
+	    border-radius: 20px;
+	   	position:relative;
+	}
 
-
-.background{
-	display: none;
-	width:100%;
-	height:100%; 
-	background-color: rgba(0,0,0,0.83);
-	position: fixed;
-	z-index: 9999;
-	top: 0px;
-	bottom: 0px;
-	right: 0px;
-	left: 0px;
-}
-
-#feedbackForm{
-/*display: none;*/
-text-align:center;
-align-content: center;
-width: 500px;
-height: 500px;
-margin:auto;
-background-color: #233345;
-margin-top: 30px;
-border-radius: 10px;
-
-}
-
-#feedbackForm form{ 
-margin: auto;
-width: 300px;
-/*margin:10px 0px 0px 70px ;*/
-}
-
-#feedbackForm input{ 
-text-align:center;
-border-radius: 8px;
-width: 200px;
-height: 20px;
-/*margin: 10px 0px 10px 70px ;*/
-}
-
-#submitbtn{
-	cursor: pointer;
-	margin-top: 30px;
-	
-}
-
-#feedbackForm label{ 
-	margin-right: 20px;
-	color: #ca1f1f;!important;
-}
-
-#feedbackForm textarea{ 
-border-radius: 8px;
-width: 200px;
-height: 100px;
-
-}
-
-
-#feedbackForm select{ 
-	width: 200px;
-	height: 20px;
-
-}
-
-.entry{
-	padding-top: 23px;
-/*margin-top: 15px;*/
-	/*margin-bottom:30px; */
-	/*height: 30px;*/
-}
-
+	#feedbackForm form {
+	    margin: auto;
+	    width: 300px;
+	    /*margin:10px 0px 0px 70px ;*/
+	}
+	#feedbackForm input {
+	    text-align: center;
+	    border-radius: 8px;
+	    width: 200px;
+	    height: 20px;
+	    /*margin: 10px 0px 10px 70px ;*/
+	}
+	#submitbtn {
+	    cursor: pointer;
+	    margin-top: 30px;
+	}
+	#feedbackForm label {
+	    margin-right: 20px;
+	    color: orange;
+	    !important;
+	}
+	#feedbackForm textarea {
+	    border-radius: 8px;
+	    width: 200px;
+	    height: 100px;
+	}
+	#feedbackForm select {
+	    width: 200px;
+	    height: 20px;
+	}
+	.entry {
+	    padding-top: 23px;
+	    /*margin-top: 15px;*/
+	    /*margin-bottom:30px; */
+	    /*height: 30px;*/
+	}

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 06, 2018 at 12:56 PM
+-- Generation Time: Apr 07, 2018 at 05:31 AM
 -- Server version: 5.7.14
 -- PHP Version: 7.0.10
 
@@ -143,6 +143,26 @@ CREATE TABLE `comment` (
   `Date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `comment`
+--
+
+INSERT INTO `comment` (`Id`, `Details`, `UserId`, `MenuItemId`, `Date`) VALUES
+(1, 'sssssssssssssssss', 3, 7, '2018-04-06'),
+(2, 'eeeee', 3, 7, '2018-04-06'),
+(3, 'ddddddddddddd', 3, 7, '2018-04-06'),
+(4, 'sssssssssssssss', 3, 7, '2018-04-06'),
+(5, 'sssssssssssssss', 3, 7, '2018-04-06'),
+(6, 'ccccccccccccccc', 3, 7, '2018-04-06'),
+(7, 'cccccccccccccccccccc', 3, 7, '2018-04-06'),
+(8, 'ffffffffffff', 3, 7, '2018-04-06'),
+(9, 'ffffffffffffffffffffffffff', 3, 8, '2018-04-06'),
+(10, 'dvdvdvdv', 3, 8, '2018-04-06'),
+(11, 'خنخنخ', 3, 8, '2018-04-06'),
+(12, 'ddddddddddddddd', 3, 8, '2018-04-06'),
+(13, 'dddddddddddd', 3, 8, '2018-04-06'),
+(14, 'aaaaaaaaaaaa', 3, 8, '2018-04-06');
+
 -- --------------------------------------------------------
 
 --
@@ -183,7 +203,6 @@ CREATE TABLE `favoriteitem` (
 --
 
 INSERT INTO `favoriteitem` (`Id`, `UserId`, `MenuItemId`) VALUES
-(5, 3, 7),
 (6, 3, 8),
 (8, 9, 8);
 
@@ -207,14 +226,6 @@ INSERT INTO `fees` (`Id`, `Name`, `Price`) VALUES
 (1, 'Delivey', '1.00'),
 (2, 'Shipping', '1.50'),
 (3, 'Tax', '2.00');
-
--- --------------------------------------------------------
-
-
-
--- (1, 'Male'),
--- (2, 'Female'),
--- (3, 'Other');
 
 -- --------------------------------------------------------
 
@@ -323,8 +334,8 @@ CREATE TABLE `menuitem` (
 --
 
 INSERT INTO `menuitem` (`Id`, `Name`, `Image`, `Price`, `Description`, `ReadyInMins`, `Visible`, `CategoryId`, `Rating`, `RatingUsersNo`) VALUES
-(7, 'salad', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/2017-09-08 10 08 38.jpg', '34.00', 'delicious', 0, 1, 9, '3', 2),
-(8, 'btats', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/2017-09-08 22 30 06.jpg', '15.00', '7lw', 0, 1, 9, '4', 2);
+(7, 'salad', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/2017-09-08 10 08 38.jpg', '34.00', 'delicious', 0, 1, 9, '4', 4),
+(8, 'btats', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/2017-09-08 22 30 06.jpg', '15.00', '7lw', 0, 1, 9, '4', 4);
 
 -- --------------------------------------------------------
 
@@ -380,21 +391,23 @@ CREATE TABLE `order` (
 --
 
 INSERT INTO `order` (`Id`, `UserId`, `DeliveryTime`, `Paid`, `Total`, `OrderStatusId`, `PaymentMethodId`, `Type`, `Visible`) VALUES
-(170, 3, '2018-04-01', '0.00', '72.50', 2, 4, 0, 1),
-(171, 3, '2018-04-01', '0.00', '38.50', 2, 4, 1, 1),
-(172, 3, '2018-04-01', '0.00', '38.50', 2, 4, 0, 1),
-(173, 3, '2018-04-01', '0.00', '38.50', 2, 4, 1, 1),
-(174, 3, '2018-04-01', '0.00', '72.50', 2, 4, 1, 1),
-(175, 3, '2018-04-01', '0.00', '106.50', 2, 4, 1, 1),
-(176, 4, '2018-04-01', '0.00', '68.00', 2, 4, 0, 0),
-(177, 3, '2018-04-01', '0.00', '36.00', 2, 4, 0, 1),
-(178, 3, '2018-04-01', '0.00', '36.00', 2, 4, 0, 1),
-(179, 3, '2018-04-01', '0.00', '36.00', 2, 4, 0, 1),
-(180, 3, '2018-04-01', '0.00', '36.00', 2, 4, 0, 1),
-(181, 3, '2018-04-01', '0.00', '36.00', 2, 4, 0, 1),
-(182, 3, '2018-04-01', '0.00', '72.50', 2, 4, 1, 1),
-(183, 3, '2018-04-01', '0.00', '106.50', 2, 4, 1, 1),
-(184, 9, '2018-04-01', '0.00', '-200.00', 1, 1, 1, 1);
+(170, 3, '2018-04-01 00:00:00', '0.00', '72.50', 2, 4, 0, 1),
+(171, 3, '2018-04-01 00:00:00', '0.00', '38.50', 2, 4, 1, 1),
+(172, 3, '2018-04-01 00:00:00', '0.00', '38.50', 2, 4, 0, 1),
+(173, 3, '2018-04-01 00:00:00', '0.00', '38.50', 2, 4, 1, 1),
+(174, 3, '2018-04-01 00:00:00', '0.00', '72.50', 2, 4, 1, 1),
+(175, 3, '2018-04-01 00:00:00', '0.00', '106.50', 2, 4, 1, 1),
+(176, 4, '2018-04-01 00:00:00', '0.00', '68.00', 2, 4, 0, 0),
+(177, 3, '2018-04-01 00:00:00', '0.00', '36.00', 2, 4, 0, 1),
+(178, 3, '2018-04-01 00:00:00', '0.00', '36.00', 2, 4, 0, 1),
+(179, 3, '2018-04-01 00:00:00', '0.00', '36.00', 2, 4, 0, 1),
+(180, 3, '2018-04-01 00:00:00', '0.00', '36.00', 2, 4, 0, 1),
+(181, 3, '2018-04-01 00:00:00', '0.00', '36.00', 2, 4, 0, 1),
+(182, 3, '2018-04-01 00:00:00', '0.00', '72.50', 2, 4, 1, 1),
+(183, 3, '2018-04-01 00:00:00', '0.00', '106.50', 2, 4, 1, 1),
+(184, 9, '2018-04-01 00:00:00', '0.00', '200.00', 1, 1, 1, 1),
+(195, 3, '2018-04-06 01:04:00', '0.00', '0.00', 1, 1, 0, 1),
+(196, 4, '2018-04-06 08:04:00', '0.00', '0.00', 1, 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -430,7 +443,30 @@ INSERT INTO `orderitem` (`Id`, `Quantity`, `OrderId`, `MenuItemId`, `TotalPrice`
 (154, 2, 182, 7, '68.00'),
 (155, 3, 183, 7, '102.00'),
 (162, 4, 184, 7, '136.00'),
-(163, 4, 184, 8, '60.00');
+(163, 4, 184, 8, '60.00'),
+(164, 2, 195, 8, '30.00'),
+(165, 3, 195, 7, '102.00');
+
+--
+-- Triggers `orderitem`
+--
+DELIMITER $$
+CREATE TRIGGER `OrderTotalAfterDelete` AFTER DELETE ON `orderitem` FOR EACH ROW UPDATE `order` SET `Total` = `Total` - `OLD`.`Quantity` * (select `Price` from `menuitem` where `OLD`.`MenuItemId` = `menuitem`.`Id`) where `Id` = `OLD`.`OrderId`
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `OrderTotalAfterInsert` AFTER INSERT ON `orderitem` FOR EACH ROW UPDATE `order` SET `Total` = `Total` + (select `Price` from `menuitem` where `NEW`.`MenuItemId` = `Id`) where `order`.`Id` = `NEW`.`OrderId`
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `OrderTotalAfterUpdate` AFTER UPDATE ON `orderitem` FOR EACH ROW UPDATE `order` SET `Total` =
+  (case when `OLD`.`Quantity` < `NEW`.`Quantity` then `Total` +
+  (select `Price` from `menuitem` where `Id` = `NEW`.`MenuItemId`)
+  when `OLD`.`quantity` > `NEW`.`quantity`
+  then `Total` - (select `Price` from `menuitem` where `Id` = `NEW`.`MenuItemId`) end)
+  where `order`.`Id` = `NEW`.`OrderId`
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -527,12 +563,30 @@ CREATE TABLE `rating` (
 --
 
 INSERT INTO `rating` (`Id`, `UserId`, `MenuItemId`, `Value`) VALUES
-(1, 3, 7, '5'),
+(1, 3, 7, '3'),
 (2, 3, 8, '3'),
 (3, 7, 7, '4'),
 (4, 7, 8, '5'),
 (5, 9, 7, '4'),
-(6, 9, 8, '3');
+(6, 9, 8, '3'),
+(7, 4, 7, '5'),
+(8, 4, 8, '5');
+
+--
+-- Triggers `rating`
+--
+DELIMITER $$
+CREATE TRIGGER `MenuItemRatingAfterDelete` AFTER DELETE ON `rating` FOR EACH ROW UPDATE `menuitem` SET `Rating` = (select avg(`Value`) from `rating` where `MenuItemId` = `OLD`.`MenuItemId`), `menuitem`.`RatingUsersNo` = `RatingUsersNo` - 1 where `Id` = `OLD`.`MenuItemId`
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `MenuItemRatingAfterInsert` AFTER INSERT ON `rating` FOR EACH ROW UPDATE `menuitem` SET `Rating` = (select avg(`Value`) from `rating` where `MenuItemId` = `New`.`MenuItemId`), `menuitem`.`RatingUsersNo` = `RatingUsersNo` + 1 where `Id` = `New`.`MenuItemId`
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `MenuItemRatingAfterUpdate` AFTER UPDATE ON `rating` FOR EACH ROW UPDATE `menuitem` SET `Rating` = (select avg(`Value`) from `rating` where `MenuItemId` = `New`.`MenuItemId`) where `Id` = `New`.`MenuItemId`
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -608,14 +662,11 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`Id`, `UserName`, `FirstName`, `LastName`, `LocaleId`, `Email`, `Image`, `PasswordHash`, `PhoneNumber`, `RoleId`, `Confirmed`) VALUES
-(3, 'mostafaelsayed9419@gmail.com', 'mostafa', 'elsayed', 1, 'mostafaelsayed9419@gmail.com', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/2017-09-08 09 11 26.jpg', '$2y$10$YzM5MzU4NGMyYTNiMzBiNeXoCIQy3DZp7g930RtDcAEJ3cDNst1jS', '01012345678', 2, '1'),
-(4, 'ahmed@gmail.com', 'ahmed', 'mohamed', 1, 'ahmed@gmail.com', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/2017-09-08 09 09 38.jpg', '$2y$10$MTliMjA3YzA5OTk1YmE2OOVGjSbeUzQ4E23P9tLQplSPTO/3hrSlO', '01012345678', 3, '1'),
+(3, 'mostafaelsayed9419@gmail.com', 'mostafa', 'elsayed', 1, 'mostafaelsayed9419@gmail.com', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/unkown/noPerson.png', '$2y$10$NGM1YTMxZjZlNWIwNjgxOOfXtiVaki5F/L1oxJ2VGlaFfu1kDRk6.', '01012345678', 2, '1'),
+(4, 'ahmed@gmail.com', 'ahmed', 'mohamed', 1, 'ahmed@gmail.com', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/2017-09-08 09 09 38.jpg', '$2y$10$MTliMjA3YzA5OTk1YmE2OOVGjSbeUzQ4E23P9tLQplSPTO/3hrSlO', '01012345678', 2, '1'),
 (7, 'waleed@gmail.com', 'waleed', 'ahmed', 1, 'waleed@gmail.com', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/2017-09-10 18 26 58.jpg', '$2y$10$ZDJlN2FkYmVjNjI1N2ZlNe0fA.FoohZxtP5qIqM6rYndvxvUcSM6y', '123', 1, '1'),
 (8, 'esmail', 'esmail', '3bas', 1, 'esmail@gmail.com', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/2017-09-19 11 03 56.jpg', '$2y$10$YTQyNzk5ZGU4YmMxYTYxO.OZyu2mPGTI.EchtcWWUS/48QPrZXs8y', '01012345678', 2, '1'),
 (9, 'mmhnabawy@gmail.com', 'mohamed', 'nabawy', 1, 'mmhnabawy@gmail.com', NULL, '$2y$10$MzQxY2YwOTEzN2RhMjk4NeUpuuEq/pMkIb81TpvnHsYrwgGsj6VCC', '01016415791', 2, '1');
-
--- --------------------------------------------------------
-
 
 --
 -- Indexes for dumped tables
@@ -678,7 +729,6 @@ ALTER TABLE `customer`
   ADD PRIMARY KEY (`Id`),
   ADD KEY `UserId` (`UserId`);
 
-
 --
 -- Indexes for table `favoriteitem`
 --
@@ -726,9 +776,6 @@ ALTER TABLE `menuitem`
 ALTER TABLE `message`
   ADD PRIMARY KEY (`Id`);
 
-
-ALTER TABLE `pages`
-  ADD PRIMARY KEY (`Id`);
 --
 -- Indexes for table `notification`
 --
@@ -768,6 +815,12 @@ ALTER TABLE `orderstatus`
   ADD PRIMARY KEY (`Id`);
 
 --
+-- Indexes for table `pages`
+--
+ALTER TABLE `pages`
+  ADD PRIMARY KEY (`Id`);
+
+--
 -- Indexes for table `paymentmethod`
 --
 ALTER TABLE `paymentmethod`
@@ -796,7 +849,6 @@ ALTER TABLE `thirdpartyuser`
   ADD KEY `Auth_ProviderId` (`Auth_ProviderId`),
   ADD KEY `UserId` (`UserId`);
 
-
 --
 -- Indexes for table `transaction`
 --
@@ -812,7 +864,6 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`Id`),
   ADD KEY `RoleId` (`RoleId`),
   ADD KEY `LocaleId` (`LocaleId`);
-
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -852,7 +903,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `customer`
 --
@@ -902,12 +953,12 @@ ALTER TABLE `notification`
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=195;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=197;
 --
 -- AUTO_INCREMENT for table `orderitem`
 --
 ALTER TABLE `orderitem`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
 --
 -- AUTO_INCREMENT for table `orderstatus`
 --
@@ -927,7 +978,7 @@ ALTER TABLE `paymentmethod`
 -- AUTO_INCREMENT for table `rating`
 --
 ALTER TABLE `rating`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `role`
 --

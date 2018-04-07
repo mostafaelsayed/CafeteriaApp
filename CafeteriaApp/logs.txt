@@ -6,6 +6,10 @@ login page has redirect implemented incorrectly using post gv but the write one 
 
 -put search in home page(not cafetrias)
 
+-avg rating is wrong (trigers)
+
+-total for order item is calculated in front-end
+
 -capatcha in register & feedback
 
 - update rating to make users up and logged in user down and hidden but show when press a button
@@ -16,10 +20,4 @@ login page has redirect implemented incorrectly using post gv but the write one 
 
 -try facebook
 
-- total order price
-- test double values (lng, lat in location)
-- stripe
-- google map first time when change from take away to delivery
-- handle error when credit card info not valid
-- trigger order total after order type (fee and stuff)
-- return order details in review order page
+-naviagtion links don't work from customer directory

@@ -15,6 +15,7 @@
 // $Words = array_merge($Words['header'], $Words['footer'], $Words[$requeted_file]);
 
 $orderId = $_SESSION['orderId'];
+$selected_lang ='en';
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +37,7 @@ $orderId = $_SESSION['orderId'];
     <!-- Bootstrap Core CSS -->
     <!-- Latest compiled and minified CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/bootstrap-select.min.css">
+    <!-- <link rel="stylesheet" href="../css/bootstrap-select.min.css"> -->
     <link href="../css/normalize.css" rel="stylesheet">
     <link href="../css/layout.css" rel="stylesheet" type="text/css">
   </head>
@@ -47,7 +48,7 @@ $orderId = $_SESSION['orderId'];
     <div ng-controller="Language_Order" ng-init="languages=['English', 'Arabic'];selectedLang = 1;orderId = <?= $orderId;?>" id="myctrl">
 
       <!-- Navigation -->
-      <nav class="navbar navbar-default navbar-fixed-top">
+      <nav class="navbar navbar-default navbar-fixed-top left-to-right">
 
         <div class="container-fluid">
 
@@ -142,8 +143,19 @@ $orderId = $_SESSION['orderId'];
               </li>
 
               <li id="languagesDropdown">
-                <select id="languages" class="selectpicker show-tick" select-picker ng-model="selectedLang" ng-options="l for l in languages" ng-change="changeLanguage(selectedLang)" data-width="fit">
-                </select>
+                <div id="languages" class="dropdown pull-right">
+                  <button class="btn language" type="button" data-toggle="dropdown">
+                  Language 
+                    <span><?=$selected_lang == 'en' ? "English" : "العربية"?></span> <i class="glyphicon glyphicon-chevron-down"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-langs">
+                  <li><span class="glyphicon glyphicon-ok check-mark"></span><a onclick="changeUserLang(1);" href="<?=count($_GET) > 1 ? str_replace('lang=en', 'lang=ar', $_SERVER['REQUEST_URI']) : $_SERVER['PHP_SELF'] . "?lang=ar";?>"><img src="/Shipping/images/header/Egypt-Flag.png" width="20" alt=""> Arabic</a>
+                  </li>
+                  <li class="divider" style="margin:4px 0"></li>
+                  <li><span></span><a onclick="changeUserLang(0);"  href="<?=count($_GET) > 1 ? str_replace('lang=ar', 'lang=en', $_SERVER['REQUEST_URI']) : $_SERVER['PHP_SELF'] . "?lang=en";?>"><img src="/Shipping/images/header/United-Kingdom-flag.png" width="20" alt=""> English</a>
+                  </li>
+              </ul>
+            </div>
               </li>
 
               <li id="myProfile" style="display: inline-block">
@@ -221,7 +233,7 @@ $orderId = $_SESSION['orderId'];
     <script src="../js/sb-admin-2.js"></script>
     <script src="../js/location_provider.js"></script>
     <!-- Latest compiled and minified JavaScript -->
-    <script src="../js/bootstrap-select.min.js"></script>
+    <!-- <script src="../js/bootstrap-select.min.js"></script> -->
       <script type="text/javascript">
         function toggleNotifications() {
           $('#notifyLabel').html('');

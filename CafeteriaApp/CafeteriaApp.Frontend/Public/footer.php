@@ -1,4 +1,4 @@
-		<link rel="stylesheet" type="text/css" href="../css/footer.css">
+<link rel="stylesheet" type="text/css" href="../css/footer.css">
 
 		<!-- Advertisments -->
 		<!-- <div id="ads">
@@ -14,9 +14,9 @@
 		<div ng-controller="feedback" class="background" ng-init="result=<?= ($y + $x); ?>">
 
 			<div id="feedbackForm">
-
-				<form method="post" action="feedback form.php">
-
+			<img src="../images/feedback/feed_back.jpg" style="position:absolute;left:0;top:0;width:100%;height: 100%;opacity:0.5;z-index:-1;">
+				<form method="post" action="feedback form.php" >
+				
 					<div class="entry">
 
 						<label for="name">Name</label>

@@ -168,7 +168,7 @@ elseif (isset($_SESSION['userId']) && isset($_SESSION['userName']) && isset($_SE
 
         <br>
 
-        <a href="<?php echo "http://localhost/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/index.php"; ?>">
+        <a href="index.php">
 
           <button class="btn waves-effect waves-light btn" type="submit" name="action">Facebook Login
 

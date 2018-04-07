@@ -119,6 +119,20 @@ nav {
 transform: rotate(15deg) scale(1.3);
 }
 */
+.left-to-right {
+    border-width: 3px 0 3px 3px;
+    border-style: solid;
+    -webkit-border-image: 
+      -webkit-gradient(linear, 100% 0, 0 0, from(black), to(rgba(0, 0, 0, 0))) 1 100%;
+    -webkit-border-image: 
+      -webkit-linear-gradient(right, black, rgba(0, 0, 0, 0)) 1 100%;
+    -moz-border-image:
+      -moz-linear-gradient(right, black, rgba(0, 0, 0, 0)) 1 100%;  
+    -o-border-image:
+      -o-linear-gradient(right, black, rgba(0, 0, 0, 0)) 1 100%;
+    border-image:
+      linear-gradient(to right, black, rgba(0, 0, 0, 0)) 1 100%; 
+}
 
 #shoppingCart_Button {
     transition: 0.3s;
@@ -209,4 +223,16 @@ a.dropdown_item:hover {
 }
 .break {
     clear: both;
+}
+.dropdown-langs li{
+    margin:10px;
+}
+
+.dropdown-langs li:hover a{
+    background-color: orange;
+    color:white;
+}
+.dropdown-langs li a{
+display: inline;
+margin-left:10px;
 }

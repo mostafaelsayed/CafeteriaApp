@@ -49,24 +49,22 @@
         <a title="Show/Hide Comments" style="color:orange;float:right" ng-click="toggleMenuItemComments($index, m.Id)" class="btn btn-lg btn-comments">
           <span style="color:orange;" class="glyphicon glyphicon-comment"></span>
         </a>
+        <div style="color: white;font-style: italic">
+          <div>Price : $ <span ng-bind="m.Price" style="color: white"></span>
+          </div>
 
-        <div style="color: white;font-style: italic">Price : $  
-
-          <span ng-bind="m.Price" style="color: white"></span>
+          <div>Rating :  
+            <span ng-bind="m.Rating" ></span>
+            <span> from </span>
+            <span ng-bind="m.RatingUsersNo" ></span>
+            <span>  user(s)</span>
+          </div>
+          <div>calories: 35 kcl</div>
+          <div>Description : ingredients,  
+            <span ng-bind="m.Description" style="color: white"></span>
+          </div>
 
         </div>
-
-        <div style="color: white;font-style: italic">Rating :  
-          <span ng-bind="m.Rating" style="color: white"></span>
-          <span> from </span>
-          <span ng-bind="m.RatingUsersNo" style="color: white"></span>
-          <span>  user(s)</span>
-        </div>
-
-        <div style="color: white;font-style: italic">Description :  
-          <span ng-bind="m.Description" style="color: white"></span>
-        </div>
-          
         <!-- Comments -->
 
         <table class="comments" id="{{'comments' + m.Id}}" ng-if="data.ShowHides[$index]">
@@ -143,7 +141,7 @@
 
           <tr>
             <td style="color:#58AF50;font-size:2rem;font-family:FontAwesome" ng-bind="o.Name" ></td>
-            <td ng-bind="o.Quantity" ></td>
+            <td style="font-size:2rem" ng-bind="o.Quantity" ></td>
             <td ng-bind="o.TotalPrice" ></td>
             <td ng-cloak ng-show="orderItems.length > 0">
               <div style="width:100px;border-radius:50%;border:2px solid orange;text-align:center;">

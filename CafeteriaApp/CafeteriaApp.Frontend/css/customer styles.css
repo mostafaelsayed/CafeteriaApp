@@ -18,8 +18,8 @@ h1, h3 {
     border-radius: 15px;
     width: 100%;
     color: orange;
-    /*background-color: rgba(233,234,153,0.8);*/
-    background:linear-gradient( to bottom left,rgb(155, 224, 21), rgba(255, 25, 2, 0.8)  );
+    background-color: rgba(233,234,153,0.8);
+    /*background:linear-gradient( to bottom left,rgb(155, 224, 21), rgba(255, 25, 2, 0.8)  );*/
     font-weight:bold;
 }
 .row .col-md-4 .order th {
