@@ -24,8 +24,6 @@
   }
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    var_dump($_POST);
-    //die(var_dump($_POST['payload']));
     $data = json_decode( file_get_contents('php://input') );
 
     if (isset($data->payload->nonce) ) {
@@ -66,11 +64,17 @@
     elseif ( isset($data->orderId) && testInt($data->orderId) ) {
       updateOrderIdInSession($conn, $data->orderId);
     }
-    else if ( testInt($_GET['type']) ) {
-      updateOrderTypeAndTotal($conn, $_GET['type']);
+    elseif ( isset($_GET['type']) && testInt($_GET['type']) ) {
+      echo updateOrderTypeAndTotal($conn, $_GET['type']);
       //$conn->query("update `order` set `Type` = {$_GET['type']} where `Id` = {$_SESSION['orderId']}");
     }
-    else if ($_GET['flag'] == 2 && isset($_GET['orderId']) && testInt($_GET['orderId']) ) {
+    elseif ($data->paymentMethodId && testInt($data->paymentMethodId)) {
+      //die($data->paymentMethodId);
+      $id = $data->paymentMethodId;
+      $conn->query("update `order` set `PaymentMethodId` = {$id} where `Id` = {$_SESSION['orderId']}");
+    }
+    //elseif ()
+    elseif (isset($_GET['flag']) && $_GET['flag'] == 2 && isset($_GET['orderId']) && testInt($_GET['orderId']) ) {
       hideOrder($conn, $_GET['orderId']);
     }
     // else if ($_GET['flag'] == 3) {

@@ -2,7 +2,7 @@
 
  
   require(__DIR__ . '/../layout.php');
-  validatePageAccess([2]);
+  //validatePageAccess([2]);
 
   if ( !isset($_GET['orderId']) || !isset($_GET['deliveryTimeDuration']) ) {
     $_GET['orderId'] = 0;
@@ -43,6 +43,8 @@
 
         <th style="color: white">OrderItem Quantity</th>
 
+        <th style="color: white">OrderItem Total Price</th>
+
         <!-- <th style="color: white">OrderItem Total Price</th> -->
 
       </tr>
@@ -51,15 +53,15 @@
 
     <tbody>
 
-      <tr ng-repeat="o in orderDetails">
+      <tr ng-repeat="o in orderItems">
 
-        <td style="color: white" ng-bind="o[0]"></td>
+        <td style="color: white" ng-bind="o['Name']"></td>
       
-        <td style="color: white" ng-bind="o[1]"></td>
+        <td style="color: white" ng-bind="o['Price']"></td>
       
-        <td style="color: white" ng-bind="o[2]"></td>
+        <td style="color: white" ng-bind="o['Quantity']"></td>
       
-        <!-- <td style="color: white" ng-bind="o[3]"></td> -->
+        <td style="color: white" ng-bind="o['TotalPrice']"></td>
 
       </tr>
 
@@ -67,9 +69,12 @@
 
   </table>
 
-  <label style="color: white">Total : </label>
-
-  <span style="color: white" ng-bind="total"></span>
+  <div style="color: white">Total: {{ total }}</div>
+  <br/>
+  <div style="color: white" ng-show="deliveryFee != 0">Delivery: {{ deliveryFee }}</div>
+  <div style="color: white">Tax: {{ taxFee }}</div>
+  <br/>
+  <div style="color: white">SubTotal: {{ subTotal }}</div>
 
   <div><br></div>
 

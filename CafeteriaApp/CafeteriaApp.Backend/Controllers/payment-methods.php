@@ -50,35 +50,47 @@ class mypaypal {
 	public static function handlePaypal($conn, $orderId, $orderType, $selectedMethodId) {
 		$paypal = self::configPaypal();
 
-		$orderItems = getOrderItems($conn, $orderId);
+		//die($orderType);
+		$order = getOrderItems($conn, $orderId);
+
+		$orderItems = $order[1];
+		$orderDetails = $order[0];
+		//die(var_dump($orderItems));
 	    $itemList = new ItemList();
 	    $totalOrder = 0.00;
 
 	    foreach ($orderItems as $orderItem) {
 	      $item = new Item();
 	      $item->setCurrency('GBP');
-	      $item->setName($orderItem[0])
-	        ->setQuantity($orderItem[2])
-	        ->setPrice($orderItem[1]);
+	      $item->setName($orderItem['Name'])
+	        ->setQuantity($orderItem['Quantity'])
+	        ->setPrice($orderItem['Price']);
 	      $itemList->addItem($item);
-	      $totalOrder += $orderItem[1] * $orderItem[2];
+	      //$totalOrder += $orderItem[1] * $orderItem[2];
 	    }
+	    $totalOrder = $orderDetails['Total'];
+	    $deliveryPrice = 0;
 
 	    // determine shipping and tax later from frontend
-	    $shippingResult = $conn->query("select `Price` from `fees` where `Id` = 2"); // id of shipping fee
-	    $shipping = mysqli_fetch_assoc($shippingResult)['Price'];
-	    mysqli_free_result($shippingResult);
+	    $deliveryResult = $conn->query("select `Price` from `fees` where `Id` = 1"); // id of shipping fee
+	    $delivery = mysqli_fetch_assoc($deliveryResult)['Price'];
+	    mysqli_free_result($deliveryResult);
 
 	    $taxResult = $conn->query("select `Price` from `fees` where `Id` = 3"); // id of tax fee
 	    $tax = mysqli_fetch_assoc($taxResult)['Price'];
 	    mysqli_free_result($taxResult);
-
 	    // other fees go here .. 
 
 	    $details = new Details();
-	    $details->setShipping($shipping)
-	      ->setTax($tax)
-	      ->setSubtotal($totalOrder);
+	    $details->setTax($tax);
+
+	      if ($orderType == 1) {
+	      	$details->setShipping($delivery);
+	      	$details->setSubtotal($totalOrder - $tax - $delivery);
+	      }
+	      else {
+	      	$details->setSubtotal($totalOrder - $tax);
+	      }
 
 	    // Set redirect urls
 	    $redirectUrls = new RedirectUrls();
@@ -88,7 +100,7 @@ class mypaypal {
 	    // Set payment amount
 	    $amount = new Amount();
 	    $amount->setCurrency('GBP')
-	      ->setTotal($totalOrder + $shipping + $tax)
+	      ->setTotal($totalOrder)
 	      ->setDetails($details);
 
 	    // Set transaction object
@@ -141,11 +153,11 @@ class mypaypal {
 				$result = $payment->execute($execution, $paypal); // Execute payment (charge customer here)
 				
 				if ($result) {
-					updateWithFee($conn, $orderType, $selectedMethodId);
+					//updateWithFee($conn, $orderType, $selectedMethodId);
 					$result = CheckOutOrder($conn, $orderId, $selectedMethodId);
 
 					if ($result) {
-						$returnUrl = self::SITEURL . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/showing cafeterias.php";
+						$returnUrl = self::SITEURL . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php";
 						$_SESSION['notifications'][] = 'Payment Succeeseded !';
 						header("Location: " . $returnUrl);
 					}
@@ -191,7 +203,7 @@ class mybraintree {
 		]);
 
 		if ($result->success) {
-			echo "../Public/showing cafeterias.php";
+			echo "../Public/categories.php";
 		} else if ($result->transaction) {
 		    print_r("Error processing transaction:");
 		    print_r("\n  code: " . $result->transaction->processorResponseCode);

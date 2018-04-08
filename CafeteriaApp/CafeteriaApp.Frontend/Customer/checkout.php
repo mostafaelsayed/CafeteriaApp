@@ -39,51 +39,19 @@
 
     <div class="well" style="width: 550px;height: 280px;margin: auto;background-color: white">
 
-      <select ng-model="selectedType" ng-options="type.name for type in orderTypes" ng-click="changeType()"></select>
+      <select ng-model="selectedType" ng-options="type.name for type in orderTypes" ng-change="changeType()"></select>
+
+      <!-- <div><button ng-click="changeType()">Confirm Type</button></div> -->
 
       <br><br><br>
 
-      <div>Total: &nbsp;
-
-        <!-- <span ng-show="selectedType.id == 1">
-
-          {{ totalWithTaxAndShipping | currency : "$" : 2 }}
-
-        </span> -->
-
-        <span ng-show="selectedType.id == 0">
-
-          {{ totalWithTax | currency : "$" : 2 }}
-
-        </span>
-
-        <span ng-show="selectedType.id == 1">
-
-          {{ totalWithShippingTaxAndDelivery | currency : "$" : 2 }}
-
-        </span>
-
-        <br />
-
-        <div>Tax : <span ng-bind="tax"></span></div>
-
-        <div ng-show="selectedType.id == 1">
-
-          <div>Delivery : <span ng-bind="delivery"></span></div>
-
-          <div>Shipping : <span ng-bind="shipping"></span></div>
-
-        </div>
-
-        <!-- <div ng-show="selectedType.id == 1">
-
-          <div>shipping : <span ng-bind="shipping"></span></div>
-
-        </div> -->
-
-      </div>
-
-      <div>Subtotal : <span ng-bind="total"></span></div>
+      <div>Total: {{ total }}</div>
+        <br/>
+        <div ng-show="deliveryFee != 0">Delivery: {{ deliveryFee }}</div>
+        <div>Tax: {{ taxFee }}</div>
+        <br/>
+        <div>SubTotal: {{ subTotal }}</div>
+      
 
       <br><br>
 
@@ -91,8 +59,10 @@
 
       <div>
 
-        <select name="method" ng-model="selectedMethod" ng-options="method.name for method in paymentMethods" required />
+        <select name="method" ng-model="selectedMethod" ng-change="changePaymentMethod()" ng-options="method.name for method in paymentMethods" required />
        	</select>
+
+        <!-- <div><button ng-click="changePaymentMethod()">Confirm Payment Method</button></div> -->
 
         <span ng-show="myForm.$submitted && myForm.method.$invalid" ng-cloak>The Payment Method is required.</span>
 
@@ -110,7 +80,7 @@
     <input style="position: absolute; display: none" ng-show="selectedMethod.id == 4" type="submit" class="btn btn-primary inbut" name="next" />
     &nbsp;&nbsp;&nbsp;
 
-    <a class="btn btn-primary" ng-show="selectedMethod.id == 4" ng-click="confirmOrder()">Submit</a>&nbsp;
+    <a class="btn btn-primary" ng-show="selectedMethod.id == 3" ng-click="confirmOrder()">Submit</a>&nbsp;
 
     <a class="btn btn-primary" ng-click="discardOrder()">Discard Order</a>
 

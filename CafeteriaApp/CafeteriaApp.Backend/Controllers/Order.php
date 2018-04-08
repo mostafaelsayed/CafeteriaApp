@@ -68,6 +68,39 @@
     $_SESSION['orderId'] = $orderId;
   }
 
+  function updateOrderTypeAndTotal($conn, $orderType) {
+    $r = $conn->query("select `Price` from `fees` where `Name` = 'Delivery'");
+
+    if (!$r) {
+      die($conn->error);
+    }
+
+    $deliveryFee = mysqli_fetch_assoc($r)['Price'];
+    $f = 0;
+
+    if ($orderType == 0) { // take away
+      $f = -$deliveryFee;
+      $deliveryFee = 0;
+
+      //$total -= $deliveryFee;
+      //$deliveryFee = 0;
+    }
+    elseif ($orderType == 1) { // delivery
+      $f = $deliveryFee;
+      //$total += $deliveryFee;
+    }
+
+    $res = $conn->query("update `order` set `Total` = `Total` + {$f}, `Type` = '{$orderType}', `DeliveryFee` = '{$deliveryFee}' where `Id` = {$_SESSION['orderId']}");
+
+    if (!$res) {
+      die($conn->error);
+    }
+
+    if ($orderType == 1) {
+      return $deliveryFee;
+    }
+  }
+
   function updateOrderLocation($conn, $locationId) {
     $sql = "select `OrderId` from `orderlocation` where `OrderId` = {$_SESSION['orderId']}";
     $res = $conn->query($sql);
@@ -102,9 +135,12 @@
   }
 
   function addOrder($conn, $deliveryTime, $paymentMethodId, $orderStatusId, $userId, $total = 0, $paid = 0) {
-    $sql = "insert into `order` (DeliveryTime, Paid, Total, PaymentMethodId, OrderStatusId, UserId) values (?, ?, ?, ?, ?, ?)";
+    $sql = "insert into `order` (`DeliveryTime`, `Paid`, `Total`, `PaymentMethodId`, `OrderStatusId`, `UserId`, `TaxFee`) values (?, ?, ?, ?, ?, ?, ?)";
+    $taxFee = mysqli_fetch_assoc($conn->query("select `Price` from `fees` where `Name` = 'Tax'"))['Price'];
+    $total += $taxFee;
+    // $deliveryFee = mysqli_fetch_assoc($conn->query("select `Price` from `fees` where `Name` = 'Delivery'"))['Delivery'];
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sddiii", $deliveryTime, $paid, $total, $paymentMethodId, $orderStatusId, $userId);
+    $stmt->bind_param("sddiiid", $deliveryTime, $paid, $total, $paymentMethodId, $orderStatusId, $userId, $taxFee);
 
     if ($stmt->execute() === TRUE) {
       //echo "Order Added successfully";
@@ -179,13 +215,23 @@
   }
 
   function getOrderItems($conn, $orderId) {
-    $orderItemsStatment = "select `menuitem`.`Name`, `menuitem`.`Price`, `orderitem`.`Quantity`, `order`.`Total` from `orderitem` inner join `menuitem` on `menuitem`.`Id` = `orderitem`.`MenuItemId` inner join `order` on `order`.`Id` = `orderitem`.`OrderId` where `orderitem`.`OrderId` = " . $orderId;
+    $orderItemsStatment = "select `menuitem`.`Name`, `menuitem`.`Price`, `orderitem`.`Quantity`, `orderitem`.`Quantity` * `menuitem`.`Price` as TotalPrice from `orderitem` inner join `menuitem` on `menuitem`.`Id` = `orderitem`.`MenuItemId` inner join `order` on `order`.`Id` = `orderitem`.`OrderId` where `orderitem`.`OrderId` = " . $orderId;
+    $orderFeesAndTotalStmt = "select `order`.`Total`, `order`.`DeliveryFee`, `order`.`TaxFee` from `order` where `id` = {$_SESSION['orderId']}";
     $result = $conn->query($orderItemsStatment);
+    $orderResult = $conn->query($orderFeesAndTotalStmt);
+    $orderDetails = mysqli_fetch_assoc($orderResult);
+    //die(var_dump($orderDetails));
+    $orderItems = [];
 
     if ($result) {
-      $orderItems = mysqli_fetch_all($result);
+      while($row = mysqli_fetch_assoc($result)) {
+        array_push($orderItems, $row);
+      }
+      //$orderItems = $items[0];
+
       mysqli_free_result($result);
-      return $orderItems;
+
+      return [$orderDetails, $orderItems];
     }
     else {
       echo "error : ", $conn->error;

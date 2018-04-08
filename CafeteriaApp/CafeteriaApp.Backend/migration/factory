@@ -1,0 +1,148 @@
+<?php
+
+require_once('../connection.php');
+$conn->query("create table `migrations` (`id` int primary key, `name` varchar(200) not null)");
+
+if ($argv[1] == 'create' && $argv[2] == 'migration') {
+	$tableName = $argv[3];
+	$files = glob('migration-files/*.{php}', GLOB_BRACE); // get files in directory
+	//var_dump($files);
+	$len = count($files); // get files count
+	$id = 0;
+
+	if ($len != 0) {
+		$last = $files[$len - 1]; // get last one
+		$fileName = substr($last, strpos($last, '/') + 1); // get filename portion of path
+		$len1 = strlen($fileName); // get len of filename string
+		$id = (int)substr($fileName, 0, strpos($fileName, '_')); // get id portion of filename
+	}
+
+	//var_dump('migration-files/' . (string)($id + 1) . '_' . $argv[3] . ".php");
+
+	$fh = fopen('migration-files/' . (string)($id + 1) . '_' . $argv[3] . ".php", 'w'); // create file with last id + 1
+	if (isset($argv[4]) && $argv[4] == 'createTable') {
+		fwrite($fh, "<?php
+		require_once(__DIR__ . '/../migration-classes.php');
+		require_once(__DIR__ . '/../migrator.php');
+
+		\$migrator = new migrator();
+
+		\$up = function(\$conn) {
+			\$tableName = '{$tableName}';
+
+			\$obj = [
+				'id' => ['type' => 'int', 'primary key', 'auto_increment'],
+			];
+
+			table::createTable(\$conn, \$tableName, \$obj);
+		};
+
+		\$down = function(\$conn) {
+			table::dropTable(\$conn, \$tableName);
+		};
+		");
+	}
+	else {
+		fwrite($fh, "<?php
+	require_once(__DIR__ . '/../migration-classes.php');
+	require_once(__DIR__ . '/../migrator.php');
+
+	\$migrator = new migrator();
+
+	\$up = function(\$conn) {
+		
+	};
+
+	\$down = function(\$conn) {
+		
+	};
+	");
+	}
+
+}
+elseif ($argv[1] == 'run' && $argv[2] == 'migration') {
+	require_once('../connection.php');
+	$files = glob('migration-files/*.{php}', GLOB_BRACE); // get files in directory
+	$filesLen = count($files);
+
+	if (isset($argv[3]) && $argv[3] == 'down') { // reverse migrations
+		$level = 1;
+
+		if (isset($argv[4])) {
+			$level = $argv[4];
+		}
+
+		// reverse migrations
+		if ($level != 'reset') {
+			while ($level !== false) {
+				$count = mysqli_fetch_assoc($conn->query('select count(*) as thecount from `migrations`'))['thecount'];
+				if ($count == 0) {
+					echo "All migrations are reversed";
+					return;
+				}
+
+				// require last migration file related to the last row in db
+				$fileName = $files[$count - 1];
+				require($fileName);
+				$lastId = mysqli_fetch_assoc($conn->query('select `id` from `migrations` order by `id` desc limit 1'))['id'];
+
+				if ($lastId < $level) {
+					echo "level is bigger than the number of migration files";
+					return;
+				}
+				// delete record from db
+				$conn->query("delete from `migrations` where `id` = {$lastId}");
+				// execute down method
+				$migrator->down($conn, $down);
+				$level--;
+				if ($level == 0) {
+					return;
+				}
+			}
+		}
+		else {
+			for ($i = $filesLen - 1; $i >= 0; $i--) {
+				$fileName = $files[$i];
+				require($fileName);
+				$lastId = mysqli_fetch_assoc($conn->query('select `id` from `migrations` order by `id` desc limit 1'))['id'];
+				// delete record from db
+				$conn->query("delete from `migrations` where `id` = {$lastId}");
+				// execute down method
+				$migrator->down($conn, $down);
+			}
+		}
+
+		
+	}
+	else {
+		require_once('../connection.php');
+
+		$files = glob('migration-files/*.{php}', GLOB_BRACE); // get files in directory
+
+		// query to get last row from migration table
+		$lastId = mysqli_fetch_assoc($conn->query('select `id` from `migrations` order by `id` desc limit 1'))['id'];
+
+		if ($lastId == null) {
+			$lastId = 0;
+		}
+
+		$startIndex = $lastId;
+
+		$len = count($files);
+
+		for ($i = $startIndex; $i < $len; $i++) {
+			$fileName = $files[$i];
+			require($fileName);
+			$fileName = substr($fileName, strpos($fileName, '/') + 1); // get filename portion of path
+			$id = (int)substr($fileName, 0, strpos($fileName, '_')); // get id portion of filename
+
+			$res = $conn->query("insert into `migrations` (`id`, `name`) values ('{$id}', '{$fileName}')");
+
+			if (!$res) {
+				echo $conn->error;
+			}
+
+			$migrator->up($conn, $up);
+		}
+	}
+}

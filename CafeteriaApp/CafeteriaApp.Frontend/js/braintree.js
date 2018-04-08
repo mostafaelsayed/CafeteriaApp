@@ -111,7 +111,8 @@ layoutApp.controller('braintree', ['$scope', '$http', function($scope, $http) {
           $http.post('../../CafeteriaApp.Backend/Requests/Order.php', {payload: payload}).then(function(response) {
             //console.log(response);
             localStorage.setItem("submit", 1);
-            document.location = response.data;
+            console.log(response);
+            //document.location = response.data[0];
           });
           // This is where you would submit payload.nonce to your server
           //alert('Submit your nonce to your server here!');

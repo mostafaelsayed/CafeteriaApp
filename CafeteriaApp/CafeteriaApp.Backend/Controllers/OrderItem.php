@@ -3,7 +3,7 @@
   require(__DIR__ . '/MenuItem.php');
 
   function getOrderItemsByOrderId($conn, $id) {
-    $sql = "select menuitem.Name, orderitem.Quantity, orderitem.MenuItemId, orderitem.Id, orderitem.OrderId from orderitem INNER JOIN menuitem ON orderitem.MenuItemId = menuitem.Id where orderitem.OrderId = " . $id;
+    $sql = "select `menuitem`.`Name`, `orderitem`.`Quantity`, `orderitem`.`MenuItemId`, `orderitem`.`Id`, `orderitem`.`OrderId`, `orderitem`.`Quantity` * `menuitem`.`price` as TotalPrice from `orderitem` INNER JOIN `menuitem` ON `orderitem`.`MenuItemId` = `menuitem`.`Id` where `orderitem`.`OrderId` = " . $id;
     $result = $conn->query($sql);
 
     if ($result) {

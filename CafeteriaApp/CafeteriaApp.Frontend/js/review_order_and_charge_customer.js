@@ -11,7 +11,12 @@ layoutApp.controller('reviewOrderAndChargeCustomer', ['$scope', '$http', '$locat
 	.then(function(response) {
 		console.log(response);
 		$scope.orderDetails = response.data;
-	 	$scope.total = response.data[0][3];
+		$orderTotalAndFees = $scope.orderDetails[0];
+		$scope.orderItems = $scope.orderDetails[1];
+	 	$scope.total = $orderTotalAndFees['Total'];
+	 	$scope.deliveryFee = $orderTotalAndFees['DeliveryFee'];
+	 	$scope.taxFee = $orderTotalAndFees['TaxFee'];
+	 	$scope.subTotal = $scope.total - $scope.deliveryFee - $scope.taxFee;
 	} );
 
 } ] );

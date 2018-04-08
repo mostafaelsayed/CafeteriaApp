@@ -7,6 +7,10 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   $scope.paymentMethods = [ {id: 1, name: "PayPal"}, {id: 2, name: "Credit Card"}, {id: 3, name: "Cash"} ];
   localStorage.setItem("submit", 1);
 
+  $scope.deliveryFee = 0;
+  $scope.taxFee = 0;
+  $scope.subTotal = 0;
+
   $scope.confirmOrder = function() {
     alertify.confirm("Are Your sure you Want to Submit Order?", function(e) {
       if (e) {
@@ -57,15 +61,41 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   $scope.changeType = function() {
     if ($scope.selectedType.id == 1) { // delivery
       document.getElementsByClassName('wrapper')[0].style.visibility = 'visible';
-      $http.put('../../CafeteriaApp.Backend/Requests/Order.php?type=1');
+      $http.put('../../CafeteriaApp.Backend/Requests/Order.php?type=1').then(function(response) {
+        $scope.deliveryFee = parseInt(response.data);
+        $scope.total += $scope.deliveryFee;
+        alertify.success('order type is now delivery');
+      });
 
       $scope.locInit();
       $scope.confirmLocation(1);
     }
     else if ($scope.selectedType.id == 0) { // take away
-      $http.put('../../CafeteriaApp.Backend/Requests/Order.php?type=0');
+      $http.put('../../CafeteriaApp.Backend/Requests/Order.php?type=0').then(function(response) {
+        $scope.total -= $scope.deliveryFee;
+        $scope.deliveryFee = 0;
+        alertify.success('order type is now take away');
+      });
       document.getElementsByClassName('wrapper')[0].style.visibility = 'hidden';
     }
+  };
+
+  $scope.changePaymentMethod = function() {
+    var data = {
+      paymentMethodId: $scope.selectedMethod.id
+    };
+    $http.put('../../CafeteriaApp.Backend/Requests/Order.php', data).then(function(response) {
+      //console.log($scope.selectedMethod.id);
+      if ($scope.selectedMethod.id == 1) { // paypal
+        alertify.success('you will be pay with PayPal');
+      }
+      else if ($scope.selectedMethod.id == 2) { // credit
+        alertify.success('you will be pay with Credit Card');
+      }
+      else if ($scope.selectedMethod.id == 3) { // cash
+        alertify.success('you will be pay Cash');
+      }
+    })
   };
 
   $scope.returnToMyCurrentLocation = function() {
@@ -139,8 +169,23 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   $scope.getOrderInfo = function() {
     $http.get('../../CafeteriaApp.Backend/Requests/Order.php')
     .then(function(response) {
+      console.log(response);
       $scope.orderInfo = response.data;
       $scope.orderType = response.data.Type;
+      var paymentMethodId = response.data.PaymentMethodId;
+      $scope.deliveryFee = response.data.DeliveryFee;
+      $scope.taxFee = response.data.TaxFee;
+      //$scope.selectedMethod = response.data.PaymentMethodId;
+
+      if (paymentMethodId == 1) {
+        $scope.selectedMethod = $scope.paymentMethods[0];
+      }
+      else if (paymentMethodId == 2) {
+        $scope.selectedMethod = $scope.paymentMethods[1];
+      }
+      else {
+        $scope.selectedMethod = $scope.paymentMethods[2];
+      }
 
       if ($scope.orderType == 1) {
         document.getElementsByClassName('wrapper')[0].style.visibility = 'visible';
@@ -175,17 +220,11 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       }
 
       $scope.total = parseFloat($scope.orderInfo.Total);
+      $scope.subTotal = $scope.total - $scope.deliveryFee - $scope.taxFee;
 
       $http.get('../../CafeteriaApp.Backend/Requests/Fee.php')
       .then(function(response) {
-        $scope.fees = response.data;
-        $scope.tax = parseFloat($scope.fees[2].Price);
-        $scope.delivery = parseFloat($scope.fees[0].Price);
-        $scope.shipping = parseFloat($scope.fees[1].Price);
-        $scope.totalWithTax = $scope.total + $scope.tax;
-        $scope.totalWithTaxAndShipping = $scope.totalWithTax + $scope.shipping;
-        $scope.totalWithShippingTaxAndDelivery =
-          $scope.totalWithTaxAndShipping + $scope.delivery;
+        
       })
     });
   };
@@ -222,5 +261,5 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
   $scope.getUserInfo();
   $scope.getOrderInfo();
-  $scope.selectedMethod = $scope.paymentMethods[0];
+  //$scope.selectedMethod = $scope.paymentMethods[0];
 }]);
