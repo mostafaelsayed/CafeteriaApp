@@ -94,8 +94,8 @@ class mypaypal {
 
 	    // Set redirect urls
 	    $redirectUrls = new RedirectUrls();
-	    $redirectUrls->setReturnUrl(self::SITEURL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/review_order_and_charge_customer.php?orderId=' . $orderId . '&paymentMethodId=' . $selectedMethodId . '&orderType=' . $orderType)
-	      ->setCancelUrl(self::SITEURL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/checkout.php?orderId=' . $orderId . '&paymentMethodId=' . $selectedMethodId);
+	    $redirectUrls->setReturnUrl(self::SITEURL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/review_order_and_charge_customer.php?orderId=' . $orderId)
+	      ->setCancelUrl(self::SITEURL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/checkout.php?orderId=' . $orderId);
 
 	    // Set payment amount
 	    $amount = new Amount();
@@ -153,7 +153,6 @@ class mypaypal {
 				$result = $payment->execute($execution, $paypal); // Execute payment (charge customer here)
 				
 				if ($result) {
-					//updateWithFee($conn, $orderType, $selectedMethodId);
 					$result = CheckOutOrder($conn, $orderId, $selectedMethodId);
 
 					if ($result) {

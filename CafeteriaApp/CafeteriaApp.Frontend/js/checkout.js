@@ -256,7 +256,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
     infoWindow.setContent(browserHasGeolocation ?
                       'Error: The Geolocation service failed.' :
                       'Error: Your browser doesn\'t support geolocation.');
-    infoWindow.open(map);
+    infoWindow.open($scope.map);
   };
 
   $scope.getUserInfo();
