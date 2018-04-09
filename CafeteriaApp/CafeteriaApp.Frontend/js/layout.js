@@ -12,7 +12,7 @@ function selectpickerDirective($parse) {
   };
 }
 
-var layoutApp = angular.module( 'layout_app', ['location_provider', 'customer_and_cashier_order'] );
+var layoutApp = angular.module( 'layout_app', ['customer_and_cashier_order'] );
 
 layoutApp.directive( 'selectPicker', ['$parse', selectpickerDirective] );
 

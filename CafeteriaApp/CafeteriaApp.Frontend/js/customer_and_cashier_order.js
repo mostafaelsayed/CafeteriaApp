@@ -11,7 +11,7 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
     order_info.ItemRating = [];
     order_info.getOrderItems = function(orderId) { // this is asyhnchronous
         $http.get('../../CafeteriaApp.Backend/Requests/OrderItem.php?orderId=' + orderId).success(function(data) {
-            console.log(data);
+            //console.log(data);
             $rootScope.orderItems = data;
             order_info.orderId = orderId;
         });
@@ -21,7 +21,8 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
             menuItemId: menuItemId
         };
         //data = JSON.stringify(data);
-        if (document.getElementById('favorites' + menuItemId).style.color === "red") { // add favorite
+        var color = $('#favorites' +menuItemId).css('color');
+        if (color == "red" || color=='rgb(255, 0, 0)') { // add favorite
             $http.post('../../CafeteriaApp.Backend/Requests/FavoriteItem.php', data).then(function(response) {
                 if (response.data !== "") {
                     alertify.error(response.data);
@@ -39,7 +40,7 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
                     'Content-type': 'application/json;charset=utf-8'
                 }
             }).then(function(response) {
-                console.log(response.data);
+                //console.log(response.data);
                 if (response.data !== "") {
                     alertify.error('Error occured !');
                 } else {
@@ -62,7 +63,7 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
                 Quantity: 1
             };
             $http.post('../../CafeteriaApp.Backend/Requests/OrderItem.php', data).then(function(response) {
-                console.log(response);
+                //console.log(response);
                 order_info.orderId = response.data;
                 order_info.togglePopup('OrderItem added successfully !');
                 order_info.getOrderItems(order_info.orderId);
@@ -131,7 +132,7 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
     };
     order_info.loadCommentsforMenuItem = function(menuItemId, menuItemIndex) {
         $http.get('../../CafeteriaApp.Backend/Requests/Comment.php?MenuItemId=' + menuItemId).then(function(response) {
-            console.log(response);
+            //console.log(response);
             order_info.comments[menuItemIndex] = response.data[0];
             order_info.customerCommentsIds[menuItemIndex] = response.data[1];
         });

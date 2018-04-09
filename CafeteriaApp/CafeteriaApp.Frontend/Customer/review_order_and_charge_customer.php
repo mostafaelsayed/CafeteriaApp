@@ -1,23 +1,12 @@
 <?php
 
- 
-  require(__DIR__ . '/../layout.php');
-  //validatePageAccess([2]);
-
-  if ( !isset($_GET['orderId']) || !isset($_GET['deliveryTimeDuration']) ) {
-    $_GET['orderId'] = 0;
-    $_GET['deliveryTimeDuration'] = 0;
-  }
+require(__DIR__ . '/../layout.php');
+validatePageAccess([2]);
 
 ?>
 
-<head>
 
-  <title>Order info</title>
-
-  <script src="../js/review_order_and_charge_customer.js"></script>
-
-</head>
+<title>Order info</title>
 
 <br>
 
@@ -38,13 +27,9 @@
       <tr>
 
         <th style="color: white">OrderItem Name</th>
-
         <th style="color: white">OrderItem Unit Price</th>
-
         <th style="color: white">OrderItem Quantity</th>
-
         <th style="color: white">OrderItem Total Price</th>
-
         <!-- <th style="color: white">OrderItem Total Price</th> -->
 
       </tr>
@@ -56,11 +41,8 @@
       <tr ng-repeat="o in orderItems">
 
         <td style="color: white" ng-bind="o['Name']"></td>
-      
         <td style="color: white" ng-bind="o['Price']"></td>
-      
         <td style="color: white" ng-bind="o['Quantity']"></td>
-      
         <td style="color: white" ng-bind="o['TotalPrice']"></td>
 
       </tr>
@@ -69,14 +51,18 @@
 
   </table>
 
+ <div style="color: white">SubTotal: {{ subTotal }}</div>
+ <br/>
+ <div style="color: white" ng-show="deliveryFee != 0">
+ Delivery: {{ deliveryFee }}</div>
+ <br/>
+  <div style="color: white">Tax: {{ taxFee }}</div>
+   <br/>
   <div style="color: white">Total: {{ total }}</div>
   <br/>
-  <div style="color: white" ng-show="deliveryFee != 0">Delivery: {{ deliveryFee }}</div>
-  <div style="color: white">Tax: {{ taxFee }}</div>
-  <br/>
-  <div style="color: white">SubTotal: {{ subTotal }}</div>
-
-  <div><br></div>
+  
+  
+  <div></div>
 
   <form novalidate name="myForm" action="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php" method="post" style="align-content: center;text-align: center">
 
@@ -94,6 +80,6 @@
 
 </div>
 
-<br>
+<script src="../js/review_order_and_charge_customer.js"></script>
 
 <?php require(__DIR__ . '/../Public/footer.php'); ?>

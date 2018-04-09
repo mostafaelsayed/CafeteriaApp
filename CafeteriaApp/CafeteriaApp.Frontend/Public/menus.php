@@ -1,15 +1,14 @@
- 
 <?php
 	require(__DIR__.'/../layout.php');
-    //validatePageAccess([1,2], false);
 ?>
 
-<head>
  <title>Menus</title>
-  <style type="text/css">
+
+<style type="text/css">
 .w3-animate-zoom {
     animation: animatezoom 0.6s
 }
+
 @keyframes animatezoom {
     from {
         transform: scale(0)
@@ -18,8 +17,8 @@
         transform: scale(1)
     }
 }
-  </style>
-</head>
+</style>
+
 
 <div class="container">
 
@@ -32,12 +31,10 @@
         <div style="text-align: center;font-size: 20px">
 
       		<a href="menuitems.php?categoryId={{c.Id}}&categoryName={{c.Name}}" style="color: orange">
-            <img style="display: block;margin: auto;width: 300px;height: 300px" ng-src={{c.Image}} />
+            <img class="img-rounded"  style="display: block;margin: auto;width: 300px;height: 300px" ng-src={{c.Image}} />
       			<span ng-bind="c.Name"></span>
 
       		</a>
-
-       		<br>
 
         </div>
 
@@ -47,6 +44,8 @@
 
 </div>
 
-<?php require(__DIR__.'/footer.php'); ?>
+
 
 <script src="../js/show_categories_of_a_cafeteria.js"></script>
+
+<?php require(__DIR__.'/footer.php'); ?>

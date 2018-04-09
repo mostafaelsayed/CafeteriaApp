@@ -1,8 +1,8 @@
 //***try use arguments instead of mentioning all items
 
 // controller for getting menuitems of a category from database
-layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$location','$rootScope','$timeout','Order_Info'
-, function($scope, $http, $location, $rootScope, $timeout, Order_Info) {
+layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$rootScope','$timeout','Order_Info'
+, function($scope, $http, $rootScope, $timeout, Order_Info) {
   
   $scope.data = Order_Info;
 
@@ -11,8 +11,8 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$locatio
     alertify.success('Order Discarded');
   }
 
-  $scope.categoryId = $location.search().categoryId;
-  $scope.cafeteriaId = $location.search().cafeteriaId;
+
+  $scope.categoryId = $.urlParam('categoryId');
 
   $scope.checkUser = function() {
     $http.get('../../CafeteriaApp.Backend/Requests/User.php?flag=1')
@@ -32,7 +32,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$locatio
     $http.get('../../CafeteriaApp.Backend/Requests/MenuItem.php?categoryId=' + $scope.categoryId)
     .then(function(response) {
       $scope.menuItems = response.data;
-      //console.log($scope.menuItems);
+      console.log($scope.menuItems);
       $scope.loadFavoriteItems();
       $scope.initializeMenuItemCommmentFlags();
       $scope.loadRatedMenuItemsForUser();

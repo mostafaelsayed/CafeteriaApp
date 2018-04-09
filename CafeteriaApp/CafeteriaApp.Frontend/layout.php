@@ -2,7 +2,7 @@
 require_once(__DIR__ . '/../CafeteriaApp.Backend/session.php'); // must be first as it uses cookies
 require(__DIR__.'/../CafeteriaApp.Backend/functions.php');
 
-//checkGetParams();
+checkGetParams();
 
 // $selected_lang = isset($_GET['lang']) ? $_GET['lang'] : 'en';
 // $direction     = $selected_lang == 'ar' ? 'rtl' : 'ltr';
@@ -71,10 +71,10 @@ $selected_lang ='en';
 
               <ul id="left_ul" class="nav navbar-nav navbar-left">
                 <li>
-                  <a class="navbar-brand" href='categories.php'>Home</a>
+                  <a class="navbar-brand" href='../Public/categories.php'>Home</a>
                 </li>
                 <li>
-                  <a class="navbar-brand" href="ssss.php">Help</a>
+                  <a class="navbar-brand" href="../Public/help.php">Help</a>
                 </li>
                 <li>
                   <a class="navbar-brand" href="ssss.php">Contact us</a>
@@ -84,8 +84,8 @@ $selected_lang ='en';
           </div>
 
           <ul id="right_ul" >
-         <?php   if(isset($_SESSION['orderId'])){ ?>
-            <li id="shoppingCart" title="Show Shopping Cart Items">
+
+            <li ng-if='orderId' id="shoppingCart" title="Show Shopping Cart Items">
               <div id="shoppingCart_Button">
                 <img src="../IconoCompraPaquetigos.png" style="width: 100%;height: 100%"/>
               </div>
@@ -140,14 +140,14 @@ $selected_lang ='en';
                     </table> 
 
                     <div>
-                      <a class="btn checkout" title="Check out this order" ng-href="../Areas/Customer/checkout.php?orderId={{orderId}}" ng-show="orderItems.length > 0" >
+                      <a class="btn checkout"  title="Check out this order" href="../Customer/checkout.php?orderId={{orderId}}">
                       Checkout
                       </a>
                     </div>
                   </div>
                 </div>
               </li>
-              <?php } ?>
+
               <li id="languagesDropdown">
                 <div id="languages" class="dropdown pull-right">
                   <button class="btn language" type="button" data-toggle="dropdown">
@@ -174,10 +174,8 @@ $selected_lang ='en';
                   <div class="dropdown-menu" style="left: -70px">
 
                     <div>
-
                       <a class="dropdown_item" href="../Customer/favorite items.php" > My Favorites</a>
                       <a class="dropdown_item" href="#">Change Info</a>
-
                       <a class="dropdown_item" href="../Customer/change_password.php">Change Password</a>
                       <hr>
                       <a class="dropdown_item" href="../logout.php">Log out
@@ -189,7 +187,7 @@ $selected_lang ='en';
                 </div>
 
               </li>
-             
+            
               <li id="notification" class="pull-right" title="Show Notifications" onclick="toggleNotifications()">
 
                   <?php $length = count($_SESSION['notifications']); ?>
@@ -237,7 +235,7 @@ $selected_lang ='en';
         </div>
 
       </nav>
-
+</div>
        <?php 
 
        if(!isset($_SESSION['userId'])) {
@@ -253,13 +251,22 @@ $selected_lang ='en';
     <script src="../js/metisMenu.min.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../js/sb-admin-2.js"></script>
-    <script src="../js/location_provider.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <!-- <script src="../js/bootstrap-select.min.js"></script> -->
       <script type="text/javascript">
         function toggleNotifications() {
           $('#notifyLabel').html('');
           $("#notifyme").slideToggle("slow");
+        }
+
+
+        $.urlParam = function(name){
+        var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+          if (results==null){
+             return null;
+          } else {
+             return decodeURI(results[1]) || 0;
+          }
         }
       </script>
 

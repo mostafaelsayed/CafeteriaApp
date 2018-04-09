@@ -6,21 +6,15 @@ login page has redirect implemented incorrectly using post gv but the write one 
 
 -put search in home page(not cafetrias)
 
--avg rating is wrong (trigers)
-
 -total for order item is calculated in front-end
 
--capatcha in register & feedback
+-capatcha in feedback
 
-- update rating to make users up and logged in user down and hidden but show when press a button
-
--when calling favorites page, layout hader links are represented relative to the directory of customer.
+-when calling favorites page, layout header links are represented relative to the directory of customer.
 
 *layout in frontend is for public and customers
 
 -try facebook
-
--naviagtion links don't work from customer directory
 
 -csrf
 

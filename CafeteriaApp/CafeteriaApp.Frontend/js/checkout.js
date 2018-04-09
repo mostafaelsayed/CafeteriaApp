@@ -1,8 +1,10 @@
 
 // controller for order checkout
-layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$http', '$location', 'Order_Info',
-  function($rootScope, $scope, $interval, $http, $location, Order_Info) {
-  $scope.orderId = $location.search().orderId;
+layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$http', 'Order_Info',
+  function($rootScope, $scope, $interval, $http, Order_Info) {
+  
+  $scope.orderId = $.urlParam('orderId');
+
   $scope.orderTypes = [ {id: 0, name: "Take Away"}, {id: 1, name: "Delivery"} ];
   $scope.paymentMethods = [ {id: 1, name: "PayPal"}, {id: 2, name: "Credit Card"}, {id: 3, name: "Cash"} ];
   localStorage.setItem("submit", 1);
