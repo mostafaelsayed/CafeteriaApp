@@ -23,6 +23,8 @@
     }
   }
 
+  //var_dump($_SERVER);
+
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = json_decode( file_get_contents('php://input') );
 
@@ -33,17 +35,9 @@
       if ( isset($_POST['selectedMethodId']) && !isset($_POST['paymentId']) && testInt($_POST['selectedMethodId']) && $_POST['selectedMethodId'] != 4) {
         processPayment($conn, $_SESSION['orderId'], $_POST['selectedMethodId'], $_POST['orderType']);
       }
-      elseif (isset($_POST['selectedMethodId']) && testInt($_POST['selectedMethodId']) && $_POST['selectedMethodId'] == 4) { // charge customer here
-        updateWithFee($conn, $_POST['orderType'], $_POST['selectedMethodId']);
-        CheckOutOrder($conn, $_SESSION['orderId'], $_POST['selectedMethodId']);
-        header("Location: " . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php");
-      }
-      elseif ( isset($_POST['paymentMethodId'], $_POST['paymentId'], $_POST['payerId']) && normalizeString($conn, $_POST['paymentId'], $_POST['payerId']) && testInt($_POST['paymentMethodId']) ) { // charge customer here {
-        chargeCustomer($_POST['paymentId'], $_POST['payerId'], $_SESSION['orderId'], $_POST['orderType'], $_POST['paymentMethodId'], $conn);
-      }    
-      else {
-        echo "error";
-      }
+    }
+    elseif ( isset($_POST['paymentId'], $_POST['payerId']) && normalizeString($conn, $_POST['paymentId'], $_POST['payerId']) ) { // charge customer here {
+      chargeCustomer($_POST['paymentId'], $_POST['payerId'], $_SESSION['orderId'], $conn);
     }
     else {
       if ($_SESSION['roleId'] == 3) {
@@ -72,6 +66,7 @@
       //die($data->paymentMethodId);
       $id = $data->paymentMethodId;
       $conn->query("update `order` set `PaymentMethodId` = {$id} where `Id` = {$_SESSION['orderId']}");
+      $_SESSION['paymentMethodId'] = $id;
     }
     //elseif ()
     elseif (isset($_GET['flag']) && $_GET['flag'] == 2 && isset($_GET['orderId']) && testInt($_GET['orderId']) ) {

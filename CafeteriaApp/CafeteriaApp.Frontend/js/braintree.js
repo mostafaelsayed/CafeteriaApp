@@ -93,14 +93,7 @@ layoutApp.controller('braintree', ['$scope', '$http', function($scope, $http) {
         }
       });
 
-      $('.panel-body').submit(function (event) {
-        //console.log($("#fakeLoader"));
-        $("#fakeLoader").fakeLoader({
-
-          timeToHide:20200, //Time in milliseconds for fakeLoader disappear
-
-        });
-
+      $('.panel-body').submit(function (event) {        
         event.preventDefault();
         hostedFieldsInstance.tokenize(function (err, payload) {
           if (err) {
@@ -108,11 +101,16 @@ layoutApp.controller('braintree', ['$scope', '$http', function($scope, $http) {
             return;
           }
 
+          $("#fakeLoader").fakeLoader({
+
+            timeToHide:20200, //Time in milliseconds for fakeLoader disappear
+
+          });
+
+
           $http.post('../../CafeteriaApp.Backend/Requests/Order.php', {payload: payload}).then(function(response) {
-            //console.log(response);
             localStorage.setItem("submit", 1);
-            console.log(response);
-            //document.location = response.data[0];
+            document.location = response.data;
           });
           // This is where you would submit payload.nonce to your server
           //alert('Submit your nonce to your server here!');

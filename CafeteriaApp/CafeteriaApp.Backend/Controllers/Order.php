@@ -2,7 +2,6 @@
   require_once(__DIR__ . '/../session.php');
   require_once(__DIR__ . '/../connection.php');
   require(__DIR__ . '/payment-methods.php');
-  //var_dump($_SERVER);
 
   function generateBrainTreeToken() {
     echo mybraintree::brainTreeConfig()->clientToken()->generate();
@@ -29,6 +28,7 @@
     if ($result) {
       $order = mysqli_fetch_array($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
+      $_SESSION['paymentMethodId'] = $order['PaymentMethodId'];
       return $order;
     }
     else {
@@ -81,13 +81,9 @@
     if ($orderType == 0) { // take away
       $f = -$deliveryFee;
       $deliveryFee = 0;
-
-      //$total -= $deliveryFee;
-      //$deliveryFee = 0;
     }
     elseif ($orderType == 1) { // delivery
       $f = $deliveryFee;
-      //$total += $deliveryFee;
     }
 
     $res = $conn->query("update `order` set `Total` = `Total` + {$f}, `Type` = '{$orderType}', `DeliveryFee` = '{$deliveryFee}' where `Id` = {$_SESSION['orderId']}");
@@ -134,13 +130,13 @@
     }
   }
 
-  function addOrder($conn, $deliveryTime, $paymentMethodId, $orderStatusId, $userId, $total = 0, $paid = 0) {
-    $sql = "insert into `order` (`DeliveryTime`, `Paid`, `Total`, `PaymentMethodId`, `OrderStatusId`, `UserId`, `TaxFee`) values (?, ?, ?, ?, ?, ?, ?)";
+  function addOrder($conn, $deliveryTime, $paymentMethodId, $orderStatusId, $userId, $total = 0) {
+    $sql = "insert into `order` (`DeliveryTime`, `Total`, `PaymentMethodId`, `OrderStatusId`, `UserId`, `TaxFee`) values (?, ?, ?, ?, ?, ?)";
     $taxFee = mysqli_fetch_assoc($conn->query("select `Price` from `fees` where `Name` = 'Tax'"))['Price'];
     $total += $taxFee;
-    // $deliveryFee = mysqli_fetch_assoc($conn->query("select `Price` from `fees` where `Name` = 'Delivery'"))['Delivery'];
+    $_SESSION['paymentMethodId'] = 1; // default is paypal
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sddiiid", $deliveryTime, $paid, $total, $paymentMethodId, $orderStatusId, $userId, $taxFee);
+    $stmt->bind_param("sdiiid", $deliveryTime, $total, $paymentMethodId, $orderStatusId, $userId, $taxFee);
 
     if ($stmt->execute() === TRUE) {
       //echo "Order Added successfully";
@@ -163,11 +159,11 @@
     }
   }
 
-  function CheckOutOrder($conn, $orderId, $paymentMethodId, $paid = 0) {
+  function CheckOutOrder($conn, $orderId) {
     $deliveryTime = date("Y-m-d h:m");
-    $sql = "update `order` set `DeliveryTime` = (?), `Paid` = (?), `PaymentMethodId` = (?), `OrderStatusId` = 2 where `Id` = (?)";
+    $sql = "update `order` set `DeliveryTime` = (?), `OrderStatusId` = 2 where `Id` = (?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sdii", $deliveryTime, $paid, $paymentMethodId, $orderId);
+    $stmt->bind_param("si", $deliveryTime, $orderId);
 
     if ($stmt->execute() === TRUE) {
       //open a new order
@@ -220,14 +216,12 @@
     $result = $conn->query($orderItemsStatment);
     $orderResult = $conn->query($orderFeesAndTotalStmt);
     $orderDetails = mysqli_fetch_assoc($orderResult);
-    //die(var_dump($orderDetails));
     $orderItems = [];
 
     if ($result) {
       while($row = mysqli_fetch_assoc($result)) {
         array_push($orderItems, $row);
       }
-      //$orderItems = $items[0];
 
       mysqli_free_result($result);
 
@@ -253,8 +247,11 @@
     }
   }
 
-  function chargeCustomer($paymentId, $payerId, $orderId, $orderType, $selectedMethodId, $conn) {
-    if ($selectedMethodId == 1) { // paypal
-      mypaypal::chargeCustomer($paymentId, $payerId, $orderId, $orderType, $selectedMethodId, $conn);
+  function chargeCustomer($paymentId, $payerId, $orderId, $conn) {
+    if ($_SESSION['paymentMethodId'] == 1) {
+      mypaypal::chargeCustomer($paymentId, $payerId, $orderId, $conn);
+    }
+    else {
+      //echo "1";
     }
   }

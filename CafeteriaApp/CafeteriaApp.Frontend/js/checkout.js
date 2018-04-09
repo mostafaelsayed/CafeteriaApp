@@ -14,7 +14,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   $scope.subTotal = 0;
 
   $scope.confirmOrder = function() {
-    alertify.confirm("Are Your sure you Want to Submit Order?", function(e) {
+    alertify.confirm("Are you sure you want to submit order?", function(e) {
       if (e) {
         document.getElementsByClassName('inbut')[0].click();
       }
@@ -26,7 +26,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
   $scope.discardOrder = function() {
     orderItems = $rootScope.orderItems;
-    alertify.confirm("Are Your sure you Want to Discard Order?", function(e) {
+    alertify.confirm("Are your sure you want to discard order?", function(e) {
       if (e) {
         for (var i = 0; i < orderItems.length; i++) {
           Order_Info.deleteOrderItem(orderItems[i]);
@@ -89,13 +89,13 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
     $http.put('../../CafeteriaApp.Backend/Requests/Order.php', data).then(function(response) {
       //console.log($scope.selectedMethod.id);
       if ($scope.selectedMethod.id == 1) { // paypal
-        alertify.success('you will be pay with PayPal');
+        alertify.success('You will pay with PayPal');
       }
       else if ($scope.selectedMethod.id == 2) { // credit
-        alertify.success('you will be pay with Credit Card');
+        alertify.success('You will pay with Credit Card');
       }
       else if ($scope.selectedMethod.id == 3) { // cash
-        alertify.success('you will be pay Cash');
+        alertify.success('You will pay Cash');
       }
     })
   };

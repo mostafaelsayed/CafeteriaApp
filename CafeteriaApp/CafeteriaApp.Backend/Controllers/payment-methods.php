@@ -132,7 +132,7 @@ class mypaypal {
 	    header("Location: " . $approvalUrl);
 	}
 
-	public static function chargeCustomer($paymentId, $payerId, $orderId, $orderType, $selectedMethodId, $conn) {
+	public static function chargeCustomer($paymentId, $payerId, $orderId, $conn) {
 		$paypal = self::configPaypal();
 		// Get payment object by passing paymentId
 		$payment = Payment::get($paymentId, $paypal);
@@ -153,7 +153,7 @@ class mypaypal {
 				$result = $payment->execute($execution, $paypal); // Execute payment (charge customer here)
 				
 				if ($result) {
-					$result = CheckOutOrder($conn, $orderId, $selectedMethodId);
+					$result = CheckOutOrder($conn, $orderId);
 
 					if ($result) {
 						$returnUrl = self::SITEURL . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php";

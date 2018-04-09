@@ -72,13 +72,13 @@
 
     <br />
 
-    <input ng-show="selectedMethod.id != 4 && selectedMethod.id != 2" type="submit" class="btn btn-primary" name="next" value="Next" />
+    <input ng-show="selectedMethod.id == 1" type="submit" class="btn btn-primary" name="next" value="Next" />
 
     <a type="button" ng-show="selectedMethod.id == 2" href="../Templates/credit-card-payment.php">Next</a>
     &nbsp;&nbsp;&nbsp;
 
-    <input style="position: absolute; display: none" ng-show="selectedMethod.id == 4" type="submit" class="btn btn-primary inbut" name="next" />
-    &nbsp;&nbsp;&nbsp;
+    <!-- <input style="position: absolute; display: none" ng-show="selectedMethod.id == 4" type="submit" class="btn btn-primary inbut" name="next" />
+    &nbsp;&nbsp;&nbsp; -->
 
     <a class="btn btn-primary" ng-show="selectedMethod.id == 3" ng-click="confirmOrder()">Submit</a>&nbsp;
 
