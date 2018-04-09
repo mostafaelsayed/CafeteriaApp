@@ -88,8 +88,10 @@ $(document).ready(function() {
         // }
     });
 
-    $('#shoppingCartDetails').click(function() {
-
-        return false;       // DO NOTHING WHEN CONTAINER IS CLICKED.
+    $('#shoppingCartDetails').click(function(e) {
+        if(! e.target.matches('#cart_checkout a'))
+            return false;       // DO NOTHING WHEN CONTAINER IS CLICKED.
     });
+
+
 });

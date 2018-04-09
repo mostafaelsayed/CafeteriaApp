@@ -25,3 +25,6 @@ login page has redirect implemented incorrectly using post gv but the write one 
 - handle error when credit card info not valid
 - trigger order total after order type (fee and stuff)
 - return order details in review order page
+
+
+checkout button in cart doesn't work

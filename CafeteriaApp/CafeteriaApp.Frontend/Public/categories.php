@@ -49,9 +49,7 @@
 
           <a ng-href="menus.php?menu_id={{cafeterias[0].Id}}">
 
-          <img style="display: block;margin: auto;width: 300px;height: 300px" ng-src={{cafeterias[0].Image}} />
-
-        
+          <img class="img-rounded" style="display: block;margin: auto;width: 300px;height: 300px" ng-src={{cafeterias[0].Image}} />
 
           <h3 style="color:orange;transform:rotate(-15deg);" ng-bind="cafeterias[0].Name" class="carousel-caption" title="see menus"></h3>
         </a>

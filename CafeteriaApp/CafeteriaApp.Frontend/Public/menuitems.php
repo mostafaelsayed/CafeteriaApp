@@ -17,7 +17,6 @@
 <div class="container">
 
   <div style="text-align: center">
-
     <h1 style="padding-bottom:20px;margin-bottom:20px;border-bottom: 3px solid #31B0D5;font-family: fontAwsome;font-size:4rem;">
       <?=$_GET['categoryName']?>
       </h1>
@@ -30,18 +29,25 @@
 
   <div class="row" ng-controller="getMenuItemsAndCustomerOrder" ng-init="customer='<?= $userName; ?>';userImage='<?=$userImage;?>'; loggedIn='<?=$loggedIn?>'" >
 
-    <div class="col-md-6 w3-animate-bottom">
-      <div ng-repeat="m in menuItems" style="width: 90%;margin-left: 40px">
-        <h1 ng-bind="m.Name" class="menu-name"></h1>
+    <div class="col-md-8 w3-animate-bottom">
+      
+      <div class="row" ng-repeat="m in menuItems" style="width:100%;margin-left: 40px">
+        
+        <div class="col-md-6">
+          <img class="img-rounded" style="width:70%;height:70%;"  src="{{m.Image}}"/>
+            <h1 ng-bind="m.Name" class="menu-name"></h1>
 
-        <a ng-if='loggedIn' id="{{'favorites' + m.Id}}" class="btn btn-info btn-favorite" title="add to favorites" ng-click="toggleFavoriteItem(m.Id)" >
-          <span class="glyphicon glyphicon-heart"></span>
-        </a>
+             <a ng-if='loggedIn' id="{{'favorites' + m.Id}}" class="btn btn-info btn-favorite" title="add to favorites" ng-click="toggleFavoriteItem(m.Id)" >
+              <span class="glyphicon glyphicon-heart"></span>
+            </a>
 
-        <div class="addToOrder" ng-if='loggedIn'>
-          <a style="font-size:2rem;text-shadow:2px 2px 10px;" title="Add To Order" ng-click="addToOrder(m)" class="btn btn-circle" ><i class="fa fa-plus"></i>
-          </a>
+            <a ng-if='loggedIn' class="btn btn-circle addToOrder" title="Add To Order" ng-click="addToOrder(m)" >
+              <i style="font-size:3rem" class="fa fa-plus"></i>
+            </a>
         </div>
+        
+
+        <div class="col-md-6">
 
         <!-- Stars Rating -->
         <div class="stars" ng-if='loggedIn'>
@@ -78,6 +84,7 @@
           </div>
 
         </div>
+         </div>
         <!-- Comments -->
 
         <table class="comments" id="{{'comments' + m.Id}}" ng-if="data.ShowHides[$index]">
@@ -102,7 +109,7 @@
             <tr>
             <!-- <textarea ng-KeyPress="$event.keyCode ==13 ? addCommentBackAndFront(m.Id,commentDetails,customer) :null" ></textarea> -->
               <td colspan="2">
-                <textarea id="{{'textarea' + $index}}" type="textarea" placeholder="add your comment ........" ng-model="data.commentDetails[$index]" style="display:block;width: 100%;border-radius:10px;">
+                <textarea id="{{'textarea' + $index}}" type="textarea" placeholder="add your comment ........" ng-model="data.commentDetails[$index]" style="display:block;width: 100%;border-radius:10px;line-height:2.5rem;padding-bottom:10px;">
                 </textarea>
 
               </td>
@@ -117,10 +124,10 @@
 
         <div ng-cloak ng-show="menuItems.indexOf(m) < menuItems.length - 1"><hr width="100%"></div>
 
-      </div>
+     
 
       <br>
-
+      </div>
     </div>
 
     <div id="openOrder" ng-if='loggedIn' ng-show="orderItems.length > 0 && roleid == false"  class="col-md-4 w3-animate-zoom" style="position:fixed;right:0;bottom:0;" ng-cloak>
@@ -170,7 +177,7 @@
 
 
   <div style="text-align: center;">
-      <a onclick="$('.about').slideToggle('slow');" style="cursor:pointer;">About this menu</a>
+      <a onclick="$('.about').slideToggle('slow');" style="cursor:pointer;"> <span class="glyphicon glyphicon-minus" onclick="$(this).toggleClass('glyphicon-minus glyphicon-plus');"></span> About this menu</a>
   </div>
 
     <div  class="about" style="margin: 0 auto;text-align: center;color: white;padding:20px;">

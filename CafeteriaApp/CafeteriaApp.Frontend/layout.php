@@ -29,22 +29,21 @@ $selected_lang ='en';
   <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
 
+   
     <link rel="icon" type="text/css" href="/CafeteriaApp/CafeteriaApp/favicon.ico">
-    
+     <link href="../css/normalize.css" rel="stylesheet"/>
     <!-- MetisMenu CSS -->
-    <link href="../css/metisMenu.min.css" rel="stylesheet">
-    
+    <link href="../css/metisMenu.min.css" rel="stylesheet"/>
     <!-- Custom CSS -->
-    <link href="../css/sb-admin-2.css" rel="stylesheet">
-    
+    <link href="../css/sb-admin-2.css" rel="stylesheet"/>
     <!-- Custom Fonts -->
-    <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <!-- Bootstrap Core CSS -->
     <!-- Latest compiled and minified CSS -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet"/>
     <!-- <link rel="stylesheet" href="../css/bootstrap-select.min.css"> -->
-    <link href="../css/normalize.css" rel="stylesheet">
-    <link href="../css/layout.css" rel="stylesheet" type="text/css">
+    <link href="../css/layout.css" rel="stylesheet" type="text/css"/>
+
   </head>
 
   <body style="background-image: url('../images/customer background image4.jpg')" ng-app="layout_app"
@@ -58,7 +57,6 @@ $selected_lang ='en';
         <div class="container-fluid">
 
             <div class="navbar-header">
-
               <button class="navbar-toggle" data-toggle="collapse" data-target="#optionsNavbar" id="mybutton" style="float: left">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -93,9 +91,9 @@ $selected_lang ='en';
               <div id="shoppingCartDetails">
 
                 <h3 id="OrderItemsHeader">Order Items</h3>
-
-                  <div id="OrderContents">
-                    <table id="orderTable" class="table table-bordered" ng-show="orderItems.length > 0">
+                  <h5  ng-show="orderItems.length == 0">Empty Cart !</h5>
+                  <div id="OrderContents" ng-show="orderItems.length > 0">
+                    <table id="orderTable" class="table table-bordered" >
 
                       <thead>
                         <tr>
@@ -118,17 +116,14 @@ $selected_lang ='en';
                                   <i class="fa fa-plus"></i>
                                 </a>
                               </li>
-
                               <li>
                                 <a title="Decrease Quantity" ng-click="decreaseQuantity(o)" class="btn">
                                   <i class="fa fa-minus"></i>
                                 </a>
                               </li>
-
                               <li>
                                 <a title="Remove From Order" ng-click="deleteOrderItem(o)" style="font-weight: bold" class="btn">X</a>
                               </li>
-
                             </ul>
 
                           </td>
@@ -139,13 +134,18 @@ $selected_lang ='en';
 
                     </table> 
 
-                    <div>
-                      <a class="btn checkout"  title="Check out this order" href="../Customer/checkout.php?orderId={{orderId}}">
-                      Checkout
+                    <div id="cart_checkout">
+                      <a class="btn checkout"  title="Check out this order" href="../Customer/checkout.php?orderId={{orderId}}" >
+                      Checkout <span class="glyphicon glyphicon-usd"></span>
                       </a>
-                    </div>
                   </div>
+
+                      
                 </div>
+
+
+                </div>
+
               </li>
 
               <li id="languagesDropdown">
@@ -236,12 +236,11 @@ $selected_lang ='en';
 
       </nav>
 </div>
-       <?php 
-
-       if(!isset($_SESSION['userId'])) {
-        echo "<h1>login <a href='../login.php'>here</a> so you can order food, rate items, add comments and more ... </h1>";
-       }
-        ?> 
+   <?php 
+   if(!isset($_SESSION['userId'])) {
+    echo "<h1>login <a href='../login.php'>here</a> so you can order food, rate items, add comments and more ... </h1>";
+   }
+    ?> 
 
     <script src="../js/jquery-3.2.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>

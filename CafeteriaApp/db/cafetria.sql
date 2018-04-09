@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2018 at 05:31 AM
+-- Generation Time: Apr 09, 2018 at 11:44 AM
 -- Server version: 5.7.14
 -- PHP Version: 7.0.10
 
@@ -88,7 +88,15 @@ CREATE TABLE `cafeteria` (
 --
 
 INSERT INTO `cafeteria` (`Id`, `Name`, `Image`) VALUES
-(13, 'Vegetrian', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/Categories/vegetrian.jpg');
+(13, 'Vegetrian', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/Categories/vegetrian.jpg'),
+(14, 'Pizza', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/Categories/Pizza.jpg'),
+(15, 'Fries', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/Categories/fries.jpg'),
+(16, 'ICe Cream', 'ICe Cream'),
+(17, 'Cookies', 'Cookies'),
+(18, 'Burger', 'Burger'),
+(19, 'Drinks', 'Drinks'),
+(20, 'Dessert', 'Dessert'),
+(21, 'Sandwitches', 'Sandwitches');
 
 -- --------------------------------------------------------
 
@@ -127,7 +135,7 @@ CREATE TABLE `category` (
 
 INSERT INTO `category` (`Id`, `Name`, `Image`, `CafeteriaId`) VALUES
 (9, 'Appetizers', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/Menus/soup-dish-appetizer.png', 13),
-(10, 'categorrry', 'dfvdfvfd', 13);
+(10, 'Salad', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/Menus/food5.jpg', 13);
 
 -- --------------------------------------------------------
 
@@ -203,8 +211,8 @@ CREATE TABLE `favoriteitem` (
 --
 
 INSERT INTO `favoriteitem` (`Id`, `UserId`, `MenuItemId`) VALUES
-(6, 3, 8),
-(8, 9, 8);
+(8, 9, 8),
+(13, 3, 8);
 
 -- --------------------------------------------------------
 
@@ -308,7 +316,11 @@ INSERT INTO `location` (`UserId`, `Lat`, `Lng`, `Id`) VALUES
 (3, '29.9787', '31.3845', 73),
 (3, '29.9847', '31.3879', 74),
 (3, '29.9953', '31.3934', 75),
-(3, '29.9739', '31.3660', 76);
+(3, '29.9739', '31.3660', 76),
+(3, '30.2869', '31.7908', 77),
+(3, '30.7326', '31.6726', 78),
+(3, '30.5474', '31.6854', 79),
+(3, '29.4398', '31.5315', 80);
 
 -- --------------------------------------------------------
 
@@ -334,8 +346,8 @@ CREATE TABLE `menuitem` (
 --
 
 INSERT INTO `menuitem` (`Id`, `Name`, `Image`, `Price`, `Description`, `ReadyInMins`, `Visible`, `CategoryId`, `Rating`, `RatingUsersNo`) VALUES
-(7, 'salad', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/2017-09-08 10 08 38.jpg', '34.00', 'delicious', 0, 1, 9, '4', 4),
-(8, 'btats', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/2017-09-08 22 30 06.jpg', '15.00', '7lw', 0, 1, 9, '4', 4);
+(7, 'Garlic Salad', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/menu-items/page2_img9.jpg', '34.00', 'delicious', 0, 1, 9, '4', 4),
+(8, 'Grilled Botatos', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/menu-items/grilled-sweet-potatoes-horiz-a-1600.jpg', '15.00', '7lw', 0, 1, 9, '4', 4);
 
 -- --------------------------------------------------------
 
@@ -359,6 +371,26 @@ INSERT INTO `message` (`Id`, `Content`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(11) NOT NULL,
+  `name` varchar(200) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `name`) VALUES
+(1, '1_addFeesToOrderTable.php'),
+(2, '2_addDeliveryFeeToOrder.php'),
+(3, '3_makeDefaultDeliveryFeeAndTaxFeeZero.php');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `notification`
 --
 
@@ -378,36 +410,36 @@ CREATE TABLE `order` (
   `Id` int(11) NOT NULL,
   `UserId` int(11) NOT NULL,
   `DeliveryTime` datetime NOT NULL,
-  `Paid` decimal(6,2) NOT NULL,
   `Total` decimal(6,2) NOT NULL,
   `OrderStatusId` int(11) NOT NULL,
   `PaymentMethodId` int(11) NOT NULL,
   `Type` tinyint(1) NOT NULL DEFAULT '0',
-  `Visible` tinyint(1) NOT NULL DEFAULT '1'
+  `Visible` tinyint(1) NOT NULL DEFAULT '1',
+  `TaxFee` double DEFAULT '0',
+  `DeliveryFee` double DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `order`
 --
 
-INSERT INTO `order` (`Id`, `UserId`, `DeliveryTime`, `Paid`, `Total`, `OrderStatusId`, `PaymentMethodId`, `Type`, `Visible`) VALUES
-(170, 3, '2018-04-01 00:00:00', '0.00', '72.50', 2, 4, 0, 1),
-(171, 3, '2018-04-01 00:00:00', '0.00', '38.50', 2, 4, 1, 1),
-(172, 3, '2018-04-01 00:00:00', '0.00', '38.50', 2, 4, 0, 1),
-(173, 3, '2018-04-01 00:00:00', '0.00', '38.50', 2, 4, 1, 1),
-(174, 3, '2018-04-01 00:00:00', '0.00', '72.50', 2, 4, 1, 1),
-(175, 3, '2018-04-01 00:00:00', '0.00', '106.50', 2, 4, 1, 1),
-(176, 4, '2018-04-01 00:00:00', '0.00', '68.00', 2, 4, 0, 0),
-(177, 3, '2018-04-01 00:00:00', '0.00', '36.00', 2, 4, 0, 1),
-(178, 3, '2018-04-01 00:00:00', '0.00', '36.00', 2, 4, 0, 1),
-(179, 3, '2018-04-01 00:00:00', '0.00', '36.00', 2, 4, 0, 1),
-(180, 3, '2018-04-01 00:00:00', '0.00', '36.00', 2, 4, 0, 1),
-(181, 3, '2018-04-01 00:00:00', '0.00', '36.00', 2, 4, 0, 1),
-(182, 3, '2018-04-01 00:00:00', '0.00', '72.50', 2, 4, 1, 1),
-(183, 3, '2018-04-01 00:00:00', '0.00', '106.50', 2, 4, 1, 1),
-(184, 9, '2018-04-01 00:00:00', '0.00', '200.00', 1, 1, 1, 1),
-(195, 3, '2018-04-06 01:04:00', '0.00', '0.00', 1, 1, 0, 1),
-(196, 4, '2018-04-06 08:04:00', '0.00', '0.00', 1, 1, 0, 1);
+INSERT INTO `order` (`Id`, `UserId`, `DeliveryTime`, `Total`, `OrderStatusId`, `PaymentMethodId`, `Type`, `Visible`, `TaxFee`, `DeliveryFee`) VALUES
+(171, 3, '2018-04-01 00:00:00', '4.50', 2, 4, 1, 1, NULL, NULL),
+(172, 3, '2018-04-01 00:00:00', '4.50', 2, 4, 0, 1, NULL, NULL),
+(173, 3, '2018-04-01 00:00:00', '4.50', 2, 4, 1, 1, NULL, NULL),
+(174, 3, '2018-04-01 00:00:00', '4.50', 2, 4, 1, 1, NULL, NULL),
+(175, 3, '2018-04-01 00:00:00', '4.50', 2, 4, 1, 1, NULL, NULL),
+(176, 4, '2018-04-01 00:00:00', '0.00', 2, 4, 0, 0, NULL, NULL),
+(177, 3, '2018-04-01 00:00:00', '2.00', 2, 4, 0, 1, NULL, NULL),
+(178, 3, '2018-04-01 00:00:00', '2.00', 2, 4, 0, 1, NULL, NULL),
+(179, 3, '2018-04-01 00:00:00', '2.00', 2, 4, 0, 1, NULL, NULL),
+(180, 3, '2018-04-01 00:00:00', '2.00', 2, 4, 0, 1, NULL, NULL),
+(181, 3, '2018-04-01 00:00:00', '2.00', 2, 4, 0, 1, NULL, NULL),
+(182, 3, '2018-04-01 00:00:00', '4.50', 2, 4, 1, 1, NULL, NULL),
+(183, 3, '2018-04-01 00:00:00', '4.50', 2, 4, 1, 1, NULL, NULL),
+(184, 9, '2018-04-01 00:00:00', '4.00', 1, 1, 1, 1, NULL, NULL),
+(196, 4, '2018-04-06 08:04:00', '0.00', 1, 1, 0, 1, NULL, NULL),
+(197, 3, '2018-04-08 08:04:00', '51.00', 1, 1, 0, 1, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -419,33 +451,16 @@ CREATE TABLE `orderitem` (
   `Id` int(11) NOT NULL,
   `Quantity` int(10) UNSIGNED NOT NULL,
   `OrderId` int(11) NOT NULL,
-  `MenuItemId` int(11) NOT NULL,
-  `TotalPrice` decimal(6,2) NOT NULL
+  `MenuItemId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `orderitem`
 --
 
-INSERT INTO `orderitem` (`Id`, `Quantity`, `OrderId`, `MenuItemId`, `TotalPrice`) VALUES
-(142, 2, 170, 7, '68.00'),
-(143, 1, 171, 7, '34.00'),
-(144, 1, 172, 7, '34.00'),
-(145, 1, 173, 7, '34.00'),
-(146, 2, 174, 7, '68.00'),
-(147, 3, 175, 7, '102.00'),
-(148, 2, 176, 7, '68.00'),
-(149, 1, 177, 7, '34.00'),
-(150, 1, 178, 7, '34.00'),
-(151, 1, 179, 7, '34.00'),
-(152, 1, 180, 7, '34.00'),
-(153, 1, 181, 7, '34.00'),
-(154, 2, 182, 7, '68.00'),
-(155, 3, 183, 7, '102.00'),
-(162, 4, 184, 7, '136.00'),
-(163, 4, 184, 8, '60.00'),
-(164, 2, 195, 8, '30.00'),
-(165, 3, 195, 7, '102.00');
+INSERT INTO `orderitem` (`Id`, `Quantity`, `OrderId`, `MenuItemId`) VALUES
+(170, 1, 197, 7),
+(171, 1, 197, 8);
 
 --
 -- Triggers `orderitem`
@@ -490,7 +505,8 @@ INSERT INTO `orderlocation` (`OrderId`, `LocationId`) VALUES
 (175, 54),
 (182, 45),
 (183, 76),
-(184, 45);
+(184, 45),
+(197, 80);
 
 -- --------------------------------------------------------
 
@@ -563,7 +579,7 @@ CREATE TABLE `rating` (
 --
 
 INSERT INTO `rating` (`Id`, `UserId`, `MenuItemId`, `Value`) VALUES
-(1, 3, 7, '3'),
+(1, 3, 7, '2'),
 (2, 3, 8, '3'),
 (3, 7, 7, '4'),
 (4, 7, 8, '5'),
@@ -662,7 +678,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`Id`, `UserName`, `FirstName`, `LastName`, `LocaleId`, `Email`, `Image`, `PasswordHash`, `PhoneNumber`, `RoleId`, `Confirmed`) VALUES
-(3, 'mostafaelsayed9419@gmail.com', 'mostafa', 'elsayed', 1, 'mostafaelsayed9419@gmail.com', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/unkown/noPerson.png', '$2y$10$NGM1YTMxZjZlNWIwNjgxOOfXtiVaki5F/L1oxJ2VGlaFfu1kDRk6.', '01012345678', 2, '1'),
+(3, 'mostafaelsayed9419@gmail.com', 'mostafa', 'elsayed', 1, 'mostafaelsayed9419@gmail.com', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/unkown/noPerson.png', '$2y$10$YTJlYWU3ODQ0YmEwNDlmZ.S2s3X2rtv/R9fL/Ev1dbAOaHTz/wSMi', '01012345678', 2, '1'),
 (4, 'ahmed@gmail.com', 'ahmed', 'mohamed', 1, 'ahmed@gmail.com', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/2017-09-08 09 09 38.jpg', '$2y$10$MTliMjA3YzA5OTk1YmE2OOVGjSbeUzQ4E23P9tLQplSPTO/3hrSlO', '01012345678', 2, '1'),
 (7, 'waleed@gmail.com', 'waleed', 'ahmed', 1, 'waleed@gmail.com', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/2017-09-10 18 26 58.jpg', '$2y$10$ZDJlN2FkYmVjNjI1N2ZlNe0fA.FoohZxtP5qIqM6rYndvxvUcSM6y', '123', 1, '1'),
 (8, 'esmail', 'esmail', '3bas', 1, 'esmail@gmail.com', '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/2017-09-19 11 03 56.jpg', '$2y$10$YTQyNzk5ZGU4YmMxYTYxO.OZyu2mPGTI.EchtcWWUS/48QPrZXs8y', '01012345678', 2, '1'),
@@ -777,6 +793,12 @@ ALTER TABLE `message`
   ADD PRIMARY KEY (`Id`);
 
 --
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `notification`
 --
 ALTER TABLE `notification`
@@ -888,7 +910,7 @@ ALTER TABLE `auth_provider`
 -- AUTO_INCREMENT for table `cafeteria`
 --
 ALTER TABLE `cafeteria`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `cashier`
 --
@@ -913,7 +935,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `favoriteitem`
 --
 ALTER TABLE `favoriteitem`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `fees`
 --
@@ -933,7 +955,7 @@ ALTER TABLE `locale`
 -- AUTO_INCREMENT for table `location`
 --
 ALTER TABLE `location`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 --
 -- AUTO_INCREMENT for table `menuitem`
 --
@@ -953,12 +975,12 @@ ALTER TABLE `notification`
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=197;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
 --
 -- AUTO_INCREMENT for table `orderitem`
 --
 ALTER TABLE `orderitem`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=172;
 --
 -- AUTO_INCREMENT for table `orderstatus`
 --
