@@ -22,7 +22,7 @@
 
 <div class="container">
 
-  <h1 class="page-header" id="header">Menus</h1>
+  <h1 class="page-header" id="header" style="color: #965C2A;">Menus</h1>
 
   <div class="w3-animate-zoom" ng-controller="getCategories">
 

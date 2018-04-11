@@ -18,6 +18,10 @@ login page has redirect implemented incorrectly using post gv but the write one 
 
 -csrf
 
+-save fixed open cart state in session
+
+-show menu item image with modal on click
+
 - total order price
 - test double values (lng, lat in location)
 - stripe
@@ -25,6 +29,3 @@ login page has redirect implemented incorrectly using post gv but the write one 
 - handle error when credit card info not valid
 - trigger order total after order type (fee and stuff)
 - return order details in review order page
-
-
-checkout button in cart doesn't work

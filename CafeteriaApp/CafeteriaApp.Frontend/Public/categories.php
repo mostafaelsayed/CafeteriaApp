@@ -24,12 +24,17 @@
         transform: scale(1)
     }
 }
+.carousel-caption{
+  color:orange;
+  transform:rotate(-15deg);
+  }
   </style>
+
 </head>
 
-<div class="container" style="position: static">
+<div class="container" style="position:static">
 
-  <h1 class="page-header" id="header">Food Categories</h1>
+  <h1 class="page-header" id="header" style="color: #965C2A;">Food Categories</h1>
 
   <div class="w3-animate-zoom" ng-controller="cafeterias">
 
@@ -51,20 +56,21 @@
 
           <img class="img-rounded" style="display: block;margin: auto;width: 300px;height: 300px" ng-src={{cafeterias[0].Image}} />
 
-          <h3 style="color:orange;transform:rotate(-15deg);" ng-bind="cafeterias[0].Name" class="carousel-caption" title="see menus"></h3>
+          <h3 ng-bind="cafeterias[0].Name" class="carousel-caption" title="see menus"></h3>
         </a>
 
         </div>
+
 
         <div ng-repeat="c in cafeterias.slice(1, cafeterias.length)" class="item">
 
           <a ng-href="menus.php?id={{c.Id}}">
 
             <img style="display: block;margin: auto;width: 300px;height: 300px" ng-src={{c.Image}} />
-
+            <h3 g-bind="c.Name" class="carousel-caption"></h3>
           </a>
 
-          <h3 g-bind="c.Name" class="carousel-caption"></h3>
+          
 
         </div>
 

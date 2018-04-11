@@ -46,36 +46,36 @@ $selected_lang ='en';
 
   </head>
 
-  <body style="background-image: url('../images/customer background image4.jpg')" ng-app="layout_app"
+  <body style="background-color:#ECD297;" ng-app="layout_app"
   ng-init="orderId = <?= $orderId;?>;" ng-cloak>
 
     <div ng-controller="Language_Order" ng-init="languages=['English', 'Arabic'];selectedLang = 1;orderId = <?= $orderId;?>" id="myctrl">
 
       <!-- Navigation -->
-      <nav class="navbar navbar-default navbar-fixed-top left-to-right w3-animate-top">
+      <nav class="navbar navbar-fixed-top left-to-right w3-animate-top">
 
         <div class="container-fluid">
 
             <div class="navbar-header">
+               <img style="width:60px;height:60px;" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/logo_main.png">
               <button class="navbar-toggle" data-toggle="collapse" data-target="#optionsNavbar" id="mybutton" style="float: left">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-
             </div>
             <!-- left navigation -->
             <div id="optionsNavbar" class="navbar-collapse">
 
               <ul id="left_ul" class="nav navbar-nav navbar-left">
                 <li>
-                  <a class="navbar-brand" href='../Public/categories.php'>Home</a>
+                  <a  href='../Public/categories.php'>Home</a>
                 </li>
                 <li>
-                  <a class="navbar-brand" href="../Public/help.php">Help</a>
+                  <a  href="../Public/help.php">Help</a>
                 </li>
                 <li>
-                  <a class="navbar-brand" href="ssss.php">Contact us</a>
+                  <a  href="ssss.php">Contact us</a>
                 </li>
             </ul>
 
@@ -191,7 +191,7 @@ $selected_lang ='en';
               <li id="notification" class="pull-right" title="Show Notifications" onclick="toggleNotifications()">
 
                   <?php $length = count($_SESSION['notifications']); ?>
-                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 90px; height: 50px;padding: 0px;background-color:transparent;border-color: transparent">
+                  <button id="notify-btn" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
 
                     <?php
                       if ($length > 0) {

@@ -25,7 +25,7 @@ h1, h3 {
 .row .col-md-4 .order th {
     color: #891C86;
 }
-.row .col-md-6 .comments {
+.row .col-md-12.comments {
     border: 2px solid #31B0D5;
     border-radius: 15px;
     width: 100%;
@@ -34,25 +34,25 @@ h1, h3 {
     margin-top:10px;
     border-collapse:separate; 
 }
-.row .col-md-6 .comments tbody::before
+.row .col-md-12.comments tbody::before
 {
   content: '';
   display: block;
   height: 15px;
 
 }
-.row .col-md-6 .comments td {
+.row .col-md-12.comments tbody tr td {
     text-align: center;
-    margin: 10px;
+    color:white
 }
-.row .col-md-6 .comments td>a {
+.row .col-md-12.comments td>a {
     text-decoration: none;
 }
-.row .col-md-6 .comments tbody tr {
+.row .col-md-12.comments tbody tr {
     /*first tr child in table */
     line-height:60px;
 }
-.row .col-md-6 .comments tr:hover {
+.row .col-md-12.comments tr:hover {
     text-shadow: 0 0 20px #952;
     transition: all .3s;
 }

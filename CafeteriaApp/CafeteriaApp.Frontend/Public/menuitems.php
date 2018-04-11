@@ -17,7 +17,7 @@
 <div class="container">
 
   <div style="text-align: center">
-    <h1 style="padding-bottom:20px;margin-bottom:20px;border-bottom: 3px solid #31B0D5;font-family: fontAwsome;font-size:4rem;">
+    <h1 style="color: #965C2A;padding-bottom:20px;margin-bottom:20px;border-bottom: 3px solid #31B0D5;font-family: fontAwsome;font-size:4rem;">
       <?=$_GET['categoryName']?>
       </h1>
 
@@ -32,7 +32,7 @@
     <div class="col-md-8 w3-animate-bottom">
       
       <div class="row" ng-repeat="m in menuItems" style="width:100%;margin-left: 40px">
-        
+        <div class="row">
         <div class="col-md-6">
           <img class="img-rounded" style="width:70%;height:70%;"  src="{{m.Image}}"/>
             <h1 ng-bind="m.Name" class="menu-name"></h1>
@@ -48,7 +48,6 @@
         
 
         <div class="col-md-6">
-
         <!-- Stars Rating -->
         <div class="stars" ng-if='loggedIn'>
           <form>
@@ -68,26 +67,27 @@
         <a title="Show/Hide Comments" style="color:orange;float:right" ng-click="toggleMenuItemComments($index, m.Id)" class="btn btn-lg btn-comments">
           <span style="color:orange;" class="glyphicon glyphicon-comment"></span>
         </a>
-        <div style="color: white;font-style: italic">
-          <div>Price : $ <span ng-bind="m.Price" style="color: white"></span>
+        <div style="color:orange;font-style: italic;font-size:2rem">
+          <div><b>Price :</b> $ <span ng-bind="m.Price"></span>
           </div>
 
-          <div>Rating :  
+          <div><b>Rating : </b> 
             <span ng-bind="m.Rating" ></span>
             <span> from </span>
             <span ng-bind="m.RatingUsersNo" ></span>
             <span>  user(s)</span>
           </div>
-          <div>calories: 35 kcl</div>
-          <div>Description : ingredients,  
-            <span ng-bind="m.Description" style="color: white"></span>
+          <div><b>calories: </b>35 kcl</div>
+          <div><b>Description : </b>ingredients,  
+            <span ng-bind="m.Description"></span>
           </div>
 
         </div>
          </div>
+         </div>
         <!-- Comments -->
-
-        <table class="comments" id="{{'comments' + m.Id}}" ng-if="data.ShowHides[$index]">
+        <div class="row">
+        <table  class="col-md-12 comments" id="{{'comments' + m.Id}}" ng-if="data.ShowHides[$index]">
           
           <tbody>
             <tr ng-repeat="comm in data.comments[$index]">
@@ -121,8 +121,10 @@
           </tbody>
 
         </table>
-
+          
         <div ng-cloak ng-show="menuItems.indexOf(m) < menuItems.length - 1"><hr width="100%"></div>
+
+        </div>
 
      
 
@@ -177,7 +179,7 @@
 
 
   <div style="text-align: center;">
-      <a onclick="$('.about').slideToggle('slow');" style="cursor:pointer;"> <span class="glyphicon glyphicon-minus" onclick="$(this).toggleClass('glyphicon-minus glyphicon-plus');"></span> About this menu</a>
+      <a onclick="$('.about').slideToggle('slow');$(this).children('span').toggleClass('glyphicon-minus glyphicon-plus');" style="cursor:pointer;"> <span class="glyphicon glyphicon-minus"></span> About this menu</a>
   </div>
 
     <div  class="about" style="margin: 0 auto;text-align: center;color: white;padding:20px;">
