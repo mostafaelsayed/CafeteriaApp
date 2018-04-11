@@ -10,7 +10,12 @@ class table {
 
 		// iterate over object attributes
 		foreach ($object as $key => $value) {
-			$f = column::constructColumnStmt($conn, $create, $key, $value, $tableName);
+			$x = column::constructColumnStmtForCreateTable($conn, $create, $key, $value, $tableName);
+
+			foreach ($x as $k => $v) {
+				array_push($f, $v);
+			}
+
 			$create .= ",";
 		}
 
@@ -19,28 +24,38 @@ class table {
 		}
 
 		$create .= ");";
-		$r = $conn->query($create);
+		$r = $conn->query($create); // create table
 
 		if ($r) {
-			echo "table created";
+			echo "table created\n";
 
 			// add any primary key or foreign key
 			foreach ($f as $key => $value) {
-				$conn->query($value);
+				if ($key === 'primary') {
+					echo "primary key added";
+				}
+				else {
+					$conn->query($value[0]);
+					echo "foreign key added on {$value[1]} column\n";
+				}
 			}
 		}
 		else {
-			echo "error: ", $conn->error;
+			echo "error: ", $conn->error . "\n";
 		}
-
-		exit();
 	}
 
 	public static function dropTable($conn, $tableName) {
 		$setForeignKeyChecks = "set foreign_key_checks = 0";
 		$drop = "drop table `$tableName`";
-		$conn->query($setForeignKeyChecks);
-		$conn->query($drop);
+		$r = $conn->query($drop);
+
+		if (!$r) {
+			echo $conn->error;
+		}
+		else {
+			echo "table dropped\n";
+		}
 	}
 
 	public static function renameTable($conn, $oldTableName, $newTableName) {
@@ -57,34 +72,10 @@ class table {
 };
 
 class column {
-	public static function constructColumnStmt($conn, &$statment, &$key, &$value, $tableName) {
+	public static function constructColumnStmtForAddColumn($conn, &$statment, &$key, &$value, $tableName) {
 		$arr = [];
 		$statment .= "`$key`";
 
-		// check type
-		// $type = $value['type'];
-
-		// if ( isset($value['type']) && $value['type'] == "varchar" && !isset($value['max']) ) {
-		// 	$statment .= " varchar(255)";
-		// }
-		// elseif ($type == 'string') {
-		// 	$statment .= " varchar";
-		// }
-		// elseif ($type == "int") {
-		// 	$statment .= " int";
-		// }
-		// elseif ($type == "double") {
-		// 	$statment .= " double";
-		// }
-		// elseif ($type == "bool") {
-		// 	$statment .= " bool";
-		// }
-		// elseif ($type == "date") {
-		// 	$statment .= " date";
-		// }
-		// elseif ($type == "text") {
-		// 	$statment .= " text";
-		// }
 		if (isset($value['type'])) {
 			$type = $value['type'];
 			$statment .= " {$value['type']}";
@@ -133,7 +124,7 @@ class column {
 			$sql = primaryKeyManager::handlePrimaryKeyAddition($conn, $tableName, $key);
 
 			if ($sql) {
-				$statment .= " primary key";
+				$arr['primary'] = $sql;
 			}
 		}
 
@@ -150,16 +141,92 @@ class column {
 		}
 
 		if ( isset($value["foreign key"]) ) {
-			$key = $value['name'];
 			$x = foreignKeyManager::checkForeignKeyExistence($conn, $tableName, $key);
 
 			if ($x === false) { // no foreign key for this column
 				$referencedTableName = $value['foreign key']['table'];
 				$tableColumn = $value['foreign key']['column'];
-				$statment .= ",";
-				$foreign = helper::constructNameForIndexAndKey($tableName, $key);
-				$statment .= "add constraint `$foreign` foreign key(`$key`) references `$referencedTableName`(`$tableColumn`)";
-				$arr['foreign'] = $statment;
+				$alter = "alter table `$tableName` add constraint foreign key(`$key`) references `$referencedTableName`(`$tableColumn`)";
+				array_push($arr, $alter);
+			}
+		}
+
+		return $arr;
+	}
+
+	public static function constructColumnStmtForCreateTable($conn, &$statment, &$key, &$value, $tableName) {
+		$arr = [];
+		$statment .= "`$key`";
+
+		if (isset($value['type'])) {
+			$type = $value['type'];
+			$statment .= " {$value['type']}";
+
+			if ( isset($value['max']) ) {
+
+				$allowedTypes = ['int', 'bigint', 'mediumint', 'smallint', 'tinyint', 'char', 'nchar', 'nvarchar', 'varchar', 'text', 'bit', 'enum', 'set'];
+				// max is not associated with every datatype
+				// so we must check that first
+				if (in_array($type, $allowedTypes) === true) {
+					$x = $value['max'];
+					$statment .= "($x)";
+				}
+				else {
+					echo "no max is set on " . $type . ". we will ignore it\n";
+				}
+			}
+			// varchar must have max so we add default
+			elseif ($type == 'varchar') {
+				$statment .= "(255)";
+			}
+		}
+		elseif (isset($value['max'])) {
+			echo "error: can't have max without determining type\n";
+			exit();
+		}
+		else {
+			echo "error: you must specify type\n";
+			exit();
+		}
+
+		// check if default is set
+		if ( isset($value['default']) ) {
+			$y = $value['default'];
+
+			if ($value['type'] == 'date' || $value['type'] == 'datetime' || $value['type'] == 'time') {
+				$statment .= " default '$y'";
+			}
+			else {
+				$statment .= " default $y";
+			}
+		}
+
+		// check other paramters
+		if ( in_array("primary key", $value) ) {
+			$statment .= " primary key";
+			$arr['primary'] = $key;
+		}
+
+		if ( in_array("not null", $value) ) {
+			$statment .= " not null";
+		}
+
+		if ( in_array("unique", $value) ) {
+			$statment .= " unique";
+		}
+
+		if ( in_array('auto_increment', $value) ) {
+			$statment .= ' auto_increment';
+		}
+		$alter = "";
+		if ( isset($value["foreign key"]) ) {
+			$x = foreignKeyManager::checkForeignKeyExistence($conn, $tableName, $key);
+
+			if ($x === false) { // no foreign key for this column
+				$referencedTableName = $value['foreign key']['table'];
+				$tableColumn = $value['foreign key']['column'];
+				$alter = "alter table `$tableName` add constraint foreign key(`$key`) references `$referencedTableName`(`$tableColumn`)";
+				array_push($arr, [$alter, $key]);
 			}
 		}
 
@@ -168,22 +235,36 @@ class column {
 
 	public static function addColumn($conn, $tableName, $key, $arr) {
 		$alter = "alter table `$tableName` add column ";
-		$arr = column::constructColumnStmt($conn, $alter, $key, $arr, $tableName);
+		$arr = column::constructColumnStmtForAddColumn($conn, $alter, $key, $arr, $tableName);
 		$res = $conn->query($alter);
 
 		if (!$res) {
-			echo $conn->error;
+			echo $conn->error . "\n";
 		}
 		else {
 			echo "column {$key} added\n";
 		}
 		foreach ($arr as $key => $value) {
-			$conn->query($value);
-			if ($key == 'foreign') {
-				echo "foreign key added\n";
+			if ($key === 'primary') {
+				$r = $conn->query($value);
+
+				if ($r) {
+					echo "primary key added\n";
+				}
+				else {
+					echo $conn->error;
+				}
 			}
-			elseif ($key == 'primary') {
-				echo "primary key added\n";
+			else {
+				$r = $conn->query($value);
+
+				if ($r) {
+					echo "foreign key added\n";
+				}
+				else {
+					echo $conn->error . "\n";
+				}
+				
 			}
 		}
 	}
@@ -214,8 +295,8 @@ class column {
 		// some errors to handle before moving on
 		// auto_increment and default
 		if (key_exists('default', $column) === true && key_exists('auto_increment', $column) === true && $column['default'] === true && $column['auto_increment'] === true) {
-			echo "can't add default and auto_increment at the same time";
-			return;
+			echo "can't add default and auto_increment at the same time\n";
+			exit();
 		}
 
 		$type = 0;
@@ -250,8 +331,8 @@ class column {
 			$r1 = mysqli_fetch_array($r, MYSQLI_ASSOC);
 
 			if (!$r) {
-				echo $conn->error;
-				return;
+				echo $conn->error, "\n";
+				exit();
 			}
 
 			if ($column['unique'] === false) {
@@ -272,6 +353,7 @@ class column {
 
 				if (!$r) {
 					echo $conn->error;
+					exit();
 				}
 			}
 		}
@@ -285,7 +367,7 @@ class column {
 				$alter .= " null";
 			}
 			else {
-				echo "not null must be either true or false";
+				echo "not null must be either true or false\n";
 				exit();
 			}
 		}
@@ -308,7 +390,7 @@ class column {
 				}
 			}
 			elseif (in_array('auto_increment', $columnAttrs) === true) {
-				echo "remove auto_increment first";
+				echo "remove auto_increment first\n";
 				exit();
 			}
 			else {
@@ -325,7 +407,7 @@ class column {
 				$alter .= " auto_increment";
 			}
 			elseif (array_key_exists('default', $columnAttrs) === true) {
-				echo "remove default first";
+				echo "remove default first\n";
 				exit();
 			}
 			else {
@@ -336,7 +418,7 @@ class column {
 		$r = $conn->query($alter);
 
 		if (!$r) {
-			echo $conn->error;
+			echo $conn->error, "\n";
 		}
 		else {
 			echo "column {$key} modified\n";
@@ -366,7 +448,7 @@ class column {
 		$r = $conn->query($alter);
 
 		if (!$r) {
-			echo $conn->error;
+			echo $conn->error, "\n";
 		}
 	}
 };
@@ -385,7 +467,7 @@ class primaryKeyManager {
 				$pr1 = $conn->query($pr);
 
 				if (!$pr1) {
-					echo "error: ", $conn->error;
+					echo "error: ", $conn->error, "\n";
 				}
 			}
 	}
@@ -395,10 +477,10 @@ class primaryKeyManager {
 		$res = $conn->query($sql);
 
 		if ($res) {
-			echo "primary key added";
+			echo "primary key added\n";
 		}
 		else {
-			echo $conn->error;
+			echo $conn->error, "\n";
 		}
 	}
 
@@ -411,14 +493,14 @@ class primaryKeyManager {
 			$z = $conn->query($c);
 
 			if ($z) {
-				echo "primary key droppped";
+				echo "primary key droppped\n";
 			}
 			else {
 				echo "error: ", $conn->error, "\n";
 			}
 		}
 		else {
-			echo "primary key can't be dropped because it's referenced from another table";
+			echo "primary key can't be dropped because it's referenced from another table\n";
 		}
 	}
 };
@@ -446,10 +528,10 @@ class foreignKeyManager {
 		var_dump($sql);
 
 		if ($res) {
-			echo "foreign key added";
+			echo "foreign key added\n";
 		}
 		else {
-			echo "error: ", $conn->error;
+			echo "error: ", $conn->error, "\n";
 		}
 	}
 
@@ -459,10 +541,10 @@ class foreignKeyManager {
 		$r = $conn->query($sql);
 
 		if ($r) {
-			echo "foreign key dropped";
+			echo "foreign key dropped\n";
 		}
 		else {
-			echo $conn->error;
+			echo $conn->error, "\n";
 		}
 	}
 };
@@ -473,10 +555,10 @@ class indexManager {
 		$res = $conn->query($sql);
 
 		if ($res) {
-			echo "index added";
+			echo "index added\n";
 		}
 		else {
-			echo "error: ", $conn->error;
+			echo "error: ", $conn->error, "\n";
 		}
 	}
 
@@ -485,10 +567,10 @@ class indexManager {
 		$res = $conn->query($sql);
 
 		if ($res) {
-			echo "index dropped";
+			echo "index dropped\n";
 		}
 		else {
-			echo "error: ", $conn->error;
+			echo "error: ", $conn->error, "\n";
 		}
 	}
 };

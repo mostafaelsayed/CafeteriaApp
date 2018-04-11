@@ -1,7 +1,13 @@
 <?php require(__DIR__ . '/../layout.php'); ?>
 <link href="../css/braintree-form.css">
 
-<link rel="stylesheet" href="../bower_components/fakeLoader/fakeLoader.css">
+<link href="../css/alertify.bootstrap.css" rel="stylesheet">
+
+<link href="../css/alertify.core.css" rel="stylesheet">
+
+<link href="../css/alertify.default.css" rel="stylesheet">
+
+<script src="../js/alertify.js"></script>
 
 <script src="https://js.braintreegateway.com/web/3.31.0/js/client.min.js"></script>
 
@@ -9,15 +15,11 @@
 
 <script type="text/javascript" src="../js/braintree.js"></script>
 
-<script type="text/javascript" src="../bower_components/fakeLoader/fakeLoader.js"></script>
-
-<div id="fakeLoader"></div>
-
 <div class="panel panel-default bootstrap-basic" ng-controller="braintree">
   <div class="panel-heading">
     <h3 class="panel-title">Enter Card Details</h3>
   </div>
-  <form class="panel-body">
+  <form class="panel-body" method="POST" action="../../CafeteriaApp.Backend/Requests/Order.php">
     <div class="row">
       <div class="form-group col-sm-8">
         <label class="control-label">Card Number</label>
@@ -54,6 +56,10 @@
 
     
     <button value="submit" id="submit" class="btn btn-info btn-lg center-block">Pay with <span id="card-type">Card</span></button>
+
+    <input type="text" name="nonce" ng-model="nonce" style="visibility: hidden;">
+
+    <input type="submit" id="formbut" name="submit" style="visibility: hidden;">
   </form>
 </div>
 

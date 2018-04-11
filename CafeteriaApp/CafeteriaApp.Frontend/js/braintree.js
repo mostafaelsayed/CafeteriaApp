@@ -1,4 +1,5 @@
 layoutApp.controller('braintree', ['$scope', '$http', function($scope, $http) {
+  $scope.nonce = 0;
   $scope.paymentMethods = [{id: 1, name: "master card"}, {id: 2, name: "visa"},
     {id: 3, name: "American Express"}];
   braintree.client.create({
@@ -93,27 +94,25 @@ layoutApp.controller('braintree', ['$scope', '$http', function($scope, $http) {
         }
       });
 
-      $('.panel-body').submit(function (event) {        
+      $('#submit').on('click', function (event) {
         event.preventDefault();
         hostedFieldsInstance.tokenize(function (err, payload) {
           if (err) {
-            console.error(err);
-            return;
+            alertify.error("some fields are not correct");
+            //console.error(err);
+            //return;
           }
 
-          $("#fakeLoader").fakeLoader({
-
-            timeToHide:20200, //Time in milliseconds for fakeLoader disappear
-
+          alertify.confirm("Are your sure you want to submit order?", function(e) {
+            if (e) {
+              $scope.$apply(function() {
+                $scope.nonce = payload.nonce;
+              });
+         
+              $('#formbut').click();
+            }
           });
-
-
-          $http.post('../../CafeteriaApp.Backend/Requests/Order.php', {payload: payload}).then(function(response) {
-            localStorage.setItem("submit", 1);
-            document.location = response.data;
-          });
-          // This is where you would submit payload.nonce to your server
-          //alert('Submit your nonce to your server here!');
+          
         });
       });
     });

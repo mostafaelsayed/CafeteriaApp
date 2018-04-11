@@ -192,17 +192,18 @@ class mybraintree {
 
 		return $braintree;
 	}
-	public static function handleBrainTree($nonce) {
+	public static function handleBrainTree($conn, $nonce, $amount) {
 		$braintree = self::brainTreeConfig();
 
 		$result = $braintree->transaction()->sale([
-		    'amount' => '100',
+		    'amount' => $amount,
 		    'paymentMethodNonce' => $nonce,
 		    'options' => ['submitForSettlement' => true]
 		]);
 
 		if ($result->success) {
-			echo "../Public/categories.php";
+			CheckOutOrder($conn, $_SESSION['orderId']);
+			header("Location: ../../CafeteriaApp.Frontend/Public/categories.php");
 		} else if ($result->transaction) {
 		    print_r("Error processing transaction:");
 		    print_r("\n  code: " . $result->transaction->processorResponseCode);

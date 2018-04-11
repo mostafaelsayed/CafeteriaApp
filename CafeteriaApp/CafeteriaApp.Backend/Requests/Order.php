@@ -23,13 +23,11 @@
     }
   }
 
-  //var_dump($_SERVER);
-
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $data = json_decode( file_get_contents('php://input') );
-
-    if (isset($data->payload->nonce) ) {
-      mybraintree::handleBrainTree($data->payload->nonce);
+    if (isset($_POST['nonce']) ) {
+      $q = $conn->query("select `Total` from `order` where `Id` = {$_SESSION['orderId']}");
+      $total = mysqli_fetch_assoc($q)['Total'];
+      mybraintree::handleBrainTree($conn, $_POST['nonce'], $total);
     }
     elseif ( isset($_POST['orderType']) && testInt($_POST['orderType']) && $_SESSION['roleId'] == 2) { // customer paypal
       if ( isset($_POST['selectedMethodId']) && !isset($_POST['paymentId']) && testInt($_POST['selectedMethodId']) && $_POST['selectedMethodId'] != 4) {

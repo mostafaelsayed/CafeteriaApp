@@ -17,7 +17,7 @@
 
   <script src="../js/alertify.js"></script>
 
-  <script src="https://maps.googleapis.com/maps/api/js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeWPPmdZODmjq3pLXNQVEzPm6X2eZm5dY"></script>
 
   <script src="../js/calculate_distance_given_longitude_and_latitude.js"></script>
  

@@ -22,7 +22,7 @@
   }
 
   function getOpenOrderByUserId($conn) {
-    $sql = "select * from `order` where `UserId` = " . $_SESSION['userId'] . " and `OrderStatusId` = 1";
+    $sql = "select * from `order` where `UserId` = {$_SESSION['userId']} and `OrderStatusId` = 1";
     $result = $conn->query($sql);
 
     if ($result) {
