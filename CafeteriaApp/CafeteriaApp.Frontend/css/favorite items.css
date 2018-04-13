@@ -10,11 +10,6 @@ h1,h3 {
   text-align: left;
 }
 
-#thead {
-  color: white;
-  font-style: italic;
-}
-
 .row .col-lg-5  table{
 
 border : 1px solid blue;
@@ -27,16 +22,10 @@ border : 1px solid blue;
 
  }
 
-.row .col-lg-5 .blueTable>tr{/*first tr child in table */
-margin: 10px;
-/*color: white;*/
-}
-
-.row .col-lg-5 .blueTable td{
+body > div.container.ng-scope > table > tbody > tr > td{
 text-align:center;
 margin: 10px;
-color: white;
- display:block;
+vertical-align: middle;
 
 }
 

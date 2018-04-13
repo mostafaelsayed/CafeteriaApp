@@ -7,7 +7,7 @@
   // redirect to fear the hacker
 
   function getCommentsByMenuItemId($conn, $id) {
-    $sql = "select user.UserName, user.Image, comment.Id ,comment.Details  from comment inner join user on comment.UserId=user.Id where MenuItemId =" . $id;
+    $sql = "select user.UserName, user.Image, comment.Id ,comment.Details, comment.Date  from comment inner join user on comment.UserId=user.Id where MenuItemId =" . $id;
     $result = $conn->query($sql);
 
     if ($result) {

@@ -85,7 +85,7 @@ $selected_lang ='en';
 
             <li ng-if='orderId' id="shoppingCart" title="Show Shopping Cart Items">
               <div id="shoppingCart_Button">
-                <img src="../IconoCompraPaquetigos.png" style="width: 100%;height: 100%"/>
+                <img src="../images/icons/cart-layout.png" style="width: 100%;height: 100%"/>
               </div>
 
               <div id="shoppingCartDetails">

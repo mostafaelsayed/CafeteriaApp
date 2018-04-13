@@ -16,11 +16,15 @@ login page has redirect implemented incorrectly using post gv but the write one 
 
 -try facebook
 
--csrf
+-csrf, htaccess
 
 -save fixed open cart state in session
 
 -show menu item image with modal on click
+
+-when uploading >> make a thumbnail image and store it in a separate dir to use in small show
+
+-when storing the path in db, must be relative
 
 - total order price
 - test double values (lng, lat in location)

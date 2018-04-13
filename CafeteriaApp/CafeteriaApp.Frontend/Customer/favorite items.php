@@ -7,7 +7,6 @@
 <head>
 
   <title>Favorite Items</title>
-
   <link href="../css/favorite items.css" rel="stylesheet">
   <link href="../css/popup.css" rel="stylesheet">
 
@@ -17,27 +16,26 @@
 
   <div>
 
-    <h2 style="color: orange">My Favorites</h2>
+    <h2 style="color: orange"><img style="width:100px;height:100px" src="../images/icons/face-savouring-delicious-food.png"> My Favorites</h2>
 
-    <div class="popup" style="float: right">
-
-      <span class="popuptext" id="myPopup">A Simple Popup!</span>
-
+    <div class="popup" style="position:fixed;">
+        <span class="popuptext" id="myPopup">A Simple Popup!</span>
     </div>
+      
 
   </div>
 
-  <table class="table" style="margin: auto" ng-show="favoriteItems.length > 0" ng-cloak>
+  <table class="table" style="margin:auto;color:#891C88" ng-show="favoriteItems.length > 0" ng-cloak>
 
     <thead>
 
       <tr>
 
-        <th id="thead">Name</th>
+        <th >Name</th>
 
-        <th id="thead">Description</th>
+        <th >Description</th>
 
-        <th id="thead" style="text-align:center">Image</th>
+        <th style="text-align:center;">Image</th>
 
       </tr>
 
@@ -45,19 +43,19 @@
 
     <tbody>
 
-      <tr ng-repeat="fi in favoriteItems">
+      <tr ng-repeat="fi in favoriteItems" >
 
         <td ng-bind="fi.Name" id="thead"></td>
 
         <td ng-bind="fi.Description" id="thead"></td>
 
-        <td><img src="{{fi.Image}}"></td>
+        <td><img class="img-rounded" src="{{fi.Image}}" style="width:200px;height:200px;"></td>
 
         <td style="vertical-align: middle"> 
        
-          <a class="btn btn-primary btn-circle" title="Remove Favorite Item" ng-click="deleteFavorItem(fi.MenuItemId,$index);" style="color: white"><i class="fa fa-minus"></i></a>
+          <a class="btn btn-default btn-circle" title="Remove Favorite Item" ng-click="deleteFavorItem(fi.MenuItemId,$index);" style="color:red"><i class="fa fa-minus"></i></a>
 
-          <a class="btn btn-primary btn-circle" title="Add to Cart" ng-click="addToOrder(fi.MenuItemId)" style="color:white"><i class="fa fa-plus"></i></a>
+          <a class="btn btn-primary btn-circle" style="width:70px;height:70px;" title="Add to Cart" ng-click="addToOrder(fi.MenuItemId)"> <img src="../images/icons/cart-favo.png" style="width: 100%;height: 100%"/></a>
 
         </td>
 

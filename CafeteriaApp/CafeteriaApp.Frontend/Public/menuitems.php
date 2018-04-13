@@ -21,7 +21,7 @@
       <?=$_GET['categoryName']?>
       </h1>
 
-      <div class="popup">
+      <div class="popup" style="position:fixed;">
         <span class="popuptext" id="myPopup">A Simple Popup!</span>
       </div>
 
@@ -41,7 +41,7 @@
               <span class="glyphicon glyphicon-heart"></span>
             </a>
 
-            <a ng-if='loggedIn' class="btn btn-circle addToOrder" title="Add To Order" ng-click="addToOrder(m)" >
+            <a ng-if='loggedIn' class="btn btn-circle addToOrder" title="Add To Order" ng-click="addToOrder(m.Id)" >
               <i style="font-size:3rem" class="fa fa-plus"></i>
             </a>
         </div>
@@ -65,7 +65,7 @@
         </div>
        
         <a title="Show/Hide Comments" style="color:orange;float:right" ng-click="toggleMenuItemComments($index, m.Id)" class="btn btn-lg btn-comments">
-          <span style="color:orange;" class="glyphicon glyphicon-comment"></span>
+          <span style="color:#5bc0de;" class="glyphicon glyphicon-comment"></span>
         </a>
         <div style="color:orange;font-style: italic;font-size:2rem">
           <div><b>Price :</b> $ <span ng-bind="m.Price"></span>
@@ -86,18 +86,18 @@
          </div>
          </div>
         <!-- Comments -->
-        <div class="row">
-        <table  class="col-md-12 comments" id="{{'comments' + m.Id}}" ng-if="data.ShowHides[$index]">
+        <div class="row" >
+        <table  class="col-md-12 comments" id="{{'comments' + m.Id}}" ng-if="data.ShowHides[$index]" style="box-shadow: -12px -12px 12px #E9E598">
           
           <tbody>
             <tr ng-repeat="comm in data.comments[$index]">
               <td>
                 <img src="{{comm.Image}}" style="width:50px;height:50px;border-radius:50%;box-sizing:border-box;">
-                &nbsp;
-                {{comm.UserName}}
+                &nbsp;<span style="font-size:1.2rem">
+                {{comm.UserName}}</span>
               </td>
               <td>{{comm.Date}}</td>
-              <td><p>{{comm.Details}} </p></td>
+              <td><p style="font-size:1.7rem">{{comm.Details}} </p></td>
               <td ng-if="checkEditAndRemove( comm.Id, menuItems.indexOf(m) )">
                 <a style="cursor: pointer" ng-click="editComment( $index, menuItems.indexOf(m) )">edit</a> &nbsp;
                 <a ng-click="deleteComment( comm.Id, $index, menuItems.indexOf(m) )"  style="cursor: pointer">remove</a>
@@ -121,12 +121,12 @@
           </tbody>
 
         </table>
-          
-        <div ng-cloak ng-show="menuItems.indexOf(m) < menuItems.length - 1"><hr width="100%"></div>
 
         </div>
 
-     
+      <div ng-cloak ng-show="menuItems.indexOf(m) < menuItems.length - 1">
+          <hr width="100%" style="background-color:black">
+        </div>
 
       <br>
       </div>
@@ -166,7 +166,7 @@
             <td ng-cloak ng-show="orderItems.length > 0">
               <div style="width:100px;border-radius:50%;border:2px solid orange;text-align:center;">
               <a title="Increase Quantity" ng-click="increaseQuantity(o)" class="btn"><i class="fa fa-plus"></i></a>
-              <a title="Decrease Quantity" ng-click="decreaseQuantity(o)" class="btn"><i class="fa fa-minus"></i></a>
+              <a style="color:red" title="Decrease Quantity" ng-click="decreaseQuantity(o)" class="btn"><i class="fa fa-minus"></i></a>
               </div>
               <a class="btn removeItem" title="Remove From Order" ng-click="deleteOrderItem(o)" style="font-style: italic" >Remove Item
               </a>

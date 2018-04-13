@@ -39,8 +39,8 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$rootSco
     });
   };
 
-  $scope.addToOrder = function(menuItem) {
-    Order_Info.addToOrder(menuItem);
+  $scope.addToOrder = function(menuItemId) {
+    Order_Info.addToOrder(menuItemId);
   };
 
   $scope.increaseQuantity = function(OrderItem) {

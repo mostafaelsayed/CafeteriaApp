@@ -50,16 +50,16 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
             });
         }
     }
-    order_info.addToOrder = function(menuItem) {
+    order_info.addToOrder = function(menuItemId) {
         var x = $rootScope.orderItems.filter(function(o) {
-            return o.MenuItemId == menuItem.Id
+            return o.MenuItemId == menuItemId
         });
         if (x.length > 0) {
             order_info.increaseQuantity(x[0]); // we extract the first element because x is array (x must be one length array)
         } else {
             var data = {
                 OrderId: order_info.orderId,
-                MenuItemId: menuItem.Id,
+                MenuItemId: menuItemId,
                 Quantity: 1
             };
             $http.post('../../CafeteriaApp.Backend/Requests/OrderItem.php', data).then(function(response) {
