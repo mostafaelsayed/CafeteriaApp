@@ -58,17 +58,14 @@ $(document).ready(function() {
     //     .css({ top: '-10px' })
     //     .animate({ top: '-2px', opacity: 1 }, 500);
 
-    $('#shoppingCart_Button').click(function() {
-
+    $('#shoppingCart-btn').click(function() {
         // TOGGLE (SHOW OR HIDE) NOTIFICATION WINDOW.
         $('#shoppingCartDetails').fadeToggle('fast', 'linear', function() {
-
             if ( $('#shoppingCartDetails').is(':hidden') ) {
-
-                // $('#shoppingCart_Button').css('background-color', '#2E467C');
+                // $('#shoppingCart-btn').css('background-color', '#2E467C');
             }
 
-            // else $('#shoppingCart_Button').css('background-color', '#FFF');        // CHANGE BACKGROUND COLOR OF THE BUTTON.
+            // else $('#shoppingCart-btn').css('background-color', '#FFF');        // CHANGE BACKGROUND COLOR OF THE BUTTON.
         });
 
         // $('#noti_Counter').fadeOut('slow');                 // HIDE THE COUNTER.
@@ -78,13 +75,11 @@ $(document).ready(function() {
 
     // HIDE NOTIFICATIONS WHEN CLICKED ANYWHERE ON THE PAGE.
     $(document).click(function() {
-
         $('#shoppingCartDetails').hide();
-
         // CHECK IF NOTIFICATION COUNTER IS HIDDEN.
         // if ($('#noti_Counter').is(':hidden')) {
         //     // CHANGE BACKGROUND COLOR OF THE BUTTON.
-        //     $('#shoppingCart_Button').css('background-color', '#2E467C');
+        //     $('#shoppingCart-btn').css('background-color', '#2E467C');
         // }
     });
 

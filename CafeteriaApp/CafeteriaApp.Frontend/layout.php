@@ -19,7 +19,6 @@ checkGetParams();
 $orderId = isset($_SESSION['orderId']) ? $_SESSION['orderId'] : 0 ;
 $userImage = isset($_SESSION['image']) ? $_SESSION['image'] : 'no Image' ;
 $userName = isset($_SESSION['userName']) ? $_SESSION['userName'] : 'anonymous' ;
-
 $selected_lang ='en';
 ?>
 
@@ -53,19 +52,17 @@ $selected_lang ='en';
 
       <!-- Navigation -->
       <nav class="navbar navbar-fixed-top left-to-right w3-animate-top">
-
-        <div class="container-fluid">
-
-            <div class="navbar-header">
-               <img style="width:60px;height:60px;" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/logo_main.png">
-              <button class="navbar-toggle" data-toggle="collapse" data-target="#optionsNavbar" id="mybutton" style="float: left">
+            <div class="navbar-header" style="display:inline;!important">
+          <!--     <button class="navbar-toggle pull-left" data-toggle="collapse" data-target="#optionsNavbar" id="mybutton" >
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-              </button>
-            </div>
+              </button> -->
+               <img id="logo" style="width:60px;height:60px;" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/logo_main.png">
+            </div> 
             <!-- left navigation -->
-            <div id="optionsNavbar" class="navbar-collapse">
+            <!-- <div id="optionsNavbar" class="navbar-collapse"> -->
+             
 
               <ul id="left_ul" class="nav navbar-nav navbar-left">
                 <li>
@@ -78,23 +75,20 @@ $selected_lang ='en';
                   <a  href="ssss.php">Contact us</a>
                 </li>
             </ul>
+          <!-- </div> -->
 
-          </div>
+         
 
           <ul id="right_ul" >
-
             <li ng-if='orderId' id="shoppingCart" title="Show Shopping Cart Items">
-              <div id="shoppingCart_Button">
-                <img src="../images/icons/cart-layout.png" style="width: 100%;height: 100%"/>
+              <div id="shoppingCart-btn">
+                <img src="../images/icons/cart-layout.png" />
               </div>
-
               <div id="shoppingCartDetails">
-
                 <h3 id="OrderItemsHeader">Order Items</h3>
                   <h5  ng-show="orderItems.length == 0">Empty Cart !</h5>
                   <div id="OrderContents" ng-show="orderItems.length > 0">
                     <table id="orderTable" class="table table-bordered" >
-
                       <thead>
                         <tr>
                           <th>Item</th>
@@ -103,7 +97,6 @@ $selected_lang ='en';
                           <th>Actions</th>
                         </tr>
                       </thead>
-
                       <tbody ng-if="orderItems.length>0" ng-repeat="o in orderItems">
                         <tr>
                           <td ng-bind="o.Name" ></td>
@@ -148,47 +141,7 @@ $selected_lang ='en';
 
               </li>
 
-              <li id="languagesDropdown">
-                <div id="languages" class="dropdown pull-right">
-                  <button class="btn language" type="button" data-toggle="dropdown">
-                  Language 
-                    <span><?=$selected_lang == 'en' ? "English" : "العربية"?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-langs">
-                  <li><span class="glyphicon glyphicon-ok check-mark"></span><a onclick="changeUserLang(1);" href="<?=count($_GET) > 1 ? str_replace('lang=en', 'lang=ar', $_SERVER['REQUEST_URI']) : $_SERVER['PHP_SELF'] . "?lang=ar";?>"><img src="/Shipping/images/header/Egypt-Flag.png" width="20" alt=""> Arabic</a>
-                  </li>
-                  <li class="divider" style="margin:4px 0"></li>
-                  <li><span></span><a onclick="changeUserLang(0);"  href="<?=count($_GET) > 1 ? str_replace('lang=ar', 'lang=en', $_SERVER['REQUEST_URI']) : $_SERVER['PHP_SELF'] . "?lang=en";?>"><img src="/Shipping/images/header/United-Kingdom-flag.png" width="20" alt=""> English</a>
-                  </li>
-              </ul>
-            </div>
-              </li>
-           <?php   if(isset($_SESSION['userId'])){ ?>
-              <li id="myProfile" style="display: inline-block">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    My Profile 
-                    <span class="glyphicon glyphicon-user"></span>
-                  </button>
-
-                  <div class="dropdown-menu" style="left: -70px">
-
-                    <div>
-                      <a class="dropdown_item" href="../Customer/favorite items.php" > My Favorites</a>
-                      <a class="dropdown_item" href="#">Change Info</a>
-                      <a class="dropdown_item" href="../Customer/change_password.php">Change Password</a>
-                      <hr>
-                      <a class="dropdown_item" href="../logout.php">Log out
-                      </a>
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </li>
-            
-              <li id="notification" class="pull-right" title="Show Notifications" onclick="toggleNotifications()">
+          <li id="notification" title="Show Notifications" onclick="toggleNotifications()">
 
                   <?php $length = count($_SESSION['notifications']); ?>
                   <button id="notify-btn" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
@@ -214,13 +167,49 @@ $selected_lang ='en';
                     ?>
 
                   </button>
-                  <div class="dropdown-menu" style="right:0px;padding: 5px;width: 300px;background-color: #FFC806">
+                  <div class="dropdown-menu" style="left:-100px;top:35px;width:300px;background-color: #FFC806">
                 
                     <?= isset($ul)? $ul : "<h5>No Notifications</h5>"; ?>
                    
                   </div>
 
               </li>
+
+              <li id="languagesDropdown">
+                <div id="languages" class="dropdown">
+                  <button class="btn language" type="button" data-toggle="dropdown"> 
+                    <span><?=$selected_lang == 'en' ? "En" : "Ar"?></span> <i class="glyphicon glyphicon-chevron-down"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-langs">
+                  <li><span class="glyphicon glyphicon-ok check-mark"></span><a onclick="changeUserLang(1);" href="<?=count($_GET) > 1 ? str_replace('lang=en', 'lang=ar', $_SERVER['REQUEST_URI']) : $_SERVER['PHP_SELF'] . "?lang=ar";?>"><img src="/Shipping/images/header/Egypt-Flag.png" width="20" alt=""> Arabic</a>
+                  </li>
+                  <li class="divider" style="margin:4px 0"></li>
+                  <li><span></span><a onclick="changeUserLang(0);"  href="<?=count($_GET) > 1 ? str_replace('lang=ar', 'lang=en', $_SERVER['REQUEST_URI']) : $_SERVER['PHP_SELF'] . "?lang=en";?>"><img src="/Shipping/images/header/United-Kingdom-flag.png" width="20" alt=""> English</a>
+                  </li>
+              </ul>
+            </div>
+              </li>
+           <?php   if(isset($_SESSION['userId'])){ ?>
+              <li id="myProfile">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    My Profile 
+                    <span class="glyphicon glyphicon-user"></span>
+                  </button>
+                  <div class="dropdown-menu" style="left: -70px">
+                      <a class="dropdown_item" href="../Customer/favorite items.php" > My Favorites</a>
+                      <a class="dropdown_item" href="#">Change Info</a>
+                      <a class="dropdown_item" href="../Customer/change_password.php">Change Password</a>
+                      <hr>
+                      <a class="dropdown_item" href="../logout.php">Log out
+                      </a>
+                  </div>
+
+                </div>
+
+              </li>
+            
+    
                <?php }else{ ?>
                <li style="margin-left: 70px;">
                 <a href="../login.php" class="btn btn-info" style="font-size:2rem;padding-top:5px;" > 
@@ -232,7 +221,7 @@ $selected_lang ='en';
                 <?php } ?>
             </ul>
 
-        </div>
+
 
       </nav>
 </div>
@@ -252,21 +241,21 @@ $selected_lang ='en';
     <script src="../js/sb-admin-2.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <!-- <script src="../js/bootstrap-select.min.js"></script> -->
-      <script type="text/javascript">
-        function toggleNotifications() {
-          $('#notifyLabel').html('');
-          $("#notifyme").slideToggle("slow");
-        }
+<script type="text/javascript">
+  function toggleNotifications() {
+    $('#notifyLabel').html('');
+    $("#notifyme").slideToggle("slow");
+  }
 
 
-        $.urlParam = function(name){
-        var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-          if (results==null){
-             return null;
-          } else {
-             return decodeURI(results[1]) || 0;
-          }
-        }
-      </script>
+  $.urlParam = function(name){
+  var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results==null){
+       return null;
+    } else {
+       return decodeURI(results[1]) || 0;
+    }
+  }
+</script>
 
-      <script src="../js/layout.js"></script>
+<script src="../js/layout.js"></script>

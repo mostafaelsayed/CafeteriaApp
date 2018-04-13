@@ -67,7 +67,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
   $scope.changeType = function() {
     if ($scope.selectedType.id == 1) { // delivery
-      document.getElementsByClassName('wrapper')[0].style.visibility = 'visible';
+      document.getElementsByClassName('map-wrapper')[0].style.display = 'block';
       $http.put('../../CafeteriaApp.Backend/Requests/Order.php?type=1').then(function(response) {
         $scope.deliveryFee = parseInt(response.data);
         $scope.total += $scope.deliveryFee;
@@ -95,7 +95,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
         alertify.success('order type is now take away');
       });
 
-      document.getElementsByClassName('wrapper')[0].style.visibility = 'hidden';
+      document.getElementsByClassName('map-wrapper')[0].style.display = 'none';
     }
   };
 
@@ -234,7 +234,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       }
 
       if ($scope.orderType == 1) {
-        document.getElementsByClassName('wrapper')[0].style.visibility = 'visible';
+        document.getElementsByClassName('map-wrapper')[0].style.display = 'block';
         $http.get('../../CafeteriaApp.Backend/Requests/OrderLocation.php?orderId=' + $scope.orderId)
         .then(function(response) {
           if ( (response.data != "") ) {

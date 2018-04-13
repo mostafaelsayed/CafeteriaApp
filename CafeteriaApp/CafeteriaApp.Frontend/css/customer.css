@@ -57,8 +57,11 @@ h1, h3 {
     transition: all .3s;
 }
 
+.btn.btn-lg.btn-comments{
+box-shadow: 12px 15px 20px rgba(0,0,0,.1);
+}
 .btn.btn-lg.btn-comments:hover {
-    background-color: #278376;
+    background-color: white;
     font-size: 20px;
     transition: all .2s;
 }
@@ -117,7 +120,8 @@ table tbody tr td a.removeItem:hover {
 a.btn.btn-info.btn-favorite{
   color: red;
   float:right;
-  box-shadow:3px 3px orange;
+  /*box-shadow:3px 3px orange;*/
+box-shadow: 12px 15px 20px rgba(0,0,0,.1);
 }
 a.btn.btn-info.btn-favorite:hover{
   box-shadow:4px 2px 22px gray;

@@ -6,9 +6,25 @@ layoutApp.controller('favorites', ['$scope', '$http', '$rootScope', '$timeout', 
         });
     };
     $scope.deleteFavorItem = function(menuItemId, index) {
-        $http.delete('../../CafeteriaApp.Backend/Requests/FavoriteItem.php?MenuItemId=' + menuItemId).then(function(response) {
-            $scope.favoriteItems.splice(index, 1);
-            Order_Info.togglePopup('Item successfully removed !');
+        var data= {
+            menuItemId: menuItemId
+        }
+        $http({
+                method: 'DELETE',
+                url: '../../CafeteriaApp.Backend/Requests/FavoriteItem.php',
+                data: data,
+                headers: {
+                    'Content-type': 'application/json;charset=utf-8'
+                }
+            })
+        .then(function(response) {
+            console.log(response);
+            if(response.data == 0) {
+                $scope.favoriteItems.splice(index, 1);
+                Order_Info.togglePopup('Item successfully removed !');
+            } else {
+                Order_Info.togglePopup('Error occured while removing the Item !');
+            }
         });
     };
     $scope.addToOrder = function(menuItemId) {

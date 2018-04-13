@@ -12,9 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
-    $data = json_decode(file_get_contents('php://input'), false);
+    $data = json_decode(file_get_contents('php://input'));
+    //echo $data;
     if (isset($_SESSION['userId']) && isset($data->menuItemId) && testInt($data->menuItemId)) {
-        deleteFavoriteItemByMenuItemId($conn, $_SESSION['userId'], $data->menuItemId);
+        checkResult(deleteFavoriteItemByMenuItemId($conn, $_SESSION['userId'], $data->menuItemId));
     }
 }
 

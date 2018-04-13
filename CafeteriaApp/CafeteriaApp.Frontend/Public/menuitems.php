@@ -17,7 +17,7 @@
 <div class="container">
 
   <div style="text-align: center">
-    <h1 style="color: #965C2A;padding-bottom:20px;margin-bottom:20px;border-bottom: 3px solid #31B0D5;font-family: fontAwsome;font-size:4rem;">
+    <h1 style="color: #965C2A;padding-bottom:20px;margin-bottom:20px;border-bottom: 3px solid #31B0D5;font-family: fontAwsome;font-size:4rem;text-shadow: 2px 2px rgba(0,5,0,.15);">
       <?=$_GET['categoryName']?>
       </h1>
 

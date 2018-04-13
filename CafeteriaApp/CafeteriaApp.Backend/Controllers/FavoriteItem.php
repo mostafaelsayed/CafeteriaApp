@@ -86,7 +86,7 @@
       $sql = "delete from favoriteitem where MenuItemId = " . $Mid . " and UserId = " . $Cid . " LIMIT 1";
 
       if ($conn->query($sql) === TRUE) {
-        return '0';
+        return 0;
       }
       else {
         echo "Error: ", $conn->error;
