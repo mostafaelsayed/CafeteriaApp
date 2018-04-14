@@ -48,9 +48,9 @@ layoutApp.controller('Language_Order', ['$rootScope', '$scope', '$http', 'Order_
 
 
 $(document).ready(function() {
-      if ( $(window).width() < 768 ) {
-        $('#optionsNavbar').addClass("collapse");
-      }
+      // if ( $(window).width() < 768 ) {
+      //   $('#optionsNavbar').addClass("collapse");
+      // }
     // ANIMATEDLY DISPLAY THE NOTIFICATION COUNTER.
     // $('#noti_Counter')
     //     .css({ opacity: 0 })
@@ -74,19 +74,33 @@ $(document).ready(function() {
     });
 
     // HIDE NOTIFICATIONS WHEN CLICKED ANYWHERE ON THE PAGE.
-    $(document).click(function() {
-        $('#shoppingCartDetails').hide();
-        // CHECK IF NOTIFICATION COUNTER IS HIDDEN.
-        // if ($('#noti_Counter').is(':hidden')) {
-        //     // CHANGE BACKGROUND COLOR OF THE BUTTON.
-        //     $('#shoppingCart-btn').css('background-color', '#2E467C');
-        // }
-    });
+    // $(document).click(function() {
+    //     $('#shoppingCartDetails').hide();
+    //     // CHECK IF NOTIFICATION COUNTER IS HIDDEN.
+    //     // if ($('#noti_Counter').is(':hidden')) {
+    //     //     // CHANGE BACKGROUND COLOR OF THE BUTTON.
+    //     //     $('#shoppingCart-btn').css('background-color', '#2E467C');
+    //     // }
+    // });
 
     $('#shoppingCartDetails').click(function(e) {
         if(! e.target.matches('#cart_checkout a'))
             return false;       // DO NOTHING WHEN CONTAINER IS CLICKED.
     });
 
+    function toggleNotifications() {
+        $('#notifyLabel').html('');
+        $("#notifyme").slideToggle("slow");
+    }
 
+    $(document).click(function (event) {
+        var clickover = $(event.target);
+        var $navbar = $(".navbar-collapse");               
+        var _opened = $navbar.hasClass("in");
+
+        // check if it's open and we clicked outside the toggle button
+        if (_opened === true && !clickover.hasClass("navbar-toggle")) {      
+            $navbar.collapse('hide');
+        }
+    });
 });

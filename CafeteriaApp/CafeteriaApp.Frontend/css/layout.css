@@ -113,16 +113,26 @@ nav {
     #shoppingCartDetails {
         left: 0px;
     }
+
+    ul > li > a {
+        width: 20%;
+    }
+
+    #contact {
+        width: 25%
+    }
 }
 
 #languages{
      display: inline-block;
 }
 #languagesDropdown {
+    margin-top: 5px;
     /*width: 28%;
     display: inline-block;*/
 }
 #myProfile {
+    margin-top: 5px;
     /*width: 100px;
     height: 70px;
     margin-right:15px;
@@ -177,19 +187,19 @@ nav {
 }
 #shoppingCart {
     cursor: pointer;
-    /*position:relative;
-    margin-top: -5px;
+    position:relative;
+    margin-top: 3px;
     margin-right: 25px;
-    cursor: pointer;
+    /*cursor: pointer;*/
     overflow: visible;
-    display: inline-block;*/
+    display: inline-block;
    
 }
 #shoppingCart-btn {
     transition: 0.3s;
-    display:inline-block;
-    width:50px;
-    height:50px;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
     box-sizing: border-box;
 }
 
@@ -329,6 +339,7 @@ a.dropdown_item:hover {
 
 #notification {
     position:relative;
+    margin-left: -20px
 }
 
 #notify-btn:hover {

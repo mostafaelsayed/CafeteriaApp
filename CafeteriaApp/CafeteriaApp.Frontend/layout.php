@@ -28,7 +28,6 @@ $selected_lang ='en';
   <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
 
-   
     <link rel="icon" type="text/css" href="/CafeteriaApp/CafeteriaApp/favicon.ico">
      <link href="../css/normalize.css" rel="stylesheet"/>
     <!-- MetisMenu CSS -->
@@ -52,7 +51,7 @@ $selected_lang ='en';
 
       <!-- Navigation -->
       <nav class="navbar navbar-fixed-top w3-animate-top">
-        <button type="button" id="dropdownBut" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -82,7 +81,7 @@ $selected_lang ='en';
 
             <li>
 
-              <a href="ssss.php">Contact us</a>
+              <a id="contact" href="ssss.php">Contact us</a>
 
             </li>
 
@@ -333,32 +332,44 @@ $selected_lang ='en';
     <script src="../js/sb-admin-2.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <!-- <script src="../js/bootstrap-select.min.js"></script> -->
-<script type="text/javascript">
-  function toggleNotifications() {
-    $('#notifyLabel').html('');
-    $("#notifyme").slideToggle("slow");
-  }
+    <script type="text/javascript">
+      // function toggleNotifications() {
+      //   $('#notifyLabel').html('');
+      //   $("#notifyme").slideToggle("slow");
+      // }
 
-  $(document).click(function (event) {
-      var clickover = $(event.target);
-      var $navbar = $(".navbar-collapse");               
-      var _opened = $navbar.hasClass("in");
+      // $(document).click(function (event) {
+      //     var clickover = $(event.target);
+      //     var $navbar = $(".navbar-collapse");               
+      //     var _opened = $navbar.hasClass("in");
 
-      // check if it's open and we clicked outside the toggle button
-      if (_opened === true && !clickover.hasClass("navbar-toggle")) {      
-          $navbar.collapse('hide');
+      //     // check if it's open and we clicked outside the toggle button
+      //     if (_opened === true && !clickover.hasClass("navbar-toggle")) {      
+      //         $navbar.collapse('hide');
+      //     }
+      // });
+
+
+      // $.urlParam = function(name){
+      // var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+      //   if (results==null){
+      //      return null;
+      //   } else {
+      //      return decodeURI(results[1]) || 0;
+      //   }
+      // }
+    </script>
+
+    <script type="text/javascript">
+      $.urlParam = function(name) {
+          var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+
+          if (results == null) {
+              return null;
+          } else {
+              return decodeURI(results[1]) || 0;
+          }
       }
-  });
+    </script>
 
-
-  $.urlParam = function(name){
-  var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-    if (results==null){
-       return null;
-    } else {
-       return decodeURI(results[1]) || 0;
-    }
-  }
-</script>
-
-<script src="../js/layout.js"></script>
+    <script src="../js/layout.js"></script>

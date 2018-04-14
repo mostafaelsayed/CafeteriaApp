@@ -13,13 +13,13 @@
   <script src="../js/calculate_distance_given_longitude_and_latitude.js"></script>
 </head>
 
-<div ng-controller="OrderCheckout" ng-init="phoneDisabled=true" class="container" style="align-content: center;text-align: center">
+<div ng-controller="OrderCheckout" ng-init="phoneDisabled=true" class="container" style="text-align: center;width: 500px;margin: 0 auto">
 
-  <h1 class="page-header" style="text-align: center;margin-top: 70px">
-  Complete Order #<span>{{orderId}}</span> info.
+  <h1 class="page-header" style="margin-top: 70px">
+    Complete Order #<span>{{orderId}}</span> info.
   </h1>
 
-  <form id="checkoutForm" novalidate name="myForm" action="../../CafeteriaApp.Backend/Requests/Order.php" method="post" style="text-align:center;color:white;background-color:#A52A2A;border-radius:20px;">
+  <form novalidate name="myForm" action="../../CafeteriaApp.Backend/Requests/Order.php" method="post" style="color:white;background-color:#A52A2A;border-radius:20px;">
     <input type="hidden" class="form-control" ng-model="selectedMethod.id" name="selectedMethodId"/>
     <input type="hidden" class="form-control" ng-model="selectedType.id" name="orderType"/>
     <input type="hidden" class="form-control" ng-model="total" name="total"/>
@@ -42,7 +42,7 @@
       <div>Payment Method</div>
 
       <div>
-        <select class="form-control" style="width: auto;" name="method" ng-model="selectedMethod" ng-change="changePaymentMethod()" ng-options="method.name for method in paymentMethods" required />
+        <select class="form-control" style="width: auto;" name="method" ng-model="selectedMethod" ng-change="changePaymentMethod()" ng-options="method.name for method in paymentMethods" required>
        	</select>
 
         <span ng-show="myForm.$submitted && myForm.method.$invalid" ng-cloak>The Payment Method is required.</span>
@@ -52,7 +52,7 @@
 
     <br />
     <div class="map-wrapper">
-      <h4 style="text-align:center;">
+      <h4>
         Click on the map above to Change Your Delivery Location
       </h4>
       <div id="map"></div>
