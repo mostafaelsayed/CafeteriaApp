@@ -41,11 +41,12 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
                 }
             }).then(function(response) {
                 //console.log(response.data);
-                if (response.data !== "") {
-                    alertify.error('Error occured !');
-                } else {
+                if (response.data == 0) {
                     document.getElementById("favorites" + menuItemId).style.color = "red";
                     alertify.success('favorite Item removed successfully !');
+                    
+                } else {
+                    alertify.error('Error occured !');
                 }
             });
         }
