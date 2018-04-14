@@ -35,7 +35,7 @@ table tr:nth-child(even) {
 }
 */
 
-.navbar:before, .navbar:after,.navbar-header:before,.navbar-header:after,.nav:before,.nav:after,.navbar-nav:before,.navbar-nav:after,.navbar-left:before,.navbar-left:after,.navbar-collapse:before,.navbar-collapse:after{
+.navbar:before, .navbar:after, .navbar-header:before, .navbar-header:after, .nav:before, .nav:after, .navbar-nav:before, .navbar-nav:after, .navbar-left:before, .navbar-left:after, .navbar-collapse:before, .navbar-collapse:after {
     display:none;!important;
 }
 
@@ -45,13 +45,13 @@ nav {
     /*background-image: url('../images/customer background image4.jpg')*/
 }
 
-.navbar-toggle{
-background-color:#ECD297;
+.navbar-toggle {
+    background-color:#ECD297;
 }
-.navbar-toggle span{
+.navbar-toggle span {
     background-color: #A52A2A;
 }
-#optionsNavbar{
+#optionsNavbar {
     display:inline;
 }
 #optionsNavbar.navbar-collapse:not(.collapse)+#right_ul {
@@ -65,7 +65,7 @@ background-color:#ECD297;
     display:inline;
 }
 
-.container-fluid,.navbar-header {
+.container-fluid, .navbar-header {
     padding-left: 10px;
 }
 
@@ -83,7 +83,7 @@ background-color:#ECD297;
     display:inline;
     margin-left: 15px;
 }
-#right_ul li>a {
+#right_ul li > a {
     display:inline;
     color: #FFAD33;
     /*position: absolute;*/
@@ -93,43 +93,65 @@ background-color:#ECD297;
     margin: 0 !important;
 }
 
+/* defined only for small size screen (when collapse) */
+@media (max-width:767px) {
+    .divider {
+        height: 1px;
+        margin: 9px 0;
+        overflow: hidden;
+        background-color: black;
+    }
+
+    #notification {
+        margin-left: -20px;
+    }
+
+    .navbar-collapse {
+        background-color: white;
+    }
+
+    #shoppingCartDetails {
+        left: 0px;
+    }
+}
+
 #languages{
      display: inline-block;
 }
 #languagesDropdown {
-    width: 28%;
-    display: inline-block;
+    /*width: 28%;
+    display: inline-block;*/
 }
 #myProfile {
-    width: 100px;
+    /*width: 100px;
     height: 70px;
     margin-right:15px;
-    display:inline-block;
+    display:inline-block;*/
 }
-#myProfile div button:hover{
-   color:#5BC0DE;
-   background-color:white;
+#myProfile div button:hover {
+    color:#5BC0DE;
+    background-color:white;
 }
 
-#left_ul{
-     display:inline;
+#left_ul {
+    display:inline;
 }
 #left_ul li {
     display:inline;
     height: 50px;
 }
-#left_ul>li>a {
+#left_ul > li > a {
     display:inline-block;
     color: #5BC0DE;
     transition: 0.1s all;
 }
-#left_ul>li>a:hover {
+#left_ul > li > a:hover {
     border-radius: 5px;
     background-color: #5BC0DE;
     color: white;
     /*transform: rotate(-10deg) scale(1.2);*/
 }
-.navbar-default.navbar-nav>li>a:active {
+.navbar-default.navbar-nav > li > a:active {
     color: yellow;
 }
 #header {
@@ -154,12 +176,13 @@ background-color:#ECD297;
       linear-gradient(to right, black, rgba(0, 0, 0, 0)) 1 100%; 
 }
 #shoppingCart {
-    position:relative;
+    cursor: pointer;
+    /*position:relative;
     margin-top: -5px;
     margin-right: 25px;
     cursor: pointer;
     overflow: visible;
-    display: inline-block;
+    display: inline-block;*/
    
 }
 #shoppingCart-btn {
@@ -176,19 +199,15 @@ background-color:#ECD297;
     border-radius: 50%;
     padding: 0px;
 }
-#shoppingCart-btn img{
+#shoppingCart-btn img {
     width:50px;
     height:50px;
 }
-#shoppingCart-btn:hover img{
+#shoppingCart-btn:hover img {
     width:40px;
     height:40px;
 }
- @media(max-width:768px){
-     #shoppingCartDetails{
-        left: 0px;
-     }
-    }
+
 #shoppingCartDetails {
     display: none;
     width: 320px;
@@ -270,46 +289,48 @@ a.dropdown_item:hover {
 .break {
     clear: both;
 }
-.dropdown-langs li{
+.dropdown-langs li {
     margin:10px;
 }
 
-.dropdown-langs li:hover a{
+.dropdown-langs li:hover a {
     background-color: orange;
     color:white;
 }
-.dropdown-langs li a{
-display: inline;
-margin-left:10px;
+.dropdown-langs li a {
+    display: inline;
+    margin-left:10px;
 }
 
-#notify-btn{
+#notify-btn {
     width: 90px;
-     height: 50px;
+    height: 50px;
     padding: 0px;
     background-color:transparent;
     border-color: transparent;
     animation: ring;
     animation-duration:1.5s;
 }
-@keyframes ring{
-0%{
-transform: rotate(50deg) ;
-}
-50%{
-transform: rotate(0deg) ;
-}
-75%{
-    transform: rotate(-50deg) ;
-}
-100%{
-transform: rotate(0deg) ;
 
+@keyframes ring {
+    0% {
+        transform: rotate(50deg);
+    }
+    50% {
+        transform: rotate(0deg);
+    }
+    75% {
+        transform: rotate(-50deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
 }
-}
-#notification{
+
+#notification {
     position:relative;
 }
-#notify-btn:hover{
-transform: rotate(15deg) scale(1.3);
+
+#notify-btn:hover {
+    transform: rotate(15deg) scale(1.3);
 }
