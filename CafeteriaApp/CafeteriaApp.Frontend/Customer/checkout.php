@@ -19,12 +19,12 @@
   Complete Order #<span>{{orderId}}</span> info.
   </h1>
 
-  <form novalidate name="myForm" action="../../CafeteriaApp.Backend/Requests/Order.php" method="post" style="text-align:center;color:white;background-color:#A52A2A;border-radius:20px;">
+  <form id="checkoutForm" novalidate name="myForm" action="../../CafeteriaApp.Backend/Requests/Order.php" method="post" style="text-align:center;color:white;background-color:#A52A2A;border-radius:20px;">
     <input type="hidden" class="form-control" ng-model="selectedMethod.id" name="selectedMethodId"/>
     <input type="hidden" class="form-control" ng-model="selectedType.id" name="orderType"/>
     <input type="hidden" class="form-control" ng-model="total" name="total"/>
     <br>
-    <div style="width: 550px;margin:auto;">
+    <div>
       <div>Get Order by</div>
       <select class="form-control" style="width: auto;" ng-model="selectedType" ng-options="type.name for type in orderTypes" ng-change="changeType()"></select>
 
