@@ -90,6 +90,19 @@
 <?php require( __DIR__ . '/../Public/footer.php'); ?>
 
 <style type="text/css">
+  @media (max-width:767px) {
+      
+      .footerLinks {
+        margin-left: -70px
+      }
+
+      .footer {
+        margin-left: 140px
+      }
+  }
+</style>
+
+<style type="text/css">
   select {
     margin: 0 auto
   }
