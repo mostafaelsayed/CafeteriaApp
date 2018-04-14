@@ -1,5 +1,13 @@
 #loginbody {
-	background-image:url('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/mylogin.jpg');
-	background-repeat:no-repeat;
-	background-size:1370px 700px
+	background-image: url('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/mylogin.jpg');
+	background-repeat: no-repeat;
+	background-size: 1370px 700px
+}
+
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    	/* IE10+ CSS styles go here */
+	#loginbody {
+		background-size: 1900px 900px
+	}
 }

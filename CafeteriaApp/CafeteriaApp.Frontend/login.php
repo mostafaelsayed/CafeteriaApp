@@ -102,6 +102,8 @@ elseif (isset($_SESSION['userId']) && isset($_SESSION['userName']) && isset($_SE
 
   <head>
 
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link href="css/errors.css" rel="stylesheet" type="text/css">
 
     <link rel="icon" type="text/css" href="../../favicon.ico">

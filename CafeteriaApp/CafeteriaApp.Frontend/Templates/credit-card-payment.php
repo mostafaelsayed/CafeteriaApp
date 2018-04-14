@@ -20,7 +20,7 @@
   <div class="panel-heading">
     <h3 class="panel-title">Enter Card Details</h3>
   </div>
-  <form class="panel-body" method="POST" action="../../CafeteriaApp.Backend/Requests/Order.php">
+  <form style="margin-top: 50px" class="panel-body" method="POST" action="../../CafeteriaApp.Backend/Requests/Order.php">
     <div class="row">
       <div class="form-group col-sm-8">
         <label class="control-label">Card Number</label>
