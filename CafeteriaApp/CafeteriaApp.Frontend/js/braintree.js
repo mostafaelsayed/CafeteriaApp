@@ -1,7 +1,7 @@
 layoutApp.controller('braintree', ['$scope', '$http', function($scope, $http) {
   $scope.nonce = 0;
-  $scope.paymentMethods = [{id: 1, name: "master card"}, {id: 2, name: "visa"},
-    {id: 3, name: "American Express"}];
+  localStorage.setItem("submit", 0);
+
   braintree.client.create({
     authorization: "sandbox_rjdt2j33_zg48rfkf4rjxjc3c",
   }, function (err, clientInstance) {
@@ -51,6 +51,8 @@ layoutApp.controller('braintree', ['$scope', '$http', function($scope, $http) {
         return;
       }
 
+      document.getElementById("myform").style.display = "block";
+
       hostedFieldsInstance.on('validityChange', function (event) {
         var field = event.fields[event.emittedBy];
 
@@ -98,9 +100,10 @@ layoutApp.controller('braintree', ['$scope', '$http', function($scope, $http) {
         event.preventDefault();
         hostedFieldsInstance.tokenize(function (err, payload) {
           if (err) {
-            alertify.error("some fields are not correct");
-            //console.error(err);
-            //return;
+            localStorage.setItem("submit", 0);
+            //console.log(err);
+            alertify.error("some fields are not invalid");
+            return;
           }
 
           alertify.confirm("Are your sure you want to submit order?", function(e) {
@@ -108,11 +111,11 @@ layoutApp.controller('braintree', ['$scope', '$http', function($scope, $http) {
               $scope.$apply(function() {
                 $scope.nonce = payload.nonce;
               });
-         
+              
+              localStorage.setItem("submit", 1);
               $('#formbut').click();
             }
           });
-          
         });
       });
     });

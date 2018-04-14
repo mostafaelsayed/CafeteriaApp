@@ -1,4 +1,5 @@
 <?php require(__DIR__ . '/../layout.php'); ?>
+
 <link href="../css/braintree-form.css">
 
 <link href="../css/alertify.bootstrap.css" rel="stylesheet">
@@ -15,7 +16,7 @@
 
 <script type="text/javascript" src="../js/braintree.js"></script>
 
-<div class="panel panel-default bootstrap-basic" ng-controller="braintree">
+<div id="myform" style="display: none" class="panel panel-default bootstrap-basic" ng-controller="braintree">
   <div class="panel-heading">
     <h3 class="panel-title">Enter Card Details</h3>
   </div>
@@ -62,4 +63,3 @@
     <input type="submit" id="formbut" name="submit" style="visibility: hidden;">
   </form>
 </div>
-

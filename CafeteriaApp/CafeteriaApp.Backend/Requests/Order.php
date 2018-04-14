@@ -66,6 +66,9 @@
       $conn->query("update `order` set `PaymentMethodId` = {$id} where `Id` = {$_SESSION['orderId']}");
       $_SESSION['paymentMethodId'] = $id;
     }
+    elseif (isset($_GET['cashflag']) && $_GET['cashflag'] == 1) {
+      CheckOutOrder($conn, $_SESSION['orderId']);
+    }
     //elseif ()
     elseif (isset($_GET['flag']) && $_GET['flag'] == 2 && isset($_GET['orderId']) && testInt($_GET['orderId']) ) {
       hideOrder($conn, $_GET['orderId']);

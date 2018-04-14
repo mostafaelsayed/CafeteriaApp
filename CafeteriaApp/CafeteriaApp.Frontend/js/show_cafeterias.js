@@ -13,8 +13,12 @@ layoutApp.controller('cafeterias', ['$scope', '$http', function($scope, $http) {
 
   var ref = document.referrer.substr(0, document.referrer.indexOf('?') );
 
-  if (localStorage.getItem("submit") == 1 && (ref == "http://127.0.0.1/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/checkout.php" || document.referrer == 'http://127.0.0.1/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Templates/credit-card-payment.php') ) {
+  if (localStorage.getItem("submit") == 1 && (ref == "http://127.0.0.1/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/checkout.php" || document.referrer == 'http://127.0.0.1/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Templates/credit-card-payment.php') ) {
   	localStorage.setItem("submit", 0);
   	alertify.success("Order Submitted");
+  }
+  else if (localStorage.getItem("discard") == 1) {
+    localStorage.setItem("discard", 0);
+    alertify.success('Order Discarded');
   }
 }]);

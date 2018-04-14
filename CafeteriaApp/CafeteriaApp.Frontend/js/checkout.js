@@ -6,26 +6,16 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   $scope.orderId = $.urlParam('orderId');
   $scope.orderTypes = [ {id: 0, name: "Take Away"}, {id: 1, name: "Delivery"} ];
   $scope.paymentMethods = [ {id: 1, name: "PayPal"}, {id: 2, name: "Credit Card"}, {id: 3, name: "Cash"} ];
-  localStorage.setItem("submit", 1);
-
   $scope.deliveryFee = 0;
   $scope.taxFee = 0;
   $scope.subTotal = 0;
 
-  // if (navigator.geolocation) {
-  //   navigator.geolocation.getCurrentPosition(function(position) {
-  //     sessionStorage.setItem("lat", position.coords.latitude);
-  //     sessionStorage.setItem("lng", position.coords.longitude);
-
-  //   }, function(error) {
-  //     console.log(error);
-  //   }, {timeout:10000});
-  // }
-
   $scope.confirmOrder = function() {
     alertify.confirm("Are you sure you want to submit order?", function(e) {
       if (e) {
-        document.getElementsByClassName('inbut')[0].click();
+        localStorage.setItem("submit", 1);
+        $http.put('../../CafeteriaApp.Backend/Requests/Order.php?cashflag=1');
+        document.location = "../Public/categories.php";
       }
       else {
         return false;
@@ -42,7 +32,8 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
         }
 
         localStorage.setItem("discard", 1);
-        document.location = document.referrer;
+        localStorage.setItem("submit", 1);
+        document.location = "../Public/categories.php";
       }
     })
   };
@@ -248,7 +239,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
             $http.post('../../CafeteriaApp.Backend/Requests/OrderLocation.php', $scope.myPos).then(function(response) {
               console.log(response);
             });
-            //$scope.changeLoc();
+
             $scope.changeLocOnMap();
           }
         });
@@ -292,8 +283,6 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
     $scope.myPos.lat = Math.round(10000 * $scope.myMarker.getPosition().lat() ) / 10000;
     $scope.myPos.lng = Math.round(10000 * $scope.myMarker.getPosition().lng() ) / 10000;
   });
-
-  
 
   $scope.getUserInfo();
   $scope.getOrderInfo();
