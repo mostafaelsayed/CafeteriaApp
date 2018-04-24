@@ -51,4 +51,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     }
 }
 
-require '../footer.php';
+require __DIR__ . '/../footer.php';

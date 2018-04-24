@@ -1,7 +1,7 @@
 <?php
-	require(__DIR__.'/../layout.php');
-  require(__DIR__.'/../modal_includes.php'); // why not relative ???
-
+	require(__DIR__ . '/../layout.php');
+  require(__DIR__ . '/../modal_includes.php'); // why not relative ???
+  validatePageAccess([1]);
 ?>
 
 <head>

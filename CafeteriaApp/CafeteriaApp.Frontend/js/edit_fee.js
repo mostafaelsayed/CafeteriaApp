@@ -1,12 +1,12 @@
-var edit_feeApp = angular.module('edit_fee',['location_provider','price']);
+var edit_feeApp = angular.module('edit_fee', ['price']);
 
-edit_feeApp.controller('editFee',['$scope','$http','$location',function($scope,$http,$location) {
+edit_feeApp.controller('editFee', ['$scope', '$http', function($scope, $http) {
 
-  $scope.feeId = $location.search().id;
+  $scope.feeId = $.urlParam('id');
 
   $scope.getFee = function() {
 
-    $http.get('../../../CafeteriaApp.Backend/Requests/Fee.php?id='+$scope.feeId)
+    $http.get('../../../CafeteriaApp.Backend/Requests/Fee.php?id=' + $scope.feeId)
     .then(function(response) {
       $scope.name = response.data.Name;
       $scope.price = response.data.Price;
@@ -26,9 +26,8 @@ edit_feeApp.controller('editFee',['$scope','$http','$location',function($scope,$
         Id: $scope.feeId
       };
 
-      $http.put('../../../CafeteriaApp.Backend/Requests/Fee.php',data)
+      $http.put('../../../CafeteriaApp.Backend/Requests/Fee.php', data)
       .then(function(response) {
-        console.log(response);
         window.history.back();
       });
 

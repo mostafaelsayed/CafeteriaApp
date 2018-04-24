@@ -1,4 +1,4 @@
-var show_and_delete_usersApp = angular.module('show_and_delete_users',['modal','angularModalService','ui.bootstrap'])
+var show_and_delete_usersApp = angular.module('show_and_delete_users', ['modal', 'angularModalService', 'ui.bootstrap'])
 
 // controller for getting and deleting users
 show_and_delete_usersApp.controller('showAndDeleteUsers',

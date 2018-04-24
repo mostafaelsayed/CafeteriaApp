@@ -1,9 +1,7 @@
-<?php   
-
-require(__DIR__.'/../../CafeteriaApp.Backend/functions.php');
-validatePageAccess([1]);
-
- ?>
+<?php
+    require(__DIR__.'/../../CafeteriaApp.Backend/functions.php');
+    validatePageAccess([1]);
+?>
 <!DOCTYPE html>
 
 <html>
@@ -88,3 +86,16 @@ validatePageAccess([1]);
 <script src="../../js/metisMenu.min.js"></script>
 <!-- sb-admin JavaScript -->
 <script src="../../js/sb-admin-2.js"></script>
+
+
+<script type="text/javascript">
+    $.urlParam = function(name) {
+          var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+
+          if (results == null) {
+              return null;
+          } else {
+              return decodeURI(results[1]) || 0;
+          }
+      }
+</script>

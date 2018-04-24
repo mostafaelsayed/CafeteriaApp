@@ -128,15 +128,16 @@ function password_encrypt($password)
       return;
     }
     else {
-      $result = $conn->query("select Image from user where Id = " . $id);
+      $result = $conn->query("select * from user where Id = " . $id);
       $userImage = mysqli_fetch_assoc($result)['Image'];
+      $name = mysqli_fetch_assoc($result)['Email'];
       mysqli_free_result($result);
       $sql = "update user set UserName = (?), FirstName = (?), LastName = (?), Email = (?), Image = (?), PhoneNumber = (?), RoleId = (?) where Id = (?)"; 
       $stmt = $conn->prepare($sql);
       $stmt->bind_param("ssssssii", $userName, $firstName, $lastName, $email, $Image, $phoneNumber, $roleId, $id);
       
-      if (isset($image) && $image != $userImage) {
-        $Image = editImage($image, $userImage);
+      if ($image != null) {
+        $Image = editImage($image, $userImage, $email);
       }
       else {
         $Image = $image;

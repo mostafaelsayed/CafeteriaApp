@@ -1,7 +1,6 @@
 <?php
-
-  require(__DIR__.'/../layout.php');
-
+  require(__DIR__ . '/../layout.php');
+  validatePageAccess([1]);
 ?>
 
 <head>
@@ -133,7 +132,6 @@
 </div>
 
 
-<script src="../../js/location_provider.js"></script>
 <script src="../../js/image_module.js"></script>
 <script src="../../js/price_module.js"></script>
 <script src="../../js/add_menuitem.js"></script>

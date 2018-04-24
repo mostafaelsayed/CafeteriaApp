@@ -1,5 +1,5 @@
 <?php
-  require_once(__DIR__.'/../ImageHandle.php');
+  require_once(__DIR__ . '/../ImageHandle.php');
 
   function getMenuItemByCategoryId($conn, $id, $customer = false) { // ????????????????
     $sql = "select * from menuitem where CategoryId = " . $id;
@@ -46,7 +46,7 @@
   function addMenuItem($conn, $name, $price, $description, $categoryId, $imageData) {
     $sql = "insert into menuitem (Name, Price, Description, CategoryId, Image) values (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $theImage = addImageFile($imageData);
+    $theImage = addImageFile($imageData, $name);
     $stmt->bind_param("sdsis", $name, $price, $description, $categoryId, $theImage);
 
     if ($stmt->execute() === TRUE) {
@@ -66,11 +66,11 @@
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sdssii", $name, $price, $description, $Image, $visible, $id);
 
-    if ($imageData != $menuItem['Image']) {
-      $Image = editImage($imageData, $menuItem['Image']);
+    if ($imageData != null) {
+      $Image = editImage($imageData, $menuItem['Image'], $name);
     }
     else {
-      $Image = $imageData;
+      $Image = $menuitem['Image'];
     }
 
     if ($stmt->execute() === TRUE) {

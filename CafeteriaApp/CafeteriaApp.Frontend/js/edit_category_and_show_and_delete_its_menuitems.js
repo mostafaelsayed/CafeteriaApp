@@ -1,15 +1,16 @@
 var edit_category_and_show_and_delete_its_menuitemsApp = angular.module('edit_category_and_show_and_delete_its_menuitems'
-,['location_provider','modal','angularModalService','ui.bootstrap','image']);
+,['modal', 'angularModalService', 'ui.bootstrap', 'image']);
 
 // controller for editing a category
-edit_category_and_show_and_delete_its_menuitemsApp.controller('editCategory',['$scope','$http','$location',function($scope,$http,$location) {
-
+edit_category_and_show_and_delete_its_menuitemsApp.controller('editCategory', ['$scope', '$http',
+  function($scope, $http) {
+// $.urlParam('orderId')
   $scope.image = null;
   $scope.imageFileName = '';
   
   $scope.uploadme = {};
   $scope.uploadme.src = '';
-  $scope.categoryId = $location.search().id;
+  $scope.categoryId = $.urlParam('id');
 
   $scope.getCategory = function() {
 
@@ -55,13 +56,14 @@ edit_category_and_show_and_delete_its_menuitemsApp.controller('editCategory',['$
 }]);
 
 // controller for showing and deleting menuitems
-edit_category_and_show_and_delete_its_menuitemsApp.controller('showAndDeleteMenuItems',['$scope','$http','$location','ModalService',function($scope,$http,$location,ModalService) {
+edit_category_and_show_and_delete_its_menuitemsApp.controller('showAndDeleteMenuItems', ['$scope', '$http', 'ModalService',
+  function($scope, $http, ModalService) {
 
-  $scope.categoryId = $location.search().id;
+  $scope.categoryId = $.urlParam('id');
 
   $scope.getMenuItems = function() {
 
-    $http.get('../../../CafeteriaApp.Backend/Requests/MenuItem.php?categoryId='+$scope.categoryId)
+    $http.get('../../../CafeteriaApp.Backend/Requests/MenuItem.php?categoryId=' + $scope.categoryId)
     .then(function (response) {
       $scope.menuItems = response.data;
     });
@@ -76,7 +78,7 @@ edit_category_and_show_and_delete_its_menuitemsApp.controller('showAndDeleteMenu
 
     $scope.delete = function() {
       
-      $http.delete('../../../CafeteriaApp.Backend/Requests/MenuItem.php?menuItemId='+menuItem.Id)
+      $http.delete('../../../CafeteriaApp.Backend/Requests/MenuItem.php?menuItemId=' + menuItem.Id)
       .then(function(response) {
         $scope.menuItems.splice($scope.menuItems.indexOf(menuItem),1);
       });

@@ -1,7 +1,7 @@
-var edit_menuitemApp = angular.module('edit_menuitem',['location_provider','image','price']);
+var edit_menuitemApp = angular.module('edit_menuitem',['image', 'price']);
 
 // controller for editing menuitem
-edit_menuitemApp.controller('editMenuItem',['$scope','$http','$location',function($scope,$http,$location) {
+edit_menuitemApp.controller('editMenuItem', ['$scope', '$http', function($scope, $http) {
 
   $scope.image = null;
   $scope.imageFileName = '';
@@ -9,12 +9,12 @@ edit_menuitemApp.controller('editMenuItem',['$scope','$http','$location',functio
   $scope.uploadme = {};
   $scope.uploadme.src = '';
 
-  $scope.menuItemId = $location.search().id;
+  $scope.menuItemId = $.urlParam('id');
   $scope.arr = [ {id: 1,name: "Visible"} , {id: 0,name: "Invisible"} ];
 
   $scope.getMenuItem = function() {
 
-    $http.get('../../../CafeteriaApp.Backend/Requests/MenuItem.php?id='+$scope.menuItemId)
+    $http.get('../../../CafeteriaApp.Backend/Requests/MenuItem.php?id=' + $scope.menuItemId)
     .then(function(response) {
 
       $scope.name = response.data.Name;

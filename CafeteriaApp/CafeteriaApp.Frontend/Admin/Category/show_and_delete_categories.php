@@ -1,13 +1,12 @@
 <?php
-
-  require(__DIR__.'/../layout.php');
-  require(__DIR__.'/../modal_includes.php');
-
+  require(__DIR__ . '/../layout.php');
+  require(__DIR__ . '/../modal_includes.php');
+  validatePageAccess([1]);
 ?>
 
 <head>
 
-  <title>Cafeterias</title>
+  <title>Categories</title>
 
   
 
@@ -17,25 +16,25 @@
 
   <div class="col-lg-12">
 
-    <h1 class="page-header">Cafeterias</h1>
+    <h1 class="page-header">Categories</h1>
 
   </div>
 
 </div>
 
-<div class="row" ng-app="show_and_delete_cafeterias">
+<div class="row" ng-app="show_and_delete_categoriesApp">
 
-  <div ng-controller="showAndDeleteCafeterias">
+  <div ng-controller="showAndDeleteCategories">
 
     <div class="col-lg-12">
 
       <div style="margin: auto">
 
-        <div><h3>Manage Your Cafeterias</h3>
+        <div><h3>Manage Your Categories</h3>
 
           <div>
 
-            <a id="add" title="Add Cafeteria" id="creatNewCafeteria" href="add_cafeteria.php" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
+            <a id="add" title="Add Category" id="creatNewCategory" href="add_category.php" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
 
           </div>
 
@@ -56,7 +55,7 @@
 
             </thead>
 
-            <tbody ng-repeat="c in cafeterias">
+            <tbody ng-repeat="c in categories">
 
               <tr>
 
@@ -64,9 +63,9 @@
 
                 <td id="alignText" class="center">
 
-                  <a type="button" href="edit_cafeteria_and_show_and_delete_its_categories.php?id={{c.Id}}">Edit</a>&nbsp;&nbsp;
+                  <a type="button" href="edit_category_and_show_and_delete_its_menuitems.php?id={{c.Id}}">Edit</a>&nbsp;&nbsp;
 
-                  <a type="button" style="cursor: pointer" ng-click="deleteCafeteria(c)">Delete</a>
+                  <a type="button" style="cursor: pointer" ng-click="deleteCategory(c)">Delete</a>
 
                 </td>
 
@@ -88,4 +87,4 @@
 
 <!-- order of include not matter in case of dependencies exist -->
 
-<script src="../../js/show_and_delete_cafeterias.js"></script>
+<script src="../../js/show_and_delete_categories.js"></script>

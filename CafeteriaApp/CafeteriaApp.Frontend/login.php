@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
                         redirect_to(rawurldecode('Public/categories.php'));
                     } elseif ($_SESSION['roleId'] == 1) {
                         // admin
-                        redirect_to(rawurldecode('Admin/Cafeteria/show_and_delete_cafeterias.php'));
+                        redirect_to(rawurldecode('Admin/Category/show_and_delete_categories.php'));
                     } else {
                         // cashier
                         redirect_to(rawurldecode('Cashier/show_and_hide_orders.php'));
@@ -69,7 +69,7 @@ if (isset($_POST['submit'])) {
                     redirect_to(rawurldecode('Public/categories.php'));
                 } elseif ($_SESSION['roleId'] == 1) {
                     // admin
-                    redirect_to(rawurldecode('Admin/Cafeteria/show_and_delete_cafeterias.php'));
+                    redirect_to(rawurldecode('Admin/Category/show_and_delete_categories.php'));
                 } else {
                     // cashier
                     redirect_to(rawurldecode('Cashier/show_and_hide_orders.php'));
@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
 elseif (isset($_SESSION['userId']) && isset($_SESSION['userName']) && isset($_SESSION['roleId'])) {
     // This is probably a GET request
     if ($_SESSION['roleId'] == 1) { // admin
-        redirect_to(rawurldecode('Admin/Cafeteria/show_and_delete_cafeterias.php')); //
+        redirect_to(rawurldecode('Admin/Category/show_and_delete_categories.php')); //
     } else if ($_SESSION['roleId'] == 2) { // customer
         redirect_to(rawurldecode('Public/categories.php')); //
     } else { // cashier

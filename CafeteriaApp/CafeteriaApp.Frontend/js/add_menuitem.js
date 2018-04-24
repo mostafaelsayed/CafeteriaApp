@@ -1,6 +1,6 @@
-var add_menuitemApp = angular.module('add_menuitem',['location_provider','image','price']);
+var add_menuitemApp = angular.module('add_menuitem', ['image', 'price']);
 
-add_menuitemApp.controller('addMenuItem',['$scope','$http','$location',function($scope,$http,$location) {
+add_menuitemApp.controller('addMenuItem', ['$scope', '$http', function($scope, $http) {
 
   $scope.image = null;
   $scope.imageFileName = '';
@@ -11,7 +11,7 @@ add_menuitemApp.controller('addMenuItem',['$scope','$http','$location',function(
   $scope.name = "";
   $scope.price = "";
   $scope.description = "";
-  $scope.categoryId = $location.search().id;
+  $scope.categoryId = $.urlParam('id');
 
   $scope.addMenuItem = function () {
 

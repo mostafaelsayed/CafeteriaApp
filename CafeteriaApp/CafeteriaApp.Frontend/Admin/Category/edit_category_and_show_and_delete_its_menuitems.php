@@ -1,8 +1,7 @@
 <?php
-
-  require(__DIR__.'/../layout.php');
-  require(__DIR__.'/../modal_includes.php');
-
+  require(__DIR__ . '/../layout.php');
+  require(__DIR__ . '/../modal_includes.php');
+  validatePageAccess([1]);
 ?>
 
 <head>
@@ -110,7 +109,7 @@
 
     <div>
 
-      <a id="add" title="Add MenuItem" id="creatNewCategory" href="../../MenuItem/Views/add_menuitem.php?id={{categoryId}}" target="_self" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
+      <a id="add" title="Add MenuItem" id="creatNewCategory" href="../MenuItem/add_menuitem.php?id={{categoryId}}" target="_self" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
 
     </div>
 
@@ -144,7 +143,7 @@
 
           <td id="alignText" class="center">
 
-            <a id="myButton" href="../../MenuItem/Views/edit_menuitem.php?id={{m.Id}}" target="_self">Edit</a>&nbsp;
+            <a id="myButton" href="../MenuItem/edit_menuitem.php?id={{m.Id}}" target="_self">Edit</a>&nbsp;
 
             <a style="cursor: pointer" ng-click="deleteMenuItem(m)">Delete</a>
 
@@ -170,8 +169,6 @@
 
 </div>
 
-<!-- location provider -->
-<script src="../../js/location_provider.js"></script>
 <!-- image module -->
 <script src="../../js/image_module.js"></script>
 <script src="../../js/edit_category_and_show_and_delete_its_menuitems.js"></script>

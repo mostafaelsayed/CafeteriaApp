@@ -1,5 +1,6 @@
 <?php
-	require(__DIR__.'/../layout.php');
+	require(__DIR__ . '/../layout.php');
+  validatePageAccess([1]);
 ?>
 
 <head>
@@ -70,4 +71,3 @@
 
 <script src="../../js/edit_fee.js"></script>
 <script src="../../js/price_module.js"></script>
-<script src="../../js/location_provider.js"></script>

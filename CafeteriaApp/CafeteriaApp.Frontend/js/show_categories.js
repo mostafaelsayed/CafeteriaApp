@@ -1,15 +1,15 @@
 
-// controller for getting cafeterias from database
-layoutApp.controller('cafeterias', ['$scope', '$http', function($scope, $http) {
-  $scope.getCafeterias = function() {
-    $http.get('../../CafeteriaApp.Backend/Requests/Cafeteria.php')
-    .then(function(response) {
-      console.log(response);
-      $scope.cafeterias = response.data;
-    });
+// controller for getting categories of a cafeteria from database
+layoutApp.controller('getCategories', ['$scope', '$http', function($scope, $http) {
+
+  $scope.getCategories = function() {
+   $http.get('../../CafeteriaApp.Backend/Requests/Category.php')
+   .then(function(response) {
+       $scope.categories = response.data;
+   });
   };
 
-  $scope.getCafeterias();
+  $scope.getCategories();
 
   var ref = document.referrer.substr(0, document.referrer.indexOf('?') );
 

@@ -1,22 +1,16 @@
 <?php
-  require_once(__DIR__.'/../ImageHandle.php');
+  require_once(__DIR__ . '/../ImageHandle.php');
 
-  function getByCafeteriaId($conn, $id) {
-    if ( !isset($id) ) {
-      //echo "Error: Id is not set";
-      return;
+  function getCategories($conn) {
+    $sql = "select * from `category`";
+
+    if ( $result = $conn->query($sql) ) {
+      $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      mysqli_free_result($result);
+      return $categories;
     }
     else {
-      $sql = "select * from category where CafeteriaId = " . $id;
-
-      if ( $result = $conn->query($sql) ) {
-        $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        mysqli_free_result($result);
-        return $categories;
-      }
-      else {
-        echo "Error Retrieving Categories: ", $conn->error;
-      }
+      echo "Error Retrieving Categories: ", $conn->error;
     }
   }
 
@@ -39,19 +33,17 @@
     }
   }
 
-  function addCategory($conn, $name, $cafeteriaId, $imageData = null) {
+  function addCategory($conn, $name, $imageData = null) {
     if ($imageData != null) {
-      echo "456";
-      $imageFileName = addImageFile($imageData);
-      $sql = "insert into category (Name, Image, CafeteriaId) values (?, ?, ?)";
+      $imageFileName = addImageFile($imageData, $name);
+      $sql = "insert into category (Name, Image) values (?, ?)";
       $stmt = $conn->prepare($sql);
-      $stmt->bind_param("ssi", $name, $imageFileName, $cafeteriaId);
+      $stmt->bind_param("ss", $name, $imageFileName);
     }
     else {
-
-      $sql = "insert into category (Name, CafeteriaId) values (?, ?)";
+      $sql = "insert into category (Name) values (?)";
       $stmt = $conn->prepare($sql);
-      $stmt->bind_param("si", $name, $cafeteriaId);
+      $stmt->bind_param("s", $name);
     }
 
     if ($stmt->execute() === TRUE) {
@@ -67,8 +59,8 @@
     $category = mysqli_fetch_assoc($result);
     mysqli_free_result($result);
 
-    if ($imageData != null && $imageData != $category['Image']) {
-      $imageFileName = editImage($imageData,$category['Image']);
+    if ($imageData != null) {
+      $imageFileName = editImage($imageData, $category['Image'], $name);
       $sql = "update category set Name = (?) , Image = (?) where Id = (?)";
       $stmt = $conn->prepare($sql);
       $stmt->bind_param("ssi", $name, $imageFileName, $id);

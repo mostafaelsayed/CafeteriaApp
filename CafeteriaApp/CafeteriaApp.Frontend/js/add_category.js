@@ -1,6 +1,6 @@
-var add_categoryApp = angular.module('add_category',['location_provider','image']);
+var add_categoryApp = angular.module('add_category', ['image']);
 
-add_categoryApp.controller('addCategory',['$scope','$http','$location',function($scope,$http,$location) {
+add_categoryApp.controller('addCategory', ['$scope', '$http', function($scope, $http) {
 
   $scope.image = null;
   $scope.imageFileName = '';
@@ -9,7 +9,7 @@ add_categoryApp.controller('addCategory',['$scope','$http','$location',function(
   $scope.uploadme.src = '';
 
   $scope.name = "";
-  $scope.cafeteriaId = $location.search().id;
+  $scope.cafeteriaId = $.urlParam('id');
 
   $scope.addCategory = function () {
 

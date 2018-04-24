@@ -1,6 +1,6 @@
 <?php
-  require(__DIR__.'/../layout.php');
-
+  require(__DIR__ . '/../layout.php');
+  validatePageAccess([1]);
 ?>
 
 <head>
@@ -115,17 +115,17 @@
 
           <div ng-if="uploadme.src != ''">
 
-            <img ng-src="{{ uploadme.src }}" style="width:300px;height:300px" />
+            <img ng-src="{{ uploadme.src }}" style="width: 300px;height: 300px" />
 
           </div>
 
           <div ng-if="uploadme.src == ''">
 
-            <img ng-src="{{ userData.imageUrl }}" style="text-align:center;width:300px;height:300px">&nbsp;
+            <img ng-src="{{ userData.imageUrl }}" style="text-align: center;width: 300px;height: 300px">&nbsp;
 
             <span>
 
-              <button class="btn btn-primary" onclick="mylabel.click()" style="position:absolute;margin-top:150px" id="mybutton">Choose image</button>
+              <button class="btn btn-primary" onclick="mylabel.click()" style="position: absolute;margin-top: 150px" id="mybutton">Choose image</button>
 
               <label id="mylabel" for="file"></label>
 
@@ -143,17 +143,17 @@
 
           </div>
 
-          <span style="margin:auto">
+          <span style="margin: auto">
 
-            <select ng-options="role.Name for role in roles" ng-model="selectedRole"></select>
+            <select ng-options="role.name for role in roles" ng-model="selectedRole"></select>
 
           </span>
 
-          <div ng-show="selectedRole.Name=='Customer'">
+          <div ng-show="selectedRole.name == 'Customer'">
 
             <div><label>Credit</label></div>
 
-            <span style="margin:auto">
+            <span style="margin: auto">
 
               <input type="text" ng-model="credit">
 
@@ -161,13 +161,13 @@
 
             <div><label>Gender</label></div>
 
-            <span style="margin:auto;margin-right:20px">
+            <span style="margin: auto;margin-right: 20px">
 
               <label>Female</label><input id="femaleInput" type="checkbox">
 
             </span>
 
-            <span style="margin:auto;margin-left:20px">
+            <span style="margin: auto;margin-left: 20px">
 
               <label>Male</label><input id="maleInput" type="checkbox">
 
@@ -175,7 +175,7 @@
 
             <div><br><label>Date of birth</label></div><br>
 
-            <div style="float:left;margin-left:500px">
+            <div style="float: left;margin-left: 500px">
 
               <label>Year</label>
 
@@ -183,7 +183,7 @@
 
             </div>
 
-            <span style="margin:auto">
+            <span style="margin: auto">
 
               <label>Month</label>
 
@@ -191,7 +191,7 @@
 
             </span>
 
-            <span style="float:right;margin-right:500px">
+            <span style="float: right;margin-right: 500px">
 
               <label>Day</label>
 
@@ -220,6 +220,5 @@
 </div>
 
 <script src="../../js/image_module.js"></script>
-<script src="../../js/location_provider.js"></script>
 <script src="../../js/phone_number_module.js"></script>
 <script src="../../js/edit_user.js"></script>

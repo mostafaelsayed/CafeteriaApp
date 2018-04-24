@@ -1,6 +1,6 @@
-var add_userApp = angular.module('add_user',['image','ngRoute','location_provider','phone_number','price']);
+var add_userApp = angular.module('add_user', ['image', 'ngRoute', 'phone_number', 'price']);
 
-add_userApp.config(['$routeProvider',function($routeProvider) {
+add_userApp.config(['$routeProvider', function($routeProvider) {
 
   $routeProvider
   // add user
@@ -40,7 +40,7 @@ add_userApp.factory('addUserService',['$rootScope',function($rootScope) {
 }]);
 
 // controller for adding user
-add_userApp.controller('addUser',['$scope','$http',function($scope,$http) {
+add_userApp.controller('addUser', ['$scope', '$http', function($scope, $http) {
 
 	$scope.userName = "";
 	$scope.firstName = "";

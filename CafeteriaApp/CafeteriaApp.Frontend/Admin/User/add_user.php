@@ -1,7 +1,6 @@
 <?php
-
-require(__DIR__.'/../layout.php');
-  
+  require(__DIR__ . '/../layout.php');
+  validatePageAccess([1]);
 ?>
 
 <head>
@@ -178,7 +177,6 @@ require(__DIR__.'/../layout.php');
 
 <script src="../../js/angular-route.js"></script>
 <script src="../../js/image_module.js"></script>
-<script src="../../js/location_provider.js"></script>
 <script src="../../js/phone_number_module.js"></script>
 <script src="../../js/price_module.js"></script>
 <script src="../../js/add_user.js"></script>
