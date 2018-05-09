@@ -35,7 +35,7 @@ edit_category_and_show_and_delete_its_menuitemsApp.controller('editCategory', ['
       }
 
       else {
-        x = $scope.imageUrl;
+        x = '';
       }
 
       var data = {

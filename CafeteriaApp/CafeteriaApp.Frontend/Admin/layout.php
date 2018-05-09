@@ -41,7 +41,7 @@
 
                     <div class="navbar-header">
 
-                        <a style="color: white" class="navbar-brand" href="../Cafeteria/show_and_delete_cafeterias.php">Manage Cafeterias</a>
+                        <a style="color: white" class="navbar-brand" href="../Category/show_and_delete_categories.php">Manage Categories</a>
 
                     </div>
 

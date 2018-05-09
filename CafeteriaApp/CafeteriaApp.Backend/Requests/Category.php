@@ -32,13 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     $data = json_decode(file_get_contents('php://input'));
 
     if (isset($data->Id, $data->Name) && normalizeString($conn, $data->Name) && testInt($data->Id)) {
-        if (!isset($data->Image)) {
+        $x = normalizeString($conn, $data->Image);
+        
+        if ($x == false) {
             editCategory($conn, $data->Name, $data->Id);
         } else {
-            if (normalizeString($conn, $data->Image)) {
-                editCategory($conn, $data->Name, $data->Id, $data->Image);
-            }
-
+            editCategory($conn, $data->Name, $data->Id, $data->Image);
         }
     } else {
         echo "name is required";

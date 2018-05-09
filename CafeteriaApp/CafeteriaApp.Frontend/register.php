@@ -1,223 +1,3 @@
-<!-- <!DOCTYPE html>
-
-<html>
-
-  <head>
-
-    <title>Register Form</title>
-
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="icon" href="images/icon.png">
-
-    <link rel="icon" type="text/css" href="../../favicon.ico">
-
-    <link rel="stylesheet" type="text/css" href="css/materialize.css"/>
-
-    <link rel="stylesheet" type="text/css" href="icons/icons.css"/>
-
-    <link href="../css/input_file.css" rel="stylesheet">
-
-    <link href="../css/errors.css" rel="stylesheet" type="text/css">
-
-    <link rel="stylesheet" href="css/register.css">
-
-    <script src="js/jquery-3.1.1.min.js"></script>
-
-    <script src="js/materialize.js"></script>
-
-    <script src="js/newjavascript.js"></script>
-
-    <script src="../javascript/angular.min.js"></script>
-
-    <script src="../javascript/angular-route.js"></script>
-
-    <script src="../javascript/ui-bootstrap-2.5.0.js"></script>
-
-    <script src="../javascript/ui-bootstrap-tpls-2.5.0.js"></script>
-
-    <script src="../javascript/angular-modal-service.js"></script>
-
-    <script src= "register.js"></script>
-
-    <script src="../javascript/alertify.js"></script>
-
-  </head>
-
-<style type="text/css">
-
-  * {
-
-    color: violet
-
-  }
-
-  [ng\:cloak], [ng-cloak], .ng-cloak {
-
-    display: none !important
-
-  }
-
-</style>
-
-  <body ng-app="register" >
-
-    <div id="main">
-
-      <div id="navigation">
-
-        &nbsp;
-
-      </div>
-      
-      <h2 style="text-align: center"> New User </h2>
-
-      <div class="row" ng-controller="Register">  
-
-        <form novalidate role="form" name="myform" style="width: 40%;margin: auto;text-align: center">
-     
-          <div class="input-field col s12">
-
-            <label for="un">User Name</label>
-
-            <input id="un" type="text" name="userName" ng-model="userName" style="text-align: center" ng-maxlength="30" ng-required />
-
-            <span ng-cloak ng-show="myform.name.$touched && myform.userName.$invalid">User Name is required.</span>
-
-            <span ng-cloak ng-show="myform.name.$touched && myform.userName.$invalid">User Name must be less than 30 character or numbers .</span>
-
-          </div>
-
-          <div class="input-field col s12">
-
-            <label for="ps">Password</label>
-
-            <input id="ps" type="password" name="password" ng-model="password" style="text-align: center" required />
-
-            <span ng-cloak ng-show=" myform.name.$touched && myform.password.$invalid">Password is required.</span>
-
-          </div>
-
-          <div class="input-field col s12">
-
-            <label for="fn">First Name</label>
-
-            <input id="fn" type="text" name="firstName" ng-model="firstName" style="text-align: center" required />
-
-            <span ng-cloak ng-show="myform.name.$touched && myform.firstName.$invalid">First Name is required.</span>
-
-          </div>
-
-          <div class="input-field col s12">
-
-            <label for="ln">Last Name</label>
-
-            <input id="ln" type="text" name="lastName" ng-model="lastName" style="text-align: center" required />
-
-            <span ng-cloak ng-show="myform.name.$touched && myform.lastName.$invalid">Last Name is required.</span>
-
-            <div><br><br></div>
-
-          </div>
-
-          <label class="labels" style="font-size: 16px">Gender</label><br>
-
-          <br>
-
-          <input class="with-gap" name="gender" ng-model="gender" type="radio" id="male" value="1" required />
-
-          <label for="male">Male</label>
-
-          <br>
-
-          <input class="with-gap" name="gender" ng-model="gender" type="radio" id="female" value="2" required/>
-
-          <label for="female" style="margin-right: -16px">Female</label>
-
-          <br>
-
-          <input class="with-gap" name="gender" ng-model="gender" type="radio" id="other" value="3" required />
-
-          <label for="other" style="margin-right: -5px">Other</label>
-
-          <h3 ng-cloak ng-show="myform.gender.$touched && myform.gender.$invalid">Gender is required.</h3>
-
-          <br><br>
-
-          <div class="input-field col s12">
-
-            <label for="em">E-mail</label>
-
-            <input id="em" type="text" name="email" ng-model="email" style="text-align: center" required/>
-
-            <span id="emailConfirm" ng-cloak ng-show="myform.name.$touched && myform.email.$invalid">Email is required.</span>
-
-          </div>
-
-          <div class="input-field col s12">
-
-            <label for="pn">Phone Number</label>
-
-            <input id="pn" type="text" name="phone" ng-model="phone" style="text-align: center" required />
-
-            <span ng-cloak ng-show="myform.name.$touched && myform.phone.$invalid">Phone Number is required.</span>
-
-          </div>
-
-          <div class="input-field col s12">
-
-            <input id="DOB" name="DOB" type="date" class="datepicker" ng-model="DOB" required />
-
-            <span ng-cloak ng-show="myform.name.$touched && myform.DOB.$invalid">Date of Birth is required.</span>
-
-            <label for="DOB">Date of Birth</label>
-
-          </div>
-
-          <div class="input-field col s12">
-      
-            <div class="dropzone" file-dropzone="[image/png, image/jpeg]" file="image" file-name="imageFileName" data-max-file-size="3">
-          
-              <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile">
-
-              <img ng-src="{{uploadme.src}}" width="200" height="200" id="profileImage">
-
-              <div><br></div>
-
-            </div>
-
-            <div>
-
-              <button class="btn btn-primary" onclick="mylabel.click()">Choose image</button>
-
-              <label id="mylabel" for="file"></label>
-
-              <div><br><br><br></div>
-
-            </div>
-
-          </div>
-         
-          <input id="save" type="submit" class="btn btn-primary" name="submit" value="Next" ng-click="registerfn()" />
-
-          <input type="submit" name="cancel" class="btn btn-primary" value="Reset" id="cancel" ng-click="cancel()"/>
-            
-        </form>
-
-      </div>
-
-      <br>
-      
-    </div>
-
-  </body>
-
-</html> -->
-
-
-
-
-
 <!DOCTYPE html>
 
 <html>
@@ -227,6 +7,8 @@
     <title>Register</title>
 
     <meta name="viewport" charset="UTF-8" content="width=device-width, initial-scale=1.0" />
+
+    <!-- <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Anton"> -->
 
     <link rel="icon" href="../favicon.ico">
 
@@ -252,11 +34,11 @@
 
     <script src="js/image_module.js"></script>
 
-    <script src="js/phone_number_module.js"></script>
+    <script type="text/javascript" src="js/register_form_validation.js"></script>
 
     <script type="text/javascript">
 
-      angular.module('registerApp', ['phone_number', 'image']).controller('registerController', ['$scope', function($scope) {
+      angular.module('registerApp', ['image', 'registerFormValidation']).controller('registerController', ['$scope', function($scope) {
           $scope.image = {};
           $scope.image.src = '';
       }]);
@@ -267,8 +49,12 @@
 
   <style type="text/css">
 
-    *{
-      color: red
+    .errorMes {
+      color: red;
+    }
+
+    label {
+      font-family: 'Anton';
     }
     
   </style>
@@ -285,7 +71,7 @@
 
     <div ng-app="registerApp" ng-controller="registerController" class="row">
 
-      <form novalidate role="form" name="myform" style="width: 40%;margin: auto;text-align: center" enctype="multipart/form-data" method="post" action="../CafeteriaApp.Backend/Requests/User.php">
+      <form ng-cloak novalidate role="form" name="myform" style="width: 40%;margin: auto;text-align: center" enctype="multipart/form-data" method="post" action="../CafeteriaApp.Backend/Requests/User.php">
 
         <div class="input-field col s12">
 
@@ -293,7 +79,7 @@
 
           <input type="text" name="firstName" ng-model="firstName" style="text-align: center" required />
 
-          <span ng-show="myform.firstName.$touched && myform.firstName.$invalid">First Name is Required</span>
+          <span class="errorMes" ng-show="myform.firstName.$touched && myform.firstName.$invalid">First Name is Required</span>
 
         </div>
 
@@ -303,7 +89,7 @@
 
           <input type="text" name="lastName" ng-model="lastName" style="text-align: center" required />
 
-          <span ng-show="myform.lastName.$touched && myform.lastName.$invalid">Last Name is Required</span>
+          <span class="errorMes" ng-show="myform.lastName.$touched && myform.lastName.$invalid">Last Name is Required</span>
 
         </div>
 
@@ -311,9 +97,10 @@
 
           <label>E-mail</label>
 
-          <input type="email" name="email" ng-model="email" style="text-align: center" required />
+          <input check type="email" name="email" ng-model="email" style="text-align: center" required />
 
-          <span ng-show="myform.email.$touched && myform.email.$invalid">Email is Required</span>
+          <span class="errorMes" ng-show="myform.email.$touched && myform.email.$invalid && !myform.email.$error.emailExisted">Email is Required</span>
+          <span class="errorMes" ng-show="myform.email.$touched && myform.email.$error.emailExisted">Email already existed</span>
 
         </div>
 
@@ -321,9 +108,10 @@
 
           <label>Password</label>
 
-          <input type="password" name="password" ng-model="password" style="text-align: center" required />
+          <input check type="password" name="password" ng-model="password" style="text-align: center" required />
 
-          <span ng-show="myform.password.$touched && myform.password.$invalid">Password is Required</span>
+          <span class="errorMes" ng-show="myform.password.$touched && myform.password.$invalid && !myform.password.$error.checkPassword">Password is Required</span>
+          <span class="errorMes" ng-show="myform.password.$touched && myform.password.$error.checkPassword">Password is Invalid. It must contain at least one lowercase letter, one uppercase letter and one digit</span>
 
         </div>
 
@@ -331,19 +119,20 @@
 
           <label>Phone Number</label>
 
-          <input type="text" name="phone" ng-model="phone" style="text-align: center" required />
+          <input type="text" check name="phone" ng-model="phone" style="text-align: center" required />
 
-          <span ng-show="myform.phone.$touched && myform.phone.$invalid">Phone Number is Required</span>
+          <span class="errorMes" ng-show="myform.phone.$touched && myform.phone.$invalid && !myform.phone.$error.checkPhoneNumber">Phone Number is Required</span>
+          <span class="errorMes" ng-show="myform.phone.$touched && myform.phone.$error.checkPhoneNumber">Phone Number is Invalid. It must has 11 digits starting with 01</span>
 
         </div>
 
         <div class="input-field col s12">
 
-          <input name="DOB" type="date" ng-model="DOB" class="datepicker" required />
+          <input check name="DOB" type="date" ng-model="DOB" class="datepicker" required />
 
           <label>Date of Birth</label>
 
-          <span ng-show="myform.DOB.$touched && myform.DOB.$invalid">Date of Birth is Required</span>
+          <span class="errorMes" ng-show="myform.DOB.$touched && myform.DOB.$invalid">Date of Birth is Required</span>
 
         </div>
 
@@ -363,47 +152,39 @@
 
         <label for="female" style="margin-right: -17px">Female</label>
 
-        <span ng-show="myform.gender.$touched && myform.gender.$invalid">Gender is Required</span>
+        <span class="errorMes" ng-show="myform.gender.$touched && myform.gender.$invalid">Gender is Required</span>
 
         <br>
 
         <div class="image-button">
 
-          <!-- <input type="file"  name="image" fileread="image.src" size="5" /> -->
-
           <label for="file" class="inside-image-label" onclick="event.preventDefault();$('#file').trigger('click')">Choose Image</label>
 
         </div>
 
-        <img ng-src="{{image.src}}" />
+        <!-- let user decide whether to crop or not -->
+        <!-- <button onclick="event.preventDefault();crop();">Crop Image</button> -->
 
-        <div class="dropzone" file-dropzone="[image/png, image/jpeg]" file="image" file-name="imageFileName" data-max-file-size="3">
+        <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="3">
 
-          <input type="file" id="file" fileread="uploadme.src" name="image" class="inputfile">
+          <input type="file" id="file" name="image" class="inputfile" onchange="readURL(this)">
 
-          <img ng-src="{{uploadme.src}}" style="width: 200px;height: 200px">
+          <div id="container">
+
+            <img id="image">
+
+            <div id="cont"><img id="inner" /></div>
+
+          </div>
 
         </div>
 
-        <!-- <div>
-        
-          <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="3">
-
-          </div>
-        
-          <input type="file" fileread="imageSrc" name="file" id="file" class="inputfile" />
-
-          <img style="margin-left:-50px;width:200px;height:200px" ng-src="{{imageSrc}}" id="profileImage" />
-
-          <div><br></div>
-
-          <button class="btn btn-primary" style="margin-left:-50px" onclick="mylabel.click()">Choose Image</button>
-
-          <label id="mylabel" for="file"></label>
-
-          <div><br><br><br></div>
-
-        </div> -->
+        <input type="hidden" name="x1" value="" />
+        <input type="hidden" name="y1" value="" />
+        <input type="hidden" name="x2" value="" />
+        <input type="hidden" name="y2" value="" />
+        <input type="hidden" name="w" value="" />
+        <input type="hidden" name="h" value="" />
 
         <input ng-if="myform.$invalid" type="button" name="submit" style="margin-left: -50px" class="btn btn-primary" value="Next" />
         
@@ -418,3 +199,157 @@
   </body>
 
 </html>
+
+<style type="text/css">
+  #cont {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    float: right;
+    position: relative,
+  }
+  #image {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  #container {
+    width: 400px;
+    height: 300px;
+  }
+</style>
+
+
+<!-- <script type="text/javascript" src="js/tapmodo-Jcrop-1902fbc/js/jquery.Jcrop.js"></script> -->
+
+
+
+<!-- <link rel="stylesheet" type="text/css" href="js/node_modules/croppie/croppie.css">
+<script type="text/javascript" src="js/node_modules/croppie/croppie.js"></script> -->
+
+
+
+<!-- <script src="js/node_modules/cropperjs/dist/cropper.js"></script>
+<link href="js/node_modules/cropperjs/dist/cropper.css" rel="stylesheet">
+<script src="js/node_modules/jquery-cropper/dist/jquery-cropper.js"></script> -->
+
+
+
+<link rel="stylesheet" type="text/css" href="js/jquery.imgareaselect-0.9.10/css/imgareaselect-default.css" />
+<script type="text/javascript" src="js/jquery.imgareaselect-0.9.10/scripts/jquery.imgareaselect.pack.js"></script>
+
+
+<script type="text/javascript">
+  function readURL(input) {
+    var file = input.files[0];
+
+    if (input.files && file) {
+          var reader = new FileReader();
+
+          reader.onload = function (e) {
+              $('#image').attr('src', e.target.result);
+              $('#inner').attr('src', e.target.result)
+          };
+
+          reader.readAsDataURL(file);
+      }
+  }
+
+
+// // jquery cropper
+
+// var cropper = 0;
+// var newWidth = 0;
+// var newHeight = 0;
+// var newX = 0;
+// var newY = 0;
+// var $image = $('#image');
+// var croppedCanvas = 0;
+
+// document.getElementById('image').onload = function() {
+//   console.log(1);
+//   $image.cropper({
+//     preview: '.preview',
+//     // aspectRatio: 16 / 9,
+//     crop: function(event) {
+//       // console.log(event.detail.x);
+//       // console.log(event.detail.y);
+//       // console.log(event.detail.width);
+//       // console.log(event.detail.height);
+//       // console.log(event.detail.rotate);
+//       // console.log(event.detail.scaleX);
+//       // console.log(event.detail.scaleY);
+//       // var cropper = $image.data('cropper');
+//       // console.log(cropper.originalUrl == cropper.url);
+//       // console.log();
+//       //cropper = $image.data('cropper');
+//       // console.log(cropper);
+//       newX = event.detail.x;
+//       newY = event.detail.y;
+//       newWidth = event.detail.width;
+//       newHeight = event.detail.height + 4;
+//       // croppedCanvas = cropper.getCroppedCanvas();
+//       // console.log(croppedCanvas);
+//       $('.preview').css({ 
+//         // setting width to $image.width() sets the 
+//         // starting size to the same as orig image
+//         width:    '100%',   
+//         overflow: 'hidden',
+//         height:    newHeight,
+//         maxWidth:  newWidth,
+//         maxHeight: newHeight
+//       });
+
+//       console.log($('.preview'));
+
+//     }
+//   });
+
+//   cropper = $image.data('cropper');
+//   // cropper.crop();
+//   // console.log(cropper);
+//   // Get the Cropper.js instance after initialized
+
+// }
+
+
+
+// imgAreaSelect
+
+document.getElementById('image').onload = function() {
+  console.log(1);
+    $('#image').imgAreaSelect({
+      aspectRatio: "1:1",
+      handles: true,
+      //show: true,
+      onSelectChange: changePreview,
+      onSelectEnd: setCoords
+    });
+  }
+
+  function setCoords(img, selection) {
+    $('input[name="x1"]').val(selection.x1);
+    $('input[name="y1"]').val(selection.y1);
+    $('input[name="x2"]').val(selection.x2);
+    $('input[name="y2"]').val(selection.y2);
+    $('input[name=w]').val(selection.width);
+    $('input[name=h]').val(selection.height);
+
+    console.log(selection);
+  }
+
+  function changePreview(img, selection) {
+    if (!selection.width || !selection.height) {
+      return;
+    }
+
+    var scaleX = 150 / (selection.width || 1);
+    var scaleY = 150 / (selection.height || 1);
+
+    $('#inner').css({
+      width: Math.round(scaleX * $('#image').width()) + 'px',
+      height: Math.round(scaleY * $('#image').height()) + 'px',
+      marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',
+      marginTop: '-' + Math.round(scaleY * selection.y1) + 'px'
+    });
+  }
+</script>

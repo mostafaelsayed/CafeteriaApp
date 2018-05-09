@@ -32,6 +32,7 @@ edit_userApp.controller('editUser', ['$scope', '$http', function($scope, $http) 
       $scope.userData.email = response.data.Email;
       $scope.userData.phoneNumber = response.data.PhoneNumber;
       $scope.userData.imageUrl = response.data.Image;
+      console.log($scope.userData.imageUrl);
       $scope.userData.id = response.data.Id;
       $scope.userData.roleId = response.data.RoleId;
 
@@ -70,7 +71,7 @@ edit_userApp.controller('editUser', ['$scope', '$http', function($scope, $http) 
 
   });
 
-  $scope.femaleInput.on('click',function() {
+  $scope.femaleInput.on('click', function() {
 
     if ($scope.selectedGender == 1) {
       $scope.maleInput.trigger('click');
@@ -116,7 +117,7 @@ edit_userApp.controller('editUser', ['$scope', '$http', function($scope, $http) 
       }
 
       else {
-        x = $scope.userData.imageUrl;
+        x = '';
       }
 
       var userData = {
@@ -132,6 +133,7 @@ edit_userApp.controller('editUser', ['$scope', '$http', function($scope, $http) 
 
       $http.put('../../../CafeteriaApp.Backend/Requests/User.php', userData)
       .then(function(response) {
+        //window.history.back();
         console.log(response);
       });
 

@@ -1,64 +1,42 @@
-var phone_numberApp = angular.module('phone_number',[]);
+var phone_numberApp = angular.module('phone_number', []);
 
-phone_numberApp.directive('checkPhoneNumber',function() {
+phone_numberApp.directive('checkPhoneNumber', function() {
 
-  function checkType(val,regExp) {
-    if (regExp.test(val) && !isEmpty(val)) {
+  function checkType(val, regExp) {
+    if ( regExp.test(val) ) {
       return true;
     }
     else {
       return false;
     }
-  };
-
-  function isEmpty(val) {
-    if (val == "") {
-      return true;
-    }
-    else {
-      return false;
-    }
-  };
+  }
 
   return {
     restrict: 'A',
     require: 'ngModel',
-    link: function(scope,elem,attr,ctrl) {
-      var regExp = /^\d{0,13}$/;
+    link: function(scope, elem, attr, ctrl) {
+      var regExp = /^01\d{9}$/;
+      
       ctrl.$parsers.unshift(function(val) {
-        if (checkType(val,regExp)) {
-          ctrl.$setValidity('checkPhoneNumber',true);
-          ctrl.$setValidity('numberEmpty',true);
+        if (checkType(val, regExp) || val == undefined) {
+          ctrl.$setValidity('checkPhoneNumber', true);
+          
           return val;
         }
         else {
-          if (isEmpty(val)) {
-            ctrl.$setValidity('numberEmpty',false);
-            ctrl.$setValidity('checkPhoneNumber',true);
-            return undefined;
-          }
-          else {
-            ctrl.$setValidity('checkPhoneNumber',false);
-            ctrl.$setValidity('numberEmpty',true);
-            return undefined;
-          }
+          ctrl.$setValidity('checkPhoneNumber', false);
+
+          return undefined;
         }
       });
       ctrl.$formatters.unshift(function(val) {
-        if (checkType(val,regExp)) {
-          ctrl.$setValidity('numberEmpty',true);
-          ctrl.$setValidity('checkPhoneNumber',true);
+        if (checkType(val, regExp) || val == undefined) {
+          ctrl.$setValidity('checkPhoneNumber', true);
         }
         else {
-          if (!isEmpty(val)) {
-            ctrl.$setValidity('checkPhoneNumber',false);
-            ctrl.$setValidity('numberEmpty',true);
-          }
-          else {
-            ctrl.$setValidity('numberEmpty',false);
-            ctrl.$setValidity('checkPhoneNumber',true);
-          }
+            ctrl.$setValidity('checkPhoneNumber', false);
         }
+
         return val;
       });
     }

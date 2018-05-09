@@ -25,7 +25,7 @@ add_menuitemApp.controller('addMenuItem', ['$scope', '$http', function($scope, $
         Image: $scope.uploadme.src.split(',')[1]
       };
 
-      $http.post('../../../CafeteriaApp.Backend/Requests/MenuItem.php',data)
+      $http.post('../../../CafeteriaApp.Backend/Requests/MenuItem.php', data)
       .then(function(response) {
         window.history.back();
       });

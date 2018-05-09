@@ -67,10 +67,17 @@
     $stmt->bind_param("sdssii", $name, $price, $description, $Image, $visible, $id);
 
     if ($imageData != null) {
+      $sql = "update menuitem set Name = (?), Price = (?), Description = (?), Image = (?), Visible = (?) 
+      where Id = (?)";
+      $stmt = $conn->prepare($sql);
+      $stmt->bind_param("sdssii", $name, $price, $description, $Image, $visible, $id);
       $Image = editImage($imageData, $menuItem['Image'], $name);
     }
     else {
-      $Image = $menuitem['Image'];
+      $sql = "update menuitem set Name = (?), Price = (?), Description = (?), Visible = (?) 
+      where Id = (?)";
+      $stmt = $conn->prepare($sql);
+      $stmt->bind_param("sdsii", $name, $price, $description, $visible, $id);
     }
 
     if ($stmt->execute() === TRUE) {

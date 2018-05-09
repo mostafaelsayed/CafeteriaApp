@@ -47,7 +47,7 @@ edit_menuitemApp.controller('editMenuItem', ['$scope', '$http', function($scope,
       }
 
       else {
-        x = $scope.imageUrl;
+        x = '';
       }
 
       var data = {
