@@ -1,8 +1,8 @@
 <?php 
-	require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/session.php');
-	require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/connection.php');
-	require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/Customer.php');
-	require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/User.php');
+	require_once(__DIR__ . '/../CafeteriaApp.Backend/session.php');
+	require_once(__DIR__ . '/../CafeteriaApp.Backend/connection.php');
+	require(__DIR__ . '/../CafeteriaApp.Backend/Controllers/Customer.php');
+	require(__DIR__ . '/../CafeteriaApp.Backend/Controllers/User.php');
 
 	if ( isset($_SESSION['userId']) ) {
 		echo nl2br("Account\r\Activated\r\n!"); 

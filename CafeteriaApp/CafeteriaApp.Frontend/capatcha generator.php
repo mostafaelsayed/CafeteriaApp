@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    include("capatchas/simple-php-captcha.php");
+    include(__DIR__ . "/capatchas/simple-php-captcha.php");
 
     $_SESSION['captcha'] = simple_php_captcha();
 ?>

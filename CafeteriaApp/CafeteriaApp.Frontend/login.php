@@ -4,11 +4,11 @@ require __DIR__ . '/../CafeteriaApp.Backend/validation_functions.php';
 require __DIR__ . '/../CafeteriaApp.Backend/Controllers/Notification.php';
 require __DIR__ . '/../CafeteriaApp.Backend/Controllers/Order.php';
 
-if (isset($_GET['redirect_to'])) {
+if ( isset($_GET['redirect_to']) ) {
     $_POST['redirect_to'] = $_GET['redirect_to'];
 }
 
-if (isset($_POST['submit'])) {
+if ( isset($_POST['submit']) ) {
     // check if the button is been pressed
     // Process the form
     // validations
@@ -42,37 +42,37 @@ if (isset($_POST['submit'])) {
             deleteNotificationsByUserId($conn, $_SESSION['userId']);
             //record date
 
-            if (isset($_POST['remember'])) {
+            if ( isset($_POST['remember']) ) {
                 // set the cookie to a long date
                 setcookie(session_name(), session_id(), time() + 42000000, '/');
             }
 
-            if (isset($_POST['redirect_to'])) {
+            if ( isset($_POST['redirect_to']) ) {
                 // make restrictions on pages that request this page ,otherwise redirect to the same page to cancel his header
                 if (basename($_POST['redirect_to']) === 'menuitems.php') { // restrictions on redirectionsfile_exists()
-                    redirect_to(rawurldecode($_POST['redirect_to']));
+                    redirect_to( rawurldecode($_POST['redirect_to']) );
                 } else {
                     if ($_SESSION['roleId'] == 2) {
                         // customer
-                        redirect_to(rawurldecode('Public/categories.php'));
+                        redirect_to( rawurldecode('Public/categories.php') );
                     } elseif ($_SESSION['roleId'] == 1) {
                         // admin
-                        redirect_to(rawurldecode('Admin/Category/show_and_delete_categories.php'));
+                        redirect_to( rawurldecode('Admin/Category/show_and_delete_categories.php') );
                     } else {
                         // cashier
-                        redirect_to(rawurldecode('Cashier/show_and_hide_orders.php'));
+                        redirect_to( rawurldecode('Cashier/show_and_hide_orders.php') );
                     }
                 }
             } else {
                 if ($_SESSION['roleId'] == 2) {
                     // customer
-                    redirect_to(rawurldecode('Public/categories.php'));
+                    redirect_to( rawurldecode('Public/categories.php') );
                 } elseif ($_SESSION['roleId'] == 1) {
                     // admin
-                    redirect_to(rawurldecode('Admin/Category/show_and_delete_categories.php'));
+                    redirect_to( rawurldecode('Admin/Category/show_and_delete_categories.php') );
                 } else {
                     // cashier
-                    redirect_to(rawurldecode('Cashier/show_and_hide_orders.php'));
+                    redirect_to( rawurldecode('Cashier/show_and_hide_orders.php') );
                 }
             } //3ala 7asab
         } else {
@@ -84,14 +84,14 @@ if (isset($_POST['submit'])) {
     }
 }
 // if already logged in and called login page
-elseif (isset($_SESSION['userId']) && isset($_SESSION['userName']) && isset($_SESSION['roleId'])) {
+elseif ( isset($_SESSION['userId']) && isset($_SESSION['userName']) && isset($_SESSION['roleId']) ) {
     // This is probably a GET request
     if ($_SESSION['roleId'] == 1) { // admin
-        redirect_to(rawurldecode('Admin/Category/show_and_delete_categories.php')); //
+        redirect_to( rawurldecode('Admin/Category/show_and_delete_categories.php') ); //
     } else if ($_SESSION['roleId'] == 2) { // customer
-        redirect_to(rawurldecode('Public/categories.php')); //
+        redirect_to( rawurldecode('Public/categories.php') ); //
     } else { // cashier
-        redirect_to(rawurldecode('Cashier/show_and_hide_orders.php')); //
+        redirect_to( rawurldecode('Cashier/show_and_hide_orders.php') ); //
     }
 } // end: if ( isset( $_POST['submit'] ) )
 ?>

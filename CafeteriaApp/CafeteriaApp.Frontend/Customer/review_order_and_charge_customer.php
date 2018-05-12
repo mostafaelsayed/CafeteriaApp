@@ -1,10 +1,7 @@
 <?php
-
-require(__DIR__ . '/../layout.php');
-validatePageAccess([2]);
-
+  require(__DIR__ . '/../layout.php');
+  validatePageAccess([2, 3]);
 ?>
-
 
 <title>Order info</title>
 
@@ -25,13 +22,10 @@ validatePageAccess([2]);
     <thead>
 
       <tr>
-
         <th style="color: white">OrderItem Name</th>
         <th style="color: white">OrderItem Unit Price</th>
         <th style="color: white">OrderItem Quantity</th>
         <th style="color: white">OrderItem Total Price</th>
-        <!-- <th style="color: white">OrderItem Total Price</th> -->
-
       </tr>
 
     </thead>
@@ -51,16 +45,25 @@ validatePageAccess([2]);
 
   </table>
 
- <div style="color: white">SubTotal: {{ subTotal }}</div>
- <br/>
- <div style="color: white" ng-show="deliveryFee != 0">
- Delivery: {{ deliveryFee }}</div>
- <br/>
-  <div style="color: white">Tax: {{ taxFee }}</div>
-   <br/>
-  <div style="color: white">Total: {{ total }}</div>
+  <div style="color: white">SubTotal: {{ subTotal }}</div>
+
   <br/>
-  
+
+  <div style="color: white" ng-show="deliveryFee != 0">
+
+    Delivery: {{ deliveryFee }}
+
+  </div>
+
+  <br/>
+
+  <div style="color: white">Tax: {{ taxFee }}</div>
+
+  <br/>
+
+  <div style="color: white">Total: {{ total }}</div>
+
+  <br/>
   
   <div></div>
 
@@ -70,16 +73,12 @@ validatePageAccess([2]);
 
     <input type="text" style="visibility: hidden" ng-model="payerId" name="payerId">
 
-    <input type="text" style="visibility: hidden" ng-model="paymentMethodId" name="paymentMethodId">
-
-    <input type="text" style="visibility: hidden" ng-model="orderType" name="orderType">
-
     <input type="submit" class="btn btn-primary" value="Pay Now" style="margin: auto;display: block">
 
   </form>
 
 </div>
 
-<script src="../js/review_order_and_charge_customer.js"></script>
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/review_order_and_charge_customer.js"></script>
 
 <?php require(__DIR__ . '/../Public/footer.php'); ?>

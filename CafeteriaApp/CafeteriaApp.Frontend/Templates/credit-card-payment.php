@@ -1,26 +1,26 @@
 <?php require(__DIR__ . '/../layout.php'); ?>
 
-<link href="../css/braintree-form.css">
+<link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/braintree-form.css">
 
-<link href="../css/alertify.bootstrap.css" rel="stylesheet">
+<link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.bootstrap.css" rel="stylesheet">
 
-<link href="../css/alertify.core.css" rel="stylesheet">
+<link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.core.css" rel="stylesheet">
 
-<link href="../css/alertify.default.css" rel="stylesheet">
+<link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.default.css" rel="stylesheet">
 
-<script src="../js/alertify.js"></script>
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/alertify.js"></script>
 
 <script src="https://js.braintreegateway.com/web/3.31.0/js/client.min.js"></script>
 
 <script src="https://js.braintreegateway.com/web/3.31.0/js/hosted-fields.min.js"></script>
 
-<script type="text/javascript" src="../js/braintree.js"></script>
+<script type="text/javascript" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/braintree.js"></script>
 
 <div id="myform" style="display: none" class="panel panel-default bootstrap-basic" ng-controller="braintree">
   <div class="panel-heading">
     <h3 class="panel-title">Enter Card Details</h3>
   </div>
-  <form style="margin-top: 50px" class="panel-body" method="POST" action="../../CafeteriaApp.Backend/Requests/Order.php">
+  <form style="margin-top: 50px" class="panel-body" method="POST" action="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php">
     <div class="row">
       <div class="form-group col-sm-8">
         <label class="control-label">Card Number</label>

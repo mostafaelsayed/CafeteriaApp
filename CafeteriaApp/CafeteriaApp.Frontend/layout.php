@@ -1,6 +1,6 @@
 <?php 
 require_once(__DIR__ . '/../CafeteriaApp.Backend/session.php'); // must be first as it uses cookies
-require(__DIR__.'/../CafeteriaApp.Backend/functions.php');
+require(__DIR__ . '/../CafeteriaApp.Backend/functions.php');
 
 checkGetParams();
 
@@ -29,18 +29,18 @@ $selected_lang ='en';
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="icon" type="text/css" href="/CafeteriaApp/CafeteriaApp/favicon.ico">
-     <link href="../css/normalize.css" rel="stylesheet"/>
+    <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/normalize.css" rel="stylesheet"/>
     <!-- MetisMenu CSS -->
-    <link href="../css/metisMenu.min.css" rel="stylesheet"/>
+    <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/metisMenu.min.css" rel="stylesheet"/>
     <!-- Custom CSS -->
-    <link href="../css/sb-admin-2.css" rel="stylesheet"/>
+    <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/sb-admin-2.css" rel="stylesheet"/>
     <!-- Custom Fonts -->
-    <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <!-- Bootstrap Core CSS -->
     <!-- Latest compiled and minified CSS -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/bootstrap.min.css" rel="stylesheet"/>
     <!-- <link rel="stylesheet" href="../css/bootstrap-select.min.css"> -->
-    <link href="../css/layout.css" rel="stylesheet" type="text/css"/>
+    <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/layout.css" rel="stylesheet" type="text/css"/>
 
   </head>
 
@@ -69,13 +69,13 @@ $selected_lang ='en';
 
             <li>
 
-              <a href='../Public/categories.php'>Home</a>
+              <a href='/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php'>Home</a>
 
             </li>
 
             <li>
 
-              <a href="../Public/help.php">Help</a>
+              <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/help.php">Help</a>
 
             </li>
 
@@ -168,7 +168,7 @@ $selected_lang ='en';
 
                   <div id="cart_checkout">
 
-                    <a class="btn checkout" title="Check out this order" href="../Customer/checkout.php?orderId={{orderId}}">
+                    <a class="btn checkout" title="Check out this order" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/checkout.php?orderId={{orderId}}">
 
                       Checkout <span class="glyphicon glyphicon-usd"></span>
 
@@ -274,15 +274,15 @@ $selected_lang ='en';
 
                   <div class="dropdown-menu" style="left: -70px">
 
-                    <a class="dropdown_item" href="../Customer/favorite items.php"> My Favorites</a>
+                    <a class="dropdown_item" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/favorite items.php"> My Favorites</a>
 
                     <a class="dropdown_item" href="#">Change Info</a>
 
-                    <a class="dropdown_item" href="../Customer/change_password.php">Change Password</a>
+                    <a class="dropdown_item" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/change_password.php">Change Password</a>
 
                     <hr>
 
-                    <a class="dropdown_item" href="../logout.php">Log out
+                    <a class="dropdown_item" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/logout.php">Log out
 
                     </a>
 
@@ -296,7 +296,7 @@ $selected_lang ='en';
 
               <li style="margin-left: 70px;">
 
-                <a href="../login.php" class="btn btn-info" style="font-size: 2rem;padding-top: 5px;">
+                <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/login.php" class="btn btn-info" style="font-size: 2rem;padding-top: 5px;">
 
                   Login
 
@@ -318,18 +318,18 @@ $selected_lang ='en';
 
     <?php 
       if ( !isset($_SESSION['userId']) ) {
-        echo "<h1>login <a href='../login.php'>here</a> so you can order food, rate items, add comments and more ... </h1>";
+        echo "<h1>login <a href='/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/login.php'>here</a> so you can order food, rate items, add comments and more ... </h1>";
       }
     ?> 
 
-    <script src="../js/jquery-3.2.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/angular.min.js"></script>
-    <!-- <script src="../javascript/alertify.js"></script> -->
-    <script src="../js/customer_and_cashier_order.js"></script>
-    <script src="../js/metisMenu.min.js"></script>
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/jquery-3.2.1.min.js"></script>
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/bootstrap.min.js"></script>
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/angular.min.js"></script>
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/alertify.js"></script>
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/customer_and_cashier_order.js"></script>
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/metisMenu.min.js"></script>
     <!-- Custom Theme JavaScript -->
-    <script src="../js/sb-admin-2.js"></script>
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/sb-admin-2.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <!-- <script src="../js/bootstrap-select.min.js"></script> -->
     <script type="text/javascript">
@@ -372,4 +372,4 @@ $selected_lang ='en';
       }
     </script>
 
-    <script src="../js/layout.js"></script>
+    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/layout.js"></script>

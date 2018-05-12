@@ -1,7 +1,6 @@
 var imageApp = angular.module('image', []);
 
 imageApp.directive('fileDropzone', function() {
-
   return {
     restrict: 'A',
     scope: {

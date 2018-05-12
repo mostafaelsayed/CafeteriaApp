@@ -1,4 +1,3 @@
-
 // controller for order checkout
 layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$http', 'Order_Info',
   function($rootScope, $scope, $interval, $http, Order_Info) {
@@ -14,8 +13,8 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
     alertify.confirm("Are you sure you want to submit order?", function(e) {
       if (e) {
         localStorage.setItem("submit", 1);
-        $http.put('../../CafeteriaApp.Backend/Requests/Order.php?cashflag=1');
-        document.location = "../Public/categories.php";
+        $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?cashflag=1');
+        document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php";
       }
       else {
         return false;
@@ -33,7 +32,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
         localStorage.setItem("discard", 1);
         localStorage.setItem("submit", 1);
-        document.location = "../Public/categories.php";
+        document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php";
       }
     })
   };
@@ -50,7 +49,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   $scope.infoWindow = new google.maps.InfoWindow();
 
   $scope.changeLoc = function() {
-    $http.put('../../CafeteriaApp.Backend/Requests/OrderLocation.php', $scope.myPos)
+    $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderLocation.php', $scope.myPos)
     .then(function(response) {
       console.log(response);
     });
@@ -59,10 +58,10 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   $scope.changeType = function() {
     if ($scope.selectedType.id == 1) { // delivery
       document.getElementsByClassName('map-wrapper')[0].style.display = 'block';
-      $http.put('../../CafeteriaApp.Backend/Requests/Order.php?type=1').then(function(response) {
+      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?type=1').then(function(response) {
         $scope.deliveryFee = parseInt(response.data);
         $scope.total += $scope.deliveryFee;
-        $http.get('../../CafeteriaApp.Backend/Requests/OrderLocation.php?orderId=' + $scope.orderId)
+        $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderLocation.php?orderId=' + $scope.orderId)
         .then(function(response) {
           if ( (response.data != "") ) {
             $scope.myPos.lat = parseFloat(response.data.Lat);
@@ -80,7 +79,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       $scope.confirmLocation(1);
     }
     else if ($scope.selectedType.id == 0) { // take away
-      $http.put('../../CafeteriaApp.Backend/Requests/Order.php?type=0').then(function(response) {
+      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?type=0').then(function(response) {
         $scope.total -= $scope.deliveryFee;
         $scope.deliveryFee = 0;
         alertify.success('order type is now take away');
@@ -95,7 +94,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       paymentMethodId: $scope.selectedMethod.id
     };
 
-    $http.put('../../CafeteriaApp.Backend/Requests/Order.php', data).then(function(response) {
+    $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php', data).then(function(response) {
       if ($scope.selectedMethod.id == 1) { // paypal
         alertify.success('You will pay with PayPal');
       }
@@ -170,7 +169,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
             $scope.changeLoc();
           }
           else if (b == 2) {
-            $http.post('../../CafeteriaApp.Backend/Requests/OrderLocation.php', $scope.myPos).then(function(response) {
+            $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderLocation.php', $scope.myPos).then(function(response) {
               console.log(response);
             });
           }
@@ -185,7 +184,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   };
 
   $scope.getUserInfo = function() {
-    $http.get('../../CafeteriaApp.Backend/Requests/Customer.php')
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Customer.php')
     .then(function(response) {
       $scope.customerInfo = response.data;
       $scope.userId = $scope.customerInfo.UserId;
@@ -206,8 +205,9 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
   $scope.getOrderInfo = function() {
 
-    $http.get('../../CafeteriaApp.Backend/Requests/Order.php')
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php')
     .then(function(response) {
+      console.log(response);
       $scope.orderInfo = response.data;
       $scope.orderType = response.data.Type;
       var paymentMethodId = response.data.PaymentMethodId;
@@ -226,7 +226,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
       if ($scope.orderType == 1) {
         document.getElementsByClassName('map-wrapper')[0].style.display = 'block';
-        $http.get('../../CafeteriaApp.Backend/Requests/OrderLocation.php?orderId=' + $scope.orderId)
+        $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderLocation.php?orderId=' + $scope.orderId)
         .then(function(response) {
           if ( (response.data != "") ) {
             $scope.myPos.lat = parseFloat(response.data.Lat);
@@ -236,7 +236,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
           else {
             $scope.myPos.lat = parseFloat(sessionStorage.getItem("lat"));
             $scope.myPos.lng = parseFloat(sessionStorage.getItem("lng"));
-            $http.post('../../CafeteriaApp.Backend/Requests/OrderLocation.php', $scope.myPos).then(function(response) {
+            $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderLocation.php', $scope.myPos).then(function(response) {
               console.log(response);
             });
 
@@ -255,7 +255,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       $scope.total = parseFloat($scope.orderInfo.Total);
       $scope.subTotal = $scope.total - $scope.deliveryFee - $scope.taxFee;
 
-      $http.get('../../CafeteriaApp.Backend/Requests/Fee.php')
+      $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Fee.php')
       .then(function(response) {
         
       })

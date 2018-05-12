@@ -1,5 +1,5 @@
 <?php 
-  require_once(__DIR__.'/../session.php'); // must be first as it uses cookies
+  require_once(__DIR__ . '/../session.php'); // must be first as it uses cookies
 
   function getCurrentCustomerinfoByUserId($conn) {
     $sql = "select * from customer inner join user on customer.UserId = user.Id where customer.UserId = " . $_SESSION['userId'] . " LIMIT 1";
@@ -8,6 +8,7 @@
     if ($result) {
       $customer = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
+
       return $customer;
     }
     else {
@@ -22,6 +23,7 @@
     if ($result) {
       $customer = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
+
       return $customer;
     }
     else {
@@ -29,13 +31,14 @@
     }
   }
 
-  function addCustomer($conn, $cred, $dob, $userId, $genderId) {
-    $sql = "insert into customer (Credit, DateOfBirth, UserId, GenderId) values (?, ?, ?, ?)";
+  function addCustomer($conn, $cred, $userId) {
+    $sql = "insert into customer (Credit, UserId) values (?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("dsii", $cred, $dob, $userId, $genderId);
+    $stmt->bind_param("di", $cred, $userId);
 
     if ($stmt->execute() === TRUE) {
       $customer_id = mysqli_insert_id($conn);
+
       return $customer_id;
     }
     else {
@@ -43,10 +46,12 @@
     }
   }
 
-  function editCustomer($conn, $cred, $genderId, $dob, $userId) {
-    $sql = "update `customer` set `Credit` = (?) , GenderId = (?) , DateOfBirth = (?) where UserId = (?)";
+  function editCustomer($conn, $cred, $userId) {
+    $sql = "update `customer` set `Credit` = (?) where UserId = (?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("disi", $cred, $genderId, $dob, $userId);
+    $stmt->bind_param("di", $cred, $userId);
+
+    echo $cred;
     
     if ($stmt->execute() === TRUE) {
       return "Customer updated successfully";

@@ -13,10 +13,8 @@ edit_menuitemApp.controller('editMenuItem', ['$scope', '$http', function($scope,
   $scope.arr = [ {id: 1,name: "Visible"} , {id: 0,name: "Invisible"} ];
 
   $scope.getMenuItem = function() {
-
-    $http.get('../../../CafeteriaApp.Backend/Requests/MenuItem.php?id=' + $scope.menuItemId)
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/MenuItem.php?id=' + $scope.menuItemId)
     .then(function(response) {
-
       $scope.name = response.data.Name;
       $scope.price = response.data.Price;
       $scope.description = response.data.Description;
@@ -25,27 +23,21 @@ edit_menuitemApp.controller('editMenuItem', ['$scope', '$http', function($scope,
       if (response.data.Visible == 1) {
         $scope.selectedElement = $scope.arr[0];
       }
-
       else {
         $scope.selectedElement = $scope.arr[1];
       }
-
     });
-
   };
 
   $scope.getMenuItem();
 
   $scope.editMenuItem = function() {
-
     if ($scope.myform.$valid) {
-
       var x = "";
 
       if ($scope.uploadme.src != '') {
         x = $scope.uploadme.src.split(',')[1];
       }
-
       else {
         x = '';
       }
@@ -59,22 +51,17 @@ edit_menuitemApp.controller('editMenuItem', ['$scope', '$http', function($scope,
         Visible: $scope.selectedElement.id
       };
 
-      $http.put('../../../CafeteriaApp.Backend/Requests/MenuItem.php',data)
+      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/MenuItem.php',data)
       .then(function(response) {
         window.history.back();
       });
-
     }
-
   };
 
   $scope.updateOpenOrders = function() {
-
-    $http.get('../../../CafeteriaApp.Backend/Requests/UpdateOpenOrders.php')
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/UpdateOpenOrders.php')
     .then(function(response) {
       window.history.back();
     });
-
   };
-
 }]);

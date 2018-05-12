@@ -1,28 +1,27 @@
 <?php
-	require(__DIR__.'/../layout.php');
+	require(__DIR__ . '/../layout.php');
 ?>
 
- <title>Categories</title>
+<title>Categories</title>
 
 <style type="text/css">
-.w3-animate-zoom {
+  .w3-animate-zoom {
     animation: animatezoom 0.6s
-}
+  }
 
-@keyframes animatezoom {
+  @keyframes animatezoom {
     from {
-        transform: scale(0)
+      transform: scale(0)
     }
     to {
-        transform: scale(1)
+      transform: scale(1)
     }
-}
+  }
 </style>
-
 
 <div class="container">
 
-  <h1 class="page-header" id="header" style="color: #965C2A;">Categories</h1>
+  <h1 class="page-header" id="header" style="color: #965C2A">Categories</h1>
 
   <div class="w3-animate-zoom" ng-controller="getCategories">
 
@@ -44,8 +43,6 @@
 
 </div>
 
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/show_categories.js"></script>
 
-
-<script src="../js/show_categories.js"></script>
-
-<?php require(__DIR__.'/footer.php'); ?>
+<?php require(__DIR__ . '/footer.php'); ?>

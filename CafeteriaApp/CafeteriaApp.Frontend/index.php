@@ -1,8 +1,8 @@
 <?php
     // Include FB config file && User class
-    require(__DIR__.'/../CafeteriaApp.Backend/Controllers/Notification.php'); 
-    require('fbConfig.php');
-    require('fbUser.php');
+    require(__DIR__ . '/../CafeteriaApp.Backend/Controllers/Notification.php'); 
+    require(__DIR__ . '/fbConfig.php');
+    require(__DIR__ . '/fbUser.php');
 
     if (isset($accessToken) ) {
         

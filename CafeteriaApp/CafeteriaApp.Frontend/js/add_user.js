@@ -1,72 +1,71 @@
-var add_userApp = angular.module('add_user', ['image', 'ngRoute', 'phone_number', 'price']);
+var add_userApp = angular.module('add_user', ['registerFormValidation', 'ngRoute']);
 
-add_userApp.config(['$routeProvider', function($routeProvider) {
+add_userApp.config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
+  $locationProvider.html5Mode({
+    enabled: true,
+    requireBase: false
+  });
 
   $routeProvider
   // add user
-  .when("../../CafeteriaApp.Frontend/Areas/Admin/User/Views/add_user.php/1" , {
-    templateUrl: "../../CafeteriaApp.Frontend/Templates/Views/add_admin.php",
-    controller: "addAdmin"
+  .when('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Admin/User/add_user.php/1', {
+    templateUrl: '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Templates/Views/add_admin.php',
   })
 
-  .when("../../CafeteriaApp.Frontend/Areas/Admin/User/Views/add_user.php/2", {
-    templateUrl: "../../CafeteriaApp.Frontend/Templates/Views/add_cashier.php",
-    controller: "addCashier"
+  .when('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Admin/User/add_user.php/2', {
+    templateUrl: '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Templates/Views/add_cashier.php',
   })
   
-  .when("../../CafeteriaApp.Frontend/Areas/Admin/User/Views/add_user.php/3", {
-    templateUrl: "../../CafeteriaApp.Frontend/Templates/Views/add_customer.php",
-    controller: "addCustomer"
+  .when('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Admin/User/add_user.php/3', {
+    templateUrl: '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Templates/Views/add_customer.php',
   })
-  
 }]);
 
-add_userApp.factory('addUserService',['$rootScope',function($rootScope) {
+// add_userApp.factory('addUserService', ['$rootScope', function($rootScope) {
 
-  var userServiceInstance = {};
-  userServiceInstance.userData = {};
+//   var userServiceInstance = {};
+//   userServiceInstance.userData = {};
 
-  $rootScope.$on('getUserData',function() {
-    $rootScope.$broadcast('getYourUserData');
-  });
+//   $rootScope.$on('getUserData', function() {
+//     $rootScope.$broadcast('getYourUserData');
+//   });
 
-  $rootScope.$on('hereIsMyUserData',function(event,data) {
-    userServiceInstance.userData = data;
-    $rootScope.$broadcast('userDataSent');
-  });
+//   $rootScope.$on('hereIsMyUserData', function(event, data) {
+//     userServiceInstance.userData = data;
+//     $rootScope.$broadcast('userDataSent');
+//   });
 
-  return userServiceInstance;
-  
-}]);
+//   return userServiceInstance;
+// }]);
 
 // controller for adding user
 add_userApp.controller('addUser', ['$scope', '$http', function($scope, $http) {
-
-	$scope.userName = "";
 	$scope.firstName = "";
 	$scope.lastName = "";
 	$scope.email = "";
 	$scope.phoneNumber = "";
 	$scope.password = "";
 	$scope.confirmPassword = "";
-  $scope.uploadme = {};
-  $scope.uploadme.src = '';
+  $scope.years = Array.from(Array(68), (x,i) => i + 1950);
+  $scope.months = Array.from(Array(12), (x,i) => i + 1);
+  $scope.days = Array.from(Array(31), (x,i) => i + 1);
+  $scope.selectedYear = {year: 2017};
+  $scope.selectedMonth = {month: 1};
+  $scope.selectedDay = {day: 1};
 
-	$scope.$on('getYourUserData',function() {
+  $scope.maleInput = angular.element("#maleInput");
+  $scope.femaleInput = angular.element("#femaleInput");
+  
+  $scope.maleInput.trigger('click');
 
-		var data = {
-			UserName: $scope.userName,
-			FirstName: $scope.firstName,
-			LastName: $scope.lastName,
-			Image: $scope.uploadme.src.split(',')[1],
-			Email: $scope.email,
-			Password: $scope.password,
-      ConfirmPassword: $scope.confirmPassword,
-			PhoneNumber: $scope.phoneNumber
-		};
+  $scope.dob = $scope.selectedYear.year + '-' + $scope.selectedMonth.month + '-' + $scope.selectedDay.day;
+  angular.element('#dob').val($scope.dob);
 
-		$scope.$emit('hereIsMyUserData',data);
+  angular.element('#role').val( window.location.href.substr(window.location.href.lastIndexOf('/') + 1) );
 
-	});
-	
+  // must use properities not the object to detect changes
+  $scope.$watchGroup(['selectedYear.year', 'selectedMonth.month', 'selectedDay.day'], function(newVal, oldVal) {
+    $scope.dob = $scope.selectedYear.year + '-' + $scope.selectedMonth.month + '-' + $scope.selectedDay.day;
+    angular.element('#dob').val($scope.dob);
+  }, true);
 }]);

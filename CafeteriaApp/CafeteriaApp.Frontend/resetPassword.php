@@ -1,6 +1,6 @@
 <?php 
-	require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Controllers/User.php');
-	require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/PHPMailer/PHPMailerAutoload.php');
+	require(__DIR__ . '/../CafeteriaApp.Backend/Controllers/User.php');
+	require(__DIR__ . '/Views/PHPMailer/PHPMailerAutoload.php');
 	//require_once("CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/PHPMailer/Language/phpmailer.lang-en.php");
 
 	if ( isset($_POST['submit']) ) {

@@ -7,7 +7,7 @@
 
   <title>Edit User</title>
 
-  <link href="../../css/input_file.css" rel="stylesheet">
+  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
 
 </head>
 
@@ -23,27 +23,13 @@
 
     <div class="row">
 
-      <form novalidate role="form" name="myform" class="css-form" id="centerBlock">
+      <form novalidate role="form" name="myform" class="css-form" id="centerBlock" ng-cloak>
 
         <div class="form-group" >
 
-          <label>User Name</label>
-
-          <input class="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="userData.userName" name="userName" required />
-
-          <span ng-show="myform.userName.$touched && myform.userName.$invalid" id="inputControl" ng-cloak>
-
-            User Name is Required
-
-            <br>
-
-          </span>
-
-          <br><br>
-
           <label>First Name</label>
 
-          <input class="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="userData.firstName" name="firstName" required />
+          <div><input class="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="userData.firstName" name="firstName" required /></div>
 
           <span ng-show="myform.firstName.$touched && myform.firstName.$invalid" id="inputControl" ng-cloak>
 
@@ -57,7 +43,7 @@
 
           <label>Last Name</label>
 
-          <input class="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="userData.lastName" name="lastName" required />
+          <div><input class="inputField" type="text" class="form-control" autofocus="autofocus" ng-model="userData.lastName" name="lastName" required /></div>
 
           <span ng-show="myform.lastName.$touched && myform.lastName.$invalid" id="inputControl" ng-cloak>
 
@@ -71,55 +57,67 @@
 
           <label>Email</label>
 
-          <input class="inputField" type="email" class="form-control" autofocus="autofocus" ng-model="userData.email" name="email" required />
+          <div><input class="inputField" type="email" class="form-control" autofocus="autofocus" ng-model="em" name="email" required /></div>
 
-          <span ng-show="myform.email.$touched && myform.email.$invalid" id="inputControl" ng-cloak>
+          <!-- <div class="errorMes" ng-show="(myform.email.$touched || myform.$submitted) && myform.email.$error.emailEmpty && em ==''">
 
             Email is Required
 
-            <br>
+          </div>
 
-          </span>
+          <div class="errorMes" ng-show="(myform.email.$touched || myform.$submitted) && em !='' && myform.email.$invalid">
+
+            Email is invalid
+
+          </div> -->
+
+          <!-- <div ng-bind="em"></div> -->
+
+          <!-- <div class="errorMes" ng-show="(myform.email.$touched || myform.$submitted) && myform.email.$error.emailExisted">
+
+            Email already existed
+
+          </div> -->
 
           <br><br>
 
           <label>Phone Number</label>
 
-          <input class="inputField" type="text" class="form-control" autofocus="autofocus" check-phone-number ng-model="userData.phoneNumber" name="phoneNumber" required />
+          <div><input check class="inputField" type="text" class="form-control" autofocus="autofocus" check-phone-number ng-model="userData.phoneNumber" name="phone" required /></div>
 
-          <span ng-show="myform.phoneNumber.$touched && myform.phoneNumber.$error.checkPhoneNumber" id="inputControl" ng-cloak>
+          <div class="errorMes" ng-show="(myform.phone.$touched || myform.$submitted) && myform.phone.$error.checkPhoneNumber && !myform.phone.$error.phoneEmpty">
 
-            Phone Number is invalid.it must be a number of at most 11 digits
+            Phone Number is Invalid. It must has 11 digits starting with 01
 
-            <br>
+          </div>
 
-          </span>
-
-          <span ng-show="myform.phoneNumber.$touched && myform.phoneNumber.$error.numberEmpty" id="inputControl" ng-cloak>
+          <div class="errorMes" ng-show="(myform.phone.$touched || myform.$submitted) && myform.phone.$error.phoneEmpty">
 
             Phone Number is Required
 
-            <br>
-
-          </span>
+          </div>
 
           <br><br>
 
           <div><label>Image</label></div>
 
-          <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name=" imageFileName" data-max-file-size="3">
+          <input type="file" name="image" id="file" class="inputfile" onchange="readURL(this);">
+
+          <div ng-if="userData.imageUrl != ''">
+
+            <img id="image" ng-src="{{ userData.imageUrl }}" style="width: 300px;height: 300px" />
+
+            <span>
+
+              <button class="btn btn-primary" onclick="event.preventDefault();mylabel.click()" style="position: absolute;margin-top: 150px" id="mybutton">Choose image</button>
+
+              <label id="mylabel" for="file"></label>
+
+            </span>
 
           </div>
 
-          <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile">
-
-          <div ng-if="uploadme.src != ''">
-
-            <img ng-src="{{ uploadme.src }}" style="width: 300px;height: 300px" />
-
-          </div>
-
-          <div ng-if="uploadme.src == ''">
+          <!-- <div ng-if="userData.imageUrl == ''">
 
             <img ng-src="{{ userData.imageUrl }}" style="text-align: center;width: 300px;height: 300px">&nbsp;
 
@@ -133,9 +131,54 @@
 
             <br>
 
-          </div>
+          </div> -->
 
           <br>
+
+          <div><label>Gender</label></div>
+
+          <span style="margin: auto;margin-right: 20px">
+
+            <label>Female</label><input id="femaleInput" name="gender" type="radio" ng-model="selectedGender" value="2">
+
+          </span>
+
+          <span style="margin: auto;margin-left: 20px">
+
+            <label>Male</label><input id="maleInput" name="gender" ng-model="selectedGender" type="radio" value="1">
+
+          </span>
+
+          <div><br><label>Date of birth</label></div><br>
+
+          <span style="margin: auto;margin-left: 40px">
+
+            <label>Year</label>
+
+            <select ng-options="year for year in years" ng-model="selectedYear.year"></select>
+
+          </span>
+
+          <span style="margin: auto">
+
+            <label>Month</label>
+
+            <select ng-options="month for month in months" ng-model="selectedMonth.month"></select>
+
+          </span>
+
+          <span style="margin: auto;margin-right: 40px">
+
+            <label>Day</label>
+
+            <select ng-options="day for day in days" ng-model="selectedDay.day"></select>
+
+          </span>
+
+          <input check type="hidden" id="dob" name="DOB" ng-model="dob">
+          <input type="hidden" id="role" name="roleId" ng-model="role">
+
+          <br><br>
 
           <div>
 
@@ -145,57 +188,19 @@
 
           <span style="margin: auto">
 
-            <select ng-options="role.name for role in roles" ng-model="selectedRole"></select>
+            <select ng-options="role.name for role in roles" ng-change="angular.element('#role').val(selectedRole.id)" ng-model="selectedRole"></select>
 
           </span>
 
           <div ng-show="selectedRole.name == 'Customer'">
+
+            <br><br>
 
             <div><label>Credit</label></div>
 
             <span style="margin: auto">
 
               <input type="text" ng-model="credit">
-
-            </span>
-
-            <div><label>Gender</label></div>
-
-            <span style="margin: auto;margin-right: 20px">
-
-              <label>Female</label><input id="femaleInput" type="checkbox">
-
-            </span>
-
-            <span style="margin: auto;margin-left: 20px">
-
-              <label>Male</label><input id="maleInput" type="checkbox">
-
-            </span>
-
-            <div><br><label>Date of birth</label></div><br>
-
-            <div style="float: left;margin-left: 500px">
-
-              <label>Year</label>
-
-              <select ng-options="year for year in years" ng-model="selectedYear"></select>
-
-            </div>
-
-            <span style="margin: auto">
-
-              <label>Month</label>
-
-              <select ng-options="month for month in months" ng-model="selectedMonth"></select>
-
-            </span>
-
-            <span style="float: right;margin-right: 500px">
-
-              <label>Day</label>
-
-              <select ng-options="day for day in days" ng-model="selectedDay"></select>
 
             </span>
 
@@ -219,6 +224,29 @@
 
 </div>
 
-<script src="../../js/image_module.js"></script>
-<script src="../../js/phone_number_module.js"></script>
-<script src="../../js/edit_user.js"></script>
+<style type="text/css">
+  .errorMes {
+    color: red;
+  }
+</style>
+
+<script type="text/javascript">
+  function readURL(input) {
+    var file = input.files[0];
+
+    if (input.files && file) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        $('#image').attr('src', e.target.result);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+</script>
+
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/image_module.js"></script>
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/phone_number_module.js"></script>
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/edit_user.js"></script>
+<script type="text/javascript" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/register_form_validation.js"></script>

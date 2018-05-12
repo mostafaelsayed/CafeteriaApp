@@ -2,24 +2,21 @@
 require_once __DIR__ . '/session.php';
 require_once __DIR__ . '/connection.php';
 
-function redirect_to($new_location)
-{
+function redirect_to($new_location) {
     header("Location: " . $new_location);
     exit;
 }
 
-function confirm_query($result_set)
-{
+function confirm_query($result_set) {
     if (!$result_set) {
         die('Database query failed.');
     }
 }
 
-function form_errors($errors = array())
-{
+function form_errors( $errors = array() ) {
     $output = "";
 
-    if (!empty($errors)) {
+    if ( !empty($errors) ) {
         $output .= "<div class=\"error\"> ";
         $output .= "<h5 style='color:white;'>Please fix the following errors:<h5>";
         $output .= "<ul class=\"list-error\">";
@@ -33,31 +30,29 @@ function form_errors($errors = array())
         $output .= "</ul>";
         $output .= "</div>";
     }
+
     return $output;
 }
 
 
 
-function islogged_in()
-{
-    return (isset($_SESSION['userId'])); // for normal user and fb user check
+function islogged_in() {
+    return isset($_SESSION['userId']); // for normal user and fb user check
 }
 
-function confirm_logged_in()
-{
-    if (!islogged_in()) {
+function confirm_logged_in() {
+    if ( !islogged_in() ) {
         redirect_to(__DIR__ . '/../CafeteriaApp.Frontend/login.php');
     }
 }
 
-function attempt_login($conn, $email, $password)
-{
+function attempt_login($conn, $email, $password) {
 
     $user = getUserByEmail($conn, $email);
     // echo  $user ;
     if ($user) {
         // found user, now check password
-        if (passwordCheck($password, $user["PasswordHash"])) {
+        if ( passwordCheck($password, $user["PasswordHash"]) ) {
             // password matches
             return $user;
         } else {
@@ -70,12 +65,12 @@ function attempt_login($conn, $email, $password)
     }
 }
 
-function getUserByEmail($conn, $email)
-{
-    if (!isset($email)) {
+function getUserByEmail($conn, $email) {
+    if ( !isset($email) ) {
         echo "Error: User Email is not set";
         return;
-    } else {
+    }
+    else {
         $safe_email = mysqli_real_escape_string($conn, $email);
         $query      = "SELECT * ";
         $query .= "FROM user ";
@@ -85,40 +80,42 @@ function getUserByEmail($conn, $email)
         //confirmQuery($user_set);
         // var_dump( $user_set);
         $user = mysqli_fetch_assoc($user_set);
+
         if ($user) {
             return $user;
-        } else {
+        }
+        else {
             return null;
         }
     }
 }
 
-function confirmQuery($result_set)
-{
+function confirmQuery($result_set) {
     if (!$result_set) {
         die('Database query failed.'); // not give the user who wants to login any info
     }
 }
 
-function passwordCheck($password, $existing_hash)
-{
+function passwordCheck($password, $existing_hash) {
     // existing hash contains format and salt at start
     $hash = crypt($password, $existing_hash);
+
     if ($hash === $existing_hash) {
         return true;
-    } else {
+    }
+    else {
         return false;
     }
 }
 
-function validatePageAccess($permittedLevels, $checklogging = true)
-{
+function validatePageAccess($permittedLevels, $checklogging = true) {
     // want to permit for admin to see menus in its customer view
     if ($checklogging) {
         confirm_logged_in();
     }
 
     $permitted = false;
+
     foreach ($permittedLevels as $key => $value) {
         if ($value == $_SESSION['roleId']) {
             $permitted = true;
@@ -152,18 +149,16 @@ function validatePageAccess($permittedLevels, $checklogging = true)
     // }
 }
 
-function checkGetParams()
-{
+function checkGetParams() {
     foreach ($_GET as $key => $value) {
-        if (!isset($_GET[$key]) || empty($_GET[$key])) {
+        if ( !isset($_GET[$key]) || empty($_GET[$key]) ) {
             echo "<h1 style ='color:red;' > Access denied ^_^  </h2>";
             exit();
         }
     }
 }
 
-function randomPassword()
-{
+function randomPassword() {
     $alphabet    = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
     $pass        = array(); //remember to declare $pass as an array
     $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache

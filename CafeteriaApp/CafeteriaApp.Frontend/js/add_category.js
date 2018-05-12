@@ -1,7 +1,6 @@
 var add_categoryApp = angular.module('add_category', ['image']);
 
 add_categoryApp.controller('addCategory', ['$scope', '$http', function($scope, $http) {
-
   $scope.image = null;
   $scope.imageFileName = '';
   
@@ -11,23 +10,18 @@ add_categoryApp.controller('addCategory', ['$scope', '$http', function($scope, $
   $scope.name = "";
   $scope.cafeteriaId = $.urlParam('id');
 
-  $scope.addCategory = function () {
-
+  $scope.addCategory = function() {
     if ($scope.myform.$valid) {
-
       var data = {
         Name: $scope.name,
         CafeteriaId: $scope.cafeteriaId,
         Image: $scope.uploadme.src.split(',')[1]
       };
 
-      $http.post('../../../CafeteriaApp.Backend/Requests/Category.php',data)
+      $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Category.php', data)
       .then(function(response) {
         window.history.back();
       });
-
     }
-
   };
-
 }]);

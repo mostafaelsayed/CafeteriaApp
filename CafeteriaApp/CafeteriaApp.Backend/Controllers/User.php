@@ -1,13 +1,8 @@
 <?php
   require(__DIR__ . '/../ImageHandle.php');
-  require(__DIR__ . '/../lib/vendor/autoload.php');
+  require(__DIR__ . '/../mail-sender.php');
 
-  use PHPMailer\PHPMailer\PHPMailer;
-  use PHPMailer\PHPMailer\Exception;
-
-
-function generate_salt($length)
-{
+  function generate_salt($length) {
     // Not 100% unique, not 100% random, but good enough for a salt
     // MD5 returns 32 characters
     $unique_random_string = md5(uniqid(mt_rand(), true));
@@ -17,20 +12,19 @@ function generate_salt($length)
     $modified_base64_string = str_replace('+', '.', $base64_string);
     // Truncate string to the correct length
     $salt = substr($modified_base64_string, 0, $length);
-    return $salt;
-}
 
-function password_encrypt($password)
-{
+    return $salt;
+  }
+
+  function password_encrypt($password) {
     $hash_format     = "$2y$10$"; // Tells PHP to use Blowfish with a "cost" or rounds of 10
     $salt_length     = 22; // Blowfish salts should be 22-characters or more
     $salt            = generate_salt($salt_length);
     $format_and_salt = $hash_format . $salt;
     $hash            = crypt($password, $format_and_salt);
+
     return $hash;
-}
-
-
+  }
 
   function getUsers($conn) {
     $sql = "select * from user";
@@ -39,6 +33,7 @@ function password_encrypt($password)
     if ($result) {
       $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
+
       return $users;
     }
     else {
@@ -53,6 +48,7 @@ function password_encrypt($password)
     if ($result) {
       $user = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
+
       return $user;
     }
     else {
@@ -60,97 +56,62 @@ function password_encrypt($password)
     }
   }
 
-  function addUser($conn, $firstName, $lastName, $image, $email, $phoneNumber, $password, $dateOfBirth, $gender, $roleId, $localeId = 1, $x1 = null, $y1 = null, $x2 = null, $y2 = null, $w = null, $h = null) {
+  function addUser($conn, $firstName, $lastName, $image, $email, $phoneNumber, $password, $gender, $roleId, $dateOfBirth = '1990-1-1', $localeId = 1, $x1 = null, $y1 = null, $w = null, $h = null) {
     $x = checkExistingEmail($conn, $email);
 
     if ($x) {
       return "email already existed";
     }
 
-    $sql = "insert into user (UserName, FirstName, LastName, Image, Email, PhoneNumber, PasswordHash, RoleId, LocaleId) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "insert into user (FirstName, LastName, Image, Email, PhoneNumber, PasswordHash, Gender, RoleId, DateOfBirth, LocaleId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $pass = password_encrypt($password);
-    $stmt->bind_param("sssssssii", $email, $firstName, $lastName, $Image, $email, $phoneNumber, $pass, $roleId, $localeId);
+    $stmt->bind_param("ssssssiisi", $firstName, $lastName, $Image, $email, $phoneNumber, $pass, $gender, $roleId, $dateOfBirth, $localeId);
 
-    if ( isset($image) && $image['size'] != 0) {
-      $Image = addImageFile($image, $email, $x1, $y1, $x2, $y2, $w, $h);
+    if ($image != null && $image['size'] != 0) {
+      $Image = addImageFile($image, $email, $x1, $y1, $w, $h);
     }
     
-    // if ($stmt->execute() === TRUE) {    
-    //   $user_id = mysqli_insert_id($conn);
-
-    //   // try {
-
-    //   //   $acc = hash("sha256", $user_id, false);
-    //   //   $hashKey = hash("sha256", $phoneNumber . $user_id, false);
-    //   //    //send confirm mail
-    //   //   $mail = new PHPMailer(true);                          // Passing `true` enables exceptions
-    //   //   $mail->isSMTP();                                      // Set mailer to use SMTP
-    //   //   $mail->Host = "smtp.gmail.com";                       // Specify main and backup SMTP servers
-    //   //   $mail->SMTPAuth = true;                               // Enable SMTP authentication
-    //   //   $mail->Username = 'mostafaelsayed9419@gmail.com';     // SMTP username
-    //   //   $mail->Password = 'nacxgewvqqhvydoa';                 // SMTP password
-    //   //   $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-    //   //   $mail->Port = 587;                                    // TCP port to connect to
-    //   //   $mail->setFrom('mostafaelsayed9419@gmail.com', 'Cafeteria App');
-    //   //   $mail->addAddress($email, "");
-    //   //   $mail->Subject = "Cafeteria App Info Confirm";
-    //   //   $mail->Body = "thank you for joining us";
-
-    //   //   // only on localhost
-    //   //   $mail->SMTPOptions = array(
-    //   //     'ssl' => array(
-    //   //       'verify_peer' => false,
-    //   //       'verify_peer_name' => false,
-    //   //       'allow_self_signed' => true
-    //   //     )
-    //   //   );
-        
-    //   //   $result = $mail->Send();
-    //   // }
-
-    //   // catch (phpmailerException $e) {
-    //   //   echo $e->errorMessage();
-    //   // }
-
-    //   // catch (Exception $e) {
-    //   //   echo $e->getMessage();
-    //   // }
+    if ($stmt->execute() === TRUE) {    
+      $user_id = mysqli_insert_id($conn);
+      sendMail($email, $user_id, $phoneNumber);
       
-    //   return $user_id;
-    // }
-    // else {
-    //   echo "Error: ", $conn->error;
-    //   return false;
-    // }
+      return $user_id;
+    }
+    else {
+      echo "Error: ", $conn->error;
+
+      return false;
+    }
   }
 
-  function editUser($conn, $userName, $firstName, $lastName, $email, $image, $phoneNumber, $roleId, $id) {
-    $userUserName = mysqli_fetch_assoc( $conn->query("select UserName from user where Id = " . $id) )['UserName'];
+  function editUser($conn, $firstName, $lastName, $email, $image, $phoneNumber, $roleId, $id, $gender, $dateOfBirth, $x1 = null, $y1 = null, $w = null, $h = null) {
+    $userEmail = mysqli_fetch_assoc( $conn->query("select Email from user where Id = " . $id) )['Email'];
 
-    if ( !($userUserName == $userName) && checkExistingUserName($conn, $userName, true) ) {
+    if ( !($userEmail == $email) && checkExistingEmail($conn, $email) ) {
       return;
     }
     else {
+      if ($userEmail != $email) {
+        sendMail($email, $id, $phoneNumber);
+      }
+
       $result = $conn->query("select Image from user where Id = " . $id);
       $userImage = mysqli_fetch_assoc($result)['Image'];
-      $name = $userUserName;
+      $name = $email;
       mysqli_free_result($result);
-      $sql = "update user set UserName = (?), FirstName = (?), LastName = (?), Email = (?), Image = (?), PhoneNumber = (?), RoleId = (?) where Id = (?)"; 
-      $stmt = $conn->prepare($sql);
-      $stmt->bind_param("ssssssii", $userName, $firstName, $lastName, $email, $Image, $phoneNumber, $roleId, $id);
 
       if ($image != null) {
-        $sql = "update user set UserName = (?), FirstName = (?), LastName = (?), Email = (?), Image = (?), PhoneNumber = (?), RoleId = (?) where Id = (?)"; 
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssssssii", $userName, $firstName, $lastName, $email, $Image, $phoneNumber, $roleId, $id);
-        $Image = editImage($image, $userImage, $name);
+        $Image = editBinaryImage($image, $userImage, $name, $x1, $y1, $w, $h);
       }
       else {
-        $sql = "update user set UserName = (?), FirstName = (?), LastName = (?), Email = (?), PhoneNumber = (?), RoleId = (?) where Id = (?)"; 
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssssii", $userName, $firstName, $lastName, $email, $phoneNumber, $roleId, $id);
+        $Image = mysqli_fetch_assoc( $conn->query("select Image from user where Id = " . $id) )['Image'];
+        var_dump($Image);
       }
+
+      $sql = "update user set FirstName = (?), LastName = (?), Email = (?), Image = (?), PhoneNumber = (?), RoleId = (?), Gender = (?), DateOfBirth = (?) where Id = (?)"; 
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssssiisi", $firstName, $lastName, $email, $Image, $phoneNumber, $roleId, $gender, $dateOfBirth, $id);
 
       if ($stmt->execute() === TRUE) {
         echo "User updated successfully";
@@ -186,27 +147,22 @@ function password_encrypt($password)
   //   }
   // }
 
-  function updateUserPasswordById($conn,$password,$id)
-  {
-     if (!isset($password) || !isset($id)) 
-    {
+  function updateUserPasswordById($conn, $password, $id) {
+    if ( !isset($password) || !isset($id) ) {
       //echo "User password is empty !";
       return;
     }
-    else
-    {
+    else {
       $sql = "update User set PasswordHash = (?) where Id = (?)"; 
       $stmt = $conn->prepare($sql);
-      $stmt->bind_param("si",$Password,$Id);
+      $stmt->bind_param("si", $Password, $Id);
       $Id = $id;
       $Password = $password;
-      if ($stmt->execute() === TRUE)
-      {
+      if ($stmt->execute() === TRUE) {
         return true;
       }
-      else
-      {
-        echo "Error: ".$conn->error;
+      else {
+        echo "Error: " . $conn->error;
       }
     }
   }

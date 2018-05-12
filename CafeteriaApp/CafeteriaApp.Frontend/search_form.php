@@ -1,4 +1,4 @@
-<form action="../../CafeteriaApp.Backend/Requests/search.php" method="post" style="display: inline-block;">
+<form action="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/search.php" method="post" style="display: inline-block;">
     <li class="inner" style="margin-top: 11px">
         <button type="submit">
             <i class="fa fa-search" style="font-size: 20px">

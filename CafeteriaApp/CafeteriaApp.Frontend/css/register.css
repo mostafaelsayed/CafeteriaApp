@@ -13,33 +13,3 @@ input[type=file] {
 	max-width: 10px;
 	top: 0;
 }
-
-.image-button {
-	position: relative;
-	top: 0;
-	float: left;
-	right: 200px;
-}
-
-label[for=file] {
-	position: absolute;
-	top: 0;
-	cursor: pointer;
-	padding: 10px 5px 10px 5px;
-	background-color: darkblue;
-	border: 2px solid black;
-	border-radius: 5px;
-}
-
-label[for=file]:hover {
-	background-color: mediumblue;
-}
-
-.inside-image-label {
-	font-size: 13px;
-	color: white;
-	white-space: nowrap;
-	zoom: 1.2;
-	-moz-transform: scale(1.2); /* firefox */
-	-webkit-transform: scale(1.2); /* chrome and safari */
-}

@@ -1,7 +1,7 @@
 <?php $x = rand(0, 20); $y = rand(0, 20);?>
 <div class="background" ng-controller="feedback" ng-init="result=<?= ($y + $x); ?>">
     <div id="feedbackForm">
-        <img src="../images/feedback/feed_back.jpg" style="position:absolute;left:0;top:0;width:100%;height: 100%;opacity:0.5;z-index:-1;">
+        <img src="../images/feedback/feed_back.jpg" style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;opacity: 0.5;z-index: -1">
             <form action="feedback form.php" method="post">
                 <div class="entry">
                     <label for="name">
@@ -61,5 +61,5 @@
         </img>
     </div>
 </div>
-<script src="../js/feedback.js">
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/feedback.js">
 </script>

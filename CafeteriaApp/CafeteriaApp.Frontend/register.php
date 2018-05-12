@@ -45,19 +45,19 @@
       
     </script>
 
+    <style type="text/css">
+
+      .errorMes {
+        color: red;
+      }
+
+      label {
+        font-family: 'Anton';
+      }
+      
+    </style>
+
   </head>
-
-  <style type="text/css">
-
-    .errorMes {
-      color: red;
-    }
-
-    label {
-      font-family: 'Anton';
-    }
-    
-  </style>
 
   <body style="background-image: url('');background-repeat: no-repeat;background-size: cover">
 
@@ -77,9 +77,13 @@
 
           <label>First Name</label>
 
-          <input type="text" name="firstName" ng-model="firstName" style="text-align: center" required />
+          <input type="text" ng-model="firstName" name="firstName" style="text-align: center" required />
 
-          <span class="errorMes" ng-show="myform.firstName.$touched && myform.firstName.$invalid">First Name is Required</span>
+          <div class="errorMes" ng-show="myform.firstName.$touched && myform.firstName.$invalid">
+
+            First Name is Required
+
+          </div>
 
         </div>
 
@@ -87,9 +91,13 @@
 
           <label>Last Name</label>
 
-          <input type="text" name="lastName" ng-model="lastName" style="text-align: center" required />
+          <input type="text" ng-model="lastName" name="lastName" style="text-align: center" required />
 
-          <span class="errorMes" ng-show="myform.lastName.$touched && myform.lastName.$invalid">Last Name is Required</span>
+          <div class="errorMes" ng-show="myform.lastName.$touched && myform.lastName.$invalid">
+
+            Last Name is Required
+
+          </div>
 
         </div>
 
@@ -97,10 +105,25 @@
 
           <label>E-mail</label>
 
-          <input check type="email" name="email" ng-model="email" style="text-align: center" required />
+          <input check ng-model="email" type="email" name="email" style="text-align: center" required />
 
-          <span class="errorMes" ng-show="myform.email.$touched && myform.email.$invalid && !myform.email.$error.emailExisted">Email is Required</span>
-          <span class="errorMes" ng-show="myform.email.$touched && myform.email.$error.emailExisted">Email already existed</span>
+          <div class="errorMes" ng-show="(myform.email.$touched || myform.$submitted) && myform.email.$error.emailEmpty">
+
+            Email is Required
+
+          </div>
+
+          <div class="errorMes" ng-show="(myform.email.$touched || myform.$submitted) && !myform.email.$error.emailEmpty && !myform.email.$error.emailExisted && myform.email.$invalid">
+
+            Email is invalid
+
+          </div>
+
+          <div class="errorMes" ng-show="(myform.email.$touched || myform.$submitted) && myform.email.$error.emailExisted">
+
+            Email already existed
+
+          </div>
 
         </div>
 
@@ -110,8 +133,43 @@
 
           <input check type="password" name="password" ng-model="password" style="text-align: center" required />
 
-          <span class="errorMes" ng-show="myform.password.$touched && myform.password.$invalid && !myform.password.$error.checkPassword">Password is Required</span>
-          <span class="errorMes" ng-show="myform.password.$touched && myform.password.$error.checkPassword">Password is Invalid. It must contain at least one lowercase letter, one uppercase letter and one digit</span>
+          <div class="errorMes" ng-show="(myform.password.$touched || myform.$submitted) && myform.password.$error.passEmpty">
+
+            Password is Required
+
+          </div>
+
+          <div class="errorMes" ng-show="(myform.password.$touched || myform.$submitted) && myform.password.$error.checkPassword && !myform.password.$error.passEmpty">
+
+            Password is Invalid. It must contain at least one lowercase letter, one uppercase letter and one digit
+
+          </div>
+
+        </div>
+
+        <div class="input-field col s12">
+          
+          <label>Confirm Password</label>
+
+          <input class="inputField" check type="password" class="form-control" ng-model="confirmPassword" name="confirmPassword" required />
+
+          <div class="errorMes" ng-show="(myform.confirmPassword.$touched || myform.$submitted) && myform.confirmPassword.$error.confirmPassEmpty">
+
+            Confirm Password is Required
+
+          </div>
+
+          <div class="errorMes" ng-show="(myform.confirmPassword.$touched || myform.$submitted) && !myform.confirmPassword.$error.checkConfirmPassword && !myform.confirmPassword.$error.confirmPassEmpty && password != confirmPassword">
+
+            Confirm Password is not as the password
+
+          </div>
+
+          <div class="errorMes" ng-show="(myform.confirmPassword.$touched || myform.$submitted) && myform.confirmPassword.$error.checkConfirmPassword && !myform.confirmPassword.$error.confirmPassEmpty">
+            
+            Confirm Password is Invalid. It must contain at least one lowercase letter, one uppercase letter and one digit
+
+          </div>
 
         </div>
 
@@ -119,76 +177,107 @@
 
           <label>Phone Number</label>
 
-          <input type="text" check name="phone" ng-model="phone" style="text-align: center" required />
+          <input type="text" check ng-model="phone" name="phone" style="text-align: center" required />
 
-          <span class="errorMes" ng-show="myform.phone.$touched && myform.phone.$invalid && !myform.phone.$error.checkPhoneNumber">Phone Number is Required</span>
-          <span class="errorMes" ng-show="myform.phone.$touched && myform.phone.$error.checkPhoneNumber">Phone Number is Invalid. It must has 11 digits starting with 01</span>
+          <div class="errorMes" ng-show="(myform.phone.$touched || myform.$submitted) && myform.phone.$error.checkPhoneNumber && !myform.phone.$error.phoneEmpty">
 
-        </div>
+            Phone Number is Invalid. It must has 11 digits starting with 01
 
-        <div class="input-field col s12">
+          </div>
 
-          <input check name="DOB" type="date" ng-model="DOB" class="datepicker" required />
+          <div class="errorMes" ng-show="(myform.phone.$touched || myform.$submitted) && myform.phone.$error.phoneEmpty">
 
-          <label>Date of Birth</label>
-
-          <span class="errorMes" ng-show="myform.DOB.$touched && myform.DOB.$invalid">Date of Birth is Required</span>
-
-        </div>
-
-        <div><br><br></div>
-
-        <label class="labels" style="font-size: 16px">Gender</label>
-
-        <br><br>
-
-        <input class="with-gap" name="gender" ng-model="gender" type="radio" value="0" id="male" required />
-
-        <label for="male">Male</label>
-
-        <br>
-
-        <input class="with-gap" name="gender" ng-model="gender" type="radio" value="1" id="female" required />
-
-        <label for="female" style="margin-right: -17px">Female</label>
-
-        <span class="errorMes" ng-show="myform.gender.$touched && myform.gender.$invalid">Gender is Required</span>
-
-        <br>
-
-        <div class="image-button">
-
-          <label for="file" class="inside-image-label" onclick="event.preventDefault();$('#file').trigger('click')">Choose Image</label>
-
-        </div>
-
-        <!-- let user decide whether to crop or not -->
-        <!-- <button onclick="event.preventDefault();crop();">Crop Image</button> -->
-
-        <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="3">
-
-          <input type="file" id="file" name="image" class="inputfile" onchange="readURL(this)">
-
-          <div id="container">
-
-            <img id="image">
-
-            <div id="cont"><img id="inner" /></div>
+            Phone Number is Required
 
           </div>
 
         </div>
 
+        <div class="input-field col s12">
+
+          <input check name="DOB" ng-model="DOB" type="date" class="datepicker" required />
+
+          <label>Date of Birth</label>
+
+          <div class="errorMes" ng-show="(myform.DOB.$touched || myform.$submitted) && myform.DOB.$error.birthEmpty">
+
+            Date of Birth is Required
+
+          </div>
+
+          <div class="errorMes" ng-show="(myform.DOB.$touched || myform.$submitted) && !myform.DOB.$error.birthEmpty && myform.DOB.$error.checkBirth">
+
+            Date of Birth is Invalid
+
+          </div>
+
+          <br><br>
+
+        </div>
+
+        <label class="labels" style="font-size: 16px">Gender</label>
+
+        <br><br>
+
+        <input class="with-gap" name="gender" type="radio" value="0" id="male" required />
+
+        <label for="male">Male</label>
+
+        <br>
+
+        <input class="with-gap" name="gender" type="radio" value="1" id="female" required />
+
+        <label for="female" style="margin-right: -17px">Female</label>
+
+        <div class="errorMes" ng-show="myform.gender.$touched && myform.gender.$invalid">
+
+          Gender is Required
+
+        </div>
+
+        <br><br><br>
+
+        <button class="btn btn-info" onclick="event.preventDefault();$('#file').trigger('click')">Choose Image</button> 
+
+        <br><br>
+
+        <!-- let user decide whether to crop or not -->
+        <!-- <button onclick="event.preventDefault();crop();">Crop Image</button> -->
+
+        <input type="file" id="file" name="image" class="inputfile" onchange="readURL(this)">
+
+        <div id="container">
+
+          <div id="parent">
+
+            <img style="width: 400px;height: 400px" id="image" src="" />
+
+          </div>
+
+          <br>
+
+          <div style="visibility: hidden" id="cont">
+
+            <img id="inner" />
+
+          </div>
+
+        </div>
+
+        <br>
+
         <input type="hidden" name="x1" value="" />
         <input type="hidden" name="y1" value="" />
-        <input type="hidden" name="x2" value="" />
-        <input type="hidden" name="y2" value="" />
+        <!-- <input type="hidden" name="x2" value="" />
+        <input type="hidden" name="y2" value="" /> -->
         <input type="hidden" name="w" value="" />
         <input type="hidden" name="h" value="" />
 
-        <input ng-if="myform.$invalid" type="button" name="submit" style="margin-left: -50px" class="btn btn-primary" value="Next" />
-        
-        <input ng-if="myform.$valid" type="submit" name="submit" style="margin-left: -50px" class="btn btn-primary" value="Next" />
+        <div>
+          <input ng-if="myform.$invalid" type="button" name="submit" class="btn btn-primary" style="text-align: center" value="Register" />
+          
+          <input ng-if="myform.$valid" type="submit" name="submit" style="text-align: center" class="btn btn-primary" value="Register" />
+        </div>
         
       </form>
 
@@ -201,122 +290,167 @@
 </html>
 
 <style type="text/css">
+  /* preview container */
   #cont {
     width: 150px;
     height: 150px;
     overflow: hidden;
-    float: right;
-    position: relative,
+    /*float: right;*/
+    text-align: center;
+    margin: 0 auto;
+    position: relative
   }
+
+  /* preview */
+  #inner {
+    min-height: 100%;
+    min-width: 100%
+    /*text-align: center;*/
+  }
+
+  /* original image */
   #image {
     max-width: 100%;
-    max-height: 100%;
+    max-height: 100%
   }
-  #container {
+
+  /* container for the whole */
+  /*#container {
     width: 400px;
     height: 300px;
-  }
+  }*/
 </style>
-
-
-<!-- <script type="text/javascript" src="js/tapmodo-Jcrop-1902fbc/js/jquery.Jcrop.js"></script> -->
-
-
-
-<!-- <link rel="stylesheet" type="text/css" href="js/node_modules/croppie/croppie.css">
-<script type="text/javascript" src="js/node_modules/croppie/croppie.js"></script> -->
-
-
-
-<!-- <script src="js/node_modules/cropperjs/dist/cropper.js"></script>
-<link href="js/node_modules/cropperjs/dist/cropper.css" rel="stylesheet">
-<script src="js/node_modules/jquery-cropper/dist/jquery-cropper.js"></script> -->
-
-
-
-<link rel="stylesheet" type="text/css" href="js/jquery.imgareaselect-0.9.10/css/imgareaselect-default.css" />
-<script type="text/javascript" src="js/jquery.imgareaselect-0.9.10/scripts/jquery.imgareaselect.pack.js"></script>
-
 
 <script type="text/javascript">
   function readURL(input) {
     var file = input.files[0];
+    document.getElementById('cont').style.visibility = 'visible';
 
     if (input.files && file) {
-          var reader = new FileReader();
+      var reader = new FileReader();
 
-          reader.onload = function (e) {
-              $('#image').attr('src', e.target.result);
-              $('#inner').attr('src', e.target.result)
-          };
+      reader.onload = function (e) {
+        $('#image').attr('src', e.target.result);
+        $('#inner').attr('src', e.target.result);
+      };
 
-          reader.readAsDataURL(file);
-      }
+      reader.readAsDataURL(file);
+    }
   }
-
-
-// // jquery cropper
-
-// var cropper = 0;
-// var newWidth = 0;
-// var newHeight = 0;
-// var newX = 0;
-// var newY = 0;
-// var $image = $('#image');
-// var croppedCanvas = 0;
-
-// document.getElementById('image').onload = function() {
-//   console.log(1);
-//   $image.cropper({
-//     preview: '.preview',
-//     // aspectRatio: 16 / 9,
-//     crop: function(event) {
-//       // console.log(event.detail.x);
-//       // console.log(event.detail.y);
-//       // console.log(event.detail.width);
-//       // console.log(event.detail.height);
-//       // console.log(event.detail.rotate);
-//       // console.log(event.detail.scaleX);
-//       // console.log(event.detail.scaleY);
-//       // var cropper = $image.data('cropper');
-//       // console.log(cropper.originalUrl == cropper.url);
-//       // console.log();
-//       //cropper = $image.data('cropper');
-//       // console.log(cropper);
-//       newX = event.detail.x;
-//       newY = event.detail.y;
-//       newWidth = event.detail.width;
-//       newHeight = event.detail.height + 4;
-//       // croppedCanvas = cropper.getCroppedCanvas();
-//       // console.log(croppedCanvas);
-//       $('.preview').css({ 
-//         // setting width to $image.width() sets the 
-//         // starting size to the same as orig image
-//         width:    '100%',   
-//         overflow: 'hidden',
-//         height:    newHeight,
-//         maxWidth:  newWidth,
-//         maxHeight: newHeight
-//       });
-
-//       console.log($('.preview'));
-
-//     }
-//   });
-
-//   cropper = $image.data('cropper');
-//   // cropper.crop();
-//   // console.log(cropper);
-//   // Get the Cropper.js instance after initialized
-
-// }
+</script>
 
 
 
-// imgAreaSelect
+
+<!-- jquery cropper -->
+
+<script src="js/node_modules/cropperjs/dist/cropper.js"></script>
+<link href="js/node_modules/cropperjs/dist/cropper.css" rel="stylesheet">
+<script src="js/node_modules/jquery-cropper/dist/jquery-cropper.js"></script>
+<script>
 
 document.getElementById('image').onload = function() {
-  console.log(1);
+  var $image = $('#image');
+
+  if (cropper) {
+    cropper.destroy();
+  }
+
+  $image.cropper({
+    preview: '#cont', // container of preview
+    aspectRatio: 1 / 1,
+    crop: function(event) {
+      
+      var cropper = $image.data('cropper');
+     
+      newX = event.detail.x;
+      newY = event.detail.y;
+      newWidth = event.detail.width;
+      newHeight = event.detail.height + 4;
+      
+      var scaleX = 150 / (newWidth || 1);
+      var scaleY = 150 / (newHeight || 1);
+
+      $('#inner').css({
+        width: Math.round( scaleX * $('#image').width() ) + 'px',
+        height: Math.round( scaleY * $('#image').height() ) + 'px',
+        marginLeft: '-' + Math.round(scaleX * newX) + 'px',
+        marginTop: '-' + Math.round(scaleY * newY) + 'px'
+      });
+
+      $('input[name="x1"]').val(newX);
+      $('input[name="y1"]').val(newY);
+      $('input[name=w]').val(newWidth);
+      $('input[name=h]').val(newHeight);
+    }
+  });
+
+  cropper = $image.data('cropper');
+  // Get the Cropper.js instance after initialized
+}
+
+</script>
+
+
+
+
+
+
+
+
+<!-- croppie (we will make it work later) -->
+
+<!-- <link rel="stylesheet" type="text/css" href="js/node_modules/croppie/croppie.css">
+<script type="text/javascript" src="js/node_modules/croppie/croppie.js"></script>
+
+<script>
+  document.getElementById('image').onload = function() {
+    $('#image').croppie({
+      //url: 'demo/demo-1.jpg',
+    });
+
+    $('#image').on('update.croppie', function(ev, cropData) {
+      console.log(cropData);
+    });
+  }
+
+  function setCoords(img, selection) {
+    $('input[name="x1"]').val(selection.x1);
+    $('input[name="y1"]').val(selection.y1);
+    $('input[name=w]').val(selection.width);
+    $('input[name=h]').val(selection.height);
+  }
+
+  function changePreview(img, selection) {
+    if (!selection.width || !selection.height) {
+      return;
+    }
+
+    var scaleX = 150 / (selection.width || 1);
+    var scaleY = 150 / (selection.height || 1);
+
+    $('#inner').css({
+      width: Math.round( scaleX * $('#image').width() ) + 'px',
+      height: Math.round( scaleY * $('#image').height() ) + 'px',
+      marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',
+      marginTop: '-' + Math.round(scaleY * selection.y1) + 'px'
+    });
+  }
+</script> -->
+
+
+
+
+
+
+
+<!-- imgAreaSelect -->
+
+<!-- <link rel="stylesheet" type="text/css" href="js/jquery.imgareaselect-0.9.10/css/imgareaselect-default.css" />
+<script type="text/javascript" src="js/jquery.imgareaselect-0.9.10/scripts/jquery.imgareaselect.pack.js"></script>
+
+<script>
+  document.getElementById('image').onload = function() {
     $('#image').imgAreaSelect({
       aspectRatio: "1:1",
       handles: true,
@@ -329,12 +463,9 @@ document.getElementById('image').onload = function() {
   function setCoords(img, selection) {
     $('input[name="x1"]').val(selection.x1);
     $('input[name="y1"]').val(selection.y1);
-    $('input[name="x2"]').val(selection.x2);
-    $('input[name="y2"]').val(selection.y2);
     $('input[name=w]').val(selection.width);
     $('input[name=h]').val(selection.height);
 
-    console.log(selection);
   }
 
   function changePreview(img, selection) {
@@ -346,10 +477,54 @@ document.getElementById('image').onload = function() {
     var scaleY = 150 / (selection.height || 1);
 
     $('#inner').css({
-      width: Math.round(scaleX * $('#image').width()) + 'px',
-      height: Math.round(scaleY * $('#image').height()) + 'px',
+      width: Math.round( scaleX * $('#image').width() ) + 'px',
+      height: Math.round( scaleY * $('#image').height() ) + 'px',
       marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',
       marginTop: '-' + Math.round(scaleY * selection.y1) + 'px'
     });
   }
-</script>
+</script> -->
+
+
+
+
+
+<!-- jcrop -->
+
+<!-- <script type="text/javascript" src="js/tapmodo-Jcrop-1902fbc/js/jquery.Jcrop.js"></script>
+<link rel="stylesheet" href="js/tapmodo-Jcrop-1902fbc/css/jquery.Jcrop.min.css" type="text/css" />
+
+<script>
+  document.getElementById('image').onload = function() {
+    $('#image').Jcrop({
+      aspectRatio: 1,
+      onChange: changePreview,
+      onSelect: setCoords
+    });
+  }
+
+  function setCoords(selection) {
+    $('input[name="x1"]').val(selection.x);
+    $('input[name="y1"]').val(selection.y);
+    $('input[name=w]').val(selection.w);
+    $('input[name=h]').val(selection.h);
+
+    $('#inner').trigger('click');
+  }
+
+  function changePreview(selection) {
+    if (!selection.w || !selection.h) {
+      return;
+    }
+
+    var scaleX = 150 / (selection.w || 1);
+    var scaleY = 150 / (selection.h || 1);
+
+    $('#inner').css({
+      width: Math.round( scaleX * $('#image').width() ) + 'px',
+      height: Math.round( scaleY * $('#image').height() ) + 'px',
+      marginLeft: '-' + Math.round(scaleX * selection.x) + 'px',
+      marginTop: '-' + Math.round(scaleY * selection.y) + 'px'
+    });
+  }
+</script> -->

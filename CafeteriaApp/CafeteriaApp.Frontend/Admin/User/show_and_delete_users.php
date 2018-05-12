@@ -1,11 +1,10 @@
 <?php
-  require(__DIR__.'/../layout.php');
-  require(__DIR__.'/../modal_includes.php');
-
+  require(__DIR__ . '/../layout.php');
+  require(__DIR__ . '/../modal_includes.php');
 ?>
 
 <head>
-<title>Users</title>
+  <title>Users</title>
 </head>
 
 <div class="row">
@@ -18,7 +17,7 @@
 
   <div ng-controller="showAndDeleteUsers">
 
-    <div style="margin:auto">
+    <div style="margin: auto">
 
       <h3>Manage Your Users</h3>
 
@@ -28,13 +27,11 @@
 
       </div>
 
-      <table width="50%" class="table" style="border-collapse:collapse" border="0" cellspacing="0" cellpadding="0">
+      <table width="50%" class="table" style="border-collapse: collapse" border="0" cellspacing="0" cellpadding="0">
 
         <thead>
 
           <tr>
-
-            <th id="alignText">User Name</th>
 
             <th id="alignText">Email</th>
 
@@ -48,15 +45,13 @@
 
           <tr>
 
-            <td id="alignText" ng-bind="u.UserName"></td>
-
             <td id="alignText" ng-bind="u.Email"></td>
 
             <td id="alignText" class="center">
 
               <a type="button" href="edit_user.php?id={{u.Id}}">Edit</a>&nbsp;&nbsp;
 
-              <a type="button" style="cursor:pointer" ng-click="deleteUser(u)">Delete</a>
+              <a type="button" style="cursor: pointer" ng-click="deleteUser(u)">Delete</a>
 
             </td>
 
@@ -72,4 +67,4 @@
 
 </div>
 
-<script src="../../js/show_and_delete_users.js"></script>
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/show_and_delete_users.js"></script>

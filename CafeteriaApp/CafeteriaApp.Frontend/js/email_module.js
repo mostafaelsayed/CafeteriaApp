@@ -11,7 +11,7 @@ emailExistedApp.directive('checkEmail', ['$http', function($http) {
             Email: val
           };
 
-          $http.post('../CafeteriaApp.Backend/Requests/User.php?flag=2', x).then(function(response) {
+          $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php?flag=2', x).then(function(response) {
             if (response.data == true) {
               ctrl.$setValidity('emailExisted', false);
 
@@ -33,7 +33,7 @@ emailExistedApp.directive('checkEmail', ['$http', function($http) {
             Email: val
           };
 
-          $http.post('../CafeteriaApp.Backend/Requests/User.php?flag=2', x).then(function(response) {
+          $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php?flag=2', x).then(function(response) {
             if (response.data == true) {
               ctrl.$setValidity('emailExisted', false);
             }

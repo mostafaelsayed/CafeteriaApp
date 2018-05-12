@@ -1,14 +1,5 @@
-
 // controller for adding customer
-add_userApp.controller('addCustomer',['$scope','addUserService','$http',function($scope,addUserService,$http) {
-
-	$scope.selectedGender = 1; 
-	$scope.years = Array.from(Array(68), (x,i) => i+1950);
-	$scope.months = Array.from(Array(12), (x,i) => i+1);
-	$scope.days = Array.from(Array(31), (x,i) => i+1);
-	$scope.selectedYear = 2017;
-	$scope.selectedMonth = 1;
-	$scope.selectedDay = 1;
+add_userApp.controller('addCustomer', ['$scope', 'addUserService', '$http', function($scope, addUserService, $http) {
 	$scope.credit = 0;
 
 	$scope.maleInput = angular.element("#maleInput");
@@ -16,36 +7,34 @@ add_userApp.controller('addCustomer',['$scope','addUserService','$http',function
 	
 	$scope.maleInput.trigger('click');
 
-	$scope.maleInput.on('click',function() {
+	$scope.maleInput.on('click', function() {
 		if ($scope.selectedGender != 1) {
 			$scope.femaleInput.trigger('click');
 			$scope.selectedGender = 1;
 		}
 	});
 
-	$scope.femaleInput.on('click',function() {
+	$scope.femaleInput.on('click', function() {
 		if ($scope.selectedGender != 2) {
 			$scope.maleInput.trigger('click');
 			$scope.selectedGender = 2;
 		}
 	});
 	
-	$scope.addCustomerUser = function () {
+	$scope.addCustomerUser = function() {
 		$scope.$emit('getUserData'); // this is a child scope so we use $emit to send this message to the root scope
 	};
 
-	$scope.$on('userDataSent' , function () {
-
+	$scope.$on('userDataSent', function() {
 		// we now extract the data provided by the service and send it
 		// along with the customer data to the database to insert the customer
 		$scope.userData = addUserService.userData;
 		$scope.userData.RoleId = 2; // customer role id
 
-		$http.post('../../../CafeteriaApp.Backend/Requests/User.php',$scope.userData)
+		$http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php', $scope.userData)
 		.then(function(response) {
-			
+			console.log(response);
 			if ($scope.myform.$valid) {
-
 				var dateOfBirth = String($scope.selectedYear) + '-' + String($scope.selectedMonth) + '-'
 				+ String($scope.selectedDay);
 
@@ -56,9 +45,10 @@ add_userApp.controller('addCustomer',['$scope','addUserService','$http',function
 					DateOfBirth: dateOfBirth
 				}
 				
-				$http.post('../../../CafeteriaApp.Backend/Requests/Customer.php',customerData)
+				$http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Customer.php', customerData)
 				.then(function(response) {
-					document.location = "../../../CafeteriaApp.Frontend/Areas/Admin/User/Views/show_and_delete_users.php";
+					console.log(response);
+					document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Admin/User/show_and_delete_users.php";
 				});
 			}
 		});

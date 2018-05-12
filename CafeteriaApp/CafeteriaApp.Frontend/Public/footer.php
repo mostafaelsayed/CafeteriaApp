@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="../css/footer.css">
+<link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/footer.css">
 
 		<!-- Advertisments -->
 		<!-- <div id="ads">
@@ -9,7 +9,7 @@
 		</div>-->
 
 		<!-- feedback form -->
-	<?php require(__DIR__.'/feedback.php'); ?>
+	<?php require(__DIR__ . '/feedback.php'); ?>
 
 		<!-- footer Links -->
 		<div class="footer"> 
@@ -17,23 +17,23 @@
 				<ul id="followUs">
 					<h4>Follow Us</h4>
 					<li>
-						<a style="color: #475993" href="#"><img class="footerImage" src="../footerIcons/facebook.png">Facebook</a>
+						<a style="color: #475993" href="#"><img class="footerImage" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/footerIcons/facebook.png">Facebook</a>
 					</li>
 
 					<li>
-						<a style="color: #76A9EA" href="#"><img class="footerImage" src="../footerIcons/twitter.png">Twitter</a>
+						<a style="color: #76A9EA" href="#"><img class="footerImage" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/footerIcons/twitter.png">Twitter</a>
 					</li>
 
 					<li>
 						<a style="color: #F34A38" href="#">
-							<img class="footerImage" src="../footerIcons/google-plus.png">
+							<img class="footerImage" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/footerIcons/google-plus.png">
 							Google+
 						</a>
 					</li>
 
 					<li>
 						<a style="color: #F61C0D" href="#">
-							<img class="footerImage" src="../footerIcons/youtube.png">
+							<img class="footerImage" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/footerIcons/youtube.png">
 							YouTube
 					</a>
 
@@ -71,14 +71,14 @@
 					</li>
 
 					<li>
-						<a href='<?=__DIR__.'/gallery.php'?>' >
+						<a href='<?=__DIR__ . '/gallery.php'?>' >
 						Our Gallery
 						</a>
 
 					</li>
 
 					<li>
-						<a href='<?=__DIR__.'/Branches.php'?>'>
+						<a href='<?=__DIR__ . '/Branches.php'?>'>
 						Our Branches
 						</a>
 					</li>

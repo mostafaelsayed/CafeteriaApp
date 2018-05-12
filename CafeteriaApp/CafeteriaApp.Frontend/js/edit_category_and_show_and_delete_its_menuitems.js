@@ -1,5 +1,6 @@
-var edit_category_and_show_and_delete_its_menuitemsApp = angular.module('edit_category_and_show_and_delete_its_menuitems'
-,['modal', 'angularModalService', 'ui.bootstrap', 'image']);
+var edit_category_and_show_and_delete_its_menuitemsApp = angular.module(
+  'edit_category_and_show_and_delete_its_menuitems'
+  , ['modal', 'angularModalService', 'ui.bootstrap', 'image']);
 
 // controller for editing a category
 edit_category_and_show_and_delete_its_menuitemsApp.controller('editCategory', ['$scope', '$http',
@@ -13,27 +14,22 @@ edit_category_and_show_and_delete_its_menuitemsApp.controller('editCategory', ['
   $scope.categoryId = $.urlParam('id');
 
   $scope.getCategory = function() {
-
-    $http.get('../../../CafeteriaApp.Backend/Requests/Category.php?id=' + $scope.categoryId)
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Category.php?id=' + $scope.categoryId)
     .then(function(response) {
       $scope.name = response.data.Name;
       $scope.imageUrl = response.data.Image;
     });
-
   };
 
   $scope.getCategory();
 
   $scope.editCategory = function() {
-
     if ($scope.myform.$valid) {
-
       var x = "";
 
       if ($scope.uploadme.src != '') {
         x = $scope.uploadme.src.split(',')[1];
       }
-
       else {
         x = '';
       }
@@ -44,63 +40,56 @@ edit_category_and_show_and_delete_its_menuitemsApp.controller('editCategory', ['
         Image: x
       };
 
-      $http.put('../../../CafeteriaApp.Backend/Requests/Category.php',data)
+      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Category.php',data)
       .then(function(response) {
         window.history.back();
       });
-
     }
-
   };
-
 }]);
 
 // controller for showing and deleting menuitems
 edit_category_and_show_and_delete_its_menuitemsApp.controller('showAndDeleteMenuItems', ['$scope', '$http', 'ModalService',
   function($scope, $http, ModalService) {
+    $scope.categoryId = $.urlParam('id');
 
-  $scope.categoryId = $.urlParam('id');
-
-  $scope.getMenuItems = function() {
-
-    $http.get('../../../CafeteriaApp.Backend/Requests/MenuItem.php?categoryId=' + $scope.categoryId)
-    .then(function (response) {
-      $scope.menuItems = response.data;
-    });
-
-  };
-
-  $scope.getMenuItems();
-
-  $scope.deleteMenuItem = function(menuItem) {
-
-    $scope.show();
-
-    $scope.delete = function() {
-      
-      $http.delete('../../../CafeteriaApp.Backend/Requests/MenuItem.php?menuItemId=' + menuItem.Id)
-      .then(function(response) {
-        $scope.menuItems.splice($scope.menuItems.indexOf(menuItem),1);
+    $scope.getMenuItems = function() {
+      $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/MenuItem.php?categoryId=' + $scope.categoryId)
+      .then(function (response) {
+        $scope.menuItems = response.data;
       });
+    };
+
+    $scope.getMenuItems();
+
+    $scope.deleteMenuItem = function(menuItem) {
+      $scope.show();
+
+      $scope.delete = function() {
+        $http.delete('../../../CafeteriaApp.Backend/Requests/MenuItem.php?menuItemId=' + menuItem.Id)
+        .then(function(response) {
+          $scope.menuItems.splice($scope.menuItems.indexOf(menuItem),1);
+        });
+
+      };
 
     };
 
-  };
+    $scope.show = function() {
+      ModalService.showModal({
+        templateUrl: '../../../CafeteriaApp.Frontend/Templates/Views/modal.html',
+        controller: "ModalController",
+        inputs: {
+          name: "menuitem"
+        }
+      }).then(function(modal) {
+        modal.element.modal();
 
-  $scope.show = function() {
-    ModalService.showModal({
-      templateUrl: '../../../CafeteriaApp.Frontend/Templates/Views/modal.html',
-      controller: "ModalController",
-      inputs: {
-        name: "menuitem"
-      }
-    }).then(function(modal) {
-      modal.element.modal();
-      modal.close.then(function(result) {
-          if (result == "Yes") {
-            $scope.delete();
-          }
+        modal.close.then(function(result) {
+            if (result == "Yes") {
+              $scope.delete();
+            }
+        });
       });
-    });
-  };
+    };
 }]);

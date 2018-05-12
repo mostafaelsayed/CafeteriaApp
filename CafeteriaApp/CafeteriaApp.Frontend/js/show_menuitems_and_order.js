@@ -1,9 +1,8 @@
 //***try use arguments instead of mentioning all items
 
 // controller for getting menuitems of a category from database
-layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$rootScope','$timeout','Order_Info'
+layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope', '$http', '$rootScope', '$timeout', 'Order_Info'
 , function($scope, $http, $rootScope, $timeout, Order_Info) {
-  
   $scope.data = Order_Info;
 
   if (localStorage.getItem("discard") == 1) {
@@ -11,11 +10,10 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$rootSco
     alertify.success('Order Discarded');
   }
 
-
   $scope.categoryId = $.urlParam('categoryId');
 
   $scope.checkUser = function() {
-    $http.get('../../CafeteriaApp.Backend/Requests/User.php?flag=1')
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php?flag=1')
     .then(function(response) {
       if (response.data == 3) { // cahsier then return to his page of orders
         $scope.roleid = true;
@@ -29,10 +27,9 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$rootSco
   $scope.checkUser();
   
   $scope.getMenuItems = function() {
-    $http.get('../../CafeteriaApp.Backend/Requests/MenuItem.php?categoryId=' + $scope.categoryId)
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/MenuItem.php?categoryId=' + $scope.categoryId)
     .then(function(response) {
       $scope.menuItems = response.data;
-      console.log($scope.menuItems);
       $scope.loadFavoriteItems();
       $scope.initializeMenuItemCommmentFlags();
       $scope.loadRatedMenuItemsForUser();
@@ -60,7 +57,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope','$http','$rootSco
   };
 
   $scope.loadFavoriteItems = function() {
-    $http.get('../../CafeteriaApp.Backend/Requests/FavoriteItem.php')
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/FavoriteItem.php')
     .then(function(response) {
       $scope.favoItems = response.data;
 

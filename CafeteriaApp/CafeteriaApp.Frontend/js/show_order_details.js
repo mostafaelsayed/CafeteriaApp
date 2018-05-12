@@ -3,17 +3,17 @@ var orderDetails = angular.module('order_details', ['customer_and_cashier_order'
 orderDetails.controller('order_details', ['$scope', '$http', '$location', function($scope, $http, $location) {
 	$scope.orderId = $location.search().id;
 
-	$http.get('../../CafeteriaApp.Backend/Requests/Order.php?orderId=' + $scope.orderId)
+	$http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?orderId=' + $scope.orderId)
 	.then(function(response) {
 		$scope.orderDetails = response.data;
 	})
 
-	$http.get('../../CafeteriaApp.Backend/Requests/OrderItem.php?orderId=' + $scope.orderId)
+	$http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderItem.php?orderId=' + $scope.orderId)
 	.then(function(response) {
 		$scope.orderItems = response.data;
 	})
 
-	$http.get('../../CafeteriaApp.Backend/Requests/OrderLocation.php?orderId=' + $scope.orderId)
+	$http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderLocation.php?orderId=' + $scope.orderId)
 	.then(function(response) {
 		console.log(response);
 		$scope.myPos = {

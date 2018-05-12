@@ -1,7 +1,8 @@
-<?php require(__DIR__.'/../CafeteriaApp.Backend/functions.php');
-
-checkGetParams();
+<?php
+  require(__DIR__ . '/../../CafeteriaApp.Backend/functions.php');
+  validatePageAccess([3]);
 ?>
+
 <!DOCTYPE html>
 
 <html>
@@ -13,20 +14,20 @@ checkGetParams();
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
       <!-- Bootstrap Core CSS -->
-      <link href="../css/bootstrap.min.css" rel="stylesheet">
+      <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/bootstrap.min.css" rel="stylesheet">
 
-      <link href="../css/form_validation.css" rel="stylesheet">
+      <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/form_validation.css" rel="stylesheet">
 
       <!-- DataTables CSS -->
-      <link href="../css/dataTables.bootstrap.css" rel="stylesheet">
+      <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/dataTables.bootstrap.css" rel="stylesheet">
       <!-- DataTables Responsive CSS -->
-      <link href="../css/dataTables.responsive.css" rel="stylesheet">
+      <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/dataTables.responsive.css" rel="stylesheet">
       <!-- Custom CSS -->
-      <link href="../css/sb-admin-2.css" rel="stylesheet">
+      <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/sb-admin-2.css" rel="stylesheet">
       <!-- Custom Fonts -->
-      <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
+      <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-      <link href="../css/admin style.css" rel="stylesheet">
+      <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/admin style.css" rel="stylesheet">
 
   </head>
 
@@ -40,9 +41,9 @@ checkGetParams();
 
           <ul class="nav navbar-nav">
 
-            <li><a style="color: white" class="navbar-brand" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Cashier/Order/Views/show_and_hide_orders.php">Manage Orders</a></li>
+            <li><a style="color: white" class="navbar-brand" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Cashier/show_and_hide_orders.php">Manage Orders</a></li>
 
-            <li><a style="color: white" class="navbar-brand" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Views/logout.php">Log out</a></li>
+            <li><a style="color: white" class="navbar-brand" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/logout.php">Log out</a></li>
 
           </ul>
 
@@ -67,14 +68,13 @@ checkGetParams();
 
 </html>
 
-<script src="../js/jquery-3.2.1.min.js"></script>
-<script src="../js/angular.min.js"></script>
-<script src="../js/angular-route.js"></script>
-<script src="../js/ui-bootstrap-2.5.0.js"></script>
-<script src="../js/ui-bootstrap-tpls-2.5.0.js"></script>
-<script src="../js/angular-modal-service.js"></script>
-<script src="../js/location_provider.js"></script>
-<script src="../js/customer_and_cashier_order.js"></script>
-<script src="../js/metisMenu.min.js"></script>
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/jquery-3.2.1.min.js"></script>
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/angular.min.js"></script>
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/angular-route.js"></script>
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/ui-bootstrap-2.5.0.js"></script>
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/ui-bootstrap-tpls-2.5.0.js"></script>
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/angular-modal-service.js"></script>
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/customer_and_cashier_order.js"></script>
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/metisMenu.min.js"></script>
 <!-- Custom Theme JavaScript -->
-<script src="../js/sb-admin-2.js"></script>
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/sb-admin-2.js"></script>

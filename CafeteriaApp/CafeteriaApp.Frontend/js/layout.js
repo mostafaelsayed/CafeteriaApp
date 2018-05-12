@@ -16,14 +16,14 @@ var layoutApp = angular.module( 'layout_app', ['customer_and_cashier_order'] );
 
 layoutApp.directive( 'selectPicker', ['$parse', selectpickerDirective] );
 
-layoutApp.controller('Language_Order', ['$rootScope', '$scope', '$http', 'Order_Info', function($rootScope, $scope, $http, Order_Info) {
-    
+layoutApp.controller('Language_Order', ['$rootScope', '$scope', '$http', 'Order_Info',
+function($rootScope, $scope, $http, Order_Info) {
     $scope.changeLanguage = function(languageId) {
         //$timeout(function () {
         //}, 1000);
         var data = {langId: languageId};
 
-        $http.post('../../CafeteriaApp.Backend/Requests/Languages.php', data)
+        $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Languages.php', data)
         .then(function(response) {
             location.reload();
             //document.location=<?php //echo "\"{$_SERVER['PHP_SELF']}\"" ;//current executing script , __FILE__ gets the current file?>

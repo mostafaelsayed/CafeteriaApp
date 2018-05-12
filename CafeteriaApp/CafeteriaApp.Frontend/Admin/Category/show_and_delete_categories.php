@@ -8,8 +8,6 @@
 
   <title>Categories</title>
 
-  
-
 </head>
 
 <div class="row">
@@ -87,4 +85,4 @@
 
 <!-- order of include not matter in case of dependencies exist -->
 
-<script src="../../js/show_and_delete_categories.js"></script>
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/show_and_delete_categories.js"></script>

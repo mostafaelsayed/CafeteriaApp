@@ -2,19 +2,15 @@
 
 <?php
 
-  require(__DIR__.'/../../CafeteriaApp.Backend/functions.php');
+  require(__DIR__ . '/layout.php');
 
-  //validatePageAccess($conn);
-
-  require(__DIR__.'/layout.php');
-
-  require(__DIR__.'/modal_includes.php');
+  require(__DIR__ . '/modal_includes.php');
 
 ?>
 
 <head>
 
-  <script src="../js/show_and_hide_orders.js"></script>
+  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/show_and_hide_orders.js"></script>
 
 </head>
 
@@ -38,13 +34,13 @@
 
         <div style="margin: auto">
 
-          <div>
+          <div style="text-align: center;">
 
-            <h3>Manage Your Orders</h3>
+            <div style="display: inline-block;"><h3>Manage Your Orders</h3></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-            <div>
+            <div style="display: inline-block;">
 
-              <form novalidate name="myForm" action="/../../CafeteriaApp.Backend/Requests/Order.php" method="post" style="float: right;padding: 0px 380px 0px 0px;margin-top: -40px">
+              <form novalidate name="myForm" action="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php" method="post">
 
                 <input type="submit" class="btn btn-primary" value="add order" />
 
@@ -53,6 +49,8 @@
             </div>
 
           </div>
+
+          <br><br>
 
           <div>
 

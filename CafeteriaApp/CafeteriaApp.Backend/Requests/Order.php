@@ -3,7 +3,7 @@
   require(__DIR__ . '/../Controllers/Fee.php');
   require(__DIR__ . '/TestRequestInput.php');
 
-  //var_dump($_SERVER);
+  // var_dump($_POST);
 
   if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ( isset($_GET['orderId']) && !isset($_GET['flag']) && testInt($_GET['orderId']) ) {
@@ -18,6 +18,9 @@
     elseif ( isset($_GET['flag']) && $_GET['flag'] == 2) {
       generateBrainTreeToken();
     }
+    elseif ($_SESSION['roleId'] == 3) {
+      checkResult( getCurrentOrder($conn) );
+    }
     else {
       checkResult( getOpenOrderByUserId($conn) );
     }
@@ -29,7 +32,7 @@
       $total = mysqli_fetch_assoc($q)['Total'];
       mybraintree::handleBrainTree($conn, $_POST['nonce'], $total);
     }
-    elseif ( isset($_POST['orderType']) && testInt($_POST['orderType']) && $_SESSION['roleId'] == 2) { // customer paypal
+    elseif ( isset($_POST['orderType']) && testInt($_POST['orderType']) && ($_SESSION['roleId'] == 2 || $_SESSION['roleId'] == 3) ) { // customer paypal
       if ( isset($_POST['selectedMethodId']) && !isset($_POST['paymentId']) && testInt($_POST['selectedMethodId']) && $_POST['selectedMethodId'] != 4) {
         processPayment($conn, $_SESSION['orderId'], $_POST['selectedMethodId'], $_POST['orderType']);
       }
@@ -39,10 +42,8 @@
     }
     else {
       if ($_SESSION['roleId'] == 3) {
-        $deliveryTimeId = getCurrentTimeId($conn);
-        $deliveryDateId = getCurrentDateId($conn);
-        $_SESSION['orderId'] = addOrder($conn, $deliveryDateId, $deliveryTimeId, 4, 1, $_SESSION['userId']); // consider it cash but when user will use paypal (either using paypal or credit), customer should use the app himself to login to paypal
-        header("Location: " . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Public/Cafeteria/Views/showing cafeterias.php");
+        $_SESSION['orderId'] = addOrder($conn, date('Y-m-d h:m'), 4, 1, $_SESSION['userId']); // consider it cash but when user will use paypal (either using paypal or credit), customer should use the app himself to login to paypal
+        header("Location: " . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php");
       }
     }
   }

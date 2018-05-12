@@ -2,25 +2,25 @@
 
 <?php
 
-	require(__DIR__.'/../../CafeteriaApp.Backend/functions.php');
+	require(__DIR__ . '/../../CafeteriaApp.Backend/functions.php');
 
 	validatePageAccess($conn);
 
-	require(__DIR__.'/layout.php');
+	require(__DIR__ . '/layout.php');
 
 ?>
 
 <head>
 
-	<link rel="stylesheet" type="text/css" href="../../../../css/map.css">
+	<link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/map.css">
 
 	<script src="https://maps.googleapis.com/maps/api/js"></script>
 
-	<script src="../../js/show_order_details.js"></script>
+	<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/show_order_details.js"></script>
 
-	<script src="../../js/modal_controller.js"></script>
+	<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/modal_controller.js"></script>
 
-	<script src="../../js/modal.js"></script>
+	<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/modal.js"></script>
 
 </head>
 

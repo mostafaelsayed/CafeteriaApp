@@ -7,7 +7,7 @@
 
   <title>Edit MenuItem</title>
 
-  <link href="../../css/input_file.css" rel="stylesheet">
+  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
 
 </head>
 
@@ -153,6 +153,6 @@
 
 </div>
 
-<script src="../../js/image_module.js"></script>
-<script src="../../js/price_module.js"></script>
-<script src="../../js/edit_menuitem.js"></script>
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/image_module.js"></script>
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/price_module.js"></script>
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/edit_menuitem.js"></script>

@@ -1,10 +1,10 @@
 <?php
 
-  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/functions.php');
+  require(__DIR__ . '/../CafeteriaApp.Backend/functions.php');
 
- // validatePageAccess($conn);
+  // validatePageAccess($conn);
 
-  require('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/layout.php');
+  require(__DIR__ . '/Customer/layout.php');
    
 ?>
 
@@ -13,29 +13,27 @@
 </head>
 
 <style type="text/css">
-  th,tr,td{
+  th, tr, td{
     text-align:center;
     color: white;
   }
-
-
-
 </style>
-<div class="container" ng-controller="branch" style="text-align:center;position:relative">
+
+<div class="container" ng-controller="branch" style="text-align: center;position: relative">
 
   <div>
 
-    <h2 style="color:orange">Our Branches</h2>
+    <h2 style="color: orange">Our Branches</h2>
 
   </div>
 
-  <table class="table" style="margin:auto" ng-show="branches.length > 0" ng-cloak>
+  <table class="table" style="margin: auto" ng-show="branches.length > 0" ng-cloak>
 
     <thead>
 
       <tr>
-       <th  >Address</th>
-        <th >Phone</th>
+       <th>Address</th>
+        <th>Phone</th>
       </tr>
 
     </thead>
@@ -47,7 +45,6 @@
         <td ng-bind="fi.Phone" id="thead"></td>
       </tr>
 
-   
     </tbody>
 
   </table>
@@ -56,28 +53,19 @@
 
 </div>
 
-<?php require_once('CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/footer.php'); ?>
+<?php require_once(__DIR__ . '/Public/footer.php'); ?>
 
 <script type="text/javascript">
-  
-
 // controller to deal with favorite items
-layoutApp.controller('branch',['$scope','$http',function($scope,$http) {
-
-  $scope.getBranches=function () {
-  
-  $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Branch.php')
-  .then(function(response) {
+layoutApp.controller('branch', ['$scope', '$http', function($scope, $http) {
+  $scope.getBranches = function() {
+    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Branch.php')
+    .then(function(response) {
       $scope.branches = response.data;
     });
-
   };
 
-
-
   $scope.getBranches();
-
 }]);
-
 
 </script>

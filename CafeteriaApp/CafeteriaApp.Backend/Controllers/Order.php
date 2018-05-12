@@ -7,6 +7,21 @@
     echo mybraintree::brainTreeConfig()->clientToken()->generate();
   }
 
+  function getCurrentOrder($conn) {
+    $sql = "select * from `order` where `Id` = " . $_SESSION['orderId'] . " LIMIT 1";
+    $result = $conn->query($sql);
+    
+    if ($result) {
+      $order = mysqli_fetch_assoc($result);
+      mysqli_free_result($result);
+
+      return $order;
+    }
+    else {
+      echo "Error retrieving order: ", $conn->error;
+    }
+  }
+
   function getOrderById($conn, $id) {
     $sql = "select `Id`, `UserId`, `Total`, `Type` from `order` where `Id` = " . $id . " LIMIT 1";
     $result = $conn->query($sql);
@@ -14,6 +29,7 @@
     if ($result) {
       $order = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
+
       return $order;
     }
     else {
@@ -168,7 +184,11 @@
     if ($stmt->execute() === TRUE) {
       //open a new order
       $deliveryTime = date("Y-m-d h:m");
-      $_SESSION['orderId'] = addOrder($conn, $deliveryTime, 1, 1, $_SESSION['userId']);
+
+      if ($_SESSION['roleId'] == 2) {
+        $_SESSION['orderId'] = addOrder($conn, $deliveryTime, 1, 1, $_SESSION['userId']);
+      }
+      
       return true;
     }
     else {
@@ -219,7 +239,7 @@
     $orderItems = [];
 
     if ($result) {
-      while($row = mysqli_fetch_assoc($result)) {
+      while ( $row = mysqli_fetch_assoc($result) ) {
         array_push($orderItems, $row);
       }
 
@@ -236,22 +256,27 @@
   function processPayment($conn, $orderId, $selectedMethodId, $orderType) {
     if ($selectedMethodId == 1) { // paypal payment
       //$paypal = new mypaypal();
+      echo "string";
       mypaypal::handlePaypal($conn, $orderId, $orderType, $selectedMethodId);
       //$payer->setPaymentMethod('paypal'); // maybe determine this from frontend too
     }
     elseif ($selectedMethodId == 2) { // braintree
+      echo "string";
       mybraintree::handleBrainTree($conn, $orderId, $orderType, $selectedMethodId);
     }
     else {
+      //echo "string";
       //$payer->setPaymentMethod('credit_card');
     }
   }
 
   function chargeCustomer($paymentId, $payerId, $orderId, $conn) {
-    if ($_SESSION['paymentMethodId'] == 1) {
+    $p = mysqli_fetch_assoc( $conn->query('select `PaymentMethodId` from `Order` where `Id` = ' . $orderId) )['PaymentMethodId'];
+
+    if ($p == 1) {
       mypaypal::chargeCustomer($paymentId, $payerId, $orderId, $conn);
     }
-    else {
-      //echo "1";
-    }
+    // else {
+    //   echo "12";
+    // }
   }

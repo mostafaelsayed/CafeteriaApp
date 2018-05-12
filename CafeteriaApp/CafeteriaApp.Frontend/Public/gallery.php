@@ -1,4 +1,4 @@
-<link href="../../css/magnific-popup.css" rel="stylesheet" type="text/css">
+<link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/magnific-popup.css" rel="stylesheet" type="text/css">
 
 <style type="text/css">
 	
@@ -104,29 +104,9 @@
 
     <div class="img__wrap">
 
-      <a href="../../images/bbig3.jpg" data-group="1" class="galleryItem test">
+      <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test">
 
-        <img src="../../images/bbig3.jpg" class="images" />
-
-        <div class="img__description_layer">
-
-          <p class="img__description">This image looks super neat.</p>
-
-        </div>
-
-      </a>
-
-    </div>
-
-  </li>
-
-  <li>
-
-    <div class="img__wrap">
-
-      <a href="../../images/bbig4.jpg" data-group="1" class="galleryItem test123">
-
-        <img src="../../images/bbig4.jpg" class="images" />
+        <img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images" />
 
         <div class="img__description_layer">
 
@@ -144,29 +124,9 @@
 
     <div class="img__wrap">
 
-      <a href="../../images/bbig3.jpg" data-group="1" class="galleryItem test">
+      <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig4.jpg" data-group="1" class="galleryItem test123">
 
-        <img src="../../images/bbig3.jpg" class="images">
-
-        <div class="img__description_layer">
-
-          <p class="img__description">This image looks super neat.</p>
-
-        </div>
-
-      </a>
-
-    </div>
-
-  </li>
-
-  <li>
-
-    <div class="img__wrap">
-
-      <a href="../../images/bbig3.jpg" data-group="1" class="galleryItem test">
-
-        <img src="../../images/bbig3.jpg" class="images" />
+        <img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig4.jpg" class="images" />
 
         <div class="img__description_layer">
 
@@ -184,29 +144,9 @@
 
     <div class="img__wrap">
 
-      <a href="../../images/bbig3.jpg" data-group="1" class="galleryItem test">
+      <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test">
 
-        <img src="../../images/bbig3.jpg" class="images"/>
-
-        <div class="img__description_layer">
-
-          <p class="img__description">This image looks super neat.</p>
-
-        </div>
-
-      </a>
-
-    </div>
-
-  </li>
-
-  <li>
-
-    <div class="img__wrap">
-
-      <a href="../../images/bbig3.jpg" data-group="1" class="galleryItem test">
-
-        <img src="../../images/bbig3.jpg" class="images">
+        <img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
 
         <div class="img__description_layer">
 
@@ -224,29 +164,9 @@
 
     <div class="img__wrap">
 
-      <a href="../../images/bbig3.jpg" data-group="1" class="galleryItem test">
+      <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test">
 
-        <img src="../../images/bbig3.jpg" class="images" />
-
-        <div class="img__description_layer">
-
-          <p class="img__description">This image looks super neat.</p>
-
-        </div>
-
-      </a>
-
-    </div>
-
-  </li>
-
-  <li>
-
-    <div class="img__wrap">
-
-      <a href="../../images/bbig3.jpg" data-group="1" class="galleryItem test">
-
-        <img src="../../images/bbig3.jpg" class="images" />
+        <img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images" />
 
         <div class="img__description_layer">
 
@@ -264,29 +184,9 @@
 
     <div class="img__wrap">
 
-      <a href="../../images/bbig3.jpg" data-group="1" class="galleryItem test">
+      <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test">
 
-        <img src="../../images/bbig3.jpg" class="images" />
-
-        <div class="img__description_layer">
-
-          <p class="img__description">This image looks super neat.</p>
-
-        </div>
-
-      </a>
-
-    </div>
-
-  </li>
-
-  <li>
-
-    <div class="img__wrap">
-
-      <a href="../../images/bbig3.jpg" data-group="1" class="galleryItem test">
-
-        <img src="../../images/bbig3.jpg" class="images" />
+        <img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images"/>
 
         <div class="img__description_layer">
 
@@ -304,29 +204,9 @@
 
     <div class="img__wrap">
 
-      <a href="../../images/bbig3.jpg" data-group="1" class="galleryItem test">
+      <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test">
 
-        <img src="../../images/bbig3.jpg" class="images" />
-
-        <div class="img__description_layer">
-
-          <p class="img__description">This image looks super neat.</p>
-
-        </div>
-
-      </a>
-
-    </div>
-
-  </li>
-
-  <li>
-
-    <div class="img__wrap">
-
-      <a href="../../images/bbig3.jpg" data-group="1" class="galleryItem test">
-
-        <img src="../../images/bbig3.jpg" class="images" />
+        <img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images">
 
         <div class="img__description_layer">
 
@@ -344,9 +224,9 @@
 
     <div class="img__wrap">
 
-      <a href="../../images/bbig3.jpg" data-group="1" class="galleryItem test">
+      <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test">
 
-        <img src="../../images/bbig3.jpg" class="images" />
+        <img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images" />
 
         <div class="img__description_layer">
 
@@ -364,9 +244,129 @@
 
     <div class="img__wrap">
 
-      <a href="../../images/bbig3.jpg" data-group="1" class="galleryItem test">
+      <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test">
 
-        <img src="../../images/bbig3.jpg" class="images" />
+        <img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images" />
+
+        <div class="img__description_layer">
+
+          <p class="img__description">This image looks super neat.</p>
+
+        </div>
+
+      </a>
+
+    </div>
+
+  </li>
+
+  <li>
+
+    <div class="img__wrap">
+
+      <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test">
+
+        <img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images" />
+
+        <div class="img__description_layer">
+
+          <p class="img__description">This image looks super neat.</p>
+
+        </div>
+
+      </a>
+
+    </div>
+
+  </li>
+
+  <li>
+
+    <div class="img__wrap">
+
+      <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test">
+
+        <img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images" />
+
+        <div class="img__description_layer">
+
+          <p class="img__description">This image looks super neat.</p>
+
+        </div>
+
+      </a>
+
+    </div>
+
+  </li>
+
+  <li>
+
+    <div class="img__wrap">
+
+      <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test">
+
+        <img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images" />
+
+        <div class="img__description_layer">
+
+          <p class="img__description">This image looks super neat.</p>
+
+        </div>
+
+      </a>
+
+    </div>
+
+  </li>
+
+  <li>
+
+    <div class="img__wrap">
+
+      <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test">
+
+        <img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images" />
+
+        <div class="img__description_layer">
+
+          <p class="img__description">This image looks super neat.</p>
+
+        </div>
+
+      </a>
+
+    </div>
+
+  </li>
+
+  <li>
+
+    <div class="img__wrap">
+
+      <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test">
+
+        <img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images" />
+
+        <div class="img__description_layer">
+
+          <p class="img__description">This image looks super neat.</p>
+
+        </div>
+
+      </a>
+
+    </div>
+
+  </li>
+
+  <li>
+
+    <div class="img__wrap">
+
+      <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" data-group="1" class="galleryItem test">
+
+        <img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/bbig3.jpg" class="images" />
 
         <div class="img__description_layer">
 
@@ -398,8 +398,8 @@
 	<li></li>
  </ol> -->
 
-<script src="../../javascript/jquery-3.2.1.min.js"></script>
-<script src="../../javascript/jquery.magnific-popup.min.js"></script>
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/jquery-3.2.1.min.js"></script>
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/javascript/jquery.magnific-popup.min.js"></script>
 <script type="text/javascript">
   var groups = {};
 

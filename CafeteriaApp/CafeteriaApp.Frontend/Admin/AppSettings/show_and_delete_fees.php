@@ -62,4 +62,4 @@
 
 </div>
 
-<script src="../../js/show_and_delete_fees.js"></script>
+<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/show_and_delete_fees.js"></script>

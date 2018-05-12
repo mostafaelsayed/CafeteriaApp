@@ -61,7 +61,8 @@ layoutApp.controller('braintree', ['$scope', '$http', function($scope, $http) {
             if (!event.fields.expirationMonth.isValid || !event.fields.expirationYear.isValid) {
               return;
             }
-          } else if (event.emittedBy === 'number') {
+          }
+          else if (event.emittedBy === 'number') {
             $('#card-number').next('span').text('');
           }
                 
@@ -70,14 +71,16 @@ layoutApp.controller('braintree', ['$scope', '$http', function($scope, $http) {
           $(field.container).parents('.form-group').removeClass('has-success');
           // Apply styling for a valid field
           $(field.container).parents('.form-group').addClass('has-success');
-        } else if (field.isPotentiallyValid) {
+        }
+        else if (field.isPotentiallyValid) {
           // Remove styling  from potentially valid fields
           $(field.container).parents('.form-group').removeClass('has-warning');
           $(field.container).parents('.form-group').removeClass('has-success');
           if (event.emittedBy === 'number') {
             $('#card-number').next('span').text('');
           }
-        } else {
+        }
+        else {
           // Add styling to invalid fields
           $(field.container).parents('.form-group').addClass('has-warning');
           // Add helper text for an invalid card number
@@ -91,7 +94,8 @@ layoutApp.controller('braintree', ['$scope', '$http', function($scope, $http) {
         // Handle a field's change, such as a change in validity or credit card type
         if (event.cards.length === 1) {
           $('#card-type').text(event.cards[0].niceType);
-        } else {
+        }
+        else {
           $('#card-type').text('Card');
         }
       });

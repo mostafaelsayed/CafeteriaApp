@@ -1,7 +1,6 @@
 var add_menuitemApp = angular.module('add_menuitem', ['image', 'price']);
 
 add_menuitemApp.controller('addMenuItem', ['$scope', '$http', function($scope, $http) {
-
   $scope.image = null;
   $scope.imageFileName = '';
   
@@ -13,10 +12,8 @@ add_menuitemApp.controller('addMenuItem', ['$scope', '$http', function($scope, $
   $scope.description = "";
   $scope.categoryId = $.urlParam('id');
 
-  $scope.addMenuItem = function () {
-
+  $scope.addMenuItem = function() {
     if ($scope.myform.$valid) {
-
       var data = {
         Name: $scope.name,
         Price: $scope.price,
@@ -25,13 +22,10 @@ add_menuitemApp.controller('addMenuItem', ['$scope', '$http', function($scope, $
         Image: $scope.uploadme.src.split(',')[1]
       };
 
-      $http.post('../../../CafeteriaApp.Backend/Requests/MenuItem.php', data)
+      $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/MenuItem.php', data)
       .then(function(response) {
         window.history.back();
       });
-    
     }
-
   };
-
 }]);

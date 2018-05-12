@@ -1,5 +1,5 @@
 <?php
-    function addImageFile($image, $name, $x1 = null, $y1 = null, $x2 = null, $y2 = null, $w = null, $h = null, $dirChanged = 0) {
+    function addImageFile($image, $name, $x1 = null, $y1 = null, $w = null, $h = null, $dirChanged = 0) {
         if ($dirChanged == 0) {
             chdir("../../.."); // inside php dir
         }
@@ -61,7 +61,19 @@
             imagedestroy($new);
         }
         
-        return $target_file;
+        return "/CafeteriaApp/" . $target_file;
+    }
+
+    function editBinaryImage($imageData, $imageAttr, $userName, $x1 = null, $y1 = null, $w = null, $h = null) {
+        $dirChanged = 0;
+
+        if ($imageAttr != null) {
+            if (deleteImageFileIfExists($imageAttr) == 1) {
+                $dirChanged = 1;
+            }
+        }
+
+        return addBinaryImageFile($imageData, $userName, $x1, $y1, $w, $h, $dirChanged);
     }
 
     function editImage($imageData, $imageAttr, $userName) {
@@ -73,7 +85,33 @@
             }
         }
 
-        return addImageFile($imageData, $userName, $dirChanged);
+        return addImageFile($imageData, $userName);
+    }
+
+    function addBinaryImageFile($image, $name, $x1 = null, $y1 = null, $w = null, $h = null, $dirChanged = 0) {
+        list($type, $image) = explode(';', $image);
+
+        if ($type != 'data:image/jpeg' && $type != 'data:image/png') {
+            return "not a valid image type";
+        }
+        else {
+            if ($type == 'data:image/jpeg') {
+                $name = $name . '.jpeg';
+            }
+            elseif ($type == 'data:image/png') {
+                $name = $name . '.png';
+            }
+        }
+
+        list(, $image) = explode(',', $image);
+
+        //var_dump($type);
+        $image = base64_decode($image);
+        $target_file = __DIR__ . "\uploads\\" . $name;
+        file_put_contents($target_file, $image);
+        $fileName = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/" . $name;
+
+        return $fileName;
     }
 
     function deleteImageFileIfExists($imageAttr) {
@@ -82,6 +120,7 @@
 
         if ( file_exists($imageFileName) ) {
             unlink($imageFileName); // remove it
+            
             return 1;
         }
         else {
