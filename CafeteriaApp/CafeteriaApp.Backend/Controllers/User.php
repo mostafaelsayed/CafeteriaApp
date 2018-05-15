@@ -67,8 +67,9 @@
     $stmt = $conn->prepare($sql);
     $pass = password_encrypt($password);
     $stmt->bind_param("ssssssiisi", $firstName, $lastName, $Image, $email, $phoneNumber, $pass, $gender, $roleId, $dateOfBirth, $localeId);
-
+    
     if ($image != null && $image['size'] != 0) {
+
       $Image = addImageFile($image, $email, $x1, $y1, $w, $h);
     }
     

@@ -34,7 +34,7 @@
 
         if ($x1 !== null) { // only one is enough as others must also be not zero (later in requests)
             // crop image
-            var_dump($x1);
+            //var_dump($x1);
             // Create our small image
             $new = imagecreatetruecolor(150, 150);
             // Create original image

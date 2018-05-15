@@ -13,3 +13,41 @@ input[type=file] {
 	max-width: 10px;
 	top: 0;
 }
+
+/* preview container */
+#cont {
+	/*width: 150px;
+	height: 150px;*/
+	overflow: hidden;
+	/*float: right;*/
+	text-align: center;
+	margin: 0 auto;
+	position: relative
+}
+
+/* preview */
+#inner {
+	/*min-height: 100%;
+	min-width: 100%*/
+	/*text-align: center;*/
+}
+
+/* original image */
+#image {
+	/* Don't set max-height and max-width */
+	/*max-width: 100%;
+	max-height: 100%;*/
+	width: 400px;
+	height: 400px;
+}
+
+#parent {
+	/*width: 300px;
+	height: 300px;*/
+}
+
+/* container for the whole */
+/*#container {
+	width: 400px;
+	height: 300px;
+}*/

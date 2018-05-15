@@ -31,7 +31,6 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
         }
 
         localStorage.setItem("discard", 1);
-        localStorage.setItem("submit", 1);
         document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php";
       }
     })
@@ -58,6 +57,11 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   $scope.changeType = function() {
     if ($scope.selectedType.id == 1) { // delivery
       document.getElementsByClassName('map-wrapper')[0].style.display = 'block';
+      document.getElementsByTagName('form')[0].classList.add('col-lg-4');
+      document.getElementsByClassName('map-wrapper')[0].classList.add('col-lg-4');
+      document.getElementsByClassName('locBut')[0].classList.add('col-lg-4');
+      document.getElementsByTagName('form')[0].style.width = '350px';
+
       $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?type=1').then(function(response) {
         $scope.deliveryFee = parseInt(response.data);
         $scope.total += $scope.deliveryFee;
@@ -79,6 +83,10 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       $scope.confirmLocation(1);
     }
     else if ($scope.selectedType.id == 0) { // take away
+      document.getElementsByTagName('form')[0].classList.remove('col-lg-4');
+      document.getElementsByClassName('map-wrapper')[0].classList.remove('col-lg-4');
+      document.getElementsByClassName('locBut')[0].classList.remove('col-lg-4');
+
       $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?type=0').then(function(response) {
         $scope.total -= $scope.deliveryFee;
         $scope.deliveryFee = 0;
@@ -86,6 +94,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       });
 
       document.getElementsByClassName('map-wrapper')[0].style.display = 'none';
+      //document.getElementsByTagName('form')[0].classList.remove('col-lg-6');
     }
   };
 
@@ -226,6 +235,11 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
       if ($scope.orderType == 1) {
         document.getElementsByClassName('map-wrapper')[0].style.display = 'block';
+        document.getElementsByTagName('form')[0].classList.add('col-lg-4');
+        document.getElementsByClassName('map-wrapper')[0].classList.add('col-lg-4');
+        document.getElementsByClassName('locBut')[0].classList.add('col-lg-4');
+        document.getElementsByTagName('form')[0].style.width = '350px';
+        
         $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderLocation.php?orderId=' + $scope.orderId)
         .then(function(response) {
           if ( (response.data != "") ) {
@@ -234,8 +248,8 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
             $scope.changeLocOnMap();
           }
           else {
-            $scope.myPos.lat = parseFloat(sessionStorage.getItem("lat"));
-            $scope.myPos.lng = parseFloat(sessionStorage.getItem("lng"));
+            $scope.myPos.lat = parseFloat( sessionStorage.getItem("lat") );
+            $scope.myPos.lng = parseFloat( sessionStorage.getItem("lng") );
             $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderLocation.php', $scope.myPos).then(function(response) {
               console.log(response);
             });
@@ -243,6 +257,11 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
             $scope.changeLocOnMap();
           }
         });
+      }
+      else { // take away
+        document.getElementsByTagName('form')[0].classList.remove('col-lg-4');
+        document.getElementsByClassName('map-wrapper')[0].classList.remove('col-lg-4');
+        document.getElementsByClassName('locBut')[0].classList.remove('col-lg-4');
       }
 
       if ($scope.orderType == 1) { // delivery

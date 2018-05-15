@@ -21,6 +21,7 @@
     <h3 class="panel-title">Enter Card Details</h3>
   </div>
   <form style="margin-top: 50px" class="panel-body" method="POST" action="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php">
+    <input type="hidden" value="<?php echo $_SESSION['csrf_token']; ?>" name="csrf_token">
     <div class="row">
       <div class="form-group col-sm-8">
         <label class="control-label">Card Number</label>

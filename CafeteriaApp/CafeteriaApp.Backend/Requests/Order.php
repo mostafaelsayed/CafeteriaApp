@@ -26,7 +26,7 @@
     }
   }
 
-  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  if ( $_SERVER['REQUEST_METHOD'] == 'POST' && checkCSRFToken($_POST['csrf_token']) ) {
     if (isset($_POST['nonce']) ) {
       $q = $conn->query("select `Total` from `order` where `Id` = {$_SESSION['orderId']}");
       $total = mysqli_fetch_assoc($q)['Total'];
@@ -37,7 +37,7 @@
         processPayment($conn, $_SESSION['orderId'], $_POST['selectedMethodId'], $_POST['orderType']);
       }
     }
-    elseif ( isset($_POST['paymentId'], $_POST['payerId']) && normalizeString($conn, $_POST['paymentId'], $_POST['payerId']) ) { // charge customer here {
+    elseif ( isset($_POST['paymentId'], $_POST['payerId']) && normalizeString($conn, $_POST['paymentId'], $_POST['payerId']) ) { // charge customer here
       chargeCustomer($_POST['paymentId'], $_POST['payerId'], $_SESSION['orderId'], $conn);
     }
     else {
@@ -48,7 +48,7 @@
     }
   }
 
-  if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+  if ( $_SERVER['REQUEST_METHOD'] == 'PUT' && checkCSRFToken($_POST['csrf_token']) ) {
     $data = json_decode( file_get_contents('php://input') );
 
     if ( isset($data->locationId) && testInt($data->locationId) ) {
@@ -82,7 +82,7 @@
     }
   }
 
-  if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+  if ( $_SERVER['REQUEST_METHOD'] == 'DELETE' && checkCSRFToken($_POST['csrf_token']) ) {
     if ($_SESSION['roleId'] == 1) {
       if ( isset($_GET['orderId']) && testInt($_GET['orderId']) ) {
         deleteOpenOrderById($conn, $_GET['orderId']);

@@ -41,7 +41,7 @@ table tr:nth-child(even) {
 
 nav {
     height: 57px;
-    background-color:brown;!important;
+    background-color: brown;!important;
     /*background-image: url('../images/customer background image4.jpg')*/
 }
 
@@ -93,6 +93,20 @@ nav {
     margin: 0 !important;
 }
 
+.leftNav li a {
+    color: white;
+}
+
+@media (min-width: 767px) {
+    /*.locBut {
+        margin-top: 20px
+    }
+
+    .currLoc {
+        display: block;
+    }*/
+}
+
 /* defined only for small size screen (when collapse) */
 @media (max-width:767px) {
     .divider {
@@ -100,6 +114,10 @@ nav {
         margin: 9px 0;
         overflow: hidden;
         background-color: black;
+    }
+
+    .leftNav li a {
+        color: black;
     }
 
     #notification {
@@ -121,7 +139,15 @@ nav {
     #contact {
         width: 25%
     }
+
+    #checkoutForm {
+        width: auto
+    }
+    /*.currLoc {
+        margin-right: -28px
+    }*/
 }
+
 
 #languages{
      display: inline-block;
@@ -155,10 +181,11 @@ nav {
     color: #5BC0DE;
     transition: 0.1s all;
 }
-#left_ul > li > a:hover {
+.leftNav > li > a:hover {
     border-radius: 5px;
-    background-color: #5BC0DE;
-    color: white;
+    /*background-color: #5BC0DE;*/
+    background-color: grey;
+    /*color: green;*/
     /*transform: rotate(-10deg) scale(1.2);*/
 }
 .navbar-default.navbar-nav > li > a:active {
@@ -358,4 +385,12 @@ a.dropdown_item:hover {
     #Eng {
         margin-left: 28px
     }
+}
+
+#myNavbar {
+    font-family: 'McLaren';
+}
+
+.leftNav {
+    font-size: 18px;
 }

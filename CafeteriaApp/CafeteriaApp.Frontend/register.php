@@ -248,15 +248,11 @@
 
         <div id="container">
 
-          <div id="parent">
+          <div id="parent"></div>
 
-            <img style="width: 400px;height: 400px" id="image" src="" />
+          <br><br><br>
 
-          </div>
-
-          <br>
-
-          <div style="visibility: hidden" id="cont">
+          <div id="cont">
 
             <img id="inner" />
 
@@ -289,62 +285,19 @@
 
 </html>
 
-<style type="text/css">
-  /* preview container */
-  #cont {
-    width: 150px;
-    height: 150px;
-    overflow: hidden;
-    /*float: right;*/
-    text-align: center;
-    margin: 0 auto;
-    position: relative
-  }
 
-  /* preview */
-  #inner {
-    min-height: 100%;
-    min-width: 100%
-    /*text-align: center;*/
-  }
+<link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/node_modules/croppie/croppie.css">
+<script type="text/javascript" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/node_modules/croppie/croppie.js"></script>
 
-  /* original image */
-  #image {
-    max-width: 100%;
-    max-height: 100%
-  }
+<script type="text/javascript" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/crop.js"></script>
 
-  /* container for the whole */
-  /*#container {
-    width: 400px;
-    height: 300px;
-  }*/
-</style>
-
-<script type="text/javascript">
-  function readURL(input) {
-    var file = input.files[0];
-    document.getElementById('cont').style.visibility = 'visible';
-
-    if (input.files && file) {
-      var reader = new FileReader();
-
-      reader.onload = function (e) {
-        $('#image').attr('src', e.target.result);
-        $('#inner').attr('src', e.target.result);
-      };
-
-      reader.readAsDataURL(file);
-    }
-  }
-</script>
 
 
 
 
 <!-- jquery cropper -->
 
-<script src="js/node_modules/cropperjs/dist/cropper.js"></script>
+<!-- <script src="js/node_modules/cropperjs/dist/cropper.js"></script>
 <link href="js/node_modules/cropperjs/dist/cropper.css" rel="stylesheet">
 <script src="js/node_modules/jquery-cropper/dist/jquery-cropper.js"></script>
 <script>
@@ -352,7 +305,7 @@
 document.getElementById('image').onload = function() {
   var $image = $('#image');
 
-  if (cropper) {
+  if (cropper != undefined) {
     cropper.destroy();
   }
 
@@ -389,58 +342,86 @@ document.getElementById('image').onload = function() {
   // Get the Cropper.js instance after initialized
 }
 
-</script>
+</script> -->
 
 
+<!-- jcrop -->
 
-
-
-
-
-
-<!-- croppie (we will make it work later) -->
-
-<!-- <link rel="stylesheet" type="text/css" href="js/node_modules/croppie/croppie.css">
-<script type="text/javascript" src="js/node_modules/croppie/croppie.js"></script>
+<!-- <script type="text/javascript" src="js/tapmodo-Jcrop-1902fbc/js/jquery.Jcrop.js"></script>
+<link rel="stylesheet" href="js/tapmodo-Jcrop-1902fbc/css/jquery.Jcrop.min.css" type="text/css" />
 
 <script>
+  document.onkeydown = function(e) {
+    console.log(1);
+    if (e.keyCode == 116) {
+      console.log(e);
+    }
+  };
+
   document.getElementById('image').onload = function() {
-    $('#image').croppie({
-      //url: 'demo/demo-1.jpg',
+    var x = $.Jcrop('#image', {
+      aspectRatio: 1,
+      //trueSize: [400, 400],
+      //trueSize: [$('#image')[0].naturalWidth, $('#image')[0].naturalHeight],
+      onChange: changePreview,
+      //onSelectEnd: setCoords,
+      //onRelease: setCoords,
+      keySupport: true
+      // boxWidth: 400,
+      // boxHeight: 400
+      //onSelect: setCoords
     });
 
-    $('#image').on('update.croppie', function(ev, cropData) {
-      console.log(cropData);
-    });
+    console.log(x);
+
+    //console.log($('#image')[0].naturalHeight);
   }
 
-  function setCoords(img, selection) {
-    $('input[name="x1"]').val(selection.x1);
-    $('input[name="y1"]').val(selection.y1);
-    $('input[name=w]').val(selection.width);
-    $('input[name=h]').val(selection.height);
+  function setCoords(selection) {
+    var ratioW = $('#image')[0].naturalWidth / 400;
+    var ratioH = $('#image')[0].naturalHeight / 400;
+
+    console.log('sdasdasdasd');
+
+    // $('input[name="x1"]').val(selection.x);
+    // $('input[name="y1"]').val(selection.y);
+    // $('input[name=w]').val(selection.w);
+    // $('input[name=h]').val(selection.h);
+
+    $('input[name="x1"]').val(selection.x * ratioW);
+    $('input[name="y1"]').val(selection.y * ratioH);
+    $('input[name=w]').val(selection.w * ratioW);
+    $('input[name=h]').val(selection.h * ratioH);
+
+    // $('input[name="x1"]').val(selection.x);
+    // $('input[name="y1"]').val(selection.y);
+    // $('input[name=w]').val(selection.w);
+    // $('input[name=h]').val(selection.h);
+
+    // $('#inner').trigger('click');
+    // $('#inner').trigger('click');
   }
 
-  function changePreview(img, selection) {
-    if (!selection.width || !selection.height) {
+  function changePreview(selection) {
+    if (!selection || !selection.w || !selection.h) {
       return;
     }
 
-    var scaleX = 150 / (selection.width || 1);
-    var scaleY = 150 / (selection.height || 1);
+    var scaleX = 150 / (selection.w || 1);
+    var scaleY = 150 / (selection.h || 1);
 
     $('#inner').css({
       width: Math.round( scaleX * $('#image').width() ) + 'px',
       height: Math.round( scaleY * $('#image').height() ) + 'px',
-      marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',
-      marginTop: '-' + Math.round(scaleY * selection.y1) + 'px'
+      marginLeft: '-' + Math.round(scaleX * selection.x) + 'px',
+      marginTop: '-' + Math.round(scaleY * selection.y) + 'px'
     });
+
+    console.log(121212);
+
+    //setCoords(selection);
   }
 </script> -->
-
-
-
-
 
 
 
@@ -461,10 +442,14 @@ document.getElementById('image').onload = function() {
   }
 
   function setCoords(img, selection) {
-    $('input[name="x1"]').val(selection.x1);
-    $('input[name="y1"]').val(selection.y1);
-    $('input[name=w]').val(selection.width);
-    $('input[name=h]').val(selection.height);
+    var ratioW = $('#image')[0].naturalWidth / 400;
+    var ratioH = $('#image')[0].naturalHeight / 400;
+    //var currentRatio = Math.min(ratioW, ratioH);
+
+    $('input[name="x1"]').val(selection.x1 * ratioW);
+    $('input[name="y1"]').val(selection.y1 * ratioH);
+    $('input[name=w]').val(selection.width * ratioW);
+    $('input[name=h]').val(selection.height * ratioH);
 
   }
 
@@ -489,42 +474,47 @@ document.getElementById('image').onload = function() {
 
 
 
-<!-- jcrop -->
 
-<!-- <script type="text/javascript" src="js/tapmodo-Jcrop-1902fbc/js/jquery.Jcrop.js"></script>
-<link rel="stylesheet" href="js/tapmodo-Jcrop-1902fbc/css/jquery.Jcrop.min.css" type="text/css" />
+<!-- croppie (we will make it work later) -->
+
+<!-- <link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/node_modules/croppie/croppie.css">
+<script type="text/javascript" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/node_modules/croppie/croppie.js"></script>
 
 <script>
   document.getElementById('image').onload = function() {
-    $('#image').Jcrop({
-      aspectRatio: 1,
-      onChange: changePreview,
-      onSelect: setCoords
+    //var x;
+    console.log(12);
+    $('#parent').croppie({
+      // viewport: {
+      //   width: 400,
+      //   height: 400
+      // },
+      boundary: {
+        width: 300,
+        height: 300
+      },
+      // points: [77, 469, 280, 739],
+      url: $('#image').attr('src')
     });
-  }
 
-  function setCoords(selection) {
-    $('input[name="x1"]').val(selection.x);
-    $('input[name="y1"]').val(selection.y);
-    $('input[name=w]').val(selection.w);
-    $('input[name=h]').val(selection.h);
+    // 
+    $('#parent').on('update.croppie', function(ev, cropData) {
+      var x1 = cropData.points[0];
+      var y1 = cropData.points[1];
+      var x2 = cropData.points[2];
+      var y2 = cropData.points[3];
+      var h = y2 - y1;
+      var w = x2 - x1;
 
-    $('#inner').trigger('click');
-  }
+      $('input[name="x1"]').val(x1);
+      $('input[name="y1"]').val(y1);
+      $('input[name=w]').val(w);
+      $('input[name=h]').val(h);
 
-  function changePreview(selection) {
-    if (!selection.w || !selection.h) {
-      return;
-    }
-
-    var scaleX = 150 / (selection.w || 1);
-    var scaleY = 150 / (selection.h || 1);
-
-    $('#inner').css({
-      width: Math.round( scaleX * $('#image').width() ) + 'px',
-      height: Math.round( scaleY * $('#image').height() ) + 'px',
-      marginLeft: '-' + Math.round(scaleX * selection.x) + 'px',
-      marginTop: '-' + Math.round(scaleY * selection.y) + 'px'
+      // cropped area data
+      $('#parent').croppie('result', {}).then(function(x) {
+        $('#inner').attr('src', x);
+      })
     });
   }
 </script> -->

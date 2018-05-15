@@ -1,4 +1,17 @@
 <?php
+
+
+function checkCSRFToken($token) {
+    if (!hash_equals($_SESSION['csrf_token'], $token) {
+        echo '<div>ERROR</div>';
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+
 function testPrice(&$value)
 {
     $value = trim($value);

@@ -84,7 +84,7 @@ $(document).ready(function() {
     // });
 
     $('#shoppingCartDetails').click(function(e) {
-        if(! e.target.matches('#cart_checkout a'))
+        if (! e.target.matches('#cart_checkout a') )
             return false;       // DO NOTHING WHEN CONTAINER IS CLICKED.
     });
 
@@ -99,7 +99,7 @@ $(document).ready(function() {
         var _opened = $navbar.hasClass("in");
 
         // check if it's open and we clicked outside the toggle button
-        if (_opened === true && !clickover.hasClass("navbar-toggle")) {      
+        if ( _opened === true && !clickover.hasClass("navbar-toggle") ) {      
             $navbar.collapse('hide');
         }
     });

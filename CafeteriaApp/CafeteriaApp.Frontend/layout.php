@@ -28,6 +28,8 @@ $selected_lang ='en';
   <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=McLaren"> -->
+
     <link rel="icon" type="text/css" href="/CafeteriaApp/CafeteriaApp/favicon.ico">
     <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/normalize.css" rel="stylesheet"/>
     <!-- MetisMenu CSS -->
@@ -44,7 +46,8 @@ $selected_lang ='en';
 
   </head>
 
-  <body style="background-color:#ECD297;" ng-app="layout_app"
+<!-- style="background-color:#ECD297;" -->
+  <body ng-app="layout_app"
   ng-init="orderId = <?= $orderId;?>;" ng-cloak>
 
     <div ng-controller="Language_Order" ng-init="languages=['English', 'Arabic'];selectedLang = 1;orderId = <?= $orderId;?>" id="myctrl">
@@ -65,7 +68,7 @@ $selected_lang ='en';
 
         <div class="collapse navbar-collapse" id="myNavbar">
 
-          <ul class="nav navbar-nav">
+          <ul class="nav navbar-nav leftNav">
 
             <li>
 
@@ -89,7 +92,7 @@ $selected_lang ='en';
 
           </ul>
 
-          <ul class="nav navbar-nav navbar-right">
+          <ul style="padding: 1px" class="nav navbar-nav navbar-right">
 
             <li ng-if='orderId' id="shoppingCart" title="Show Shopping Cart Items">
 
@@ -218,7 +221,7 @@ $selected_lang ='en';
 
             </li>
 
-            <li id="languagesDropdown" class="btn-sm">
+            <li id="languagesDropdown" style="margin-right: 10px" class="btn-sm">
 
               <div class="dropdown">
 
@@ -261,16 +264,18 @@ $selected_lang ='en';
 
             <?php if ( isset($_SESSION['userId']) ) { ?>
 
-              <li id="myProfile" class="btn-sm">
+              <li id="myProfile" style="margin-right: 50px" class="btn-sm">
 
                 <div class="btn-group">
 
-                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <!-- <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     My Profile
 
                     <span class="glyphicon glyphicon-user"></span>
 
-                  </button>
+                  </button> -->
+                  <img class="dropdown-toggle img-circle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                  src="<?php echo $_SESSION['image']?>" style="cursor: pointer;width: 45px;height: 45px" />
 
                   <div class="dropdown-menu" style="left: -70px">
 
@@ -325,7 +330,6 @@ $selected_lang ='en';
     <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/jquery-3.2.1.min.js"></script>
     <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/bootstrap.min.js"></script>
     <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/angular.min.js"></script>
-    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/alertify.js"></script>
     <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/customer_and_cashier_order.js"></script>
     <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/metisMenu.min.js"></script>
     <!-- Custom Theme JavaScript -->

@@ -7,6 +7,12 @@ require __DIR__ . '/../Controllers/Order.php';
 require __DIR__ . '/TestRequestInput.php';
 
 // var_dump($_SERVER);
+// if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'PUT' || $_SERVER['REQUEST_METHOD'] == 'DELETE') {
+//     if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token']) {
+//         echo '<div>ERROR</div>';
+//         return;
+//     }
+// }
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ($_SESSION['roleId'] == 1) {
@@ -23,14 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ( $_SERVER['REQUEST_METHOD'] == 'POST' && checkCSRFToken($_POST['csrf_token']) ) {
     if (isset($_GET['flag']) && $_GET['flag'] == 2) {
         $data = json_decode( file_get_contents('php://input') );
         $email = $data->Email;
         echo checkExistingEmail($conn, $email);
     }
     elseif (isset($_SESSION['roleId']) && $_SESSION['roleId'] == 1) {
-        $result = isset($_POST['firstName'], $_POST['lastName'], $_POST['roleId'], $_POST['phone'], $_POST['email'], $_POST['DOB'], $_POST['password']) && normalizeString($conn, $_POST['firstName'], $_POST['lastName']) && testPhone($_POST['phone']) && testEmail($_POST['email']) && testDateOfBirth($_POST['DOB']) && testPassword($_POST['password']) && testInt($_POST['roleId']);
+        $result = isset($_POST['firstName'], $_POST['lastName'], $_POST['roleId'], $_POST['phone'], $_POST['email'], $_POST['DOB'], $_POST['password']) && normalizeString($conn, $_POST['firstName'], $_POST['lastName']) && testPhone($_POST['phone']) && testEmail($_POST['email']) && testDateOfBirth($_POST['DOB']) && testPassword($_POST['password']) && testInt($_POST['roleId']) && ($_POST['confirmPassword'] == $_POST['password']);
 
         if ($result) {
             $x1 = $_POST['x1'];
@@ -54,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
     else {
-        $result = isset($_POST['firstName'], $_POST['lastName'], $_POST['phone'], $_POST['email'], $_POST['DOB'], $_POST['gender'], $_POST['password']) && normalizeString($conn, $_POST['firstName'], $_POST['lastName']) && testPhone($_POST['phone']) && testEmail($_POST['email']) && testDateOfBirth($_POST['DOB']) && testInt($_POST['gender']) && testPassword($_POST['password']);
+        $result = isset($_POST['firstName'], $_POST['lastName'], $_POST['phone'], $_POST['email'], $_POST['DOB'], $_POST['gender'], $_POST['password']) && normalizeString($conn, $_POST['firstName'], $_POST['lastName']) && testPhone($_POST['phone']) && testEmail($_POST['email']) && testDateOfBirth($_POST['DOB']) && testInt($_POST['gender']) && testPassword($_POST['password']) && ($_POST['confirmPassword'] == $_POST['password']);
 
         if ($result) {
             $x1 = $_POST['x1'];
@@ -67,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['orderId'] = addOrder($conn, date('Y-m-d h:m'), 1, 1, $userId);
             $_SESSION['notifications'] = [];
             $_SESSION['langId'] = 1;
+            $_SESSION['image'] = mysqli_fetch_assoc($conn->query('select Image from user where Id = ' . $userId))['Image'];
             header("Location: " . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php");
         }
         else {
@@ -75,10 +82,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+if ( $_SERVER['REQUEST_METHOD'] == 'PUT' && checkCSRFToken($_POST['csrf_token']) ) {
     if ($_SESSION['roleId'] == 1) {
-
-        //var_dump($_FILES);
         //decode the json data
         $data = json_decode( file_get_contents('php://input') );
 
@@ -97,18 +102,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
             $h  = null;
         }
 
-        // var_dump($result);
-
-        //var_dump($data);
-
         if ($result) {
             $x = normalizeString($conn, $data->Image);
 
-            //var_dump($data->Image);
-
             if ($x) {
-                //echo "string";
-                //var_dump('asfasdasd');
                 editUser($conn, $data->FirstName, $data->LastName, $data->Email, $data->Image, $data->PhoneNumber, $data->RoleId, $data->Id, $data->Gender, $data->DateOfBirth, $x1, $y1, $w, $h);
             }
             else {
@@ -118,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+if ( $_SERVER['REQUEST_METHOD'] == 'DELETE' && checkCSRFToken($_POST['csrf_token']) ) {
     if ($_SESSION['roleId'] == 1) {
         //decode the json data
         if ( isset($_GET['userId']) && testInt($_GET['userId']) ) {

@@ -4,6 +4,15 @@
 
 <title>Categories</title>
 
+<link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/alertify/css/alertify.min.css">
+<link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/alertify/css/themes/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/alertify/css/themes/default.min.css">
+<link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/alertify/css/themes/semantic.min.css">
+
+<!-- <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.bootstrap.css" rel="stylesheet">
+<link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.core.css" rel="stylesheet">
+<link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.default.css" rel="stylesheet"> -->
+
 <style type="text/css">
   .w3-animate-zoom {
     animation: animatezoom 0.6s
@@ -44,5 +53,7 @@
 </div>
 
 <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/show_categories.js"></script>
+<!-- <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/alertify.js"></script> -->
+<script type="text/javascript" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/alertify/alertify.min.js"></script>
 
 <?php require(__DIR__ . '/footer.php'); ?>

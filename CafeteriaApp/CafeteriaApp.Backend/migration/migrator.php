@@ -1,6 +1,5 @@
 <?php
-	class migrator
-	{
+	class migrator {
 		public function up($conn, $upFunc) {
 			$upFunc($conn);
 		}
