@@ -11,8 +11,8 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
     order_info.ItemRating = [];
 
     order_info.getOrderItems = function(orderId) { // this is asyhnchronous
-        $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderItem.php?orderId=' + orderId).success(function(data) {
-            $rootScope.orderItems = data;
+        $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderItem.php?orderId=' + orderId).then(function(response) {
+            $rootScope.orderItems = response.data;
             order_info.orderId = orderId;
         });
     };

@@ -1,6 +1,7 @@
 // controller for order checkout
 layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$http', 'Order_Info',
-  function($rootScope, $scope, $interval, $http, Order_Info) {
+  '$httpParamSerializerJQLike',
+  function($rootScope, $scope, $interval, $http, Order_Info, $httpParamSerializerJQLike) {
 
   $scope.orderId = $.urlParam('orderId');
   $scope.orderTypes = [ {id: 0, name: "Take Away"}, {id: 1, name: "Delivery"} ];
@@ -9,12 +10,47 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   $scope.taxFee = 0;
   $scope.subTotal = 0;
 
+  $scope.csrf_token = document.getElementById('csrf_token').value;
+
   $scope.confirmOrder = function() {
     alertify.confirm("Are you sure you want to submit order?", function(e) {
       if (e) {
         localStorage.setItem("submit", 1);
-        $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?cashflag=1');
-        document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php";
+        // $http({
+        //   method: 'put',
+        //   url: '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?cashflag=1',
+        //   data: $httpParamSerializerJQLike({csrf_token: 'sd'}), 
+        //   headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        // }).then(function(response) {
+        //   console.log(response);
+        //   if (response.data == false) {
+        //     // document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/error.php";
+        //     alertify.error('error occured');
+        //   }
+        //   else {
+        //     //document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php";
+        //   }
+        //   //console.log(response);
+        // });
+
+        $http({
+          method: 'put',
+          url: '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?cashflag=1',
+          data: {csrf_token: $scope.csrf_token}, 
+          //headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).then(function(response) {
+          console.log(response);
+          if (response.data == 'error') {
+            document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/error.php";
+            //alertify.error('error occured');
+          }
+          else {
+            document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php";
+          }
+          //console.log(response);
+        });
+
+        //document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php";
       }
       else {
         return false;
@@ -62,7 +98,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       document.getElementsByClassName('locBut')[0].classList.add('col-lg-4');
       document.getElementsByTagName('form')[0].style.width = '350px';
 
-      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?type=1').then(function(response) {
+      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?type=1', {csrf_token: $scope.csrf_token}).then(function(response) {
         $scope.deliveryFee = parseInt(response.data);
         $scope.total += $scope.deliveryFee;
         $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderLocation.php?orderId=' + $scope.orderId)
@@ -87,8 +123,9 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       document.getElementsByClassName('map-wrapper')[0].classList.remove('col-lg-4');
       document.getElementsByClassName('locBut')[0].classList.remove('col-lg-4');
 
-      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?type=0').then(function(response) {
+      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?type=0', {csrf_token: $scope.csrf_token}).then(function(response) {
         $scope.total -= $scope.deliveryFee;
+        //console.log(response);
         $scope.deliveryFee = 0;
         alertify.success('order type is now take away');
       });
@@ -99,11 +136,14 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   };
 
   $scope.changePaymentMethod = function() {
+    //console.log($scope.csrf_token);
     var data = {
-      paymentMethodId: $scope.selectedMethod.id
+      paymentMethodId: $scope.selectedMethod.id,
+      //csrf_token: $scope.csrf_token
     };
 
     $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php', data).then(function(response) {
+      console.log(response);
       if ($scope.selectedMethod.id == 1) { // paypal
         alertify.success('You will pay with PayPal');
       }

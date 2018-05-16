@@ -13,7 +13,7 @@
   <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/calculate_distance_given_longitude_and_latitude.js"></script>
 </head>
 
-<div ng-controller="OrderCheckout" ng-init="phoneDisabled=true" class="container" style="text-align: center;margin: 0 auto">
+<div ng-controller="OrderCheckout" ng-show="subTotal > 0" ng-init="phoneDisabled=true" class="container" style="text-align: center;margin: 0 auto">
 
   <h1 class="page-header" style="margin-top: 70px">
     Complete Order #<span>{{orderId}}</span> info.
@@ -22,7 +22,7 @@
   <!-- <div class="col-lg-4" style="border: 3px solid lightgrey;border-radius: 20px"> -->
     <form id="checkoutForm" novalidate style="margin: 0 auto;border: 3px solid lightgrey;border-radius: 20px;width: 500px" name="myForm" action="../../CafeteriaApp.Backend/Requests/Order.php" method="post">
       <!-- background-color: #A52A2A -->
-      <input type="hidden" value="<?php echo $_SESSION['csrf_token']; ?>" name="csrf_token">
+      <input type="hidden" value="<?php echo $_SESSION['csrf_token']; ?>" name="csrf_token" id="csrf_token">
       <input style="display: none" class="form-control" ng-model="selectedMethod.id" name="selectedMethodId"/>
       <input style="display: none" class="form-control" ng-model="selectedType.id" name="orderType"/>
       <input style="display: none" class="form-control" ng-model="total" name="total"/>

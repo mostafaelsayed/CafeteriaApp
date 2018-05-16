@@ -44,7 +44,7 @@
     if ($result) {
       $order = mysqli_fetch_array($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      $_SESSION['paymentMethodId'] = $order['PaymentMethodId'];
+      //$_SESSION['paymentMethodId'] = $order['PaymentMethodId'];
       return $order;
     }
     else {

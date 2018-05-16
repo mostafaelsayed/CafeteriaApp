@@ -3,7 +3,7 @@ require __DIR__ . '/../Controllers/OrderItem.php';
 require __DIR__ . '/TestRequestInput.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if ( isset($_GET['orderId']) && testInt($_GET['orderId']) ) {// cashier only
+    if ( isset($_GET['orderId']) && testInt($_GET['orderId']) ) {
         checkResult( getOrderItemsByOrderId($conn, $_GET['orderId']) );
     }
 
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 
 }
 
-if ( $_SERVER['REQUEST_METHOD'] == 'DELETE' && checkCSRFToken($_POST['csrf_token']) ) {
+if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     if ( isset($_GET['id']) && testInt($_GET['id']) ) {
         deleteOrderItem($conn, $_GET['id']);
     }
