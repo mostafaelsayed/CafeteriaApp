@@ -47,6 +47,9 @@
                 $current_image = imagecreatefrompng($target_file);
             }
 
+            $whiteBackground = imagecolorallocate($new, 255, 255, 255);
+            imagefill($new, 0, 0, $whiteBackground); // fill the background with white
+
             // resamling (actual cropping)
             imagecopyresampled($new, $current_image, 0, 0, $x1, $y1, 150, 150, $w, $h);
             // creating our new image

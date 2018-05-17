@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
 }
 
-if ( $_SERVER['REQUEST_METHOD'] == 'POST' && checkCSRFToken($_POST['csrf_token']) ) {
+if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
     if (isset($_GET['flag']) && $_GET['flag'] == 2) {
         $data = json_decode( file_get_contents('php://input') );
         $email = $data->Email;
@@ -82,7 +82,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && checkCSRFToken($_POST['csrf_token']
     }
 }
 
-if ( $_SERVER['REQUEST_METHOD'] == 'PUT' && checkCSRFToken($_POST['csrf_token']) ) {
+if ( $_SERVER['REQUEST_METHOD'] == 'PUT' ) {
     if ($_SESSION['roleId'] == 1) {
         //decode the json data
         $data = json_decode( file_get_contents('php://input') );
@@ -115,7 +115,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'PUT' && checkCSRFToken($_POST['csrf_token'])
     }
 }
 
-if ( $_SERVER['REQUEST_METHOD'] == 'DELETE' && checkCSRFToken($_POST['csrf_token']) ) {
+if ( $_SERVER['REQUEST_METHOD'] == 'DELETE' ) {
     if ($_SESSION['roleId'] == 1) {
         //decode the json data
         if ( isset($_GET['userId']) && testInt($_GET['userId']) ) {

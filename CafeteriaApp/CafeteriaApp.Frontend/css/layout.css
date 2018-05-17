@@ -373,12 +373,16 @@ a.dropdown_item:hover {
     transform: rotate(15deg) scale(1.3);
 }
 
+#Eng {
+    margin-left: 28px
+}
+
 /* firefox */
-@-moz-document url-prefix() {
+/*@-moz-document url-prefix() {
     #Eng {
         margin-left: 28px
     }
-}
+}*/
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     /* IE10+ CSS styles go here */

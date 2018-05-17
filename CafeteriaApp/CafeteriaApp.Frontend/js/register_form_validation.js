@@ -173,114 +173,114 @@ registerFormApp.directive('check', ['$http', function($http) {
           }
         }
       });
-      ctrl.$formatters.unshift(function(val) {
-        if (attr.name == 'email') {
-          if (val != undefined) {
-            var x = {
-              Email: val
-            };
+      // ctrl.$formatters.unshift(function(val) {
+      //   if (attr.name == 'email') {
+      //     if (val != undefined) {
+      //       var x = {
+      //         Email: val
+      //       };
 
-            $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php?flag=2', x).then(function(response) {
-              if (response.data == true) {
-                ctrl.$setValidity('emailExisted', false);
-                ctrl.$setValidity('emailEmpty', true);
-              }
-              else if (val == '') {
-                ctrl.$setValidity('emailEmpty', false);                  
-              }
-              else {
-                ctrl.$setValidity('emailExisted', true);
-                ctrl.$setValidity('emailEmpty', true);             
-              }
-            });
-          }
-          else {
-            ctrl.$setValidity('emailEmpty', false);
-          }
-        }
-        else if (attr.name == 'password') {
-          if (val != undefined) {
-            if ( checkType(val, regExpPass) ) {
-              ctrl.$setValidity('checkPassword', true);
-              ctrl.$setValidity('passEmpty', false);
-            }
-            else if (val == '') {
-              ctrl.$setValidity('passEmpty', false);
-              ctrl.$setValidity('checkPassword', true);          
-            }
-            else {
-              ctrl.$setValidity('checkPassword', false);
-              ctrl.$setValidity('passEmpty', true);
-            }
-          }
-          else {
-            ctrl.$setValidity('passEmpty', false);
-            ctrl.$setValidity('checkPassword', true);
-          }
-        }
-        else if (attr.name == 'confirmPassword') {
-          if (val != undefined) {
-            if ( checkType(val, regExpPass) ) {
-              ctrl.$setValidity('checkConfirmPassword', true);
-              ctrl.$setValidity('confirmPassEmpty', true);
-            }
-            else if (val == '') {
-              ctrl.$setValidity('confirmPassEmpty', false);
-              ctrl.$setValidity('checkConfirmPassword', true);             
-            }
-            else {
-              ctrl.$setValidity('checkConfirmPassword', false);
-              ctrl.$setValidity('confirmPassEmpty', true);
-            }
-          }
-          else {
-            ctrl.$setValidity('confirmPassEmpty', false);
-            ctrl.$setValidity('checkConfirmPassword', true);
-          }
-        }
-        else if (attr.name == 'phone') {
-          if (val != undefined) {
-            if ( checkType(val, regExpPhone) ) {
-              ctrl.$setValidity('checkPhoneNumber', true);
-              ctrl.$setValidity('phoneEmpty', true);
-            }
-            else if (val == '') {
-              ctrl.$setValidity('phoneEmpty', false);
-              ctrl.$setValidity('checkPhoneNumber', true);
-            }
-            else {
-              ctrl.$setValidity('checkPhoneNumber', false);
-              ctrl.$setValidity('phoneEmpty', true);
-            }
-          }
-          else {
-            ctrl.$setValidity('phoneEmpty', false);
-            ctrl.$setValidity('checkPhoneNumber', true);
-          }
-        }
-        else if (attr.name == 'DOB') {
-          if (val != undefined) {
-            if ( checkType(val, regExpBirth) ) {
-              ctrl.$setValidity('checkBirth', true);
-              ctrl.$setValidity('birthEmpty', true);
-            }
-            else if (val == '') {
-              ctrl.$setValidity('birthEmpty', false);
-              ctrl.$setValidity('checkBirth', true);
-            }
-            else {
-              ctrl.$setValidity('checkBirth', false);
-              ctrl.$setValidity('birthEmpty', true);
-            }
-          }
-          else {
-            ctrl.$setValidity('birthEmpty', false);
-            ctrl.$setValidity('checkBirth', true);
-          }
-        }
+      //       $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php?flag=2', x).then(function(response) {
+      //         if (response.data == true) {
+      //           ctrl.$setValidity('emailExisted', false);
+      //           ctrl.$setValidity('emailEmpty', true);
+      //         }
+      //         else if (val == '') {
+      //           ctrl.$setValidity('emailEmpty', false);                  
+      //         }
+      //         else {
+      //           ctrl.$setValidity('emailExisted', true);
+      //           ctrl.$setValidity('emailEmpty', true);             
+      //         }
+      //       });
+      //     }
+      //     else {
+      //       ctrl.$setValidity('emailEmpty', false);
+      //     }
+      //   }
+      //   else if (attr.name == 'password') {
+      //     if (val != undefined) {
+      //       if ( checkType(val, regExpPass) ) {
+      //         ctrl.$setValidity('checkPassword', true);
+      //         ctrl.$setValidity('passEmpty', false);
+      //       }
+      //       else if (val == '') {
+      //         ctrl.$setValidity('passEmpty', false);
+      //         ctrl.$setValidity('checkPassword', true);          
+      //       }
+      //       else {
+      //         ctrl.$setValidity('checkPassword', false);
+      //         ctrl.$setValidity('passEmpty', true);
+      //       }
+      //     }
+      //     else {
+      //       ctrl.$setValidity('passEmpty', false);
+      //       ctrl.$setValidity('checkPassword', true);
+      //     }
+      //   }
+      //   else if (attr.name == 'confirmPassword') {
+      //     if (val != undefined) {
+      //       if ( checkType(val, regExpPass) ) {
+      //         ctrl.$setValidity('checkConfirmPassword', true);
+      //         ctrl.$setValidity('confirmPassEmpty', true);
+      //       }
+      //       else if (val == '') {
+      //         ctrl.$setValidity('confirmPassEmpty', false);
+      //         ctrl.$setValidity('checkConfirmPassword', true);             
+      //       }
+      //       else {
+      //         ctrl.$setValidity('checkConfirmPassword', false);
+      //         ctrl.$setValidity('confirmPassEmpty', true);
+      //       }
+      //     }
+      //     else {
+      //       ctrl.$setValidity('confirmPassEmpty', false);
+      //       ctrl.$setValidity('checkConfirmPassword', true);
+      //     }
+      //   }
+      //   else if (attr.name == 'phone') {
+      //     if (val != undefined) {
+      //       if ( checkType(val, regExpPhone) ) {
+      //         ctrl.$setValidity('checkPhoneNumber', true);
+      //         ctrl.$setValidity('phoneEmpty', true);
+      //       }
+      //       else if (val == '') {
+      //         ctrl.$setValidity('phoneEmpty', false);
+      //         ctrl.$setValidity('checkPhoneNumber', true);
+      //       }
+      //       else {
+      //         ctrl.$setValidity('checkPhoneNumber', false);
+      //         ctrl.$setValidity('phoneEmpty', true);
+      //       }
+      //     }
+      //     else {
+      //       ctrl.$setValidity('phoneEmpty', false);
+      //       ctrl.$setValidity('checkPhoneNumber', true);
+      //     }
+      //   }
+      //   else if (attr.name == 'DOB') {
+      //     if (val != undefined) {
+      //       if ( checkType(val, regExpBirth) ) {
+      //         ctrl.$setValidity('checkBirth', true);
+      //         ctrl.$setValidity('birthEmpty', true);
+      //       }
+      //       else if (val == '') {
+      //         ctrl.$setValidity('birthEmpty', false);
+      //         ctrl.$setValidity('checkBirth', true);
+      //       }
+      //       else {
+      //         ctrl.$setValidity('checkBirth', false);
+      //         ctrl.$setValidity('birthEmpty', true);
+      //       }
+      //     }
+      //     else {
+      //       ctrl.$setValidity('birthEmpty', false);
+      //       ctrl.$setValidity('checkBirth', true);
+      //     }
+      //   }
 
-        return val;
-      });
+      //   return val;
+      // });
     }
   }
 }]);

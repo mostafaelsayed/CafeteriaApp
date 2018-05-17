@@ -13,7 +13,7 @@
   <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/calculate_distance_given_longitude_and_latitude.js"></script>
 </head>
 
-<div ng-controller="OrderCheckout" ng-show="subTotal > 0" ng-init="phoneDisabled=true" class="container" style="text-align: center;margin: 0 auto">
+<div ng-controller="OrderCheckout" ng-init="phoneDisabled=true" class="container" style="text-align: center;margin: 0 auto">
 
   <h1 class="page-header" style="margin-top: 70px">
     Complete Order #<span>{{orderId}}</span> info.

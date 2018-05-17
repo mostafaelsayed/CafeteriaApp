@@ -246,11 +246,11 @@ $selected_lang ='en';
 
                   <!-- <li class="divider" style="margin:4px 0"></li> -->
 
-                  <li class="dropdown-item">
+                  <li id="Eng" class="dropdown-item">
 
                     <span></span>
 
-                    <a id="Eng" onclick="changeUserLang(0);" href="<?=count($_GET) > 1 ? str_replace('lang=ar', 'lang=en', $_SERVER['REQUEST_URI']) : $_SERVER['PHP_SELF'] . "?lang=en";?>"><img src="/Shipping/images/header/United-Kingdom-flag.png" width="20" alt=""> English
+                    <a onclick="changeUserLang(0);" href="<?=count($_GET) > 1 ? str_replace('lang=ar', 'lang=en', $_SERVER['REQUEST_URI']) : $_SERVER['PHP_SELF'] . "?lang=en";?>"><img src="/Shipping/images/header/United-Kingdom-flag.png" width="20" alt=""> English
 
                     </a>
 
@@ -275,7 +275,7 @@ $selected_lang ='en';
 
                   </button> -->
                   <img class="dropdown-toggle img-circle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                  src="<?php echo $_SESSION['image']?>" style="cursor: pointer;width: 45px;height: 45px" />
+                  src="<?php echo $_SESSION['image']?>" style="margin-top: -5px;cursor: pointer;width: 45px;height: 45px" />
 
                   <div class="dropdown-menu" style="left: -70px">
 

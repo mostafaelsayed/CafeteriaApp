@@ -1,5 +1,5 @@
 <?php
-	require(__DIR__ . '/../layout.php');
+  require(__DIR__ . '/../layout.php');
 ?>
 
 <title>Categories</title>
@@ -32,25 +32,34 @@
 
   <h1 class="page-header" id="header" style="color: #965C2A">Categories</h1>
 
-  <div class="w3-animate-zoom" ng-controller="getCategories">
+  <div class="w3-animate-zoom row" ng-controller="getCategories">
 
-    	<div class="col-md-6" ng-repeat="c in categories">
+      <div class="col-md-6" ng-repeat="c in categories">
 
         <div style="text-align: center;font-size: 20px">
 
-      		<a href="menuitems.php?categoryId={{c.Id}}&categoryName={{c.Name}}" style="color: orange">
-            <img class="img-rounded" style="display: block;margin: auto;width: 300px;height: 300px" ng-src={{c.Image}} />
-      			<span ng-bind="c.Name"></span>
+          <!-- text-decoration: none is to remove the little black line on the image -->
+          <a style="text-decoration: none;" href="menuitems.php?categoryId={{c.Id}}&categoryName={{c.Name}}">
+            <img class="img-rounded" style="margin: 0 auto;width: 300px;height: 300px" ng-src={{c.Image}} />
+          </a>
 
-      		</a>
+          <br>
+
+          <a href="menuitems.php?categoryId={{c.Id}}&categoryName={{c.Name}}"><span ng-bind="c.Name"></span></a>
 
         </div>
 
-    	</div>
+      </div>
 
   </div>
 
 </div>
+
+<style type="text/css">
+  .nopadding {
+    padding: 0 !important;color: orange;margin: 0 !important
+  }
+</style>
 
 <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/show_categories.js"></script>
 <!-- <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/alertify.js"></script> -->
