@@ -35,7 +35,7 @@
 
         <label>Total: {{ total }} $</label>
           <br/>
-          <label ng-show="deliveryFee != 0">Delivery: {{ deliveryFee }} $</label>
+          <label ng-if="deliveryFee != 0">Delivery: {{ deliveryFee }} $</label>
           <label>Tax: {{ taxFee }} $</label>
           <br/>
           <label>SubTotal: {{ subTotal }} $</label>
@@ -48,7 +48,7 @@
           <select class="form-control" style="width: auto" name="method" ng-model="selectedMethod" ng-change="changePaymentMethod()" ng-options="method.name for method in paymentMethods" required>
          	</select>
 
-          <span ng-show="myForm.$submitted && myForm.method.$invalid" ng-cloak>The Payment Method is required.</span>
+          <span ng-if="myForm.$submitted && myForm.method.$invalid" ng-cloak>The Payment Method is required.</span>
         </div>
 
       </div>
@@ -74,11 +74,11 @@
 
       <div class="form-group text-center">
 
-        <input type="submit" class="btn btn-primary" ng-show="selectedMethod.id == 1" name="next" value="Next" />
+        <input type="submit" class="btn btn-primary" ng-if="selectedMethod.id == 1" name="next" value="Next" />
 
-        <a class="btn btn-primary" ng-show="selectedMethod.id == 2" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Templates/credit-card-payment.php">Next</a>
+        <a class="btn btn-primary" ng-if="selectedMethod.id == 2" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Templates/credit-card-payment.php">Next</a>
 
-        <a class="btn btn-primary" ng-show="selectedMethod.id == 3" ng-click="confirmOrder()">Submit</a>
+        <a class="btn btn-primary" ng-if="selectedMethod.id == 3" ng-click="confirmOrder()">Submit</a>
 
         <a class="btn btn-primary" ng-click="discardOrder()">Discard Order</a>
 
@@ -110,7 +110,11 @@
 
     <br><br>    
 
-    <a class="btn btn-primary currLoc" ng-click="returnToMyCurrentLocation()">My Current Location</a>
+    <a class="btn btn-primary currLoc" ng-click="returnToMyCurrentLocation()">Return to My Current Location</a>
+
+    <br><br>
+
+    <span ng-bind="formatted_address"></span>
   </div>
 </div>
 

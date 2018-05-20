@@ -63,14 +63,15 @@
       return "email already existed";
     }
 
-    $sql = "insert into user (FirstName, LastName, Image, Email, PhoneNumber, PasswordHash, Gender, RoleId, DateOfBirth, LocaleId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "insert into user (FirstName, LastName, Image, Email, PhoneNumber, PasswordHash, Gender, RoleId, DateOfBirth, LocaleId, CroppedImage) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $pass = password_encrypt($password);
-    $stmt->bind_param("ssssssiisi", $firstName, $lastName, $Image, $email, $phoneNumber, $pass, $gender, $roleId, $dateOfBirth, $localeId);
+    $stmt->bind_param("ssssssiisis", $firstName, $lastName, $Image, $email, $phoneNumber, $pass, $gender, $roleId, $dateOfBirth, $localeId, $CroppedImage);
     
     if ($image != null && $image['size'] != 0) {
-
-      $Image = addImageFile($image, $email, $x1, $y1, $w, $h);
+      $ImageRes = addImageFile($image, $email, $x1, $y1, $w, $h);
+      $Image = $ImageRes[0];
+      $CroppedImage = $ImageRes[1];
     }
     
     if ($stmt->execute() === TRUE) {    

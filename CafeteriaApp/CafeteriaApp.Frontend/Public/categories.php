@@ -55,14 +55,7 @@
 
 </div>
 
-<style type="text/css">
-  .nopadding {
-    padding: 0 !important;color: orange;margin: 0 !important
-  }
-</style>
-
 <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/show_categories.js"></script>
-<!-- <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/alertify.js"></script> -->
 <script type="text/javascript" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/alertify/alertify.min.js"></script>
 
 <?php require(__DIR__ . '/footer.php'); ?>

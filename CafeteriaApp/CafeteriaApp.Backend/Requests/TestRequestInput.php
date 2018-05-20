@@ -11,6 +11,7 @@ function checkCSRFToken() {
             //return false;
             //header('Location: ' . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/error.php');
             echo 'error';
+            
             return false;
         }
     }
@@ -18,11 +19,21 @@ function checkCSRFToken() {
         //var_dump($_POST);
         //echo '<div>ERROR</div>';
         $data = json_decode( file_get_contents('php://input') );
-        $csrf_token = $data->csrf_token;
+        $csrf_token = '';
+
+        if ( isset($data->csrf_token) ) {
+            $csrf_token = $data->csrf_token;
+        }
+        else {
+            echo "error";
+
+            return false;
+        }
 
         if ( hash_equals($_SESSION['csrf_token'], $csrf_token) ) {
             //header('Location: ' . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categ.php');
             echo true;
+
             return true;
         }
         else {

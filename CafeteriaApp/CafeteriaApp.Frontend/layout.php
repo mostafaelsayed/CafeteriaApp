@@ -275,13 +275,13 @@ $selected_lang ='en';
 
                   </button> -->
                   <img class="dropdown-toggle img-circle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                  src="<?php echo $_SESSION['image']?>" style="margin-top: -5px;cursor: pointer;width: 45px;height: 45px" />
+                  src="<?php echo $_SESSION['croppedImage']; ?>" style="margin-top: -5px;cursor: pointer;width: 45px;height: 45px" />
 
                   <div class="dropdown-menu" style="left: -70px">
 
-                    <a class="dropdown_item" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/favorite items.php"> My Favorites</a>
+                    <a class="dropdown_item" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/favorite items.php">My Favorites</a>
 
-                    <a class="dropdown_item" href="#">Change Info</a>
+                    <a class="dropdown_item" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/Profile.php">Update Profile</a>
 
                     <a class="dropdown_item" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/change_password.php">Change Password</a>
 

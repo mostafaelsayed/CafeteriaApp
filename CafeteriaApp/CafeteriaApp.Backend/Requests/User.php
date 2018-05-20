@@ -6,14 +6,6 @@ require __DIR__ . '/../Controllers/Customer.php';
 require __DIR__ . '/../Controllers/Order.php';
 require __DIR__ . '/TestRequestInput.php';
 
-// var_dump($_SERVER);
-// if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'PUT' || $_SERVER['REQUEST_METHOD'] == 'DELETE') {
-//     if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token']) {
-//         echo '<div>ERROR</div>';
-//         return;
-//     }
-// }
-
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ($_SESSION['roleId'] == 1) {
         // admin only can call these methods
@@ -60,24 +52,38 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
         }
     }
     else {
-        $result = isset($_POST['firstName'], $_POST['lastName'], $_POST['phone'], $_POST['email'], $_POST['DOB'], $_POST['gender'], $_POST['password']) && normalizeString($conn, $_POST['firstName'], $_POST['lastName']) && testPhone($_POST['phone']) && testEmail($_POST['email']) && testDateOfBirth($_POST['DOB']) && testInt($_POST['gender']) && testPassword($_POST['password']) && ($_POST['confirmPassword'] == $_POST['password']);
-
-        if ($result) {
+        if (isset($_POST['update']) && $_POST['update'] == 1) {
             $x1 = $_POST['x1'];
             $y1 = $_POST['y1'];
             $w  = $_POST['w'];
             $h  = $_POST['h'];
-            normalizeString($conn, $_FILES['image']['name']);
-            $userId = addUser($conn, $_POST['firstName'], $_POST['lastName'], $_FILES['image'], $_POST['email'], $_POST['phone'], $_POST['password'], $_POST['gender'], 2, $_POST['DOB'], 1, $x1, $y1, $w, $h);
-            $_SESSION['userId'] = $userId;
-            $_SESSION['orderId'] = addOrder($conn, date('Y-m-d h:m'), 1, 1, $userId);
-            $_SESSION['notifications'] = [];
-            $_SESSION['langId'] = 1;
-            $_SESSION['image'] = mysqli_fetch_assoc($conn->query('select Image from user where Id = ' . $userId))['Image'];
-            header("Location: " . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php");
+
+            handlePictureUpdate($conn, $_FILES['image'], $x1, $y1, $w, $h);
+            header("Location: " . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/profile.php');
         }
         else {
-            header("Location: " . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Register.php");
+            $result = isset($_POST['firstName'], $_POST['lastName'], $_POST['phone'], $_POST['email'], $_POST['DOB'], $_POST['gender'], $_POST['password']) && normalizeString($conn, $_POST['firstName'], $_POST['lastName']) && testPhone($_POST['phone']) && testEmail($_POST['email']) && testDateOfBirth($_POST['DOB']) && testInt($_POST['gender']) && testPassword($_POST['password']) && ($_POST['confirmPassword'] == $_POST['password']);
+
+            if ($result) {
+                $x1 = $_POST['x1'];
+                $y1 = $_POST['y1'];
+                $w  = $_POST['w'];
+                $h  = $_POST['h'];
+                normalizeString($conn, $_FILES['image']['name']);
+                $userId = addUser($conn, $_POST['firstName'], $_POST['lastName'], $_FILES['image'], $_POST['email'], $_POST['phone'], $_POST['password'], $_POST['gender'], 2, $_POST['DOB'], 1, $x1, $y1, $w, $h);
+                $_SESSION['userId'] = $userId;
+                $_SESSION['orderId'] = addOrder($conn, date('Y-m-d h:m'), 1, 1, $userId);
+                $_SESSION['notifications'] = [];
+                $_SESSION['langId'] = 1;
+                $x = mysqli_fetch_assoc($conn->query('select Image, CroppedImage, Email from user where Id = ' . $userId));
+                $_SESSION['image'] = $x['Image'];
+                $_SESSION['email']  = $x['Email'];
+                $_SESSION['croppedImage'] = $x['CroppedImage'];
+                header("Location: " . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php");
+            }
+            else {
+                header("Location: " . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Register.php");
+            }
         }
     }
 }

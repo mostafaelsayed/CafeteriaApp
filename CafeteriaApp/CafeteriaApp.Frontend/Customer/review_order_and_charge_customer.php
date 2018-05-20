@@ -9,7 +9,7 @@
 
 <div ng-controller="reviewOrderAndChargeCustomer" class="container" style="align-content: center;text-align: center">
 
-  <div style="color: white" class="page-header">
+  <div class="page-header">
 
     <h1>Order #<span ng-bind="orderId"></span></h1>
 
@@ -22,22 +22,22 @@
     <thead>
 
       <tr>
-        <th style="color: white">OrderItem Name</th>
-        <th style="color: white">OrderItem Unit Price</th>
-        <th style="color: white">OrderItem Quantity</th>
-        <th style="color: white">OrderItem Total Price</th>
+        <th>OrderItem Name</th>
+        <th>OrderItem Unit Price</th>
+        <th>OrderItem Quantity</th>
+        <th>OrderItem Total Price</th>
       </tr>
 
     </thead>
 
     <tbody>
 
-      <tr ng-repeat="o in orderItems">
+      <tr ng-repeat="o in orderItems" style="font-size: 17px">
 
-        <td style="color: white" ng-bind="o['Name']"></td>
-        <td style="color: white" ng-bind="o['Price']"></td>
-        <td style="color: white" ng-bind="o['Quantity']"></td>
-        <td style="color: white" ng-bind="o['TotalPrice']"></td>
+        <td ng-bind="o['Name']"></td>
+        <td ng-bind="o['Price']"></td>
+        <td ng-bind="o['Quantity']"></td>
+        <td ng-bind="o['TotalPrice']"></td>
 
       </tr>
 
@@ -45,29 +45,31 @@
 
   </table>
 
-  <div style="color: white">SubTotal: {{ subTotal }}</div>
+  <div class="detail">
+    <div>SubTotal: {{ subTotal }}</div>
 
-  <br/>
+    <br/>
 
-  <div style="color: white" ng-show="deliveryFee != 0">
+    <div ng-if="deliveryFee != 0">
 
-    Delivery: {{ deliveryFee }}
+      Delivery: {{ deliveryFee }}
 
+    </div>
+
+    <div>Tax: {{ taxFee }}</div>
+
+    <br/><br/>
+
+    <div>Total: {{ total }}</div>
   </div>
-
-  <br/>
-
-  <div style="color: white">Tax: {{ taxFee }}</div>
-
-  <br/>
-
-  <div style="color: white">Total: {{ total }}</div>
 
   <br/>
   
   <div></div>
 
   <form novalidate name="myForm" action="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php" method="post" style="align-content: center;text-align: center">
+
+    <input type="hidden" value="<?php echo $_SESSION['csrf_token']; ?>" name="csrf_token" id="csrf_token">
 
     <input type="text" style="visibility: hidden" ng-model="paymentId" name="paymentId">
 
@@ -78,6 +80,12 @@
   </form>
 
 </div>
+
+<style type="text/css">
+  .detail {
+    font-size: 17px
+  }
+</style>
 
 <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/review_order_and_charge_customer.js"></script>
 

@@ -16,7 +16,7 @@
 <div class="container">
 
   <div style="text-align: center">
-    <h1 style="color: #965C2A;padding-bottom: 20px;margin-bottom: 20px;border-bottom: 3px solid #31B0D5;font-family: fontAwsome;font-size:4rem;text-shadow: 2px 2px rgba(0, 5, 0, .15);">
+    <h1 style="color: #965C2A;padding-bottom: 20px;margin-bottom: 20px;border-bottom: 3px solid #31B0D5;font-family: fontAwsome;font-size: 4rem;text-shadow: 2px 2px rgba(0, 5, 0, .15);">
       <?=$_GET['categoryName']?>
     </h1>
 
@@ -32,7 +32,7 @@
       <div class="row" ng-repeat="m in menuItems" style="width: 100%;margin-left: 40px">
         <div class="row">
           <div class="col-md-6">
-            <img class="img-rounded" style="width: 70%;height: 70%;"  src="{{m.Image}}"/>
+            <img class="img-rounded" style="width: 70%;height: 70%;" src="{{m.Image}}"/>
 
             <h1 ng-bind="m.Name" class="menu-name"></h1>
 
@@ -124,7 +124,7 @@
 
         </div>
 
-        <div ng-cloak ng-show="menuItems.indexOf(m) < menuItems.length - 1">
+        <div ng-cloak ng-if="menuItems.indexOf(m) < menuItems.length - 1">
           <hr width="100%" style="background-color: black">
         </div>
 
@@ -132,7 +132,7 @@
       </div>
     </div>
 
-    <div id="openOrder" ng-if='loggedIn' ng-show="orderItems.length > 0 && roleid == false" class="col-md-4 w3-animate-zoom" style="position: fixed;right: 0;bottom: 0" ng-cloak>
+    <div id="openOrder" ng-if='loggedIn' ng-if="orderItems.length > 0 && roleid == false" class="col-md-4 w3-animate-zoom" style="position: fixed;right: 0;bottom: 0" ng-cloak>
 
       <div>
         <label style="color: white;margin-left: 10px;font-size: 1.5rem">Order {{orderId}}
@@ -145,12 +145,12 @@
         <a onclick="$('.table.order').fadeToggle('slow');$(this).children('span').toggleClass('glyphicon-arrow-up glyphicon-arrow-down');" class="pull-right btn btn-info btn-circle" style="margin:0 10px 0 0;padding: 5px 0" href="javascript:;"><span class="glyphicon glyphicon-arrow-down"></span>
         </a>
 
-        <a style="font-style: italic;color: white" class="btn btn-info btn-lg" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Cashier/show_and_hide_orders.php" ng-cloak ng-show="roleid == true" target="_self">
+        <a style="font-style: italic;color: white" class="btn btn-info btn-lg" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Cashier/show_and_hide_orders.php" ng-cloak ng-if="roleid == true" target="_self">
           Return To Orders
         </a>
       </div>
 
-      <table class="table order" ng-cloak ng-show="orderItems.length > 0">
+      <table class="table order" ng-cloak ng-if="orderItems.length > 0">
         <thead>
           <tr>
             <th>Item</th>
@@ -166,7 +166,7 @@
             <td style="color: #58AF50;font-size: 2rem;font-family: FontAwesome" ng-bind="o.Name" ></td>
             <td style="font-size: 2rem" ng-bind="o.Quantity"></td>
             <td ng-bind="o.TotalPrice"></td>
-            <td ng-cloak ng-show="orderItems.length > 0">
+            <td ng-cloak ng-if="orderItems.length > 0">
               <div style="width: 100px;border-radius: 50%;border: 2px solid orange;text-align: center">
 
                 <a title="Increase Quantity" ng-click="increaseQuantity(o)" class="btn"><i class="fa fa-plus"></i></a>

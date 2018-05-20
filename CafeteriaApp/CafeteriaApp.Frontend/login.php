@@ -25,10 +25,11 @@ if ( isset($_POST['submit']) ) {
             // Success
             // Mark user as logged in
             $_SESSION['userId']    = $found_user['Id'];
-            $_SESSION['userName']  = $found_user['UserName'];
+            $_SESSION['email']  = $found_user['Email'];
             $_SESSION['roleId']    = $found_user['RoleId'];
             $_SESSION['langId']    = $found_user['LocaleId'];
             $_SESSION['image']     = $found_user['Image'];
+            $_SESSION['croppedImage']     = $found_user['CroppedImage'];
 
             $_SESSION['Confirmed'] = $found_user['Confirmed'];
 

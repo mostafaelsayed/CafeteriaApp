@@ -83,6 +83,8 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
   $scope.infoWindow = new google.maps.InfoWindow();
 
+  $scope.formatted_address = '';
+
   $scope.changeLoc = function() {
     $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderLocation.php', $scope.myPos)
     .then(function(response) {
@@ -186,6 +188,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       position: $scope.myPos
     });
 
+
     // add info window to display text at the user location to help him identify the location better
     $scope.infoWindow.setPosition($scope.myPos);
     $scope.map.setCenter($scope.myPos); // center of map is the current location
@@ -244,7 +247,9 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
   $scope.confirmLocation = function(a) {
     if ($scope.myPos.lat !== 0 && $scope.myPos.lng !== 0) {
+
       $scope.changeLoc();
+      $scope.geocodeLatLng();
     }
 
     if (a == undefined) {
@@ -334,6 +339,8 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   };
 
   google.maps.event.addListener($scope.map, 'click', function(event) { // listener to click event on the map
+    $scope.infoWindow.setMap(null);
+
     $scope.myMarker.setPosition({
       lat: event.latLng.lat(),
       lng: event.latLng.lng()
@@ -345,4 +352,34 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
   $scope.getUserInfo();
   $scope.getOrderInfo();
+
+  $scope.geocoder = new google.maps.Geocoder;
+
+  $scope.geocodeLatLng = function() {
+    var latlng = {lat: $scope.myPos.lat, lng: $scope.myPos.lng};
+    $scope.geocoder.geocode({'location': latlng}, function(results, status) {
+      if (status === 'OK') {
+        if (results[0]) {
+          $scope.$apply(function() {
+            $scope.formatted_address = results[0].formatted_address;
+          })
+
+          //console.log(results);
+          $scope.myMarker.position = latlng;
+          $scope.myMarker.map = $scope.map;
+          
+
+          $scope.infoWindow = new google.maps.InfoWindow();
+          $scope.infoWindow.setMap($scope.map);
+          $scope.infoWindow.setPosition($scope.myPos);
+          $scope.infoWindow.setContent('The New Location');
+          $scope.infoWindow.open($scope.map, $scope.marker);
+        } else {
+          window.alert('No results found');
+        }
+      } else {
+        window.alert('Geocoder failed due to: ' + status);
+      }
+    });
+  }
 }]);
