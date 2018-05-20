@@ -8,6 +8,9 @@
 <link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/alertify/css/themes/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/alertify/css/themes/default.min.css">
 
+<meta charset="utf-8" id="imgFlag" value="<?php echo $_SESSION['imgFlag'] ?>">
+
+<div ng-controller="profile">
 
 <div class="container row">
 
@@ -15,7 +18,7 @@
   <div class="col-lg-4">
     <div style="margin-top: 70px">
 
-      <img src="<?php echo $_SESSION['croppedImage']; ?>" />
+      <img style="width: 150px;height: 150px" src="<?php echo $_SESSION['croppedImage']; ?>" />
 
       <br><br>
 
@@ -23,6 +26,9 @@
     </div>
 
     <div><button data-toggle="modal" data-target="#myModal" class="btn btn-primary" type="submit" name="submit" value="Update">Update</button></div>
+    <br><br>
+
+    <button ng-click="delete()" class="btn btn-primary" type="submit">Delete</button>
 
   </div>
 
@@ -69,7 +75,7 @@
 
             <div id="profPicture"></div>
 
-            <div><img style="display: none" src="<?php echo $_SESSION['image']; ?>" id="myPic" /></div>
+            <div><img style="display: none;" src="<?php echo $_SESSION['image']; ?>" id="myPic" /></div>
 
             <div id="container1">
 
@@ -92,9 +98,9 @@
           <input type="hidden" name="update" value="1" />
 
           <br><br>
-        
+        <!-- ng-show="<?php echo $_SESSION['imgFlag'] ?> != 1" -->
           <div style="text-align: center"><input type="submit" class="btn btn-primary" value="Update" /></div>
-        </form>
+        </form>        
 
       </div>
 
@@ -108,12 +114,35 @@
 
 </div>
 
+</div>
+
+<script type="text/javascript">
+  
+  //var profile = angular.module('profile', []);
+
+  layoutApp.controller('profile', ['$scope', '$http', function($scope, $http) {
+    $scope.delete = function() {
+      $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php?f=1').then(function(response) {
+        //console.log(response);
+        location.reload();
+      });
+    };
+  }]);
+
+
+</script>
+
 <style type="text/css">
   input[type=file] {
     opacity: 0;
     /*position: absolute;*/
     max-width: 10px;
     top: 0;
+  }
+
+  #picInner {
+    width: 150px;
+    height: 150px
   }
 
   /* preview container */

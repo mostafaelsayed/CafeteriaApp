@@ -63,15 +63,31 @@
       return "email already existed";
     }
 
-    $sql = "insert into user (FirstName, LastName, Image, Email, PhoneNumber, PasswordHash, Gender, RoleId, DateOfBirth, LocaleId, CroppedImage) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "insert into user (FirstName, LastName, Image, Email, PhoneNumber, PasswordHash, Gender, RoleId, DateOfBirth, LocaleId, CroppedImage, ImageSet) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $pass = password_encrypt($password);
-    $stmt->bind_param("ssssssiisis", $firstName, $lastName, $Image, $email, $phoneNumber, $pass, $gender, $roleId, $dateOfBirth, $localeId, $CroppedImage);
+    $stmt->bind_param("ssssssiisisi", $firstName, $lastName, $Image, $email, $phoneNumber, $pass, $gender, $roleId, $dateOfBirth, $localeId, $CroppedImage, $ImageSet);
     
     if ($image != null && $image['size'] != 0) {
       $ImageRes = addImageFile($image, $email, $x1, $y1, $w, $h);
       $Image = $ImageRes[0];
       $CroppedImage = $ImageRes[1];
+      $_SESSION['imageSet'] = 1;
+      $ImageSet = 1;
+    }
+    else {
+      $_SESSION['imageSet'] = 0;
+      $ImageSet = 0;
+      $Image = '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/';
+
+      if ($gender == 0) { // male
+        $Image .= 'maleimage.jpeg';
+      }
+      else {
+        $Image .= 'femaleimage.jpeg';
+      }
+
+      $CroppedImage = $Image;
     }
     
     if ($stmt->execute() === TRUE) {    

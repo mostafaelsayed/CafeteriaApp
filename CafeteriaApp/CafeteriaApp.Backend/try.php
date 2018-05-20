@@ -4,4 +4,6 @@
 //echo function_exists('random_bytes');
 
 
-echo dirname($_SERVER['PHP_SELF']);
+//echo pathinfo('/x/y.jpg', PATHINFO_EXTENSION);
+
+echo dirname(__FILE__);

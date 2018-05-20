@@ -142,67 +142,108 @@
                 $croppedImageName = $y . '/uploads/' . $_SESSION['email'] . '_crop';
 
                 if ($imageFileType == 2) {
+                    $_SESSION['image'] = $imageName . '.jpeg';
+                    $_SESSION['croppedImage'] = $croppedImageName . '.jpeg';
+                    $f = 0;
+
+                    if ($_SESSION['imageSet'] == 0) {
+                        $conn->query("update `user` set `Image` = '{$_SESSION['image']}', `CroppedImage` = '{$_SESSION['croppedImage']}', `ImageSet` = 1 where `Id` = '{$_SESSION['userId']}'");
+                        $_SESSION['imageSet'] = 1;
+                        $f = 1;
+                    }
+
                     if ($ext != 'jpeg') {
-                        $_SESSION['image'] = $imageName . '.jpeg';
-                        $_SESSION['croppedImage'] = $croppedImageName . '.jpeg';
-
-                        if (!$conn->query("update `User` set `Image` = '{$_SESSION['image']}' where `Id` = '{$_SESSION['userId']}'") ) {
-                            die(var_dump($conn->error));
+                        if ($f == 0) {
+                            $conn->query("update `User` set `Image` = '{$_SESSION['image']}', `CroppedImage` = '{$_SESSION['croppedImage']}' where `Id` = '{$_SESSION['userId']}'");
+                            unlink(__DIR__ . '\uploads\\' . $_SESSION['email'] . '.png'); // remove the old picture
+                            unlink(__DIR__ . '\uploads\\' . $_SESSION['email'] . '_crop.png'); // remove the old cropped
                         }
-                        if (!$conn->query("update `User` set `CroppedImage` = '{$_SESSION['croppedImage']}' where `Id` = '{$_SESSION['userId']}'") ) {
-                            die(var_dump($conn->error));
-                        }
-
-                        unlink(__DIR__ . '\uploads\\' . $_SESSION['email'] . '.png'); // remove the old picture
-                        unlink(__DIR__ . '\uploads\\' . $_SESSION['email'] . '_crop.png'); // remove the old cropped
                     }
                     else {
-                        unlink(__DIR__ . '\uploads\\' . $_SESSION['email'] . '.jpeg'); // remove the old picture
-                        unlink(__DIR__ . '\uploads\\' . $_SESSION['email'] . '_crop.jpeg'); // remove the old 
+                        if ($f == 0) {
+                            $conn->query("update `User` set `Image` = '{$_SESSION['image']}', `CroppedImage` = '{$_SESSION['croppedImage']}' where `Id` = '{$_SESSION['userId']}'");
+                            unlink(__DIR__ . '\uploads\\' . $_SESSION['email'] . '.jpeg'); // remove the old picture
+                            unlink(__DIR__ . '\uploads\\' . $_SESSION['email'] . '_crop.jpeg'); // remove the old
+                        }
                     }
                 }
                 else {
-                    if ($ext != 'png') {
-                        $_SESSION['image'] = $imageName . '.png';
-                        $_SESSION['croppedImage'] = $croppedImageName . '.png';
+                    $_SESSION['image'] = $imageName . '.png';
+                    $_SESSION['croppedImage'] = $croppedImageName . '.png';
+                    $f = 0;
 
-                        if (!$conn->query("update `User` set `Image` = '{$_SESSION['image']}' where `Id` = '{$_SESSION['userId']}'") ) {
-                            die(var_dump($conn->error));
+                    if ($_SESSION['imageSet'] == 0) {
+                        $conn->query("update `user` set `Image` = '{$_SESSION['image']}', `CroppedImage` = '{$_SESSION['croppedImage']}', `ImageSet` = 1 where `Id` = '{$_SESSION['userId']}'");
+                        $_SESSION['imageSet'] = 1;
+                        $f = 1;
+                    }
+
+                    if ($ext != 'png') {
+                        if ($f == 0) {
+                            $conn->query("update `User` set `Image` = '{$_SESSION['image']}', `CroppedImage` = '{$_SESSION['croppedImage']}' where `Id` = '{$_SESSION['userId']}'");
+                            unlink(__DIR__ . '\uploads\\' . $_SESSION['email'] . '.jpeg'); // remove the old picture
+                            unlink(__DIR__ . '\uploads\\' . $_SESSION['email'] . '_crop.jpeg'); // remove the old cropped
                         }
-                        if (!$conn->query("update `User` set `CroppedImage` = '{$_SESSION['croppedImage']}' where `Id` = '{$_SESSION['userId']}'") ) {
-                            die(var_dump($conn->error));
-                        }
-                        unlink(__DIR__ . '\uploads\\' . $_SESSION['email'] . '.jpeg'); // remove the old picture
-                        unlink(__DIR__ . '\uploads\\' . $_SESSION['email'] . '_crop.jpeg'); // remove the old cropped
                     }
                     else {
-                        unlink(__DIR__ . '\uploads\\' . $_SESSION['email'] . '.png'); // remove the old picture
-                        unlink(__DIR__ . '\uploads\\' . $_SESSION['email'] . '_crop.png'); // remove the old 
+                        if ($f == 0) {
+                            $conn->query("update `User` set `Image` = '{$_SESSION['image']}', `CroppedImage` = '{$_SESSION['croppedImage']}' where `Id` = '{$_SESSION['userId']}'");
+                            unlink(__DIR__ . '\uploads\\' . $_SESSION['email'] . '.png'); // remove the old picture
+                            unlink(__DIR__ . '\uploads\\' . $_SESSION['email'] . '_crop.png'); // remove the old
+                        }
                     }
                 }
 
                 addImageFile($image, $_SESSION['email'], $x1, $y1, $w, $h);
             }
             else {
-                $ext = pathinfo($_SESSION['image'], PATHINFO_EXTENSION);
-                $img = __DIR__ . '\uploads\\' . $_SESSION['email'];
-                $cropped = __DIR__ . '\uploads\\' . $_SESSION['email'] . '_crop';
+                if ($_SESSION['imageSet'] == 1) {
+                    $ext = pathinfo($_SESSION['image'], PATHINFO_EXTENSION);
+                    $img = __DIR__ . '\uploads\\' . $_SESSION['email'];
+                    $cropped = __DIR__ . '\uploads\\' . $_SESSION['email'] . '_crop';
 
-                if ($ext == 'jpeg') {
-                    $ext = 2;
-                    $img = $img . '.jpeg';
-                    $cropped =  $cropped . '.jpeg';
+                    if ($ext == 'jpeg') {
+                        $ext = 2;
+                        $img = $img . '.jpeg';
+                        $cropped =  $cropped . '.jpeg';
+                    }
+                    elseif ($ext == 'png') {
+                        $ext = 3;
+                        $img = $img . '.png';
+                        $cropped = $cropped . '.png';
+                    }
+                    
                     unlink($cropped);
+                    copy($img, $cropped);
+                    crop($cropped, $x1, $y1, $w, $h, $ext);
                 }
-                elseif ($ext == 'png') {
-                    $ext = 3;
-                    $img = $img . '.png';
-                    $cropped = $cropped . '.png';
-                    unlink($cropped);
+                else {
+                    $x = strrpos(dirname($_SERVER['PHP_SELF']), '/');
+                    $y = substr(dirname($_SERVER['PHP_SELF']), 0, $x);
+                    $img = __DIR__ . '\uploads\\';
+                    $cropped = __DIR__ . '\uploads\\';
+
+                    if ($_SESSION['genderId'] == 0) {
+                        $img .= 'maleimage.jpeg';
+                    }
+                    else {
+                        $img .= 'femaleimage.jpeg';
+                    }
+
+                    $x = $_SESSION['email'] . '_crop.jpeg';
+
+                    $cropped .= $x;
+                    $_SESSION['croppedImage'] = $y . '/uploads/' . $x;
+
+                    $conn->query("update `User` set `CroppedImage` = '{$_SESSION['croppedImage']}' where `Id` = '{$_SESSION['userId']}'");
+
+                    if (file_exists($cropped)) {
+                        unlink($cropped);
+                    }
+
+                    copy($img, $cropped);
+                    crop($cropped, $x1, $y1, $w, $h, 2);
                 }
-                
-                copy($img, $cropped);
-                crop($cropped, $x1, $y1, $w, $h, $ext);
             }
         }
     }

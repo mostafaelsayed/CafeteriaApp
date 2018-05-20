@@ -75,9 +75,10 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
                 $_SESSION['orderId'] = addOrder($conn, date('Y-m-d h:m'), 1, 1, $userId);
                 $_SESSION['notifications'] = [];
                 $_SESSION['langId'] = 1;
-                $x = mysqli_fetch_assoc($conn->query('select Image, CroppedImage, Email from user where Id = ' . $userId));
+                $x = mysqli_fetch_assoc( $conn->query('select Image, CroppedImage from user where Id = ' . $userId) );
+                $_SESSION['genderId'] = $_POST['gender'];
                 $_SESSION['image'] = $x['Image'];
-                $_SESSION['email']  = $x['Email'];
+                $_SESSION['email']  = $_POST['email'];
                 $_SESSION['croppedImage'] = $x['CroppedImage'];
                 header("Location: " . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php");
             }
@@ -127,6 +128,39 @@ if ( $_SERVER['REQUEST_METHOD'] == 'DELETE' ) {
         if ( isset($_GET['userId']) && testInt($_GET['userId']) ) {
             deleteUser($conn, $_GET['userId']);
         }
+    }
+    elseif (isset($_GET['f']) && $_GET['f'] == 1) {
+        $_SESSION['imageSet'] = 0;
+        $conn->query("update `user` set `ImageSet` = 0 where `Id` = '{$_SESSION['userId']}'");
+        $type = pathinfo($_SESSION['image'], PATHINFO_EXTENSION);
+        $imageFileName = __DIR__ . '\..\uploads\\' . $_SESSION['email'];
+        $croppedImageFileName = $imageFileName;
+
+        if ($type == 'jpeg') {
+            $imageFileName .= '.jpeg';
+            $croppedImageFileName .= '_crop.jpeg';
+
+        }
+        else {
+            $imageFileName .= '.png';
+            $croppedImageFileName .= '_crop.png';
+        }
+
+        unlink($croppedImageFileName);
+        unlink($imageFileName);
+
+        $_SESSION['image'] = '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/';
+
+        if ($_SESSION['genderId'] == 0) { // male
+            $_SESSION['image'] .= 'maleimage.jpeg';
+        }
+        else {
+            $_SESSION['image'] .= 'femaleimage.jpeg';
+        }
+
+        $_SESSION['croppedImage'] = $_SESSION['image'];
+
+        $conn->query("update `user` set `Image` = '{$_SESSION['image']}', `CroppedImage` = '{$_SESSION['croppedImage']}' where `Id` = '{$_SESSION['userId']}'");
     }
 }
 
