@@ -8,7 +8,7 @@
         }
 
         $target_dir = __DIR__ . "\uploads\\";
-        $target_file = $target_dir . $name; // trailing name normalized (validation)
+        $target_file = $target_dir . $name;
 
         // Check file size
         // if ($image['size'] > 500000) {
@@ -30,13 +30,20 @@
             $imageName = $y . '/uploads/' . $name . '.jpeg';
             $croppedImageName = $y . '/uploads/' . $name . '_crop.jpeg';
         }
-
         elseif ($imageFileType == 3) {
             $imageName = $y . '/uploads/' . $name . '.png';
             $croppedImageName = $y . '/uploads/' . $name . '_crop.png';
         }
 
-        if ($x1 !== null) {
+        if ($x1 === null && $y1 === null && $w === null && $h === null) {
+            if ($imageFileType == 2) {
+                move_uploaded_file( $image['tmp_name'], $croppedImage . '.jpeg');
+            }
+            elseif ($imageFileType == 3) {
+                move_uploaded_file( $image['tmp_name'], $croppedImage . '.png');
+            }
+        }
+        else {
             $croppedImage = $target_file . '_crop';
 
             if ($imageFileType == 2) { // jpeg
@@ -53,9 +60,7 @@
                 move_uploaded_file( $image['tmp_name'], $croppedImage);
                 copy($croppedImage, $target_file);
             }
-        }
 
-        if ($x1 !== null) { // only one is enough as others must also be not zero (later in requests)
             // crop image
             // Create our small image
             $new = imagecreatetruecolor(150, 150);
@@ -141,8 +146,12 @@
                         $_SESSION['image'] = $imageName . '.jpeg';
                         $_SESSION['croppedImage'] = $croppedImageName . '.jpeg';
 
-                        $conn->query('update `User` set `Image` = ' . $_SESSION['image'] . ' where `Id` = ' . $_SESSION['id']);
-                        $conn->query('update `User` set `CroppedImage` = ' . $_SESSION['croppedImage'] . ' where `Id` = ' . $_SESSION['id']);
+                        if (!$conn->query("update `User` set `Image` = '{$_SESSION['image']}' where `Id` = '{$_SESSION['userId']}'") ) {
+                            die(var_dump($conn->error));
+                        }
+                        if (!$conn->query("update `User` set `CroppedImage` = '{$_SESSION['croppedImage']}' where `Id` = '{$_SESSION['userId']}'") ) {
+                            die(var_dump($conn->error));
+                        }
 
                         unlink(__DIR__ . '\uploads\\' . $_SESSION['email'] . '.png'); // remove the old picture
                         unlink(__DIR__ . '\uploads\\' . $_SESSION['email'] . '_crop.png'); // remove the old cropped
@@ -156,8 +165,13 @@
                     if ($ext != 'png') {
                         $_SESSION['image'] = $imageName . '.png';
                         $_SESSION['croppedImage'] = $croppedImageName . '.png';
-                        $conn->query('update `User` set `Image` = ' . $_SESSION['image'] . ' where `Id` = ' . $_SESSION['id']);
-                        $conn->query('update `User` set `CroppedImage` = ' . $_SESSION['croppedImage'] . ' where `Id` = ' . $_SESSION['id']);
+
+                        if (!$conn->query("update `User` set `Image` = '{$_SESSION['image']}' where `Id` = '{$_SESSION['userId']}'") ) {
+                            die(var_dump($conn->error));
+                        }
+                        if (!$conn->query("update `User` set `CroppedImage` = '{$_SESSION['croppedImage']}' where `Id` = '{$_SESSION['userId']}'") ) {
+                            die(var_dump($conn->error));
+                        }
                         unlink(__DIR__ . '\uploads\\' . $_SESSION['email'] . '.jpeg'); // remove the old picture
                         unlink(__DIR__ . '\uploads\\' . $_SESSION['email'] . '_crop.jpeg'); // remove the old cropped
                     }
@@ -218,27 +232,30 @@
     }
 
     function addBinaryImageFile($image, $name, $x1 = null, $y1 = null, $w = null, $h = null, $dirChanged = 0) {
-        list($type, $image) = explode(';', $image);
+        $imgdata = base64_decode($image);
 
-        if ($type != 'data:image/jpeg' && $type != 'data:image/png') {
+        $f = finfo_open(FILEINFO_MIME_TYPE);
+
+        $type = finfo_buffer($f, $imgdata, FILEINFO_MIME_TYPE);        
+
+        if ($type != 'image/jpeg' && $type != 'image/png') {
             return "not a valid image type";
         }
         else {
-            if ($type == 'data:image/jpeg') {
+            if ($type == 'image/jpeg') {
                 $name = $name . '.jpeg';
             }
-            elseif ($type == 'data:image/png') {
+            elseif ($type == 'image/png') {
                 $name = $name . '.png';
             }
         }
 
-        list(, $image) = explode(',', $image);
-
-        //var_dump($type);
         $image = base64_decode($image);
         $target_file = __DIR__ . "\uploads\\" . $name;
         file_put_contents($target_file, $image);
-        $fileName = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/" . $name;
+        $x = strrpos(dirname($_SERVER['PHP_SELF']), '/');
+        $y = substr(dirname($_SERVER['PHP_SELF']), 0, $x);
+        $fileName = $y . '/uploads/' . $name;
 
         return $fileName;
     }

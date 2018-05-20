@@ -35,7 +35,7 @@
 
   function addCategory($conn, $name, $imageData = null) {
     if ($imageData != null) {
-      $imageFileName = addImageFile($imageData, $name);
+      $imageFileName = addBinaryImageFile($imageData, $name);
       $sql = "insert into category (Name, Image) values (?, ?)";
       $stmt = $conn->prepare($sql);
       $stmt->bind_param("ss", $name, $imageFileName);
@@ -60,7 +60,7 @@
     mysqli_free_result($result);
 
     if ($imageData != null) {
-      $imageFileName = editImage($imageData, $category['Image'], $name);
+      $imageFileName = editBinaryImage($imageData, $category['Image'], $name);
       $sql = "update category set Name = (?) , Image = (?) where Id = (?)";
       $stmt = $conn->prepare($sql);
       $stmt->bind_param("ssi", $name, $imageFileName, $id);

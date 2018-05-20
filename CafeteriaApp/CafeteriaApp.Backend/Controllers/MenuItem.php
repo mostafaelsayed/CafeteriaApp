@@ -46,7 +46,7 @@
   function addMenuItem($conn, $name, $price, $description, $categoryId, $imageData) {
     $sql = "insert into menuitem (Name, Price, Description, CategoryId, Image) values (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $theImage = addImageFile($imageData, $name);
+    $theImage = addBinaryImageFile($imageData, $name);
     $stmt->bind_param("sdsis", $name, $price, $description, $categoryId, $theImage);
 
     if ($stmt->execute() === TRUE) {
@@ -71,7 +71,7 @@
       where Id = (?)";
       $stmt = $conn->prepare($sql);
       $stmt->bind_param("sdssii", $name, $price, $description, $Image, $visible, $id);
-      $Image = editImage($imageData, $menuItem['Image'], $name);
+      $Image = editBinaryImage($imageData, $menuItem['Image'], $name);
     }
     else {
       $sql = "update menuitem set Name = (?), Price = (?), Description = (?), Visible = (?) 
