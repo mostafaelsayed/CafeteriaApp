@@ -12,6 +12,17 @@ function runReversers() {
 	exit();
 }
 
+function checkKeywords($value) {
+	$allowedKeywords = ['type', 'max', 'not null', 'foreign key', 'auto_increment', 'default', 'primary key'];
+
+	foreach ($value as $k => $v) {
+		if (!in_array($k, $allowedKeywords)) {
+			echo "undefined keyword {$k}";
+			exit();
+		}
+	}
+}
+
 class table {
 	public static function createTable($conn, $tableName, $object, $rev = 0) {
 		$create = "create table `$tableName` (";
@@ -23,12 +34,8 @@ class table {
 			$x = column::constructColumnStmtForCreateTable($conn, $create, $key, $value, $tableName);
 
 			foreach ($x as $k => $v) {
-				//var_dump($k);
-				//var_dump($v);
-				array_push($f, $k);
+				array_push($f, $v);
 			}
-
-			//var_dump($f);
 
 			$create .= ",";
 		}
@@ -42,7 +49,7 @@ class table {
 
 		if ($r) {
 			if ($rev == 0) {
-				echo "table created\n";
+				echo "table {$tableName} created\n";
 			}
 
 			$reverser = function() use($conn, $tableName) {
@@ -53,9 +60,9 @@ class table {
 
 			// add any primary key or foreign key
 			foreach ($f as $key => $value) {
-				if ($value === 'primary') {
+				if ( !is_array($value) ) { // value is primary key column
 					if ($rev == 0) {
-						echo "primary key added\n";
+						echo "primary key added on {$value} column\n";
 					}
 				}
 				else {
@@ -73,7 +80,6 @@ class table {
 							exit();
 						}
 
-						//var_dump($f);
 						echo $conn->error;
 
 						runReversers();
@@ -121,7 +127,7 @@ class table {
 			array_push($GLOBALS['reversers'], $reverser);
 
 			if ($rev == 0) {
-				echo "table dropped\n";
+				echo "table {$tableName} dropped\n";
 			}
 		}
 	}
@@ -157,6 +163,7 @@ class table {
 
 class column {
 	public static function constructColumnStmtForAddColumn($conn, &$statment, &$key, &$value, $tableName) {
+		checkKeywords($value);
 		$arr = [];
 		$statment .= "`$key`";
 
@@ -253,8 +260,10 @@ class column {
 	}
 
 	public static function constructColumnStmtForCreateTable($conn, &$statment, &$key, &$value, $tableName) {
+		checkKeywords($value);
 		$arr = [];
 		$statment .= "`$key`";
+		$allowedKeywords = ['type', 'max', 'foreign key', 'auto_increment', 'default', 'primary key'];
 
 		if ( isset($value['type']) ) {
 			$type = $value['type'];
@@ -262,10 +271,10 @@ class column {
 
 			if ( isset($value['max']) ) {
 
-				$allowedTypes = ['int', 'bigint', 'mediumint', 'smallint', 'tinyint', 'char', 'nchar', 'nvarchar', 'varchar', 'text', 'bit', 'enum', 'set'];
+				$allowedTypesToHaveMax = ['int', 'bigint', 'mediumint', 'smallint', 'tinyint', 'char', 'nchar', 'nvarchar', 'varchar', 'text', 'bit', 'enum', 'set'];
 				// max is not associated with every datatype
 				// so we must check that first
-				if (in_array($type, $allowedTypes) === true) {
+				if (in_array($type, $allowedTypesToHaveMax) === true) {
 					$x = $value['max'];
 					$statment .= "($x)";
 				}
@@ -372,12 +381,12 @@ class column {
 			}
 		}
 		foreach ($arr as $key => $value) {
-			if ($key === 'primary') {
+			if ( !is_array($value) ) {
 				$r = $conn->query($value);
 
 				if ($r) {
 					if ($rev == 0) {
-						echo "primary key added\n";
+						echo "primary key added on {$key} column\n";
 					}
 				}
 				else {
@@ -397,7 +406,7 @@ class column {
 
 				if ($r) {
 					if ($rev == 0) {
-						echo "foreign key added\n";
+						echo "foreign key added to {$key} column\n";
 					}
 				}
 				else {
@@ -448,7 +457,23 @@ class column {
 
 	// update every value for that column
 	public static function modifyColumn($conn, $tableName, $key, $column, $rev = 0) {
+		checkKeywords($column);
 		$arr = objectTableMapper::getTableColumns($conn, $tableName);
+		$f = 0;
+
+		if (array_key_exists('not null', $column) && $column['not null'] === false) {
+			if ( in_array('primary key', $arr[$key]) ) {
+				echo "error, can't set null on primary";
+
+				if ($rev == 1) {
+					echo "stuck in rev\n";
+					exit();
+				}
+
+				runReversers();
+			}
+		}
+
 		$columnAttrs = $arr[$key];
 		$alter = "alter table `$tableName` modify column `$key`";
 		// some errors to handle before moving on
@@ -460,6 +485,20 @@ class column {
 				echo "stuck in rev\n";
 				exit();
 			}
+
+			runReversers();
+		}
+
+		if (isset($column['auto_increment']) && $column['auto_increment'] !== true && $column['auto_increment'] !== false) {
+
+			//if ($rev == 0) {
+			echo "error, invalid value for auto_increment. only true and false are valid";
+
+			if ($rev == 1) {
+				echo "stuck in rev\n";
+				exit();
+			}
+			//}
 
 			runReversers();
 		}
@@ -490,12 +529,75 @@ class column {
 			}
 		}
 
+		if (array_key_exists('primary key', $column)) {
+			if ($column['primary key'] === false) {
+				if (array_key_exists('foreign key', $arr[$key])) {
+					foreignKeyManager::dropForeignKey($conn, $tableName, $key, 1);
+
+					$y = $arr[$key]['foreign key'];
+
+					$reverser = function() use($conn, $tableName, $key, $arr) {
+						column::addForeignKey($conn, $tableName, $key, $y['table'], $y['column'], 1);
+					};
+
+					array_push($GLOBALS['reversers'], $reverser);
+				}
+
+				primaryKeyManager::dropPrimaryKey($conn, $tableName, $key);
+
+				$reverser = function() use($conn, $tableName, $key) {
+					column::addPrimaryKey($conn, $tableName, $key, 1);
+				};
+
+				array_push($GLOBALS['reversers'], $reverser);
+
+				if (array_key_exists('foreign key', $arr[$key])) {
+					$x = $arr[$key]['foreign key'];
+
+					foreignKeyManager::addForeignKey($conn, $tableName, $key, $x['table'], $x['column'], 1);
+
+					$reverser = function() use($conn, $tableName, $key) {
+						column::dropForeignKey($conn, $tableName, $key, 1);
+					};
+
+					array_push($GLOBALS['reversers'], $reverser);
+				}
+			}
+			elseif ($column['primary key'] === true) {
+				primaryKeyManager::addPrimaryKey($conn, $tableName, $key);
+
+				$reverser = function() use($conn, $tableName, $key) {
+					column::dropPrimaryKey($conn, $tableName, $key, 1);
+				};
+
+				array_push($GLOBALS['reversers'], $reverser);
+			}
+			else {
+				echo "primary key must be true or false\n";
+
+				if ($f == 1) {
+					$conn->query('set foreign_key_checks=1');
+				}
+
+				if ($rev == 1) {
+					echo "stuck in rev\n";
+					exit();
+				}
+
+				runReversers();
+			}
+		}
+
 		if (array_key_exists('unique', $column) === true) {
 			$uni = "select * from `information_schema`.`table_constraints` where `constraint_type` = 'unique' and `CONSTRAINT_NAME` = '$key' and `table_name` = '$tableName'";
 			$r = $conn->query($uni);
 			$r1 = mysqli_fetch_array($r, MYSQLI_ASSOC);
 
 			if (!$r) {
+				if ($f == 1) {
+					$conn->query('set foreign_key_checks=1');
+				}
+
 				if ($rev == 1) {
 					echo "stuck in rev\n";
 					echo $conn->error;
@@ -513,6 +615,10 @@ class column {
 				if (!$res) {
 					echo "index not found on {$key} column\n";
 
+					if ($f == 1) {
+						$conn->query('set foreign_key_checks=1');
+					}
+
 					if ($rev == 1) {
 						echo "stuck in rev\n";
 						echo $conn->error;
@@ -529,10 +635,16 @@ class column {
 					};
 
 					array_push($GLOBALS['reversers'], $reverser);
+
+					echo "unique dropped from {$key} column\n";
 				}
 			}
 			elseif ($r1 !== null && $column['unique'] === true) {
 				echo "unique already set on column {$key}\n";
+
+				if ($f == 1) {
+					$conn->query('set foreign_key_checks=1');
+				}
 
 				if ($rev == 1) {
 					echo "stuck in rev\n";
@@ -546,6 +658,10 @@ class column {
 				$r = $conn->query($s);
 
 				if (!$r) {
+					if ($f == 1) {
+						$conn->query('set foreign_key_checks=1');
+					}
+
 					if ($rev == 1) {
 						echo "stuck in rev\n";
 						echo $conn->error;
@@ -562,7 +678,16 @@ class column {
 					};
 
 					array_push($GLOBALS['reversers'], $reverser);
+
+					echo "unique added to {$key} column\n";
 				}
+			}
+		}
+
+		if (array_key_exists('auto_increment', $column) ) {
+			if (isset($columnAttrs['foreign key'])) {
+				$conn->query('set foreign_key_checks=0');
+				$f = 1;
 			}
 		}
 
@@ -576,6 +701,10 @@ class column {
 			}
 			else {
 				echo "not null must be either true or false\n";
+
+				if ($f == 1) {
+					$conn->query('set foreign_key_checks=1');
+				}
 
 				if ($rev == 1) {
 					echo "stuck in rev\n";
@@ -594,6 +723,15 @@ class column {
 		&& array_key_exists('auto_increment', $column) === true && $column['auto_increment'] === false) {
 
 		}
+		// elseif (array_key_exists('auto_increment', $column) === true && $column['auto_increment'] === false) {
+		// 	if (isset($columnAttrs['foreign key'])) {
+		// 		$conn->query('set foreign_key_checks=0');
+		// 		$f = 1;
+		// 	}
+		// }
+		elseif (array_key_exists('default', $column) === false && array_key_exists('auto_increment', $column) === false && array_key_exists('default', $columnAttrs) == true && $columnAttrs['default'] != null) {
+			$alter .= " default " . $columnAttrs['default'];
+		}
 		elseif (array_key_exists('default', $column) === true && $column['default'] !== false) {
 			if (array_key_exists('auto_increment', $column) === true && $column['auto_increment'] === false) {
 				if ($type == 'date' || $type == 'time' || $type == 'datetime') {
@@ -605,6 +743,10 @@ class column {
 			}
 			elseif (in_array('auto_increment', $columnAttrs) === true) {
 				echo "remove auto_increment first\n";
+
+				if ($f == 1) {
+					$conn->query('set foreign_key_checks=1');
+				}
 
 				if ($rev == 1) {
 					echo "stuck in rev\n";
@@ -629,6 +771,10 @@ class column {
 			elseif (array_key_exists('default', $columnAttrs) === true) {
 				echo "remove default first\n";
 
+				if ($f == 1) {
+					$conn->query('set foreign_key_checks=1');
+				}
+
 				if ($rev == 1) {
 					echo "stuck in rev\n";
 					exit();
@@ -641,7 +787,48 @@ class column {
 			}
 		}
 
+		if ( isset($column['foreign key']) ) {
+			$x = $column['foreign key'];
+
+			if ($x === false) {
+				foreignKeyManager::dropForeignKey($conn, $tableName, $key);
+
+				$y = $arr[$key]['foreign key'];
+
+				$reverser = function() use($conn, $tableName, $key, $arr) {
+					column::addForeignKey($conn, $tableName, $key, $y['table'], $y['column'], 1);
+				};
+
+				array_push($GLOBALS['reversers'], $reverser);
+			}
+			else {
+				// foreign key changed
+				foreignKeyManager::dropForeignKey($conn, $tableName, $key);
+
+				$y = $arr[$key]['foreign key'];
+
+				$reverser = function() use($conn, $tableName, $key, $arr) {
+					column::addForeignKey($conn, $tableName, $key, $y['table'], $y['column'], 1);
+				};
+
+				array_push($GLOBALS['reversers'], $reverser);
+
+				foreignKeyManager::addForeignKey($conn, $tableName, $key, $x['table'], $x['column']);
+
+				$reverser = function() use($conn, $tableName, $key, $arr) {
+					column::dropForeignKey($conn, $tableName, $key, 1);
+				};
+
+				array_push($GLOBALS['reversers'], $reverser);
+			}
+		}
+
 		$r = $conn->query($alter);
+
+		if ($f == 1) {
+			$conn->query('set foreign_key_checks=1');
+			//$f = 0;
+		}
 
 		if (!$r) {
 			if ($rev == 1) {
@@ -673,7 +860,9 @@ class column {
 		$alter = "alter table `$tableName` change column `$oldColumnName` `$newColumnName`";
 
 		$alter .= " {$columnAttrs['type']}"; // type
-		$alter .= "({$columnAttrs['max']})"; // max
+		if (isset($columnAttrs['max'])) {
+			$alter .= "({$columnAttrs['max']})"; // max
+		}
 
 		if (in_array('not null', $columnAttrs) === true) {
 			$alter .= " not null";
@@ -706,6 +895,10 @@ class column {
 			};
 
 			array_push($GLOBALS['reversers'], $reverser);
+
+			if ($rev == 0) {
+				echo "column " . $oldColumnName . " is renamed to " . $newColumnName . "\n";
+			}
 		}
 	}
 };
@@ -765,7 +958,7 @@ class primaryKeyManager {
 		}
 	}
 
-	public static function dropPrimaryKey($conn, $tableName, $key = null, $rev = 0) {
+	public static function dropPrimaryKey($conn, $tableName, $key, $rev = 0) {
 		$sql = "SELECT * FROM `information_schema`.`KEY_COLUMN_USAGE` WHERE `REFERENCED_TABLE_NAME` = '$tableName' AND `REFERENCED_COLUMN_NAME` = '$key'";
 		$r = mysqli_fetch_assoc( $conn->query($sql) );
 
@@ -781,7 +974,7 @@ class primaryKeyManager {
 				array_push($GLOBALS['reversers'], $reverser);
 
 				if ($rev == 0) {
-					echo "primary key droppped\n";
+					echo "primary key dropped from {$key} column\n";
 				}
 			}
 			else {
@@ -790,6 +983,8 @@ class primaryKeyManager {
 					echo $conn->error;
 					exit();
 				}
+
+				echo "sdsdsd";
 
 				echo $conn->error;
 
@@ -829,9 +1024,17 @@ class foreignKeyManager {
 
 		if ($x) {
 			$y = mysqli_fetch_all($x, MYSQLI_ASSOC);
+			$ref = [];
+
+			foreach ($y as $key => $value) {
+				if ($value['REFERENCED_TABLE_NAME'] != null) {
+					$ref = $value;
+					break;
+				}
+			}
 			
-			if (count($y) > 0 && $y[0]['REFERENCED_TABLE_NAME'] != null) {
-				return [$y[0]["REFERENCED_TABLE_NAME"], $y[0]["REFERENCED_COLUMN_NAME"], $y[0]['CONSTRAINT_NAME']];
+			if (count($y) > 0 && count($ref) > 0) {
+				return [$ref["REFERENCED_TABLE_NAME"], $ref["REFERENCED_COLUMN_NAME"], $ref['CONSTRAINT_NAME']];
 			}
 			else {
 				return [];
@@ -1015,8 +1218,8 @@ class objectTableMapper {
 			$f = foreignKeyManager::getReferencedTableAndColumn($conn, $tableName, $row['COLUMN_NAME']);
 
 			if (count($f) > 0) {
-				$arr[$row['COLUMN_NAME']]['foriegn key']['table'] = $f[0];
-				$arr[$row['COLUMN_NAME']]['foriegn key']['column'] = $f[1];
+				$arr[$row['COLUMN_NAME']]['foreign key']['table'] = $f[0];
+				$arr[$row['COLUMN_NAME']]['foreign key']['column'] = $f[1];
 			}
 		}
 		

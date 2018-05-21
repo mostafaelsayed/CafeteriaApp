@@ -30,12 +30,12 @@ if ( isset($_POST['submit']) ) {
             $_SESSION['langId']    = $found_user['LocaleId'];
             $_SESSION['image']     = $found_user['Image'];
             $_SESSION['croppedImage']     = $found_user['CroppedImage'];
-            $_SESSION['genderId'] = $found_user['Gender'];
+            $_SESSION['genderId'] = $found_user['GenderId'];
             $_SESSION['imageSet'] = $found_user['ImageSet'];
 
             $_SESSION['Confirmed'] = $found_user['Confirmed'];
 
-            if ((!$_SESSION['orderId'] = getOpenOrderByUserId($conn)['Id']) && $_SESSION['roleId'] == 2) {
+            if ( (!$_SESSION['orderId'] = getOpenOrderByUserId($conn)['Id']) && $_SESSION['roleId'] == 2 ) {
                 // if not found open order>>open a new one
                 $_SESSION['orderId'] = addOrder($conn, date('Y-m-d h:m'), 1, 1, $_SESSION['userId']);
             }

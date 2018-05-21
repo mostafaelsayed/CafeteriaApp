@@ -219,17 +219,17 @@
 
         <br><br>
 
-        <input class="with-gap" name="gender" type="radio" value="0" id="male" required />
+        <input class="with-gap" name="genderId" type="radio" value="1" id="male" required />
 
         <label for="male">Male</label>
 
         <br>
 
-        <input class="with-gap" name="gender" type="radio" value="1" id="female" required />
+        <input class="with-gap" name="genderId" type="radio" value="2" id="female" required />
 
         <label for="female" style="margin-right: -17px">Female</label>
 
-        <div class="errorMes" ng-show="myform.gender.$touched && myform.gender.$invalid">
+        <div class="errorMes" ng-show="myform.genderId.$touched && myform.genderId.$invalid">
 
           Gender is Required
 

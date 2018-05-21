@@ -29,7 +29,7 @@ edit_userApp.controller('editUser', ['$scope', '$http', function($scope, $http) 
       $scope.userData.imageUrl = response.data.Image;
       $scope.userData.id = response.data.Id;
       $scope.userData.role = response.data.RoleId;
-      $scope.selectedGender = response.data.Gender;
+      $scope.selectedGender = response.data.GenderId;
       $scope.dateOfBirth = response.data.DateOfBirth;
 
       $scope.originalRole = $scope.roles.filter(function(a) { // find object by property
@@ -86,7 +86,7 @@ edit_userApp.controller('editUser', ['$scope', '$http', function($scope, $http) 
         RoleId: $scope.selectedRole.id,
         Image: $('#image').attr('src'),
         DateOfBirth: String($scope.selectedYear.year) + '-' + String($scope.selectedMonth.month) + '-' + String($scope.selectedDay.day),
-        Gender: parseInt($scope.selectedGender)
+        GenderId: parseInt($scope.selectedGender)
       };
 
       if ($('#file').val() == '') {

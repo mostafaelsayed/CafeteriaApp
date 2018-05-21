@@ -28,7 +28,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
         echo checkExistingEmail($conn, $email);
     }
     elseif (isset($_SESSION['roleId']) && $_SESSION['roleId'] == 1) {
-        $result = isset($_POST['firstName'], $_POST['lastName'], $_POST['roleId'], $_POST['phone'], $_POST['email'], $_POST['DOB'], $_POST['password']) && normalizeString($conn, $_POST['firstName'], $_POST['lastName']) && testPhone($_POST['phone']) && testEmail($_POST['email']) && testDateOfBirth($_POST['DOB']) && testPassword($_POST['password']) && testInt($_POST['roleId']) && ($_POST['confirmPassword'] == $_POST['password']);
+        $result = isset($_POST['firstName'], $_POST['lastName'], $_POST['roleId'], $_POST['phone'], $_POST['email'], $_POST['DOB'], $_POST['password']) && normalizeString($conn, $_POST['firstName'], $_POST['lastName']) && testPhone($_POST['phone']) && testEmail($_POST['email']) && testDateOfBirth($_POST['DOB']) && testPassword($_POST['password']) && testInt($_POST['roleId']) && ($_POST['confirmPassword'] == $_POST['password']) && ($_POST['genderId'] == 1 || $_POST['genderId'] == 2);
 
         if ($result) {
             $x1 = $_POST['x1'];
@@ -36,7 +36,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
             $w  = $_POST['w'];
             $h  = $_POST['h'];
             normalizeString($conn, $_FILES['image']['name']);
-            $userId = addUser($conn, $_POST['firstName'], $_POST['lastName'], $_FILES['image'], $_POST['email'], $_POST['phone'], $_POST['password'], $_POST['gender'], $_POST['roleId'], $_POST['DOB'], 1, $x1, $y1, $w, $h);
+            $userId = addUser($conn, $_POST['firstName'], $_POST['lastName'], $_FILES['image'], $_POST['email'], $_POST['phone'], $_POST['password'], $_POST['genderId'], $_POST['roleId'], $_POST['DOB'], 1, $x1, $y1, $w, $h);
 
             if ($_POST['roleId'] == 1) {
                 addAdmin($conn, $userId);
@@ -62,7 +62,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
             header("Location: " . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/profile.php');
         }
         else {
-            $result = isset($_POST['firstName'], $_POST['lastName'], $_POST['phone'], $_POST['email'], $_POST['DOB'], $_POST['gender'], $_POST['password']) && normalizeString($conn, $_POST['firstName'], $_POST['lastName']) && testPhone($_POST['phone']) && testEmail($_POST['email']) && testDateOfBirth($_POST['DOB']) && testInt($_POST['gender']) && testPassword($_POST['password']) && ($_POST['confirmPassword'] == $_POST['password']);
+            $result = isset($_POST['firstName'], $_POST['lastName'], $_POST['phone'], $_POST['email'], $_POST['DOB'], $_POST['genderId'], $_POST['password']) && normalizeString($conn, $_POST['firstName'], $_POST['lastName']) && testPhone($_POST['phone']) && testEmail($_POST['email']) && testDateOfBirth($_POST['DOB']) && testInt($_POST['genderId']) && testPassword($_POST['password']) && ($_POST['confirmPassword'] == $_POST['password']);
 
             if ($result) {
                 $x1 = $_POST['x1'];
@@ -70,13 +70,13 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
                 $w  = $_POST['w'];
                 $h  = $_POST['h'];
                 normalizeString($conn, $_FILES['image']['name']);
-                $userId = addUser($conn, $_POST['firstName'], $_POST['lastName'], $_FILES['image'], $_POST['email'], $_POST['phone'], $_POST['password'], $_POST['gender'], 2, $_POST['DOB'], 1, $x1, $y1, $w, $h);
+                $userId = addUser($conn, $_POST['firstName'], $_POST['lastName'], $_FILES['image'], $_POST['email'], $_POST['phone'], $_POST['password'], $_POST['genderId'], 2, $_POST['DOB'], 1, $x1, $y1, $w, $h);
                 $_SESSION['userId'] = $userId;
                 $_SESSION['orderId'] = addOrder($conn, date('Y-m-d h:m'), 1, 1, $userId);
                 $_SESSION['notifications'] = [];
                 $_SESSION['langId'] = 1;
                 $x = mysqli_fetch_assoc( $conn->query('select Image, CroppedImage from user where Id = ' . $userId) );
-                $_SESSION['genderId'] = $_POST['gender'];
+                $_SESSION['genderId'] = $_POST['genderId'];
                 $_SESSION['image'] = $x['Image'];
                 $_SESSION['email']  = $_POST['email'];
                 $_SESSION['croppedImage'] = $x['CroppedImage'];
@@ -94,7 +94,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'PUT' ) {
         //decode the json data
         $data = json_decode( file_get_contents('php://input') );
 
-        $result = normalizeString($conn, $data->FirstName, $data->LastName) && testPhone($data->PhoneNumber) && testEmail($data->Email) && testInt($data->Gender, $data->RoleId) && testDateOfBirth($data->DateOfBirth);
+        $result = normalizeString($conn, $data->FirstName, $data->LastName) && testPhone($data->PhoneNumber) && testEmail($data->Email) && testInt($data->GenderId, $data->RoleId) && testDateOfBirth($data->DateOfBirth);
 
         if ( isset($data->x1) || isset($data->y1) || isset($data->w) || isset($data->h) ) {
             $x1 = $data->x1;
@@ -113,10 +113,10 @@ if ( $_SERVER['REQUEST_METHOD'] == 'PUT' ) {
             $x = normalizeString($conn, $data->Image);
 
             if ($x) {
-                editUser($conn, $data->FirstName, $data->LastName, $data->Email, $data->Image, $data->PhoneNumber, $data->RoleId, $data->Id, $data->Gender, $data->DateOfBirth, $x1, $y1, $w, $h);
+                editUser($conn, $data->FirstName, $data->LastName, $data->Email, $data->Image, $data->PhoneNumber, $data->RoleId, $data->Id, $data->GenderId, $data->DateOfBirth, $x1, $y1, $w, $h);
             }
             else {
-                editUser($conn, $data->FirstName, $data->LastName, $data->Email, null, $data->PhoneNumber, $data->RoleId, $data->Id, $data->Gender, $data->DateOfBirth);
+                editUser($conn, $data->FirstName, $data->LastName, $data->Email, null, $data->PhoneNumber, $data->RoleId, $data->Id, $data->GenderId, $data->DateOfBirth);
             }
         }
     }
@@ -151,7 +151,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'DELETE' ) {
 
         $_SESSION['image'] = '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/';
 
-        if ($_SESSION['genderId'] == 0) { // male
+        if ($_SESSION['genderId'] == 1) { // male
             $_SESSION['image'] .= 'maleimage.jpeg';
         }
         else {

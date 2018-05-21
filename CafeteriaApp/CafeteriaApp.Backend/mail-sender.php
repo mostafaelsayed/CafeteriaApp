@@ -20,7 +20,9 @@
 			$mail->setFrom('mostafaelsayed9419@gmail.com', 'Cafeteria App');
 			$mail->addAddress($email, "");
 			$mail->Subject = "Cafeteria App Info Confirm";
-			$mail->Body = "thank you for joining us";
+			$bodyHref = "http://127.0.0.1/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/infoConfirm.php?acc=" . $acc . "&hashKey=" . $hashKey . "&userId=" . $user_id;
+			$mail->Body = '<p>thank you for joining us, click on <a href=' . $bodyHref . '>this</a> to confirm</p>';
+			$mail->IsHTML(true);
 
 			// only on localhost
 			$mail->SMTPOptions = array(
@@ -35,11 +37,11 @@
 		}
 
 		catch (phpmailerException $e) {
-			echo $e->errorMessage();
+			die(var_dump($e->errorMessage()));
 		}
 
 		catch (Exception $e) {
-			echo $e->getMessage();
+			die(var_dump($e->getMessage()));
 		}
 	}
 ?>

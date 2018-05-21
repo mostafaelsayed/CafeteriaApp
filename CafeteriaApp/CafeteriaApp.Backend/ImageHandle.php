@@ -223,7 +223,7 @@
                     $img = __DIR__ . '\uploads\\';
                     $cropped = __DIR__ . '\uploads\\';
 
-                    if ($_SESSION['genderId'] == 0) {
+                    if ($_SESSION['genderId'] == 1) {
                         $img .= 'maleimage.jpeg';
                     }
                     else {

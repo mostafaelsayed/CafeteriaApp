@@ -56,17 +56,17 @@
     }
   }
 
-  function addUser($conn, $firstName, $lastName, $image, $email, $phoneNumber, $password, $gender, $roleId, $dateOfBirth = '1990-1-1', $localeId = 1, $x1 = null, $y1 = null, $w = null, $h = null) {
+  function addUser($conn, $firstName, $lastName, $image, $email, $phoneNumber, $password, $genderId, $roleId, $dateOfBirth = '1990-1-1', $localeId = 1, $x1 = null, $y1 = null, $w = null, $h = null) {
     $x = checkExistingEmail($conn, $email);
 
     if ($x) {
       return "email already existed";
     }
 
-    $sql = "insert into user (FirstName, LastName, Image, Email, PhoneNumber, PasswordHash, Gender, RoleId, DateOfBirth, LocaleId, CroppedImage, ImageSet) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "insert into user (FirstName, LastName, Image, Email, PhoneNumber, PasswordHash, GenderId, RoleId, DateOfBirth, LocaleId, CroppedImage, ImageSet) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $pass = password_encrypt($password);
-    $stmt->bind_param("ssssssiisisi", $firstName, $lastName, $Image, $email, $phoneNumber, $pass, $gender, $roleId, $dateOfBirth, $localeId, $CroppedImage, $ImageSet);
+    $stmt->bind_param("ssssssiisisi", $firstName, $lastName, $Image, $email, $phoneNumber, $pass, $genderId, $roleId, $dateOfBirth, $localeId, $CroppedImage, $ImageSet);
     
     if ($image != null && $image['size'] != 0) {
       $ImageRes = addImageFile($image, $email, $x1, $y1, $w, $h);
@@ -80,7 +80,7 @@
       $ImageSet = 0;
       $Image = '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/';
 
-      if ($gender == 0) { // male
+      if ($genderId == 0) { // male
         $Image .= 'maleimage.jpeg';
       }
       else {
@@ -103,7 +103,7 @@
     }
   }
 
-  function editUser($conn, $firstName, $lastName, $email, $image, $phoneNumber, $roleId, $id, $gender, $dateOfBirth, $x1 = null, $y1 = null, $w = null, $h = null) {
+  function editUser($conn, $firstName, $lastName, $email, $image, $phoneNumber, $roleId, $id, $genderId, $dateOfBirth, $x1 = null, $y1 = null, $w = null, $h = null) {
     $userEmail = mysqli_fetch_assoc( $conn->query("select Email from user where Id = " . $id) )['Email'];
 
     if ( !($userEmail == $email) && checkExistingEmail($conn, $email) ) {
@@ -127,9 +127,9 @@
         var_dump($Image);
       }
 
-      $sql = "update user set FirstName = (?), LastName = (?), Email = (?), Image = (?), PhoneNumber = (?), RoleId = (?), Gender = (?), DateOfBirth = (?) where Id = (?)"; 
+      $sql = "update user set FirstName = (?), LastName = (?), Email = (?), Image = (?), PhoneNumber = (?), RoleId = (?), GenderId = (?), DateOfBirth = (?) where Id = (?)"; 
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssssiisi", $firstName, $lastName, $email, $Image, $phoneNumber, $roleId, $gender, $dateOfBirth, $id);
+        $stmt->bind_param("sssssiisi", $firstName, $lastName, $email, $Image, $phoneNumber, $roleId, $genderId, $dateOfBirth, $id);
 
       if ($stmt->execute() === TRUE) {
         echo "User updated successfully";

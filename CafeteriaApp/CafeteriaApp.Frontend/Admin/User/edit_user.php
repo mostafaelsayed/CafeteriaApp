@@ -139,13 +139,13 @@
 
           <span style="margin: auto;margin-right: 20px">
 
-            <label>Female</label><input id="femaleInput" name="gender" type="radio" ng-model="selectedGender" value="2">
+            <label>Female</label><input id="femaleInput" name="genderId" type="radio" ng-model="selectedGender" value="2">
 
           </span>
 
           <span style="margin: auto;margin-left: 20px">
 
-            <label>Male</label><input id="maleInput" name="gender" ng-model="selectedGender" type="radio" value="1">
+            <label>Male</label><input id="maleInput" name="genderId" ng-model="selectedGender" type="radio" value="1">
 
           </span>
 
