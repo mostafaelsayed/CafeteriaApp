@@ -98,7 +98,7 @@
             // $output .= '<br/><a href="'.$userData['Link'].'" target="_blank">Click to Visit Facebook Page</a>';
 
             // $output .= '<br/>Logout from <a href="'.$logoutURL.'">Facebook</a>'; 
-            header("Location:/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php");
+            header("Location:/public/categories");
         }
         else {
             $output = '<h3 style="color: red">Some problem occurred, please try again.</h3>';

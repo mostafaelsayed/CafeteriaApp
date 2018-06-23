@@ -7,6 +7,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ( isset($_GET['id']) && testInt($_GET['id']) ) {
         checkResult( getCategoryById($conn, $_GET['id']) );
     }
+    elseif (isset($_GET['name'])) {
+        checkResult( getCategoryIdByName($conn, $_GET['name']) );
+    }
     else {
         checkResult( getCategories($conn) );
     }

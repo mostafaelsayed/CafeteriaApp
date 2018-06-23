@@ -5,11 +5,12 @@ require __DIR__ . '/../Controllers/Cashier.php';
 require __DIR__ . '/../Controllers/Customer.php';
 require __DIR__ . '/../Controllers/Order.php';
 require __DIR__ . '/TestRequestInput.php';
+require __DIR__ . '/../functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ($_SESSION['roleId'] == 1) {
         // admin only can call these methods
-        if ( isset($_GET['userId']) && testInt($_GET['userId']) ) {
+        if ( isset($_GET['userId']) && testMutipleInts($_GET['userId']) ) {
             checkResult( getUserById($conn, $_GET['userId']) );
         }
         else {
@@ -21,20 +22,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
 }
 
-if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_GET['flag']) && $_GET['flag'] == 2) {
         $data = json_decode( file_get_contents('php://input') );
         $email = $data->Email;
         echo checkExistingEmail($conn, $email);
     }
     elseif (isset($_SESSION['roleId']) && $_SESSION['roleId'] == 1) {
-        $result = isset($_POST['firstName'], $_POST['lastName'], $_POST['roleId'], $_POST['phone'], $_POST['email'], $_POST['DOB'], $_POST['password']) && normalizeString($conn, $_POST['firstName'], $_POST['lastName']) && testPhone($_POST['phone']) && testEmail($_POST['email']) && testDateOfBirth($_POST['DOB']) && testPassword($_POST['password']) && testInt($_POST['roleId']) && ($_POST['confirmPassword'] == $_POST['password']) && ($_POST['genderId'] == 1 || $_POST['genderId'] == 2);
+        $result = isset($_POST['firstName'], $_POST['lastName'], $_POST['roleId'], $_POST['phone'], $_POST['email'], $_POST['DOB'], $_POST['password']) && normalizeString($conn, $_POST['firstName'], $_POST['lastName']) && testPhone($_POST['phone']) && testEmail($_POST['email']) && testDateOfBirth($_POST['DOB']) && testPassword($_POST['password']) && testMutipleInts($_POST['roleId']) && ($_POST['confirmPassword'] == $_POST['password']) && ($_POST['genderId'] == 1 || $_POST['genderId'] == 2);
 
-        if ($result) {
+        if ( isset($_POST['x1'], $_POST['y1'], $_POST['w'], $_POST['h']) && testMutipleInts($_POST['x1'], $_POST['y1'], $_POST['w'], $_POST['h']) ) {
             $x1 = $_POST['x1'];
             $y1 = $_POST['y1'];
             $w  = $_POST['w'];
             $h  = $_POST['h'];
+        }
+        else {
+            $x1 = null;
+            $y1 = null;
+            $w  = null;
+            $h  = null;
+        }
+
+        if ($result) {
             normalizeString($conn, $_FILES['image']['name']);
             $userId = addUser($conn, $_POST['firstName'], $_POST['lastName'], $_FILES['image'], $_POST['email'], $_POST['phone'], $_POST['password'], $_POST['genderId'], $_POST['roleId'], $_POST['DOB'], 1, $x1, $y1, $w, $h);
 
@@ -48,7 +58,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
                 addCashier($conn, $userId);
             }
 
-            header("Location: " . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Admin/User/show_and_delete_users.php");
+            header("Location: " . "/admin/user/show");
         }
     }
     else {
@@ -59,10 +69,10 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
             $h  = $_POST['h'];
 
             handlePictureUpdate($conn, $_FILES['image'], $x1, $y1, $w, $h);
-            header("Location: " . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/profile.php');
+            header("Location: " . '/profile');
         }
         else {
-            $result = isset($_POST['firstName'], $_POST['lastName'], $_POST['phone'], $_POST['email'], $_POST['DOB'], $_POST['genderId'], $_POST['password']) && normalizeString($conn, $_POST['firstName'], $_POST['lastName']) && testPhone($_POST['phone']) && testEmail($_POST['email']) && testDateOfBirth($_POST['DOB']) && testInt($_POST['genderId']) && testPassword($_POST['password']) && ($_POST['confirmPassword'] == $_POST['password']);
+            $result = isset($_POST['firstName'], $_POST['lastName'], $_POST['phone'], $_POST['email'], $_POST['DOB'], $_POST['genderId'], $_POST['password']) && normalizeString($conn, $_POST['firstName'], $_POST['lastName']) && testPhone($_POST['phone']) && testEmail($_POST['email']) && testDateOfBirth($_POST['DOB']) && testMutipleInts($_POST['genderId']) && testPassword($_POST['password']) && ($_POST['confirmPassword'] == $_POST['password']);
 
             if ($result) {
                 $x1 = $_POST['x1'];
@@ -80,21 +90,21 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
                 $_SESSION['image'] = $x['Image'];
                 $_SESSION['email']  = $_POST['email'];
                 $_SESSION['croppedImage'] = $x['CroppedImage'];
-                header("Location: " . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php");
+                header("Location: " . "/public/categories");
             }
             else {
-                header("Location: " . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Register.php");
+                header("Location: " . "/register");
             }
         }
     }
 }
 
-if ( $_SERVER['REQUEST_METHOD'] == 'PUT' ) {
+if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     if ($_SESSION['roleId'] == 1) {
         //decode the json data
         $data = json_decode( file_get_contents('php://input') );
 
-        $result = normalizeString($conn, $data->FirstName, $data->LastName) && testPhone($data->PhoneNumber) && testEmail($data->Email) && testInt($data->GenderId, $data->RoleId) && testDateOfBirth($data->DateOfBirth);
+        $result = normalizeString($conn, $data->FirstName, $data->LastName) && testPhone($data->PhoneNumber) && testEmail($data->Email) && testMutipleInts($data->GenderId, $data->RoleId) && testDateOfBirth($data->DateOfBirth);
 
         if ( isset($data->x1) || isset($data->y1) || isset($data->w) || isset($data->h) ) {
             $x1 = $data->x1;
@@ -122,10 +132,10 @@ if ( $_SERVER['REQUEST_METHOD'] == 'PUT' ) {
     }
 }
 
-if ( $_SERVER['REQUEST_METHOD'] == 'DELETE' ) {
+if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     if ($_SESSION['roleId'] == 1) {
         //decode the json data
-        if ( isset($_GET['userId']) && testInt($_GET['userId']) ) {
+        if ( isset($_GET['userId']) && testMutipleInts($_GET['userId']) ) {
             deleteUser($conn, $_GET['userId']);
         }
     }
@@ -149,7 +159,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'DELETE' ) {
         unlink($croppedImageFileName);
         unlink($imageFileName);
 
-        $_SESSION['image'] = '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/';
+        $_SESSION['image'] = '/uploads/';
 
         if ($_SESSION['genderId'] == 1) { // male
             $_SESSION['image'] .= 'maleimage.jpeg';

@@ -1,26 +1,18 @@
-<title>Order Details</title>
-
 <?php
-
-	require(__DIR__ . '/../../CafeteriaApp.Backend/functions.php');
-
-	validatePageAccess($conn);
-
-	require(__DIR__ . '/layout.php');
-
+	require(__DIR__ . '/../layout.php');
+	validatePageAccess([3]);
+	require(__DIR__ . '/../modal_includes.php');
 ?>
+
+<title>Order Details</title>
 
 <head>
 
-	<link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/map.css">
+	<link rel="stylesheet" type="text/css" href="/css/map.css">
 
-	<script src="https://maps.googleapis.com/maps/api/js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeWPPmdZODmjq3pLXNQVEzPm6X2eZm5dY"></script>
 
-	<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/show_order_details.js"></script>
-
-	<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/modal_controller.js"></script>
-
-	<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/modal.js"></script>
+	<script src="/js/show_order_details.js"></script>
 
 </head>
 
@@ -30,7 +22,7 @@
 
 		<h2 style="text-align: center">Order Details</h2>
 
-		<table class="table table-bordered" ng-cloak ng-show="orderItems.length > 0">
+		<table class="table table-bordered" ng-cloak>
 
         	<thead>
 
@@ -72,7 +64,7 @@
 
     	<h2 style="text-align: center">OrderItems Details</h2>
 
-    	<table class="table table-bordered" ng-cloak ng-show="orderItems.length > 0">
+    	<table class="table table-bordered" ng-cloak>
 
         	<thead>
 
@@ -108,7 +100,9 @@
 
     		<h2 style="text-align: center">Order Location</h2>
 
-    		<div class="wrapper"><div id="map"></div></div>
+    		<div class="wrapper"><div id="map" style="width: 500px;height: 500px"></div></div>
+
+    		<br>
 
     	</div>
 

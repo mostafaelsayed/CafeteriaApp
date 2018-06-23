@@ -16,33 +16,33 @@ checkGetParams();
 
 // $Words = array_merge($Words['header'], $Words['footer'], $Words[$requeted_file]);
 
-$orderId = isset($_SESSION['orderId']) ? $_SESSION['orderId'] : 0 ;
-$userImage = isset($_SESSION['image']) ? $_SESSION['image'] : 'no Image' ;
-$userName = isset($_SESSION['userName']) ? $_SESSION['userName'] : 'anonymous' ;
-$selected_lang ='en';
+$orderId = isset($_SESSION['orderId']) ? $_SESSION['orderId'] : 0;
+$userImage = isset($_SESSION['image']) ? $_SESSION['image'] : 'no Image';
+$userName = isset($_SESSION['userName']) ? $_SESSION['userName'] : 'anonymous';
+$selected_lang = 'en';
 ?>
 
 <!DOCTYPE html>
 
 <html>
   <head>
-    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" charset="utf-8" name="viewport" content="IE=11,width=device-width, initial-scale=1.0" />
 
     <!-- <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=McLaren"> -->
 
-    <link rel="icon" type="text/css" href="/CafeteriaApp/CafeteriaApp/favicon.ico">
-    <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/normalize.css" rel="stylesheet"/>
+    <link rel="icon" type="text/css" href="/favicon">
+    <link href="/css/normalize.css" rel="stylesheet"/>
     <!-- MetisMenu CSS -->
-    <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/metisMenu.min.css" rel="stylesheet"/>
+    <link href="/css/metisMenu.min.css" rel="stylesheet"/>
     <!-- Custom CSS -->
-    <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/sb-admin-2.css" rel="stylesheet"/>
+    <link href="/css/sb-admin-2.css" rel="stylesheet"/>
     <!-- Custom Fonts -->
-    <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <!-- Bootstrap Core CSS -->
     <!-- Latest compiled and minified CSS -->
-    <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
     <!-- <link rel="stylesheet" href="../css/bootstrap-select.min.css"> -->
-    <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/layout.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/layout.css" rel="stylesheet" type="text/css"/>
 
   </head>
 
@@ -62,7 +62,7 @@ $selected_lang ='en';
 
         <div class="navbar-header" style="display:inline;!important">
 
-          <img id="logo" style="width:60px;height:60px;" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/logo_main.png">
+          <img id="logo" style="width:60px;height:60px;" src="/images/logo_main.png">
 
         </div>
 
@@ -72,13 +72,13 @@ $selected_lang ='en';
 
             <li>
 
-              <a href='/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php'>Home</a>
+              <a href="/public/categories">Home</a>
 
             </li>
 
             <li>
 
-              <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/help.php">Help</a>
+              <a href="/public/help">Help</a>
 
             </li>
 
@@ -96,7 +96,7 @@ $selected_lang ='en';
 
             <li ng-if='orderId' id="shoppingCart" title="Show Shopping Cart Items">
 
-              <img id="shoppingCart-btn" src="../images/icons/cart-layout.png" />
+              <img id="shoppingCart-btn" src="/images/icons/cart-layout.png" />
 
               <div id="shoppingCartDetails">
 
@@ -171,7 +171,7 @@ $selected_lang ='en';
 
                   <div id="cart_checkout">
 
-                    <a class="btn checkout" title="Check out this order" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/checkout.php?orderId={{orderId}}">
+                    <a class="btn checkout" title="Check out this order" href="/checkout/{{orderId}}">
 
                       Checkout <span class="glyphicon glyphicon-usd"></span>
 
@@ -193,11 +193,11 @@ $selected_lang ='en';
 
                 <?php
                   if ($length > 0) {
-                    echo "<img src='../images/alarm-1.png' style='width:40px; height:40px;'/>
+                    echo "<img src='/images/alarm-1.png' style='width:40px; height:40px;'/>
                       <label id='notifyLabel' style='color: blue;font-size: 2em'>{$length}</label>";
                   }
                   else {
-                    echo "<img src='../images/alarm.png' style='width:40px; height:40px;'/>";
+                    echo "<img src='/images/alarm.png' style='width:40px; height:40px;'/>";
                   }
 
                   if ( !empty($_SESSION['notifications']) && is_array($_SESSION['notifications']) ) {
@@ -279,15 +279,15 @@ $selected_lang ='en';
 
                   <div class="dropdown-menu" style="left: -70px">
 
-                    <a class="dropdown_item" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/favorite items.php">My Favorites</a>
+                    <a class="dropdown_item" href="/favorite items">My Favorites</a>
 
-                    <a class="dropdown_item" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/Profile.php">Update Profile</a>
+                    <a class="dropdown_item" href="/profile">Update Profile</a>
 
-                    <a class="dropdown_item" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/change_password.php">Change Password</a>
+                    <a class="dropdown_item" href="/change_password">Change Password</a>
 
                     <hr>
 
-                    <a class="dropdown_item" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/logout.php">Log out
+                    <a class="dropdown_item" href="/logout">Log out
 
                     </a>
 
@@ -301,7 +301,7 @@ $selected_lang ='en';
 
               <li style="margin-left: 70px;">
 
-                <a href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/login.php" class="btn btn-info" style="font-size: 2rem;padding-top: 5px;">
+                <a href="/login.php" class="btn btn-info" style="font-size: 2rem;padding-top: 5px;">
 
                   Login
 
@@ -323,17 +323,17 @@ $selected_lang ='en';
 
     <?php 
       if ( !isset($_SESSION['userId']) ) {
-        echo "<h1>login <a href='/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/login.php'>here</a> so you can order food, rate items, add comments and more ... </h1>";
+        echo "<h1>login <a href='/login.php'>here</a> so you can order food, rate items, add comments and more ... </h1>";
       }
     ?> 
 
-    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/jquery-3.2.1.min.js"></script>
-    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/bootstrap.min.js"></script>
-    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/angular.min.js"></script>
-    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/customer_and_cashier_order.js"></script>
-    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/metisMenu.min.js"></script>
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/angular.min.js"></script>
+    <script src="/js/customer_and_cashier_order.js"></script>
+    <script src="/js/metisMenu.min.js"></script>
     <!-- Custom Theme JavaScript -->
-    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/sb-admin-2.js"></script>
+    <script src="/js/sb-admin-2.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <!-- <script src="../js/bootstrap-select.min.js"></script> -->
     <script type="text/javascript">
@@ -365,15 +365,23 @@ $selected_lang ='en';
     </script>
 
     <script type="text/javascript">
-      $.urlParam = function(name) {
-          var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+      // $.urlParam = function(name) {
+      //     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
 
-          if (results == null) {
-              return null;
-          } else {
-              return decodeURI(results[1]) || 0;
-          }
+      //     if (results == null) {
+      //         return null;
+      //     } else {
+      //         return decodeURI(results[1]) || 0;
+      //     }
+      // }
+
+      $.urlParam = function(pos) {
+        var arr = window.location.href.split('/').reverse();
+        var res = arr[pos];
+
+        return res;
       }
+
     </script>
 
-    <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/layout.js"></script>
+    <script src="/js/layout.js"></script>

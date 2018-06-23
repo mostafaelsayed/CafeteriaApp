@@ -11,6 +11,7 @@
     if ( $result = $conn->query($sql) ) {
       $MenuItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
+
       return $MenuItems;
     }
     else {
@@ -23,6 +24,7 @@
     if ( $result = $conn->query($sql) ) {
       $MenuItem = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
+      
       return $MenuItem;
     }
     else {
@@ -36,6 +38,7 @@
     if ( $result = $conn->query($sql) ) {
       $MenuItem = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
+      
       return $MenuItem['Price'];
     }
     else {
@@ -43,11 +46,18 @@
     }
   }
 
-  function addMenuItem($conn, $name, $price, $description, $categoryId, $imageData) {
-    $sql = "insert into menuitem (Name, Price, Description, CategoryId, Image) values (?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $theImage = addBinaryImageFile($imageData, $name);
-    $stmt->bind_param("sdsis", $name, $price, $description, $categoryId, $theImage);
+  function addMenuItem($conn, $name, $price, $description, $categoryId, $imageData = null) {
+    if ($imageData != null) {
+      $sql = "insert into menuitem (Name, Price, Description, CategoryId, Image) values (?, ?, ?, ?, ?)";
+      $stmt = $conn->prepare($sql);
+      $theImage = addBinaryImageFile($imageData, $name . $categoryId)[0];
+      $stmt->bind_param("sdsis", $name, $price, $description, $categoryId, $theImage);
+    }
+    else {
+      $sql = "insert into menuitem (Name, Price, Description, CategoryId) values (?, ?, ?, ?)";
+      $stmt = $conn->prepare($sql);
+      $stmt->bind_param("sdsi", $name, $price, $description, $categoryId);
+    }
 
     if ($stmt->execute() === TRUE) {
       return "MenuItem Added successfully";
@@ -58,20 +68,17 @@
   }
 
   function editMenuItem($conn, $name, $price, $description, $id, $imageData, $visible) {
-    $result = $conn->query("select Image from menuitem where Id = " . $id);
+    $result = $conn->query("select Image, CategoryId from menuitem where Id = " . $id);
     $menuItem = mysqli_fetch_assoc($result);
     mysqli_free_result($result);
-    $sql = "update menuitem set Name = (?), Price = (?), Description = (?), Image = (?), Visible = (?) 
-    where Id = (?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sdssii", $name, $price, $description, $Image, $visible, $id);
+    $stmt = '';
 
     if ($imageData != null) {
       $sql = "update menuitem set Name = (?), Price = (?), Description = (?), Image = (?), Visible = (?) 
       where Id = (?)";
       $stmt = $conn->prepare($sql);
       $stmt->bind_param("sdssii", $name, $price, $description, $Image, $visible, $id);
-      $Image = editBinaryImage($imageData, $menuItem['Image'], $name);
+      $Image = editBinaryImage($imageData, $menuItem['Image'], $name . $menuItem['CategoryId'])[0];
     }
     else {
       $sql = "update menuitem set Name = (?), Price = (?), Description = (?), Visible = (?) 
@@ -91,12 +98,12 @@
   function deleteMenuItem($conn, $id) {
     $sql = "select Image from menuitem where Id = " . $id . " LIMIT 1";
     $result = $conn->query($sql);
-    deleteImageFileIfExists( mysqli_fetch_assoc($result)['Image'] );
-    mysqli_free_result($result);
-    //$conn->query("set foreign_key_checks = 0"); // ????????/
     $sql = "delete from menuitem where Id = " . $id . " LIMIT 1";
 
     if ($conn->query($sql) === TRUE) {
+      deleteImageFileName( mysqli_fetch_assoc($result)['Image'] );
+      mysqli_free_result($result);
+
       return "MenuItem deleted successfully";
     }
     else {

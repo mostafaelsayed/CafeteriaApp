@@ -5,6 +5,7 @@
 
 		if ($res) {
 			$res = mysqli_fetch_assoc($res);
+			
 			return $res;
 		}
 		else {

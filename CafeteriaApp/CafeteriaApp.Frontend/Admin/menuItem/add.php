@@ -7,7 +7,7 @@
 
   <title>Adding MenuItem</title>
 
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
+  <link href="/css/input_file.css" rel="stylesheet">
 
 </head>
 
@@ -93,25 +93,13 @@
 
         <div><label>Image</label></div>
 
-        <div class="dropzone" file-dropzone="[image/png, image/jpeg]" file="image" file-name="imageFileName" data-max-file-size="3">
+        <input type="file" name="image" id="file" class="inputfile" onchange="readURL(this);">
 
-        </div>
-
-        <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile" required>
-
-        <span ng-show="myform.file.$touched && myform.file.$invalid" id="inputControl" ng-cloak>
-
-          Image is Required
-
-          <br>
-
-        </span>
-
-        <img ng-src="{{ uploadme.src }}" style="width: 300px;height: 300px">
+        <img id="image" style="width: 300px;height: 300px">
 
         <span>
 
-          <button class="btn btn-primary" onclick="mylabel.click()" style="position: absolute;margin-top: 150px">Choose image</button>
+          <button class="btn btn-primary" onclick="event.preventDefault();mylabel.click()" style="position: absolute;margin-top: 150px">Choose image</button>
 
           <label id="mylabel" for="file"></label>
 
@@ -132,6 +120,22 @@
 </div>
 
 
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/image_module.js"></script>
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/price_module.js"></script>
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/add_menuitem.js"></script>
+<script src="/js/image_module.js"></script>
+<script src="/js/price_module.js"></script>
+<script src="/js/add_menuitem.js"></script>
+
+<script type="text/javascript">
+  function readURL(input) {
+    var file = input.files[0];
+
+    if (input.files && file) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        $('#image').attr('src', e.target.result);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+</script>

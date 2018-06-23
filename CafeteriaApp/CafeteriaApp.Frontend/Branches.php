@@ -59,7 +59,7 @@
 // controller to deal with favorite items
 layoutApp.controller('branch', ['$scope', '$http', function($scope, $http) {
   $scope.getBranches = function() {
-    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Branch.php')
+    $http.get('/myapi/Branch')
     .then(function(response) {
       $scope.branches = response.data;
     });

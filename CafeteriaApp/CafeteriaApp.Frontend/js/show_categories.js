@@ -1,7 +1,7 @@
 // controller for getting categories of a cafeteria from database
 layoutApp.controller('getCategories', ['$scope', '$http', function($scope, $http) {
   $scope.getCategories = function() {
-    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Category.php')
+    $http.get('/myapi/Category')
     .then(function(response) {
       $scope.categories = response.data;
     });

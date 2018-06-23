@@ -1,21 +1,20 @@
-var orderDetails = angular.module('order_details', ['customer_and_cashier_order', 'location_provider']);
+var orderDetails = angular.module('order_details', ['customer_and_cashier_order']);
 
-orderDetails.controller('order_details', ['$scope', '$http', '$location', function($scope, $http, $location) {
-	$scope.orderId = $location.search().id;
+orderDetails.controller('order_details', ['$scope', '$http', function($scope, $http) {
+	$scope.orderId = $.urlParam(1);
 
-	$http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?orderId=' + $scope.orderId)
+	$http.get('/myapi/Order/orderId/' + $scope.orderId)
 	.then(function(response) {
 		$scope.orderDetails = response.data;
 	})
 
-	$http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderItem.php?orderId=' + $scope.orderId)
+	$http.get('/myapi/OrderItem/orderId/' + $scope.orderId)
 	.then(function(response) {
 		$scope.orderItems = response.data;
 	})
 
-	$http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderLocation.php?orderId=' + $scope.orderId)
+	$http.get('/myapi/OrderLocation/orderId/' + $scope.orderId)
 	.then(function(response) {
-		console.log(response);
 		$scope.myPos = {
     		lat: parseFloat(response.data.Lat),
    			lng: parseFloat(response.data.Lng)
@@ -29,8 +28,6 @@ orderDetails.controller('order_details', ['$scope', '$http', '$location', functi
           map: $scope.map,
           position: $scope.myPos
         });
-
-        console.log($scope.myPos);
 
 	  	$scope.infoWindow = new google.maps.InfoWindow();
 

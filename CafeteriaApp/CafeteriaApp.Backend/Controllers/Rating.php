@@ -25,7 +25,7 @@
     $stmt->bind_param("iid", $Cid, $Mid, $value);
 
     if ($stmt->execute() === TRUE) {
-       return true;
+      return true;
       //return "Comment Added successfully";
     }
     else {
@@ -39,7 +39,7 @@
     $stmt->bind_param("dii", $value, $Cid, $Mid);
 
     if ($stmt->execute() === TRUE) {
-       return true;
+      return true;
       //return "Comment Added successfully";
     }
     else {
@@ -71,6 +71,7 @@
     if ($result) {
       $avg = mysqli_fetch_all($result, MYSQLI_NUM);
       mysqli_free_result($result);
+      
       return $avg;
     }
     else { // server

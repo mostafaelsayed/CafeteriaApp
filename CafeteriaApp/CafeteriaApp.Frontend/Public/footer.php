@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/footer.css">
+<link rel="stylesheet" type="text/css" href="/css/footer.css">
 
 		<!-- Advertisments -->
 		<!-- <div id="ads">
@@ -17,23 +17,23 @@
 				<ul id="followUs">
 					<h4>Follow Us</h4>
 					<li>
-						<a style="color: #475993" href="#"><img class="footerImage" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/footerIcons/facebook.png">Facebook</a>
+						<a style="color: #475993" href="#"><img class="footerImage" src="/footerIcons/facebook.png">Facebook</a>
 					</li>
 
 					<li>
-						<a style="color: #76A9EA" href="#"><img class="footerImage" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/footerIcons/twitter.png">Twitter</a>
+						<a style="color: #76A9EA" href="#"><img class="footerImage" src="/footerIcons/twitter.png">Twitter</a>
 					</li>
 
 					<li>
 						<a style="color: #F34A38" href="#">
-							<img class="footerImage" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/footerIcons/google-plus.png">
+							<img class="footerImage" src="/footerIcons/google-plus.png">
 							Google+
 						</a>
 					</li>
 
 					<li>
 						<a style="color: #F61C0D" href="#">
-							<img class="footerImage" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/footerIcons/youtube.png">
+							<img class="footerImage" src="/footerIcons/youtube.png">
 							YouTube
 					</a>
 

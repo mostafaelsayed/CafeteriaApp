@@ -46,7 +46,7 @@
 
           <td id="alignText" class="center">
 
-          <a type="button" href="edit_fee.php?id={{f.Id}}">Edit</a>&nbsp;&nbsp;
+          <a type="button" href="{{f.Id}}/edit">Edit</a>&nbsp;&nbsp;
 
           <a type="button" style="cursor: pointer" ng-click="deleteFee(f)">Delete</a>
 
@@ -62,4 +62,4 @@
 
 </div>
 
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/show_and_delete_fees.js"></script>
+<script src="/js/show_and_delete_fees.js"></script>

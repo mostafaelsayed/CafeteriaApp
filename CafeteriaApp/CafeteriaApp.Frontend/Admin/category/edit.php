@@ -8,7 +8,7 @@
 
   <title>Managing Category</title>
 
-  <link href="../../css/input_file.css" rel="stylesheet">
+  <link href="/css/input_file.css" rel="stylesheet">
 
 </head>
 
@@ -50,38 +50,19 @@
 
         <div><label>Image</label></div>
 
-        <div class="dropzone" file-dropzone="[image/png, image/jpeg]" file="image" file-name=" imageFileName" data-max-file-size="3">
+        <input type="file" name="image" id="file" class="inputfile" onchange="readURL(this);">
 
-        </div>
+        <div ng-if="imageUrl != ''">
 
-        <input type="file" fileread="uploadme.src" name="file" id="file" class="inputfile" required>
-
-        <span ng-show="myform.file.$touched && myform.file.$invalid" id="inputControl" ng-cloak>
-
-          Image is Required
-
-          <br>
-
-        </span>
-
-        <div ng-if="uploadme.src != ''">
-
-          <img ng-src="{{ uploadme.src }}" style="width: 300px;height: 300px" />
-
-        </div>
-
-        <div ng-if="uploadme.src == ''">
-
-          <img ng-src="{{ imageUrl }}" style="text-align: center;width: 300px;height: 300px">&nbsp;
+          <img id="image" ng-src="{{ imageUrl }}" style="width: 300px;height: 300px" />
 
           <span>
-            <button class="btn btn-primary" onclick="mylabel.click()" style="position: absolute;margin-top: 150px" id="mybutton">Choose image</button>
+
+            <button class="btn btn-primary" onclick="event.preventDefault();mylabel.click()" style="position: absolute;margin-top: 150px" id="mybutton">Choose image</button>
 
             <label id="mylabel" for="file"></label>
 
           </span>
-
-          <br>
 
         </div>
 
@@ -109,7 +90,7 @@
 
     <div>
 
-      <a id="add" title="Add MenuItem" id="creatNewCategory" href="../MenuItem/add_menuitem.php?id={{categoryId}}" target="_self" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
+      <a id="add" title="Add MenuItem" id="creatNewCategory" href="menuitem/add" target="_self" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
 
     </div>
 
@@ -143,7 +124,7 @@
 
           <td id="alignText" class="center">
 
-            <a id="myButton" href="../MenuItem/edit_menuitem.php?id={{m.Id}}" target="_self">Edit</a>&nbsp;
+            <a id="myButton" href="menuitem/{{m.Id}}/edit" target="_self">Edit</a>&nbsp;
 
             <a style="cursor: pointer" ng-click="deleteMenuItem(m)">Delete</a>
 
@@ -170,5 +151,21 @@
 </div>
 
 <!-- image module -->
-<script src="../../js/image_module.js"></script>
-<script src="../../js/edit_category_and_show_and_delete_its_menuitems.js"></script>
+<script src="/js/image_module.js"></script>
+<script src="/js/edit_category_and_show_and_delete_its_menuitems.js"></script>
+
+<script type="text/javascript">
+  function readURL(input) {
+    var file = input.files[0];
+
+    if (input.files && file) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        $('#image').attr('src', e.target.result);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+</script>

@@ -21,7 +21,7 @@ if ( isset($_POST['submit']) ) {
             }
             else {
                 $_SESSION['message'] = "<h3 class=\"error\">You must be logged in first !</h3>";
-                redirect_to( __DIR__ . '/../login.php');
+                redirect_to(__DIR__ . '/../login.php');
             }
         }
 
@@ -29,7 +29,7 @@ if ( isset($_POST['submit']) ) {
 }
 ?>
 
-<link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/errors.css" rel="stylesheet" type="text/css">
+<link href="/css/errors.css" rel="stylesheet" type="text/css">
 
 <style type="text/css">
 	input[type="password"] {

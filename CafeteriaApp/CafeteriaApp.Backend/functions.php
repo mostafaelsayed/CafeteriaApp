@@ -42,7 +42,7 @@ function islogged_in() {
 
 function confirm_logged_in() {
     if ( !islogged_in() ) {
-        redirect_to(__DIR__ . '/../CafeteriaApp.Frontend/login.php');
+        redirect_to('/login');
     }
 }
 
@@ -123,8 +123,9 @@ function validatePageAccess($permittedLevels, $checklogging = true) {
     }
 
     if (!$permitted) {
-        echo "<h1 style ='color:red;' > Access denied ^_^ ! </h2>";
-        exit();
+        // echo "<h1 style ='color:red;' > Access denied ^_^ ! </h2>";
+        // exit();
+        redirect_to('/login');
     }
 
     // $query  = "SELECT `Dir` FROM `dir` WHERE `Id` IN (SELECT `DirId` FROM `dir_role` WHERE `RoleId` = {$_SESSION['roleId']} ) ";  // add RoleId
@@ -150,6 +151,8 @@ function validatePageAccess($permittedLevels, $checklogging = true) {
 }
 
 function checkGetParams() {
+    confirm_logged_in();
+
     foreach ($_GET as $key => $value) {
         if ( !isset($_GET[$key]) || empty($_GET[$key]) ) {
             echo "<h1 style ='color:red;' > Access denied ^_^  </h2>";

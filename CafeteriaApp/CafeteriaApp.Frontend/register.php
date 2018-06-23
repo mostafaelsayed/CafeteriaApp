@@ -6,7 +6,7 @@
 
     <title>Register</title>
 
-    <meta name="viewport" charset="UTF-8" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" name="viewport" charset="UTF-8" content="IE=11,width=device-width, initial-scale=1.0" />
 
     <!-- <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Anton"> -->
 
@@ -71,7 +71,7 @@
 
     <div ng-app="registerApp" ng-controller="registerController" class="row">
 
-      <form ng-cloak novalidate role="form" name="myform" style="width: 40%;margin: auto;text-align: center" enctype="multipart/form-data" method="post" action="../CafeteriaApp.Backend/Requests/User.php">
+      <form ng-cloak novalidate role="form" name="myform" style="width: 40%;margin: auto;text-align: center" enctype="multipart/form-data" method="post" action="/myapi/User">
 
         <div class="input-field col s12">
 
@@ -264,8 +264,6 @@
 
         <input type="hidden" name="x1" value="" />
         <input type="hidden" name="y1" value="" />
-        <!-- <input type="hidden" name="x2" value="" />
-        <input type="hidden" name="y2" value="" /> -->
         <input type="hidden" name="w" value="" />
         <input type="hidden" name="h" value="" />
 
@@ -286,10 +284,10 @@
 </html>
 
 
-<link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/node_modules/croppie/croppie.css">
-<script type="text/javascript" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/node_modules/croppie/croppie.js"></script>
+<link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp.Frontend/js/node_modules/croppie/croppie.css">
+<script type="text/javascript" src="/CafeteriaApp/CafeteriaApp.Frontend/js/node_modules/croppie/croppie.js"></script>
 
-<script type="text/javascript" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/crop.js"></script>
+<script type="text/javascript" src="/CafeteriaApp/CafeteriaApp.Frontend/js/crop.js"></script>
 
 
 
@@ -477,8 +475,8 @@ document.getElementById('image').onload = function() {
 
 <!-- croppie (we will make it work later) -->
 
-<!-- <link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/node_modules/croppie/croppie.css">
-<script type="text/javascript" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/node_modules/croppie/croppie.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp.Frontend/js/node_modules/croppie/croppie.css">
+<script type="text/javascript" src="/CafeteriaApp/CafeteriaApp.Frontend/js/node_modules/croppie/croppie.js"></script>
 
 <script>
   document.getElementById('image').onload = function() {

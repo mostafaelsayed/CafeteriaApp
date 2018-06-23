@@ -4,9 +4,9 @@
 
 <title>Profile Info</title>
 
-<link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/alertify/css/alertify.min.css">
-<link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/alertify/css/themes/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/alertify/css/themes/default.min.css">
+<link rel="stylesheet" type="text/css" href="/js/alertify/css/alertify.min.css">
+<link rel="stylesheet" type="text/css" href="/js/alertify/css/themes/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/js/alertify/css/themes/default.min.css">
 
 <meta charset="utf-8" id="imgFlag" value="<?php echo $_SESSION['imgFlag'] ?>">
 
@@ -50,7 +50,7 @@
 
       <div class="modal-body">
 
-        <form enctype="multipart/form-data" method="post" action="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php">
+        <form enctype="multipart/form-data" method="post" action="/myapi/User">
           <div style="text-align: center"><button class="btn btn-info" onclick="event.preventDefault();$('#file').trigger('click')">Choose Another Image</button></div>
 
           <input type="file" id="file" name="image" class="inputfile" value="" onchange="readURL(this)" />
@@ -122,7 +122,7 @@
 
   layoutApp.controller('profile', ['$scope', '$http', function($scope, $http) {
     $scope.delete = function() {
-      $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php?f=1').then(function(response) {
+      $http.delete('/myapi/User/f/1').then(function(response) {
         //console.log(response);
         location.reload();
       });
@@ -175,11 +175,11 @@
   }
 </style>
 
-<script type="text/javascript" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/alertify/alertify.min.js"></script>
+<script type="text/javascript" src="/js/alertify/alertify.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/node_modules/croppie/croppie.css">
-<script type="text/javascript" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/node_modules/croppie/croppie.js"></script>
+<link rel="stylesheet" type="text/css" href="/js/node_modules/croppie/croppie.css">
+<script type="text/javascript" src="/js/node_modules/croppie/croppie.js"></script>
 
-<script type="text/javascript" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/crop.js"></script>
+<script type="text/javascript" src="/js/crop.js"></script>
 
 <?php require(__DIR__ . '/../Public/footer.php'); ?>

@@ -32,7 +32,7 @@
 
           <div>
 
-            <a id="add" title="Add Category" id="creatNewCategory" href="add_category.php" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
+            <a id="add" title="Add Category" id="creatNewCategory" href="/admin/category/add" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></a>
 
           </div>
 
@@ -61,7 +61,7 @@
 
                 <td id="alignText" class="center">
 
-                  <a type="button" href="edit_category_and_show_and_delete_its_menuitems.php?id={{c.Id}}">Edit</a>&nbsp;&nbsp;
+                  <a type="button" href="/admin/category/{{c.Id}}/edit">Edit</a>&nbsp;&nbsp;
 
                   <a type="button" style="cursor: pointer" ng-click="deleteCategory(c)">Delete</a>
 
@@ -85,4 +85,4 @@
 
 <!-- order of include not matter in case of dependencies exist -->
 
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/show_and_delete_categories.js"></script>
+<script src="/js/show_and_delete_categories.js"></script>

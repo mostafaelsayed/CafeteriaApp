@@ -31,7 +31,7 @@ function filterData($conn, $searchInput)
         }
 
         $_SESSION['filteredData'] = array_merge($arr1, $arr2, $arr3);
-        header('Location: /CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Customer/filtered-data.php?query=' . $searchInput);
+        header('Location: /filtered-data?query=' . $searchInput);
     } else {
         echo "error : ", $conn->error;
     }

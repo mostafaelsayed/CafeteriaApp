@@ -14,14 +14,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
 }
 
-// i don't know how to handle
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($_SESSION['roleId'] == 1) {
         //decode the json data
         $data = json_decode( file_get_contents('php://input') ); // ????????????
 
-        if ( isset($data->CategoryId, $data->Price, $data->Name, $data->Description, $data->Image) && testInt($data->CategoryId) && normalizeString($conn, $data->Name, $data->Description, $data->Image) && testPrice($data->Price) ) {
-            addMenuItem($conn, $data->Name, $data->Price, $data->Description, $data->CategoryId, $data->Image);
+        if ( isset($data->CategoryId, $data->Price, $data->Name, $data->Description) && testInt($data->CategoryId) && normalizeString($conn, $data->Name, $data->Description) && testPrice($data->Price) ) {
+            if (isset($data->Image) && $data->Image != null) {
+                addMenuItem($conn, $data->Name, $data->Price, $data->Description, $data->CategoryId, $data->Image);
+            }
+            else {
+                addMenuItem($conn, $data->Name, $data->Price, $data->Description, $data->CategoryId);
+            }
         } else {
             echo "error while adding menuitem";
         }

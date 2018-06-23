@@ -4,7 +4,7 @@ var edit_userApp = angular.module('edit_user', ['image', 'registerFormValidation
 edit_userApp.controller('editUser', ['$scope', '$http', function($scope, $http) {
 
   $scope.userData = {imageUrl: ''};
-  $scope.userId = $.urlParam('id');
+  $scope.userId = $.urlParam(1);
 
   $scope.roles = [{'id': 1, 'name': 'Admin'}, {'id': 2, 'name': 'Customer'}, {'id': 3, 'name': 'Cashier'}];
 
@@ -18,7 +18,7 @@ edit_userApp.controller('editUser', ['$scope', '$http', function($scope, $http) 
   $scope.credit = 0;
 
   $scope.getUser = function() {
-    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php?userId=' + $scope.userId)
+    $http.get('/myapi/User/userId/' + $scope.userId)
     .then(function(response) {
       console.log(response);
       $scope.userData.firstName = response.data.FirstName;
@@ -68,7 +68,7 @@ edit_userApp.controller('editUser', ['$scope', '$http', function($scope, $http) 
   $scope.getUser();
 
   $scope.getCustomer = function() {
-    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Customer.php?userId=' + $scope.userId)
+    $http.get('/myapi/Customer/userId/' + $scope.userId)
     .then(function(response) {
       $scope.credit = response.data.Credit;
     });
@@ -76,7 +76,6 @@ edit_userApp.controller('editUser', ['$scope', '$http', function($scope, $http) 
 
   $scope.save = function () {
     if ($scope.myform.$valid) {
-
       var userData = {
         FirstName: $scope.userData.firstName,
         LastName: $scope.userData.lastName,
@@ -86,7 +85,11 @@ edit_userApp.controller('editUser', ['$scope', '$http', function($scope, $http) 
         RoleId: $scope.selectedRole.id,
         Image: $('#image').attr('src'),
         DateOfBirth: String($scope.selectedYear.year) + '-' + String($scope.selectedMonth.month) + '-' + String($scope.selectedDay.day),
-        GenderId: parseInt($scope.selectedGender)
+        GenderId: parseInt($scope.selectedGender),
+        x1: $('#x1').val(),
+        y1: $('#y1').val(),
+        w: $('#w').val(),
+        h: $('#h').val()
       };
 
       if ($('#file').val() == '') {
@@ -95,10 +98,10 @@ edit_userApp.controller('editUser', ['$scope', '$http', function($scope, $http) 
 
       //console.log(userData);
 
-      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php', userData)
+      $http.put('/myapi/User', userData)
       .then(function(response) {
         //window.history.back();
-        //console.log(response);
+        console.log(response);
       });
 
       if ($scope.selectedRole.id == $scope.originalRole.id) {
@@ -110,34 +113,34 @@ edit_userApp.controller('editUser', ['$scope', '$http', function($scope, $http) 
             UserId: parseInt($scope.userData.id),
           };
 
-          $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Customer.php', customerData)
+          $http.put('/myapi/Customer', customerData)
           .then(function(response) {
             console.log(response);
             // window.history.back();
           });
 
-          window.history.back();
+          //window.history.back();
         }
         else if (x == 1) { // admin role
-          window.history.back();
+          //window.history.back();
         }
         else if (x == 3) { // cashier role
-          window.history.back();
+          //window.history.back();
         }
       }
       else { // selected is not as original
         if ($scope.originalRole.id == 1) { // admin role
-          $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Admin.php?userId=' + $scope.userId)
+          $http.delete('/myapi/Admin/userId/' + $scope.userId)
           .then(function(response) {
           });
         }
         else if ($scope.originalRole.id == 2) { // customer role
-          $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Customer.php?userId=' + $scope.userId)
+          $http.delete('/myapi/Customer/userId/' + $scope.userId)
           .then(function(response) {
           });
         }
         else if ($scope.originalRole.id == 3) { // cashier role
-          $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Cashier.php?userId=' + $scope.userId)
+          $http.delete('/myapi/Cashier/userId/' + $scope.userId)
           .then(function(response) {
           });
         }
@@ -147,7 +150,7 @@ edit_userApp.controller('editUser', ['$scope', '$http', function($scope, $http) 
             UserId: $scope.userData.id
           };
 
-          $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Admin.php', adminData)
+          $http.post('/myapi/Admin', adminData)
           .then(function(response) {
             // window.history.back();
           });
@@ -162,7 +165,7 @@ edit_userApp.controller('editUser', ['$scope', '$http', function($scope, $http) 
             UserId: $scope.userData.id,
           };
 
-          $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Customer.php', customerData)
+          $http.post('/myapi/Customer', customerData)
           .then(function(response) {
             //window.history.back();
           });
@@ -176,7 +179,7 @@ edit_userApp.controller('editUser', ['$scope', '$http', function($scope, $http) 
             UserId: $scope.userData.id
           };
 
-          $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Cashier.php', cashierData)
+          $http.post('/myapi/Cashier', cashierData)
           .then(function(response) {
             //window.history.back();
           });

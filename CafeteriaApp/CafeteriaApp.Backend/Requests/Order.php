@@ -43,7 +43,7 @@
     else {
       if ($_SESSION['roleId'] == 3) {
         $_SESSION['orderId'] = addOrder($conn, date('Y-m-d h:m'), 4, 1, $_SESSION['userId']); // consider it cash but when user will use paypal (either using paypal or credit), customer should use the app himself to login to paypal
-        header("Location: " . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php");
+        header("Location: " . "/public/categories");
       }
     }
   }

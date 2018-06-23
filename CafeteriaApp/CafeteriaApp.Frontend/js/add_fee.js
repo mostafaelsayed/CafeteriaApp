@@ -11,9 +11,9 @@ add_feeApp.controller('addFee', ['$scope', '$http', function($scope, $http) {
         Price: $scope.price
       };
 
-      $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Fee.php', data)
+      $http.post('/myapi/Fee', data)
       .then(function(response) {
-        document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Areas/Admin/AppSettings/Views/show_and_delete_fees.php";
+        document.location = "/AppSettings/fees";
       });
     }
   };

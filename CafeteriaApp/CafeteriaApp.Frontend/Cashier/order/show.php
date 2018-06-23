@@ -2,15 +2,15 @@
 
 <?php
 
-  require(__DIR__ . '/layout.php');
+  require(__DIR__ . '/../layout.php');
 
-  require(__DIR__ . '/modal_includes.php');
+  require(__DIR__ . '/../modal_includes.php');
 
 ?>
 
 <head>
 
-  <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/show_and_hide_orders.js"></script>
+  <script src="/js/show_and_hide_orders.js"></script>
 
 </head>
 
@@ -40,7 +40,7 @@
 
             <div style="display: inline-block;">
 
-              <form novalidate name="myForm" action="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php" method="post">
+              <form novalidate name="myForm" action="/myapi/Order" method="post">
 
                 <input type="submit" class="btn btn-primary" value="add order" />
 
@@ -92,7 +92,7 @@
 
                     <a style="cursor: pointer" ng-click="hideOrder(o)">Remove</a>&nbsp;&nbsp;
 
-                    <a class="btn btn-info" style="cursor: pointer" href="show_order_details.php?id={{o.Id}}">Show Details</a>
+                    <a class="btn btn-info" style="cursor: pointer" href="{{o.Id}}/details">Show Details</a>
 
                   </td>
 

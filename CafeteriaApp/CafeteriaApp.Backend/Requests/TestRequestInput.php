@@ -9,7 +9,7 @@ function checkCSRFToken() {
         }
         else {
             //return false;
-            //header('Location: ' . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/error.php');
+            //header('Location: ' . '/CafeteriaApp/CafeteriaApp.Frontend/Public/error.php');
             echo 'error';
             
             return false;
@@ -31,7 +31,7 @@ function checkCSRFToken() {
         }
 
         if ( hash_equals($_SESSION['csrf_token'], $csrf_token) ) {
-            //header('Location: ' . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categ.php');
+            //header('Location: ' . '/CafeteriaApp/CafeteriaApp.Frontend/Public/categ.php');
             echo true;
 
             return true;
@@ -39,7 +39,7 @@ function checkCSRFToken() {
         else {
             //return false;
             echo 'error';
-            //header('Location: ' . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/error.php');
+            //header('Location: ' . '/CafeteriaApp/CafeteriaApp.Frontend/Public/error.php');
             // ob_start();
             // echo 'error';
             // ob_end_clean();
@@ -148,8 +148,6 @@ function testInt($value) {
     }
 }
 
-//var_dump(testInt());
-
 function testMutipleInts(&...$values) {
 
     foreach ($values as &$value) {
@@ -168,7 +166,6 @@ function testPassword(&$password) {
     $y        = preg_match('/([A-Z])/', $password);
 
     if (!$x || !$y) {
-        //echo "false password";
         return false;
     }
 

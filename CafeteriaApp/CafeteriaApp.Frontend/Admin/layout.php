@@ -8,41 +8,41 @@
 
     <head>
 
-        <meta name="viewport" content="width=device-width,initial-scale=1.0" charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" name="viewport" content="IE=11,width=device-width,initial-scale=1.0" charset="utf-8" />
 
-        <link href="/CafeteriaApp/CafeteriaApp/favicon.ico" rel="icon">
+        <link href="/favicon" rel="icon">
 
         <!-- Bootstrap Core CSS -->
-        <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- form validations style -->
-        <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/form_validation.css" rel="stylesheet">
+        <link href="/css/form_validation.css" rel="stylesheet">
 
 
         <!-- sb-admin CSS -->
-        <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/sb-admin-2.css" rel="stylesheet">
+        <link href="/css/sb-admin-2.css" rel="stylesheet">
 
         <!-- font awesome -->
-        <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/font-awesome.min.css" rel="stylesheet">
+        <link href="/css/font-awesome.min.css" rel="stylesheet">
 
         <!-- admin style -->
-        <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/admin style.css" rel="stylesheet">
+        <link href="/css/admin style.css" rel="stylesheet">
 
         
     </head>
 
-    <body style="background-image:url('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/admin background image.jpg');background-repeat: no-repeat;background-size: 1430px 1300px">
+    <body style="background-image:url('/images/admin background image.jpg');background-repeat: no-repeat;background-size: 1430px 1300px">
 
         <div>
 
             <!-- Navigation -->
-            <nav class="navbar navbar-default navbar-fixed-top" style="background-image: url('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/admin background image.jpg')">
+            <nav class="navbar navbar-default navbar-fixed-top" style="background-image: url('/images/admin background image.jpg')">
 
                 <div class="container-fluid">
 
                     <div class="navbar-header">
 
-                        <a style="color: white" class="navbar-brand" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Admin/Category/show_and_delete_categories.php">Manage Categories</a>
+                        <a style="color: white" class="navbar-brand" href="/admin/category/show">Manage Categories</a>
 
                     </div>
 
@@ -50,19 +50,19 @@
 
                         <li>
 
-                            <a style="color: white" class="navbar-brand" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Admin/User/show_and_delete_users.php">Manage Users</a>
+                            <a style="color: white" class="navbar-brand" href="/admin/user/show">Manage Users</a>
 
                         </li>
 
                         <li>
 
-                            <a style="color: white" class="navbar-brand" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Admin/AppSettings/show_and_delete_fees.php">Manage Fees</a>
+                            <a style="color: white" class="navbar-brand" href="/admin/fees/show">Manage Fees</a>
 
                         </li>
 
                         <li>
 
-                            <a style="color: white" class="navbar-brand" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/logout.php">Log out</a>
+                            <a style="color: white" class="navbar-brand" href="/logout.php">Log out</a>
 
                         </li>
 
@@ -81,23 +81,29 @@
 
 </html>
 
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/jquery-3.2.1.min.js"></script>
+<script src="/js/jquery-3.2.1.min.js"></script>
 <!-- angular module -->
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/angular.min.js"></script>
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/metisMenu.min.js"></script>
+<script src="/js/angular.min.js"></script>
+<script src="/js/metisMenu.min.js"></script>
 <!-- sb-admin JavaScript -->
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/sb-admin-2.js"></script>
+<script src="/js/sb-admin-2.js"></script>
 
 
 <script type="text/javascript">
-    $.urlParam = function(name) {
-      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    $.urlParam = function(pos) {
+      // var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
 
-      if (results == null) {
-        return null;
-      }
-      else {
-        return decodeURI(results[1]) || 0;
-      }
+      // if (results == null) {
+      //   return null;
+      // }
+      // else {
+      //   return decodeURI(results[1]) || 0;
+      // }
+
+     
+      var arr = window.location.href.split('/').reverse();
+      var res = arr[pos];
+
+      return res;
     }
 </script>

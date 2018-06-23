@@ -69,5 +69,5 @@
 
 </div>
 
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/edit_fee.js"></script>
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/price_module.js"></script>
+<script src="/js/edit_fee.js"></script>
+<script src="/js/price_module.js"></script>

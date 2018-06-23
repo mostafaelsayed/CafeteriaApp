@@ -1,14 +1,14 @@
 angular.module('cashierApp', ['ui.bootstrap', 'modal', 'angularModalService']).controller('showAndHideOrders',
 ['$scope', '$http', 'ModalService', function($scope, $http, ModalService) {
-	$http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?flag=1')
+	$http.get('/myapi/Order/flag/1')
 	.then(function(response) {
 		$scope.orders = response.data;
 	});
 
 	$scope.editOrder = function(orderId) {
-		$http.put( '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php', {orderId: orderId} )
+		$http.put( '/myapi/Order', {orderId: orderId} )
 		.then(function(response) {
-		  document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php";
+		  document.location = "/public/categories";
 		})
 	};
 
@@ -18,7 +18,7 @@ angular.module('cashierApp', ['ui.bootstrap', 'modal', 'angularModalService']).c
 
 	$scope.show = function(order) {
     ModalService.showModal({
-      templateUrl: '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Templates/Views/modal.html',
+      templateUrl: '/templates/modal.html',
       controller: "ModalController",
       inputs: {
         name: "order"
@@ -36,7 +36,7 @@ angular.module('cashierApp', ['ui.bootstrap', 'modal', 'angularModalService']).c
   };
 
   $scope.delete = function(order) { // this will close order not delete it
-    $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?flag=2&orderId=' + order.Id)
+    $http.put('/myapi/Order/flag/2/orderId/' + order.Id)
     .then(function(response) {
       $scope.orders.splice($scope.orders.indexOf(order), 1);
     });

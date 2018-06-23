@@ -2,9 +2,11 @@
   function getLanguages($conn) {
     $sql = "select * from languages";
     $result = $conn->query($sql);
+
     if ($result) {
       $languages = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
+
       return $languages;   
     }
     else {
@@ -39,8 +41,8 @@
   }
 
   function deleteLanguage($conn, $id) { // drop the colun also ???????
-    //$conn->query("set foreign_key_checks = 0"); // ????????/
     $sql = "delete from languages where Id = " . $id . " LIMIT 1";
+    
     if ($conn->query($sql) === TRUE) {
       return "Language deleted successfully";
     }

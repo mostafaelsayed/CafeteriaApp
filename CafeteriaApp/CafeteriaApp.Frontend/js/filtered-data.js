@@ -2,7 +2,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$rootScope', '$scope', '$
 	function($rootScope, $scope, $http, Order_Info) {
 		$scope.data = Order_Info;
 
-		$http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/search.php').then(function(response) {
+		$http.get('/myapi/search').then(function(response) {
 			$scope.menuItems = response.data;
 			console.log(response);
 		});

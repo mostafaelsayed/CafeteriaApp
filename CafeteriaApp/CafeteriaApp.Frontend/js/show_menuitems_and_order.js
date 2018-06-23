@@ -10,10 +10,21 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope', '$http', '$rootS
     alertify.success('Order Discarded');
   }
 
-  $scope.categoryId = $.urlParam('categoryId');
+  $scope.categoryName = $.urlParam(0);
+  $scope.categoryId = 0;
+
+  $scope.getCategoryIdByName = function() {
+    $http.get('/myapi/Category/name/' + $scope.categoryName).then(function(response) {
+      $scope.categoryId = parseInt(response.data);
+      $scope.getMenuItems();
+      console.log(response);
+    })
+  };
+
+  $scope.getCategoryIdByName();
 
   $scope.checkUser = function() {
-    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php?flag=1')
+    $http.get('/myapi/User/flag/1')
     .then(function(response) {
       if (response.data == 3) { // cahsier then return to his page of orders
         $scope.roleid = true;
@@ -27,8 +38,10 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope', '$http', '$rootS
   $scope.checkUser();
   
   $scope.getMenuItems = function() {
-    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/MenuItem.php?categoryId=' + $scope.categoryId)
+    console.log($scope.categoryId);
+    $http.get('/myapi/MenuItem/categoryId/' + $scope.categoryId)
     .then(function(response) {
+      console.log(response);
       $scope.menuItems = response.data;
       $scope.loadFavoriteItems();
       $scope.initializeMenuItemCommmentFlags();
@@ -57,7 +70,7 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope', '$http', '$rootS
   };
 
   $scope.loadFavoriteItems = function() {
-    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/FavoriteItem.php')
+    $http.get('/myapi/FavoriteItem')
     .then(function(response) {
       $scope.favoItems = response.data;
 
@@ -131,5 +144,5 @@ layoutApp.controller('getMenuItemsAndCustomerOrder', ['$scope', '$http', '$rootS
   $scope.comments = [];//menuitems
   $scope.customerCommentsIds = [];//menuitems
   $scope.ItemRating = [];
-  $scope.getMenuItems();
+  
 }]);

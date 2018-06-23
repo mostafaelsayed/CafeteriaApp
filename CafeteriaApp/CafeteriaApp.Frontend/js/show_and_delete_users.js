@@ -5,7 +5,7 @@ show_and_delete_usersApp.controller('showAndDeleteUsers', ['$scope', '$http', 'M
 function($scope, $http, ModalService) {
   $scope.showModal = function(user) {
     ModalService.showModal({
-      templateUrl: '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Templates/Views/modal.html',
+      templateUrl: '/templates/modal.html',
       controller: 'ModalController',
       inputs: {
         name: 'user'
@@ -22,7 +22,7 @@ function($scope, $http, ModalService) {
   };
 
   $scope.getUsers = function() {
-    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php')
+    $http.get('/myapi/User')
     .then(function(response) {
       $scope.users = response.data;
     });
@@ -35,7 +35,7 @@ function($scope, $http, ModalService) {
   };
 
   $scope.deleteTheUser = function(user) {
-    $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php?userId=' + user.Id)
+    $http.delete('/myapi/User/userId/' + user.Id)
     .then(function(response) {
       console.log(response);
       // console.log(response);
@@ -47,21 +47,21 @@ function($scope, $http, ModalService) {
     var userId = parseInt(user.Id);
 
     if (user.RoleId == 1) {
-      $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Admin.php?userId=' + userId)
+      $http.delete('/myapi/Admin/userId/' + userId)
       .then(function(response) {
         console.log(response);
         $scope.deleteTheUser(user);
       });
     }
     else if (user.RoleId == 3) {
-      $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Cashier.php?userId=' + userId)
+      $http.delete('/myapi/Cashier/userId/' + userId)
       .then(function(response) {
         console.log(response);
         $scope.deleteTheUser(user);
       });
     }
     else if (user.RoleId == 2) {
-      $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Customer.php?userId=' + userId)
+      $http.delete('/myapi/Customer/userId/' + userId)
       .then(function(response) {
         console.log(response);
         $scope.deleteTheUser(user);

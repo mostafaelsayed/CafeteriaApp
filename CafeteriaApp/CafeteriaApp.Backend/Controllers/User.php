@@ -78,7 +78,7 @@
     else {
       $_SESSION['imageSet'] = 0;
       $ImageSet = 0;
-      $Image = '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/uploads/';
+      $Image = '/uploads/';
 
       if ($genderId == 0) { // male
         $Image .= 'maleimage.jpeg';
@@ -104,32 +104,32 @@
   }
 
   function editUser($conn, $firstName, $lastName, $email, $image, $phoneNumber, $roleId, $id, $genderId, $dateOfBirth, $x1 = null, $y1 = null, $w = null, $h = null) {
-    $userEmail = mysqli_fetch_assoc( $conn->query("select Email from user where Id = " . $id) )['Email'];
+    $user = mysqli_fetch_assoc( $conn->query("select Email, CroppedImage, Image from user where Id = " . $id) );
 
-    if ( !($userEmail == $email) && checkExistingEmail($conn, $email) ) {
+    if ( !($user['Email'] == $email) && checkExistingEmail($conn, $email) ) {
       return;
     }
     else {
-      if ($userEmail != $email) {
+      if ($user['Email'] != $email) {
         sendMail($email, $id, $phoneNumber);
       }
 
-      $result = $conn->query("select Image from user where Id = " . $id);
-      $userImage = mysqli_fetch_assoc($result)['Image'];
-      $name = $email;
-      mysqli_free_result($result);
+      $stmt = '';
 
       if ($image != null) {
-        $Image = editBinaryImage($image, $userImage, $name, $x1, $y1, $w, $h);
+        $name = $email;
+        $myImage = editBinaryImage($image, $user['Image'], $name, $user['CroppedImage'], $x1, $y1, $w, $h);
+        $Image = $myImage[0];
+        $CroppedImage = $myImage[1];
+        $sql = "update user set FirstName = (?), LastName = (?), Email = (?), Image = (?), CroppedImage = (?), PhoneNumber = (?), RoleId = (?), GenderId = (?), DateOfBirth = (?) where Id = (?)"; 
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssssssiisi", $firstName, $lastName, $email, $Image, $CroppedImage, $phoneNumber, $roleId, $genderId, $dateOfBirth, $id);
       }
       else {
-        $Image = mysqli_fetch_assoc( $conn->query("select Image from user where Id = " . $id) )['Image'];
-        var_dump($Image);
-      }
-
-      $sql = "update user set FirstName = (?), LastName = (?), Email = (?), Image = (?), PhoneNumber = (?), RoleId = (?), GenderId = (?), DateOfBirth = (?) where Id = (?)"; 
+        $sql = "update user set FirstName = (?), LastName = (?), Email = (?), PhoneNumber = (?), RoleId = (?), GenderId = (?), DateOfBirth = (?) where Id = (?)"; 
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssssiisi", $firstName, $lastName, $email, $Image, $phoneNumber, $roleId, $genderId, $dateOfBirth, $id);
+        $stmt->bind_param("ssssiisi", $firstName, $lastName, $email, $phoneNumber, $roleId, $genderId, $dateOfBirth, $id);
+      }
 
       if ($stmt->execute() === TRUE) {
         echo "User updated successfully";
@@ -176,6 +176,7 @@
       $stmt->bind_param("si", $Password, $Id);
       $Id = $id;
       $Password = $password;
+      
       if ($stmt->execute() === TRUE) {
         return true;
       }
@@ -205,14 +206,13 @@
 
     if ($result) {
       $result = mysqli_fetch_array($result, MYSQLI_NUM); 
-      //mysqli_free_result($result);
       $result = (int)$result[0];
 
       if ($result > 0) { // if he wnats to change the mail and not keeping the old
         return true; // exist
       }
       else {
-        return false;//not exist
+        return false; // not exist
       }
     }
     else {
@@ -235,7 +235,7 @@
         return true; // exist
       }
       else {
-        return false;//not exist
+        return false; //not exist
       }
 
       mysqli_free_result($result);
@@ -246,10 +246,15 @@
   }
 
   function deleteUser($conn, $id) { // cascaded delete ??
-    //$conn->query("set foreign_key_checks = 0"); // ????????/
     $sql = "delete from user where Id = " . $id . " LIMIT 1";
+    $res = mysqli_fetch_assoc( $conn->query("select Image, CroppedImage from user where Id = " . $id) );
+    $image = $res['Image'];
+    $croppedImage = $res['CroppedImage'];
 
     if ($conn->query($sql) === TRUE) {
+      deleteImageFileName($image);
+      deleteImageFileName($croppedImage);
+
       return "User deleted successfully";
     }
     else {

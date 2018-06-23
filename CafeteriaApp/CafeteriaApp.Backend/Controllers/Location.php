@@ -2,6 +2,7 @@
 	function addUserLocation($conn, $lat, $lng) {
 		$sql = "select `Id` from `location` where `Lat` = " . $lat . " and `Lng` = " . $lng;
 		$res = $conn->query($sql);
+		
 		if ($res === false) {
 			echo "error: ", $conn->error;
 		}

@@ -6,7 +6,7 @@
 		$scope.payerId = $.urlParam('PayerID');
 		$scope.paymentMethodId = $.urlParam('paymentMethodId');
 
-		$http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?orderId=' + $scope.orderId + '&flag=' + 1)
+		$http.get('/myapi/Order/orderId/' + $scope.orderId + '/flag/1')
 		.then(function(response) {
 			console.log(response);
 			$scope.orderDetails = response.data;

@@ -13,8 +13,8 @@
   }
 
   function deleteCashierByUserId($conn, $userId) {
-    //$conn->query("set foreign_key_checks = 0");
     $sql = "delete from `cashier` where `UserId` = " . $userId . " LIMIT 1";
+    
     if ($conn->query($sql) === TRUE) {
       return "Cashier deleted successfully";
     }

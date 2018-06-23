@@ -11,10 +11,11 @@ edit_category_and_show_and_delete_its_menuitemsApp.controller('editCategory', ['
   
   $scope.uploadme = {};
   $scope.uploadme.src = '';
-  $scope.categoryId = $.urlParam('id');
+  $scope.categoryId = $.urlParam(1);
+  console.log($scope.categoryId);
 
   $scope.getCategory = function() {
-    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Category.php?id=' + $scope.categoryId)
+    $http.get('/myapi/Category/id/' + $scope.categoryId)
     .then(function(response) {
       $scope.name = response.data.Name;
       $scope.imageUrl = response.data.Image;
@@ -25,22 +26,17 @@ edit_category_and_show_and_delete_its_menuitemsApp.controller('editCategory', ['
 
   $scope.editCategory = function() {
     if ($scope.myform.$valid) {
-      var x = "";
-
-      if ($scope.uploadme.src != '') {
-        x = $scope.uploadme.src.split(',')[1];
-      }
-      else {
-        x = '';
-      }
-
       var data = {
         Name: $scope.name,
         Id: $scope.categoryId,
-        Image: x
+        Image: $('#image').attr('src'),
       };
 
-      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Category.php',data)
+      if ($('#file').val() == '') {
+        data.Image = '';
+      }
+
+      $http.put('/myapi/Category',data)
       .then(function(response) {
         window.history.back();
       });
@@ -51,10 +47,10 @@ edit_category_and_show_and_delete_its_menuitemsApp.controller('editCategory', ['
 // controller for showing and deleting menuitems
 edit_category_and_show_and_delete_its_menuitemsApp.controller('showAndDeleteMenuItems', ['$scope', '$http', 'ModalService',
   function($scope, $http, ModalService) {
-    $scope.categoryId = $.urlParam('id');
+    $scope.categoryId = $.urlParam(1);
 
     $scope.getMenuItems = function() {
-      $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/MenuItem.php?categoryId=' + $scope.categoryId)
+      $http.get('/myapi/MenuItem/categoryId/' + $scope.categoryId)
       .then(function (response) {
         $scope.menuItems = response.data;
       });
@@ -66,7 +62,7 @@ edit_category_and_show_and_delete_its_menuitemsApp.controller('showAndDeleteMenu
       $scope.show();
 
       $scope.delete = function() {
-        $http.delete('../../../CafeteriaApp.Backend/Requests/MenuItem.php?menuItemId=' + menuItem.Id)
+        $http.delete('/myapi/MenuItem/menuItemId/' + menuItem.Id)
         .then(function(response) {
           $scope.menuItems.splice($scope.menuItems.indexOf(menuItem),1);
         });
@@ -77,7 +73,7 @@ edit_category_and_show_and_delete_its_menuitemsApp.controller('showAndDeleteMenu
 
     $scope.show = function() {
       ModalService.showModal({
-        templateUrl: '../../../CafeteriaApp.Frontend/Templates/Views/modal.html',
+        templateUrl: '/templates/modal.html',
         controller: "ModalController",
         inputs: {
           name: "menuitem"

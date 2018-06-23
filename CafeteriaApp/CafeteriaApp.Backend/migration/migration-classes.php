@@ -16,15 +16,77 @@ function checkKeywords($value) {
 	$allowedKeywords = ['type', 'max', 'not null', 'foreign key', 'auto_increment', 'default', 'primary key'];
 
 	foreach ($value as $k => $v) {
-		if (!in_array($k, $allowedKeywords)) {
+		if (in_array($k, $allowedKeywords) === false && is_int($k) === false) {
 			echo "undefined keyword {$k}";
+			exit();
+		}
+		elseif (is_int($k) === true && in_array($v, $allowedKeywords) === false) {
+			echo "undefined keyword {$v}";
 			exit();
 		}
 	}
 }
 
+class database {
+	public static function createDatabase($conn, $databaseName, $rev=0) {
+		$create = "create database `{$databaseName}`";
+		$r = $conn->query($create);
+
+		if ($r) {
+			if ($rev == 0) {
+				echo "database {$databaseName} created\n";
+			}
+
+			$reverser = function() use($conn, $databaseName) {
+				table::dropDatabase($conn, $databaseName, 1);
+			};
+
+			array_push($GLOBALS['reversers'], $reverser);
+		}
+		else {
+			if ($rev == 1) {
+				echo "stuck in rev\n";
+				echo $conn->error;
+				exit();
+			}
+
+			echo $conn->error;
+
+			runReversers();
+		}
+	}
+	public static function dropDatabase($conn, $databaseName, $rev=0) {
+		$drop = "drop database `{$databaseName}`";
+		$r = $conn->query($drop);
+
+		if ($r) {
+			if ($rev == 0) {
+				echo "database {$databaseName} deleted\n";
+			}
+
+			$reverser = function() use($conn, $databaseName) {
+				table::createDatabase($conn, $databaseName, 1);
+			};
+
+			array_push($GLOBALS['reversers'], $reverser);
+		}
+		else {
+			if ($rev == 1) {
+				echo "stuck in rev\n";
+				echo $conn->error;
+				exit();
+			}
+
+			echo $conn->error;
+
+			runReversers();
+		}
+	}
+
+}
+
 class table {
-	public static function createTable($conn, $tableName, $object, $rev = 0) {
+	public static function createTable($conn, $tableName, $object, $rev=0) {
 		$create = "create table `$tableName` (";
 
 		$f = [];
@@ -100,7 +162,7 @@ class table {
 		}
 	}
 
-	public static function dropTable($conn, $tableName, $rev = 0) {
+	public static function dropTable($conn, $tableName, $rev=0) {
 		$setForeignKeyChecks = "set foreign_key_checks = 0";
 		$drop = "drop table `$tableName`";
 		$arr = objectTableMapper::getTableColumns($conn, $tableName); // for reverser
@@ -132,7 +194,7 @@ class table {
 		}
 	}
 
-	public static function renameTable($conn, $oldTableName, $newTableName, $rev = 0) {
+	public static function renameTable($conn, $oldTableName, $newTableName, $rev=0) {
 		$sql = "rename table `{$oldTableName}` to `{$newTableName}`";
 		$res = $conn->query($sql);
 
@@ -353,7 +415,7 @@ class column {
 		return $arr;
 	}
 
-	public static function addColumn($conn, $tableName, $key, $arr, $rev = 0) {
+	public static function addColumn($conn, $tableName, $key, $arr, $rev=0) {
 		$alter = "alter table `$tableName` add column ";
 		$arr = column::constructColumnStmtForAddColumn($conn, $alter, $key, $arr, $tableName);
 		$res = $conn->query($alter);
@@ -425,7 +487,7 @@ class column {
 		}
 	}
 
-	public static function dropColumn($conn, $tableName, $key, $rev = 0) {
+	public static function dropColumn($conn, $tableName, $key, $rev=0) {
 		$arr = objectTableMapper::getTableColumns($conn, $tableName)[$key];
 		foreignKeyManager::dropForeignKey($conn, $tableName, $key); // if existed
 		$alter = "alter table `$tableName` drop column `$key`";
@@ -456,7 +518,7 @@ class column {
 	}
 
 	// update every value for that column
-	public static function modifyColumn($conn, $tableName, $key, $column, $rev = 0) {
+	public static function modifyColumn($conn, $tableName, $key, $column, $rev=0) {
 		checkKeywords($column);
 		$arr = objectTableMapper::getTableColumns($conn, $tableName);
 		$f = 0;
@@ -529,9 +591,9 @@ class column {
 			}
 		}
 
-		if (array_key_exists('primary key', $column)) {
+		if ( array_key_exists('primary key', $column) ) {
 			if ($column['primary key'] === false) {
-				if (array_key_exists('foreign key', $arr[$key])) {
+				if ( array_key_exists('foreign key', $arr[$key]) ) {
 					foreignKeyManager::dropForeignKey($conn, $tableName, $key, 1);
 
 					$y = $arr[$key]['foreign key'];
@@ -551,7 +613,7 @@ class column {
 
 				array_push($GLOBALS['reversers'], $reverser);
 
-				if (array_key_exists('foreign key', $arr[$key])) {
+				if ( array_key_exists('foreign key', $arr[$key]) ) {
 					$x = $arr[$key]['foreign key'];
 
 					foreignKeyManager::addForeignKey($conn, $tableName, $key, $x['table'], $x['column'], 1);
@@ -854,7 +916,7 @@ class column {
 		}
 	}
 
-	public static function renameColumn($conn, $tableName, $oldColumnName, $newColumnName, $rev = 0) {
+	public static function renameColumn($conn, $tableName, $oldColumnName, $newColumnName, $rev=0) {
 		$arr = objectTableMapper::getTableColumns($conn, $tableName);
 		$columnAttrs = $arr[$oldColumnName];
 		$alter = "alter table `$tableName` change column `$oldColumnName` `$newColumnName`";
@@ -930,7 +992,7 @@ class primaryKeyManager {
 			}
 	}
 
-	public static function addPrimaryKey($conn, $tableName, $key, $rev = 0) { // when update column
+	public static function addPrimaryKey($conn, $tableName, $key, $rev=0) { // when update column
 		$sql = "ALTER TABLE `$tableName` ADD CONSTRAINT PRIMARY KEY (`$key`);";
 		$res = $conn->query($sql);
 
@@ -958,7 +1020,7 @@ class primaryKeyManager {
 		}
 	}
 
-	public static function dropPrimaryKey($conn, $tableName, $key, $rev = 0) {
+	public static function dropPrimaryKey($conn, $tableName, $key, $rev=0) {
 		$sql = "SELECT * FROM `information_schema`.`KEY_COLUMN_USAGE` WHERE `REFERENCED_TABLE_NAME` = '$tableName' AND `REFERENCED_COLUMN_NAME` = '$key'";
 		$r = mysqli_fetch_assoc( $conn->query($sql) );
 
@@ -1053,7 +1115,7 @@ class foreignKeyManager {
 		}
 	}
 
-	public static function addForeignKey($conn, $tableName, $column, $referencedTable, $referencedColumn, $rev = 0) {
+	public static function addForeignKey($conn, $tableName, $column, $referencedTable, $referencedColumn, $rev=0) {
 		$sql = "ALTER TABLE `$tableName` ADD CONSTRAINT FOREIGN KEY (`$column`) REFERENCES `$referencedTable`(`$referencedColumn`);";
 		$conn->query('set foreign_key_checks = 0'); // look for better way
 		$res = $conn->query($sql);
@@ -1084,7 +1146,7 @@ class foreignKeyManager {
 		}
 	}
 
-	public static function dropForeignKey($conn, $tableName, $key, $rev = 0) {
+	public static function dropForeignKey($conn, $tableName, $key, $rev=0) {
 		$foreign = foreignKeyManager::checkForeignKeyExistence($conn, $tableName, $key);
 
 		if ($foreign) {
@@ -1121,7 +1183,7 @@ class foreignKeyManager {
 };
 
 class indexManager {
-	public static function createIndex($conn, $tableName, $index, $columnToIndexTo, $rev = 0) {
+	public static function createIndex($conn, $tableName, $index, $columnToIndexTo, $rev=0) {
 		$sql = "ALTER TABLE `$tableName` ADD INDEX `$index` (`$columnToIndexTo` ASC);";
 		$res = $conn->query($sql);
 
@@ -1149,7 +1211,7 @@ class indexManager {
 		}
 	}
 
-	public static function dropIndex($conn, $tableName, $index, $rev = 0) {
+	public static function dropIndex($conn, $tableName, $index, $rev=0) {
 		$sql = "ALTER TABLE `$tableName` DROP INDEX `$index`";
 		$res = $conn->query($sql);
 
@@ -1180,7 +1242,8 @@ class indexManager {
 
 class objectTableMapper {
 	public static function getTableColumns($conn, $tableName) {
-		$result = $conn->query("SELECT * FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_NAME` = '{$tableName}' and `table_schema` = 'cafetria'");
+		$x = DB_NAME;
+		$result = $conn->query("SELECT * FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_NAME` = '{$tableName}' and `table_schema` = '{$x}'");
 		$arr = [];
 		$flag = 0;
 

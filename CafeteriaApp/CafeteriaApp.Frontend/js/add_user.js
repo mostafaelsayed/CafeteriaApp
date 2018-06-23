@@ -8,16 +8,16 @@ add_userApp.config(['$locationProvider', '$routeProvider', function($locationPro
 
   $routeProvider
   // add user
-  .when('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Admin/User/add_user.php/1', {
-    templateUrl: '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Templates/Views/add_admin.php',
+  .when('/admin/users/add/1', {
+    templateUrl: '/templates/add_admin.php',
   })
 
-  .when('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Admin/User/add_user.php/2', {
-    templateUrl: '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Templates/Views/add_cashier.php',
+  .when('/admin/users/add/2', {
+    templateUrl: '/templates/add_cashier.php',
   })
   
-  .when('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Admin/User/add_user.php/3', {
-    templateUrl: '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Templates/Views/add_customer.php',
+  .when('/admin/users/add/3', {
+    templateUrl: '/templates/add_customer.php',
   })
 }]);
 

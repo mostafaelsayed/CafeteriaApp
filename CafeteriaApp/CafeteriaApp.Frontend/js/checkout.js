@@ -3,9 +3,9 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   '$httpParamSerializerJQLike',
   function($rootScope, $scope, $interval, $http, Order_Info, $httpParamSerializerJQLike) {
 
-  $scope.orderId = $.urlParam('orderId');
-  $scope.orderTypes = [ {id: 0, name: "Take Away"}, {id: 1, name: "Delivery"} ];
-  $scope.paymentMethods = [ {id: 1, name: "PayPal"}, {id: 2, name: "Credit Card"}, {id: 3, name: "Cash"} ];
+  $scope.orderId = $.urlParam(0);
+  $scope.orderTypes = [ {id: 0, name: 'Take Away'}, {id: 1, name: 'Delivery'} ];
+  $scope.paymentMethods = [ {id: 1, name: 'PayPal'}, {id: 2, name: 'Credit Card'}, {id: 3, name: 'Cash'} ];
   $scope.deliveryFee = 0;
   $scope.taxFee = 0;
   $scope.subTotal = 0;
@@ -13,44 +13,22 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   $scope.csrf_token = document.getElementById('csrf_token').value;
 
   $scope.confirmOrder = function() {
-    alertify.confirm("Are you sure you want to submit order?", function(e) {
+    alertify.confirm('Are you sure you want to submit order?', function(e) {
       if (e) {
-        localStorage.setItem("submit", 1);
-        // $http({
-        //   method: 'put',
-        //   url: '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?cashflag=1',
-        //   data: $httpParamSerializerJQLike({csrf_token: 'sd'}), 
-        //   headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        // }).then(function(response) {
-        //   console.log(response);
-        //   if (response.data == false) {
-        //     // document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/error.php";
-        //     alertify.error('error occured');
-        //   }
-        //   else {
-        //     //document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php";
-        //   }
-        //   //console.log(response);
-        // });
+        localStorage.setItem('submit', 1);
 
         $http({
           method: 'put',
-          url: '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?cashflag=1',
+          url: '/myapi/Order/cashflag/1',
           data: {csrf_token: $scope.csrf_token}, 
-          //headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).then(function(response) {
-          console.log(response);
           if (response.data == 'error') {
-            document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/error.php";
-            //alertify.error('error occured');
+            document.location = '/public/error';
           }
           else {
-            document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php";
+            document.location = '/public/categories';
           }
-          //console.log(response);
         });
-
-        //document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php";
       }
       else {
         return false;
@@ -60,14 +38,14 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
   $scope.discardOrder = function() {
     orderItems = $rootScope.orderItems;
-    alertify.confirm("Are your sure you want to discard order?", function(e) {
+    alertify.confirm('Are your sure you want to discard order?', function(e) {
       if (e) {
         for (var i = 0; i < orderItems.length; i++) {
           Order_Info.deleteOrderItem(orderItems[i]);
         }
 
-        localStorage.setItem("discard", 1);
-        document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php";
+        localStorage.setItem('discard', 1);
+        document.location = '/public/categories';
       }
     })
   };
@@ -86,9 +64,8 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   $scope.formatted_address = '';
 
   $scope.changeLoc = function() {
-    $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderLocation.php', $scope.myPos)
+    $http.put('/myapi/OrderLocation', $scope.myPos)
     .then(function(response) {
-      console.log(response);
     });
   };
 
@@ -100,10 +77,10 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       document.getElementsByClassName('locBut')[0].classList.add('col-lg-4');
       document.getElementsByTagName('form')[0].style.width = '350px';
 
-      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?type=1', {csrf_token: $scope.csrf_token}).then(function(response) {
+      $http.put('/myapi/Order/type/1', {csrf_token: $scope.csrf_token}).then(function(response) {
         $scope.deliveryFee = parseInt(response.data);
         $scope.total += $scope.deliveryFee;
-        $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderLocation.php?orderId=' + $scope.orderId)
+        $http.get('/myapi/OrderLocation/orderId/' + $scope.orderId)
         .then(function(response) {
           if ( (response.data != "") ) {
             $scope.myPos.lat = parseFloat(response.data.Lat);
@@ -125,27 +102,22 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       document.getElementsByClassName('map-wrapper')[0].classList.remove('col-lg-4');
       document.getElementsByClassName('locBut')[0].classList.remove('col-lg-4');
 
-      $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php?type=0', {csrf_token: $scope.csrf_token}).then(function(response) {
+      $http.put('/myapi/Order/type/0', {csrf_token: $scope.csrf_token}).then(function(response) {
         $scope.total -= $scope.deliveryFee;
-        //console.log(response);
         $scope.deliveryFee = 0;
         alertify.success('order type is now take away');
       });
 
       document.getElementsByClassName('map-wrapper')[0].style.display = 'none';
-      //document.getElementsByTagName('form')[0].classList.remove('col-lg-6');
     }
   };
 
   $scope.changePaymentMethod = function() {
-    //console.log($scope.csrf_token);
     var data = {
       paymentMethodId: $scope.selectedMethod.id,
-      //csrf_token: $scope.csrf_token
     };
 
-    $http.put('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php', data).then(function(response) {
-      console.log(response);
+    $http.put('/myapi/Order', data).then(function(response) {
       if ($scope.selectedMethod.id == 1) { // paypal
         alertify.success('You will pay with PayPal');
       }
@@ -158,25 +130,22 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
     })
   };
 
-  /// ???????
-
   $scope.returnToMyCurrentLocation = function() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
-        sessionStorage.setItem("lat", position.coords.latitude);
-        sessionStorage.setItem("lng", position.coords.longitude);
-        $scope.myPos.lat = parseFloat(sessionStorage.getItem("lat"));
-        $scope.myPos.lng = parseFloat(sessionStorage.getItem("lng"));
+        sessionStorage.setItem('lat', position.coords.latitude);
+        sessionStorage.setItem('lng', position.coords.longitude);
+        $scope.myPos.lat = parseFloat(sessionStorage.getItem('lat'));
+        $scope.myPos.lng = parseFloat(sessionStorage.getItem('lng'));
         $scope.changeLoc();
         $scope.myMarker.setMap(null);
         $scope.changeLocOnMap();
       }, function(error) {
-        //alertify.error("geolocation failure. we will use last location you were in");
       }, {timeout:5000})
     }
 
-    $scope.myPos.lat = parseFloat(sessionStorage.getItem("lat"));
-    $scope.myPos.lng = parseFloat(sessionStorage.getItem("lng"));
+    $scope.myPos.lat = parseFloat(sessionStorage.getItem('lat'));
+    $scope.myPos.lng = parseFloat(sessionStorage.getItem('lng'));
     $scope.changeLoc();
     $scope.myMarker.setMap(null);
     $scope.changeLocOnMap();
@@ -221,8 +190,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
             $scope.changeLoc();
           }
           else if (b == 2) {
-            $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderLocation.php', $scope.myPos).then(function(response) {
-              console.log(response);
+            $http.post('/myapi/OrderLocation', $scope.myPos).then(function(response) {
             });
           }
         
@@ -236,7 +204,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   };
 
   $scope.getUserInfo = function() {
-    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Customer.php')
+    $http.get('/myapi/Customer')
     .then(function(response) {
       $scope.customerInfo = response.data;
       $scope.userId = $scope.customerInfo.UserId;
@@ -259,9 +227,8 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
   $scope.getOrderInfo = function() {
 
-    $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php')
+    $http.get('/myapi/Order')
     .then(function(response) {
-      console.log(response);
       $scope.orderInfo = response.data;
       $scope.orderType = response.data.Type;
       var paymentMethodId = response.data.PaymentMethodId;
@@ -285,7 +252,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
         document.getElementsByClassName('locBut')[0].classList.add('col-lg-4');
         document.getElementsByTagName('form')[0].style.width = '350px';
         
-        $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderLocation.php?orderId=' + $scope.orderId)
+        $http.get('/myapi/OrderLocation/orderId/' + $scope.orderId)
         .then(function(response) {
           if ( (response.data != "") ) {
             $scope.myPos.lat = parseFloat(response.data.Lat);
@@ -293,10 +260,9 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
             $scope.changeLocOnMap();
           }
           else {
-            $scope.myPos.lat = parseFloat( sessionStorage.getItem("lat") );
-            $scope.myPos.lng = parseFloat( sessionStorage.getItem("lng") );
-            $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/OrderLocation.php', $scope.myPos).then(function(response) {
-              console.log(response);
+            $scope.myPos.lat = parseFloat( sessionStorage.getItem('lat') );
+            $scope.myPos.lng = parseFloat( sessionStorage.getItem('lng') );
+            $http.post('/myapi/OrderLocation', $scope.myPos).then(function(response) {
             });
 
             $scope.changeLocOnMap();
@@ -319,7 +285,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       $scope.total = parseFloat($scope.orderInfo.Total);
       $scope.subTotal = $scope.total - $scope.deliveryFee - $scope.taxFee;
 
-      $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Fee.php')
+      $http.get('/myapi/Fee')
       .then(function(response) {
         
       })
@@ -364,7 +330,6 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
             $scope.formatted_address = results[0].formatted_address;
           })
 
-          //console.log(results);
           $scope.myMarker.position = latlng;
           $scope.myMarker.map = $scope.map;
           

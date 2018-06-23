@@ -25,7 +25,7 @@ $(document).ready(function() {
 
 layoutApp.controller('feedback', function($scope, $http) {
 	$scope.getFeedbackAbouts = function() {
-	 $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/FeedbackAbouts.php')
+	 $http.get('/myapi/FeedbackAbouts')
 	 .then(function (response) {	
       $scope.abouts = response.data;
     });
@@ -43,7 +43,7 @@ layoutApp.controller('feedback', function($scope, $http) {
         SelectedAboutId: selectedAbout.Id
       };
 
-      $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/VisitorFeedback.php', data)
+      $http.post('/myapi/VisitorFeedback', data)
       .then(function(response) {
         if (response.data === "") {
         	$scope.failure = true;

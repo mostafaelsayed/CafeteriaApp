@@ -6,6 +6,7 @@
     if ($result) {
       $roles = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
+      
       return $roles;   
     }
     else {
@@ -20,6 +21,7 @@
     if ($result) {
       $roles = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
+
       return $roles;
     }
     else {
@@ -55,7 +57,6 @@
   }
 
   function deleteRole($conn, $id) { // cascaded delete ??
-    //$conn->query("set foreign_key_checks = 0"); // ????????/
     $sql = "delete from role where Id = " . $id . " LIMIT 1";
 
     if ($conn->query($sql) === TRUE) {

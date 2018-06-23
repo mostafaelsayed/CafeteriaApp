@@ -8,17 +8,15 @@ add_categoryApp.controller('addCategory', ['$scope', '$http', function($scope, $
   $scope.uploadme.src = '';
 
   $scope.name = "";
-  $scope.cafeteriaId = $.urlParam('id');
 
   $scope.addCategory = function() {
     if ($scope.myform.$valid) {
       var data = {
         Name: $scope.name,
-        CafeteriaId: $scope.cafeteriaId,
-        Image: $scope.uploadme.src.split(',')[1]
+        Image: $('#image').attr('src')
       };
 
-      $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Category.php', data)
+      $http.post('/myapi/Category', data)
       .then(function(response) {
         window.history.back();
       });

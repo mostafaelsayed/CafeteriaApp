@@ -57,25 +57,25 @@ if ( isset($_POST['submit']) ) {
                 } else {
                     if ($_SESSION['roleId'] == 2) {
                         // customer
-                        redirect_to( rawurldecode('Public/categories.php') );
+                        redirect_to( rawurldecode('/public/categories') );
                     } elseif ($_SESSION['roleId'] == 1) {
                         // admin
-                        redirect_to( rawurldecode('Admin/Category/show_and_delete_categories.php') );
+                        redirect_to( rawurldecode('/admin/category/show') );
                     } else {
                         // cashier
-                        redirect_to( rawurldecode('Cashier/show_and_hide_orders.php') );
+                        redirect_to( rawurldecode('/cashier/order/show') );
                     }
                 }
             } else {
                 if ($_SESSION['roleId'] == 2) {
                     // customer
-                    redirect_to( rawurldecode('Public/categories.php') );
+                    redirect_to( rawurldecode('/public/categories') );
                 } elseif ($_SESSION['roleId'] == 1) {
                     // admin
-                    redirect_to( rawurldecode('Admin/Category/show_and_delete_categories.php') );
+                    redirect_to( rawurldecode('/admin/category/show') );
                 } else {
                     // cashier
-                    redirect_to( rawurldecode('Cashier/show_and_hide_orders.php') );
+                    redirect_to( rawurldecode('/cashier/order/show') );
                 }
             } //3ala 7asab
         } else {
@@ -90,11 +90,11 @@ if ( isset($_POST['submit']) ) {
 elseif ( isset($_SESSION['userId']) && isset($_SESSION['userName']) && isset($_SESSION['roleId']) ) {
     // This is probably a GET request
     if ($_SESSION['roleId'] == 1) { // admin
-        redirect_to( rawurldecode('Admin/Category/show_and_delete_categories.php') ); //
+        redirect_to( rawurldecode('/admin/category/show') ); //
     } else if ($_SESSION['roleId'] == 2) { // customer
-        redirect_to( rawurldecode('Public/categories.php') ); //
+        redirect_to( rawurldecode('/public/categories') ); //
     } else { // cashier
-        redirect_to( rawurldecode('Cashier/show_and_hide_orders.php') ); //
+        redirect_to( rawurldecode('/cashier/order/show') ); //
     }
 } // end: if ( isset( $_POST['submit'] ) )
 ?>
@@ -105,19 +105,21 @@ elseif ( isset($_SESSION['userId']) && isset($_SESSION['userName']) && isset($_S
 
   <head>
 
-    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" charset="utf-8" name="viewport" content="IE=11,width=device-width, initial-scale=1.0" />
 
-    <link href="css/errors.css" rel="stylesheet" type="text/css">
+    <title>Login</title>
 
-    <link rel="icon" type="text/css" href="../../favicon.ico">
+    <link href="/css/errors.css" rel="stylesheet" type="text/css">
 
-    <link rel="stylesheet" href="css/materialize.css">
+    <link rel="icon" type="text/css" href="/favicon">
 
-    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link rel="stylesheet" href="/css/materialize.css">
 
-    <script src="js/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
 
-    <script src="js/materialize.min.js"></script>
+    <script src="/js/jquery-3.1.1.min.js"></script>
+
+    <script src="/js/materialize.min.js"></script>
 
   </head>
 
@@ -177,7 +179,7 @@ elseif ( isset($_SESSION['userId']) && isset($_SESSION['userName']) && isset($_S
 
           <button class="btn waves-effect waves-light btn" type="submit" name="action">Facebook Login
 
-            <img src="icons/facebook.png" width="30px" height="30px" style="margin-top: 2px">
+            <img src="/icons/facebook.png" width="30px" height="30px" style="margin-top: 2px">
 
           </button>
 
@@ -189,11 +191,11 @@ elseif ( isset($_SESSION['userId']) && isset($_SESSION['userName']) && isset($_S
 
           <div>
 
-            <a href="register.php" name="submit" />New User ! </a>
+            <a href="register" name="submit" />New User ! </a>
 
           </div>
 
-          <a href="resetPassword.php" name="submit" />Forgot Password ! </a>
+          <a href="reset-password" name="submit" />Forgot Password ! </a>
 
           <div><br></div>
 

@@ -5,7 +5,7 @@ show_and_delete_categoriesApp.controller('showAndDeleteCategories', ['$scope', '
 function($scope, $http, ModalService) {
   $scope.getCategories = function() {
 
-  $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Category.php')
+  $http.get('/myapi/Category')
     .then(function(response) {
       $scope.categories = response.data;
     });
@@ -17,7 +17,7 @@ function($scope, $http, ModalService) {
     $scope.show();
 
     $scope.delete = function() {
-      $http.delete('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Category.php?categoryId=' + category.Id)
+      $http.delete('/myapi/Category/categoryId/' + category.Id)
       .then(function(response) {
         $scope.categories.splice($scope.categories.indexOf(category), 1);
       });
@@ -26,7 +26,7 @@ function($scope, $http, ModalService) {
 
   $scope.show = function() {
     ModalService.showModal({
-      templateUrl: '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Templates/Views/modal.html',
+      templateUrl: '/templates/modal.html',
       controller: "ModalController",
       inputs: {
         name: "category"

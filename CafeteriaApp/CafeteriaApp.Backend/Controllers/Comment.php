@@ -13,6 +13,7 @@
     if ($result) {
       $comments = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
+
       return $comments;
     }
     else { // server
@@ -27,6 +28,7 @@
     if ($result) {
       $comments = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
+      
       return $comments;
     }
     else {

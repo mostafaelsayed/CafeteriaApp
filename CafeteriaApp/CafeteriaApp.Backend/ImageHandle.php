@@ -1,12 +1,5 @@
 <?php
-    function addImageFile($image, $name, $x1 = null, $y1 = null, $w = null, $h = null, $dirChanged = 0) {
-        $x = strrpos(dirname($_SERVER['PHP_SELF']), '/'); // directory path (without localhost part)
-        $y = substr(dirname($_SERVER['PHP_SELF']), 0, $x);
-
-        if ($dirChanged == 0) {
-            chdir("../../.."); // inside php dir
-        }
-
+    function addImageFile($image, $name, $x1 = null, $y1 = null, $w = null, $h = null) {
         $target_dir = __DIR__ . "\uploads\\";
         $target_file = $target_dir . $name;
 
@@ -16,32 +9,39 @@
         //     exit();
         // }
         
-        // Allow certain file formats
         $imageFileType = exif_imagetype($image['tmp_name']); // file type (supposed to be image type in our case)
+        $imageNameDb = '';
+        $croppedImageNameDb = '';
 
-        $croppedImage = '';
-
+        // Allow certain file formats
         if ($imageFileType != 2 && $imageFileType != 3) {
             echo "Sorry, only JPG, JPEG & PNG files are allowed.";
             exit();
         }
 
+        $uploadFile = '/uploads/' . $name;
+
         if ($imageFileType == 2) {
-            $imageName = $y . '/uploads/' . $name . '.jpeg';
-            $croppedImageName = $y . '/uploads/' . $name . '_crop.jpeg';
+            $imageNameDb = $uploadFile . '.jpeg';
+            $croppedImageNameDb = $uploadFile . '_crop.jpeg';
         }
         elseif ($imageFileType == 3) {
-            $imageName = $y . '/uploads/' . $name . '.png';
-            $croppedImageName = $y . '/uploads/' . $name . '_crop.png';
+            $imageNameDb = $uploadFile . '.png';
+            $croppedImageNameDb = $uploadFile . '_crop.png';
         }
 
         if ($x1 === null && $y1 === null && $w === null && $h === null) {
             if ($imageFileType == 2) {
-                move_uploaded_file( $image['tmp_name'], $croppedImage . '.jpeg');
+                $c = $target_file . '_crop.jpeg';                
+                $c1 = $target_file . '.jpeg';
             }
             elseif ($imageFileType == 3) {
-                move_uploaded_file( $image['tmp_name'], $croppedImage . '.png');
+                $c = $target_file . '_crop.png';
+                $c1 = $target_file . '.png';
             }
+
+            move_uploaded_file( $image['tmp_name'], $c);
+            copy($c, $c1);
         }
         else {
             $croppedImage = $target_file . '_crop';
@@ -49,17 +49,14 @@
             if ($imageFileType == 2) { // jpeg
                 $croppedImage .= '.jpeg';
                 $target_file .= '.jpeg';
-
-                move_uploaded_file( $image['tmp_name'], $croppedImage);
-                copy($croppedImage, $target_file);
             }
             elseif ($imageFileType == 3) { // png
                 $croppedImage .= '.png';
-                $target_file .= '.png';
-                
-                move_uploaded_file( $image['tmp_name'], $croppedImage);
-                copy($croppedImage, $target_file);
+                $target_file .= '.png';    
             }
+
+            move_uploaded_file($image['tmp_name'], $croppedImage);
+            copy($croppedImage, $target_file);
 
             // crop image
             // Create our small image
@@ -91,7 +88,7 @@
             imagedestroy($new);
         }
         
-        return [$imageName, $croppedImageName];
+        return [$imageNameDb, $croppedImageNameDb];
     }
 
     function crop($image, $x1, $y1, $w, $h, $type) {
@@ -125,25 +122,33 @@
         imagedestroy($new);
     }
 
+    function deleteImageFileName($fileName) {
+        if (file_exists(__DIR__ . $fileName)) {
+            unlink(__DIR__ . $fileName);
+
+            return true;
+        }
+
+        return false;
+    }
+
     function handlePictureUpdate($conn, $image, $x1 = null, $y1 = null, $w = null, $h = null) {
         if ($x1 != null || $y1 != null || $w != null || $h != null) {
             if ($image['size'] != 0) { // new image is gonna be uploaded
                 $imageFileType = exif_imagetype($image['tmp_name']);
 
                 if ($imageFileType != 2 && $imageFileType != 3) {
-                    echo "Sorry, only JPG, JPEG & PNG files are allowed.";
+                    echo "Sorry, only JPEG and PNG files are allowed.";
                     exit();
                 }
 
                 $ext = pathinfo($_SESSION['image'], PATHINFO_EXTENSION);
-                $x = strrpos(dirname($_SERVER['PHP_SELF']), '/');
-                $y = substr(dirname($_SERVER['PHP_SELF']), 0, $x);
-                $imageName = $y . '/uploads/' . $_SESSION['email'];
-                $croppedImageName = $y . '/uploads/' . $_SESSION['email'] . '_crop';
+                $imageNameDb = '/uploads/' . $_SESSION['email'];
+                $croppedImageNameDb = '/uploads/' . $_SESSION['email'] . '_crop';
 
                 if ($imageFileType == 2) {
-                    $_SESSION['image'] = $imageName . '.jpeg';
-                    $_SESSION['croppedImage'] = $croppedImageName . '.jpeg';
+                    $_SESSION['image'] = $imageNameDb . '.jpeg';
+                    $_SESSION['croppedImage'] = $croppedImageNameDb . '.jpeg';
                     $f = 0;
 
                     if ($_SESSION['imageSet'] == 0) {
@@ -168,8 +173,8 @@
                     }
                 }
                 else {
-                    $_SESSION['image'] = $imageName . '.png';
-                    $_SESSION['croppedImage'] = $croppedImageName . '.png';
+                    $_SESSION['image'] = $imageNameDb . '.png';
+                    $_SESSION['croppedImage'] = $croppedImageNameDb . '.png';
                     $f = 0;
 
                     if ($_SESSION['imageSet'] == 0) {
@@ -218,8 +223,6 @@
                     crop($cropped, $x1, $y1, $w, $h, $ext);
                 }
                 else {
-                    $x = strrpos(dirname($_SERVER['PHP_SELF']), '/');
-                    $y = substr(dirname($_SERVER['PHP_SELF']), 0, $x);
                     $img = __DIR__ . '\uploads\\';
                     $cropped = __DIR__ . '\uploads\\';
 
@@ -231,9 +234,8 @@
                     }
 
                     $x = $_SESSION['email'] . '_crop.jpeg';
-
                     $cropped .= $x;
-                    $_SESSION['croppedImage'] = $y . '/uploads/' . $x;
+                    $_SESSION['croppedImage'] = __DIR__ . '/uploads/' . $x;
 
                     $conn->query("update `User` set `CroppedImage` = '{$_SESSION['croppedImage']}' where `Id` = '{$_SESSION['userId']}'");
 
@@ -248,70 +250,84 @@
         }
     }
 
-    function editBinaryImage($imageData, $imageAttr, $userName, $x1 = null, $y1 = null, $w = null, $h = null) {
-        $dirChanged = 0;
-
+    function editBinaryImage($imageData, $imageAttr, $name, $imageAttr2 = 0, $x1 = null, $y1 = null, $w = null, $h = null) {
         if ($imageAttr != null) {
-            if (deleteImageFileIfExists($imageAttr) == 1) {
-                $dirChanged = 1;
+            if (deleteImageFileName($imageAttr) === true) {
+                if ($imageAttr2 !== 0) {
+                    deleteImageFileName($imageAttr2);
+                }
+
+                return addBinaryImageFile($imageData, $name, $imageAttr2, $x1, $y1, $w, $h);
             }
-        }
-
-        return addBinaryImageFile($imageData, $userName, $x1, $y1, $w, $h, $dirChanged);
-    }
-
-    function editImage($imageData, $imageAttr, $userName) {
-        $dirChanged = 0;
-
-        if ($imageAttr != null) {
-            if (deleteImageFileIfExists($imageAttr) == 1) {
-                $dirChanged = 1;
-            }
-        }
-
-        return addImageFile($imageData, $userName);
-    }
-
-    function addBinaryImageFile($image, $name, $x1 = null, $y1 = null, $w = null, $h = null, $dirChanged = 0) {
-        $imgdata = base64_decode($image);
-
-        $f = finfo_open(FILEINFO_MIME_TYPE);
-
-        $type = finfo_buffer($f, $imgdata, FILEINFO_MIME_TYPE);        
-
-        if ($type != 'image/jpeg' && $type != 'image/png') {
-            return "not a valid image type";
         }
         else {
-            if ($type == 'image/jpeg') {
+            return addBinaryImageFile($imageData, $name, $imageAttr2, $x1, $y1, $w, $h);
+        }
+    }
+
+    function editImage($imageData, $imageAttr, $name) {
+        if ($imageAttr != null) {
+            if (deleteImageFileIfExists($imageAttr) == 1) {
+                return addImageFile($imageData, $name);
+            }
+        }
+    }
+
+    function addBinaryImageFile($image, $name, $imageAttr2 = 0, $x1 = null, $y1 = null, $w = null, $h = null) {
+        list($type, $imageData) = explode(';', $image);
+        list(, $imageData)      = explode(',', $imageData);
+        $imageData = base64_decode($imageData);
+        $fileName = '';
+        $croppedFileName = '';
+
+        if ($imageAttr2 !== 0) { // maybe a user
+            $c = __DIR__ . "\uploads\\" . $name;
+            $c1 = $c . "_crop";
+
+            if ($type == 'data:image/jpeg') {
+                $croppedName = $name . '_crop.jpeg';
                 $name = $name . '.jpeg';
+                $c .= '.jpeg';
+                $c1 .= ".jpeg";
+                file_put_contents($c, $imageData);
+                $fileName = '/uploads/' . $name;
+                $croppedFileName = '/uploads/' . $croppedName;
+                copy($c, $c1);
             }
-            elseif ($type == 'image/png') {
+            elseif ($type == 'data:image/png') {
+                $croppedName = $name . '_crop.png';
                 $name = $name . '.png';
+                $c .= '.png';
+                $c1 .= ".png";
+                file_put_contents($c, $imageData);
+                $fileName = '/uploads/' . $name;
+                $croppedFileName = '/uploads/' . $croppedName;
+                copy($c, $c1);
             }
-        }
 
-        $image = base64_decode($image);
-        $target_file = __DIR__ . "\uploads\\" . $name;
-        file_put_contents($target_file, $image);
-        $x = strrpos(dirname($_SERVER['PHP_SELF']), '/');
-        $y = substr(dirname($_SERVER['PHP_SELF']), 0, $x);
-        $fileName = $y . '/uploads/' . $name;
-
-        return $fileName;
-    }
-
-    function deleteImageFileIfExists($imageAttr) {
-        $imageFileName = basename($imageAttr);
-        chdir("../uploads");
-
-        if ( file_exists($imageFileName) ) {
-            unlink($imageFileName); // remove it
-            
-            return 1;
+            return [$fileName, $croppedFileName];
         }
         else {
-            return 0;
+            if ($type != 'data:image/jpeg' && $type != 'data:image/png') {
+                return "not a valid image type";
+                exit;
+            }
+            else {
+                if ($type == 'data:image/jpeg') {
+                    $name = $name . '.jpeg';
+                }
+                elseif ($type == 'data:image/png') {
+                    $name = $name . '.png';
+                }
+            }
+
+            $target_file = __DIR__ . "\uploads\\" . $name;
+            file_put_contents($target_file, $imageData);
+            $fileName = '/uploads/' . $name;
+
+            return [$fileName];
         }
+
+        
     }
 ?>

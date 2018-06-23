@@ -1,16 +1,10 @@
 var add_menuitemApp = angular.module('add_menuitem', ['image', 'price']);
 
 add_menuitemApp.controller('addMenuItem', ['$scope', '$http', function($scope, $http) {
-  $scope.image = null;
-  $scope.imageFileName = '';
-  
-  $scope.uploadme = {};
-  $scope.uploadme.src = '';
-
   $scope.name = "";
   $scope.price = "";
   $scope.description = "";
-  $scope.categoryId = $.urlParam('id');
+  $scope.categoryId = $.urlParam(2);
 
   $scope.addMenuItem = function() {
     if ($scope.myform.$valid) {
@@ -19,11 +13,12 @@ add_menuitemApp.controller('addMenuItem', ['$scope', '$http', function($scope, $
         Price: $scope.price,
         Description: $scope.description,
         CategoryId: $scope.categoryId,
-        Image: $scope.uploadme.src.split(',')[1]
+        Image: $('#image').attr('src')
       };
 
-      $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/MenuItem.php', data)
+      $http.post('/myapi/MenuItem', data)
       .then(function(response) {
+        //console.log(response);
         window.history.back();
       });
     }

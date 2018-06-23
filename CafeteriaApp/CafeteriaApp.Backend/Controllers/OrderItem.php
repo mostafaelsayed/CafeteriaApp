@@ -9,6 +9,7 @@
     if ($result) {
       $orderItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
+
       return $orderItems;
     }
     else {
@@ -23,6 +24,7 @@
     if ($result) {
       $orderItem = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
+      
       return $orderItem;
     }
     else {

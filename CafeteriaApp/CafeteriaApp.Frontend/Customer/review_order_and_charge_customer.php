@@ -67,7 +67,7 @@
   
   <div></div>
 
-  <form novalidate name="myForm" action="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Order.php" method="post" style="align-content: center;text-align: center">
+  <form novalidate name="myForm" action="/myapi/Order" method="post" style="align-content: center;text-align: center">
 
     <input type="hidden" value="<?php echo $_SESSION['csrf_token']; ?>" name="csrf_token" id="csrf_token">
 
@@ -87,6 +87,6 @@
   }
 </style>
 
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/review_order_and_charge_customer.js"></script>
+<script src="/js/review_order_and_charge_customer.js"></script>
 
 <?php require(__DIR__ . '/../Public/footer.php'); ?>

@@ -5,12 +5,12 @@
 
 <head>
   <title>Menu Items</title>
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.bootstrap.css" rel="stylesheet">
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.core.css" rel="stylesheet">
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/alertify.default.css" rel="stylesheet">
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/customer.css" rel="stylesheet">
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/popup.css" rel="stylesheet">
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/stars.css" rel="stylesheet">
+  <link href="/css/alertify.bootstrap.css" rel="stylesheet">
+  <link href="/css/alertify.core.css" rel="stylesheet">
+  <link href="/css/alertify.default.css" rel="stylesheet">
+  <link href="/css/customer.css" rel="stylesheet">
+  <link href="/css/popup.css" rel="stylesheet">
+  <link href="/css/stars.css" rel="stylesheet">
 </head>
 
 <div class="container">
@@ -138,14 +138,14 @@
         <label style="color: white;margin-left: 10px;font-size: 1.5rem">Order {{orderId}}
         </label>
       
-        <a class="btn checkout pull-right" style="margin-bottom: 5px" ng-href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/checkout.php?orderId={{orderId}}" ng-cloak target="_self">
+        <a class="btn checkout pull-right" style="margin-bottom: 5px" ng-href="/checkout/{{orderId}}" ng-cloak target="_self">
           Checkout <span class="glyphicon glyphicon-usd"></span>
         </a>
 
         <a onclick="$('.table.order').fadeToggle('slow');$(this).children('span').toggleClass('glyphicon-arrow-up glyphicon-arrow-down');" class="pull-right btn btn-info btn-circle" style="margin:0 10px 0 0;padding: 5px 0" href="javascript:;"><span class="glyphicon glyphicon-arrow-down"></span>
         </a>
 
-        <a style="font-style: italic;color: white" class="btn btn-info btn-lg" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Cashier/show_and_hide_orders.php" ng-cloak ng-if="roleid == true" target="_self">
+        <a style="font-style: italic;color: white" class="btn btn-info btn-lg" href="/cashier/order/show" ng-cloak ng-if="roleid == true" target="_self">
           Return To Orders
         </a>
       </div>
@@ -200,6 +200,6 @@
 
 <?php require(__DIR__ . '/footer.php'); ?>
 
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/alertify.js"></script>
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/about_slide_toggle.js"></script>
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/show_menuitems_and_order.js"></script>
+<script src="/js/alertify.js"></script>
+<script src="/js/about_slide_toggle.js"></script>
+<script src="/js/show_menuitems_and_order.js"></script>

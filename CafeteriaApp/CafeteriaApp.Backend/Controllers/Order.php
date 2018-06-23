@@ -44,7 +44,7 @@
     if ($result) {
       $order = mysqli_fetch_array($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
-      //$_SESSION['paymentMethodId'] = $order['PaymentMethodId'];
+
       return $order;
     }
     else {
@@ -59,6 +59,7 @@
     if ($result) {
       $order = mysqli_fetch_array($result, MYSQLI_NUM);
       mysqli_free_result($result);
+
       return $order[0];
     }
     else {
@@ -73,6 +74,7 @@
     if ($result) {
       $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
+
       return $orders;
     }
     else {
@@ -219,7 +221,6 @@
   // }
 
   function deleteOpenOrderById($conn) { // remove order items with cascading
-    //$conn->query("set foreign_key_checks = 0"); // ????????/
     $sql = "delete from `order` where `UserId` = " . $_SESSION['userId'] . " and `OrderStatusId` = 1 LIMIT 1";
 
     if ($conn->query($sql) === TRUE) {
@@ -265,7 +266,6 @@
       mybraintree::handleBrainTree($conn, $orderId, $orderType, $selectedMethodId);
     }
     else {
-      //echo "string";
       //$payer->setPaymentMethod('credit_card');
     }
   }
@@ -276,7 +276,4 @@
     if ($p == 1) {
       mypaypal::chargeCustomer($paymentId, $payerId, $orderId, $conn);
     }
-    // else {
-    //   echo "12";
-    // }
   }

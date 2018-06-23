@@ -9,7 +9,7 @@
 
   <meta name="viewport" content="width=device-width" />
 
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
+  <link href="/css/input_file.css" rel="stylesheet">
 
 </head>
 
@@ -25,7 +25,7 @@
 
     <div class="row">
 
-      <form novalidate role="form" method="post" name="myform" id="centerBlock" ng-cloak action="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php" enctype="multipart/form-data">
+      <form novalidate role="form" method="post" name="myform" id="centerBlock" ng-cloak action="/myapi/User" enctype="multipart/form-data">
 
         <div class="form-group">
 
@@ -103,6 +103,11 @@
 
           <input type="file" name="image" id="file" class="inputfile" onchange="readURL(this);">
 
+          <input type="hidden" name="x1" value="" />
+          <input type="hidden" name="y1" value="" />
+          <input type="hidden" name="w" value="" />
+          <input type="hidden" name="h" value="" />
+
           <img id="image" style="width: 300px;height: 300px">
 
           <span>
@@ -161,13 +166,13 @@
 
           <span style="margin: auto;margin-right: 20px">
 
-            <label>Female</label><input id="femaleInput" name="gender" type="radio" value="2">
+            <label>Female</label><input id="femaleInput" name="genderId" type="radio" value="2">
 
           </span>
 
           <span style="margin: auto;margin-left: 20px">
 
-            <label>Male</label><input id="maleInput" name="gender" type="radio" value="1">
+            <label>Male</label><input id="maleInput" name="genderId" type="radio" value="1">
 
           </span>
 
@@ -239,11 +244,11 @@
          
           <div><label>Choose Role</label></div>
 
-          <a onclick="$('#role').val(1);" style="margin: auto" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Admin/User/add_user.php/1">Admin&nbsp;</a>
+          <a onclick="$('#role').val(1);" style="margin: auto" href="/admin/users/add/1">Admin&nbsp;</a>
 
-          <a onclick="$('#role').val(3);" style="margin: auto" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Admin/User/add_user.php/2">Cashier&nbsp;</a>
+          <a onclick="$('#role').val(3);" style="margin: auto" href="/admin/users/add/2">Cashier&nbsp;</a>
 
-          <a onclick="$('#role').val(2);" style="margin: auto" href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Admin/User/add_user.php/3">Customer&nbsp;</a>
+          <a onclick="$('#role').val(2);" style="margin: auto" href="/admin/users/add/3">Customer&nbsp;</a>
 
           <div ng-view></div>
 
@@ -279,9 +284,9 @@
   }
 </script>
 
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/angular-route.js"></script>
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/add_user.js"></script>
-<!-- <script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/add_customer.js"></script>
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/add_admin.js"></script>
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/add_cashier.js"></script> -->
-<script type="text/javascript" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/register_form_validation.js"></script>
+<script src="/js/angular-route.js"></script>
+<script src="/js/add_user.js"></script>
+<!-- <script src="/js/add_customer.js"></script>
+<script src="/js/add_admin.js"></script>
+<script src="/js/add_cashier.js"></script> -->
+<script type="text/javascript" src="/js/register_form_validation.js"></script>

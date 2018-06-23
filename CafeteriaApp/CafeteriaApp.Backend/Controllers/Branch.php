@@ -5,6 +5,7 @@
 	  	if ( $result = $conn->query($sql) ) {
 	    	$branch = mysqli_fetch_all($result, MYSQLI_ASSOC); // ??
 	    	mysqli_free_result($result);
+	    	
 		    return $branch;
 		}
 		else {

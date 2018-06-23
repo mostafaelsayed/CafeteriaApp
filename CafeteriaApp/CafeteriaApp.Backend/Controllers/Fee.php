@@ -5,6 +5,7 @@
     if ( $result = $conn->query($sql) ) {
       $fees = mysqli_fetch_all($result, MYSQLI_ASSOC); // ??
       mysqli_free_result($result);
+
       return $fees;
   	}
   	else {
@@ -18,6 +19,7 @@
     if ( $result = $conn->query($sql) ) {
       $fee = mysqli_fetch_assoc($result); // fetch only the first row of the result
       mysqli_free_result($result);
+      
       return $fee;
     }
     else {

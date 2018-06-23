@@ -7,7 +7,7 @@
 
   <title>Edit User</title>
 
-  <link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/input_file.css" rel="stylesheet">
+  <link href="/css/input_file.css" rel="stylesheet">
 
 </head>
 
@@ -102,6 +102,11 @@
           <div><label>Image</label></div>
 
           <input type="file" name="image" id="file" class="inputfile" onchange="readURL(this);">
+
+          <input type="hidden" id="x1" value="" />
+          <input type="hidden" id="y1" value="" />
+          <input type="hidden" id="w" value="" />
+          <input type="hidden" id="h" value="" />
 
           <div ng-if="userData.imageUrl != ''">
 
@@ -246,7 +251,7 @@
   }
 </script>
 
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/image_module.js"></script>
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/phone_number_module.js"></script>
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/edit_user.js"></script>
-<script type="text/javascript" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/register_form_validation.js"></script>
+<script src="/js/image_module.js"></script>
+<script src="/js/phone_number_module.js"></script>
+<script src="/js/edit_user.js"></script>
+<script type="text/javascript" src="/js/register_form_validation.js"></script>

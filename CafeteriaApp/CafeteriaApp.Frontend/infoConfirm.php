@@ -34,7 +34,7 @@
     //             	$_SESSION['orderId'] = addOrder($conn, date('Y-m-d h:m'), 1, 1, $_SESSION['userId']);
     //         	}
 
-    //         	header( "Location:" . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php");
+    //         	header( "Location:" . "/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php");
 				echo "<h1>Your Account is Confirmed Successfully</h1>";
 					
 			}

@@ -6,6 +6,7 @@
     if ($result) {
       $favoriteItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
+
       return $favoriteItems;
     }
     else {
@@ -19,7 +20,8 @@
 
     if ($result) {
       $favoriteItems = mysqli_fetch_assoc($result);
-      mysqli_free_result($result); 
+      mysqli_free_result($result);
+
       return $favoriteItems;
     }
     else {
@@ -64,7 +66,6 @@
   }
 
   function deleteFavoriteItem($conn, $id) {
-    //$conn->query("set foreign_key_checks=0");
     $sql = "delete from favoriteitem where Id = " . $id . " LIMIT 1";
 
     if ($conn->query($sql) === TRUE) {
@@ -81,8 +82,6 @@
       return;
     }
     else {
-
-      //$conn->query("set foreign_key_checks=0");
       $sql = "delete from favoriteitem where MenuItemId = " . $Mid . " and UserId = " . $Cid . " LIMIT 1";
 
       if ($conn->query($sql) === TRUE) {

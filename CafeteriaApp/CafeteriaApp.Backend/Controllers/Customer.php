@@ -51,8 +51,6 @@
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("di", $cred, $userId);
 
-    echo $cred;
-    
     if ($stmt->execute() === TRUE) {
       return "Customer updated successfully";
     }
@@ -62,7 +60,6 @@
   }
 
   function deleteCustomerByUserId($conn, $userId) { // cascaded delete ??
-    //$conn->query("set foreign_key_checks = 0"); // ????????/
     $sql = "delete from customer where UserId = " . $userId . " LIMIT 1";
 
     if ($conn->query($sql) === TRUE) {
@@ -74,7 +71,6 @@
   }
 
   function deleteCustomer($conn, $id) {
-    //$conn->query("set foreign_key_checks = 0"); // ????????/
     $sql = "delete from customer where Id = " . $id . " LIMIT 1";
 
     if ($conn->query($sql) === TRUE) {

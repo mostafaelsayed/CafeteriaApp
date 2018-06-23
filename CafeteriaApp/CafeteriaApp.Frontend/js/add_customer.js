@@ -30,27 +30,13 @@ add_userApp.controller('addCustomer', ['$scope', 'addUserService', '$http', func
 		// along with the customer data to the database to insert the customer
 		$scope.userData = addUserService.userData;
 		$scope.userData.RoleId = 2; // customer role id
-
-		$http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php', $scope.userData)
-		.then(function(response) {
-			console.log(response);
-			if ($scope.myform.$valid) {
-				var dateOfBirth = String($scope.selectedYear) + '-' + String($scope.selectedMonth) + '-'
-				+ String($scope.selectedDay);
-
-				var customerData = {
-					GenderId: $scope.selectedGender,
-					UserId: parseInt(response.data),
-					Credit: $scope.credit,
-					DateOfBirth: dateOfBirth
-				}
-				
-				$http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Customer.php', customerData)
-				.then(function(response) {
-					console.log(response);
-					document.location = "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Admin/User/show_and_delete_users.php";
-				});
+		if ($scope.myform.$valid) {
+			var customerData = {
+				UserId: parseInt(response.data),
+				Credit: $scope.credit,
 			}
-		});
+			
+			$http.post('/myapi/Customer', customerData);
+		}
 	});
 }]);

@@ -7,10 +7,25 @@
     if ( $result = $conn->query($sql) ) {
       $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
+
       return $categories;
     }
     else {
       echo "Error Retrieving Categories: ", $conn->error;
+    }
+  }
+
+  function getCategoryIdByName($conn, $name) {
+    $sql = "select `Id` from category where `Name` = '{$name}'";
+
+    if ( $result = $conn->query($sql) ) {
+      $categoryId = (int)mysqli_fetch_assoc($result)['Id'];
+      mysqli_free_result($result);
+
+      return $categoryId;
+    }
+    else {
+      echo "Error Retrieving Category: ", $conn->error;
     }
   }
 
@@ -25,6 +40,7 @@
       if ( $result = $conn->query($sql) ) {
         $category = mysqli_fetch_assoc($result);
         mysqli_free_result($result);
+        
         return $category;
       }
       else {
@@ -35,7 +51,7 @@
 
   function addCategory($conn, $name, $imageData = null) {
     if ($imageData != null) {
-      $imageFileName = addBinaryImageFile($imageData, $name);
+      $imageFileName = addBinaryImageFile($imageData, $name)[0];
       $sql = "insert into category (Name, Image) values (?, ?)";
       $stmt = $conn->prepare($sql);
       $stmt->bind_param("ss", $name, $imageFileName);
@@ -58,12 +74,15 @@
     $result = $conn->query("select Image from category where Id = " . $id);
     $category = mysqli_fetch_assoc($result);
     mysqli_free_result($result);
+    $stmt = '';
 
     if ($imageData != null) {
-      $imageFileName = editBinaryImage($imageData, $category['Image'], $name);
+      var_dump($category['Image']);
+      var_dump($name);
       $sql = "update category set Name = (?) , Image = (?) where Id = (?)";
       $stmt = $conn->prepare($sql);
-      $stmt->bind_param("ssi", $name, $imageFileName, $id);
+      $stmt->bind_param("ssi", $name, $Image, $id);
+      $Image = editBinaryImage($imageData, $category['Image'], $name)[0];
     }
     else {
       $sql = "update category set Name = (?) where Id = (?)";
@@ -82,12 +101,20 @@
   function deleteCategory($conn, $id) {
     $sql = "select Image from category where Id = " . $id . " LIMIT 1";
     $result = $conn->query($sql);
-    deleteImageFileIfExists( mysqli_fetch_assoc($result)['Image'] );
-    mysqli_free_result($result);
-    //$conn->query("set foreign_key_checks=0");
+    $sql = "select Image from menuitem where CategoryId = " . $id;
+    $result2 = $conn->query($sql);
     $sql = "delete from category where Id = " . $id . " LIMIT 1";
     
     if ($conn->query($sql) === TRUE) {
+      deleteImageFileName( mysqli_fetch_assoc($result)['Image'] );
+      mysqli_free_result($result);
+
+      while ($row = mysqli_fetch_assoc($result2)) {
+        deleteImageFileName( $row['Image'] );
+      }
+
+      mysqli_free_result($result2);
+
       return "Category deleted successfully";
     }
     else {

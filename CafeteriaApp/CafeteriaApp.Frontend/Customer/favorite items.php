@@ -5,14 +5,14 @@
 <!-- here you can know to which category your user belongs and can recommend him new items in that category -->
 
 <title>Favorite Items</title>
-<link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/favorite items.css" rel="stylesheet">
-<link href="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/css/popup.css" rel="stylesheet">
+<link href="/css/favorite items.css" rel="stylesheet">
+<link href="/css/popup.css" rel="stylesheet">
 
 <div class="container" ng-controller="favorites" style="text-align: center;position: relative">
 
   <div>
 
-    <h2 style="color: orange;margin-top: 50px"> My Favorites <img style="width: 70px;height: 70px" src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/icons/face-savouring-delicious-food.png"></h2>
+    <h2 style="color: orange;margin-top: 50px"> My Favorites <img style="width: 70px;height: 70px" src="/images/icons/face-savouring-delicious-food.png"></h2>
 
     <div class="popup" style="position: fixed">
       <span class="popuptext" id="myPopup">A Simple Popup!</span>
@@ -38,7 +38,7 @@
         <td style="vertical-align: middle"> 
           <a class="btn btn-default btn-circle" title="Remove Favorite Item" ng-click="deleteFavorItem(fi.MenuItemId,$index);" style="color: red"><i class="fa fa-minus"></i></a>
 
-          <a class="btn btn-primary btn-circle" style="width: 70px;height: 70px" title="Add to Cart" ng-click="addToOrder(fi.MenuItemId)"> <img src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/images/icons/cart-favo.png" style="width: 100%;height: 100%"/></a>
+          <a class="btn btn-primary btn-circle" style="width: 70px;height: 70px" title="Add to Cart" ng-click="addToOrder(fi.MenuItemId)"> <img src="/images/icons/cart-favo.png" style="width: 100%;height: 100%"/></a>
         </td>
       </tr>
 
@@ -50,6 +50,6 @@
 
 </div>
 
-<script src="/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/js/favorite items.js"></script>
+<script src="/js/favorite items.js"></script>
 
 <?php require(__DIR__ . '/../Public/footer.php'); ?>

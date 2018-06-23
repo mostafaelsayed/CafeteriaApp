@@ -23,7 +23,7 @@ function($rootScope, $scope, $http, Order_Info) {
         //}, 1000);
         var data = {langId: languageId};
 
-        $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Languages.php', data)
+        $http.post('/myapi/Languages', data)
         .then(function(response) {
             location.reload();
             //document.location=<?php //echo "\"{$_SERVER['PHP_SELF']}\"" ;//current executing script , __FILE__ gets the current file?>

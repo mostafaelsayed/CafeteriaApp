@@ -20,7 +20,7 @@ use PayPal\Exception\PayPalConnectionException;
 use PayPal\Api\ExecutePayment;
 
 class mypaypal {
-	const SITEURL = 'http://127.0.0.1';
+	const SITEURL = 'http://127.0.0.2';
 
 	public static function configPaypal() {
 		$paypal = new ApiContext(
@@ -94,8 +94,8 @@ class mypaypal {
 
 	    // Set redirect urls
 	    $redirectUrls = new RedirectUrls();
-	    $redirectUrls->setReturnUrl(self::SITEURL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/review_order_and_charge_customer.php?orderId=' . $orderId)
-	      ->setCancelUrl(self::SITEURL . '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/checkout.php?orderId=' . $orderId);
+	    $redirectUrls->setReturnUrl(self::SITEURL . '/CafeteriaApp/CafeteriaApp.Frontend/Customer/review_order_and_charge_customer.php?orderId=' . $orderId)
+	      ->setCancelUrl(self::SITEURL . '/CafeteriaApp/CafeteriaApp.Frontend/Customer/checkout.php?orderId=' . $orderId);
 
 	    // Set payment amount
 	    $amount = new Amount();
@@ -156,7 +156,7 @@ class mypaypal {
 					$result = CheckOutOrder($conn, $orderId);
 
 					if ($result) {
-						$returnUrl = self::SITEURL . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php";
+						$returnUrl = self::SITEURL . "/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php";
 						$_SESSION['notifications'][] = 'Payment Succeeseded !';
 						header("Location: " . $returnUrl);
 					}
@@ -165,7 +165,7 @@ class mypaypal {
 					}
 				}
 				else {
-					$returnUrl = self::SITEURL . "/CafeteriaApp/CafeteriaApp/CafeteriaApp.Frontend/Customer/checkout.php";
+					$returnUrl = self::SITEURL . "/CafeteriaApp/CafeteriaApp.Frontend/Customer/checkout.php";
 					header("Location: " . $returnUrl);
 				}	
 			}

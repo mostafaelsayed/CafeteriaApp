@@ -10,16 +10,16 @@ add_userApp.controller('addCashier', ['$scope', '$http', 'addUserService', funct
 		$scope.userData = addUserService.userData;
 		$scope.userData.RoleId = 3; // cashier role id
 
-		$http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php', $scope.userData)
+		$http.post('/myapi/User', $scope.userData)
 		.then(function(response) {
 			if ($scope.myform.$valid) {
 				var cashierData = {
 					UserId: parseInt(response.data)
 				}
 
-				$http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/Cashier.php',cashierData)
+				$http.post('/myapi/Cashier',cashierData)
 				.then(function(response) {
-					//document.location = "../../CafeteriaApp.Frontend/Areas/Admin/User/Views/show_and_delete_users.php";
+					//document.location = "/admin/users";
 				});
 			}
 		});

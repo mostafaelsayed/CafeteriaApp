@@ -25,7 +25,7 @@ registerFormApp.directive('check', ['$http', function($http) {
               Email: val
             };
 
-            $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php?flag=2', x).then(function(response) {
+            $http.post('/myapi/User/flag/2', x).then(function(response) {
               if (response.data == true) {
                 ctrl.$setValidity('emailExisted', false);
                 ctrl.$setValidity('emailEmpty', true);
@@ -180,7 +180,7 @@ registerFormApp.directive('check', ['$http', function($http) {
               Email: val
             };
 
-            $http.post('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/User.php?flag=2', x).then(function(response) {
+            $http.post('/myapi/User/flag/2', x).then(function(response) {
               if (response.data == true) {
                 ctrl.$setValidity('emailExisted', false);
                 ctrl.$setValidity('emailEmpty', true);

@@ -1,14 +1,35 @@
-- csrf token for the rest of the forms ??????
+- url mapping :
 
-- no payment methods in db ?
+	- pass id in the query string (maybe hide it?)
 
-- info confirm not neccessary open a session ??
+	- /register, /login and /logout url mapping not separate one for each
 
-
+- paypal payment show only with credit card
 
 - register needs click twice to work in IE
 
 - fix login labels inside the form input when first load the login page in chrome (sometimes)
+
+- verifing the credit card number with good messages if something goes wrong
+
+- proper error messages in case of paypal failure
+
+- customer credit from paypal or credit card (braintree)
+
+- try to handle error in console when update image (when choose another image twice)
+
+- when add (orderitem, favoriteitem) fast don't add two orderitems (either increase qty or add timeout between two consecutive clicks)
+
+- google map problem when get current position (something other than local storage solution)
+
+
+
+
+
+
+- csrf token for the rest of the forms ??????
+
+- no payment methods in db ???
 
 - saving the formatted_address of the location in db ???
 
@@ -20,47 +41,9 @@
 
 
 
+- later :
+	- stripe (optional)
 
-- verifing the credit card number with good messages if something goes wrong
+	- multiple file uploads and renaming them
 
-
-
-
-
-
-
-- try to handle error in console when update image (when choose another image twice)
-
-
-
-
-
-
-
-- when add (orderitem, favoriteitem) fast don't add two orderitems (either increase qty or add timeout between two consecutive clicks)
-
-
-- google map problem when get current position (something other than local storage solution)
-
-
-- stripe (optional)
-
-
-
-
-
-
-- later : multiple file uploads and renaming them
-
-
-
-
-- later (optional) : try different library for cropping
-
-
-
-
-
-
-- notes
-	1- don't use type="hidden" with ng-model
+	- try different library for cropping (optional)	

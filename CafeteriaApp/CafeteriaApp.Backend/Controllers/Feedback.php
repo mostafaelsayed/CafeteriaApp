@@ -8,6 +8,7 @@
     if ($result) {
       $feedbacks = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
+
       return $feedbacks;
     }
     else { //server
@@ -22,6 +23,7 @@
     if ($result) {
       $feedbacks = mysqli_fetch_all($result, MYSQLI_ASSOC);
       mysqli_free_result($result);
+
       return $feedbacks;
     }
     else { //server
@@ -37,6 +39,7 @@
     if ($result) {
       $feedbacks = mysqli_fetch_array($result, MYSQLI_NUM);
       mysqli_free_result($result);
+      
       return $feedbacks[0] > 0 ? true : false;
     }
     else { //server

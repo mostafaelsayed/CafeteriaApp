@@ -1,7 +1,7 @@
 // controller to deal with favorite items
 layoutApp.controller('favorites', ['$scope', '$http', '$rootScope', '$timeout', 'Order_Info', function($scope, $http, $rootScope, $timeout, Order_Info) {
     $scope.getFavoriteItems = function() {
-        $http.get('/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/FavoriteItem.php').then(function(response) {
+        $http.get('/myapi/FavoriteItem').then(function(response) {
             $scope.favoriteItems = response.data;
         });
     };
@@ -13,7 +13,7 @@ layoutApp.controller('favorites', ['$scope', '$http', '$rootScope', '$timeout', 
 
         $http({
             method: 'DELETE',
-            url: '/CafeteriaApp/CafeteriaApp/CafeteriaApp.Backend/Requests/FavoriteItem.php',
+            url: '/myapi/FavoriteItem',
             data: data,
             headers: {
                 'Content-type': 'application/json;charset=utf-8'

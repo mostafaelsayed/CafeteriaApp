@@ -1,0 +1,2 @@
+1- don't use type="hidden" with ng-model
+2- testInt doesn't work with empty string (gives true)
