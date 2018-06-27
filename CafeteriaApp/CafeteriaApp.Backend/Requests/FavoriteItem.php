@@ -8,12 +8,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (isset($_SESSION['userId'])) {
         checkResult(getFavoriteItemsByUserId($conn, $_SESSION['userId']));
     }
-
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     $data = json_decode(file_get_contents('php://input'));
-    //echo $data;
+
     if (isset($_SESSION['userId']) && isset($data->menuItemId) && testInt($data->menuItemId)) {
         checkResult(deleteFavoriteItemByMenuItemId($conn, $_SESSION['userId'], $data->menuItemId));
     }

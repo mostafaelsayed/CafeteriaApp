@@ -1,23 +1,16 @@
 <?php
-//var_dump(hash_equals('12', '12') === false);
-// ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'PUT' || $_SERVER['REQUEST_METHOD'] == 'DELETE')
 function checkCSRFToken() {
-    //isset($_POST['csrf_token']) && checkCSRFToken($_POST['csrf_token'])
     if ( isset($_POST['csrf_token']) ) {
         if ( hash_equals($_SESSION['csrf_token'], $_POST['csrf_token']) ) {
             return true;
         }
         else {
-            //return false;
-            //header('Location: ' . '/CafeteriaApp/CafeteriaApp.Frontend/Public/error.php');
             echo 'error';
             
             return false;
         }
     }
     else {
-        //var_dump($_POST);
-        //echo '<div>ERROR</div>';
         $data = json_decode( file_get_contents('php://input') );
         $csrf_token = '';
 
@@ -31,29 +24,15 @@ function checkCSRFToken() {
         }
 
         if ( hash_equals($_SESSION['csrf_token'], $csrf_token) ) {
-            //header('Location: ' . '/CafeteriaApp/CafeteriaApp.Frontend/Public/categ.php');
             echo true;
 
             return true;
         }
         else {
-            //return false;
             echo 'error';
-            //header('Location: ' . '/CafeteriaApp/CafeteriaApp.Frontend/Public/error.php');
-            // ob_start();
-            // echo 'error';
-            // ob_end_clean();
-            //ob_end_clean();
-            // <?php
-            
-
-            
+           
             return false;
         }
-        //exit(); // if it will be used in all requests (later)
-        //return false;
-
-        //return json_decode( file_get_contents('php://input') );
     }
 }
 

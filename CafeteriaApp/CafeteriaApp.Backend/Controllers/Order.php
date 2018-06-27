@@ -1,7 +1,7 @@
 <?php    
-  require_once(__DIR__ . '/../session.php');
-  require_once(__DIR__ . '/../connection.php');
-  require(__DIR__ . '/payment-methods.php');
+  require_once __DIR__ . '/../session.php';
+  require_once __DIR__ . '/../connection.php';
+  require __DIR__ . '/payment-methods.php';
 
   function generateBrainTreeToken() {
     echo mybraintree::brainTreeConfig()->clientToken()->generate();
@@ -99,6 +99,7 @@
     if ($orderType == 0) { // take away
       $f = -$deliveryFee;
       $deliveryFee = 0;
+      $conn->query("delete from `OrderLocation` where `OrderId` = " . $_SESSION['orderId']);
     }
     elseif ($orderType == 1) { // delivery
       $f = $deliveryFee;
@@ -257,12 +258,10 @@
   function processPayment($conn, $orderId, $selectedMethodId, $orderType) {
     if ($selectedMethodId == 1) { // paypal payment
       //$paypal = new mypaypal();
-      echo "string";
       mypaypal::handlePaypal($conn, $orderId, $orderType, $selectedMethodId);
       //$payer->setPaymentMethod('paypal'); // maybe determine this from frontend too
     }
     elseif ($selectedMethodId == 2) { // braintree
-      echo "string";
       mybraintree::handleBrainTree($conn, $orderId, $orderType, $selectedMethodId);
     }
     else {

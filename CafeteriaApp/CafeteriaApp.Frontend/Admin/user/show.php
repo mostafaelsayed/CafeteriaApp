@@ -1,5 +1,6 @@
 <?php
   require(__DIR__ . '/../layout.php');
+  validatePageAccess([1]);
   require(__DIR__ . '/../modal_includes.php');
 ?>
 

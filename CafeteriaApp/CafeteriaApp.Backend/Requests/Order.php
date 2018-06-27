@@ -1,9 +1,7 @@
 <?php
-  require(__DIR__ . '/../Controllers/Order.php');
-  require(__DIR__ . '/../Controllers/Fee.php');
-  require(__DIR__ . '/TestRequestInput.php');
-
-  // var_dump($_POST);
+  require __DIR__ . '/../Controllers/Order.php';
+  require __DIR__ . '/../Controllers/Fee.php';
+  require __DIR__ . '/TestRequestInput.php';
 
   if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ( isset($_GET['orderId']) && !isset($_GET['flag']) && testInt($_GET['orderId']) ) {
@@ -43,14 +41,12 @@
     else {
       if ($_SESSION['roleId'] == 3) {
         $_SESSION['orderId'] = addOrder($conn, date('Y-m-d h:m'), 4, 1, $_SESSION['userId']); // consider it cash but when user will use paypal (either using paypal or credit), customer should use the app himself to login to paypal
-        header("Location: " . "/public/categories");
+        header("Location: /public/categories");
       }
     }
   }
 
   if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
-    //var_dump($_POST);
-    //exit();
     $data = json_decode( file_get_contents('php://input') );
 
     if ( isset($data->locationId) && testInt($data->locationId) ) {
@@ -61,10 +57,8 @@
     }
     elseif ( isset($_GET['type']) && testInt($_GET['type']) && checkCSRFToken() ) {
       echo updateOrderTypeAndTotal($conn, $_GET['type']);
-      //$conn->query("update `order` set `Type` = {$_GET['type']} where `Id` = {$_SESSION['orderId']}");
     }
     elseif ( isset($data->paymentMethodId) && testInt($data->paymentMethodId) ) {
-      //die($data->paymentMethodId);
       $id = $data->paymentMethodId;
       $conn->query("update `order` set `PaymentMethodId` = {$id} where `Id` = {$_SESSION['orderId']}");
       $_SESSION['paymentMethodId'] = $id;
@@ -75,9 +69,6 @@
     elseif (isset($_GET['flag']) && $_GET['flag'] == 2 && isset($_GET['orderId']) && testInt($_GET['orderId']) ) {
       hideOrder($conn, $_GET['orderId']);
     }
-    // else if ($_GET['flag'] == 3) {
-    //   $conn->query("update `order` set `Type` = 1 where `Id` = {$_SESSION['orderId']}");
-    // }
     else {
       echo "error";
     }

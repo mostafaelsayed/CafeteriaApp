@@ -1,49 +1,42 @@
 - url mapping :
 
-	- pass id in the query string (maybe hide it?)
+	- pass id in the query string in category (maybe hide it?)
 
 	- /register, /login and /logout url mapping not separate one for each
 
-- paypal payment show only with credit card
+	- after url rewriting, sometimes it takes too long to load
 
-- register needs click twice to work in IE
 
-- fix login labels inside the form input when first load the login page in chrome (sometimes)
 
-- verifing the credit card number with good messages if something goes wrong
-
-- proper error messages in case of paypal failure
-
-- customer credit from paypal or credit card (braintree)
-
-- try to handle error in console when update image (when choose another image twice)
-
-- when add (orderitem, favoriteitem) fast don't add two orderitems (either increase qty or add timeout between two consecutive clicks)
-
-- google map problem when get current position (something other than local storage solution)
+- handling errors :
+	- paypal
+	- if any ajax request fails
 
 
 
 
 
+- register need click twice to work in IE
 
-- csrf token for the rest of the forms ??????
+- try not to use browser storage
 
-- no payment methods in db ???
 
-- saving the formatted_address of the location in db ???
-
-- confirm password only in frontend (how to put confirm password in form but without sending it to server) ????
-
-- cropping image validation ??
 
 
 
 
 
-- later :
-	- stripe (optional)
+- confirm password only in frontend (how to put confirm password in form but without sending it to server) ????
+
+
+
+
+
+
+- later and optional :
+
+	- stripe and handling errors if occured
 
 	- multiple file uploads and renaming them
 
-	- try different library for cropping (optional)	
+	- try different library for cropping	

@@ -1,7 +1,7 @@
 <?php
   require(__DIR__ . '/../layout.php');
-  require(__DIR__ . '/../modal_includes.php');
   validatePageAccess([1]);
+  require(__DIR__ . '/../modal_includes.php');
 ?>
 
 <head>
@@ -23,6 +23,8 @@
   <div ng-controller="editCategory">
 
     <form novalidate role="form" name="myform" id="centerBlock">
+
+      <input type="hidden" value="<?php echo $_SESSION['csrf_token']; ?>" name="csrf_token" id="csrf_token">
 
       <div class="form-group">
 
@@ -54,7 +56,7 @@
 
         <div ng-if="imageUrl != ''">
 
-          <img id="image" ng-src="{{ imageUrl }}" style="width: 300px;height: 300px" />
+          <img id="image" class="img-block" ng-src="{{ imageUrl }}" style="width: 300px;height: 300px;" />
 
           <span>
 

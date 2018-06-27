@@ -1,6 +1,6 @@
 <?php
-  require(__DIR__ . '/../ImageHandle.php');
-  require(__DIR__ . '/../mail-sender.php');
+  require __DIR__ . '/../ImageHandle.php';
+  require __DIR__ . '/../mail-sender.php';
 
   function generate_salt($length) {
     // Not 100% unique, not 100% random, but good enough for a salt

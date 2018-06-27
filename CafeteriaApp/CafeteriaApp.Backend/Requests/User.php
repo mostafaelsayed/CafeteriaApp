@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && checkCSRFToken()) {
     if (isset($_GET['flag']) && $_GET['flag'] == 2) {
         $data = json_decode( file_get_contents('php://input') );
         $email = $data->Email;
@@ -31,20 +31,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     elseif (isset($_SESSION['roleId']) && $_SESSION['roleId'] == 1) {
         $result = isset($_POST['firstName'], $_POST['lastName'], $_POST['roleId'], $_POST['phone'], $_POST['email'], $_POST['DOB'], $_POST['password']) && normalizeString($conn, $_POST['firstName'], $_POST['lastName']) && testPhone($_POST['phone']) && testEmail($_POST['email']) && testDateOfBirth($_POST['DOB']) && testPassword($_POST['password']) && testMutipleInts($_POST['roleId']) && ($_POST['confirmPassword'] == $_POST['password']) && ($_POST['genderId'] == 1 || $_POST['genderId'] == 2);
 
-        if ( isset($_POST['x1'], $_POST['y1'], $_POST['w'], $_POST['h']) && testMutipleInts($_POST['x1'], $_POST['y1'], $_POST['w'], $_POST['h']) ) {
-            $x1 = $_POST['x1'];
-            $y1 = $_POST['y1'];
-            $w  = $_POST['w'];
-            $h  = $_POST['h'];
-        }
-        else {
-            $x1 = null;
-            $y1 = null;
-            $w  = null;
-            $h  = null;
-        }
+        if ( $result && isset($_POST['x1'], $_POST['y1'], $_POST['w'], $_POST['h']) && ( ($_POST['x1'] == '' && $_POST['y1'] == '' && $_POST['w'] == '' && $_POST['h'] == '') || ( testMutipleInts($_POST['x1'], $_POST['y1'], $_POST['w'], $_POST['h']) ) ) ) {
+            $x1 = $y1 = $w = $h = null;
 
-        if ($result) {
+            if ( ($_POST['x1'] != '' && $_POST['y1'] != '' && $_POST['w'] != '' && $_POST['h'] != '') ) {
+                $x1 = $_POST['x1'];
+                $y1 = $_POST['y1'];
+                $w  = $_POST['w'];
+                $h  = $_POST['h'];
+            }
+
             normalizeString($conn, $_FILES['image']['name']);
             $userId = addUser($conn, $_POST['firstName'], $_POST['lastName'], $_FILES['image'], $_POST['email'], $_POST['phone'], $_POST['password'], $_POST['genderId'], $_POST['roleId'], $_POST['DOB'], 1, $x1, $y1, $w, $h);
 
@@ -58,30 +54,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 addCashier($conn, $userId);
             }
 
-            header("Location: " . "/admin/user/show");
+            header("Location: /admin/user/show");
+        }
+        else {
+            header("Location: /admin/user/add");
         }
     }
     else {
-        if (isset($_POST['update']) && $_POST['update'] == 1) {
-            $x1 = $_POST['x1'];
-            $y1 = $_POST['y1'];
-            $w  = $_POST['w'];
-            $h  = $_POST['h'];
+        if (isset($_GET['update']) && $_GET['update'] == 1) {
+            $data = json_decode( file_get_contents('php://input') );
 
-            handlePictureUpdate($conn, $_FILES['image'], $x1, $y1, $w, $h);
-            header("Location: " . '/profile');
+            if ( isset($data->x1, $data->y1, $data->w, $data->h) && ( ($data->x1 == '' && $data->y1 == '' && $data->w == '' && $data->h == '') || testMutipleInts($data->x1, $data->y1, $data->w, $data->h) ) ) {
+                $x1 = $y1 = $w = $h = null;
+
+                if ( ($data->x1 != '' && $data->y1 != '' && $data->w != '' && $data->h != '') ) {
+                    $x1 = $data->x1;
+                    $y1 = $data->y1;
+                    $w  = $data->w;
+                    $h  = $data->h;
+                }
+
+                handlePictureUpdate($conn, $data->Image, $x1, $y1, $w, $h);
+            }
         }
         else {
             $result = isset($_POST['firstName'], $_POST['lastName'], $_POST['phone'], $_POST['email'], $_POST['DOB'], $_POST['genderId'], $_POST['password']) && normalizeString($conn, $_POST['firstName'], $_POST['lastName']) && testPhone($_POST['phone']) && testEmail($_POST['email']) && testDateOfBirth($_POST['DOB']) && testMutipleInts($_POST['genderId']) && testPassword($_POST['password']) && ($_POST['confirmPassword'] == $_POST['password']);
 
-            if ($result) {
-                $x1 = $_POST['x1'];
-                $y1 = $_POST['y1'];
-                $w  = $_POST['w'];
-                $h  = $_POST['h'];
+            if ($result && isset($_POST['x1'], $_POST['y1'], $_POST['w'], $_POST['h']) && ( ($_POST['x1'] == '' && $_POST['y1'] == '' && $_POST['w'] == '' && $_POST['h'] == '') || ( testMutipleInts($_POST['x1'], $_POST['y1'], $_POST['w'], $_POST['h']) ) ) ) {
+                $x1 = $y1 = $w = $h = null;
+
+                if ( ($_POST['x1'] != '' && $_POST['y1'] != '' && $_POST['w'] != '' && $_POST['h'] != '') ) {
+                    $x1 = $_POST['x1'];
+                    $y1 = $_POST['y1'];
+                    $w  = $_POST['w'];
+                    $h  = $_POST['h'];
+                }
+
                 normalizeString($conn, $_FILES['image']['name']);
                 $userId = addUser($conn, $_POST['firstName'], $_POST['lastName'], $_FILES['image'], $_POST['email'], $_POST['phone'], $_POST['password'], $_POST['genderId'], 2, $_POST['DOB'], 1, $x1, $y1, $w, $h);
                 $_SESSION['userId'] = $userId;
+                $_SESSION['roleId'] = 2; // customer
                 $_SESSION['orderId'] = addOrder($conn, date('Y-m-d h:m'), 1, 1, $userId);
                 $_SESSION['notifications'] = [];
                 $_SESSION['langId'] = 1;
@@ -90,10 +102,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['image'] = $x['Image'];
                 $_SESSION['email']  = $_POST['email'];
                 $_SESSION['croppedImage'] = $x['CroppedImage'];
-                header("Location: " . "/public/categories");
+                header("Location: /public/categories");
             }
             else {
-                header("Location: " . "/register");
+                header("Location: /register");
             }
         }
     }
@@ -106,20 +118,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 
         $result = normalizeString($conn, $data->FirstName, $data->LastName) && testPhone($data->PhoneNumber) && testEmail($data->Email) && testMutipleInts($data->GenderId, $data->RoleId) && testDateOfBirth($data->DateOfBirth);
 
-        if ( isset($data->x1) || isset($data->y1) || isset($data->w) || isset($data->h) ) {
-            $x1 = $data->x1;
-            $y1 = $data->y1;
-            $w  = $data->w;
-            $h  = $data->h;
-        }
-        else {
-            $x1 = null;
-            $y1 = null;
-            $w  = null;
-            $h  = null;
-        }
+        if ( $result && isset($data->x1, $data->y1, $data->w, $data->h) && ( ($_POST['x1'] == '' && $_POST['y1'] == '' && $_POST['w'] == '' && $_POST['h'] == '') || testMutipleInts($data->x1, $data->y1, $data->w, $data->h) ) ) {
+            $x1 = $y1 = $w = $h = null;
 
-        if ($result) {
+            if ( ($_POST['x1'] != '' && $_POST['y1'] != '' && $_POST['w'] != '' && $_POST['h'] != '') ) {
+                $x1 = $data->x1;
+                $y1 = $data->y1;
+                $w  = $data->w;
+                $h  = $data->h;
+            }
+
             $x = normalizeString($conn, $data->Image);
 
             if ($x) {

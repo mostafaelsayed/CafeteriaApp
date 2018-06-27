@@ -5,14 +5,8 @@ var edit_category_and_show_and_delete_its_menuitemsApp = angular.module(
 // controller for editing a category
 edit_category_and_show_and_delete_its_menuitemsApp.controller('editCategory', ['$scope', '$http',
   function($scope, $http) {
-// $.urlParam('orderId')
-  $scope.image = null;
-  $scope.imageFileName = '';
-  
-  $scope.uploadme = {};
-  $scope.uploadme.src = '';
   $scope.categoryId = $.urlParam(1);
-  console.log($scope.categoryId);
+  $scope.csrf_token = document.getElementById('csrf_token').value;
 
   $scope.getCategory = function() {
     $http.get('/myapi/Category/id/' + $scope.categoryId)
@@ -30,6 +24,7 @@ edit_category_and_show_and_delete_its_menuitemsApp.controller('editCategory', ['
         Name: $scope.name,
         Id: $scope.categoryId,
         Image: $('#image').attr('src'),
+        csrf_token: $scope.csrf_token
       };
 
       if ($('#file').val() == '') {
@@ -39,6 +34,7 @@ edit_category_and_show_and_delete_its_menuitemsApp.controller('editCategory', ['
       $http.put('/myapi/Category',data)
       .then(function(response) {
         window.history.back();
+        //console.log(response);
       });
     }
   };

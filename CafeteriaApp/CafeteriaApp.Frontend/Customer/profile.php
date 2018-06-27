@@ -1,5 +1,6 @@
 <?php
   require(__DIR__ . '/../layout.php');
+  validatePageAccess([2]);
 ?>
 
 <title>Profile Info</title>
@@ -7,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="/js/alertify/css/alertify.min.css">
 <link rel="stylesheet" type="text/css" href="/js/alertify/css/themes/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/js/alertify/css/themes/default.min.css">
+<!-- <link rel="stylesheet" href="/js/bower_components/fakeLoader/fakeLoader.css"> -->
 
 <meta charset="utf-8" id="imgFlag" value="<?php echo $_SESSION['imgFlag'] ?>">
 
@@ -18,11 +20,10 @@
   <div class="col-lg-4">
     <div style="margin-top: 70px">
 
-      <img style="width: 150px;height: 150px" src="<?php echo $_SESSION['croppedImage']; ?>" />
+      <img style="width: 150px;height: 150px" id="cropped" src="<?php echo $_SESSION['croppedImage']; ?>" />
 
       <br><br>
 
-      
     </div>
 
     <div><button data-toggle="modal" data-target="#myModal" class="btn btn-primary" type="submit" name="submit" value="Update">Update</button></div>
@@ -50,8 +51,12 @@
 
       <div class="modal-body">
 
-        <form enctype="multipart/form-data" method="post" action="/myapi/User">
+        <form name="myform" method="post">
           <div style="text-align: center"><button class="btn btn-info" onclick="event.preventDefault();$('#file').trigger('click')">Choose Another Image</button></div>
+
+          <input type="hidden" value="<?php echo $_SESSION['csrf_token']; ?>" name="csrf_token" id="csrf_token">
+
+          <img style="display: none" id="myimg" src="">
 
           <input type="file" id="file" name="image" class="inputfile" value="" onchange="readURL(this)" />
 
@@ -91,15 +96,14 @@
 
           </div>
 
-          <input type="hidden" name="x1" value="" />
-          <input type="hidden" name="y1" value="" />
-          <input type="hidden" name="w" value="" />
-          <input type="hidden" name="h" value="" />
-          <input type="hidden" name="update" value="1" />
+          <input type="hidden" name="x1" id="x1" value="" />
+          <input type="hidden" name="y1" id="y1" value="" />
+          <input type="hidden" name="w" id="w" value="" />
+          <input type="hidden" name="h" id="h" value="" />
 
           <br><br>
         <!-- ng-show="<?php echo $_SESSION['imgFlag'] ?> != 1" -->
-          <div style="text-align: center"><input type="submit" class="btn btn-primary" value="Update" /></div>
+          <div style="text-align: center"><input type="submit" class="btn btn-primary" ng-click="updateImage()" /></div>
         </form>        
 
       </div>
@@ -115,22 +119,6 @@
 </div>
 
 </div>
-
-<script type="text/javascript">
-  
-  //var profile = angular.module('profile', []);
-
-  layoutApp.controller('profile', ['$scope', '$http', function($scope, $http) {
-    $scope.delete = function() {
-      $http.delete('/myapi/User/f/1').then(function(response) {
-        //console.log(response);
-        location.reload();
-      });
-    };
-  }]);
-
-
-</script>
 
 <style type="text/css">
   input[type=file] {
@@ -179,7 +167,24 @@
 
 <link rel="stylesheet" type="text/css" href="/js/node_modules/croppie/croppie.css">
 <script type="text/javascript" src="/js/node_modules/croppie/croppie.js"></script>
-
 <script type="text/javascript" src="/js/crop.js"></script>
+<!-- <script type="text/javascript" src="/js/bower_components/fakeLoader/fakeLoader.min.js"></script> -->
+<script type="text/javascript" src="/js/profile.js"></script>
+
+<!-- <script type="text/javascript">
+  function readURL(input) {
+    var file = input.files[0];
+
+    if (input.files && file) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        $('#image').attr('src', e.target.result);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+</script> -->
 
 <?php require(__DIR__ . '/../Public/footer.php'); ?>

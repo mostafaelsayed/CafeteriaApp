@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ( $_SERVER['REQUEST_METHOD'] == 'POST' && checkCSRFToken() ) {
     if ($_SESSION['roleId'] == 1) {
         //decode the json data
         $data = json_decode( file_get_contents('php://input') ); // ????????????
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+if ( $_SERVER['REQUEST_METHOD'] == 'PUT' && checkCSRFToken() ) {
     if ($_SESSION['roleId'] == 1) {
         //decode the json data
         $data = json_decode( file_get_contents('php://input') );

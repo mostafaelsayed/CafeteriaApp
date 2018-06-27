@@ -1,5 +1,4 @@
 <?php
-
   function getVisitorFeedbackByDate($conn, $id) {
     $Date = date("Y-m-d");
     $sql = "select * from visitorfeedback where Date = " . $Date;

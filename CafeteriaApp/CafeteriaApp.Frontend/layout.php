@@ -274,7 +274,7 @@ $selected_lang = 'en';
                     <span class="glyphicon glyphicon-user"></span>
 
                   </button> -->
-                  <img class="dropdown-toggle img-circle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                  <img class="dropdown-toggle img-circle" id="croppedLayout" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                   src="<?php echo $_SESSION['croppedImage']; ?>" style="margin-top: -5px;cursor: pointer;width: 45px;height: 45px" />
 
                   <div class="dropdown-menu" style="left: -70px">
@@ -365,15 +365,15 @@ $selected_lang = 'en';
     </script>
 
     <script type="text/javascript">
-      // $.urlParam = function(name) {
-      //     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+      $.urlStringParam = function(name) {
+          var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
 
-      //     if (results == null) {
-      //         return null;
-      //     } else {
-      //         return decodeURI(results[1]) || 0;
-      //     }
-      // }
+          if (results == null) {
+              return null;
+          } else {
+              return decodeURI(results[1]) || 0;
+          }
+      }
 
       $.urlParam = function(pos) {
         var arr = window.location.href.split('/').reverse();

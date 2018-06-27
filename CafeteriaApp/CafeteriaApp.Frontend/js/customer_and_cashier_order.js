@@ -13,6 +13,7 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
     order_info.getOrderItems = function(orderId) { // this is asyhnchronous
         $http.get('/myapi/OrderItem/orderId/' + orderId).then(function(response) {
             $rootScope.orderItems = response.data;
+            $('.addToOrder').addClass('clickable');
             order_info.orderId = orderId;
         });
     };
@@ -65,7 +66,9 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
         if (x.length > 0) {
             order_info.increaseQuantity(x[0]); // we extract the first element because x is array (x must be one length array)
         }
-        else {
+        else if ($('.addToOrder').hasClass('clickable')) {
+            $('.addToOrder').removeClass('clickable');
+
             var data = {
                 OrderId: order_info.orderId,
                 MenuItemId: menuItemId,
@@ -78,7 +81,7 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
                 order_info.getOrderItems(order_info.orderId);
             });
         }
-    };
+    }
 
     order_info.togglePopup = function(message) {
         var popup = document.getElementById("myPopup");

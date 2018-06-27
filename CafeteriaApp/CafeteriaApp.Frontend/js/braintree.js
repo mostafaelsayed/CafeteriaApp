@@ -1,4 +1,5 @@
 layoutApp.controller('braintree', ['$scope', '$http', function($scope, $http) {
+  
   $scope.nonce = 0;
   localStorage.setItem("submit", 0);
 
@@ -50,6 +51,8 @@ layoutApp.controller('braintree', ['$scope', '$http', function($scope, $http) {
         console.error(err);
         return;
       }
+
+      $('#fakeloader').remove();
 
       document.getElementById("myform").style.display = "block";
 

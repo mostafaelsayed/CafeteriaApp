@@ -1,5 +1,5 @@
 <?php
-  require_once(__DIR__ . '/../ImageHandle.php');
+  require_once __DIR__ . '/../ImageHandle.php';
 
   function getMenuItemByCategoryId($conn, $id, $customer = false) { // ????????????????
     $sql = "select * from menuitem where CategoryId = " . $id;

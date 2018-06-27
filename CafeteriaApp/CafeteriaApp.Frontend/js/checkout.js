@@ -2,14 +2,13 @@
 layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$http', 'Order_Info',
   '$httpParamSerializerJQLike',
   function($rootScope, $scope, $interval, $http, Order_Info, $httpParamSerializerJQLike) {
-
   $scope.orderId = $.urlParam(0);
   $scope.orderTypes = [ {id: 0, name: 'Take Away'}, {id: 1, name: 'Delivery'} ];
-  $scope.paymentMethods = [ {id: 1, name: 'PayPal'}, {id: 2, name: 'Credit Card'}, {id: 3, name: 'Cash'} ];
+  $scope.paymentMethods = [ {id: 1, name: 'PayPal'}, {id: 2, name: 'Card'}, {id: 3, name: 'Cash'} ];
   $scope.deliveryFee = 0;
   $scope.taxFee = 0;
   $scope.subTotal = 0;
-
+  $scope.loading = 0;
   $scope.csrf_token = document.getElementById('csrf_token').value;
 
   $scope.confirmOrder = function() {
@@ -38,6 +37,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
   $scope.discardOrder = function() {
     orderItems = $rootScope.orderItems;
+
     alertify.confirm('Are your sure you want to discard order?', function(e) {
       if (e) {
         for (var i = 0; i < orderItems.length; i++) {
@@ -60,7 +60,6 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   }
 
   $scope.infoWindow = new google.maps.InfoWindow();
-
   $scope.formatted_address = '';
 
   $scope.changeLoc = function() {
@@ -76,21 +75,22 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       document.getElementsByClassName('map-wrapper')[0].classList.add('col-lg-4');
       document.getElementsByClassName('locBut')[0].classList.add('col-lg-4');
       document.getElementsByTagName('form')[0].style.width = '350px';
+      $scope.loading = 1;
 
       $http.put('/myapi/Order/type/1', {csrf_token: $scope.csrf_token}).then(function(response) {
         $scope.deliveryFee = parseInt(response.data);
         $scope.total += $scope.deliveryFee;
-        $http.get('/myapi/OrderLocation/orderId/' + $scope.orderId)
-        .then(function(response) {
-          if ( (response.data != "") ) {
-            $scope.myPos.lat = parseFloat(response.data.Lat);
-            $scope.myPos.lng = parseFloat(response.data.Lng);
-            $scope.changeLocOnMap();
-          }
-          else {
+        // $http.get('/myapi/OrderLocation/orderId/' + $scope.orderId)
+        // .then(function(response) {
+          // if ( (response.data != "") ) {
+          //   $scope.myPos.lat = parseFloat(response.data.Lat);
+          //   $scope.myPos.lng = parseFloat(response.data.Lng);
+          //   $scope.changeLocOnMap(1);
+          // }
+          // else {
             $scope.locInit(2);
-          }
-        });
+          // }
+        // });
 
         alertify.success('order type is now delivery');
       });
@@ -101,6 +101,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       document.getElementsByTagName('form')[0].classList.remove('col-lg-4');
       document.getElementsByClassName('map-wrapper')[0].classList.remove('col-lg-4');
       document.getElementsByClassName('locBut')[0].classList.remove('col-lg-4');
+      document.getElementsByTagName('form')[0].style.width = '500px';
 
       $http.put('/myapi/Order/type/0', {csrf_token: $scope.csrf_token}).then(function(response) {
         $scope.total -= $scope.deliveryFee;
@@ -109,6 +110,8 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       });
 
       document.getElementsByClassName('map-wrapper')[0].style.display = 'none';
+      $scope.myMarker.setMap(null);
+
     }
   };
 
@@ -131,32 +134,17 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   };
 
   $scope.returnToMyCurrentLocation = function() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        sessionStorage.setItem('lat', position.coords.latitude);
-        sessionStorage.setItem('lng', position.coords.longitude);
-        $scope.myPos.lat = parseFloat(sessionStorage.getItem('lat'));
-        $scope.myPos.lng = parseFloat(sessionStorage.getItem('lng'));
-        $scope.changeLoc();
-        $scope.myMarker.setMap(null);
-        $scope.changeLocOnMap();
-      }, function(error) {
-      }, {timeout:5000})
-    }
-
-    $scope.myPos.lat = parseFloat(sessionStorage.getItem('lat'));
-    $scope.myPos.lng = parseFloat(sessionStorage.getItem('lng'));
-    $scope.changeLoc();
-    $scope.myMarker.setMap(null);
-    $scope.changeLocOnMap();
+      $scope.loading = 1;
+      $scope.locInit(1);
   };
 
-  $scope.changeLocOnMap = function() {
-    $scope.myMarker = new google.maps.Marker({ // add marker on your current location on the map
-      map: $scope.map,
-      position: $scope.myPos
-    });
-
+  $scope.changeLocOnMap = function(a=0) {
+    if (a == 0) {
+      $scope.myMarker = new google.maps.Marker({ // add marker on your current location on the map
+        map: $scope.map,
+        position: $scope.myPos
+      });
+    }
 
     // add info window to display text at the user location to help him identify the location better
     $scope.infoWindow.setPosition($scope.myPos);
@@ -165,41 +153,37 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
     $scope.infoWindow.open($scope.map, $scope.myMarker); // position the info window in the map in the marker
   }
 
-  $scope.locInit = function(b) {
+  $scope.locInit = function(b=0) {
     if (navigator.geolocation) { // browser supports geolocation to find your current location
       navigator.geolocation.getCurrentPosition(function(position) {
-        if ($scope.myPos.lat == 0 && $scope.myPos.lng == 0) {
-            $scope.myPos = {
-              lat: Math.round(1000000 * position.coords.latitude) / 1000000,
-              lng: Math.round(1000000 * position.coords.longitude) / 1000000
-            };
-          }
+        if (($scope.myPos.lat == 0 && $scope.myPos.lng == 0) || b == 1) {
+          $scope.myPos.lat = Math.round(1000000 * position.coords.latitude) / 1000000;
+          $scope.myPos.lng = Math.round(1000000 * position.coords.longitude) / 1000000;
+        }
 
-          $scope.myMarker = new google.maps.Marker({ // add marker on your current location on the map
-            map: $scope.map,
-            position: $scope.myPos
+        if (b != 1) {
+          $scope.changeLocOnMap();
+        }
+
+        if (b == 2) {
+          $scope.loading = 0;
+          $http.post('/myapi/OrderLocation', $scope.myPos).then(function(response) {
           });
-
-          // add info window to display text at the user location to help him identify the location better
-          $scope.infoWindow.setPosition($scope.myPos);
-          $scope.map.setCenter($scope.myPos); // center of map is the current location
-          $scope.infoWindow.setContent('Your Location'); // text is 'Your Location'
-          $scope.infoWindow.open($scope.map, $scope.myMarker); // position the info window in the map in the marker
-
-          if (b == 1) {
-            $scope.changeLoc();
-          }
-          else if (b == 2) {
-            $http.post('/myapi/OrderLocation', $scope.myPos).then(function(response) {
-            });
-          }
+        }
+        else if (b == 1) {
+          $scope.changeLoc();
+          $scope.myMarker.setMap(null);
+          $scope.changeLocOnMap();
+          $scope.formatted_address = '';
+          $scope.loading = 0;
+        }
         
-      }, function() {
-        $scope.handleLocationError( true, $scope.infoWindow, $scope.map.getCenter() );
+      }, function(error) {
+        console.log(error);
       });
     } else {
       // Browser doesn't support Geolocation
-      $scope.handleLocationError( false, $scope.infoWindow, $scope.map.getCenter() );
+      console.log('location not supported in your browser');
     }
   };
 
@@ -215,9 +199,11 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
   $scope.confirmLocation = function(a) {
     if ($scope.myPos.lat !== 0 && $scope.myPos.lng !== 0) {
-
       $scope.changeLoc();
-      $scope.geocodeLatLng();
+
+      if (a != 1) {
+        $scope.geocodeLatLng();
+      }
     }
 
     if (a == undefined) {
@@ -260,8 +246,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
             $scope.changeLocOnMap();
           }
           else {
-            $scope.myPos.lat = parseFloat( sessionStorage.getItem('lat') );
-            $scope.myPos.lng = parseFloat( sessionStorage.getItem('lng') );
+            $scope.returnToMyCurrentLocation();
             $http.post('/myapi/OrderLocation', $scope.myPos).then(function(response) {
             });
 
@@ -287,7 +272,6 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
       $http.get('/myapi/Fee')
       .then(function(response) {
-        
       })
     });
   };
@@ -332,17 +316,17 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
           $scope.myMarker.position = latlng;
           $scope.myMarker.map = $scope.map;
-          
-
           $scope.infoWindow = new google.maps.InfoWindow();
           $scope.infoWindow.setMap($scope.map);
           $scope.infoWindow.setPosition($scope.myPos);
-          $scope.infoWindow.setContent('The New Location');
+          //$scope.infoWindow.setContent('The New Location');
           $scope.infoWindow.open($scope.map, $scope.marker);
-        } else {
+        }
+        else {
           window.alert('No results found');
         }
-      } else {
+      }
+      else {
         window.alert('Geocoder failed due to: ' + status);
       }
     });

@@ -5,6 +5,7 @@ add_menuitemApp.controller('addMenuItem', ['$scope', '$http', function($scope, $
   $scope.price = "";
   $scope.description = "";
   $scope.categoryId = $.urlParam(2);
+  $scope.csrf_token = document.getElementById('csrf_token').value;
 
   $scope.addMenuItem = function() {
     if ($scope.myform.$valid) {
@@ -13,7 +14,8 @@ add_menuitemApp.controller('addMenuItem', ['$scope', '$http', function($scope, $
         Price: $scope.price,
         Description: $scope.description,
         CategoryId: $scope.categoryId,
-        Image: $('#image').attr('src')
+        Image: $('#image').attr('src'),
+        csrf_token: $scope.csrf_token
       };
 
       $http.post('/myapi/MenuItem', data)

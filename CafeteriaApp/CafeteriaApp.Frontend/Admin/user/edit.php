@@ -110,7 +110,7 @@
 
           <div ng-if="userData.imageUrl != ''">
 
-            <img id="image" ng-src="{{ userData.imageUrl }}" style="width: 300px;height: 300px" />
+            <img id="image" class="img-block" ng-src="{{ userData.imageUrl }}" style="width: 300px;height: 300px" />
 
             <span>
 

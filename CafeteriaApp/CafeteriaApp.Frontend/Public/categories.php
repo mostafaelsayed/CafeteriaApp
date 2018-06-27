@@ -26,6 +26,12 @@
       transform: scale(1)
     }
   }
+
+  .img-block {
+    display: inline-block;
+    border: 1px solid;
+  }
+    
 </style>
 
 <div class="container">
@@ -40,7 +46,7 @@
 
           <!-- text-decoration: none is to remove the little black line on the image -->
           <a style="text-decoration: none;" href="/public/categories/{{c.Name}}">
-            <img class="img-rounded" style="margin: 0 auto;width: 300px;height: 300px" ng-src={{c.Image}} />
+            <img class="img-rounded img-block" style="margin: 0 auto;width: 300px;height: 300px" ng-src={{c.Image}} />
           </a>
 
           <br>

@@ -33,6 +33,10 @@ if ( isset($_POST['submit']) ) {
             $_SESSION['genderId'] = $found_user['GenderId'];
             $_SESSION['imageSet'] = $found_user['ImageSet'];
 
+            if ( empty($_SESSION['csrf_token']) ) {
+                $_SESSION['csrf_token'] = bin2hex( random_bytes(32) );
+            }
+
             $_SESSION['Confirmed'] = $found_user['Confirmed'];
 
             if ( (!$_SESSION['orderId'] = getOpenOrderByUserId($conn)['Id']) && $_SESSION['roleId'] == 2 ) {
@@ -145,7 +149,7 @@ elseif ( isset($_SESSION['userId']) && isset($_SESSION['userName']) && isset($_S
 
           <div class="input-field col s12">
 
-            <label for="email" style="font-size: 25px;color: white">E-mail</label>
+            <div style="font-size: 25px;color: white;text-align: left;">E-mail</div>
 
             <input type="email" id="email" name="email" value="<?php echo isset($_SESSION['userName']) ? htmlentities($_SESSION['userName']) : ''; ?>" />
 
@@ -153,7 +157,7 @@ elseif ( isset($_SESSION['userId']) && isset($_SESSION['userName']) && isset($_S
 
           <div class="input-field col s12">
 
-            <label for="password" style="font-size: 25px;color: white">Password</label>
+            <div style="font-size: 25px;color: white;text-align: left;">Password</div>
 
             <input type="password" name="password" style="color: white" />
 

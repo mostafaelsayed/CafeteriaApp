@@ -19,3 +19,8 @@
 .inputfile + label:hover {
     background-color: red;
 }
+
+.img-block {
+    display: inline-block;
+    border: 1px solid;
+}

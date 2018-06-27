@@ -23,6 +23,8 @@
 
     <form novalidate role="form" name="myform" id="centerBlock">
 
+      <input type="hidden" value="<?php echo $_SESSION['csrf_token']; ?>" name="csrf_token" id="csrf_token">
+
       <div class="form-group">
 
         <label>Name</label>
@@ -51,7 +53,7 @@
 
         <input type="file" name="image" id="file" class="inputfile" onchange="readURL(this);">
 
-        <img id="image" style="width: 300px;height: 300px">
+        <img id="image" class="img-block" style="width: 300px;height: 300px">
 
         <span>
 

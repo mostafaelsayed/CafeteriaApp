@@ -13,6 +13,13 @@
   <link href="/css/stars.css" rel="stylesheet">
 </head>
 
+<style type="text/css">
+  .img-block {
+    display: inline-block;
+    border: 1px solid;
+  }
+</style>
+
 <div class="container">
 
   <div style="text-align: center">
@@ -32,7 +39,7 @@
       <div class="row" ng-repeat="m in menuItems" style="width: 100%;margin-left: 40px">
         <div class="row">
           <div class="col-md-6">
-            <img class="img-rounded" style="width: 70%;height: 70%;" src="{{m.Image}}"/>
+            <img class="img-rounded img-block" style="width: 70%;height: 70%;" src="{{m.Image}}"/>
 
             <h1 ng-bind="m.Name" class="menu-name"></h1>
 
@@ -40,7 +47,7 @@
               <span class="glyphicon glyphicon-heart"></span>
             </a>
 
-            <a ng-if='loggedIn' class="btn btn-circle addToOrder" title="Add To Order" ng-click="addToOrder(m.Id)" >
+            <a ng-if='loggedIn' class="btn btn-circle addToOrder clickable" title="Add To Order" ng-click="addToOrder(m.Id)" >
               <i style="font-size: 3rem" class="fa fa-plus"></i>
             </a>
           </div>

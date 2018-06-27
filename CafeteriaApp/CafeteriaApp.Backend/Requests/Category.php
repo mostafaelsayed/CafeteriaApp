@@ -1,6 +1,7 @@
 <?php
 require __DIR__ . '/../Controllers/Category.php';
 require __DIR__ . '/../connection.php';
+require __DIR__ . '/../session.php';
 require __DIR__ . '/TestRequestInput.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {        
@@ -15,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ( $_SERVER['REQUEST_METHOD'] == 'POST' && checkCSRFToken() ) {
     $data = json_decode( file_get_contents('php://input') );
 
     if (isset($data->Name) && normalizeString($conn, $data->Name) ) {
@@ -33,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+if ( $_SERVER['REQUEST_METHOD'] == 'PUT' && checkCSRFToken() ) {
     //decode the json data
     $data = json_decode( file_get_contents('php://input') );
 

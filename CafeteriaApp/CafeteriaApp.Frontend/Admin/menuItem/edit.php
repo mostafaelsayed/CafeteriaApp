@@ -21,6 +21,8 @@
 
   <form novalidate role="form" name="myform" class="css-form" id="centerBlock">
 
+    <input type="hidden" value="<?php echo $_SESSION['csrf_token']; ?>" name="csrf_token" id="csrf_token">
+
     <div class="form-group">
 
       <label>Name</label>
@@ -95,7 +97,7 @@
 
       <div ng-if="imageUrl != ''">
 
-        <img id="image" ng-src="{{ imageUrl }}" style="width: 300px;height: 300px" />
+        <img id="image" class="img-block" ng-src="{{ imageUrl }}" style="width: 300px;height: 300px" />
 
         <span>
 

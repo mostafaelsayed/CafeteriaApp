@@ -134,10 +134,13 @@
 
     function handlePictureUpdate($conn, $image, $x1 = null, $y1 = null, $w = null, $h = null) {
         if ($x1 != null || $y1 != null || $w != null || $h != null) {
-            if ($image['size'] != 0) { // new image is gonna be uploaded
-                $imageFileType = exif_imagetype($image['tmp_name']);
+            if (strlen($image) != 0) { // new image is gonna be uploaded
+                $imageData = $image;
+                list($imageFileType, $image) = explode(';', $image);
+                list(, $image)      = explode(',', $image);
+                //$imageFileType = exif_imagetype($image['tmp_name']);
 
-                if ($imageFileType != 2 && $imageFileType != 3) {
+                if ($imageFileType != 'data:image/jpeg' && $imageFileType != 'data:image/png') {
                     echo "Sorry, only JPEG and PNG files are allowed.";
                     exit();
                 }
@@ -146,7 +149,7 @@
                 $imageNameDb = '/uploads/' . $_SESSION['email'];
                 $croppedImageNameDb = '/uploads/' . $_SESSION['email'] . '_crop';
 
-                if ($imageFileType == 2) {
+                if ($imageFileType == 'data:image/jpeg') {
                     $_SESSION['image'] = $imageNameDb . '.jpeg';
                     $_SESSION['croppedImage'] = $croppedImageNameDb . '.jpeg';
                     $f = 0;
@@ -199,7 +202,8 @@
                     }
                 }
 
-                addImageFile($image, $_SESSION['email'], $x1, $y1, $w, $h);
+                //echo $image;
+                addBinaryImageFile($imageData, $_SESSION['email'], 1, $x1, $y1, $w, $h);
             }
             else {
                 if ($_SESSION['imageSet'] == 1) {
@@ -274,7 +278,9 @@
     }
 
     function addBinaryImageFile($image, $name, $imageAttr2 = 0, $x1 = null, $y1 = null, $w = null, $h = null) {
+        //var_dump($image);
         list($type, $imageData) = explode(';', $image);
+
         list(, $imageData)      = explode(',', $imageData);
         $imageData = base64_decode($imageData);
         $fileName = '';
@@ -293,6 +299,7 @@
                 $fileName = '/uploads/' . $name;
                 $croppedFileName = '/uploads/' . $croppedName;
                 copy($c, $c1);
+                crop(__DIR__ . $croppedFileName, $x1, $y1, $w, $h, 2);
             }
             elseif ($type == 'data:image/png') {
                 $croppedName = $name . '_crop.png';
@@ -303,6 +310,7 @@
                 $fileName = '/uploads/' . $name;
                 $croppedFileName = '/uploads/' . $croppedName;
                 copy($c, $c1);
+                crop(__DIR__ . $croppedFileName, $x1, $y1, $w, $h, 3);
             }
 
             return [$fileName, $croppedFileName];

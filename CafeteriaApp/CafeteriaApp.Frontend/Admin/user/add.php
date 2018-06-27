@@ -27,6 +27,8 @@
 
       <form novalidate role="form" method="post" name="myform" id="centerBlock" ng-cloak action="/myapi/User" enctype="multipart/form-data">
 
+        <input type="hidden" value="<?php echo $_SESSION['csrf_token']; ?>" name="csrf_token" id="csrf_token">
+
         <div class="form-group">
 
           <label>First Name</label>
@@ -108,7 +110,7 @@
           <input type="hidden" name="w" value="" />
           <input type="hidden" name="h" value="" />
 
-          <img id="image" style="width: 300px;height: 300px">
+          <img id="image" class="img-block" style="width: 300px;height: 300px">
 
           <span>
 

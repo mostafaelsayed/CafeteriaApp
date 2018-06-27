@@ -4,6 +4,7 @@ var edit_menuitemApp = angular.module('edit_menuitem',['image', 'price']);
 edit_menuitemApp.controller('editMenuItem', ['$scope', '$http', function($scope, $http) {
   $scope.menuItemId = $.urlParam(1);
   $scope.arr = [ {id: 1,name: "Visible"} , {id: 0,name: "Invisible"} ];
+  $scope.csrf_token = document.getElementById('csrf_token').value;
 
   $scope.getMenuItem = function() {
     $http.get('/myapi/MenuItem/id/' + $scope.menuItemId)
@@ -32,7 +33,8 @@ edit_menuitemApp.controller('editMenuItem', ['$scope', '$http', function($scope,
         Description: $scope.description,
         Id: $scope.menuItemId,
         Image: $('#image').attr('src'),
-        Visible: $scope.selectedElement.id
+        Visible: $scope.selectedElement.id,
+        csrf_token: $scope.csrf_token
       };
 
       if ($('#file').val() == '') {

@@ -21,6 +21,8 @@
 
   	<form novalidate role="form" name="myform" id="centerBlock">
 
+      <input type="hidden" value="<?php echo $_SESSION['csrf_token']; ?>" name="csrf_token" id="csrf_token">
+
       <div class="form-group">
 
         <label>Fee Name</label>

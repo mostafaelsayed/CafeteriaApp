@@ -2,9 +2,11 @@
 	// controller for reviewing customer order
 	layoutApp.controller('reviewOrderAndChargeCustomer', ['$scope', '$http', '$location',
 	function ($scope, $http, $location) {
-		$scope.paymentId = $.urlParam('paymentId');
-		$scope.payerId = $.urlParam('PayerID');
-		$scope.paymentMethodId = $.urlParam('paymentMethodId');
+		$scope.paymentId = $.urlStringParam('paymentId');
+		$scope.payerId = $.urlStringParam('PayerID');
+		//$scope.paymentMethodId = $.urlStringParam('paymentMethodId');
+		$scope.orderId = $.urlStringParam('orderId');
+		console.log($scope.orderId);
 
 		$http.get('/myapi/Order/orderId/' + $scope.orderId + '/flag/1')
 		.then(function(response) {

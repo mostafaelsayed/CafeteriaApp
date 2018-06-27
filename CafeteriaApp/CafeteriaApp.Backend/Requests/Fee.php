@@ -5,13 +5,11 @@ require __DIR__ . '/../session.php';
 require __DIR__ . '/TestRequestInput.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    //if ($_SESSION['roleId'] == 1) {
     if (isset($_GET['id']) && testInt($_GET['id'])) {
         checkResult(getFeeById($conn, $_GET['id']));
     } else {
         checkResult(getFees($conn));
     }
-    //}
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

@@ -4,16 +4,16 @@ require __DIR__ . '/../Controllers/Comment.php';
 require __DIR__ . '/../connection.php';
 require __DIR__ . '/TestRequestInput.php';
 
-
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (isset($_GET['MenuItemId']) && testInt($_GET['MenuItemId'])) {
         $comments = getCommentsByMenuItemId($conn, $_GET['MenuItemId']);
         
-        if(isset($_SESSION['userId'])){
-        $commentsIdsForCustomer = getCommentsIdsByUserIdAndMenuItemId($conn, $_SESSION['userId'], $_GET['MenuItemId']);
+        if (isset($_SESSION['userId'])) {
+            $commentsIdsForCustomer = getCommentsIdsByUserIdAndMenuItemId($conn, $_SESSION['userId'], $_GET['MenuItemId']);
         } else {
-        $commentsIdsForCustomer =[];
-    }
+            $commentsIdsForCustomer =[];
+        }
+
         checkResult(array($comments, $commentsIdsForCustomer));
     } 
 }
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($data->Details) && normalizeString($conn, $data->Details) && isset($_SESSION['userId']) && isset($data->MenuItemId) && testInt($data->MenuItemId)) {
         checkResult(addComment($conn, $data->Details, $_SESSION['userId'], $data->MenuItemId));
-    } 
+    }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'PUT') {

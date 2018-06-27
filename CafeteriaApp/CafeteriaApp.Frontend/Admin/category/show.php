@@ -1,7 +1,7 @@
 <?php
   require(__DIR__ . '/../layout.php');
-  require(__DIR__ . '/../modal_includes.php');
   validatePageAccess([1]);
+  require(__DIR__ . '/../modal_includes.php');
 ?>
 
 <head>

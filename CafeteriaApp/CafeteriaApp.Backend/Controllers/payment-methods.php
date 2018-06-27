@@ -1,8 +1,8 @@
 <?php
 // Autoload SDK package for composer based installations
-require_once(__DIR__ . '/../lib/vendor/autoload.php');
+require_once __DIR__ . '/../lib/vendor/autoload.php';
 //require(__DIR__ . '/../paypal/start.php');
-require_once(__DIR__ . '/../lib/vendor/braintree/braintree_php/lib/Braintree.php');
+require_once __DIR__ . '/../lib/vendor/braintree/braintree_php/lib/Braintree.php';
 
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
@@ -49,13 +49,9 @@ class mypaypal {
 
 	public static function handlePaypal($conn, $orderId, $orderType, $selectedMethodId) {
 		$paypal = self::configPaypal();
-
-		//die($orderType);
 		$order = getOrderItems($conn, $orderId);
-
 		$orderItems = $order[1];
 		$orderDetails = $order[0];
-		//die(var_dump($orderItems));
 	    $itemList = new ItemList();
 	    $totalOrder = 0.00;
 
@@ -66,8 +62,8 @@ class mypaypal {
 	        ->setQuantity($orderItem['Quantity'])
 	        ->setPrice($orderItem['Price']);
 	      $itemList->addItem($item);
-	      //$totalOrder += $orderItem[1] * $orderItem[2];
 	    }
+
 	    $totalOrder = $orderDetails['Total'];
 	    $deliveryPrice = 0;
 
@@ -84,18 +80,18 @@ class mypaypal {
 	    $details = new Details();
 	    $details->setTax($tax);
 
-	      if ($orderType == 1) {
-	      	$details->setShipping($delivery);
-	      	$details->setSubtotal($totalOrder - $tax - $delivery);
-	      }
-	      else {
-	      	$details->setSubtotal($totalOrder - $tax);
-	      }
+		if ($orderType == 1) { // if delivery
+			$details->setShipping($delivery);
+			$details->setSubtotal($totalOrder - $tax - $delivery);
+		}
+		else {
+			$details->setSubtotal($totalOrder - $tax);
+		}
 
 	    // Set redirect urls
 	    $redirectUrls = new RedirectUrls();
-	    $redirectUrls->setReturnUrl(self::SITEURL . '/CafeteriaApp/CafeteriaApp.Frontend/Customer/review_order_and_charge_customer.php?orderId=' . $orderId)
-	      ->setCancelUrl(self::SITEURL . '/CafeteriaApp/CafeteriaApp.Frontend/Customer/checkout.php?orderId=' . $orderId);
+	    $redirectUrls->setReturnUrl(self::SITEURL . '/review_order?orderId=' . $orderId)
+	      ->setCancelUrl(self::SITEURL . '/checkout/' . $orderId);
 
 	    // Set payment amount
 	    $amount = new Amount();
@@ -156,7 +152,7 @@ class mypaypal {
 					$result = CheckOutOrder($conn, $orderId);
 
 					if ($result) {
-						$returnUrl = self::SITEURL . "/CafeteriaApp/CafeteriaApp.Frontend/Public/categories.php";
+						$returnUrl = self::SITEURL . "/public/categories";
 						$_SESSION['notifications'][] = 'Payment Succeeseded !';
 						header("Location: " . $returnUrl);
 					}
@@ -165,7 +161,7 @@ class mypaypal {
 					}
 				}
 				else {
-					$returnUrl = self::SITEURL . "/CafeteriaApp/CafeteriaApp.Frontend/Customer/checkout.php";
+					$returnUrl = self::SITEURL . "/checkout/" . $orderId;
 					header("Location: " . $returnUrl);
 				}	
 			}
@@ -203,7 +199,7 @@ class mybraintree {
 
 		if ($result->success) {
 			CheckOutOrder($conn, $_SESSION['orderId']);
-			header("Location: ../../CafeteriaApp.Frontend/Public/categories.php");
+			header("Location: /public/categories");
 		}
 		// else if ($result->transaction) {
 		//     print_r("Error processing transaction:");

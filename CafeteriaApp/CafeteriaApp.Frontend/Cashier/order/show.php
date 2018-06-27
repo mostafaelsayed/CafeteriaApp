@@ -1,11 +1,9 @@
 <title>Orders</title>
 
 <?php
-
   require(__DIR__ . '/../layout.php');
-
+  validatePageAccess([3]);
   require(__DIR__ . '/../modal_includes.php');
-
 ?>
 
 <head>

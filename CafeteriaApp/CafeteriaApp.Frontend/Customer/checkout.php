@@ -83,9 +83,13 @@
 
     <a class="btn btn-primary currLoc" ng-click="returnToMyCurrentLocation()">Return to My Current Location</a>
 
+    <br>
+
+    <div ng-show="loading == 1" style="font-size: 18px">Please wait ...</div>
+ 
     <br><br>
 
-    <span ng-bind="formatted_address"></span>
+    <span ng-bind="formatted_address" ng-show="loading == 0"></span>
   </div>
 </div>
 

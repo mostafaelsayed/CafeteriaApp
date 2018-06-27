@@ -1,3 +1,15 @@
+<?php
+  if ( !session_id() ) {
+      session_start();
+
+      if ( empty($_SESSION['csrf_token']) ) {
+        $_SESSION['csrf_token'] = bin2hex( random_bytes(32) );
+    }
+
+    //$token = $_SESSION['token'];
+  }
+?>
+
 <!DOCTYPE html>
 
 <html>
@@ -72,6 +84,8 @@
     <div ng-app="registerApp" ng-controller="registerController" class="row">
 
       <form ng-cloak novalidate role="form" name="myform" style="width: 40%;margin: auto;text-align: center" enctype="multipart/form-data" method="post" action="/myapi/User">
+
+        <input type="hidden" value="<?php echo $_SESSION['csrf_token']; ?>" name="csrf_token" id="csrf_token">
 
         <div class="input-field col s12">
 

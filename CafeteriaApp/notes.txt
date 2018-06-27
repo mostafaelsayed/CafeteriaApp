@@ -1,2 +1,18 @@
 1- don't use type="hidden" with ng-model
 2- testInt doesn't work with empty string (gives true)
+3- in url mapping, always write the more specfic rules before the general ones
+
+
+
+payment methods ids :
+	1 : paypal
+	2 : card
+	3 : cash
+
+
+roles ids :
+	1 : admin
+	2 : customer
+	3 : cashier
+
+
