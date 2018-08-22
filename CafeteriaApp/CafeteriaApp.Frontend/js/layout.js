@@ -18,6 +18,8 @@ layoutApp.directive( 'selectPicker', ['$parse', selectpickerDirective] );
 
 layoutApp.controller('Language_Order', ['$rootScope', '$scope', '$http', 'Order_Info',
 function($rootScope, $scope, $http, Order_Info) {
+    $scope.searchTerm = '';
+
     $scope.changeLanguage = function(languageId) {
         //$timeout(function () {
         //}, 1000);
@@ -29,7 +31,20 @@ function($rootScope, $scope, $http, Order_Info) {
             //document.location=<?php //echo "\"{$_SERVER['PHP_SELF']}\"" ;//current executing script , __FILE__ gets the current file?>
         });
         // handle error too
-    }
+    };
+
+    $scope.search = function() {
+        $http.post('/myapi/search?query=' + $scope.searchTerm).then(function(response) {
+            $scope.searchResult = response.data;
+            console.log(response);
+        });
+    };
+
+    $scope.selectFromSearchResult = function(res) {
+        $http.put('/myapi/search?query=' + res.Name).then(function(response) {
+            document.location = '/filtered_data?query=' + res.Name;
+        });
+    };
    
     Order_Info.getOrderItems($scope.orderId);
 

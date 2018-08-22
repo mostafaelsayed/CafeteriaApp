@@ -1,8 +1,26 @@
+## 3.34.0
+* Allow payee ID to be passed in options params for transaction create
+* Add `merchant_id` to `ConnectedMerchantStatusTransitioned` and `ConnectedMerchantPayPalStatusChanged` Auth webhooks
+* Fix webhook testing sample xml for dispute webhooks to include `amount-won` and `amount-disputed` (closes #225)
+
+## 3.33.0
+* Fix WebhookTestingGateway to use local configuration
+* Add Disbursement type field and methods
+
+## 3.32.0
+* Add support for US Bank Account verifications API
+
+## 3.31.0
+* Fix issue where webhook verification would fail due to missing global public key configuration value
+* Fix issue where webhook testing did not work on instantiated gateway
+* Add support for VCR compelling evidence dispute representment
+
 ## 3.30.0
 * Add `oauthAccessRevocation` to `WebhookNotification`s
 * Add support for `profileId` in Transaction#create options for VenmoAccounts
 * Add support for dispute search by `customerId`, `disbursementDate`, and `effectiveDate`
 * Make `CustomerGateway::find` backward compatible
+* Remove `sepaMandateType` and `sepaMandateAcceptanceLocation` params from `ClientTokenGateway`
 
 ## 3.29.0
 * Add support for `association_filter_id` in `Customer#find`

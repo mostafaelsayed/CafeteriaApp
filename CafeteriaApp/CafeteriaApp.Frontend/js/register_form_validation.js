@@ -29,7 +29,7 @@ registerFormApp.directive('check', ['$http', function($http) {
 
             $http.post('/myapi/User/flag/2', {Email: val, csrf_token: csrf_token}).then(function(response) {
               console.log(response);
-              if (response.data == true || response.data == 11) {
+              if (response.data == "11") {
                 ctrl.$setValidity('emailExisted', false);
                 ctrl.$setValidity('emailEmpty', true);
 
@@ -184,7 +184,7 @@ registerFormApp.directive('check', ['$http', function($http) {
             };
 
             $http.post('/myapi/User/flag/2', x).then(function(response) {
-              if (response.data == true || response.data == 11) {
+              if (response.data == "11") {
                 ctrl.$setValidity('emailExisted', false);
                 ctrl.$setValidity('emailEmpty', true);
               }

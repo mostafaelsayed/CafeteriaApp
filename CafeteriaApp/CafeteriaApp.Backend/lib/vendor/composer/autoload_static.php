@@ -7,6 +7,7 @@ namespace Composer\Autoload;
 class ComposerStaticInit6c6dfcae0dd4dc5db30e01d01f692e3d
 {
     public static $files = array (
+        'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
         'e07c71f2ea2b62b033964b1e1efa7980' => __DIR__ . '/..' . '/abeautifulsite/simple-php-captcha/simple-php-captcha.php',
         'c65d09b6820da036953a371c8c73a9b1' => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook/polyfills.php',
     );
@@ -16,14 +17,27 @@ class ComposerStaticInit6c6dfcae0dd4dc5db30e01d01f692e3d
         array (
             'Stripe\\' => 7,
         ),
+        'R' => 
+        array (
+            'React\\Promise\\' => 14,
+        ),
         'P' => 
         array (
             'Psr\\Log\\' => 8,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
+        'G' => 
+        array (
+            'GuzzleHttp\\Stream\\' => 18,
+            'GuzzleHttp\\Ring\\' => 16,
+        ),
         'F' => 
         array (
             'Facebook\\' => 9,
+        ),
+        'E' => 
+        array (
+            'Elasticsearch\\' => 14,
         ),
         'B' => 
         array (
@@ -36,6 +50,10 @@ class ComposerStaticInit6c6dfcae0dd4dc5db30e01d01f692e3d
         array (
             0 => __DIR__ . '/..' . '/stripe/stripe-php/lib',
         ),
+        'React\\Promise\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/react/promise/src',
+        ),
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
@@ -44,9 +62,21 @@ class ComposerStaticInit6c6dfcae0dd4dc5db30e01d01f692e3d
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
+        'GuzzleHttp\\Stream\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/streams/src',
+        ),
+        'GuzzleHttp\\Ring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/ringphp/src',
+        ),
         'Facebook\\' => 
         array (
             0 => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook',
+        ),
+        'Elasticsearch\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/elasticsearch/elasticsearch/src/Elasticsearch',
         ),
         'Braintree\\' => 
         array (

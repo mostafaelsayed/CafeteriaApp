@@ -1,5 +1,41 @@
 # Changelog
 
+## 6.10.0 - 2018-06-28
+* [#488](https://github.com/stripe/stripe-php/pull/488) Add support for `$appPartnerId` to `Stripe::setAppInfo()`
+
+## 6.9.0 - 2018-06-28
+* [#487](https://github.com/stripe/stripe-php/pull/487) Add support for payment intents
+
+## 6.8.2 - 2018-06-24
+* [#486](https://github.com/stripe/stripe-php/pull/486) Make `Account.deauthorize()` return the `StripeObject` from the API
+
+## 6.8.1 - 2018-06-13
+* [#472](https://github.com/stripe/stripe-php/pull/472) Added phpDoc for `ApiRequestor` and others, especially regarding thrown errors
+
+## 6.8.0 - 2018-06-13
+* [#481](https://github.com/stripe/stripe-php/pull/481) Add new `\Stripe\Discount` and `\Stripe\OrderItem` classes, add more PHPDoc describing object attributes
+
+## 6.7.4 - 2018-05-29
+* [#480](https://github.com/stripe/stripe-php/pull/480) PHPDoc changes for API version 2018-05-21 and the addition of the new `CHARGE_EXPIRED` event type
+
+## 6.7.3 - 2018-05-28
+* [#479](https://github.com/stripe/stripe-php/pull/479) Fix unnecessary traits on `\Stripe\InvoiceLineItem`
+
+## 6.7.2 - 2018-05-28
+* [#471](https://github.com/stripe/stripe-php/pull/471) Add `OBJECT_NAME` constant to all API resource classes, add `\Stripe\InvoiceLineItem` class
+
+## 6.7.1 - 2018-05-13
+* [#468](https://github.com/stripe/stripe-php/pull/468) Update fields in PHP docs for accuracy
+
+## 6.7.0 - 2018-05-09
+* [#466](https://github.com/stripe/stripe-php/pull/466) Add support for issuer fraud records
+
+## 6.6.0 - 2018-04-11
+* [#460](https://github.com/stripe/stripe-php/pull/460) Add support for flexible billing primitives
+
+## 6.5.0 - 2018-04-05
+* [#461](https://github.com/stripe/stripe-php/pull/461) Don't zero keys on non-`metadata` subobjects
+
 ## 6.4.2 - 2018-03-17
 * [#458](https://github.com/stripe/stripe-php/pull/458) Add PHPDoc for `account` on `\Stripe\Event`
 

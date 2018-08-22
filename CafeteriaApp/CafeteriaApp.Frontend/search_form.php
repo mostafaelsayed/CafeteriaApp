@@ -6,6 +6,9 @@
         </button>
     </li>
     <li class="inner" style="margin-top: -27px;margin-left: 50px">
-        <input name="searchInput" type="text"/>
+        <input ng-model="searchTerm" name="searchInput" ng-change="search()" type="text"/>
     </li>
+    <div style="background-color: white;margin-right: -10px;margin-top: 5px" ng-repeat="res in searchResult">
+    	<div class="search-term" ng-bind="res.Name" ng-click="selectFromSearchResult(res)"></div>
+    </div>
 </form>

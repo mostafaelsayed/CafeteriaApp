@@ -138,6 +138,7 @@ class PaymentMethodGateway
             'verificationMerchantAccountId',
             'verifyCard',
             'verificationAmount',
+            'usBankAccountVerificationMethod',
             ['paypal' => [
                 'payee_email',
                 'payeeEmail',
@@ -290,11 +291,6 @@ class PaymentMethodGateway
         } else if (isset($response['amexExpressCheckoutCard'])) {
             return new Result\Successful(
                 AmexExpressCheckoutCard::factory($response['amexExpressCheckoutCard']),
-                "paymentMethod"
-            );
-        } else if (isset($response['europeBankAccount'])) {
-            return new Result\Successful(
-                EuropeBankAccount::factory($response['europeBankAccount']),
                 "paymentMethod"
             );
         } else if (isset($response['usBankAccount'])) {

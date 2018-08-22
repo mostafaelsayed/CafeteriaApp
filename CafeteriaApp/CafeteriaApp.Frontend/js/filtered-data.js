@@ -1,11 +1,16 @@
 layoutApp.controller('getMenuItemsAndCustomerOrder', ['$rootScope', '$scope', '$http', 'Order_Info',
 	function($rootScope, $scope, $http, Order_Info) {
 		$scope.data = Order_Info;
+		$scope.searchTerm = '';
 
-		$http.get('/myapi/search').then(function(response) {
-			$scope.menuItems = response.data;
-			console.log(response);
-		});
+		$scope.search = function() {
+	        $http.get('/myapi/search').then(function(response) {
+	            $scope.menuItems = response.data;
+	            console.log(response);
+	        });
+	    };
+
+	    $scope.search();
 
 		$scope.addToOrder = function(menuItem) {
 	    	Order_Info.addToOrder(menuItem);

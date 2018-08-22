@@ -153,12 +153,12 @@ function validatePageAccess($permittedLevels, $checklogging = true) {
 function checkGetParams() {
     confirm_logged_in();
 
-    foreach ($_GET as $key => $value) {
-        if ( !isset($_GET[$key]) || empty($_GET[$key]) ) {
-            echo "<h1 style ='color:red;' > Access denied ^_^  </h2>";
-            exit();
-        }
-    }
+    // foreach ($_GET as $key => $value) {
+    //     if ( !isset($_GET[$key]) || empty($_GET[$key]) ) {
+    //         echo "<h1 style ='color:red;' > Access denied ^_^  </h2>";
+    //         exit();
+    //     }
+    // }
 }
 
 function randomPassword() {

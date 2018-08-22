@@ -94,6 +94,10 @@ $selected_lang = 'en';
 
           <ul style="padding: 1px" class="nav navbar-nav navbar-right">
 
+            <li style="margin-right: 10px">
+              <?php readfile(__DIR__ . "/search_form.php"); ?>
+            </li>
+
             <li ng-if='orderId' id="shoppingCart" title="Show Shopping Cart Items">
 
               <img id="shoppingCart-btn" src="/images/icons/cart-layout.png" />

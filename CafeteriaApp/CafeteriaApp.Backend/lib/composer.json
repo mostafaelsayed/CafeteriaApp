@@ -6,6 +6,7 @@
         "facebook/graph-sdk": "^5.6",
         "paypal/rest-api-sdk-php": "^1.13",
         "stripe/stripe-php": "^6.4",
-        "braintree/braintree_php": "^3.30"
+        "braintree/braintree_php": "^3.30",
+        "elasticsearch/elasticsearch": "~6.0"
     }
 }
