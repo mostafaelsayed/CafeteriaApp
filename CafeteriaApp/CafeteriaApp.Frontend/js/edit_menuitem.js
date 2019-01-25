@@ -3,7 +3,7 @@ var edit_menuitemApp = angular.module('edit_menuitem',['image', 'price']);
 // controller for editing menuitem
 edit_menuitemApp.controller('editMenuItem', ['$scope', '$http', function($scope, $http) {
   $scope.menuItemId = $.urlParam(1);
-  $scope.arr = [ {id: 1,name: "Visible"} , {id: 0,name: "Invisible"} ];
+  $scope.arr = [ {id: 1,name: "Visible"} , {id: 0,name: "InVisible"} ];
   $scope.csrf_token = document.getElementById('csrf_token').value;
 
   $scope.getMenuItem = function() {
@@ -14,7 +14,7 @@ edit_menuitemApp.controller('editMenuItem', ['$scope', '$http', function($scope,
       $scope.description = response.data.Description;
       $scope.imageUrl = response.data.Image;
 
-      if (response.data.Visible == 1) {
+      if (response.data.Visible == 'Yes') {
         $scope.selectedElement = $scope.arr[0];
       }
       else {
@@ -33,7 +33,7 @@ edit_menuitemApp.controller('editMenuItem', ['$scope', '$http', function($scope,
         Description: $scope.description,
         Id: $scope.menuItemId,
         Image: $('#image').attr('src'),
-        Visible: $scope.selectedElement.id,
+        Visible: $scope.selectedElement.name == 'Visible' ? 'Yes' : 'No',
         csrf_token: $scope.csrf_token
       };
 

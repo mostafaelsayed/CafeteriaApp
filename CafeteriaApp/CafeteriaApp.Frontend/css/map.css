@@ -6,6 +6,38 @@ html {
 .map-wrapper {
     display: none;
 }
+
+@media (max-width: 1366px) {
+	#map {
+        /* width: 700px; */
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+/* @media (max-width: 1250px) {
+	.chats:nth-child(3) {
+		display: none;
+	}
+
+	.wrapword {
+		margin-left: -50px;
+	}
+}
+
+@media (max-width: 920px) {
+    #map {
+        width: 600px;  
+    }
+} */
+
+@media (max-width: 767px) {
+    #map {
+        padding-left: 300px;
+        padding-right: 300px;  
+    }
+}
+
 #map {
     color: #363535;
     text-transform: uppercase;

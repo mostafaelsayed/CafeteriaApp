@@ -335,7 +335,7 @@ CREATE TABLE `menuitem` (
   `Price` decimal(6,2) NOT NULL,
   `Description` text COLLATE utf8_unicode_ci,
   `ReadyInMins` int(11) NOT NULL DEFAULT '0',
-  `Visible` tinyint(1) NOT NULL DEFAULT '1',
+  `Visible` varchar(100) NOT NULL DEFAULT '1',
   `CategoryId` int(11) NOT NULL,
   `Rating` decimal(10,0) NOT NULL DEFAULT '0',
   `RatingUsersNo` int(11) NOT NULL DEFAULT '0'
@@ -411,10 +411,10 @@ CREATE TABLE `order` (
   `UserId` int(11) NOT NULL,
   `DeliveryTime` datetime NOT NULL,
   `Total` decimal(6,2) NOT NULL,
-  `OrderStatusId` int(11) NOT NULL,
-  `PaymentMethodId` int(11) NOT NULL,
-  `Type` tinyint(1) NOT NULL DEFAULT '0',
-  `Visible` tinyint(1) NOT NULL DEFAULT '1',
+  `OrderStatus` varchar(100) NOT NULL,
+  `PaymentMethod` varchar(100) NOT NULL,
+  `Type` varchar(100) NOT NULL DEFAULT '0',
+  `Visible` varchar(100) NOT NULL DEFAULT '1',
   `TaxFee` double DEFAULT '0',
   `DeliveryFee` double DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -423,23 +423,23 @@ CREATE TABLE `order` (
 -- Dumping data for table `order`
 --
 
-INSERT INTO `order` (`Id`, `UserId`, `DeliveryTime`, `Total`, `OrderStatusId`, `PaymentMethodId`, `Type`, `Visible`, `TaxFee`, `DeliveryFee`) VALUES
-(171, 3, '2018-04-01 00:00:00', '4.50', 2, 4, 1, 1, NULL, NULL),
-(172, 3, '2018-04-01 00:00:00', '4.50', 2, 4, 0, 1, NULL, NULL),
-(173, 3, '2018-04-01 00:00:00', '4.50', 2, 4, 1, 1, NULL, NULL),
-(174, 3, '2018-04-01 00:00:00', '4.50', 2, 4, 1, 1, NULL, NULL),
-(175, 3, '2018-04-01 00:00:00', '4.50', 2, 4, 1, 1, NULL, NULL),
-(176, 4, '2018-04-01 00:00:00', '0.00', 2, 4, 0, 0, NULL, NULL),
-(177, 3, '2018-04-01 00:00:00', '2.00', 2, 4, 0, 1, NULL, NULL),
-(178, 3, '2018-04-01 00:00:00', '2.00', 2, 4, 0, 1, NULL, NULL),
-(179, 3, '2018-04-01 00:00:00', '2.00', 2, 4, 0, 1, NULL, NULL),
-(180, 3, '2018-04-01 00:00:00', '2.00', 2, 4, 0, 1, NULL, NULL),
-(181, 3, '2018-04-01 00:00:00', '2.00', 2, 4, 0, 1, NULL, NULL),
-(182, 3, '2018-04-01 00:00:00', '4.50', 2, 4, 1, 1, NULL, NULL),
-(183, 3, '2018-04-01 00:00:00', '4.50', 2, 4, 1, 1, NULL, NULL),
-(184, 9, '2018-04-01 00:00:00', '4.00', 1, 1, 1, 1, NULL, NULL),
-(196, 4, '2018-04-06 08:04:00', '0.00', 1, 1, 0, 1, NULL, NULL),
-(197, 3, '2018-04-08 08:04:00', '51.00', 1, 1, 0, 1, 2, 0);
+INSERT INTO `order` (`Id`, `UserId`, `DeliveryTime`, `Total`, `OrderStatus`, `PaymentMethod`, `Type`, `Visible`, `TaxFee`, `DeliveryFee`) VALUES
+(171, 3, '2018-04-01 00:00:00', '4.50', 'Close', 'Cash', 'Delivery', 'Yes', NULL, NULL),
+(172, 3, '2018-04-01 00:00:00', '4.50', 'Close', 'Cash', 'TakeAway', 'Yes', NULL, NULL),
+(173, 3, '2018-04-01 00:00:00', '4.50', 'Close', 'Cash', 'Delivery', 'Yes', NULL, NULL),
+(174, 3, '2018-04-01 00:00:00', '4.50', 'Close', 'Cash', 'Delivery', 'Yes', NULL, NULL),
+(175, 3, '2018-04-01 00:00:00', '4.50', 'Close', 'Cash', 'Delivery', 'Yes', NULL, NULL),
+(176, 4, '2018-04-01 00:00:00', '0.00', 'Close', 'Cash', 'TakeAway', 'No', NULL, NULL),
+(177, 3, '2018-04-01 00:00:00', '2.00', 'Close', 'Cash', 'TakeAway', 'Yes', NULL, NULL),
+(178, 3, '2018-04-01 00:00:00', '2.00', 'Close', 'Cash', 'TakeAway', 'Yes', NULL, NULL),
+(179, 3, '2018-04-01 00:00:00', '2.00', 'Close', 'Cash', 'TakeAway', 'Yes', NULL, NULL),
+(180, 3, '2018-04-01 00:00:00', '2.00', 'Close', 'Cash', 'TakeAway', 'Yes', NULL, NULL),
+(181, 3, '2018-04-01 00:00:00', '2.00', 'Close', 'Cash', 'TakeAway', 'Yes', NULL, NULL),
+(182, 3, '2018-04-01 00:00:00', '4.50', 'Close', 'Cash', 'Delivery', 'Yes', NULL, NULL),
+(183, 3, '2018-04-01 00:00:00', '4.50', 'Close', 'Cash', 'Delivery', 'Yes', NULL, NULL),
+(184, 9, '2018-04-01 00:00:00', '4.00', 'Open', 'PayPal', 'Delivery', 'Yes', NULL, NULL),
+(196, 4, '2018-04-06 08:04:00', '0.00', 'Open', 'PayPal', 'TakeAway', 'Yes', NULL, NULL),
+(197, 3, '2018-04-08 08:04:00', '51.00', 'Open', 'PayPal', 'TakeAway', 'Yes', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -511,26 +511,6 @@ INSERT INTO `orderlocation` (`OrderId`, `LocationId`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orderstatus`
---
-
-CREATE TABLE `orderstatus` (
-  `Id` int(11) NOT NULL,
-  `Name` varchar(100) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `orderstatus`
---
-
-INSERT INTO `orderstatus` (`Id`, `Name`) VALUES
-(1, 'Open'),
-(2, 'Closed Or Delivered'),
-(3, 'Shipped');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `pages`
 --
 
@@ -538,28 +518,6 @@ CREATE TABLE `pages` (
   `Id` int(11) NOT NULL,
   `Path` varchar(300) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `paymentmethod`
---
-
-CREATE TABLE `paymentmethod` (
-  `Id` int(11) NOT NULL,
-  `Name` varchar(100) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `paymentmethod`
---
-
-INSERT INTO `paymentmethod` (`Id`, `Name`) VALUES
-(1, 'PayPal'),
-(2, 'Online Bank'),
-(3, 'Visa'),
-(4, 'Cash'),
-(5, 'Credit Card');
 
 -- --------------------------------------------------------
 
@@ -812,8 +770,6 @@ ALTER TABLE `notification`
 ALTER TABLE `order`
   ADD PRIMARY KEY (`Id`),
   ADD KEY `UserId` (`UserId`),
-  ADD KEY `OrderStatusId` (`OrderStatusId`),
-  ADD KEY `PaymentMethodId` (`PaymentMethodId`);
 
 --
 -- Indexes for table `orderitem`
@@ -831,21 +787,10 @@ ALTER TABLE `orderlocation`
   ADD KEY `LocationId` (`LocationId`);
 
 --
--- Indexes for table `orderstatus`
---
-ALTER TABLE `orderstatus`
-  ADD PRIMARY KEY (`Id`);
 
---
 -- Indexes for table `pages`
 --
 ALTER TABLE `pages`
-  ADD PRIMARY KEY (`Id`);
-
---
--- Indexes for table `paymentmethod`
---
-ALTER TABLE `paymentmethod`
   ADD PRIMARY KEY (`Id`);
 
 --
@@ -982,20 +927,11 @@ ALTER TABLE `order`
 ALTER TABLE `orderitem`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=172;
 --
--- AUTO_INCREMENT for table `orderstatus`
---
-ALTER TABLE `orderstatus`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
+
 -- AUTO_INCREMENT for table `pages`
 --
 ALTER TABLE `pages`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `paymentmethod`
---
-ALTER TABLE `paymentmethod`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `rating`
 --
@@ -1093,8 +1029,6 @@ ALTER TABLE `notification`
 --
 ALTER TABLE `order`
   ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `user` (`Id`),
-  ADD CONSTRAINT `order_ibfk_4` FOREIGN KEY (`OrderStatusId`) REFERENCES `orderstatus` (`Id`),
-  ADD CONSTRAINT `order_ibfk_5` FOREIGN KEY (`PaymentMethodId`) REFERENCES `paymentmethod` (`Id`);
 
 --
 -- Constraints for table `orderitem`

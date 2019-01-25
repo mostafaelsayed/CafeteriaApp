@@ -885,6 +885,9 @@ class column {
 			}
 		}
 
+		echo 'alter stmt\n';
+		echo $alter;
+
 		$r = $conn->query($alter);
 
 		if ($f == 1) {

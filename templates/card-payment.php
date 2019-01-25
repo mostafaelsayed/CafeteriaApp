@@ -69,7 +69,7 @@
     </div>
 
     
-    <button value="submit" id="submit" class="btn btn-primary btn-lg center-block">Pay with <span id="card-type">Card</span></button>
+    <button style="background-color: #891C88;color: white" value="submit" id="submit" class="btn btn-lg center-block">Pay with <span id="card-type">Card</span></button>
 
     <input type="text" name="nonce" ng-model="nonce" style="visibility: hidden;">
 

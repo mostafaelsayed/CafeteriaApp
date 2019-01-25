@@ -21,8 +21,8 @@
 
   <form id="checkoutForm" novalidate style="margin: 0 auto;border: 3px solid lightgrey;border-radius: 20px;width: 500px" name="myForm" action="/myapi/Order" method="post">
     <input type="hidden" value="<?php echo $_SESSION['csrf_token']; ?>" name="csrf_token" id="csrf_token">
-    <input style="display: none" class="form-control" ng-model="selectedMethod.id" name="selectedMethodId"/>
-    <input style="display: none" class="form-control" ng-model="selectedType.id" name="orderType"/>
+    <input style="display: none" class="form-control" ng-model="selectedMethod.name" name="selectedMethod"/>
+    <input style="display: none" class="form-control" ng-model="selectedType.name" name="orderType"/>
     <input style="display: none" class="form-control" ng-model="total" name="total"/>
     <br>
     <div>
@@ -55,11 +55,14 @@
 
     <div class="form-group text-center">
 
-      <input type="submit" class="btn btn-primary" ng-if="selectedMethod.id == 1" name="next" value="Next" />
+      <!-- paypal -->
+      <input type="submit" class="btn btn-primary" ng-if="selectedMethod.name == 'Paypal'" name="next" value="Next" />
 
-      <a class="btn btn-primary" ng-if="selectedMethod.id == 2" href="/pay/credit">Next</a>
+      <!-- card (braintree) -->
+      <a class="btn btn-primary" ng-if="selectedMethod.name == 'Card'" href="/pay/credit">Next</a>
 
-      <a class="btn btn-primary" ng-if="selectedMethod.id == 3" ng-click="confirmOrder()">Submit</a>
+      <!-- cash -->
+      <a class="btn btn-primary" ng-if="selectedMethod.name == 'Cash'" ng-click="confirmOrder()">Submit</a>
 
       <a class="btn btn-primary" ng-click="discardOrder()">Discard Order</a>
 
@@ -76,7 +79,7 @@
 
   </div>
 
-  <div ng-show="selectedType.id == 1" class="form-group locBut" style="margin-top: 20px">
+  <div ng-show="selectedType.name == 'Paypal'" class="form-group locBut" style="margin-top: 20px">
     <a class="btn btn-primary confirmLoc" ng-click="confirmLocation()">Confirm Location</a>
 
     <br><br>    

@@ -41,12 +41,12 @@ table tr:nth-child(even) {
 */
 
 .navbar:before, .navbar:after, .navbar-header:before, .navbar-header:after, .nav:before, .nav:after, .navbar-nav:before, .navbar-nav:after, .navbar-left:before, .navbar-left:after, .navbar-collapse:before, .navbar-collapse:after {
-    display:none;!important;
+    display:none !important;
 }
 
 nav {
     height: 57px;
-    background-color: brown;!important;
+    background-color: #891C88 !important;
     /*background-image: url('../images/customer background image4.jpg')*/
 }
 
@@ -300,7 +300,7 @@ nav {
     border: 1px solid #5F5F5F;
     vertical-align: middle;
 }
-#orderTable: hover {
+#orderTable:hover {
     background-color: black;
 }
 .checkout {

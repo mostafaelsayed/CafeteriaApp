@@ -3,8 +3,8 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   '$httpParamSerializerJQLike',
   function($rootScope, $scope, $interval, $http, Order_Info, $httpParamSerializerJQLike) {
   $scope.orderId = $.urlParam(0);
-  $scope.orderTypes = [ {id: 0, name: 'Take Away'}, {id: 1, name: 'Delivery'} ];
-  $scope.paymentMethods = [ {id: 1, name: 'PayPal'}, {id: 2, name: 'Card'}, {id: 3, name: 'Cash'} ];
+  $scope.orderTypes = [ {id: 0, name: 'TakeAway'}, {id: 1, name: 'Delivery'} ];
+  $scope.paymentMethods = [ {id: 1, name: 'Paypal'}, {id: 2, name: 'Card'}, {id: 3, name: 'Cash'} ];
   $scope.deliveryFee = 0;
   $scope.taxFee = 0;
   $scope.subTotal = 0;
@@ -69,16 +69,19 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
   };
 
   $scope.changeType = function() {
-    if ($scope.selectedType.id == 1) { // delivery
+    if ($scope.selectedType.name == 'Delivery') { // delivery
       document.getElementsByClassName('map-wrapper')[0].style.display = 'block';
-      document.getElementsByTagName('form')[0].classList.add('col-lg-4');
-      document.getElementsByClassName('map-wrapper')[0].classList.add('col-lg-4');
-      document.getElementsByClassName('locBut')[0].classList.add('col-lg-4');
+      document.getElementsByClassName('map-wrapper')[0].style.paddingLeft = '250px';
+        document.getElementsByClassName('map-wrapper')[0].style.paddingRight = '250px';
+      // document.getElementsByTagName('form')[0].classList.add('col-lg-4');
+      // document.getElementsByClassName('map-wrapper')[0].classList.add('col-lg-4');
+      // document.getElementsByClassName('locBut')[0].classList.add('col-lg-4');
       document.getElementsByTagName('form')[0].style.width = '350px';
       $scope.loading = 1;
 
-      $http.put('/myapi/Order/type/1', {csrf_token: $scope.csrf_token}).then(function(response) {
-        $scope.deliveryFee = parseInt(response.data);
+      $http.put('/myapi/Order/type/Delivery', {csrf_token: $scope.csrf_token}).then(function(response) {
+        console.log(response);
+        $scope.deliveryFee = parseFloat(response.data);
         $scope.total += $scope.deliveryFee;
         // $http.get('/myapi/OrderLocation/orderId/' + $scope.orderId)
         // .then(function(response) {
@@ -97,13 +100,13 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
       $scope.confirmLocation(1);
     }
-    else if ($scope.selectedType.id == 0) { // take away
-      document.getElementsByTagName('form')[0].classList.remove('col-lg-4');
-      document.getElementsByClassName('map-wrapper')[0].classList.remove('col-lg-4');
-      document.getElementsByClassName('locBut')[0].classList.remove('col-lg-4');
+    else if ($scope.selectedType.name == 'TakeAway') { // take away
+      // document.getElementsByTagName('form')[0].classList.remove('col-lg-4');
+      // document.getElementsByClassName('map-wrapper')[0].classList.remove('col-lg-4');
+      // document.getElementsByClassName('locBut')[0].classList.remove('col-lg-4');
       document.getElementsByTagName('form')[0].style.width = '500px';
 
-      $http.put('/myapi/Order/type/0', {csrf_token: $scope.csrf_token}).then(function(response) {
+      $http.put('/myapi/Order/type/TakeAway', {csrf_token: $scope.csrf_token}).then(function(response) {
         $scope.total -= $scope.deliveryFee;
         $scope.deliveryFee = 0;
         alertify.success('order type is now take away');
@@ -117,17 +120,17 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
 
   $scope.changePaymentMethod = function() {
     var data = {
-      paymentMethodId: $scope.selectedMethod.id,
+      paymentMethod: $scope.selectedMethod.name,
     };
 
     $http.put('/myapi/Order', data).then(function(response) {
-      if ($scope.selectedMethod.id == 1) { // paypal
+      if ($scope.selectedMethod.name == 'Paypal') { // paypal
         alertify.success('You will pay with PayPal');
       }
-      else if ($scope.selectedMethod.id == 2) { // credit
-        alertify.success('You will pay with Credit Card');
+      else if ($scope.selectedMethod.name == 'Card') { // card
+        alertify.success('You will pay with Card');
       }
-      else if ($scope.selectedMethod.id == 3) { // cash
+      else if ($scope.selectedMethod.name == 'Cash') { // cash
         alertify.success('You will pay Cash');
       }
     })
@@ -217,26 +220,28 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
     .then(function(response) {
       $scope.orderInfo = response.data;
       $scope.orderType = response.data.Type;
-      var paymentMethodId = response.data.PaymentMethodId;
+      var paymentMethod = response.data.PaymentMethod;
       $scope.deliveryFee = response.data.DeliveryFee;
       $scope.taxFee = response.data.TaxFee;
 
-      if (paymentMethodId == 1) {
+      if (paymentMethod == 'Paypal') {
         $scope.selectedMethod = $scope.paymentMethods[0];
       }
-      else if (paymentMethodId == 2) {
+      else if (paymentMethod == 'Card') {
         $scope.selectedMethod = $scope.paymentMethods[1];
       }
       else {
         $scope.selectedMethod = $scope.paymentMethods[2];
       }
 
-      if ($scope.orderType == 1) {
+      if ($scope.orderType == "Delivery") {
         document.getElementsByClassName('map-wrapper')[0].style.display = 'block';
-        document.getElementsByTagName('form')[0].classList.add('col-lg-4');
-        document.getElementsByClassName('map-wrapper')[0].classList.add('col-lg-4');
-        document.getElementsByClassName('locBut')[0].classList.add('col-lg-4');
-        document.getElementsByTagName('form')[0].style.width = '350px';
+        document.getElementsByClassName('map-wrapper')[0].style.paddingLeft = '250px';
+        document.getElementsByClassName('map-wrapper')[0].style.paddingRight = '250px';
+        // document.getElementsByTagName('form')[0].classList.add('col-lg-4');
+        // document.getElementsByClassName('map-wrapper')[0].classList.add('col-lg-4');
+        // document.getElementsByClassName('locBut')[0].classList.add('col-lg-4');
+        document.getElementsByTagName('form')[0].style.width = '300px';
         
         $http.get('/myapi/OrderLocation/orderId/' + $scope.orderId)
         .then(function(response) {
@@ -255,12 +260,12 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
         });
       }
       else { // take away
-        document.getElementsByTagName('form')[0].classList.remove('col-lg-4');
-        document.getElementsByClassName('map-wrapper')[0].classList.remove('col-lg-4');
-        document.getElementsByClassName('locBut')[0].classList.remove('col-lg-4');
+        // document.getElementsByTagName('form')[0].classList.remove('col-lg-4');
+        // document.getElementsByClassName('map-wrapper')[0].classList.remove('col-lg-4');
+        // document.getElementsByClassName('locBut')[0].classList.remove('col-lg-4');
       }
 
-      if ($scope.orderType == 1) { // delivery
+      if ($scope.orderType == "Delivery") { // delivery
         $scope.selectedType = $scope.orderTypes[1];
       }
       else { // take away
@@ -268,7 +273,7 @@ layoutApp.controller('OrderCheckout', ['$rootScope', '$scope', '$interval', '$ht
       }
 
       $scope.total = parseFloat($scope.orderInfo.Total);
-      $scope.subTotal = $scope.total - $scope.deliveryFee - $scope.taxFee;
+      $scope.subTotal = ($scope.total - $scope.deliveryFee - $scope.taxFee).toFixed(2);
 
       $http.get('/myapi/Fee')
       .then(function(response) {

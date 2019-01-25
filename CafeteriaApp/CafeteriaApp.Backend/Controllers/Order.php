@@ -38,7 +38,7 @@
   }
 
   function getOpenOrderByUserId($conn) {
-    $sql = "select * from `order` where `UserId` = {$_SESSION['userId']} and `OrderStatusId` = 1";
+    $sql = "select * from `order` where `UserId` = {$_SESSION['userId']} and `OrderStatus` = 'Open'";
     $result = $conn->query($sql);
 
     if ($result) {
@@ -96,12 +96,12 @@
     $deliveryFee = mysqli_fetch_assoc($r)['Price'];
     $f = 0;
 
-    if ($orderType == 0) { // take away
+    if ($orderType == 'TakeAway') { // take away
       $f = -$deliveryFee;
       $deliveryFee = 0;
       $conn->query("delete from `OrderLocation` where `OrderId` = " . $_SESSION['orderId']);
     }
-    elseif ($orderType == 1) { // delivery
+    elseif ($orderType == 'Delivery') { // delivery
       $f = $deliveryFee;
     }
 
@@ -111,7 +111,7 @@
       die($conn->error);
     }
 
-    if ($orderType == 1) {
+    if ($orderType == 'Delivery') {
       return $deliveryFee;
     }
   }
@@ -149,13 +149,13 @@
     }
   }
 
-  function addOrder($conn, $deliveryTime, $paymentMethodId, $orderStatusId, $userId, $total = 0) {
-    $sql = "insert into `order` (`DeliveryTime`, `Total`, `PaymentMethodId`, `OrderStatusId`, `UserId`, `TaxFee`) values (?, ?, ?, ?, ?, ?)";
+  function addOrder($conn, $deliveryTime, $paymentMethod, $orderStatus, $userId, $total = 0) {
+    $sql = "insert into `order` (`DeliveryTime`, `Total`, `PaymentMethod`, `OrderStatus`, `UserId`, `TaxFee`) values (?, ?, ?, ?, ?, ?)";
     $taxFee = mysqli_fetch_assoc($conn->query("select `Price` from `fees` where `Name` = 'Tax'"))['Price'];
     $total += $taxFee;
-    $_SESSION['paymentMethodId'] = 1; // default is paypal
+    $_SESSION['paymentMethod'] = 'Cash'; // default is Cash
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sdiiid", $deliveryTime, $total, $paymentMethodId, $orderStatusId, $userId, $taxFee);
+    $stmt->bind_param("sdssid", $deliveryTime, $total, $paymentMethod, $orderStatus, $userId, $taxFee);
 
     if ($stmt->execute() === TRUE) {
       //echo "Order Added successfully";
@@ -167,7 +167,7 @@
   }
 
   function hideOrder($conn, $orderId) {
-    $sql = "update `order` set `Visible` = 0, `OrderStatusId` = 2 where `Id` = " . $orderId;
+    $sql = "update `order` set `Visible` = 'No', `OrderStatus` = 'Close' where `Id` = " . $orderId;
     $sql = $conn->query($sql);
 
     if ($sql) {
@@ -180,7 +180,7 @@
 
   function CheckOutOrder($conn, $orderId) {
     $deliveryTime = date("Y-m-d h:m");
-    $sql = "update `order` set `DeliveryTime` = (?), `OrderStatusId` = 2 where `Id` = (?)";
+    $sql = "update `order` set `DeliveryTime` = (?), `OrderStatus` = 'Close' where `Id` = (?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("si", $deliveryTime, $orderId);
 
@@ -189,7 +189,7 @@
       $deliveryTime = date("Y-m-d h:m");
 
       if ($_SESSION['roleId'] == 2) {
-        $_SESSION['orderId'] = addOrder($conn, $deliveryTime, 1, 1, $_SESSION['userId']);
+        $_SESSION['orderId'] = addOrder($conn, $deliveryTime, 'Cash', 'Open', $_SESSION['userId']);
       }
       
       return true;
@@ -202,7 +202,7 @@
   // function updateOrderTypeAndTotal($conn, $orderType) {
   //   $fee = 0;
 
-  //   if ($orderType == 1) {
+  //   if ($orderType == 'Delivery') {
   //     $fees = getFees($conn);
   //   }
   // }
@@ -210,19 +210,19 @@
   // function updateWithFee($conn, $orderType, $selectedMethodId) {
   //   $fees = getFees($conn);
 
-  //   if ( $orderType == 1) { // paypal or credit and delivery
+  //   if ( $orderType == 'Delivery') { // paypal or credit and delivery
   //     updateOrderTotalById($conn, $_SESSION['orderId'], $fees[0]['Price'] + $fees[1]['Price'] + $fees[2]['Price']);
   //   }
-  //   elseif ( ($selectedMethodId == 1 || $selectedMethodId == 5) && $orderType == 0) { // paypal or credit and delivery
+  //   elseif ( ($selectedMethodId == 1 || $selectedMethodId == 5) && $orderType == 'TakeAway') { // paypal or credit and delivery
   //     updateOrderTotalById($conn, $_SESSION['orderId'], $fees[1]['Price'] + $fees[2]['Price']);
   //   }
-  //   elseif ( $selectedMethodId == 4 && $orderType == 0) { // tax
+  //   elseif ( $selectedMethodId == 4 && $orderType == 'TakeAway') { // tax
   //     updateOrderTotalById($conn, $_SESSION['orderId'], $fees[2]['Price']);
   //   }
   // }
 
   function deleteOpenOrderById($conn) { // remove order items with cascading
-    $sql = "delete from `order` where `UserId` = " . $_SESSION['userId'] . " and `OrderStatusId` = 1 LIMIT 1";
+    $sql = "delete from `order` where `UserId` = " . $_SESSION['userId'] . " and `OrderStatus` = 'Open' LIMIT 1";
 
     if ($conn->query($sql) === TRUE) {
       return "Current Open Order deleted successfully";
@@ -255,14 +255,14 @@
     
   }
 
-  function processPayment($conn, $orderId, $selectedMethodId, $orderType) {
-    if ($selectedMethodId == 1) { // paypal payment
+  function processPayment($conn, $orderId, $selectedMethod, $orderType) {
+    if ($selectedMethod == 'Paypal') { // paypal payment
       //$paypal = new mypaypal();
-      mypaypal::handlePaypal($conn, $orderId, $orderType, $selectedMethodId);
+      mypaypal::handlePaypal($conn, $orderId, $orderType, $selectedMethod);
       //$payer->setPaymentMethod('paypal'); // maybe determine this from frontend too
     }
-    elseif ($selectedMethodId == 2) { // braintree
-      mybraintree::handleBrainTree($conn, $orderId, $orderType, $selectedMethodId);
+    elseif ($selectedMethod == 'Card') { // braintree
+      mybraintree::handleBrainTree($conn, $orderId, $orderType, $selectedMethod);
     }
     else {
       //$payer->setPaymentMethod('credit_card');
@@ -270,9 +270,9 @@
   }
 
   function chargeCustomer($paymentId, $payerId, $orderId, $conn) {
-    $p = mysqli_fetch_assoc( $conn->query('select `PaymentMethodId` from `Order` where `Id` = ' . $orderId) )['PaymentMethodId'];
+    $p = mysqli_fetch_assoc( $conn->query('select `PaymentMethod` from `Order` where `Id` = ' . $orderId) )['PaymentMethod'];
 
-    if ($p == 1) {
+    if ($p == 'Paypal') {
       mypaypal::chargeCustomer($paymentId, $payerId, $orderId, $conn);
     }
   }

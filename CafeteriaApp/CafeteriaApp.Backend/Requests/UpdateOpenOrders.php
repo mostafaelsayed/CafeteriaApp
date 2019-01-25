@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
 
     //1-get all open orders where open status id =1
-    $orders = getOrdersByOrderStatusId($conn, 1);
+    $orders = getOrdersByOrderStatus($conn, 'Open');
 
     if (!empty($orders)) {
         // get users who should get notified by the change happened

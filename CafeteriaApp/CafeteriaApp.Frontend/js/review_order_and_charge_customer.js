@@ -4,7 +4,7 @@
 	function ($scope, $http, $location) {
 		$scope.paymentId = $.urlStringParam('paymentId');
 		$scope.payerId = $.urlStringParam('PayerID');
-		//$scope.paymentMethodId = $.urlStringParam('paymentMethodId');
+		//$scope.paymentMethod = $.urlStringParam('paymentMethod');
 		$scope.orderId = $.urlStringParam('orderId');
 		console.log($scope.orderId);
 

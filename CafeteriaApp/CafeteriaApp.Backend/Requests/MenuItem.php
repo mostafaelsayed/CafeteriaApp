@@ -37,7 +37,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'PUT' && checkCSRFToken() ) {
         //decode the json data
         $data = json_decode( file_get_contents('php://input') );
 
-        if ( isset($data->Id, $data->Price, $data->Visible, $data->Name, $data->Description) && testMutipleInts($data->Id, $data->Visible) && normalizeString($conn, $data->Name, $data->Description) && testPrice($data->Price) ) {
+        if ( isset($data->Id, $data->Price, $data->Visible, $data->Name, $data->Description) && testMutipleInts($data->Id) && normalizeString($conn, $data->Name, $data->Description, $data->Visible) && testPrice($data->Price) ) {
             $x = normalizeString($conn, $data->Image);
 
             if ($x == true) {

@@ -47,13 +47,15 @@ class mypaypal {
 		return $paypal;
 	}
 
-	public static function handlePaypal($conn, $orderId, $orderType, $selectedMethodId) {
+	public static function handlePaypal($conn, $orderId, $orderType, $selectedMethod) {
 		$paypal = self::configPaypal();
 		$order = getOrderItems($conn, $orderId);
 		$orderItems = $order[1];
 		$orderDetails = $order[0];
 	    $itemList = new ItemList();
-	    $totalOrder = 0.00;
+		$totalOrder = 0.00;
+		
+		
 
 	    foreach ($orderItems as $orderItem) {
 	      $item = new Item();
@@ -64,7 +66,8 @@ class mypaypal {
 	      $itemList->addItem($item);
 	    }
 
-	    $totalOrder = $orderDetails['Total'];
+		$totalOrder = $orderDetails['Total'];
+		
 	    $deliveryPrice = 0;
 
 	    // determine shipping and tax later from frontend
@@ -80,13 +83,28 @@ class mypaypal {
 	    $details = new Details();
 	    $details->setTax($tax);
 
-		if ($orderType == 1) { // if delivery
+		if ($orderType == 'Delivery') { // if delivery
 			$details->setShipping($delivery);
 			$details->setSubtotal($totalOrder - $tax - $delivery);
 		}
 		else {
 			$details->setSubtotal($totalOrder - $tax);
 		}
+
+		// echo "orderItems\n";
+		// var_dump($orderItems);
+
+		// echo "orderDetails\n";
+		// var_dump($orderDetails);
+
+		// echo "totalOrder\n";
+		// var_dump($totalOrder);
+
+		// echo "itemList\n";
+		// var_dump($itemList);
+
+		// echo "details\n";
+		// var_dump($details);
 
 	    // Set redirect urls
 	    $redirectUrls = new RedirectUrls();

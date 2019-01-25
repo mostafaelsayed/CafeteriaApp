@@ -47,7 +47,7 @@
 
   function addOrderItem($conn, $orderId, $menuItemId, $quantity) {
     if ($orderId == null) {
-      $orderId = addOrder($conn, date('Y-m-d h:m'), 4, 1, $_SESSION['userId']);
+      $orderId = addOrder($conn, date('Y-m-d h:m'), 'Cash', 'Open', $_SESSION['userId']);
     }
 
     $sql = "insert into `orderitem` (OrderId, MenuItemId, Quantity) values (?, ?, ?)"; // add TotalPrice to total of the order

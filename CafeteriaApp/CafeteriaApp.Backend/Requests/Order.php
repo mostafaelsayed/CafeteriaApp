@@ -31,8 +31,8 @@
       mybraintree::handleBrainTree($conn, $_POST['nonce'], $total);
     }
     elseif ( isset($_POST['orderType']) && testInt($_POST['orderType']) && ($_SESSION['roleId'] == 2 || $_SESSION['roleId'] == 3) && checkCSRFToken() ) { // customer paypal
-      if ( isset($_POST['selectedMethodId']) && !isset($_POST['paymentId']) && testInt($_POST['selectedMethodId']) && $_POST['selectedMethodId'] != 4) {
-        processPayment($conn, $_SESSION['orderId'], $_POST['selectedMethodId'], $_POST['orderType']);
+      if ( isset($_POST['selectedMethod']) && !isset($_POST['paymentId']) && normalizeString($_POST['selectedMethod']) && $_POST['selectedMethod'] != 4) {
+        processPayment($conn, $_SESSION['orderId'], $_POST['selectedMethod'], $_POST['orderType']);
       }
     }
     elseif ( isset($_POST['paymentId'], $_POST['payerId']) && normalizeString($conn, $_POST['paymentId'], $_POST['payerId']) && checkCSRFToken() ) { // charge customer here
@@ -40,7 +40,7 @@
     }
     else {
       if ($_SESSION['roleId'] == 3) {
-        $_SESSION['orderId'] = addOrder($conn, date('Y-m-d h:m'), 4, 1, $_SESSION['userId']); // consider it cash but when user will use paypal (either using paypal or credit), customer should use the app himself to login to paypal
+        $_SESSION['orderId'] = addOrder($conn, date('Y-m-d h:m'), 'Cash', 'Open', $_SESSION['userId']); // consider it cash but when user will use paypal (either using paypal or credit), customer should use the app himself to login to paypal
         header("Location: /public/categories");
       }
     }
@@ -55,13 +55,13 @@
     elseif ( isset($data->orderId) && testInt($data->orderId) ) {
       updateOrderIdInSession($conn, $data->orderId);
     }
-    elseif ( isset($_GET['type']) && testInt($_GET['type']) && checkCSRFToken() ) {
+    elseif ( isset($_GET['type']) && normalizeString($_GET['type']) ) {
       echo updateOrderTypeAndTotal($conn, $_GET['type']);
     }
-    elseif ( isset($data->paymentMethodId) && testInt($data->paymentMethodId) ) {
-      $id = $data->paymentMethodId;
-      $conn->query("update `order` set `PaymentMethodId` = {$id} where `Id` = {$_SESSION['orderId']}");
-      $_SESSION['paymentMethodId'] = $id;
+    elseif ( isset($data->paymentMethod) && normalizeString($data->paymentMethod) ) {
+      $paymentMethod = $data->paymentMethod;
+      $conn->query("update `order` set `PaymentMethod` = '{$paymentMethod}' where `Id` = {$_SESSION['orderId']}");
+      $_SESSION['paymentMethod'] = $paymentMethod;
     }
     elseif (isset($_GET['cashflag']) && $_GET['cashflag'] == 1) {
       CheckOutOrder($conn, $_SESSION['orderId']);

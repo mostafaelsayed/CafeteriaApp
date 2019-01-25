@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && checkCSRFToken()) {
                 $userId = addUser($conn, $_POST['firstName'], $_POST['lastName'], $_FILES['image'], $_POST['email'], $_POST['phone'], $_POST['password'], $_POST['genderId'], 2, $_POST['DOB'], 1, $x1, $y1, $w, $h);
                 $_SESSION['userId'] = $userId;
                 $_SESSION['roleId'] = 2; // customer
-                $_SESSION['orderId'] = addOrder($conn, date('Y-m-d h:m'), 1, 1, $userId);
+                $_SESSION['orderId'] = addOrder($conn, date('Y-m-d h:m'), 'Cash', 'Open', $userId);
                 $_SESSION['notifications'] = [];
                 $_SESSION['langId'] = 1;
                 $x = mysqli_fetch_assoc( $conn->query('select Image, CroppedImage from user where Id = ' . $userId) );

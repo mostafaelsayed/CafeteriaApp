@@ -41,7 +41,7 @@ if ( isset($_POST['submit']) ) {
 
             if ( (!$_SESSION['orderId'] = getOpenOrderByUserId($conn)['Id']) && $_SESSION['roleId'] == 2 ) {
                 // if not found open order>>open a new one
-                $_SESSION['orderId'] = addOrder($conn, date('Y-m-d h:m'), 1, 1, $_SESSION['userId']);
+                $_SESSION['orderId'] = addOrder($conn, date('Y-m-d h:m'), 'Cash', 'Open', $_SESSION['userId']);
             }
 
             //get notification messages

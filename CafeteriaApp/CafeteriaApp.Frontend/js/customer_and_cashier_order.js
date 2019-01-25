@@ -66,7 +66,8 @@ angular.module('customer_and_cashier_order', []).factory('Order_Info', ['$interv
         if (x.length > 0) {
             order_info.increaseQuantity(x[0]); // we extract the first element because x is array (x must be one length array)
         }
-        else if ($('.addToOrder').hasClass('clickable')) {
+        // else if ($('.addToOrder').hasClass('clickable')) {
+        else {
             $('.addToOrder').removeClass('clickable');
 
             var data = {

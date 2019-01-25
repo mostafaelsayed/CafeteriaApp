@@ -5,7 +5,7 @@
     $sql = "select * from menuitem where CategoryId = " . $id;
 
     if ($customer) {
-      $sql .= " and Visible = 1";
+      $sql .= " and Visible = 'Yes'";
     }
 
     if ( $result = $conn->query($sql) ) {
@@ -77,14 +77,14 @@
       $sql = "update menuitem set Name = (?), Price = (?), Description = (?), Image = (?), Visible = (?) 
       where Id = (?)";
       $stmt = $conn->prepare($sql);
-      $stmt->bind_param("sdssii", $name, $price, $description, $Image, $visible, $id);
+      $stmt->bind_param("sdsssi", $name, $price, $description, $Image, $visible, $id);
       $Image = editBinaryImage($imageData, $menuItem['Image'], $name . $menuItem['CategoryId'])[0];
     }
     else {
       $sql = "update menuitem set Name = (?), Price = (?), Description = (?), Visible = (?) 
       where Id = (?)";
       $stmt = $conn->prepare($sql);
-      $stmt->bind_param("sdsii", $name, $price, $description, $visible, $id);
+      $stmt->bind_param("sdssi", $name, $price, $description, $visible, $id);
     }
 
     if ($stmt->execute() === TRUE) {

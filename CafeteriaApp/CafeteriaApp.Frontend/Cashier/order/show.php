@@ -70,19 +70,19 @@
 
               </thead>
 
-              <tbody ng-repeat="o in orders" ng-show="o.Visible == 1">
+              <tbody ng-repeat="o in orders" ng-show="o.Visible == 'Yes'">
 
                 <tr>
 
                   <td id="alignText" ng-bind="o.Id"></td>
 
-                  <td id="alignText" ng-show="o.Type == 1">Delivery</td>
+                  <td id="alignText" ng-show="o.Type == 'Delivery'">Delivery</td>
 
-                  <td id="alignText" ng-show="o.Type == 0">Take Away</td>
+                  <td id="alignText" ng-show="o.Type == 'TakeAway'">Take Away</td>
 
-                  <td id="alignText" ng-show="o.OrderStatusId == 1">Open</td>
+                  <td id="alignText" ng-show="o.OrderStatus == 'Open'">Open</td>
 
-                  <td id="alignText" ng-show="o.OrderStatusId == 2">Closed</td>
+                  <td id="alignText" ng-show="o.OrderStatus == 'Close'">Closed</td>
 
                   <td id="alignText" class="center">
 
