@@ -108,7 +108,7 @@ class mypaypal {
 
 	    // Set redirect urls
 	    $redirectUrls = new RedirectUrls();
-	    $redirectUrls->setReturnUrl(self::SITEURL . '/review_order?orderId=' . $orderId)
+	    $redirectUrls->setReturnUrl(self::SITEURL . '/pay/Paypal?orderId=' . $orderId)
 	      ->setCancelUrl(self::SITEURL . '/checkout/' . $orderId);
 
 	    // Set payment amount

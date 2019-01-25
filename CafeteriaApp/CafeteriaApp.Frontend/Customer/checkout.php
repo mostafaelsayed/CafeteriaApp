@@ -59,7 +59,7 @@
       <input type="submit" class="btn btn-primary" ng-if="selectedMethod.name == 'Paypal'" name="next" value="Next" />
 
       <!-- card (braintree) -->
-      <a class="btn btn-primary" ng-if="selectedMethod.name == 'Card'" href="/pay/credit">Next</a>
+      <a class="btn btn-primary" ng-if="selectedMethod.name == 'Card'" href="/pay/card">Next</a>
 
       <!-- cash -->
       <a class="btn btn-primary" ng-if="selectedMethod.name == 'Cash'" ng-click="confirmOrder()">Submit</a>
